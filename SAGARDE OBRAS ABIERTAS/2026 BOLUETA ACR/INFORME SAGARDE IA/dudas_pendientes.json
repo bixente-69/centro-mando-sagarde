@@ -1,0 +1,173 @@
+{
+  "version": "4.2",
+  "catalogo_version": "1.2",
+  "obra": "2026 BOLUETA ACR",
+  "revision": "21/07/2026",
+  "generado": "22/07/2026 00:04",
+  "dudas_pendientes": [
+    {
+      "codigo": "DEPENDENCIA_SIN_DATO",
+      "tarea_id": "apliques",
+      "pregunta": "No hay dato de 'Fachada terminada' para decidir Apliques y enchufes de terraza. Confirmar antes de priorizar.",
+      "n_ubicaciones": 96,
+      "ubicaciones": [
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "NO_QUITAR_X",
+      "tarea_id": "embornado",
+      "pregunta": "Embornado eléctrico tenía X y después figura pendiente. Se conserva X hasta confirmar la corrección.",
+      "n_ubicaciones": 4,
+      "ubicaciones": [
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "NO_QUITAR_X",
+      "tarea_id": "montante_electrica",
+      "pregunta": "Montante eléctrica tenía X y después figura M. Se conserva X hasta confirmar la corrección.",
+      "n_ubicaciones": 4,
+      "ubicaciones": [
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidad": "D"
+        }
+      ]
+    }
+  ]
+}

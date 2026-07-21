@@ -1,0 +1,22 @@
+{
+  "version": "4.2",
+  "catalogo_version": "1.2",
+  "obra": "2025 BILBAO OBISPO ORUETA",
+  "revision": "24/09/2025",
+  "generado": "22/07/2026 00:04",
+  "dudas_pendientes": [
+    {
+      "codigo": "ALCANCE_POSTAPERTURA",
+      "tarea_id": "trabajos_electricos_tabique_cocina",
+      "pregunta": "Cuando termine el tabique separador de cocinas, revisar los apartamentos 1 y 2 de PB antes de decidir si quedan tubeado, cableado, mecanismos u otros trabajos.",
+      "n_ubicaciones": 1,
+      "ubicaciones": [
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Apartamentos 1 y 2"
+        }
+      ]
+    }
+  ]
+}

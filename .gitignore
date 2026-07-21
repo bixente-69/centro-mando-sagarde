@@ -14,5 +14,12 @@ VARIOS/APPS SAGARDE/
 !POST-VENTAS/logo_sagarde.jpg
 !VIDEOSAG.mp4
 
+# Publicar el actualizador corregido
+!Actualizar_Sagarde.bat
+
+# Datos calculados enlazados desde los paneles de obras
+!SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/prioridades_trabajos.json
+!SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/dudas_pendientes.json
+
 # Mantener este archivo rastreado
 !.gitignore
