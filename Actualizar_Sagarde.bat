@@ -45,8 +45,8 @@ if not defined GITCMD if exist "%ProgramFiles%\Git\cmd\git.exe" set "GITCMD=%Pro
 if not defined GITCMD if exist "%ProgramFiles(x86)%\Git\cmd\git.exe" set "GITCMD=%ProgramFiles(x86)%\Git\cmd\git.exe"
 
 if not defined GITCMD (
-  for /f "delims=" %%g in ('dir /b /s /a-d "%LOCALAPPDATA%\GitHubDesktop\app-*\resources\app\git\cmd\git.exe" 2^>nul ^| sort /R') do (
-    if not defined GITCMD set "GITCMD=%%g"
+  for /d %%d in ("%LOCALAPPDATA%\GitHubDesktop\app-*") do (
+    if exist "%%~fd\resources\app\git\cmd\git.exe" set "GITCMD=%%~fd\resources\app\git\cmd\git.exe"
   )
 )
 
