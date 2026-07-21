@@ -1,0 +1,18 @@
+# Ignorar todo
+*
+
+# Permitir directorios (necesario para navegar la estructura)
+!*/
+
+# Incluir todos los HTML generados
+!*.html
+
+# Excluir carpeta de nóminas y personal (datos sensibles - NO publicar)
+VARIOS/APPS SAGARDE/
+
+# Archivos necesarios para el portal
+!POST-VENTAS/logo_sagarde.jpg
+!VIDEOSAG.mp4
+
+# Mantener este archivo rastreado
+!.gitignore

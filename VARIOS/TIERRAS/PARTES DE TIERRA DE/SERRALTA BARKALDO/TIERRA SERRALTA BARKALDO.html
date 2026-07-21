@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Informe Tierras — SERRALTA BARKALDO</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;color:#222;background:#eef2f7;font-size:10pt}
+.page{max-width:830px;margin:0 auto;padding:24px 32px;background:#fff;box-shadow:0 2px 16px rgba(0,0,0,.13)}
+
+/* ── Cabecera ── */
+.header{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid #1a3a5c;padding-bottom:12px;margin-bottom:16px}
+.logo{font-size:1.55em;font-weight:900;color:#1a3a5c;line-height:1.1}
+.logo span{font-size:.48em;display:block;font-weight:400;color:#666;letter-spacing:.3px}
+.header-dir{text-align:right;font-size:.77em;color:#666;line-height:1.6}
+.title-bar{background:#1a3a5c;color:#fff;padding:8px 14px;font-weight:700;font-size:.94em;margin-bottom:14px;letter-spacing:.6px}
+
+/* ── Tablas de datos ── */
+table.datos{width:100%;border-collapse:collapse;margin-bottom:16px}
+table.datos td{border:1px solid #b0c0d0;padding:6px 10px;font-size:.87em}
+table.datos td:first-child{font-weight:700;background:#eaf1fb;width:32%}
+
+/* ── Secciones ── */
+.sec{margin-bottom:18px}
+.sec h3{display:flex;align-items:center;gap:8px;color:#fff;padding:6px 11px;font-size:.87em;margin-bottom:9px}
+.sec h3.azul{background:#1a3a5c}
+.sec h3.gris{background:#555}
+.sec h3.naranja{background:#d35400}
+.sec h3.verde{background:#1e8449}
+.sec p,.sec li{font-size:.86em;line-height:1.72;margin-bottom:5px}
+.sec ul{margin-left:20px}
+
+/* ── Tip / nota ── */
+.tip{font-size:.79em;color:#444;font-style:italic;background:#f4f7fc;border-left:3px solid #7fb3e0;padding:5px 10px;margin:6px 0;border-radius:0 4px 4px 0;line-height:1.6}
+
+/* ── Tabla de resultados ── */
+table.res{width:100%;border-collapse:collapse;font-size:.84em;margin:8px 0}
+table.res th{background:#1a3a5c;color:#fff;padding:5px 10px;text-align:left}
+table.res td{border:1px solid #ccc;padding:5px 10px;vertical-align:middle}
+table.res tr:nth-child(even) td{background:#f5f8fc}
+.badge{padding:2px 9px;border-radius:10px;font-size:.78em;font-weight:700;white-space:nowrap;display:inline-block}
+.ok{background:#1e8449;color:#fff}
+.fail{background:#b03a2e;color:#fff}
+.warn{background:#d35400;color:#fff}
+.inv{background:#888;color:#fff}
+
+/* ── Cajas de texto ── */
+.caja{border-left:4px solid;padding:10px 13px;font-size:.85em;margin:8px 0;border-radius:0 5px 5px 0;line-height:1.72}
+.caja.azul{background:#eaf1fb;border-color:#1a3a5c}
+.caja.naranja{background:#fef5e7;border-color:#d35400}
+.caja.roja{background:#fdedec;border-color:#b03a2e}
+.caja.verde{background:#eafaf1;border-color:#1e8449}
+.caja.gris{background:#f4f6f7;border-color:#888}
+
+/* ── Pantalla equipo ── */
+.scrbox{background:#111;color:#7fff7f;font-family:'Courier New',monospace;font-size:.8em;padding:10px 14px;border-radius:5px;margin:8px 0;line-height:2}
+.scrbox span{color:#aaffaa}
+
+/* ── Checklist ── */
+.checklist{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:10px 0}
+.chk{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:5px;font-size:.82em;font-weight:700;border:1px solid}
+.chk.ok2{background:#eafaf1;color:#1e8449;border-color:#a9dfbf}
+.chk.nok{background:#fdedec;color:#b03a2e;border-color:#f1948a}
+.chk-ico{font-size:1.15em;flex-shrink:0}
+
+/* ── Gauge bar ── */
+.gauge-wrap{background:#f8f9fb;border:1px solid #d5e3f0;border-radius:6px;padding:14px 16px;margin:12px 0}
+.gauge-bar{position:relative;height:26px;border-radius:4px;overflow:visible;margin:22px 0 28px}
+.gauge-seg{position:absolute;top:0;height:100%}
+.needle{position:absolute;top:-5px;bottom:-5px;width:3px;border-radius:2px;background:#1a3a5c;z-index:2}
+.needle-lbl{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:.71em;font-weight:700;color:#1a3a5c;white-space:nowrap;background:#fff;padding:0 3px;border-radius:2px;border:1px solid #1a3a5c}
+.gauge-ticks{display:flex;justify-content:space-between;font-size:.71em;color:#666;margin-top:4px}
+.gauge-legend{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-size:.75em}
+.gauge-legend span{display:flex;align-items:center;gap:5px}
+.leg-color{display:inline-block;width:14px;height:10px;border-radius:2px}
+
+/* ── Gráfico barras (SVG inline) ── */
+.chart-wrap{background:#f8f9fb;border:1px solid #d5e3f0;border-radius:6px;padding:14px 16px;margin:12px 0}
+.chart-title{font-size:.82em;font-weight:700;color:#333;margin-bottom:8px}
+
+/* ── Fotos ── */
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.photo-card{border:1px solid #d5e3f0;border-radius:5px;overflow:hidden;background:#f0f4f8;position:relative}
+.photo-card img{width:100%;height:150px;object-fit:cover;display:block}
+.photo-card .cap{font-size:.73em;padding:4px 7px;background:#1a3a5c;color:#fff}
+.photo-add{border:2px dashed #7fb3e0;border-radius:5px;height:160px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:#f0f4ff;gap:6px;font-size:.8em;color:#1a3a5c;font-weight:700;transition:background .2s}
+.photo-add:hover{background:#dce8f5}
+.photo-cap-in{width:100%;border:none;border-top:1px solid #d5e3f0;padding:4px 7px;font-size:.73em;background:#fff}
+.rm-btn{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.55);color:#fff;border:none;border-radius:50%;width:22px;height:22px;cursor:pointer;font-size:.75em;line-height:22px;text-align:center}
+
+/* ── Firma ── */
+.sign-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px}
+.sign-box{border-top:1px solid #aaa;padding-top:6px;font-size:.79em;color:#555;text-align:center;line-height:1.6}
+
+/* ── Footer ── */
+.footer{margin-top:22px;border-top:1px solid #ccc;padding-top:9px;font-size:.75em;color:#777;text-align:center}
+
+/* ── Botones ── */
+.btn-bar{margin-top:18px;padding:14px;background:#eef2f7;border-radius:6px;text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn{border:none;padding:9px 22px;border-radius:5px;cursor:pointer;font-size:.88em;font-weight:700}
+.btn-azul{background:#1a3a5c;color:#fff}
+.btn-verde{background:#1e8449;color:#fff}
+
+@media print{
+  body{background:#fff}
+  .page{box-shadow:none;padding:10px 18px}
+  .noprint{display:none!important}
+  .photo-add{display:none!important}
+  .rm-btn{display:none!important}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══════════ CABECERA ═══════════ -->
+<div class="header">
+  <div class="logo">SAGARDE S.L.<span>MONTAJES ELÉCTRICOS</span></div>
+  <div class="header-dir">PI. Ugarte, Barrio Barrondo Nave C7, 48480 Zaratamo</div>
+</div>
+<div class="title-bar">INFORME DE MEDICIÓN — SISTEMA DE PUESTA A TIERRA</div>
+
+<table class="datos">
+  <tr><td>Cliente</td><td>OBRAS ESPECIALES</td></tr>
+  <tr><td>Fecha de medición</td><td>19/05/2026</td></tr>
+  <tr><td>Local / Dirección</td><td>SERRALTA BARKALDO</td></tr>
+  <tr><td>Coordenadas GPS</td><td>—</td></tr>
+  <tr><td>Tipo de instalación</td><td>Edificio de viviendas (obra en construcción)</td></tr>
+  <tr><td>Técnico responsable</td><td>Vicente Trancon</td></tr>
+  <tr><td>Equipo de medida</td><td>HT GSC-53 (S/N: —) — Calibrado SGS el 09/04/2019 | Cert.: —</td></tr>
+</table>
+
+
+<!-- ═══════════ 1. OBJETO ═══════════ -->
+<div class="sec">
+  <h3 class="azul">📋 1. OBJETO DEL INFORME</h3>
+  <p>Este informe documenta las mediciones de la red de puesta a tierra realizadas por <strong>SAGARDE S.L.</strong> en la fecha indicada. Su finalidad es comprobar si los valores cumplen la normativa vigente y dejar constancia escrita del estado del sistema.</p>
+  <div class="tip">💡 <strong>¿Qué es la puesta a tierra?</strong> Es el camino que sigue la electricidad hacia el suelo en caso de avería o descarga. Cuanto más fácil sea ese camino (menor resistencia en ohmios, Ω), mejor protegidas están las personas y los equipos. En pararrayos este camino es especialmente crítico, ya que un rayo descarga miles de amperios en microsegundos.</div>
+  <p>La obra se encuentra <strong>en construcción</strong>. En proyecto aparece una conexión (línea discontinua) que unirá las tierras de los pararrayos con la red de baja tensión (BT) de los futuros edificios. Esta conexión aún no está ejecutada y se realizará mediante un <strong>elemento viachispas</strong> — un dispositivo que actúa como puente cuando hay diferencia de tensión entre ambas redes, evitando que esa diferencia sea peligrosa.</p>
+</div>
+
+
+<!-- ═══════════ 2. DESCRIPCIÓN ═══════════ -->
+<div class="sec">
+  <h3 class="azul">🏗️ 2. ESTADO DEL SISTEMA EN LA FECHA DE MEDICIÓN</h3>
+  <p>La instalación cuenta con <strong>dos redes de tierra independientes</strong>, una por cada pararrayos. Cada red forma un triángulo con <strong>6 picas de 2 m</strong> conectadas con conductor de cobre de 50 mm². En el momento de la medición, la instalación no estaba terminada:</p>
+
+  <div class="checklist">
+    <div class="chk ok2"><span class="chk-ico">✅</span> 5 de 6 picas instaladas en cada red</div>
+    <div class="chk nok"><span class="chk-ico">❌</span> Última pica pendiente (en ambas redes)</div>
+    <div class="chk nok"><span class="chk-ico">❌</span> Sin recubrimiento de tierra vegetal</div>
+    <div class="chk nok"><span class="chk-ico">❌</span> Conexión viachispas con BT sin ejecutar</div>
+    <div class="chk ok2"><span class="chk-ico">✅</span> Conductores de anillo colocados</div>
+    <div class="chk nok"><span class="chk-ico">❌</span> Terminaciones de red sin completar</div>
+  </div>
+
+  <p><strong>Límites normativos aplicables:</strong></p>
+  <table class="res">
+    <tr><th>Normativa</th><th>Ámbito</th><th>Límite de resistencia</th><th>Contexto</th></tr>
+    <tr>
+      <td>REBT — ITC-BT-18</td>
+      <td>Red BT general (diferencial 300 mA)</td>
+      <td style="text-align:center"><strong>≤ 167 Ω</strong></td>
+      <td>Ut ≤ 50 V → RA &lt; 50/0,3 = 167 Ω</td>
+    </tr>
+    <tr>
+      <td>UNE 21186:2011</td>
+      <td>Pararrayos / SPCR</td>
+      <td style="text-align:center"><strong>≤ 10 Ω</strong></td>
+      <td>Criterio mucho más estricto por la energía de un rayo</td>
+    </tr>
+  </table>
+  <div class="tip">💡 El límite de 10 Ω para pararrayos es 16 veces más exigente que el general de 167 Ω porque la corriente de un rayo puede superar los 100.000 A. Una resistencia alta crearía una tensión enorme en los conductores que podría dañar la estructura del edificio.</div>
+</div>
+
+
+<!-- ═══════════ 3. METODOLOGÍA ═══════════ -->
+<div class="sec">
+  <h3 class="azul">🔬 3. MÉTODOS DE MEDICIÓN EMPLEADOS</h3>
+  <table class="res">
+    <tr><th>Método</th><th>Precisión</th><th>¿Se pudo usar?</th><th>Motivo</th></tr>
+    <tr>
+      <td><strong>3 Hilos (3H)</strong></td>
+      <td>⭐⭐⭐ Alta</td>
+      <td><span class="badge inv">Inválido</span></td>
+      <td>Terreno compactado de obra, interferencias con otros conductores: lectura inestable</td>
+    </tr>
+    <tr>
+      <td><strong>2 Hilos (2H) — neutro provisional</strong></td>
+      <td>⭐⭐ Media</td>
+      <td><span class="badge inv">Descartado</span></td>
+      <td>La instalación provisional tiene resistencias de referencia (Rp/Rc) demasiado altas</td>
+    </tr>
+    <tr>
+      <td><strong>2 Hilos (2H) — tierra provisional</strong></td>
+      <td>⭐⭐ Media</td>
+      <td><span class="badge inv">Descartado</span></td>
+      <td>Mismo motivo: referencias no válidas en la instalación de obra</td>
+    </tr>
+    <tr>
+      <td><strong>RCD/RA</strong></td>
+      <td>⭐ Baja-Media</td>
+      <td><span class="badge ok">Aplicado</span></td>
+      <td>Único viable. Mide sin desconectar el diferencial</td>
+    </tr>
+  </table>
+
+  <div class="caja gris" style="margin-top:10px">
+    <strong>¿Cómo funciona el método RCD/RA?</strong><br>
+    El equipo GSC-53 inyecta la mitad de la corriente del diferencial (150 mA de los 300 mA nominales) a través del bucle de la instalación. Al no llegar al umbral de disparo, el diferencial no salta. Con esa corriente y la tensión que mide, el equipo calcula la resistencia del camino completo: desde el cuadro hasta tierra, pasando por todos los cables de la instalación. Eso hace que sea el menos exacto de los tres, ya que <em>incluye la resistencia de los cables, no solo la de los electrodos enterrados.</em>
+  </div>
+
+  <div class="caja naranja" style="margin-top:10px">
+    <strong>⚠ Condicionante importante — Cable de extensión de 120 m:</strong><br>
+    Para llegar desde el cuadro provisional hasta los pararrayos fue necesario tender un cable adicional de <strong>120 m de longitud y sección 2,5 mm²</strong>. Este cable añade resistencia al bucle que el equipo no puede descontar automáticamente:
+    <br><br>
+    <strong>R<sub>cable</sub> = 2 × (ρ<sub>Cu</sub> × L / A) = 2 × (0,0175 × 120 / 2,5) = 1,68 Ω</strong>
+    <br><br>
+    Los valores mostrados en pantalla son <strong>~1,68 Ω mayores</strong> que la resistencia real de los electrodos de tierra. Es una diferencia pequeña en valores de 40 Ω, pero importante tenerla en cuenta en la interpretación.
+  </div>
+</div>
+
+
+<!-- ═══════════ 4. RESULTADOS ═══════════ -->
+<div class="sec">
+  <h3 class="azul">📊 4. RESULTADOS DE LA MEDICIÓN</h3>
+
+  <!-- Gauge -->
+  <div class="gauge-wrap">
+    <div style="font-size:.82em;font-weight:700;color:#444;margin-bottom:4px">Escala de resistencia — pararrayos (UNE 21186, límite 10 Ω)</div>
+    <div class="gauge-bar" id="gbar"></div>
+    <div class="gauge-ticks" id="gticks"></div>
+    <div class="gauge-legend" style="margin-top:10px">
+      <span><span class="leg-color" style="background:#1e8449"></span> Cumple UNE 21186 (≤ 10 Ω)</span>
+      <span><span class="leg-color" style="background:#d35400"></span> Zona intermedia (cumple REBT, no UNE 21186)</span>
+      <span><span class="leg-color" style="background:#b03a2e"></span> Fuera de límite</span>
+    </div>
+  </div>
+
+  <!-- Bar chart -->
+  <div class="chart-wrap">
+    <div class="chart-title">Comparativa: valores medidos vs límite UNE 21186 (10 Ω)</div>
+    <svg id="bchart" viewBox="0 0 520 230" width="100%" style="display:block;overflow:visible"></svg>
+  </div>
+
+  <!-- Pantalla equipo -->
+  <h3 class="gris" style="margin-top:12px;padding:5px 11px;font-size:.85em">🖥️ Datos de pantalla del equipo (GSC-53)</h3>
+  <div class="scrbox">
+    <span>Punto</span>: Pararrayos 1 &nbsp;|&nbsp; <span>RA</span>: <strong>41 Ω</strong> &nbsp;|&nbsp; <span>Ut</span>: 12,3 V<br>
+    <span>Punto</span>: Pararrayos 2 &nbsp;|&nbsp; <span>RA</span>: <strong>42 Ω</strong> &nbsp;|&nbsp; <span>Ut</span>: 12,6 V<br>
+    <span>FRQ</span>: 50,0 Hz &nbsp;|&nbsp; <span>VP-N</span>: 238 V &nbsp;|&nbsp; <span>VP-PE</span>: 238 V &nbsp;|&nbsp; <span>IΔn</span>: 300 mA &nbsp;|&nbsp; <span>UL</span>: 50 V
+  </div>
+
+  <!-- Tabla resultados -->
+  <table class="res" style="margin-top:10px">
+    <tr>
+      <th>Punto</th>
+      <th style="text-align:center">RA medida (Ω)</th>
+      <th style="text-align:center">Descuento cable (Ω)</th>
+      <th style="text-align:center">RA real estimada (Ω)</th>
+      <th style="text-align:center">Límite (UNE 21186)</th>
+      <th style="text-align:center">Estado</th>
+    </tr>
+    <tr>
+      <td>⚡ Pararrayos 1</td>
+      <td style="text-align:center">41</td>
+      <td style="text-align:center;color:#888">−1,68</td>
+      <td style="text-align:center">≈ 39,3</td>
+      <td style="text-align:center">≤ 10 Ω</td>
+      <td style="text-align:center"><span class="badge fail">No cumple</span></td>
+    </tr>
+    <tr>
+      <td>⚡ Pararrayos 2</td>
+      <td style="text-align:center">42</td>
+      <td style="text-align:center;color:#888">−1,68</td>
+      <td style="text-align:center">≈ 40,3</td>
+      <td style="text-align:center">≤ 10 Ω</td>
+      <td style="text-align:center"><span class="badge fail">No cumple</span></td>
+    </tr>
+  </table>
+
+  <div class="tip" style="margin-top:8px">ℹ️ El diferencial del cuadro provisional <strong>no disparó</strong> durante la medición, lo que confirma que la BT provisional cumple el criterio REBT de tensión de contacto: Ut = 0,3 A × 41 Ω ≈ 12,3 V, muy por debajo del límite de 50 V. Solo los pararrayos no alcanzan su límite específico (UNE 21186, ≤ 10 Ω).</div>
+</div>
+
+
+<!-- ═══════════ 5. RESUMEN ═══════════ -->
+<div class="sec">
+  <h3 class="azul">📋 5. RESUMEN DE RESULTADOS</h3>
+  <table class="res">
+    <tr><th>Elemento</th><th>Método</th><th>Valor</th><th>Criterio</th><th>Estado</th></tr>
+    <tr>
+      <td>Red de tierra</td><td>3H</td><td>—</td><td>—</td>
+      <td><span class="badge inv">Inválido</span></td>
+    </tr>
+    <tr>
+      <td>Red de tierra</td><td>2H (neutro provisional)</td><td>—</td><td>—</td>
+      <td><span class="badge inv">Descartado</span></td>
+    </tr>
+    <tr>
+      <td>Red de tierra</td><td>2H (tierra provisional)</td><td>—</td><td>—</td>
+      <td><span class="badge inv">Descartado</span></td>
+    </tr>
+    <tr>
+      <td>⚡ Pararrayos 1</td><td>RCD/RA</td>
+      <td style="text-align:center">41 Ω</td>
+      <td style="text-align:center">≤ 10 Ω</td>
+      <td><span class="badge fail">No cumple</span></td>
+    </tr>
+    <tr>
+      <td>⚡ Pararrayos 2</td><td>RCD/RA</td>
+      <td style="text-align:center">42 Ω</td>
+      <td style="text-align:center">≤ 10 Ω</td>
+      <td><span class="badge fail">No cumple</span></td>
+    </tr>
+  </table>
+</div>
+
+
+<!-- ═══════════ 6. INTERPRETACIÓN ═══════════ -->
+<div class="sec">
+  <h3 class="azul">🧠 6. INTERPRETACIÓN TÉCNICA</h3>
+  <p>Los valores no cumplen el límite de 10 Ω (UNE 21186), pero deben leerse teniendo en cuenta que <strong>la instalación está incompleta y el método usado es el menos preciso disponible</strong>. Los factores que explican por qué el valor medido es superior al real y al que tendrá la instalación terminada son:</p>
+
+  <table class="res" style="margin-top:8px">
+    <tr><th>Factor</th><th>Efecto sobre la medición</th><th>Cuantificación</th></tr>
+    <tr>
+      <td>Cable extensión 120 m / 2,5 mm²</td>
+      <td>Añade resistencia parásita al bucle de medición</td>
+      <td style="text-align:center"><strong>+1,68 Ω</strong> (estimado)</td>
+    </tr>
+    <tr>
+      <td>Método RCD/RA vs 3H</td>
+      <td>Mide bucle completo (cables + electrodo), no solo electrodo</td>
+      <td style="text-align:center">No cuantificable sin ref.</td>
+    </tr>
+    <tr>
+      <td>Última pica pendiente (×2 redes)</td>
+      <td>Al colocarla actuará en paralelo, reduciendo la R total</td>
+      <td style="text-align:center">Reducción estimada <strong>12–18 %</strong></td>
+    </tr>
+    <tr>
+      <td>Tierra vegetal pendiente</td>
+      <td>Mejora contacto electrodo-suelo, reduce resistividad superficial</td>
+      <td style="text-align:center">Mejora variable según humedad</td>
+    </tr>
+    <tr>
+      <td>Unión viachispas (ambas redes en paralelo)</td>
+      <td>Dos redes iguales en paralelo → R total ≈ R individual / 2</td>
+      <td style="text-align:center">Reducción hasta <strong>~50 %</strong></td>
+    </tr>
+    <tr>
+      <td>Terminaciones sin completar</td>
+      <td>Posibles discontinuidades en los conductores de anillo</td>
+      <td style="text-align:center">Mejora al completarlas</td>
+    </tr>
+  </table>
+
+  <div class="caja azul" style="margin-top:10px">
+    <strong>Estimación orientativa con instalación completa:</strong><br>
+    Valor actual estimado real (descontado cable): ~39–40 Ω<br>
+    Reducción por pica adicional (~15 %): −6 Ω → ~33–34 Ω<br>
+    Reducción por tierra vegetal y terminaciones (~10 %): −3 Ω → ~30–31 Ω<br>
+    Reducción por unión viachispas (paralelo de 2 redes): ~50 % → <strong>~15–16 Ω</strong><br><br>
+    <em>Nota: estos valores son una estimación orientativa. El resultado real depende de la resistividad del suelo, la humedad y la calidad de las conexiones definitivas. Se requiere medición final para confirmar el cumplimiento normativo.</em>
+  </div>
+</div>
+
+
+<!-- ═══════════ 6B. CONDICIONANTES ═══════════ -->
+<div class="sec">
+  <h3 class="naranja">⚠️ 6B. CONDICIONANTES DE LA MEDICIÓN</h3>
+  <div class="caja gris">
+    <strong>Cable de extensión — resistencia parásita no compensada:</strong><br>
+    120 m / 2,5 mm² → R = 2 × (0,0175 × 120 / 2,5) = <strong>1,68 Ω</strong> en el bucle de medición.<br>
+    R<sub>t</sub> real estimada de los electrodos ≈ <strong>39,3 – 40,3 Ω</strong> (valor medido − 1,68 Ω).
+  </div>
+  <div class="caja naranja" style="margin-top:8px">
+    <strong>Instalación incompleta en la fecha de medición — elementos pendientes:</strong>
+    <ul style="margin-left:16px;margin-top:6px">
+      <li>Última pica de cada red pendiente de colocar</li>
+      <li>Recubrimiento con tierra vegetal pendiente</li>
+      <li>Uniones equipotenciales (viachispas / conductor BT) sin ejecutar</li>
+      <li>Terminaciones de la red sin completar</li>
+    </ul>
+    <br>Los valores medidos representan el <strong>estado parcial</strong> de la instalación, no el estado definitivo.
+  </div>
+</div>
+
+
+<!-- ═══════════ 7. CONCLUSIÓN ═══════════ -->
+<div class="sec">
+  <h3 class="azul">✅ 7. CONCLUSIÓN</h3>
+  <div class="caja naranja">
+    <strong>⚠ Estado actual: NO cumple UNE 21186</strong><br>
+    R<sub>t</sub> medida: 41–42 Ω | R<sub>t</sub> real estimada: ~39–40 Ω | Límite: ≤ 10 Ω<br><br>
+    <strong>Perspectiva: FAVORABLE para el cumplimiento normativo una vez completada la obra</strong><br><br>
+    La medición se realizó con la instalación incompleta y con el método de menor precisión disponible (RCD/RA), condicionado además por un cable de extensión de 120 m. El comportamiento actual del sistema es coherente con una instalación que, una vez terminada —especialmente tras ejecutar la conexión viachispas que pondrá ambas redes en paralelo—, tiene posibilidades fundadas de alcanzar el límite de 10 Ω exigido por la UNE 21186.<br><br>
+    <strong>Acción recomendada:</strong> repetir la medición cuando la instalación esté completamente terminada. Preferiblemente con el método 3H (picas auxiliares a 10–20 m), que proporciona el valor real del electrodo sin la interferencia del bucle de instalación. Si el resultado sigue siendo desfavorable, valorar añadir electrodos adicionales, mejorador de conductividad en suelo o aumentar la longitud de los radiales.
+  </div>
+</div>
+
+
+<!-- ═══════════ 8. FOTOGRAFÍAS ═══════════ -->
+<div class="sec">
+  <h3 class="azul">📷 8. FOTOGRAFÍAS DE LA TOMA DE DATOS</h3>
+  <div class="photo-grid" id="photoGrid"></div>
+  <div class="noprint" style="margin-top:10px;display:flex;align-items:center;gap:12px">
+    <button class="btn btn-verde" onclick="addSlot()">📷 Añadir fotografía</button>
+    <span style="font-size:.78em;color:#666">Las fotos se incluyen al imprimir / exportar a PDF</span>
+  </div>
+</div>
+
+
+<!-- ═══════════ FIRMA ═══════════ -->
+<div class="sign-row">
+  <div class="sign-box">
+    <br><br>
+    <strong>Vicente Trancon</strong><br>
+    Técnico responsable — SAGARDE S.L.
+  </div>
+  <div class="sign-box">
+    <br><br>
+    Fecha: 19/05/2026<br>
+    Sello empresa
+  </div>
+</div>
+
+<div class="footer">
+  Informe realizado por <strong>Vicente Trancon</strong> — <strong>SAGARDE S.L.</strong><br>
+  Equipo: <strong>HT GSC-53</strong> | Calibrado SGS 09/04/2019 | Cert.: —
+</div>
+
+<div class="btn-bar noprint">
+  <button class="btn btn-azul" onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button>
+  <button class="btn btn-verde" onclick="addSlot()">📷 Añadir foto</button>
+</div>
+
+</div><!-- /page -->
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script>
+/* ── GAUGE BAR ── */
+(function(){
+  var maxOhm = 60;
+  var g10 = 10, g40 = 40;
+  var val = 41.5; // media de 41 y 42
+
+  var pGreen  = (g10 / maxOhm * 100).toFixed(2);
+  var pOrange = ((g40 - g10) / maxOhm * 100).toFixed(2);
+  var pRed    = ((maxOhm - g40) / maxOhm * 100).toFixed(2);
+  var pVal    = Math.min(val / maxOhm * 100, 97).toFixed(2);
+
+  var bar = document.getElementById('gbar');
+  bar.innerHTML =
+    '<div class="gauge-seg" style="left:0;width:'+pGreen+'%;background:#1e8449;border-radius:4px 0 0 4px"></div>'+
+    '<div class="gauge-seg" style="left:'+pGreen+'%;width:'+pOrange+'%;background:#d35400"></div>'+
+    '<div class="gauge-seg" style="left:'+(parseFloat(pGreen)+parseFloat(pOrange))+'%;width:'+pRed+'%;background:#b03a2e;border-radius:0 4px 4px 0"></div>'+
+    '<div class="needle" style="left:'+pVal+'%"><div class="needle-lbl">41–42 Ω medidos</div></div>';
+
+  var ticks = document.getElementById('gticks');
+  var labels = ['0 Ω','10 Ω','20 Ω','30 Ω','40 Ω','50 Ω','60 Ω'];
+  ticks.innerHTML = labels.map(function(l){ return '<span>'+l+'</span>'; }).join('');
+})();
+
+/* ── BAR CHART ── */
+(function(){
+  var svg = document.getElementById('bchart');
+  if(!svg) return;
+
+  var bars = [
+    {lbl:'Pararrayos 1\n(medido)',    val:41,   col:'#b03a2e'},
+    {lbl:'Pararrayos 2\n(medido)',    val:42,   col:'#b03a2e'},
+    {lbl:'Pararrayos 1\n(est. real)', val:39.3, col:'#d35400'},
+    {lbl:'Pararrayos 2\n(est. real)', val:40.3, col:'#d35400'}
+  ];
+
+  var W=520, H=230;
+  var pL=54, pR=24, pT=24, pB=50;
+  var cW = W-pL-pR, cH = H-pT-pB;
+  var maxY = 50;
+
+  function y(v){ return pT + cH - (v/maxY)*cH; }
+
+  var bW = 60, gap = (cW - bars.length*bW) / (bars.length+1);
+  var html = '';
+
+  // Grid + etiquetas Y
+  [0,10,20,30,40,50].forEach(function(v){
+    var yy = y(v);
+    html += '<line x1="'+pL+'" y1="'+yy+'" x2="'+(W-pR)+'" y2="'+yy+'" stroke="#e0e0e0" stroke-width="1"/>';
+    html += '<text x="'+(pL-5)+'" y="'+(yy+4)+'" text-anchor="end" font-size="11" fill="#888">'+v+'</text>';
+  });
+
+  // Eje Y title
+  html += '<text x="14" y="'+(pT+cH/2)+'" text-anchor="middle" font-size="10" fill="#666" transform="rotate(-90,14,'+(pT+cH/2)+')">Resistencia (Ω)</text>';
+
+  // Barras
+  bars.forEach(function(d,i){
+    var x = pL + gap + i*(bW+gap);
+    var top = y(d.val);
+    var bot = y(0);
+    html += '<rect x="'+x+'" y="'+top+'" width="'+bW+'" height="'+(bot-top)+'" fill="'+d.col+'" rx="3" opacity=".88"/>';
+    html += '<text x="'+(x+bW/2)+'" y="'+(top-5)+'" text-anchor="middle" font-size="11" fill="'+d.col+'" font-weight="bold">'+d.val+'</text>';
+    d.lbl.split('\n').forEach(function(ln,li){
+      html += '<text x="'+(x+bW/2)+'" y="'+(bot+14+li*12)+'" text-anchor="middle" font-size="9.5" fill="#555">'+ln+'</text>';
+    });
+  });
+
+  // Línea límite 10 Ω
+  var ly = y(10);
+  html += '<line x1="'+pL+'" y1="'+ly+'" x2="'+(W-pR)+'" y2="'+ly+'" stroke="#1e8449" stroke-width="2" stroke-dasharray="7,4"/>';
+  html += '<text x="'+(W-pR+3)+'" y="'+(ly+4)+'" font-size="10" fill="#1e8449" font-weight="bold">10 Ω</text>';
+  html += '<text x="'+(W-pR+3)+'" y="'+(ly+15)+'" font-size="9" fill="#1e8449">(UNE 21186)</text>';
+
+  // Ejes
+  html += '<line x1="'+pL+'" y1="'+pT+'" x2="'+pL+'" y2="'+(pT+cH)+'" stroke="#555" stroke-width="1.5"/>';
+  html += '<line x1="'+pL+'" y1="'+(pT+cH)+'" x2="'+(W-pR)+'" y2="'+(pT+cH)+'" stroke="#555" stroke-width="1.5"/>';
+
+  // Leyenda
+  var lx = pL + 10;
+  html += '<rect x="'+lx+'" y="'+pT+'" width="12" height="10" fill="#b03a2e" rx="2"/>';
+  html += '<text x="'+(lx+16)+'" y="'+(pT+9)+'" font-size="10" fill="#555">Valor medido (incluye R cable)</text>';
+  html += '<rect x="'+lx+'" y="'+(pT+14)+'" width="12" height="10" fill="#d35400" rx="2"/>';
+  html += '<text x="'+(lx+16)+'" y="'+(pT+23)+'" font-size="10" fill="#555">Estimación real (descontado cable)</text>';
+
+  svg.innerHTML = html;
+})();
+
+/* ── FOTOS ── */
+var nFoto = 0;
+
+function addSlot(){
+  nFoto++;
+  var id = 'f'+nFoto;
+  var g = document.getElementById('photoGrid');
+  var wrap = document.createElement('div');
+  wrap.id = 'wrap_'+id;
+  wrap.innerHTML =
+    '<div class="photo-add" onclick="document.getElementById(\'inp_'+id+'\').click()">'+
+      '<span style="font-size:2em">📷</span>'+
+      '<span>Añadir foto</span>'+
+      '<input type="file" id="inp_'+id+'" accept="image/*" style="display:none" onchange="cargarFoto(\''+id+'\',this)">'+
+    '</div>';
+  g.appendChild(wrap);
+}
+
+function cargarFoto(id, input){
+  if(!input.files || !input.files[0]) return;
+  var r = new FileReader();
+  r.onload = function(e){
+    var w = document.getElementById('wrap_'+id);
+    w.innerHTML =
+      '<div class="photo-card">'+
+        '<button class="rm-btn" onclick="quitarFoto(\''+id+'\')">✕</button>'+
+        '<img src="'+e.target.result+'" alt="Fotografía de campo">'+
+        '<input class="photo-cap-in" placeholder="Descripción..." maxlength="80">'+
+      '</div>';
+  };
+  r.readAsDataURL(input.files[0]);
+}
+
+function quitarFoto(id){
+  var w = document.getElementById('wrap_'+id);
+  if(w) w.remove();
+}
+
+// Arrancar con 3 huecos vacíos
+addSlot(); addSlot(); addSlot();
+</script>
+</body>
+</html>

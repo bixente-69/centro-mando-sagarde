@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Post-ventas Sagarde</title>
+<style>
+:root{--bg:#f4f6f9;--card:#fff;--header:#0b1f3a;--header2:#123a63;--text:#1c2733;--muted:#647184;--accent:#f5a524;--ok:#2e9e5b;--warn:#e07b1a;--bad:#d9483c;--line:#e3e7ee;--radius:10px;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.45;}
+.wrap{max-width:1320px;margin:0 auto;padding:22px;}
+.header{background:linear-gradient(120deg,var(--header),var(--header2));color:#fff;border-radius:var(--radius);padding:22px 28px;margin-bottom:16px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;}
+.logo{height:68px;width:auto;border-radius:9px;object-fit:contain;box-shadow:0 0 0 3px #b42318,0 4px 20px rgba(0,0,0,.35);}
+.brand{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:4px;}
+h1{font-size:25px;font-weight:750;}
+.sub{font-size:13px;color:#c7d3e3;margin-top:5px;}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px;}
+.stat{background:var(--card);border-radius:var(--radius);padding:13px 16px;box-shadow:0 1px 3px rgba(0,0,0,.07);}
+.stat-value{font-size:23px;font-weight:800;}
+.stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
+.toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px;}
+.search{flex:1 1 320px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text);}
+.filters{display:flex;gap:7px;flex-wrap:wrap;}
+.filters button{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:8px;padding:9px 12px;font-size:13px;font-weight:650;cursor:pointer;}
+.filters button.active{background:var(--header);border-color:var(--header);color:#fff;}
+.count{font-size:12px;color:var(--muted);font-weight:650;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(315px,1fr));gap:14px;align-items:start;}
+.obra{background:var(--card);border-radius:var(--radius);padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.08);border-top:4px solid var(--accent);}
+.card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;}
+.eyebrow{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;font-weight:800;margin-bottom:4px;}
+.obra h2{font-size:16px;line-height:1.25;font-weight:760;}
+.age{font-size:11.5px;color:var(--muted);white-space:nowrap;margin-top:1px;}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0;}
+.badge{font-size:11px;font-weight:750;border-radius:20px;background:#eef2f7;color:var(--header2);padding:3px 8px;}
+.badge.ok{background:#e8f6ee;color:var(--ok);}
+.badge.muted{color:var(--muted);}
+.last{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 0;margin-bottom:12px;}
+.last span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800;}
+.last strong{display:block;font-size:18px;margin-top:2px;}
+.last em{display:block;font-style:normal;color:var(--muted);font-size:12px;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;}
+.metrics div{background:#f8f9fb;border-radius:8px;padding:9px 8px;text-align:center;}
+.metrics b{display:block;font-size:18px;}
+.metrics span{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;}
+.actions{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid var(--line);background:#fff;color:var(--header2);font-weight:750;font-size:12.5px;border-radius:7px;padding:7px 10px;min-height:32px;}
+.btn.primary{background:var(--header);border-color:var(--header);color:#fff;}
+.btn.disabled{color:#a2adbb;background:#f4f6f9;}
+details{border-top:1px solid var(--line);padding-top:9px;}
+summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
+.docs{list-style:none;margin-top:8px;display:grid;gap:7px;}
+.docs li{display:grid;gap:2px;font-size:12px;min-width:0;}
+.docs a{color:var(--header2);text-decoration:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.docs a:hover{text-decoration:underline;}
+.docs span{color:var(--muted);font-size:11px;}
+.empty{display:none;background:#fff;border-radius:var(--radius);padding:30px;text-align:center;color:var(--muted);}
+.footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 0;}
+@media(max-width:760px){.wrap{padding:14px;}.header{grid-template-columns:1fr;padding:20px;}.logo{display:none;}.metrics{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="header">
+    <img class="logo" src="logo_sagarde.jpg" alt="Sagarde">
+    <div>
+      <div class="brand">Sagarde Post-ventas</div>
+      <h1>Incidencias por obra cerrada</h1>
+      <div class="sub">31 contrato(s) de postventa · ordenado por último archivo · generado 20/07/2026 22:22</div>
+    </div>
+  </header>
+
+  <section class="stats">
+    <div class="stat"><div class="stat-value">31</div><div class="stat-label">Contratos</div></div>
+    <div class="stat"><div class="stat-value">120</div><div class="stat-label">PDF</div></div>
+    <div class="stat"><div class="stat-value">69</div><div class="stat-label">Word</div></div>
+    <div class="stat"><div class="stat-value">129</div><div class="stat-label">Fotos</div></div>
+    <div class="stat"><div class="stat-value">20/07/2026 19:17</div><div class="stat-label">Última actividad</div></div>
+  </section>
+
+  <div class="toolbar">
+    <input id="search" class="search" type="search" placeholder="Buscar obra, archivo, código o incidencia">
+    <div class="filters">
+      <button class="active" data-filter="all">Todas</button>
+      <button data-filter="recent">Recientes</button>
+      <button data-filter="pdf">Con PDF</button>
+      <button data-filter="word">Con Word</button>
+      <button data-filter="images">Con fotos</button>
+    </div>
+    <div id="count" class="count"></div>
+  </div>
+
+  <main id="grid" class="grid">
+<article class="obra" data-search="eibar acr incidencias eibar acr incidencias eibar acr.docx incidencias eibar acr.docx incidencias eibar acr_backup_20260720.docx eibar incidencias realizadas 20072026.pdf partes_incidencia_eibar_16jul26.pdf"
+  data-recent="true" data-pdf="true"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>EIBAR ACR</h2>
+    </div>
+    <div class="age">hoy</div>
+  </div>
+  <div class="badges"><span class="badge ok">Reciente</span><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>20/07/2026 19:17</strong>
+    <em>INCIDENCIAS EIBAR ACR.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>17</b><span>Archivos</span></div>
+    <div><b>12</b><span>PDF</span></div>
+    <div><b>5</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20EIBAR%20ACR/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_EIBAR_ACR_bc6b04f4e9.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20EIBAR%20ACR/INCIDENCIAS%20EIBAR%20ACR.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20EIBAR%20ACR/INCIDENCIAS%20REALIZADAS%20EIBAR/EIBAR%20INCIDENCIAS%20REALIZADAS%2020072026.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS_EIBAR_ACR_bc6b04f4e9.html">INCIDENCIAS EIBAR ACR.docx</a><span>Vista HTML · 20/07/2026 19:17</span></li><li><a href="_PREVIEWS_WORD/INCIDENCIAS_EIBAR_ACR_BACKUP_20260720_4f0e0fe633.html">INCIDENCIAS EIBAR ACR_BACKUP_20260720.docx</a><span>Vista HTML · 20/07/2026 19:17</span></li><li><a href="INCIDENCIAS%20EIBAR%20ACR/INCIDENCIAS%20REALIZADAS%20EIBAR/EIBAR%20INCIDENCIAS%20REALIZADAS%2020072026.pdf">EIBAR INCIDENCIAS REALIZADAS 20072026.pdf</a><span>20/07/2026 18:58 · 20/07/2026 18:58</span></li><li><a href="INCIDENCIAS%20EIBAR%20ACR/INCIDENCIAS%20REALIZADAS%20EIBAR/PARTES_INCIDENCIA_EIBAR_16jul26.pdf">PARTES_INCIDENCIA_EIBAR_16jul26.pdf</a><span>16/07/2026 13:44 · 16/07/2026 13:44</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="95v amorebieta incidencias 95v amorebieta incidencias betarragane ii 95v amorebieta 17072026.pdf incidencias betarragane ii 95v amorebieta 17072026.pdf incidencias postventa betarragane2 95v amorebieta 17072026.docx backup incidencias postventa betarragane2 95v amorebieta.docx incidencias postventa betarragane2 95v amorebieta.docx"
+  data-recent="true" data-pdf="true"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>95V AMOREBIETA</h2>
+    </div>
+    <div class="age">hace 3 días</div>
+  </div>
+  <div class="badges"><span class="badge ok">Reciente</span><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>17/07/2026 17:41</strong>
+    <em>Incidencias BETARRAGANE II 95V AMOREBIETA 17072026.pdf</em>
+  </div>
+  <div class="metrics">
+    <div><b>11</b><span>Archivos</span></div>
+    <div><b>7</b><span>PDF</span></div>
+    <div><b>4</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%2095V%20AMOREBIETA/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_postventa_BETARRAGANE2_95V_AMOREBIETA_17072026_740e6311f9.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%2095V%20AMOREBIETA/INCIDENCIAS%20postventa%20BETARRAGANE2%2095V%20AMOREBIETA%2017072026.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%2095V%20AMOREBIETA/Incidencias%20BETARRAGANE%20II%2095V%20AMOREBIETA%2017072026.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="INCIDENCIAS%2095V%20AMOREBIETA/Incidencias%20BETARRAGANE%20II%2095V%20AMOREBIETA%2017072026.pdf">Incidencias BETARRAGANE II 95V AMOREBIETA 17072026.pdf</a><span>17/07/2026 17:41 · 17/07/2026 17:41</span></li><li><a href="_PREVIEWS_WORD/INCIDENCIAS_postventa_BETARRAGANE2_95V_AMOREBIETA_17072026_740e6311f9.html">INCIDENCIAS postventa BETARRAGANE2 95V AMOREBIETA 17072026.docx</a><span>Vista HTML · 17/07/2026 17:38</span></li><li><a href="_PREVIEWS_WORD/Backup_INCIDENCIAS_postventa_BETARRAGANE2_95V_AMOREBIETA_33bb1f8f8a.html">Backup INCIDENCIAS postventa BETARRAGANE2 95V AMOREBIETA.docx</a><span>Vista HTML · 17/07/2026 17:38</span></li><li><a href="_PREVIEWS_WORD/INCIDENCIAS_postventa_BETARRAGANE2_95V_AMOREBIETA_cc0fefbdc5.html">INCIDENCIAS postventa BETARRAGANE2 95V AMOREBIETA.docx</a><span>Vista HTML · 17/07/2026 07:03</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="dinamita cruces incidencias dinamita cruces incidencias postventa dinamita cruces 17072026.docx incidencias postventa dinamita cruces 17072026.docx incidencia resuelta 04052026 ycri20251204196.jpg incidencia resuelta 04052026 mvmi2026202986.jpg incidencia resuelta 04052026 dvci2026100240.jpg"
+  data-recent="true" data-pdf="true"
+  data-word="true" data-images="true">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>DINAMITA CRUCES</h2>
+    </div>
+    <div class="age">hace 3 días</div>
+  </div>
+  <div class="badges"><span class="badge ok">Reciente</span><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>17/07/2026 14:18</strong>
+    <em>INCIDENCIAS postventa DINAMITA CRUCES 17072026.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>26</b><span>Archivos</span></div>
+    <div><b>3</b><span>PDF</span></div>
+    <div><b>2</b><span>Word</span></div>
+    <div><b>19</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20DINAMITA%20CRUCES/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_postventa_DINAMITA_CRUCES_17072026_3902207d53.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20DINAMITA%20CRUCES/INCIDENCIAS%20postventa%20DINAMITA%20CRUCES%2017072026.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20DINAMITA%20CRUCES/INCIDENCIAS%20SOLUCIONADAS%20DINAMITA%2015072026.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS_postventa_DINAMITA_CRUCES_17072026_3902207d53.html">INCIDENCIAS postventa DINAMITA CRUCES 17072026.docx</a><span>Vista HTML · 17/07/2026 14:18</span></li><li><a href="INCIDENCIAS%20DINAMITA%20CRUCES/Incidencia%20Resuelta%2004052026%20YCRI20251204196.jpg">Incidencia Resuelta 04052026 YCRI20251204196.jpg</a><span>17/07/2026 13:49 · 17/07/2026 13:49</span></li><li><a href="INCIDENCIAS%20DINAMITA%20CRUCES/Incidencia%20Resuelta%2004052026%20MVMI2026202986.jpg">Incidencia Resuelta 04052026 MVMI2026202986.jpg</a><span>17/07/2026 13:49 · 17/07/2026 13:49</span></li><li><a href="INCIDENCIAS%20DINAMITA%20CRUCES/Incidencia%20Resuelta%2004052026%20DVCI2026100240.jpg">Incidencia Resuelta 04052026 DVCI2026100240.jpg</a><span>17/07/2026 13:49 · 17/07/2026 13:49</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="82v zorrozaure acr incidencias 82v zorrozaure acr incidencias postventa zorrozaure acr.docx incidencias postventa zorrozaure acr.docx incidencias resueltas zorrozaure junio.pdf incidencias resueltas zorrozaure 29042026.pdf incidencias resueltas 10042026.pdf"
+  data-recent="true" data-pdf="true"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>82V ZORROZAURE ACR</h2>
+    </div>
+    <div class="age">hace 17 días</div>
+  </div>
+  <div class="badges"><span class="badge ok">Reciente</span><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>03/07/2026 15:20</strong>
+    <em>INCIDENCIAS postventa ZORROZAURE ACR.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>6</b><span>Archivos</span></div>
+    <div><b>5</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%2082V%20ZORROZAURE%20ACR/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_postventa_ZORROZAURE_ACR_402a7ff2ce.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%2082V%20ZORROZAURE%20ACR/INCIDENCIAS%20postventa%20ZORROZAURE%20ACR.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%2082V%20ZORROZAURE%20ACR/INCIDENCIAS%20RESUELTAS%20ZORROZAURE%20JUNIO.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS_postventa_ZORROZAURE_ACR_402a7ff2ce.html">INCIDENCIAS postventa ZORROZAURE ACR.docx</a><span>Vista HTML · 03/07/2026 15:20</span></li><li><a href="INCIDENCIAS%2082V%20ZORROZAURE%20ACR/INCIDENCIAS%20RESUELTAS%20ZORROZAURE%20JUNIO.pdf">INCIDENCIAS RESUELTAS ZORROZAURE JUNIO.pdf</a><span>03/07/2026 15:19 · 03/07/2026 15:19</span></li><li><a href="INCIDENCIAS%2082V%20ZORROZAURE%20ACR/INCIDENCIAS%20RESUELTAS%20ZORROZAURE%2029042026.pdf">INCIDENCIAS RESUELTAS ZORROZAURE 29042026.pdf</a><span>30/04/2026 08:06 · 30/04/2026 08:06</span></li><li><a href="INCIDENCIAS%2082V%20ZORROZAURE%20ACR/INCIDENCIAS%20RESUELTAS%2010042026.pdf">INCIDENCIAS RESUELTAS 10042026.pdf</a><span>14/04/2026 15:01 · 14/04/2026 15:01</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="urduliz incidencias urduliz incidencia urduliz.docx incidencia urduliz.docx incidencia urduliz 06_03_2025.docx incidencia urduliz 06_03_2025.pdf"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>URDULIZ</h2>
+    </div>
+    <div class="age">hace 96 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>15/04/2026 08:28</strong>
+    <em>Incidencia Urduliz.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>3</b><span>Archivos</span></div>
+    <div><b>1</b><span>PDF</span></div>
+    <div><b>2</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20URDULIZ/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/Incidencia_Urduliz_41fee09142.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20URDULIZ/Incidencia%20Urduliz.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20URDULIZ/Incidencia%20Urduliz%2006_03_2025.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/Incidencia_Urduliz_41fee09142.html">Incidencia Urduliz.docx</a><span>Vista HTML · 15/04/2026 08:28</span></li><li><a href="_PREVIEWS_WORD/Incidencia_Urduliz_06_03_2025_7fc8588174.html">Incidencia Urduliz 06_03_2025.docx</a><span>Vista HTML · 18/03/2025 14:55</span></li><li><a href="INCIDENCIAS%20URDULIZ/Incidencia%20Urduliz%2006_03_2025.pdf">Incidencia Urduliz 06_03_2025.pdf</a><span>18/03/2025 14:53 · 18/03/2025 14:53</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="betarragane 80vamore incidencias betarragane 80vamore incidencias80v.docx incidencias80v.docx incidencias80vivamorevusa.docx"
+  data-recent="false" data-pdf="false"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>BETARRAGANE 80VAMORE</h2>
+    </div>
+    <div class="age">hace 166 días</div>
+  </div>
+  <div class="badges"><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>04/02/2026 15:24</strong>
+    <em>INCIDENCIAS80V.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>2</b><span>Archivos</span></div>
+    <div><b>0</b><span>PDF</span></div>
+    <div><b>2</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20BETARRAGANE%2080VAMORE/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS80V_b1d5bf125d.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20BETARRAGANE%2080VAMORE/INCIDENCIAS80V.docx">Abrir Word</a>
+    <span class="btn disabled">Último PDF</span>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS80V_b1d5bf125d.html">INCIDENCIAS80V.docx</a><span>Vista HTML · 04/02/2026 15:24</span></li><li><a href="_PREVIEWS_WORD/INCIDENCIAS80VIVAMOREVUSA_55ecf6db75.html">INCIDENCIAS80VIVAMOREVUSA.docx</a><span>Vista HTML · 28/10/2018 10:29</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="obispo orueta incidencias obispo orueta nuevo documento de microsoft word.docx nuevo documento de microsoft word.docx remates obra maar 05122025.pdf incidencias resueltas 05122025.pdf"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>OBISPO ORUETA</h2>
+    </div>
+    <div class="age">hace 172 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>29/01/2026 09:01</strong>
+    <em>Nuevo Documento de Microsoft Word.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>3</b><span>Archivos</span></div>
+    <div><b>2</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20OBISPO%20ORUETA/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/Nuevo_Documento_de_Microsoft_Word_3831f2ce77.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20OBISPO%20ORUETA/Nuevo%20Documento%20de%20Microsoft%20Word.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20OBISPO%20ORUETA/remates%20obra%20MAAR%2005122025.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/Nuevo_Documento_de_Microsoft_Word_3831f2ce77.html">Nuevo Documento de Microsoft Word.docx</a><span>Vista HTML · 29/01/2026 09:01</span></li><li><a href="INCIDENCIAS%20OBISPO%20ORUETA/remates%20obra%20MAAR%2005122025.pdf">remates obra MAAR 05122025.pdf</a><span>11/12/2025 10:48 · 11/12/2025 10:48</span></li><li><a href="INCIDENCIAS%20OBISPO%20ORUETA/INCIDENCIAS%20RESUELTAS%2005122025.pdf">INCIDENCIAS RESUELTAS 05122025.pdf</a><span>11/12/2025 10:42 · 11/12/2025 10:42</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="munguia larrabizker 94v incidencias munguia larrabizker 94v incidencias munguia larrabisker.docx incidencias munguia larrabisker.docx incidencias resueltas larrabizker 05122023.pdf incidencias solucionadas larrabizker 20102023.pdf incidencias resueltas larrabizker 12052023.pdf"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="true">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>MUNGUIA LARRABIZKER 94V</h2>
+    </div>
+    <div class="age">hace 396 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>19/06/2025 10:07</strong>
+    <em>INCIDENCIAS MUNGUIA LARRABISKER.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>37</b><span>Archivos</span></div>
+    <div><b>30</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>6</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20MUNGUIA%20LARRABIZKER%2094V/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_MUNGUIA_LARRABISKER_c3ce2f7759.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20MUNGUIA%20LARRABIZKER%2094V/INCIDENCIAS%20MUNGUIA%20LARRABISKER.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20MUNGUIA%20LARRABIZKER%2094V/INCIDENCIAS%20SOLUCIONADAS/INCIDENCIAS%20RESUELTAS%20LARRABIZKER%2005122023.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS_MUNGUIA_LARRABISKER_c3ce2f7759.html">INCIDENCIAS MUNGUIA LARRABISKER.docx</a><span>Vista HTML · 19/06/2025 10:07</span></li><li><a href="INCIDENCIAS%20MUNGUIA%20LARRABIZKER%2094V/INCIDENCIAS%20SOLUCIONADAS/INCIDENCIAS%20RESUELTAS%20LARRABIZKER%2005122023.pdf">INCIDENCIAS RESUELTAS LARRABIZKER 05122023.pdf</a><span>11/12/2023 07:46 · 11/12/2023 07:46</span></li><li><a href="INCIDENCIAS%20MUNGUIA%20LARRABIZKER%2094V/INCIDENCIAS%20SOLUCIONADAS/INCIDENCIAS%20SOLUCIONADAS%20LARRABIZKER%2020102023.pdf">INCIDENCIAS SOLUCIONADAS LARRABIZKER 20102023.pdf</a><span>26/10/2023 14:47 · 26/10/2023 14:47</span></li><li><a href="INCIDENCIAS%20MUNGUIA%20LARRABIZKER%2094V/INCIDENCIAS%20SOLUCIONADAS/INCIDENCIAS%20RESUELTAS%20LARRABIZKER%2012052023.pdf">INCIDENCIAS RESUELTAS LARRABIZKER 12052023.pdf</a><span>16/05/2023 15:19 · 16/05/2023 15:19</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="acr bolueta santa ana incidencias acr bolueta santa ana incidencias bolueta bilbao santa ana.docx incidencias bolueta bilbao santa ana.docx incidencias resueltas santana 05122023.pdf incidencias solucionadas santana 20102023.pdf incidencias bolueta bilbao santa ana 2023.docx"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="true">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>ACR BOLUETA SANTA ANA</h2>
+    </div>
+    <div class="age">hace 952 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>11/12/2023 08:05</strong>
+    <em>INCIDENCIAS BOLUETA BILBAO SANTA ANA.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>38</b><span>Archivos</span></div>
+    <div><b>16</b><span>PDF</span></div>
+    <div><b>15</b><span>Word</span></div>
+    <div><b>7</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20ACR%20BOLUETA%20SANTA%20ANA/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_BOLUETA_BILBAO_SANTA_ANA_0a44572da0.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20ACR%20BOLUETA%20SANTA%20ANA/INCIDENCIAS%20BOLUETA%20BILBAO%20SANTA%20ANA.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20ACR%20BOLUETA%20SANTA%20ANA/INCIDENCIAS%20RESUELTAS/INCIDENCIAS%20RESUELTAS%20SANTANA%2005122023.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS_BOLUETA_BILBAO_SANTA_ANA_0a44572da0.html">INCIDENCIAS BOLUETA BILBAO SANTA ANA.docx</a><span>Vista HTML · 11/12/2023 08:05</span></li><li><a href="INCIDENCIAS%20ACR%20BOLUETA%20SANTA%20ANA/INCIDENCIAS%20RESUELTAS/INCIDENCIAS%20RESUELTAS%20SANTANA%2005122023.pdf">INCIDENCIAS RESUELTAS SANTANA 05122023.pdf</a><span>11/12/2023 08:00 · 11/12/2023 08:00</span></li><li><a href="INCIDENCIAS%20ACR%20BOLUETA%20SANTA%20ANA/INCIDENCIAS%20RESUELTAS/INCIDENCIAS%20SOLUCIONADAS%20SANTANA%2020102023.pdf">INCIDENCIAS SOLUCIONADAS SANTANA 20102023.pdf</a><span>26/10/2023 15:06 · 26/10/2023 15:06</span></li><li><a href="_PREVIEWS_WORD/INCIDENCIAS_BOLUETA_BILBAO_SANTA_ANA_2023_09b81b718b.html">INCIDENCIAS BOLUETA BILBAO SANTA ANA 2023.docx</a><span>Vista HTML · 10/03/2023 15:29</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="santurce mamariga incidencias santurce mamariga incidencias resueltas mamariga 16032023.pdf incidencias resueltas mamariga 16032023.pdf incidencias mamariga.docx incidencia resuelta mamariga 22052023.pdf incidencias resueltas mamariga 16052023.pdf"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>SANTURCE MAMARIGA</h2>
+    </div>
+    <div class="age">hace 1126 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>20/06/2023 15:08</strong>
+    <em>INCIDENCIAS RESUELTAS MAMARIGA 16032023.pdf</em>
+  </div>
+  <div class="metrics">
+    <div><b>23</b><span>Archivos</span></div>
+    <div><b>9</b><span>PDF</span></div>
+    <div><b>14</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20SANTURCE%20MAMARIGA/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_mamariga_2e64925619.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20SANTURCE%20MAMARIGA/INCIDENCIAS%20mamariga.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20SANTURCE%20MAMARIGA/INCIDENCIAS%20SOLUCIONADAS%20MAMARIGA/INCIDENCIAS%20RESUELTAS%20MAMARIGA%2016032023.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="INCIDENCIAS%20SANTURCE%20MAMARIGA/INCIDENCIAS%20SOLUCIONADAS%20MAMARIGA/INCIDENCIAS%20RESUELTAS%20MAMARIGA%2016032023.pdf">INCIDENCIAS RESUELTAS MAMARIGA 16032023.pdf</a><span>20/06/2023 15:08 · 20/06/2023 15:08</span></li><li><a href="_PREVIEWS_WORD/INCIDENCIAS_mamariga_2e64925619.html">INCIDENCIAS mamariga.docx</a><span>Vista HTML · 02/06/2023 07:38</span></li><li><a href="INCIDENCIAS%20SANTURCE%20MAMARIGA/INCIDENCIAS%20SOLUCIONADAS%20MAMARIGA/INCIDENCIA%20RESUELTA%20MAMARIGA%2022052023.pdf">INCIDENCIA RESUELTA MAMARIGA 22052023.pdf</a><span>25/05/2023 15:33 · 25/05/2023 15:33</span></li><li><a href="INCIDENCIAS%20SANTURCE%20MAMARIGA/INCIDENCIAS%20SOLUCIONADAS%20MAMARIGA/INCIDENCIAS%20RESUELTAS%20MAMARIGA%2016052023.pdf">INCIDENCIAS RESUELTAS MAMARIGA 16052023.pdf</a><span>17/05/2023 08:56 · 17/05/2023 08:56</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="munguia obras especiales incidencias munguia obras especiales incidencias munguia obras especiales.docx incidencias munguia obras especiales.docx"
+  data-recent="false" data-pdf="false"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>MUNGUIA OBRAS ESPECIALES</h2>
+    </div>
+    <div class="age">hace 1228 días</div>
+  </div>
+  <div class="badges"><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>10/03/2023 15:37</strong>
+    <em>INCIDENCIAS MUNGUIA OBRAS ESPECIALES.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>1</b><span>Archivos</span></div>
+    <div><b>0</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20MUNGUIA%20OBRAS%20ESPECIALES/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_MUNGUIA_OBRAS_ESPECIALES_b155398101.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20MUNGUIA%20OBRAS%20ESPECIALES/INCIDENCIAS%20MUNGUIA%20OBRAS%20ESPECIALES.docx">Abrir Word</a>
+    <span class="btn disabled">Último PDF</span>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS_MUNGUIA_OBRAS_ESPECIALES_b155398101.html">INCIDENCIAS MUNGUIA OBRAS ESPECIALES.docx</a><span>Vista HTML · 10/03/2023 15:37</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="chao berango incidencias chao berango whatsapp image 2022-08-31 at 11.47.42 am.jpeg whatsapp image 2022-08-31 at 11.47.42 am.jpeg whatsapp image 2022-08-31 at 11.47.41 am (4).jpeg whatsapp image 2022-08-31 at 11.47.41 am (3).jpeg whatsapp image 2022-08-31 at 11.47.41 am (2).jpeg"
+  data-recent="false" data-pdf="false"
+  data-word="false" data-images="true">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>CHAO BERANGO</h2>
+    </div>
+    <div class="age">hace 1419 días</div>
+  </div>
+  <div class="badges"><span class="badge">Fotos</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>31/08/2022 15:12</strong>
+    <em>WhatsApp Image 2022-08-31 at 11.47.42 AM.jpeg</em>
+  </div>
+  <div class="metrics">
+    <div><b>8</b><span>Archivos</span></div>
+    <div><b>0</b><span>PDF</span></div>
+    <div><b>0</b><span>Word</span></div>
+    <div><b>8</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20CHAO%20BERANGO/">Abrir carpeta</a>
+    <span class="btn disabled">Ver Word</span>
+    <span class="btn disabled">Abrir Word</span>
+    <span class="btn disabled">Último PDF</span>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="INCIDENCIAS%20CHAO%20BERANGO/WhatsApp%20Image%202022-08-31%20at%2011.47.42%20AM.jpeg">WhatsApp Image 2022-08-31 at 11.47.42 AM.jpeg</a><span>31/08/2022 15:12 · 31/08/2022 15:12</span></li><li><a href="INCIDENCIAS%20CHAO%20BERANGO/WhatsApp%20Image%202022-08-31%20at%2011.47.41%20AM%20(4).jpeg">WhatsApp Image 2022-08-31 at 11.47.41 AM (4).jpeg</a><span>31/08/2022 15:12 · 31/08/2022 15:12</span></li><li><a href="INCIDENCIAS%20CHAO%20BERANGO/WhatsApp%20Image%202022-08-31%20at%2011.47.41%20AM%20(3).jpeg">WhatsApp Image 2022-08-31 at 11.47.41 AM (3).jpeg</a><span>31/08/2022 15:12 · 31/08/2022 15:12</span></li><li><a href="INCIDENCIAS%20CHAO%20BERANGO/WhatsApp%20Image%202022-08-31%20at%2011.47.41%20AM%20(2).jpeg">WhatsApp Image 2022-08-31 at 11.47.41 AM (2).jpeg</a><span>31/08/2022 15:12 · 31/08/2022 15:12</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="avd kaiku vega de galindo (sestao) incidencias avd kaiku vega de galindo (sestao) incidenciasvegagalindo.docx incidenciasvegagalindo.docx incidencia resuelta avenida kaiku sestao 07072022.pdf 20210930 postventa kaiku sestao.pdf 20211007 postventa kaiku sestao.pdf"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>AVD KAIKU VEGA DE GALINDO (SESTAO)</h2>
+    </div>
+    <div class="age">hace 1474 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>07/07/2022 15:31</strong>
+    <em>INCIDENCIASVEGAGALINDO.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>7</b><span>Archivos</span></div>
+    <div><b>6</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20AVD%20KAIKU%20VEGA%20DE%20GALINDO%20(SESTAO)/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIASVEGAGALINDO_5d6b054893.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20AVD%20KAIKU%20VEGA%20DE%20GALINDO%20(SESTAO)/INCIDENCIASVEGAGALINDO.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20AVD%20KAIKU%20VEGA%20DE%20GALINDO%20(SESTAO)/INCIDENCIAS%20%20RESUELTAS/INCIDENCIA%20RESUELTA%20AVENIDA%20KAIKU%20SESTAO%2007072022.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIASVEGAGALINDO_5d6b054893.html">INCIDENCIASVEGAGALINDO.docx</a><span>Vista HTML · 07/07/2022 15:31</span></li><li><a href="INCIDENCIAS%20AVD%20KAIKU%20VEGA%20DE%20GALINDO%20(SESTAO)/INCIDENCIAS%20%20RESUELTAS/INCIDENCIA%20RESUELTA%20AVENIDA%20KAIKU%20SESTAO%2007072022.pdf">INCIDENCIA RESUELTA AVENIDA KAIKU SESTAO 07072022.pdf</a><span>07/07/2022 15:19 · 07/07/2022 15:19</span></li><li><a href="INCIDENCIAS%20AVD%20KAIKU%20VEGA%20DE%20GALINDO%20(SESTAO)/INCIDENCIAS%20%20RESUELTAS/20210930%20POSTVENTA%20KAIKU%20SESTAO.pdf">20210930 POSTVENTA KAIKU SESTAO.pdf</a><span>07/10/2021 08:56 · 07/10/2021 08:56</span></li><li><a href="INCIDENCIAS%20AVD%20KAIKU%20VEGA%20DE%20GALINDO%20(SESTAO)/INCIDENCIAS%20%20RESUELTAS/20211007%20POSTVENTA%20KAIKU%20SESTAO.pdf">20211007 POSTVENTA KAIKU SESTAO.pdf</a><span>07/10/2021 07:59 · 07/10/2021 07:59</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="sarratu (basauri) incidencias sarratu (basauri) incidencia resuelta sarratu 9 1b.pdf incidencia resuelta sarratu 9 1b.pdf incidenciassarratubasauri.docx 20211007 postventa sarratu basauri.pdf sarratupv0220.pdf"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>SARRATU (BASAURI)</h2>
+    </div>
+    <div class="age">hace 1561 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>11/04/2022 15:27</strong>
+    <em>INCIDENCIA RESUELTA SARRATU 9 1B.pdf</em>
+  </div>
+  <div class="metrics">
+    <div><b>6</b><span>Archivos</span></div>
+    <div><b>4</b><span>PDF</span></div>
+    <div><b>2</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20SARRATU%20(BASAURI)/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIASSARRATUBASAURI_cbcfbcd15a.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20SARRATU%20(BASAURI)/INCIDENCIASSARRATUBASAURI.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20SARRATU%20(BASAURI)/INCIDENCIA%20RESUELTA%20SARRATU%209%201B.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="INCIDENCIAS%20SARRATU%20(BASAURI)/INCIDENCIA%20RESUELTA%20SARRATU%209%201B.pdf">INCIDENCIA RESUELTA SARRATU 9 1B.pdf</a><span>11/04/2022 15:27 · 11/04/2022 15:27</span></li><li><a href="_PREVIEWS_WORD/INCIDENCIASSARRATUBASAURI_cbcfbcd15a.html">INCIDENCIASSARRATUBASAURI.docx</a><span>Vista HTML · 06/04/2022 15:03</span></li><li><a href="INCIDENCIAS%20SARRATU%20(BASAURI)/20211007%20POSTVENTA%20SARRATU%20BASAURI.pdf">20211007 POSTVENTA SARRATU BASAURI.pdf</a><span>07/10/2021 08:28 · 07/10/2021 08:28</span></li><li><a href="INCIDENCIAS%20SARRATU%20(BASAURI)/sarratuPV0220.pdf">sarratuPV0220.pdf</a><span>06/02/2020 14:30 · 06/02/2020 14:30</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="etxezuri ortuella trapaga incidencias etxezuri ortuella trapaga incidencia etxezuri 4b 4d.pdf incidencia etxezuri 4b 4d.pdf incidencias etxezuri ortuella.docx img-20220315-wa0001.jpg img-20220315-wa0000.jpg"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="true">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>ETXEZURI ORTUELLA TRAPAGA</h2>
+    </div>
+    <div class="age">hace 1566 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>06/04/2022 14:39</strong>
+    <em>INCIDENCIA ETXEZURI 4B 4D.pdf</em>
+  </div>
+  <div class="metrics">
+    <div><b>7</b><span>Archivos</span></div>
+    <div><b>3</b><span>PDF</span></div>
+    <div><b>2</b><span>Word</span></div>
+    <div><b>2</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20ETXEZURI%20ORTUELLA%20TRAPAGA/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_ETXEZURI_ORTUELLA_fceed2bae7.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20ETXEZURI%20ORTUELLA%20TRAPAGA/INCIDENCIAS%20ETXEZURI%20ORTUELLA.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20ETXEZURI%20ORTUELLA%20TRAPAGA/INCIDENCIA%20ETXEZURI%204B%204D.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="INCIDENCIAS%20ETXEZURI%20ORTUELLA%20TRAPAGA/INCIDENCIA%20ETXEZURI%204B%204D.pdf">INCIDENCIA ETXEZURI 4B 4D.pdf</a><span>06/04/2022 14:39 · 06/04/2022 14:39</span></li><li><a href="_PREVIEWS_WORD/INCIDENCIAS_ETXEZURI_ORTUELLA_fceed2bae7.html">INCIDENCIAS ETXEZURI ORTUELLA.docx</a><span>Vista HTML · 29/03/2022 15:37</span></li><li><a href="INCIDENCIAS%20ETXEZURI%20ORTUELLA%20TRAPAGA/FOTOS%20POSTVENTA%20ETXEZURI/IMG-20220315-WA0001.jpg">IMG-20220315-WA0001.jpg</a><span>15/03/2022 07:45 · 15/03/2022 07:45</span></li><li><a href="INCIDENCIAS%20ETXEZURI%20ORTUELLA%20TRAPAGA/FOTOS%20POSTVENTA%20ETXEZURI/IMG-20220315-WA0000.jpg">IMG-20220315-WA0000.jpg</a><span>15/03/2022 07:45 · 15/03/2022 07:45</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="euskadi (galdakao) incidencias euskadi (galdakao) 20211007 postventa euskadi galdakao.pdf 20211007 postventa euskadi galdakao.pdf incidencias galdakao euskadi 13 15.docx incidencias galdakao euskadi 13 15 030221.pdf incidencias galdakao euskadi 13 15 12112020.pdf"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>EUSKADI (GALDAKAO)</h2>
+    </div>
+    <div class="age">hace 1747 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>07/10/2021 07:59</strong>
+    <em>20211007 POSTVENTA EUSKADI GALDAKAO.pdf</em>
+  </div>
+  <div class="metrics">
+    <div><b>4</b><span>Archivos</span></div>
+    <div><b>3</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20EUSKADI%20(GALDAKAO)/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_GALDAKAO_EUSKADI_13_15_50b3365bca.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20EUSKADI%20(GALDAKAO)/INCIDENCIAS%20GALDAKAO%20EUSKADI%2013%2015.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20EUSKADI%20(GALDAKAO)/20211007%20POSTVENTA%20EUSKADI%20GALDAKAO.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="INCIDENCIAS%20EUSKADI%20(GALDAKAO)/20211007%20POSTVENTA%20EUSKADI%20GALDAKAO.pdf">20211007 POSTVENTA EUSKADI GALDAKAO.pdf</a><span>07/10/2021 07:59 · 07/10/2021 07:59</span></li><li><a href="_PREVIEWS_WORD/INCIDENCIAS_GALDAKAO_EUSKADI_13_15_50b3365bca.html">INCIDENCIAS GALDAKAO EUSKADI 13 15.docx</a><span>Vista HTML · 30/09/2021 15:33</span></li><li><a href="INCIDENCIAS%20EUSKADI%20(GALDAKAO)/PDF%C2%B4S/INCIDENCIAS%20GALDAKAO%20EUSKADI%2013%2015%20030221.pdf">INCIDENCIAS GALDAKAO EUSKADI 13 15 030221.pdf</a><span>04/02/2021 08:16 · 04/02/2021 08:16</span></li><li><a href="INCIDENCIAS%20EUSKADI%20(GALDAKAO)/PDF%C2%B4S/INCIDENCIAS%20GALDAKAO%20EUSKADI%2013%2015%2012112020.pdf">INCIDENCIAS GALDAKAO EUSKADI 13 15 12112020.pdf</a><span>12/11/2020 15:22 · 12/11/2020 15:22</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="murrieta currito (santurtxi) incidencias  murrieta currito (santurtxi) incidencias currito santurce.docx incidencias currito santurce.docx incidencias currito 140521.pdf incidencias currito 080221.pdf incidencias currito 250121.pdf"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="true">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>MURRIETA CURRITO (SANTURTXI)</h2>
+    </div>
+    <div class="age">hace 1890 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>17/05/2021 07:44</strong>
+    <em>INCIDENCIAS CURRITO SANTURCE.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>8</b><span>Archivos</span></div>
+    <div><b>4</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>3</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20%20MURRIETA%20CURRITO%20(SANTURTXI)/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_CURRITO_SANTURCE_9d4e25cab7.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20%20MURRIETA%20CURRITO%20(SANTURTXI)/INCIDENCIAS%20CURRITO%20SANTURCE.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20%20MURRIETA%20CURRITO%20(SANTURTXI)/PDF%C2%B4s/incidencias%20currito%20140521.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS_CURRITO_SANTURCE_9d4e25cab7.html">INCIDENCIAS CURRITO SANTURCE.docx</a><span>Vista HTML · 17/05/2021 07:44</span></li><li><a href="INCIDENCIAS%20%20MURRIETA%20CURRITO%20(SANTURTXI)/PDF%C2%B4s/incidencias%20currito%20140521.pdf">incidencias currito 140521.pdf</a><span>14/05/2021 10:58 · 14/05/2021 10:58</span></li><li><a href="INCIDENCIAS%20%20MURRIETA%20CURRITO%20(SANTURTXI)/PDF%C2%B4s/incidencias%20currito%20080221.pdf">incidencias currito 080221.pdf</a><span>08/02/2021 15:31 · 08/02/2021 15:31</span></li><li><a href="INCIDENCIAS%20%20MURRIETA%20CURRITO%20(SANTURTXI)/PDF%C2%B4s/incidencias%20currito%20250121.pdf">incidencias currito 250121.pdf</a><span>26/01/2021 12:30 · 26/01/2021 12:30</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="acr ballonti incidencias acr ballonti incidenciasacrballonti.docx incidenciasacrballonti.docx img_20200310_162340.jpg img_20200310_164732.jpg aviso acr 01042019.xlsx"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="true">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>ACR BALLONTI</h2>
+    </div>
+    <div class="age">hace 2001 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>26/01/2021 12:50</strong>
+    <em>INCIDENCIASACRBALLONTI.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>14</b><span>Archivos</span></div>
+    <div><b>5</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>7</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20ACR%20BALLONTI/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIASACRBALLONTI_0a16950202.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20ACR%20BALLONTI/REVISIONES%20POST-VENTA/INCIDENCIASACRBALLONTI.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20ACR%20BALLONTI/PDF%C2%B4S/G452_R19-03408.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIASACRBALLONTI_0a16950202.html">INCIDENCIASACRBALLONTI.docx</a><span>Vista HTML · 26/01/2021 12:50</span></li><li><a href="INCIDENCIAS%20ACR%20BALLONTI/Fotos%20acrballonti/IMG_20200310_162340.jpg">IMG_20200310_162340.jpg</a><span>11/03/2020 07:41 · 11/03/2020 07:41</span></li><li><a href="INCIDENCIAS%20ACR%20BALLONTI/Fotos%20acrballonti/IMG_20200310_164732.jpg">IMG_20200310_164732.jpg</a><span>11/03/2020 07:39 · 11/03/2020 07:39</span></li><li><a href="INCIDENCIAS%20ACR%20BALLONTI/PDF%C2%B4S/AVISO%20ACR%2001042019.xlsx">AVISO ACR 01042019.xlsx</a><span>01/04/2019 11:07 · 01/04/2019 11:07</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="sanmiguel de basauri ramon y kareaga incidencias sanmiguel de basauri ramon y kareaga incidenciasanmiguelramon y kareaga.docx incidenciasanmiguelramon y kareaga.docx 101120.pdf incidencias 010620.pdf cerraderos.pdf"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="true">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>SANMIGUEL DE BASAURI RAMON Y KAREAGA</h2>
+    </div>
+    <div class="age">hace 2075 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>13/11/2020 08:36</strong>
+    <em>INCIDENCIASanmiguelramon y kareaga.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>10</b><span>Archivos</span></div>
+    <div><b>3</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>6</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20SANMIGUEL%20DE%20BASAURI%20RAMON%20Y%20KAREAGA/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIASanmiguelramon_y_kareaga_6781ebe3c7.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20SANMIGUEL%20DE%20BASAURI%20RAMON%20Y%20KAREAGA/INCIDENCIASanmiguelramon%20y%20kareaga.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20SANMIGUEL%20DE%20BASAURI%20RAMON%20Y%20KAREAGA/PDF%C2%B4S/101120.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIASanmiguelramon_y_kareaga_6781ebe3c7.html">INCIDENCIASanmiguelramon y kareaga.docx</a><span>Vista HTML · 13/11/2020 08:36</span></li><li><a href="INCIDENCIAS%20SANMIGUEL%20DE%20BASAURI%20RAMON%20Y%20KAREAGA/PDF%C2%B4S/101120.pdf">101120.pdf</a><span>10/11/2020 12:10 · 10/11/2020 12:10</span></li><li><a href="INCIDENCIAS%20SANMIGUEL%20DE%20BASAURI%20RAMON%20Y%20KAREAGA/PDF%C2%B4S/incidencias%20010620.pdf">incidencias 010620.pdf</a><span>01/06/2020 14:29 · 01/06/2020 14:29</span></li><li><a href="INCIDENCIAS%20SANMIGUEL%20DE%20BASAURI%20RAMON%20Y%20KAREAGA/PDF%C2%B4S/CERRADEROS.pdf">CERRADEROS.pdf</a><span>01/06/2020 14:16 · 01/06/2020 14:16</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="amazon incidencias amazon img_20200302_161023.jpg img_20200302_161023.jpg img_20200302_161037.jpg img_20191119_130346.jpg zemper-nave amazon-planos.zip"
+  data-recent="false" data-pdf="true"
+  data-word="false" data-images="true">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>AMAZON</h2>
+    </div>
+    <div class="age">hace 2295 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Fotos</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>07/04/2020 10:21</strong>
+    <em>IMG_20200302_161023.jpg</em>
+  </div>
+  <div class="metrics">
+    <div><b>5</b><span>Archivos</span></div>
+    <div><b>1</b><span>PDF</span></div>
+    <div><b>0</b><span>Word</span></div>
+    <div><b>3</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20AMAZON/">Abrir carpeta</a>
+    <span class="btn disabled">Ver Word</span>
+    <span class="btn disabled">Abrir Word</span>
+    <a class="btn" href="INCIDENCIAS%20AMAZON/(Anexo%20D)%20REV170524-Final%20de%20obra.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="INCIDENCIAS%20AMAZON/IMG_20200302_161023.jpg">IMG_20200302_161023.jpg</a><span>07/04/2020 10:21 · 07/04/2020 10:21</span></li><li><a href="INCIDENCIAS%20AMAZON/IMG_20200302_161037.jpg">IMG_20200302_161037.jpg</a><span>07/04/2020 10:21 · 07/04/2020 10:21</span></li><li><a href="INCIDENCIAS%20AMAZON/IMG_20191119_130346.jpg">IMG_20191119_130346.jpg</a><span>19/11/2019 17:37 · 19/11/2019 17:37</span></li><li><a href="INCIDENCIAS%20AMAZON/ZEMPER-Nave%20Amazon-planos.zip">ZEMPER-Nave Amazon-planos.zip</a><span>06/11/2019 17:11 · 06/11/2019 17:11</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="parkeder (bilbao) incidencias parkeder (bilbao) incidenciasparkederbilbao.docx incidenciasparkederbilbao.docx"
+  data-recent="false" data-pdf="false"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>PARKEDER (BILBAO)</h2>
+    </div>
+    <div class="age">hace 2366 días</div>
+  </div>
+  <div class="badges"><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>27/01/2020 17:07</strong>
+    <em>INCIDENCIASparkederBILBAO.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>1</b><span>Archivos</span></div>
+    <div><b>0</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20PARKEDER%20(BILBAO)/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIASparkederBILBAO_a2b0426fa1.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20PARKEDER%20(BILBAO)/INCIDENCIASparkederBILBAO.docx">Abrir Word</a>
+    <span class="btn disabled">Último PDF</span>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIASparkederBILBAO_a2b0426fa1.html">INCIDENCIASparkederBILBAO.docx</a><span>Vista HTML · 27/01/2020 17:07</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="gardoki incidencias gardoki img_20191218_090641.jpg img_20191218_090641.jpg img_20191218_090627.jpg certificado de las tierras gardoki8.pdf tierras.docx"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="true">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>GARDOKI</h2>
+    </div>
+    <div class="age">hace 2406 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>18/12/2019 11:26</strong>
+    <em>IMG_20191218_090641.jpg</em>
+  </div>
+  <div class="metrics">
+    <div><b>26</b><span>Archivos</span></div>
+    <div><b>1</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>24</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20GARDOKI/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/TIERRAS_aa22b7880e.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20GARDOKI/TIERRAS.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20GARDOKI/Certificado%20de%20las%20tierras%20GARDOKI8.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="INCIDENCIAS%20GARDOKI/IMG_20191218_090641.jpg">IMG_20191218_090641.jpg</a><span>18/12/2019 11:26 · 18/12/2019 11:26</span></li><li><a href="INCIDENCIAS%20GARDOKI/IMG_20191218_090627.jpg">IMG_20191218_090627.jpg</a><span>18/12/2019 11:25 · 18/12/2019 11:25</span></li><li><a href="INCIDENCIAS%20GARDOKI/Certificado%20de%20las%20tierras%20GARDOKI8.pdf">Certificado de las tierras GARDOKI8.pdf</a><span>25/11/2019 15:39 · 25/11/2019 15:39</span></li><li><a href="_PREVIEWS_WORD/TIERRAS_aa22b7880e.html">TIERRAS.docx</a><span>Vista HTML · 25/11/2019 15:37</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="ermua incidencias ermua img_20191023_123310c.jpg img_20191023_123310c.jpg img_20191023_123230 c.jpg img-20191115-wa0000.jpg img-20191115-wa0001.jpg"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="true">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>ERMUA</h2>
+    </div>
+    <div class="age">hace 2436 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>18/11/2019 17:15</strong>
+    <em>IMG_20191023_123310c.jpg</em>
+  </div>
+  <div class="metrics">
+    <div><b>52</b><span>Archivos</span></div>
+    <div><b>4</b><span>PDF</span></div>
+    <div><b>2</b><span>Word</span></div>
+    <div><b>44</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20ERMUA/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIASERMUA_fde567c3b3.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20ERMUA/INCIDENCIAS/INCIDENCIASERMUA.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20ERMUA/webincidencia/EUNIFILARGARAJE.pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="INCIDENCIAS%20ERMUA/IMG_20191023_123310c.jpg">IMG_20191023_123310c.jpg</a><span>18/11/2019 17:15 · 18/11/2019 17:15</span></li><li><a href="INCIDENCIAS%20ERMUA/IMG_20191023_123230%20c.jpg">IMG_20191023_123230 c.jpg</a><span>18/11/2019 17:15 · 18/11/2019 17:15</span></li><li><a href="INCIDENCIAS%20ERMUA/IMG-20191115-WA0000.jpg">IMG-20191115-WA0000.jpg</a><span>18/11/2019 16:38 · 18/11/2019 16:38</span></li><li><a href="INCIDENCIAS%20ERMUA/IMG-20191115-WA0001.jpg">IMG-20191115-WA0001.jpg</a><span>18/11/2019 16:38 · 18/11/2019 16:38</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="urquijo (bilbao) incidencias urquijo (bilbao) incidenciasurquijo.docx incidenciasurquijo.docx"
+  data-recent="false" data-pdf="false"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>URQUIJO (BILBAO)</h2>
+    </div>
+    <div class="age">hace 2477 días</div>
+  </div>
+  <div class="badges"><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>08/10/2019 18:02</strong>
+    <em>INCIDENCIASURQUIJO.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>1</b><span>Archivos</span></div>
+    <div><b>0</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20URQUIJO%20(BILBAO)/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIASURQUIJO_3f07a58b96.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20URQUIJO%20(BILBAO)/INCIDENCIASURQUIJO.docx">Abrir Word</a>
+    <span class="btn disabled">Último PDF</span>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIASURQUIJO_3f07a58b96.html">INCIDENCIASURQUIJO.docx</a><span>Vista HTML · 08/10/2019 18:02</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="neguri (getxo) incidencias neguri (getxo) incidencias 12v neguri.docx incidencias 12v neguri.docx post venta - neguri sagarde[2329].pdf"
+  data-recent="false" data-pdf="true"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>NEGURI (GETXO)</h2>
+    </div>
+    <div class="age">hace 2502 días</div>
+  </div>
+  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>13/09/2019 15:06</strong>
+    <em>INCIDENCIAS 12V NEGURI.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>2</b><span>Archivos</span></div>
+    <div><b>1</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20NEGURI%20(GETXO)/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_12V_NEGURI_91bd04ea24.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20NEGURI%20(GETXO)/INCIDENCIAS%2012V%20NEGURI.docx">Abrir Word</a>
+    <a class="btn" href="INCIDENCIAS%20NEGURI%20(GETXO)/post%20venta%20-%20neguri%20sagarde[2329].pdf">Último PDF</a>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS_12V_NEGURI_91bd04ea24.html">INCIDENCIAS 12V NEGURI.docx</a><span>Vista HTML · 13/09/2019 15:06</span></li><li><a href="INCIDENCIAS%20NEGURI%20(GETXO)/post%20venta%20-%20neguri%20sagarde[2329].pdf">post venta - neguri sagarde[2329].pdf</a><span>10/09/2019 12:02 · 10/09/2019 12:02</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="mundaka incidencias mundaka incidenciasmundaka.docx incidenciasmundaka.docx"
+  data-recent="false" data-pdf="false"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>MUNDAKA</h2>
+    </div>
+    <div class="age">hace 2505 días</div>
+  </div>
+  <div class="badges"><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>10/09/2019 18:13</strong>
+    <em>INCIDENCIASMUNDAKA.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>1</b><span>Archivos</span></div>
+    <div><b>0</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20MUNDAKA/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIASMUNDAKA_db2804435e.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20MUNDAKA/INCIDENCIASMUNDAKA.docx">Abrir Word</a>
+    <span class="btn disabled">Último PDF</span>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIASMUNDAKA_db2804435e.html">INCIDENCIASMUNDAKA.docx</a><span>Vista HTML · 10/09/2019 18:13</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="30vamore incidencias 30vamore incidencias30vamore.docx incidencias30vamore.docx"
+  data-recent="false" data-pdf="false"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>30VAMORE</h2>
+    </div>
+    <div class="age">hace 2547 días</div>
+  </div>
+  <div class="badges"><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>30/07/2019 16:43</strong>
+    <em>INCIDENCIAS30VAMORE.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>1</b><span>Archivos</span></div>
+    <div><b>0</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%2030VAMORE/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS30VAMORE_64a4d35f4a.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%2030VAMORE/INCIDENCIAS30VAMORE.docx">Abrir Word</a>
+    <span class="btn disabled">Último PDF</span>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS30VAMORE_64a4d35f4a.html">INCIDENCIAS30VAMORE.docx</a><span>Vista HTML · 30/07/2019 16:43</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="33vamore incidencias 33vamore incidencias33vamore.docx incidencias33vamore.docx"
+  data-recent="false" data-pdf="false"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>33VAMORE</h2>
+    </div>
+    <div class="age">hace 2547 días</div>
+  </div>
+  <div class="badges"><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>30/07/2019 16:30</strong>
+    <em>INCIDENCIAS33VAMORE.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>1</b><span>Archivos</span></div>
+    <div><b>0</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%2033VAMORE/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS33VAMORE_be8407bc65.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%2033VAMORE/INCIDENCIAS33VAMORE.docx">Abrir Word</a>
+    <span class="btn disabled">Último PDF</span>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS33VAMORE_be8407bc65.html">INCIDENCIAS33VAMORE.docx</a><span>Vista HTML · 30/07/2019 16:30</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="residencia santutxu incidencias residencia santutxu incidenciasresividaliasantutxu.docx incidenciasresividaliasantutxu.docx"
+  data-recent="false" data-pdf="false"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>RESIDENCIA SANTUTXU</h2>
+    </div>
+    <div class="age">hace 2548 días</div>
+  </div>
+  <div class="badges"><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>29/07/2019 17:11</strong>
+    <em>INCIDENCIASRESIVIDALIASANTUTXU.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>1</b><span>Archivos</span></div>
+    <div><b>0</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20RESIDENCIA%20SANTUTXU/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIASRESIVIDALIASANTUTXU_59635ae19e.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20RESIDENCIA%20SANTUTXU/INCIDENCIASRESIVIDALIASANTUTXU.docx">Abrir Word</a>
+    <span class="btn disabled">Último PDF</span>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIASRESIVIDALIASANTUTXU_59635ae19e.html">INCIDENCIASRESIVIDALIASANTUTXU.docx</a><span>Vista HTML · 29/07/2019 17:11</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="72v garellano incidencias 72v garellano incidencias 72vgarellano.docx incidencias 72vgarellano.docx"
+  data-recent="false" data-pdf="false"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>72V GARELLANO</h2>
+    </div>
+    <div class="age">hace 2748 días</div>
+  </div>
+  <div class="badges"><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>10/01/2019 08:28</strong>
+    <em>INCIDENCIAS 72vGARELLANO.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>1</b><span>Archivos</span></div>
+    <div><b>0</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%2072V%20GARELLANO/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIAS_72vGARELLANO_11985d5139.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%2072V%20GARELLANO/INCIDENCIAS%2072vGARELLANO.docx">Abrir Word</a>
+    <span class="btn disabled">Último PDF</span>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS_72vGARELLANO_11985d5139.html">INCIDENCIAS 72vGARELLANO.docx</a><span>Vista HTML · 10/01/2019 08:28</span></li></ul>
+  </details>
+</article>
+
+<article class="obra" data-search="tenderia (bilbao) incidencias tenderia (bilbao) incidenciastenderiabilbao.docx incidenciastenderiabilbao.docx"
+  data-recent="false" data-pdf="false"
+  data-word="true" data-images="false">
+  <div class="card-top">
+    <div>
+      <div class="eyebrow">Contrato postventa</div>
+      <h2>TENDERIA (BILBAO)</h2>
+    </div>
+    <div class="age">hace 2786 días</div>
+  </div>
+  <div class="badges"><span class="badge">Word</span></div>
+  <div class="last">
+    <span>Último archivo</span>
+    <strong>03/12/2018 06:36</strong>
+    <em>INCIDENCIASTENDERIABILBAO.docx</em>
+  </div>
+  <div class="metrics">
+    <div><b>1</b><span>Archivos</span></div>
+    <div><b>0</b><span>PDF</span></div>
+    <div><b>1</b><span>Word</span></div>
+    <div><b>0</b><span>Fotos</span></div>
+  </div>
+  <div class="actions">
+    <a class="btn primary" href="INCIDENCIAS%20TENDERIA%20(BILBAO)/">Abrir carpeta</a>
+    <a class="btn" href="_PREVIEWS_WORD/INCIDENCIASTENDERIABILBAO_e8df2afc70.html">Ver Word</a>
+    <a class="btn" href="INCIDENCIAS%20TENDERIA%20(BILBAO)/INCIDENCIASTENDERIABILBAO.docx">Abrir Word</a>
+    <span class="btn disabled">Último PDF</span>
+  </div>
+  <details>
+    <summary>Últimos documentos</summary>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIASTENDERIABILBAO_e8df2afc70.html">INCIDENCIASTENDERIABILBAO.docx</a><span>Vista HTML · 03/12/2018 06:36</span></li></ul>
+  </details>
+</article></main>
+  <div id="empty" class="empty">No hay coincidencias con el filtro actual.</div>
+  <div class="footer">Para actualizar este panel: doble clic en <b>Actualizar_Postventas.bat</b>.</div>
+</div>
+<script>
+const search = document.getElementById('search');
+const buttons = [...document.querySelectorAll('.filters button')];
+const cards = [...document.querySelectorAll('.obra')];
+const count = document.getElementById('count');
+const empty = document.getElementById('empty');
+let currentFilter = 'all';
+
+function matchesFilter(card) {
+  if (currentFilter === 'all') return true;
+  return card.dataset[currentFilter] === 'true';
+}
+
+function applyFilters() {
+  const q = search.value.trim().toLowerCase();
+  let visible = 0;
+  cards.forEach(card => {
+    const ok = matchesFilter(card) && (!q || card.dataset.search.includes(q));
+    card.style.display = ok ? '' : 'none';
+    if (ok) visible += 1;
+  });
+  count.textContent = `${visible} de ${cards.length}`;
+  empty.style.display = visible ? 'none' : 'block';
+}
+
+buttons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    buttons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.filter;
+    applyFilters();
+  });
+});
+search.addEventListener('input', applyFilters);
+applyFilters();
+</script>
+</body>
+</html>

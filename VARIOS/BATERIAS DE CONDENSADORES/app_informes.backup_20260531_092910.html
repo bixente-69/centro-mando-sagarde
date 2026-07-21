@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sagarde S.L. — App Baterías de Condensadores</title>
+<style>
+:root{--navy:#1a2f6e;--blue:#0066cc;--gris:#f4f6f9;--borde:#d0d4de;--verde:#1a7a3c;--ambar:#8a6000;--rojo:#b01c1c;--texto:#1a1e2e;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#cdd0d8;color:var(--texto);font-size:14px;padding-bottom:72px;}
+header{background:var(--navy);color:white;padding:11px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,.3);}
+.logo-box{padding:0;display:flex;align-items:center;justify-content:center;border-radius:4px;overflow:hidden;}
+.logo-box img{height:44px;width:auto;display:block;}
+header h1{font-size:16px;font-weight:700;}
+header p{font-size:10px;opacity:.6;}
+/* TABS */
+.tabs{display:flex;background:#122a45;border-bottom:3px solid var(--blue);position:sticky;top:52px;z-index:199;}
+.tab-btn{padding:10px 18px;color:rgba(255,255,255,.6);cursor:pointer;font-size:12px;font-weight:700;border:none;background:none;transition:all .15s;letter-spacing:.3px;}
+.tab-btn:hover{color:#fff;background:rgba(255,255,255,.08);}
+.tab-btn.active{color:#fff;background:var(--blue);border-bottom:3px solid #60a5fa;margin-bottom:-3px;}
+/* BARRA VALIDACION (sticky debajo tabs) */
+#val-bar{background:#fff;border-bottom:2px solid var(--borde);padding:7px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:11px;position:sticky;top:95px;z-index:198;}
+.val-ok{background:#dcfce7;border:1px solid #86efac;color:#166534;border-radius:4px;padding:2px 8px;font-weight:700;}
+.val-falta{background:#fee2e2;border:1px solid #fca5a5;color:#7f1d1d;border-radius:4px;padding:2px 8px;font-weight:700;cursor:pointer;}
+.val-falta:hover{background:#fca5a5;}
+.val-aviso{background:#fef9c3;border:1px solid #fde047;color:#713f12;border-radius:4px;padding:2px 8px;font-weight:700;cursor:pointer;}
+#val-bar .lbl{font-weight:700;color:#64748b;margin-right:2px;}
+/* CONTENIDO TABS */
+.tab-content{display:none;padding:16px 20px;max-width:1060px;margin:0 auto;}
+.tab-content.active{display:block;}
+/* SECCIONES */
+.sec{background:#fff;border-radius:6px;border:1px solid var(--borde);margin-bottom:12px;overflow:hidden;}
+.sec-h{background:var(--navy);color:#fff;padding:8px 14px;font-weight:700;font-size:11px;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none;}
+.sec-h .ico-colapsar{font-size:14px;transition:transform .2s;}
+.sec-h.collapsed .ico-colapsar{transform:rotate(-90deg);}
+.sec-h .sec-badge{font-size:10px;font-weight:700;border-radius:10px;padding:1px 7px;}
+.sec-h .badge-ok{background:#16a34a;color:#fff;}
+.sec-h .badge-warn{background:#ca8a04;color:#fff;}
+.sec-h .badge-inc{background:#dc2626;color:#fff;}
+.sec-b{padding:12px;}
+.sec-b.collapsed{display:none;}
+/* NOTA OPCIONAL */
+.nota-opt{background:#f0f9ff;border-left:3px solid #38bdf8;border-radius:0 4px 4px 0;padding:6px 10px;font-size:10px;color:#0c4a6e;margin-bottom:10px;}
+/* GRIDS */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:9px;}
+.sp2{grid-column:span 2;}.sp3{grid-column:span 3;}.sp4{grid-column:span 4;}
+/* CAMPOS */
+.campo{display:flex;flex-direction:column;gap:3px;}
+.campo label{font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.4px;}
+.campo input,.campo select,.campo textarea{border:1px solid var(--borde);border-radius:4px;padding:6px 8px;font-size:12px;color:var(--texto);background:#fff;font-family:inherit;transition:border-color .15s;}
+.campo input:focus,.campo select:focus,.campo textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 2px rgba(0,102,204,.12);}
+.campo input.required-empty{border-color:#f87171;background:#fff5f5;}
+.campo textarea{resize:vertical;min-height:60px;}
+.campo input[readonly]{background:#f5f6f8;color:#64748b;}
+.campo .req{color:#dc2626;margin-left:2px;}
+/* MEDIDAS */
+.mg{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;}
+.mc-f{border:1px solid var(--borde);border-radius:5px;padding:8px 10px;background:#f8fafc;position:relative;}
+.mc-f .lbl{font-size:9px;font-weight:700;color:#64748b;text-transform:uppercase;margin-bottom:3px;}
+.mc-f .row{display:flex;align-items:center;gap:6px;}
+.mc-f input{border:1px solid var(--borde);border-radius:3px;padding:4px 6px;font-size:13px;font-weight:700;width:85px;text-align:right;}
+.mc-f input:focus{outline:none;border-color:var(--blue);}
+.mc-f .unit{font-size:11px;color:#64748b;min-width:30px;}
+.sem{width:11px;height:11px;border-radius:50%;background:#cbd5e1;flex-shrink:0;transition:background .2s;}
+.sem.ok{background:#1ea64a;box-shadow:0 0 4px rgba(30,166,74,.5);}
+.sem.wn{background:#c8960a;box-shadow:0 0 4px rgba(200,150,10,.5);}
+.sem.al{background:#d05500;box-shadow:0 0 4px rgba(208,85,0,.5);}
+.sem.cr{background:#b01c1c;box-shadow:0 0 4px rgba(176,28,28,.5);}
+.mc-f .hint{font-size:9px;color:#94a3b8;margin-top:2px;}
+.cos-extra{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:8px;background:#eaf6ee;border:1px solid #9ed4b0;border-radius:5px;padding:8px 12px;}
+.cos-extra label{font-size:10px;font-weight:700;color:#1a7a3c;}
+.cos-extra select{border:1px solid #9ed4b0;border-radius:3px;padding:3px 7px;font-size:12px;background:#fff;}
+/* CHECKLIST */
+.chk-list{display:flex;flex-direction:column;gap:4px;}
+.chk{display:flex;align-items:center;gap:8px;padding:5px 8px;background:#f8fafc;border:1px solid var(--borde);border-radius:4px;}
+.chk input[type=checkbox]{width:14px;height:14px;accent-color:var(--blue);cursor:pointer;flex-shrink:0;}
+.chk label{font-size:12px;cursor:pointer;flex:1;}
+.chk input[type=checkbox]:checked + label{text-decoration:line-through;color:#94a3b8;}
+.chk .del{background:none;border:none;color:#cbd5e1;cursor:pointer;font-size:14px;padding:0 2px;}
+.chk .del:hover{color:var(--rojo);}
+.add-row{display:flex;gap:6px;margin-top:6px;}
+.add-row input{flex:1;border:1px dashed var(--borde);border-radius:4px;padding:5px 8px;font-size:12px;}
+.add-row button{background:var(--blue);color:#fff;border:none;border-radius:4px;padding:5px 12px;cursor:pointer;font-size:12px;}
+/* ALARMA */
+.alm-desc{background:#fff7ed;border:1px solid #fed7aa;border-radius:4px;padding:5px 9px;font-size:11px;color:#9a3412;flex:1;display:none;}
+/* CHIPS PERFILES */
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;}
+.chip{background:#e8f1fb;border:1px solid #a0c4f0;border-radius:20px;padding:3px 11px;font-size:11px;font-weight:700;color:var(--blue);cursor:pointer;display:flex;align-items:center;gap:4px;}
+.chip:hover{background:#bfd9f7;}
+.chip .x{color:#93c5fd;}.chip .x:hover{color:var(--rojo);}
+/* OBS CON BOTON AUTO */
+.obs-wrap{display:flex;flex-direction:column;gap:3px;}
+.obs-wrap label{font-size:10px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;justify-content:space-between;}
+.btn-auto{background:var(--navy);color:#fff;border:none;border-radius:3px;padding:2px 8px;font-size:10px;cursor:pointer;font-weight:700;}
+.btn-auto:hover{background:var(--blue);}
+/* HISTORIAL */
+.hist-card{background:#fff;border:1px solid var(--borde);border-radius:6px;padding:10px 13px;display:flex;align-items:center;gap:11px;cursor:pointer;margin-bottom:7px;transition:box-shadow .15s;}
+.hist-card:hover{box-shadow:0 2px 10px rgba(0,0,0,.1);}
+.hist-fecha{background:var(--navy);color:#fff;border-radius:5px;padding:5px 8px;text-align:center;min-width:48px;}
+.hist-fecha .d{font-size:17px;font-weight:900;line-height:1;}
+.hist-fecha .m{font-size:8px;text-transform:uppercase;}
+.hist-info{flex:1;}
+.hist-info .cl{font-weight:700;font-size:13px;}
+.hist-info .dt{font-size:11px;color:#64748b;margin-top:1px;}
+.hist-cp{font-size:17px;font-weight:900;color:var(--verde);text-align:right;}
+.hist-cp .sub{font-size:9px;color:#94a3b8;}
+.vacio{text-align:center;padding:32px;color:#94a3b8;font-style:italic;font-size:12px;}
+/* BARRA ACCIÓN FIJA */
+.action-bar{position:fixed;bottom:0;left:0;right:0;background:var(--navy);border-top:2px solid var(--blue);padding:10px 20px;display:flex;align-items:center;gap:10px;z-index:300;box-shadow:0 -4px 16px rgba(0,0,0,.25);}
+.btn{padding:7px 16px;border-radius:5px;border:none;font-size:12px;font-weight:700;cursor:pointer;transition:opacity .15s;}
+.btn:hover{opacity:.85;}
+.btn:disabled{opacity:.45;cursor:not-allowed;}
+.btn-pdf{background:#0066cc;color:#fff;font-size:13px;padding:9px 22px;}
+.btn-g{background:#1a7a3c;color:#fff;}
+.btn-o{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.25);}
+#bar-estado{font-size:11px;color:rgba(255,255,255,.7);flex:1;}
+#bar-estado .ok{color:#4ade80;font-weight:700;}
+#bar-estado .warn{color:#fbbf24;font-weight:700;}
+/* ESCALONES VIS */
+.ev-vis{display:flex;gap:7px;flex-wrap:wrap;margin-top:7px;}
+.ev-b{display:flex;align-items:center;gap:4px;background:#dcfce7;border:1px solid #86efac;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:#166534;}
+.ev-b .dot{width:6px;height:6px;border-radius:50%;background:#16a34a;}
+/* PERFILES DET */
+.pf-card{background:#fff;border:1px solid var(--borde);border-radius:6px;margin-bottom:10px;overflow:hidden;}
+.pf-h{background:#f5f6f8;border-bottom:1px solid var(--borde);padding:8px 12px;display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:12px;}
+.pf-b{padding:10px 12px;font-size:11px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo-box">
+    <img id="app-logo" src="data:image/jpeg;base64,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" alt="Sagarde S.L. Montajes Eléctricos" style="height:38px;width:auto;display:block;">
+  </div>
+  <div>
+    <h1>Baterías de Condensadores — Generador de Informes</h1>
+    <p>Sagarde S.L. · Bizkaia</p>
+  </div>
+</header>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('nueva',this)">＋ Nueva Revisión</button>
+  <button class="tab-btn" onclick="showTab('historial',this)">📋 Historial</button>
+  <button class="tab-btn" onclick="showTab('perfiles',this)">⚙ Perfiles</button>
+</div>
+
+<!-- BARRA VALIDACION -->
+<div id="val-bar" style="display:none;">
+  <span class="lbl">📋 Campos:</span>
+  <span id="val-chips"></span>
+</div>
+
+<!-- ===== NUEVA REVISIÓN ===== -->
+<div id="tab-nueva" class="tab-content active">
+
+  <!-- PERFILES -->
+  <div class="sec">
+    <div class="sec-h" onclick="toggleSec(this)">💾 Perfiles de equipo guardados <span class="ico-colapsar">▼</span></div>
+    <div class="sec-b">
+      <div id="pf-chips" class="chips"><span style="font-size:11px;color:#94a3b8;font-style:italic;">Sin perfiles guardados</span></div>
+      <div style="display:flex;gap:7px;flex-wrap:wrap;">
+        <button class="btn btn-g" onclick="guardarPerfil()">💾 Guardar equipo actual como perfil</button>
+        <button id="btn-update-profile" class="btn btn-o" style="color:var(--texto);border-color:var(--borde);background:#fff;" onclick="actualizarPerfilActivo()" disabled>↻ Actualizar perfil cargado</button>
+        <button class="btn btn-o" style="color:var(--texto);border-color:var(--borde);background:#fff;" onclick="limpiarForm()">✕ Limpiar</button>
+        <span id="perfil-activo" style="font-size:11px;color:#64748b;align-self:center;">Sin perfil cargado</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATOS INTERVENCIÓN -->
+  <div class="sec" id="sec-datos">
+    <div class="sec-h" onclick="toggleSec(this)">
+      <span>📍 1. Datos de la intervención</span>
+      <span id="badge-datos" class="sec-badge">▼</span>
+    </div>
+    <div class="sec-b">
+      <div class="g3">
+        <div class="campo"><label>Instalación / Cliente <span class="req">*</span></label><input id="f_cliente" type="text" placeholder="Ej: CARDIVA" oninput="autoRef();validate();"></div>
+        <div class="campo"><label>Ubicación</label><input id="f_ubicacion" type="text" placeholder="Ej: Lezama, Bizkaia"></div>
+        <div class="campo"><label>Fecha intervención <span class="req">*</span></label><input id="f_fecha" type="date" oninput="autoRef();validate();"></div>
+        <div class="campo"><label>Técnico <span class="req">*</span></label><input id="f_tecnico" type="text" value="Vicente Trancón" oninput="validate();"></div>
+        <div class="campo"><label>Empresa</label><input id="f_empresa" type="text" value="Sagarde S.L. Montajes Eléctricos"></div>
+        <div class="campo"><label>Referencia <span style="font-size:9px;color:#94a3b8;">(auto)</span></label><input id="f_ref" type="text" placeholder="Se genera automáticamente"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATOS EQUIPO -->
+  <div class="sec" id="sec-equipo">
+    <div class="sec-h" onclick="toggleSec(this)">
+      <span>⚡ 2. Datos del equipo</span>
+      <span id="badge-equipo" class="sec-badge">▼</span>
+    </div>
+    <div class="sec-b">
+      <div style="background:#1a2f6e;color:#fff;border-radius:5px;padding:8px 12px;margin-bottom:10px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <label style="font-size:11px;font-weight:700;letter-spacing:.5px;opacity:.8;">TIPO DE CONTROLADOR:</label>
+        <select id="controlador_tipo" onchange="onControladorChange()" style="background:#fff;color:#1a2f6e;border:none;border-radius:4px;padding:5px 10px;font-size:13px;font-weight:700;cursor:pointer;">
+          <option value="LOVATO_DCRL8">LOVATO DCRL8</option>
+          <option value="CIRCUTOR_MAX6">CIRCUTOR Computer Max 6</option>
+          <option value="CIRCUTOR_MAX12">CIRCUTOR Computer Max 12</option>
+          <option value="DUCATI_R5">Ducati Energia R5</option>
+          <option value="GENERICO">Genérico / Otro</option>
+        </select>
+        <span id="ctrl-info" style="font-size:10px;opacity:.65;"></span>
+      </div>
+      <div class="g4">
+        <div class="campo"><label>Fabricante</label><input id="e_fabricante" type="text" placeholder="Ej: Goval SLU"></div>
+        <div class="campo"><label>Modelo</label><input id="e_modelo" type="text" placeholder="Ej: BCC"></div>
+        <div class="campo"><label>Nº Serie</label><input id="e_serie" type="text" placeholder="Ej: 17031277"></div>
+        <div class="campo"><label>Año fabricación</label><input id="e_ano" type="text" placeholder="Ej: 2017"></div>
+        <div class="campo"><label>Potencia total (kVAr) <span class="req">*</span></label><input id="e_kvar" type="number" placeholder="30" oninput="calcNominal();validate();"></div>
+        <div class="campo"><label>Tensión (V)</label><input id="e_tension" type="number" value="400" oninput="calcNominal()"></div>
+        <div class="campo"><label>Frecuencia (Hz)</label><input id="e_hz" type="number" value="50"></div>
+        <div class="campo"><label>A nominal (calc.)</label><input id="e_anom" type="text" readonly></div>
+        <div class="campo"><label>Escalonamiento <span class="req">*</span></label><input id="e_escalones" type="text" placeholder="Ej: 5+10+15" oninput="renderEscalones();validate();"></div>
+        <div class="campo"><label>Nº condensadores</label><input id="e_ncond" type="number" placeholder="Ej: 12"></div>
+        <div class="campo"><label>Controlador <span style="font-size:9px;color:#94a3b8;">(auto)</span></label><input id="e_controlador" type="text" placeholder="Se rellena automáticamente"></div>
+        <div class="campo"><label>Normativa</label><input id="e_normativa" type="text" placeholder="Ej: CEI 33-5 · IEC 60439"></div>
+      </div>
+      <div id="ev-vis" class="ev-vis"></div>
+    </div>
+  </div>
+
+  <!-- MEDIDAS DCRL8 -->
+  <div class="sec" id="sec-medidas">
+    <div class="sec-h" onclick="toggleSec(this)">
+      <span id="med-sec-title">📊 3. Lecturas de pantalla — LOVATO DCRL8 <span class="req">*</span></span>
+      <span id="badge-medidas" class="sec-badge">▼</span>
+    </div>
+    <div class="sec-b">
+      <div class="nota-opt">Introduce los valores que muestra la pantalla del regulador. Los semáforos se calculan solos.</div>
+      <div class="mg" id="med-grid"></div>
+      <div class="cos-extra">
+        <label>Tipo cos φ:</label>
+        <select id="m_cosphi_tipo"><option value="CAP">Capacitivo (CAP)</option><option value="IND">Inductivo (IND)</option></select>
+        <label style="margin-left:12px;">Modo al inicio:</label>
+        <select id="m_modo_inicio"><option value="AUT">AUT</option><option value="MAN">MAN</option><option value="PRUEBA">PRUEBA</option></select>
+        <label style="margin-left:12px;">Modo al cierre:</label>
+        <select id="m_modo_cierre"><option value="AUT">AUT</option><option value="MAN">MAN</option></select>
+      </div>
+    </div>
+  </div>
+
+  <!-- ALARMAS -->
+  <div class="sec">
+    <div class="sec-h" onclick="toggleSec(this)"><span>🔔 4. Alarmas</span><span class="ico-colapsar">▼</span></div>
+    <div class="sec-b">
+      <div style="display:flex;align-items:flex-start;gap:10px;flex-wrap:wrap;">
+        <div class="campo" style="min-width:210px;">
+          <label>Alarma activa al inicio</label>
+          <select id="alarma_sel" onchange="updateAlmDesc()">
+            <option value="">— Sin alarmas —</option>
+          </select>
+        </div>
+        <div id="alm-desc" class="alm-desc" style="margin-top:18px;"></div>
+      </div>
+      <div style="margin-top:8px;" class="campo">
+        <label>Acción realizada sobre alarma</label>
+        <input id="alarma_accion" type="text" placeholder="Ej: Reset A12 mediante comando C01 (contador horas P.45)">
+      </div>
+    </div>
+  </div>
+
+  <!-- TRABAJOS REALIZADOS -->
+  <div class="sec">
+    <div class="sec-h" onclick="toggleSec(this)"><span>✅ 5. Trabajos realizados</span><span class="ico-colapsar">▼</span></div>
+    <div class="sec-b">
+      <div class="chk-list" id="chk-list"></div>
+      <div class="add-row">
+        <input id="new-chk" type="text" placeholder="Añadir trabajo..." onkeydown="if(event.key==='Enter')addChk()">
+        <button onclick="addChk()">＋ Añadir</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARÁMETROS — COLAPSADO POR DEFECTO -->
+  <div class="sec">
+    <div class="sec-h collapsed" onclick="toggleSec(this)">
+      <span id="params-sec-title">⚙ 6. Parámetros del regulador <span style="font-size:9px;opacity:.7;">(OPCIONAL — solo si accedes a programación)</span></span>
+      <span class="ico-colapsar" style="transform:rotate(-90deg);">▼</span>
+    </div>
+    <div class="sec-b collapsed">
+      <div class="nota-opt" id="params-nota">Parámetros visibles entrando al menú de programación. Si no puedes verlos, déjalo vacío — el informe se genera igualmente.</div>
+      <div id="params-content"></div>
+    </div>
+  </div>
+
+  <!-- ANOMALÍAS / INCIDENCIAS DE CAMPO -->
+  <div class="sec">
+    <div class="sec-h" onclick="toggleSec(this)"><span>🔍 6b. Anomalías e incidencias detectadas en visita</span><span class="ico-colapsar">▼</span></div>
+    <div class="sec-b">
+      <div class="nota-opt">Anota aquí todo lo que te llame la atención aunque no sea urgente. Se incluirá automáticamente en el informe al pulsar ✨ Auto.</div>
+      <div class="g3" style="margin-bottom:10px;">
+        <div class="chk"><input type="checkbox" id="an_ruido"><label for="an_ruido">🔊 Ruido anormal (contactores, condensadores)</label></div>
+        <div class="chk"><input type="checkbox" id="an_olor"><label for="an_olor">🌡 Olor a quemado o a calor</label></div>
+        <div class="chk"><input type="checkbox" id="an_temp"><label for="an_temp">🌡 Temperatura elevada al tacto en el armario</label></div>
+        <div class="chk"><input type="checkbox" id="an_bornes"><label for="an_bornes">⚡ Bornes con indicios de calentamiento (oxidación, decoloración)</label></div>
+        <div class="chk"><input type="checkbox" id="an_abomb"><label for="an_abomb">💥 Condensadores con posible inicio de abombamiento</label></div>
+        <div class="chk"><input type="checkbox" id="an_cable"><label for="an_cable">🔌 Cableado deteriorado / aislamiento dañado</label></div>
+        <div class="chk"><input type="checkbox" id="an_humedad"><label for="an_humedad">💧 Humedad interior del armario</label></div>
+        <div class="chk"><input type="checkbox" id="an_filtros"><label for="an_filtros">🌫 Filtros de ventilación sucios / obstruidos</label></div>
+        <div class="chk"><input type="checkbox" id="an_vibracion"><label for="an_vibracion">📳 Vibraciones excesivas en el armario</label></div>
+      </div>
+      <div class="campo">
+        <label>Descripción libre — anomalías, situaciones inusuales, aspectos a vigilar</label>
+        <textarea id="an_txt" rows="3" placeholder="Describe lo que has visto: cualquier detalle raro, sospechoso o que quieras recordar para la próxima visita..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- OBSERVACIONES — AUTO -->
+  <div class="sec">
+    <div class="sec-h" onclick="toggleSec(this)"><span>📝 7. Observaciones y conclusiones</span><span class="ico-colapsar">▼</span></div>
+    <div class="sec-b">
+      <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:4px;padding:8px 12px;font-size:11px;color:#92400e;margin-bottom:10px;">
+        💡 Pulsa <b>✨ Auto</b> para generar el texto automáticamente desde las medidas introducidas. Puedes editarlo después.
+      </div>
+      <div class="g2">
+        <div class="obs-wrap sp2">
+          <label>Observaciones generales
+            <button class="btn-auto" onclick="autoGenObs()">✨ Auto-generar desde medidas</button>
+          </label>
+          <textarea id="obs_gen" rows="4" placeholder="Estado del equipo, incidencias, anomalías..."></textarea>
+        </div>
+        <div class="obs-wrap sp2">
+          <label>Recomendaciones
+            <button class="btn-auto" onclick="autoGenRec()">✨ Auto-generar recomendaciones</button>
+          </label>
+          <textarea id="obs_rec" rows="4" placeholder="Acciones recomendadas, mejoras..."></textarea>
+        </div>
+        <div class="campo"><label>Próxima revisión recomendada</label><input id="prox_rev" type="date"></div>
+        <div class="campo"><label>Estado general del equipo</label>
+          <select id="estado_gen">
+            <option value="CONFORME">✅ CONFORME — Funcionamiento correcto</option>
+            <option value="ADVERTENCIA">⚠️ ADVERTENCIA — Requiere atención</option>
+            <option value="CRÍTICO">🔴 CRÍTICO — Intervención urgente</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /tab-nueva -->
+
+<!-- ===== HISTORIAL ===== -->
+<div id="tab-historial" class="tab-content">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+    <h2 style="color:var(--navy);font-size:16px;">Historial de intervenciones</h2>
+    <input type="text" id="hist-q" placeholder="🔍 Buscar cliente..." style="border:1px solid var(--borde);border-radius:4px;padding:6px 10px;font-size:12px;width:190px;" oninput="renderHistorial()">
+  </div>
+  <div id="hist-lista"></div>
+</div>
+
+<!-- ===== PERFILES ===== -->
+<div id="tab-perfiles" class="tab-content">
+  <h2 style="color:var(--navy);font-size:16px;margin-bottom:5px;">Perfiles de equipo guardados</h2>
+  <p style="color:#64748b;font-size:11px;margin-bottom:12px;">Pre-rellenan los datos del armario al cargarlos.</p>
+  <div id="pf-det"></div>
+</div>
+
+<!-- BARRA FIJA INFERIOR -->
+<div class="action-bar">
+  <button class="btn btn-pdf" onclick="generarPDF()">🖨 GENERAR PDF</button>
+  <button class="btn btn-g" onclick="guardarHistorial()">💾 Guardar</button>
+  <button class="btn btn-o" onclick="exportJSON()">↓ JSON</button>
+  <button class="btn btn-o" onclick="document.getElementById('imp-f').click()">↑ Importar</button>
+  <button class="btn btn-o" onclick="exportDatosApp()">↓ Datos app</button>
+  <button class="btn btn-o" onclick="document.getElementById('imp-db').click()">↑ Datos app</button>
+  <input type="file" id="imp-f" accept=".json" style="display:none" onchange="importJSON(event)">
+  <input type="file" id="imp-db" accept=".json" style="display:none" onchange="importDatosApp(event)">
+  <div id="bar-estado">Rellena el formulario y pulsa GENERAR PDF</div>
+</div>
+
+<script>
+// ============================================================
+// DATOS
+// ============================================================
+const MEDIDAS = [
+  {id:'m_dkvar', label:'Delta kVAr activo',    unidad:'kVAr', hint:'0 = corrección perfecta'},
+  {id:'m_v',     label:'Tensión de línea',      unidad:'V',    hint:'Nominal 400 V (±5%)'},
+  {id:'m_a',     label:'Corriente de línea',    unidad:'A',    hint:'Comparar con A nominal'},
+  {id:'m_wpf',   label:'WPF — FP semanal',      unidad:'',     hint:'Objetivo ≥ 0,95'},
+  {id:'m_ccu',   label:'%C.CU condensadores',   unidad:'%',    hint:'Alarma A05 en 125%'},
+  {id:'m_temp',  label:'Temperatura interna',   unidad:'°C',   hint:'Alarma A02 en 60°C'},
+  {id:'m_thdv',  label:'THDV — Arm. tensión',   unidad:'%',    hint:'< 5% normal'},
+  {id:'m_thdi',  label:'THDI — Arm. corriente', unidad:'%',    hint:'< 15% normal, >25% elevado ⚠'},
+  {id:'m_cosphi',label:'cos φ — Factor pot.',   unidad:'',     hint:'Objetivo ≥ 0,95 (P.19)'},
+];
+
+// Logo embebido como base64 en el src del <img id="app-logo"> del header.
+// Se muestra ahí y el informe lo lee directamente de ese .src — sin canvas, sin fetch.
+function getLogoB64(){
+  const img=document.getElementById('app-logo');
+  return (img&&img.src&&img.src.startsWith('data:'))?img.src:'';
+}
+
+// Fuente: Manual oficial LOVATO DCRL8 — I418 E 04 15 (español)
+const ALARMAS_DESC = {
+  A01:'SUBCOMPENSACIÓN — Todos los pasos están conectados y el cos φ sigue siendo más inductivo que el valor de referencia P.19. El banco es insuficiente para la demanda reactiva actual. Retardo: 15 min. Causas: banco subdimensionado, paso averiado (ver A13), carga inductiva muy elevada.',
+  A02:'SOBRECOMPENSACIÓN — Todos los pasos están desconectados y el cos φ medido es más capacitivo que la referencia P.19. El banco está aportando más reactiva de la que necesita la instalación. Retardo: 120 s. Causas: banco sobredimensionado para la carga actual, P.19 demasiado alto, baja carga (noche/fin de semana). Revisar P.19 y P.10.',
+  A03:'CORRIENTE DE ENTRADA DEMASIADO BAJA — La corriente en las entradas amperimétricas es inferior al mínimo del rango. Ocurre normalmente cuando no hay carga conectada. Retardo: 5 s. Verificar TC (P.01/P.02), cableado de medida y que haya consumo en la instalación.',
+  A04:'CORRIENTE DE ENTRADA DEMASIADO ALTA — La corriente en las entradas amperimétricas supera el máximo del rango. Retardo: 120 s. Verificar relación de transformación del TC configurada en P.01/P.02.',
+  A05:'TENSIÓN DEMASIADO BAJA — La tensión medida está por debajo del umbral P.42 (defecto: OFF). Retardo: 5 s. Verificar acometida, caída de tensión y valor umbral configurado en P.42.',
+  A06:'TENSIÓN DEMASIADO ALTA — La tensión medida supera el umbral P.41 (defecto: 120% de tensión nominal P.07). Retardo: 15 min. Verificar acometida y umbral P.41.',
+  A07:'SOBRECARGA DE CORRIENTE EN CONDENSADORES — La corriente calculada en los condensadores supera los umbrales P.32 (retardado, def. 125%) y/o P.33 (instantáneo, def. 150%). Alarma persiste 5 min tras desaparecer. Retardo: 180 s. Causas: armónicos elevados (THDI) generan sobreintensidad en condensadores. Valorar reactancias de desintonización 7%.',
+  A08:'TEMPERATURA DEMASIADO ALTA — La temperatura interior del armario supera el umbral P.39 (defecto: 60°C). El sensor mide temperatura ambiental dentro del armario, no del regulador. Retardo: 30 s. Verificar ventilación, limpiar filtros, comprobar temperatura ambiente.',
+  A09:'MICROCORTE — Se ha producido una interrupción >8 ms en las entradas de tensión. El regulador detectó un fallo momentáneo de red. Retardo: inmediato. Verificar calidad del suministro, conexiones y si hay maniobras de aparellaje próximas.',
+  A10:'THD DE TENSIÓN DEMASIADO ALTA (THDV) — La distorsión armónica de tensión supera el umbral P.43 (defecto: OFF). Retardo: 120 s. Causas: cargas no lineales en la instalación o en la red de distribución. Activar P.43 para vigilancia automática.',
+  A11:'THD DE CORRIENTE DEMASIADO ALTA (THDI) — La distorsión armónica de corriente supera el umbral P.44 (defecto: OFF). Retardo: 120 s. Causas: variadores de frecuencia, rectificadores, UPS. Riesgo de resonancia con el banco y sobrecarga de condensadores (ver A07).',
+  A12:'SOLICITUD DE MANTENIMIENTO — El intervalo configurado en P.45 (horas, se muestra HR) o P.54 (maniobras, se muestra CN) ha finalizado. Alarma informativa, no desconecta el equipo. Reset por horas: ejecutar comando C01. Reset por maniobras: ejecutar C01 seguido de C02.',
+  A13:'FALLO DE PASO — La potencia residual de uno o varios pasos ha caído por debajo del umbral P.40 (defecto: OFF). Indica condensador averiado o con pérdida de capacidad. Retardo: inmediato. Identificar el paso afectado activándolos en modo MAN, verificar condensadores, fusibles y contactor del paso.',
+};
+
+// Descripciones para el INFORME AL CLIENTE — lenguaje profesional, sin referencias internas
+const ALARMAS_CLIENTE = {
+  A01:'Banco de condensadores insuficiente para compensar la demanda reactiva inductiva actual de la instalación. Se han activado todos los escalones disponibles sin alcanzar el factor de potencia objetivo.',
+  A02:'La corrección reactiva del banco supera la demanda actual de la instalación. El regulador ha desconectado todos los escalones pero el factor de potencia permanece en zona capacitiva.',
+  A03:'El regulador no detecta corriente en las entradas de medida. Puede indicar que la instalación está sin carga o que existe un problema en el circuito de medida de corriente.',
+  A04:'La corriente medida en las entradas del regulador supera el rango de medida. Revisar la relación del transformador de corriente y la carga de la instalación.',
+  A05:'La tensión de red está por debajo del umbral mínimo configurado. Verificar el suministro eléctrico y la calidad de la acometida.',
+  A06:'La tensión de red supera el umbral máximo configurado. Verificar el suministro eléctrico y la acometida.',
+  A07:'La corriente que circula por los condensadores supera su valor nominal permitido. Situación que puede reducir la vida útil de los condensadores y requiere revisión técnica.',
+  A08:'La temperatura interior del armario ha superado el umbral de seguridad. Verificar la ventilación del armario, el estado de los filtros y la temperatura ambiente del local.',
+  A09:'El regulador ha detectado una interrupción momentánea en el suministro eléctrico. Verificar la calidad de la red y las conexiones eléctricas.',
+  A10:'El nivel de distorsión armónica de tensión en la red supera el umbral configurado. Pueden existir cargas perturbadoras en la instalación o en la red de distribución.',
+  A11:'El nivel de distorsión armónica de corriente supera el umbral configurado. Existen cargas no lineales en la instalación que generan armónicos de corriente.',
+  A12:'Se ha alcanzado el intervalo de mantenimiento programado del equipo. Esta alarma es informativa y no afecta al funcionamiento del banco. Intervenida y restablecida en esta visita.',
+  A13:'Uno o varios escalones de condensadores presentan una reducción de potencia significativa respecto a su valor nominal, indicando posible degradación de condensadores.',
+};
+
+// ============================================================
+// CONFIGURACIÓN DE CONTROLADORES
+// ============================================================
+const CONTROLLERS = {
+  LOVATO_DCRL8:{
+    nombre:'LOVATO DCRL8',
+    pasos_max:14,
+    med_ids:['m_dkvar','m_v','m_a','m_wpf','m_ccu','m_temp','m_thdv','m_thdi','m_cosphi'],
+    tiene:{wfp:true,ccu:true,temp:true,dkvar:true},
+    alarmas:ALARMAS_DESC,
+    alarmas_cli:ALARMAS_CLIENTE,
+    params:[
+      {id:'p01',label:'P.01 — TC Primario (A)',ph:'Ej: 100'},
+      {id:'p02',label:'P.02 — TC Secundario (A)',ph:'Ej: 5'},
+      {id:'p06',label:'P.06 — Paso mín. (kVAr)',ph:'Ej: 5'},
+      {id:'p09',label:'P.09 — T. reconexión (s)',ph:'60'},
+      {id:'p10',label:'P.10 — Sensibilidad',ph:'Ej: 60'},
+      {id:'p19',label:'P.19 — Ref. cos φ',ph:'0,95'},
+      {id:'p32',label:'P.32 — Alarm. %C.CU (%)',ph:'125'},
+      {id:'p44',label:'P.44 — Alarm. THDI (%)',ph:'OFF o valor'},
+      {id:'p45',label:'P.45 — Mant. horas (h)',ph:'9000'},
+      {id:'p54',label:'P.54 — Mant. maniobras',ph:'Ej: 10000'},
+      {id:'p_otros',label:'Otros parámetros',ph:'Ej: P.43=3%',span2:true},
+    ],
+    modo_man:'Tecla MAN 1s → ▲▼ selecciona paso (parpadea) → MODE conecta/desconecta. Si P.09 no expiró, icono MAN parpadea (normal).',
+    reset_info:'Menú CMD (MODE 5s → CMD → AUT) → seleccionar C01 → mantener ▲ hasta cuenta atrás. Reset maniobras: C01 + C02.',
+    checks_extra:['Lectura y registro de parámetros del regulador','Verificación escalones en modo MAN'],
+  },
+  CIRCUTOR_MAX6:{
+    nombre:'CIRCUTOR Computer Max 6',
+    pasos_max:6,
+    med_ids:['m_v','m_a','m_thdi','m_cosphi'],
+    tiene:{wfp:false,ccu:false,temp:false,dkvar:false},
+    alarmas:{
+      E01:'CORRIENTE BAJA / TC NO CONECTADO — La corriente medida en la entrada amperiométrica es inferior al mínimo (Isec<0,05 A). Normal si la instalación está sin carga. Verificar TC, cableado y que haya consumo.',
+      E02:'SOBRECOMPENSACIÓN — Se solicita desconexión pero todos los escalones ya están desconectados. El banco está sobrecompensando. Revisar cos φ objetivo y configuración.',
+      E03:'SUBCOMPENSACIÓN — Se solicita conexión pero todos los escalones ya están conectados. El banco es insuficiente para la demanda reactiva. Valorar ampliar potencia instalada.',
+      E04:'SOBRECORRIENTE — La corriente medida supera en +20% la corriente nominal del TC primario configurada. Verificar relación TC.',
+      E05:'SOBRETENSIÓN — La tensión medida supera en +15% la tensión nominal configurada. Verificar acometida y configuración de tensión nominal.',
+    },
+    alarmas_cli:{
+      E01:'La corriente de la instalación es muy baja o el transformador de corriente no está enviando señal al regulador. Ocurre habitualmente cuando la instalación está sin carga.',
+      E02:'El banco de condensadores está sobrecompensando. El regulador ha desconectado todos los escalones pero el factor de potencia permanece en zona capacitiva.',
+      E03:'El banco de condensadores es insuficiente para la demanda reactiva actual. El regulador ha conectado todos los escalones disponibles sin alcanzar el factor de potencia objetivo.',
+      E04:'La corriente medida supera el límite del transformador de corriente configurado. Verificar la relación del TC y la carga de la instalación.',
+      E05:'La tensión de red supera el límite máximo configurado. Verificar el suministro eléctrico y la acometida.',
+    },
+    params:[
+      {id:'p_cosphi_obj',label:'cos φ objetivo',ph:'Ej: 0,95'},
+      {id:'p_ck',label:'Factor C/K (paso menor)',ph:'Ej: 0,24'},
+      {id:'p_programa',label:'Programa escalones',ph:'Ej: 1:1:1 / 1:2:2 / 1:2:4'},
+      {id:'p_tc',label:'Tc — Retardo conexión (s)',ph:'10'},
+      {id:'p_tr',label:'Tr — T. reconexión (s)',ph:'50'},
+      {id:'p_nesc',label:'Nº escalones configurados',ph:'Ej: 5'},
+      {id:'p_fase',label:'Fase TC (conexión)',ph:'Ej: L1-L2'},
+      {id:'p_otros',label:'Otros parámetros',ph:'...',span2:true},
+    ],
+    modo_man:'Pulsación larga ▲ = conecta escalones secuencialmente (intervalo Tc). Pulsación larga ▼ = desconecta. Retardo reconexión Tr = 5×Tc.',
+    reset_info:'Teclas ▲+▼ simultáneas 2s = deshabilitar/habilitar alarmas E01/E02/E03. Las alarmas E04/E05 son instantáneas y se resetean solas.',
+    checks_extra:['Lectura de parámetros del regulador (cos φ obj., C/K, Tc/Tr)','Verificación escalones en modo manual'],
+  },
+  CIRCUTOR_MAX12:{
+    nombre:'CIRCUTOR Computer Max 12',
+    pasos_max:12,
+    med_ids:['m_v','m_a','m_thdi','m_cosphi'],
+    tiene:{wfp:false,ccu:false,temp:false,dkvar:false},
+    alarmas:{E01:'CORRIENTE BAJA / TC NO CONECTADO — La corriente medida es inferior al mínimo (Isec<0,05 A). Verificar TC y carga.',E02:'SOBRECOMPENSACIÓN — Todos los escalones desconectados y cosφ más capacitivo que objetivo.',E03:'SUBCOMPENSACIÓN — Todos los escalones conectados y cosφ más inductivo que objetivo.',E04:'SOBRECORRIENTE — Corriente supera +20% de la nominal del TC. Verificar relación TC.',E05:'SOBRETENSIÓN — Tensión supera +15% de la nominal. Verificar acometida.'},
+    alarmas_cli:{E01:'La corriente es muy baja o el TC no envía señal al regulador.',E02:'El banco está sobrecompensando. Todos los escalones desconectados y cosφ permanece capacitivo.',E03:'El banco es insuficiente. Todos los escalones conectados sin alcanzar el objetivo.',E04:'Corriente superior al límite del TC configurado. Verificar relación del TC.',E05:'Tensión de red superior al límite configurado. Verificar acometida.'},
+    params:[
+      {id:'p_cosphi_obj',label:'cos φ objetivo',ph:'Ej: 0,95'},
+      {id:'p_ck',label:'Factor C/K (paso menor)',ph:'Ej: 0,24'},
+      {id:'p_programa',label:'Programa escalones',ph:'Ej: 1:1:1 / 1:2:2 / 1:2:4'},
+      {id:'p_tc',label:'Tc — Retardo conexión (s)',ph:'10'},
+      {id:'p_tr',label:'Tr — T. reconexión (s)',ph:'50'},
+      {id:'p_nesc',label:'Nº escalones configurados',ph:'Ej: 11'},
+      {id:'p_fase',label:'Fase TC (conexión)',ph:'Ej: L1-L2'},
+      {id:'p_otros',label:'Otros parámetros',ph:'...',span2:true},
+    ],
+    modo_man:'Pulsación larga ▲ = conecta escalones secuencialmente (intervalo Tc). Pulsación larga ▼ = desconecta.',
+    reset_info:'Teclas ▲+▼ simultáneas 2s = deshabilitar/habilitar alarmas E01/E02/E03.',
+    checks_extra:['Lectura de parámetros del regulador (cos φ obj., C/K, Tc/Tr)','Verificación escalones en modo manual'],
+  },
+  DUCATI_R5:{
+    // Fuente: Manual completo MU-MID-R5-C-ESP.doc — Ducati Energia R5 (español, 76 pág.)
+    nombre:'Ducati Energia R5',
+    pasos_max:5,
+    // Medidas disponibles: cosfi, kVAr reactiva, A, V, Hz, W, VA, THDI%, THDV%, temperatura
+    med_ids:['m_dkvar','m_v','m_a','m_thdv','m_thdi','m_temp','m_cosphi'],
+    tiene:{wfp:false,ccu:false,temp:true,dkvar:true},
+    alarmas:{
+      'THHV':  'SOBRETENSIÓN — La tensión supera el umbral configurado (def. 110% de la tensión nominal del TV). El regulador desconecta todos los escalones de forma secuencial. Verificar acometida y nivel de tensión de red.',
+      'THHA':  'SOBRECORRIENTE — La corriente supera el umbral configurado (def. 120% del primario del TC). El regulador desconecta todos los escalones de forma secuencial. Verificar la relación del TC y la carga de la instalación.',
+      'THLV':  'TENSIÓN BAJA — La tensión es inferior al umbral configurado (def. OFF). El regulador desconecta todos los escalones. Verificar suministro eléctrico y configurar umbral.',
+      'THLA':  'CORRIENTE BAJA — La corriente es inferior al 0,7% del Primario TC o al umbral configurado. El regulador desconecta los escalones. Normal cuando la instalación está sin carga. Verificar TC si hay carga.',
+      'THD%A': 'THDI ELEVADA — La distorsión armónica de corriente supera el umbral configurado (def. OFF → 999%). El regulador desconecta todos los escalones. Cargas no lineales: variadores, rectificadores, UPS. Ajustar umbral para vigilancia.',
+      'THD%V': 'THDV ELEVADA — La distorsión armónica de tensión supera el umbral configurado (def. OFF → 999%). El regulador desconecta todos los escalones. Cargas no lineales o problema en la red de distribución.',
+      'TMP°C': 'TEMPERATURA ELEVADA — La temperatura interna del regulador supera el umbral configurado (def. 60°C). Verificar ventilación del armario y limpieza de filtros. Sensor de temperatura integrado en el regulador.',
+      'HIcosfi':'SOBREDESFASE — El cos φ medido es más capacitivo que el límite del rango objetivo (setpoint + tolerancia). Banco sobrecompensando. El regulador ha desconectado todos los escalones. Revisar setpoint y tolerancia.',
+      'LOcosfi':'AUSENCIA DE CORRECCIÓN — El cos φ es más inductivo que el límite del rango objetivo (setpoint - tolerancia). Banco insuficiente o todos los escalones conectados sin alcanzar el objetivo. Verificar potencia instalada y setpoint.',
+      'MICRO':  'MICROINTERRUPCIÓN — Se ha detectado una interrupción de la tensión de red de duración superior al parámetro P.20 (def. 5 ms). Verificar calidad del suministro y conexiones. Esta alarma no se puede resetear manualmente.',
+      'BATT':   'ROTURA DE BATERÍA — La potencia estimada de uno o varios escalones ha caído por debajo del umbral de avería (P.10, def. 80% de la potencia nominal). Condensador averiado o con pérdida de capacidad significativa. Solo se puede resetear desde el Menú Reset.',
+      'MAX':    'MÁXIMO INTRODUCCIONES — El número de maniobras de un escalón ha alcanzado el máximo configurado (P.21, def. 8 horas continuas de conexión). Solo se puede resetear desde el Menú Reset.',
+    },
+    alarmas_cli:{
+      'THHV':  'La tensión de red ha superado el límite máximo configurado. El banco ha desconectado todos los escalones como medida de protección. Verificar el suministro eléctrico y la acometida.',
+      'THHA':  'La corriente medida ha superado el límite del transformador de corriente configurado. El banco ha desconectado todos los escalones. Verificar la relación del TC y la carga de la instalación.',
+      'THLV':  'La tensión de red está por debajo del umbral mínimo configurado. El banco ha desconectado los escalones como protección. Verificar el suministro eléctrico.',
+      'THLA':  'La corriente de la instalación es muy baja o el transformador de corriente no envía señal al regulador. Situación normal cuando la instalación está sin carga.',
+      'THD%A': 'El nivel de distorsión armónica de corriente supera el umbral configurado. Existen cargas no lineales en la instalación (variadores, rectificadores, UPS) que generan armónicos. El banco ha desconectado los escalones como protección.',
+      'THD%V': 'El nivel de distorsión armónica de tensión supera el umbral configurado. Pueden existir cargas perturbadoras en la instalación o en la red de distribución.',
+      'TMP°C': 'La temperatura interna del regulador supera el umbral de seguridad configurado. Verificar la ventilación del armario y el estado de los filtros de ventilación.',
+      'HIcosfi':'El banco de condensadores está sobrecompensando. El cos φ ha superado el límite capacitivo configurado. El regulador ha desconectado todos los escalones.',
+      'LOcosfi':'El banco de condensadores no alcanza el factor de potencia objetivo. El cos φ supera el límite inductivo configurado, todos los escalones están conectados pero la compensación es insuficiente.',
+      'MICRO':  'El regulador ha detectado una microinterrupción en el suministro eléctrico. Verificar la calidad de la red y las conexiones del armario.',
+      'BATT':   'Uno o varios escalones de condensadores presentan una reducción de potencia significativa respecto a su valor nominal, indicando posible degradación o avería de condensadores.',
+      'MAX':    'Un escalón de condensadores ha alcanzado el número máximo de conexiones continuas configurado. Revisión técnica recomendada para verificar el estado del condensador.',
+    },
+    params:[
+      {id:'p_cosphi_obj',label:'Setpoint cos φ (def. 0,98 IND)',ph:'Ej: 0,95 IND'},
+      {id:'p_tolerancia',label:'Tolerancia setpoint (def. 0,03)',ph:'0,03'},
+      {id:'p01',label:'TC Primario (A)',ph:'Ej: 100'},
+      {id:'p02',label:'TC Secundario (A)',ph:'5'},
+      {id:'p_vnom',label:'Tensión nominal condensadores (V)',ph:'400'},
+      {id:'p_tc',label:'Tiempo de reconexión (s, def. 60)',ph:'60'},
+      {id:'p_tr',label:'Tiempo de maniobra (s, def. 60)',ph:'60'},
+      {id:'p_thhv',label:'Umbral sobretensión (% TV, def. 110%)',ph:'110%'},
+      {id:'p_thha',label:'Umbral sobrecorriente (% TC, def. 120%)',ph:'120%'},
+      {id:'p_thdv',label:'Umbral alarma THDV (%, def. OFF)',ph:'OFF o valor %'},
+      {id:'p44',label:'Umbral alarma THDI (%, def. OFF)',ph:'OFF o valor %'},
+      {id:'p_ttemp',label:'Umbral temperatura (°C, def. 60)',ph:'60'},
+      {id:'p_otros',label:'Otros parámetros (P.8, P.20, P.22...)',ph:'...',span2:true},
+    ],
+    modo_man:'Pulsación larga de tecla ↕ en Menú Medidas → activa Modo Manual (icono MAn parpadea). En modo manual: teclas ▲▼ conectan/desconectan escalones de forma secuencial respetando el tiempo de reconexión.',
+    reset_info:'Menú Alarmas en Curso (teclas ▲+▼ durante 2s desde Menú Medidas) → seleccionar alarma → tecla ENTER para resetear (solo si P.13=ON). Alarmas BATT y MAX solo desde Menú Reset.',
+    checks_extra:[
+      'Lectura y registro de parámetros del regulador (setpoint, tolerancia, TC, tiempos)',
+      'Verificación de los 5 escalones en modo manual',
+      'Comprobación estadísticas de baterías (potencia estimada vs. nominal)',
+    ],
+  },
+  GENERICO:{
+    nombre:'Genérico / Otro',
+    pasos_max:12,
+    med_ids:['m_v','m_a','m_cosphi','m_thdi','m_thdv','m_temp'],
+    tiene:{wfp:false,ccu:false,temp:true,dkvar:false},
+    alarmas:{},
+    alarmas_cli:{},
+    params:[{id:'p_otros',label:'Parámetros relevantes observados',ph:'Anota los parámetros disponibles...',span2:true}],
+    modo_man:'Consultar manual del fabricante.',
+    reset_info:'Consultar manual del fabricante.',
+    checks_extra:['Lectura y registro de parámetros del regulador','Verificación de escalones en modo manual'],
+  },
+};
+
+// Deduplicar datos compartidos entre MAX6 y MAX12 (no se puede hacer dentro del literal del objeto)
+CONTROLLERS.CIRCUTOR_MAX12.alarmas     = CONTROLLERS.CIRCUTOR_MAX6.alarmas;
+CONTROLLERS.CIRCUTOR_MAX12.alarmas_cli = CONTROLLERS.CIRCUTOR_MAX6.alarmas_cli;
+
+const ALL_PARAM_IDS=['p01','p02','p06','p09','p10','p19','p32','p33','p39','p40','p41','p42','p43','p44','p45','p54',
+  'p_cosphi_obj','p_ck','p_programa','p_tc','p_tr','p_nesc','p_fase','p_tolerancia','p_vnom',
+  'p_thhv','p_thha','p_thdv','p_ttemp', // Ducati-específicos
+  'p_otros'];
+
+const CHECKS_COMUNES = [
+  'Inspección visual condensadores (bultos, fugas, deformaciones)',
+  'Verificación fusibles de protección',
+  'Inspección y apriete bornes de potencia y control',
+  'Limpieza interior armario (filtros, bandejas)',
+  'Retorno a modo AUT y verificación cos φ final',
+  'Restablecimiento de alarma activa (si procede) y verificación del equipo',
+];
+
+const CHECKS_DEFAULT = CHECKS_COMUNES; // se amplía con checks_extra del controlador en onControladorChange
+
+let checks = [];
+let perfilActivoId = null;
+
+function escapeHtml(value){
+  const s = value === undefined || value === null ? '' : String(value);
+  return s.replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+function todayLocalIso(){
+  const d = new Date();
+  d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+  return d.toISOString().slice(0,10);
+}
+
+function readJsonArray(key){
+  try{
+    const parsed = JSON.parse(localStorage.getItem(key)||'[]');
+    return Array.isArray(parsed) ? parsed : [];
+  }catch(err){
+    console.warn('No se pudo leer '+key+' de localStorage:', err);
+    return [];
+  }
+}
+
+function normalizeChecks(items){
+  return (Array.isArray(items)?items:[]).map((c,i)=>{
+    const item=c && typeof c==='object' ? c : {texto:c};
+    return {
+      id:Number.isFinite(Number(item.id))?Number(item.id):i,
+      texto:String(item.texto||''),
+      hecho:!!item.hecho
+    };
+  });
+}
+
+function sanitizeReportData(data){
+  const out = {...data};
+  Object.keys(out).forEach(k=>{
+    if(typeof out[k] === 'string') out[k] = escapeHtml(out[k]);
+  });
+  out.checks = normalizeChecks(out.checks).map(c=>({...c,texto:escapeHtml(c.texto)}));
+  if(Array.isArray(out.an_checks)) out.an_checks = out.an_checks.map(v=>escapeHtml(v));
+  return out;
+}
+
+function setValue(id,value){
+  const el=document.getElementById(id);
+  if(el && value!==undefined) el.value=value;
+}
+
+// ============================================================
+// INIT
+// ============================================================
+window.onload = function() {
+  document.getElementById('f_fecha').value = todayLocalIso();
+  onControladorChange();
+  renderPerfilChips();
+  renderHistorial();
+  renderPfDet();
+  updatePerfilActivoUI();
+  validate();
+};
+
+// ============================================================
+// TABS & SECCIONES
+// ============================================================
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(btn) btn.classList.add('active');
+  const vb = document.getElementById('val-bar');
+  vb.style.display = id==='nueva' ? 'flex' : 'none';
+  if(id==='historial') renderHistorial();
+  if(id==='perfiles') renderPfDet();
+}
+
+function toggleSec(hdr) {
+  hdr.classList.toggle('collapsed');
+  const body = hdr.nextElementSibling;
+  if(body) body.classList.toggle('collapsed');
+}
+
+// ============================================================
+// AUTO REFERENCIA
+// ============================================================
+function autoRef() {
+  const cliente = (document.getElementById('f_cliente').value||'').trim();
+  const fecha = document.getElementById('f_fecha').value;
+  if(!cliente||!fecha) return;
+  const sigla = cliente.replace(/[^A-Za-zÁÉÍÓÚáéíóú\s]/g,'')
+    .split(/\s+/).map(w=>w[0]||'').join('').toUpperCase().substring(0,3)||
+    cliente.replace(/\s/g,'').toUpperCase().substring(0,3);
+  const p = fecha.split('-');
+  document.getElementById('f_ref').value = 'MNT-'+p[0]+'-'+p[1]+p[2]+'-'+sigla;
+}
+
+// ============================================================
+// VALIDACIÓN
+// ============================================================
+const REQUIRED = [
+  {id:'f_cliente',   label:'Cliente',        sec:'sec-datos'},
+  {id:'f_fecha',     label:'Fecha',          sec:'sec-datos'},
+  {id:'f_tecnico',   label:'Técnico',        sec:'sec-datos'},
+  {id:'e_kvar',      label:'Potencia kVAr',  sec:'sec-equipo'},
+  {id:'e_escalones', label:'Escalonamiento', sec:'sec-equipo'},
+  {id:'m_cosphi',    label:'cos φ',          sec:'sec-medidas'},
+];
+const RECOMMENDED = [
+  {id:'m_thdi',      label:'THDI',           sec:'sec-medidas'},
+  {id:'e_ncond',     label:'Nº condensadores', sec:'sec-equipo'},
+];
+
+function validate() {
+  const missing = REQUIRED.filter(f=>!val(f.id));
+  const warn    = RECOMMENDED.filter(f=>!val(f.id));
+
+  // Colorear bordes
+  REQUIRED.forEach(f=>{
+    const el=document.getElementById(f.id);
+    if(el) el.classList.toggle('required-empty', !val(f.id));
+  });
+
+  // Barra val
+  const chips = document.getElementById('val-chips');
+  let html = '';
+  if(!missing.length && !warn.length) {
+    html = '<span class="val-ok">✅ Todo listo — pulsa GENERAR PDF</span>';
+  } else {
+    missing.forEach(f=>{ html+=`<span class="val-falta" onclick="scrollToSec('${f.sec}')" title="Ir al campo">⛔ ${f.label}</span>`; });
+    warn.forEach(f=>{    html+=`<span class="val-aviso" onclick="scrollToSec('${f.sec}')" title="Ir al campo">⚠ ${f.label}</span>`; });
+  }
+  chips.innerHTML = html;
+
+  // Badges de sección
+  setBadge('badge-datos',   REQUIRED.filter(f=>f.sec==='sec-datos'));
+  setBadge('badge-equipo',  REQUIRED.filter(f=>f.sec==='sec-equipo'));
+  setBadge('badge-medidas', REQUIRED.concat(RECOMMENDED).filter(f=>f.sec==='sec-medidas'));
+
+  // Barra inferior
+  const bar = document.getElementById('bar-estado');
+  if(!missing.length) {
+    bar.innerHTML = '<span class="ok">✅ Listo para generar</span>' + (warn.length?` · <span class="warn">⚠ Recomendado: ${warn.map(w=>w.label).join(', ')}</span>`:'');
+  } else {
+    bar.innerHTML = `<span class="warn">⚠ Faltan: ${missing.map(m=>m.label).join(', ')}</span> — pulsa el chip rojo para ir al campo`;
+  }
+
+  return missing.length === 0;
+}
+
+function val(id) { return (document.getElementById(id)||{value:''}).value.trim(); }
+
+function setBadge(badgeId, fields) {
+  const el = document.getElementById(badgeId);
+  if(!el) return;
+  const missing = fields.filter(f=>!val(f.id));
+  if(!missing.length) { el.className='sec-badge badge-ok'; el.textContent='✓'; }
+  else { el.className='sec-badge badge-inc'; el.textContent='⛔ '+missing.map(f=>f.label).join(', '); }
+}
+
+function scrollToSec(secId) {
+  const el = document.getElementById(secId);
+  if(!el) return;
+  // Abrir sección si está colapsada
+  const hdr = el.querySelector('.sec-h');
+  const body = el.querySelector('.sec-b');
+  if(hdr && hdr.classList.contains('collapsed')) { hdr.classList.remove('collapsed'); body && body.classList.remove('collapsed'); }
+  el.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+// ============================================================
+// MEDIDAS
+// ============================================================
+function renderMedGrid(ids){
+  const visible=ids?MEDIDAS.filter(m=>ids.includes(m.id)):MEDIDAS;
+  // Labels específicos por controlador para ciertos campos
+  const labelOverrides={DUCATI_R5:{m_dkvar:'Potencia reactiva (kVAr)'}};
+  const overrides=(labelOverrides[gv('controlador_tipo')])||{};
+  document.getElementById('med-grid').innerHTML = visible.map(m=>`
+    <div class="mc-f">
+      <div class="lbl">${overrides[m.id]||m.label}</div>
+      <div class="row">
+        <div class="sem" id="sem-${m.id}"></div>
+        <input type="text" inputmode="decimal" id="${m.id}" placeholder="—" oninput="evalSem('${m.id}');validate();autoEstado();">
+        <span class="unit">${m.unidad}</span>
+      </div>
+      <div class="hint">${m.hint}</div>
+    </div>`).join('');
+}
+
+function pn(val){ return parseFloat((val||'').toString().replace(',','.')); }
+
+// ============================================================
+// GESTIÓN DE CONTROLADOR
+// ============================================================
+function getCtrl(){ return CONTROLLERS[gv('controlador_tipo')] || CONTROLLERS.LOVATO_DCRL8; }
+
+function onControladorChange(){
+  const ctrl=getCtrl();
+  // Actualizar campo CONTROLADOR siempre con el nombre del controlador seleccionado
+  const ec=document.getElementById('e_controlador');
+  if(ec) ec.value=ctrl.nombre;
+  // Actualizar título de sección de medidas
+  const mst=document.getElementById('med-sec-title');
+  if(mst) mst.innerHTML='📊 3. Lecturas de pantalla — '+ctrl.nombre+' <span class="req">*</span>';
+  // Info de pasos en la barra del selector
+  const ci=document.getElementById('ctrl-info');
+  if(ci) ci.textContent='Hasta '+ctrl.pasos_max+' pasos · '+ctrl.reset_info.split('.')[0];
+  // Alarmas
+  renderAlarmSelect(ctrl);
+  // Parámetros
+  renderParamsSection(ctrl);
+  // Medidas
+  renderMedGrid(ctrl.med_ids);
+  // Checklist con items del controlador
+  const allChecks = [...(ctrl.checks_extra||[]), ...CHECKS_COMUNES];
+  renderChecklist(allChecks.map((t,i)=>({id:i,texto:t,hecho:false})));
+  validate();
+}
+
+function renderAlarmSelect(ctrl){
+  const sel=document.getElementById('alarma_sel');
+  if(!sel)return;
+  const alarmas=ctrl.alarmas||{};
+  const short_name={
+    LOVATO_DCRL8: {'A01':'Subcompensación','A02':'Sobrecompensación','A03':'Corriente baja','A04':'Corriente alta','A05':'Tensión baja','A06':'Tensión alta','A07':'Sobrecarga condensadores','A08':'Temperatura alta','A09':'Microcorte','A10':'THDV alta','A11':'THDI alta','A12':'Solicitud mantenimiento','A13':'Fallo de paso'},
+    CIRCUTOR_MAX6: {E01:'Corriente baja / TC no conectado',E02:'Sobrecompensación',E03:'Subcompensación',E04:'Sobrecorriente',E05:'Sobretensión'},
+    CIRCUTOR_MAX12:{E01:'Corriente baja / TC no conectado',E02:'Sobrecompensación',E03:'Subcompensación',E04:'Sobrecorriente',E05:'Sobretensión'},
+    DUCATI_R5:    {'THHV':'Sobretensión','THHA':'Sobrecorriente','THLV':'Tensión baja','THLA':'Corriente baja','THD%A':'THDI elevada (desconecta banco)','THD%V':'THDV elevada (desconecta banco)','TMP°C':'Temperatura elevada','HIcosfi':'Sobredesfase / Sobrecompensación','LOcosfi':'Ausencia corrección / Subcompensación','MICRO':'Microinterrupción de red','BATT':'Rotura de batería de condensadores','MAX':'Máximo introducciones de escalón'},
+    GENERICO:     {},
+  };
+  const tipo=gv('controlador_tipo')||'LOVATO_DCRL8';
+  const names=short_name[tipo]||{};
+  const opts=Object.keys(alarmas).map(code=>`<option value="${code}">${code} — ${names[code]||code}</option>`).join('');
+  sel.innerHTML='<option value="">— Sin alarmas —</option>'+opts;
+  document.getElementById('alm-desc').style.display='none';
+}
+
+function renderParamsSection(ctrl){
+  const params=ctrl.params||[];
+  const cont=document.getElementById('params-content');
+  if(!cont)return;
+  if(!params.length){cont.innerHTML='<p style="color:#64748b;font-size:12px;font-style:italic;padding:4px 0;">Sin parámetros definidos para este controlador.</p>';return;}
+  let html='<div class="g4">';
+  params.forEach(p=>{
+    html+=`<div class="campo${p.span2?' sp2':''}"><label>${p.label}</label><input id="${p.id}" type="text" placeholder="${p.ph}"></div>`;
+  });
+  html+='</div>';
+  cont.innerHTML=html;
+  // Actualizar título de sección
+  const t=document.getElementById('params-sec-title');
+  if(t) t.innerHTML='⚙ 6. Parámetros — '+ctrl.nombre+' <span style="font-size:9px;opacity:.7;">(OPCIONAL — solo si accedes a programación)</span>';
+}
+
+function evalSem(id) {
+  const raw = (document.getElementById(id)||{value:''}).value;
+  const v = pn(raw);
+  const s = document.getElementById('sem-'+id);
+  if(isNaN(v)||raw.trim()===''){s.className='sem';return;}
+  let c='';
+  if(id==='m_dkvar'){const a=Math.abs(v);c=a<=0.5?'ok':a<=2?'wn':'al';}
+  else if(id==='m_wpf'||id==='m_cosphi'){c=v>=0.95?'ok':v>=0.90?'wn':'al';}
+  else if(id==='m_v'){c=(v>=380&&v<=420)?'ok':(v>=360&&v<=440)?'wn':'al';}
+  else if(id==='m_a'){const an=parseFloat(document.getElementById('e_anom').value);if(!isNaN(an)&&an>0){const p=(v/an)*100;c=p<=90?'ok':p<=110?'wn':'al';}else c='wn';}
+  else if(id==='m_ccu'){c=v<=90?'ok':v<=110?'wn':v<=125?'al':'cr';}
+  else if(id==='m_temp'){c=v<=45?'ok':v<=60?'wn':'cr';}
+  else if(id==='m_thdv'){c=v<=5?'ok':v<=8?'wn':'al';}
+  else if(id==='m_thdi'){c=v<=15?'ok':v<=25?'wn':'al';}
+  s.className='sem '+c;
+}
+
+function getSemCls(id){
+  const e=document.getElementById('sem-'+id);
+  if(!e||e.className==='sem') return '';
+  for(const c of['ok','wn','al','cr']) if(e.classList.contains(c)) return c;
+  return '';
+}
+
+// ============================================================
+// ESCALONES / NOMINAL
+// ============================================================
+function calcNominal(){
+  const k=parseFloat(document.getElementById('e_kvar').value);
+  const v=parseFloat(document.getElementById('e_tension').value)||400;
+  document.getElementById('e_anom').value=(!isNaN(k)&&k>0)?((k*1000)/(Math.sqrt(3)*v)).toFixed(1):'';
+}
+
+function parsePasos(str){
+  const parts = (str||'').trim().split(/[+;\s]+/).filter(Boolean);
+  return parts.map(x=>{
+    if(!/^\d+(?:[,.]\d+)?$/.test(x)) return NaN;
+    const n=Number(x.replace(',','.'));
+    return Number.isFinite(n)&&n>0?n:NaN;
+  }).filter(n=>!isNaN(n));
+}
+
+function fmtPaso(n){
+  return Number.isInteger(n) ? String(n) : String(Number(n.toFixed(3))).replace('.',',');
+}
+
+function renderEscalones(){
+  const val=document.getElementById('e_escalones').value;
+  const c=document.getElementById('ev-vis');
+  const pasos=parsePasos(val);
+  if(!pasos.length){c.innerHTML='';return;}
+  const tot=pasos.reduce((a,b)=>a+b,0);
+  const totalTxt=fmtPaso(tot);
+  c.innerHTML=pasos.map((p,i)=>`<div class="ev-b"><div class="dot"></div>P${i+1}: <b>${fmtPaso(p)} kVAr</b></div>`).join('')
+    +`<div class="ev-b" style="background:#f1f5f9;border-color:#cbd5e1;color:#64748b;"><b>Total: ${totalTxt} kVAr</b></div>`;
+}
+
+// ============================================================
+// ALARMAS
+// ============================================================
+function updateAlmDesc(){
+  const v=document.getElementById('alarma_sel').value;
+  const d=document.getElementById('alm-desc');
+  const ctrl=getCtrl();
+  const desc=(ctrl.alarmas||{})[v]||'';
+  if(v&&desc){d.style.display='block';d.innerHTML='<b>'+escapeHtml(v)+'</b> — '+escapeHtml(desc);}
+  else d.style.display='none';
+}
+
+// ============================================================
+// CHECKLIST
+// ============================================================
+function renderChecklist(items){checks=normalizeChecks(items);refreshChk();}
+function refreshChk(){
+  checks=normalizeChecks(checks);
+  document.getElementById('chk-list').innerHTML=checks.map(c=>`
+    <div class="chk">
+      <input type="checkbox" id="cb${c.id}" ${c.hecho?'checked':''} onchange="toggleChk(${c.id})">
+      <label for="cb${c.id}">${escapeHtml(c.texto)}</label>
+      <button class="del" onclick="delChk(${c.id})">✕</button>
+    </div>`).join('');
+}
+function toggleChk(id){const c=checks.find(x=>x.id===id);if(c)c.hecho=!c.hecho;refreshChk();}
+function delChk(id){checks=checks.filter(x=>x.id!==id);refreshChk();}
+function addChk(){
+  const i=document.getElementById('new-chk');const t=i.value.trim();if(!t)return;
+  const nid=checks.length?Math.max(...checks.map(c=>c.id))+1:0;
+  checks.push({id:nid,texto:t,hecho:false});i.value='';refreshChk();
+}
+
+// ============================================================
+// AUTO-GENERAR OBSERVACIONES
+// ============================================================
+function fmtN(v,dec){const n=pn(v);if(isNaN(n))return v||'—';return n.toFixed(dec!==undefined?dec:(Math.abs(n)<10?2:1)).replace('.',',');}
+
+function autoGenObs() {
+  const d = recogerDatos();
+  const ps = [];
+  const estado = d.estado_gen;
+  if(estado==='CONFORME')    ps.push('El equipo se encuentra en buen estado general.');
+  else if(estado==='ADVERTENCIA') ps.push('El equipo presenta incidencias que requieren atención.');
+  else ps.push('El equipo presenta problemas críticos que requieren intervención urgente.');
+
+  const cp=pn(d.m_cosphi), tipo=d.m_cosphi_tipo||'CAP', dk=pn(d.m_dkvar);
+  if(!isNaN(cp)) ps.push('Factor de potencia cos φ = '+fmtN(cp,2)+' '+tipo+((!isNaN(dk))?', corrección residual ΔkVAr = '+fmtN(dk,2)+' kVAr.':'.'));
+
+  const v=pn(d.m_v), a=pn(d.m_a), an=pn(d.e_anom);
+  if(!isNaN(v)){
+    let t='Tensión de red '+fmtN(v,0)+' V';
+    if(!isNaN(a)){t+=', corriente de línea '+fmtN(a,1)+' A';if(!isNaN(an)&&an>0)t+=' ('+Math.round((a/an)*100)+'% del nominal)';}
+    ps.push(t+'.');
+  }
+
+  const wpf=pn(d.m_wpf);
+  if(!isNaN(wpf)&&wpf<0.95) ps.push('WPF (factor potencia semanal) '+fmtN(wpf,2)+' — inferior al cos φ instantáneo, indica periodos de menor corrección (posiblemente nocturno o fin de semana).');
+
+  const ccu=pn(d.m_ccu);
+  if(!isNaN(ccu)&&ccu>90) ps.push('%C.CU = '+fmtN(ccu,0)+'% — corriente de condensadores '+(ccu>110?'al límite':'próxima al límite')+' del nominal (alarma A07 en 125%).');
+
+  const temp=pn(d.m_temp);
+  if(!isNaN(temp)) ps.push('Temperatura interior '+fmtN(temp,0)+'°C — '+(temp>45?'elevada, verificar ventilación.':'normal.'));
+
+  const thdi=pn(d.m_thdi);
+  if(!isNaN(thdi)){
+    if(thdi>25)      ps.push('THDI '+fmtN(thdi,1)+'% — distorsión armónica de corriente elevada. Cargas no lineales presentes en la instalación (variadores, rectificadores...).');
+    else if(thdi>15) ps.push('THDI '+fmtN(thdi,1)+'% — distorsión armónica de corriente moderada. Vigilar evolución.');
+    else             ps.push('THDI '+fmtN(thdi,1)+'% — armónicos dentro de rango aceptable.');
+  }
+
+  const inspCond=d.checks&&d.checks.some(c=>c.hecho&&c.texto.toLowerCase().includes('condensador'));
+  if(inspCond) ps.push('Inspección visual de los '+( d.e_ncond||'')+' condensadores sin anomalías (sin abombamientos, fugas ni deformaciones).');
+
+  const inspFus=d.checks&&d.checks.some(c=>c.hecho&&c.texto.toLowerCase().includes('fusib'));
+  if(inspFus) ps.push('Fusibles de protección verificados — todos en correcto estado.');
+
+  const limpieza=d.checks&&d.checks.some(c=>c.hecho&&c.texto.toLowerCase().includes('limpieza'));
+  if(limpieza) ps.push('Limpieza interior del armario realizada.');
+
+  if(d.alarma){
+    const acc=d.alarma_accion;
+    ps.push('Alarma '+d.alarma+' resuelta'+(acc?': '+acc+'.':'.'));
+  }
+
+  const AN_LABELS={an_ruido:'Ruido anormal detectado (contactores/condensadores)',an_olor:'Olor a quemado o calor presente en el armario',an_temp:'Temperatura elevada al tacto en el armario',an_bornes:'Bornes con indicios de calentamiento (oxidación/decoloración)',an_abomb:'Posible inicio de abombamiento en condensadores — revisar en próxima visita',an_cable:'Cableado con deterioro de aislamiento',an_humedad:'Presencia de humedad interior en el armario',an_filtros:'Filtros de ventilación sucios u obstruidos',an_vibracion:'Vibraciones excesivas detectadas en el armario'};
+  if(d.an_checks&&d.an_checks.length) ps.push('⚠ Incidencias detectadas en visita: '+d.an_checks.map(a=>AN_LABELS[a]||a).join('; ')+'.');
+  if(d.an_txt) ps.push(d.an_txt);
+
+  document.getElementById('obs_gen').value = ps.join('\n');
+}
+
+// ============================================================
+// AUTO-GENERAR RECOMENDACIONES
+// ============================================================
+function autoGenRec() {
+  const d = recogerDatos();
+  const recs = [];
+  let n = 1;
+
+  const thdi=pn(d.m_thdi);
+  const p44=(d.p44||'').toUpperCase();
+  if(!isNaN(thdi)&&thdi>15){
+    if(p44==='OFF'||!d.p44) recs.push(n+++'. INMEDIATO — Activar protección THDI: configurar P.44 = 30% (umbral alarma A11) para vigilancia automática de armónicos de corriente.');
+    if(thdi>25){
+      recs.push(n+++'. CORTO PLAZO — Análisis Power Quality: medir espectro armónico completo para identificar fuentes dominantes (5ª y 7ª armónica típicas en variadores de frecuencia y rectificadores).');
+      recs.push(n+++'. MEDIO PLAZO — Reactancias de desintonización 7%: instalar inductancias en serie con cada paso de condensadores. Reducirá %C.CU, evitará resonancias y aumentará vida útil del banco.');
+    }
+  }
+
+  const wpf=pn(d.m_wpf);
+  if(!isNaN(wpf)&&wpf<0.92) recs.push(n+++'. CONFIGURACIÓN — Revisar P.19 (cos φ referencia) y P.10 (sensibilidad) para optimizar la corrección en periodos de baja carga (horas nocturnas, fin de semana).');
+
+  const ccu=pn(d.m_ccu);
+  if(!isNaN(ccu)&&ccu>100) recs.push(n+++'. VIGILANCIA — Registrar %C.CU en próxima revisión. Si ≥ 110% de forma continuada, planificar sustitución preventiva de condensadores o instalar reactancias de desintonización.');
+
+  const cp=pn(d.m_cosphi);
+  if(!isNaN(cp)&&cp<0.95) recs.push(n+++'. FACTOR DE POTENCIA — cos φ = '+fmtN(cp,2)+' inferior al objetivo (0,95). Revisar configuración del regulador y potencia reactiva instalada.');
+
+  recs.push(n+++'. MANTENIMIENTO PERIÓDICO — En próxima revisión: registrar contador de maniobras P.54 y horas P.45, apretar bornes de potencia y verificar escalones en modo MAN.');
+
+  if(d.prox_rev) recs.push('Próxima revisión recomendada: '+fmtFechaLarga(d.prox_rev)+'.');
+
+  document.getElementById('obs_rec').value = recs.length ? recs.join('\n\n') : 'Equipo en correcto estado. Continuar con mantenimiento preventivo periódico.';
+}
+
+function fmtFechaLarga(iso){if(!iso)return '—';const dt=new Date(iso+'T00:00:00');return dt.toLocaleDateString('es-ES',{day:'numeric',month:'long',year:'numeric'});}
+function fmtFecha(iso){if(!iso)return '—';const[y,m,d]=iso.split('-');return d+' / '+m+' / '+y;}
+
+// ============================================================
+// RECOGER DATOS
+// ============================================================
+function recogerDatos(){
+  const d={};
+  ['cliente','ubicacion','fecha','tecnico','empresa','ref'].forEach(k=>d[k]=gv('f_'+k));
+  ['fabricante','modelo','serie','ano','kvar','tension','hz','anom','escalones','ncond','controlador','normativa'].forEach(k=>{const v=gv('e_'+k);d[k]=v;d['e_'+k]=v;});
+  MEDIDAS.forEach(m=>{d[m.id]=gv(m.id);d['sc_'+m.id]=getSemCls(m.id);});
+  d.m_cosphi_tipo=gv('m_cosphi_tipo')||'CAP';
+  d.m_modo_inicio=gv('m_modo_inicio')||'AUT';
+  d.m_modo_cierre=gv('m_modo_cierre')||'AUT';
+  // params ya recogidos por ALL_PARAM_IDS arriba
+  d.controlador_tipo=gv('controlador_tipo')||'LOVATO_DCRL8';
+  ALL_PARAM_IDS.forEach(k=>{const v=gv(k);if(v)d[k]=v;});
+  d.alarma=gv('alarma_sel'); d.alarma_accion=gv('alarma_accion');
+  const AN_IDS=['an_ruido','an_olor','an_temp','an_bornes','an_abomb','an_cable','an_humedad','an_filtros','an_vibracion'];
+  d.an_checks=AN_IDS.filter(id=>(document.getElementById(id)||{}).checked);
+  d.an_txt=gv('an_txt');
+  d.obs_gen=gv('obs_gen'); d.obs_rec=gv('obs_rec');
+  d.prox_rev=gv('prox_rev'); d.estado_gen=gv('estado_gen')||'CONFORME';
+  d.checks=JSON.parse(JSON.stringify(checks));
+  return d;
+}
+function gv(id){return ((document.getElementById(id)||{value:''}).value||'').trim();}
+
+// ============================================================
+// AUTO-DETECTAR ESTADO GENERAL
+// Lógica: el sello refleja si el banco cumple su FUNCIÓN PRIMARIA
+// (corregir factor de potencia). THDI y WPF van al diagnóstico
+// pero no cambian el sello si cos φ es correcto.
+// ============================================================
+function autoEstado() {
+  const ctrl=getCtrl();
+  const cp   = pn(gv('m_cosphi'));
+  const ccu  = pn(gv('m_ccu'));
+  const temp = pn(gv('m_temp'));
+  const thdi = pn(gv('m_thdi'));
+  const sel  = document.getElementById('estado_gen');
+  if(!sel) return;
+  // CRÍTICO
+  if((!isNaN(cp) && cp < 0.90) ||
+     (ctrl.tiene.temp && !isNaN(temp) && temp >= 60) ||
+     (ctrl.tiene.ccu  && !isNaN(ccu)  && ccu  >= 125)) { sel.value='CRÍTICO'; return; }
+  // ADVERTENCIA
+  if((!isNaN(cp) && cp < 0.95) ||
+     (ctrl.tiene.temp && !isNaN(temp) && temp >= 50) ||
+     (ctrl.tiene.ccu  && !isNaN(ccu)  && ccu  >= 110 && !isNaN(thdi) && thdi >= 25)) { sel.value='ADVERTENCIA'; return; }
+  sel.value='CONFORME';
+}
+
+// ============================================================
+// PERFILES
+// ============================================================
+function getPerfiles(){return readJsonArray('sgd_perfiles');}
+function setPerfiles(p){try{localStorage.setItem('sgd_perfiles',JSON.stringify(p));}catch(err){alert('No se pudieron guardar perfiles: '+err.message);}}
+
+function guardarPerfil(){
+  const n=prompt('Nombre del perfil (ej: "CARDIVA BCC30"):');if(!n)return;
+  const nombre=n.trim();if(!nombre)return;
+  const d=recogerDatos();const all=getPerfiles();
+  const id=Date.now();
+  all.push({...d,id,nombre});setPerfiles(all);
+  perfilActivoId=id;
+  renderPerfilChips();renderPfDet();updatePerfilActivoUI();alert('Perfil "'+nombre+'" guardado.');
+}
+
+function updatePerfilActivoUI(){
+  const btn=document.getElementById('btn-update-profile');
+  const lbl=document.getElementById('perfil-activo');
+  const p=getPerfiles().find(x=>Number(x.id)===Number(perfilActivoId));
+  if(btn) btn.disabled=!p;
+  if(lbl) lbl.textContent=p?'Perfil cargado: '+(p.nombre||'Perfil'):'Sin perfil cargado';
+}
+
+function actualizarPerfilActivo(){
+  if(!perfilActivoId){alert('Primero carga un perfil para poder actualizarlo.');return;}
+  actualizarPerfil(perfilActivoId);
+}
+
+function actualizarPerfil(id){
+  const all=getPerfiles();
+  const idx=all.findIndex(x=>Number(x.id)===Number(id));
+  if(idx<0){alert('No se encuentra el perfil.');return;}
+  const old=all[idx];
+  const nombrePrompt=prompt('Nombre del perfil:', old.nombre||'Perfil');
+  if(nombrePrompt===null)return;
+  const nombre=nombrePrompt.trim()||old.nombre||'Perfil';
+  if(!confirm('Actualizar el perfil "'+nombre+'" con los datos actuales del formulario?'))return;
+  const d=recogerDatos();
+  all[idx]={...d,id:Number(old.id),nombre};
+  setPerfiles(all);
+  perfilActivoId=Number(old.id);
+  renderPerfilChips();renderPfDet();updatePerfilActivoUI();
+  alert('Perfil "'+nombre+'" actualizado.');
+}
+
+function cargarPerfil(id){
+  const p=getPerfiles().find(x=>Number(x.id)===Number(id));if(!p)return;
+  // 1. Tipo de controlador primero (re-renderiza medidas, alarmas, params)
+  if(p.controlador_tipo){
+    const sel=document.getElementById('controlador_tipo');
+    if(sel)sel.value=p.controlador_tipo;
+  }
+  onControladorChange();
+  // 2. Datos fijos del cliente/instalación
+  ['cliente','ubicacion'].forEach(k=>{const el=document.getElementById('f_'+k);if(el&&p[k])el.value=p[k];});
+  // 3. Datos fijos del equipo
+  ['fabricante','modelo','serie','ano','kvar','tension','hz','escalones','ncond','controlador','normativa'].forEach(k=>{const el=document.getElementById('e_'+k);if(el&&p[k]!==undefined)el.value=p[k];});
+  // 4. Parámetros del controlador (los inputs ya están renderizados por onControladorChange)
+  ALL_PARAM_IDS.forEach(k=>{const el=document.getElementById(k);if(el&&p[k]!==undefined)el.value=p[k];});
+  // 5. Configuración del regulador
+  if(p.m_cosphi_tipo){const el=document.getElementById('m_cosphi_tipo');if(el)el.value=p.m_cosphi_tipo;}
+  if(p.m_modo_inicio){const el=document.getElementById('m_modo_inicio');if(el)el.value=p.m_modo_inicio;}
+  if(p.m_modo_cierre){const el=document.getElementById('m_modo_cierre');if(el)el.value=p.m_modo_cierre;}
+  // 6. Resetear datos de visita
+  MEDIDAS.forEach(m=>{const el=document.getElementById(m.id);if(el)el.value='';});
+  document.querySelectorAll('.sem').forEach(s=>s.className='sem');
+  document.getElementById('f_fecha').value=todayLocalIso();
+  perfilActivoId=Number(id);
+  autoRef();calcNominal();renderEscalones();
+  showTab('nueva',document.querySelector('.tab-btn'));updatePerfilActivoUI();validate();
+}
+
+function eliminarPerfil(id){
+  const p=getPerfiles().find(x=>Number(x.id)===Number(id));
+  if(p&&!confirm('Eliminar el perfil "'+(p.nombre||'Perfil')+'"?'))return;
+  setPerfiles(getPerfiles().filter(x=>Number(x.id)!==Number(id)));
+  if(Number(perfilActivoId)===Number(id))perfilActivoId=null;
+  renderPerfilChips();renderPfDet();updatePerfilActivoUI();
+}
+
+function renderPerfilChips(){
+  const p=getPerfiles();const c=document.getElementById('pf-chips');
+  if(!p.length){c.innerHTML='<span style="font-size:11px;color:#94a3b8;font-style:italic;">Sin perfiles guardados</span>';return;}
+  c.innerHTML=p.map(pf=>{
+    const id=Number(pf.id);
+    if(!Number.isFinite(id)) return '';
+    return `<div class="chip" onclick="cargarPerfil(${id})">⚙ ${escapeHtml(pf.nombre||'Perfil')} <span class="x" onclick="event.stopPropagation();eliminarPerfil(${id})">✕</span></div>`;
+  }).join('');
+}
+
+function renderPfDet(){
+  const p=getPerfiles();const c=document.getElementById('pf-det');
+  const shown=v=>escapeHtml(v===undefined||v===''?'—':v);
+  if(!p.length){c.innerHTML='<div class="vacio">Sin perfiles. Rellena el formulario y guarda el equipo.</div>';return;}
+  c.innerHTML=p.map(pf=>{
+    const id=Number(pf.id);
+    if(!Number.isFinite(id)) return '';
+    return `<div class="pf-card"><div class="pf-h"><span>⚙ ${escapeHtml(pf.nombre||'Perfil')}</span><div style="display:flex;gap:6px;"><button class="btn btn-g" style="padding:3px 10px;font-size:11px;" onclick="cargarPerfil(${id})">Cargar</button><button class="btn btn-o" style="padding:3px 10px;font-size:11px;color:var(--texto);border-color:var(--borde);background:#fff;" onclick="actualizarPerfil(${id})">Actualizar</button><button class="btn" style="padding:3px 10px;font-size:11px;background:#b01c1c;color:#fff;" onclick="eliminarPerfil(${id})">Eliminar</button></div></div><div class="pf-b"><div class="g4" style="gap:6px;font-size:11px;"><div><b>Fabricante:</b> ${shown(pf.fabricante)}</div><div><b>Modelo:</b> ${shown(pf.modelo)}</div><div><b>Nº Serie:</b> ${shown(pf.serie)}</div><div><b>kVAr:</b> ${shown(pf.kvar)}</div><div><b>Escalones:</b> ${shown(pf.escalones)}</div><div><b>Tensión:</b> ${shown(pf.tension)} V</div><div><b>Controlador:</b> ${shown(pf.controlador)}</div><div><b>Año:</b> ${shown(pf.ano)}</div></div></div></div>`;
+  }).join('');
+}
+
+// ============================================================
+// HISTORIAL
+// ============================================================
+function getHistorial(){return readJsonArray('sgd_historial');}
+function setHistorial(h){try{localStorage.setItem('sgd_historial',JSON.stringify(h));}catch(err){alert('No se pudo guardar el historial: '+err.message);}}
+
+function guardarHistorial(){
+  if(!validate()){alert('Rellena los campos requeridos (marcados en rojo) antes de guardar.');scrollToSec('sec-datos');return;}
+  const d=recogerDatos();
+  const h=getHistorial();h.unshift({id:Date.now(),...d});setHistorial(h);
+  alert('Intervención guardada en el historial.');
+}
+
+function renderHistorial(){
+  const q=(document.getElementById('hist-q')||{value:''}).value.toLowerCase();
+  let h=getHistorial();
+  if(q)h=h.filter(x=>(x.cliente||'').toLowerCase().includes(q)||(x.ubicacion||'').toLowerCase().includes(q));
+  const c=document.getElementById('hist-lista');
+  if(!h.length){c.innerHTML='<div class="vacio">No hay intervenciones registradas.</div>';return;}
+  c.innerHTML=h.map(item=>{
+    const id=Number(item.id);
+    if(!Number.isFinite(id)) return '';
+    const dt=new Date((item.fecha||'2000-01-01')+'T00:00:00');
+    const dia=String(dt.getDate()).padStart(2,'0');
+    const mes=dt.toLocaleDateString('es-ES',{month:'short'}).replace('.','');
+    const ano=dt.getFullYear();
+    const cpRaw=pn(item.m_cosphi);
+    const cp=!isNaN(cpRaw)?fmtN(cpRaw,2):'—';
+    const est=['CONFORME','ADVERTENCIA','CRÍTICO'].includes(item.estado_gen)?item.estado_gen:'CONFORME';
+    const ec=est==='CONFORME'?'#1a7a3c':est==='ADVERTENCIA'?'#8a6000':'#b01c1c';
+    const modelo=escapeHtml(item.e_modelo||'');
+    const kvar=escapeHtml(item.e_kvar?item.e_kvar+' kVAr':'');
+    return `<div class="hist-card" onclick="cargarDesdeHist(${id})">
+      <div class="hist-fecha"><div class="d">${dia}</div><div class="m">${mes} ${ano}</div></div>
+      <div class="hist-info">
+        <div class="cl">${escapeHtml(item.cliente||'Sin cliente')} <small style="color:#94a3b8;font-weight:400;">— ${escapeHtml(item.ubicacion||'')}</small></div>
+        <div class="dt">${modelo} ${kvar} · ${escapeHtml(item.tecnico||'')} · Ref: ${escapeHtml(item.ref||'—')}</div>
+        <div style="margin-top:3px;"><span style="background:${ec};color:#fff;border-radius:10px;padding:1px 7px;font-size:10px;font-weight:700;">${est}</span></div>
+      </div>
+      <button class="btn" style="background:#b01c1c;color:#fff;padding:4px 9px;font-size:11px;" onclick="event.stopPropagation();eliminarHistorial(${id})">Eliminar</button>
+      <div class="hist-cp">${cp}<div class="sub">cos φ</div></div>
+    </div>`;
+  }).join('');
+}
+
+function cargarDesdeHist(id){
+  const item=getHistorial().find(x=>Number(x.id)===Number(id));if(!item)return;
+  perfilActivoId=null;
+  cargarDatos(item);
+  updatePerfilActivoUI();
+  showTab('nueva',document.querySelector('.tab-btn'));
+}
+
+function eliminarHistorial(id){
+  const h=getHistorial();
+  const item=h.find(x=>Number(x.id)===Number(id));
+  const ref=item?(item.ref||item.cliente||'esta intervención'):'esta intervención';
+  if(!confirm('Eliminar '+ref+' del historial?'))return;
+  setHistorial(h.filter(x=>Number(x.id)!==Number(id)));
+  renderHistorial();
+}
+
+// ============================================================
+// ANOMALÍAS — HELPER
+// ============================================================
+function restoreAnomalias(d){
+  const AN_IDS=['an_ruido','an_olor','an_temp','an_bornes','an_abomb','an_cable','an_humedad','an_filtros','an_vibracion'];
+  AN_IDS.forEach(id=>{const el=document.getElementById(id);if(el)el.checked=(d.an_checks||[]).includes(id);});
+  const txt=document.getElementById('an_txt');if(txt)txt.value=d.an_txt||'';
+}
+
+// ============================================================
+// LIMPIAR / EXPORT / IMPORT
+// ============================================================
+function limpiarForm(){
+  if(!confirm('¿Limpiar todos los campos?'))return;
+  document.querySelectorAll('#tab-nueva input[type=text],#tab-nueva input[type=number],#tab-nueva input[type=date],#tab-nueva textarea').forEach(el=>{
+    if(el.id==='f_tecnico')el.value='Vicente Trancón';
+    else if(el.id==='f_empresa')el.value='Sagarde S.L. Montajes Eléctricos';
+    else if(el.id==='e_tension')el.value='400';
+    else if(el.id==='e_hz')el.value='50';
+    else el.value='';
+  });
+  // Resetear selects EXCEPTO el tipo de controlador (el técnico sigue con el mismo equipo)
+  document.querySelectorAll('#tab-nueva select').forEach(el=>{if(el.id!=='controlador_tipo')el.selectedIndex=0;});
+  document.querySelectorAll('.sem').forEach(s=>s.className='sem');
+  document.getElementById('ev-vis').innerHTML='';
+  document.getElementById('alm-desc').style.display='none';
+  document.getElementById('f_fecha').value=todayLocalIso();
+  ['an_ruido','an_olor','an_temp','an_bornes','an_abomb','an_cable','an_humedad','an_filtros','an_vibracion'].forEach(id=>{const el=document.getElementById(id);if(el)el.checked=false;});
+  const ant=document.getElementById('an_txt');if(ant)ant.value='';
+  onControladorChange(); // recarga medidas/alarmas/params/checklist del controlador activo
+  perfilActivoId=null;
+  updatePerfilActivoUI();
+  validate();
+}
+
+function exportJSON(){
+  const d=recogerDatos();
+  const blob=new Blob([JSON.stringify(d,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  const cl=((d.cliente||'informe').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9_-]+/gi,'_').replace(/^_+|_+$/g,'').toLowerCase())||'informe';
+  const url=URL.createObjectURL(blob);
+  a.href=url;a.download='sgd_'+cl+'_'+(d.fecha||'sin-fecha')+'.json';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+function importJSON(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=ev=>{try{perfilActivoId=null;cargarDatos(JSON.parse(ev.target.result));updatePerfilActivoUI();}catch(err){alert('Error JSON: '+err.message);}};
+  r.readAsText(f,'utf-8');e.target.value='';
+}
+
+function exportDatosApp(){
+  const data={tipo:'sagarde_app_informes_datos',version:1,exportado:todayLocalIso(),perfiles:getPerfiles(),historial:getHistorial()};
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='app_informes_datos.json';
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+function importDatosApp(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{
+    try{
+      const data=JSON.parse(ev.target.result);
+      const perfiles=Array.isArray(data.perfiles)?data.perfiles:[];
+      const historial=Array.isArray(data.historial)?data.historial:[];
+      if(!perfiles.length&&!historial.length&&!confirm('El archivo no contiene perfiles ni historial. ¿Quieres vaciar los datos actuales?'))return;
+      if(!confirm('Importar datos de app reemplazará los perfiles e historial actuales. ¿Continuar?'))return;
+      setPerfiles(perfiles);setHistorial(historial);
+      perfilActivoId=null;
+      renderPerfilChips();renderPfDet();renderHistorial();updatePerfilActivoUI();
+      alert('Datos de app importados: '+perfiles.length+' perfiles y '+historial.length+' intervenciones.');
+    }catch(err){alert('Error al importar datos de app: '+err.message);}
+  };
+  r.readAsText(f,'utf-8');e.target.value='';
+}
+function cargarDatos(d){
+  if(!d || typeof d!=='object'){alert('JSON no válido.');return;}
+  if(d.controlador_tipo && CONTROLLERS[d.controlador_tipo]){const s=document.getElementById('controlador_tipo');if(s)s.value=d.controlador_tipo;}
+  onControladorChange();
+  ['cliente','ubicacion','fecha','tecnico','empresa','ref'].forEach(k=>setValue('f_'+k,d[k]));
+  ['fabricante','modelo','serie','ano','kvar','tension','hz','escalones','ncond','controlador','normativa'].forEach(k=>setValue('e_'+k,d[k]));
+  MEDIDAS.forEach(m=>{const el=document.getElementById(m.id);if(el&&d[m.id]!==undefined){el.value=d[m.id];evalSem(m.id);}});
+  ALL_PARAM_IDS.forEach(k=>setValue(k,d[k]));
+  const sel=document.getElementById('alarma_sel');if(sel){sel.value=d.alarma||'';updateAlmDesc();}
+  setValue('alarma_accion',d.alarma_accion);
+  setValue('obs_gen',d.obs_gen);
+  setValue('obs_rec',d.obs_rec);
+  setValue('prox_rev',d.prox_rev);
+  setValue('estado_gen',d.estado_gen);
+  setValue('m_cosphi_tipo',d.m_cosphi_tipo);
+  setValue('m_modo_inicio',d.m_modo_inicio);
+  setValue('m_modo_cierre',d.m_modo_cierre);
+  restoreAnomalias(d);
+  if(d.checks){checks=normalizeChecks(d.checks);refreshChk();}
+  calcNominal();renderEscalones();validate();
+}
+
+// ============================================================
+// GENERADOR PDF — ESTILO CARDIVA
+// ============================================================
+function generarPDF(){
+  if(!validate()){
+    scrollToSec('sec-datos');
+    document.getElementById('f_cliente').focus();
+    return;
+  }
+  const LOGO_B64 = getLogoB64(); // lee el <img id="app-logo"> ya cargado en el header
+  let d=recogerDatos();
+  // Lectura DOM directa — garantiza valores actuales
+  ['fabricante','modelo','serie','ano','kvar','tension','hz','escalones','ncond','controlador','normativa'].forEach(k=>{
+    const el=document.getElementById('e_'+k);
+    if(el&&el.value.trim()){d[k]=el.value.trim();d['e_'+k]=el.value.trim();}
+  });
+  ['cliente','ubicacion','fecha','tecnico','empresa','ref'].forEach(k=>{
+    const el=document.getElementById('f_'+k);
+    if(el&&el.value.trim()){d[k]=el.value.trim();}
+  });
+  // Controlador activo
+  const ctrl=CONTROLLERS[d.controlador_tipo]||CONTROLLERS.LOVATO_DCRL8;
+  function sc(id){return d['sc_'+id]||'';}
+  const pasos=parsePasos(d.e_escalones||d.escalones);
+  const verif=d.checks&&d.checks.some(c=>c.hecho&&c.texto.toLowerCase().includes('escal'));
+  const thdiVal=pn(d.m_thdi);
+  const showTHD=!isNaN(thdiVal)&&thdiVal>15;
+  const AN_LABELS={an_ruido:'Ruido anormal (contactores/condensadores)',an_olor:'Olor a quemado o calor',an_temp:'Temperatura elevada al tacto en el armario',an_bornes:'Bornes con indicios de calentamiento (oxidación/decoloración)',an_abomb:'Posible inicio de abombamiento en condensadores — vigilar en próxima visita',an_cable:'Cableado con deterioro de aislamiento',an_humedad:'Presencia de humedad interior',an_filtros:'Filtros de ventilación sucios u obstruidos',an_vibracion:'Vibraciones excesivas en el armario'};
+  const hayAnomalias=(d.an_checks&&d.an_checks.length)||d.an_txt;
+  const STEP_COLORS=[{t:'#0066cc',v:'#0066cc'},{t:'#c8960a',v:'#c8960a'},{t:'#1a7a3c',v:'#1a7a3c'},{t:'#7c3aed',v:'#7c3aed'},{t:'#dc2626',v:'#dc2626'},{t:'#ea580c',v:'#ea580c'},{t:'#0891b2',v:'#0891b2'},{t:'#65a30d',v:'#65a30d'},{t:'#db2777',v:'#db2777'},{t:'#d97706',v:'#d97706'},{t:'#0d9488',v:'#0d9488'},{t:'#7c3aed',v:'#7c3aed'},{t:'#b45309',v:'#b45309'},{t:'#4f46e5',v:'#4f46e5'}];
+  const MS={
+    m_dkvar:{ok:'✓ Corrección casi perfecta',wn:'⚠ Corrección moderada',al:'🔴 Corrección insuficiente'},
+    m_v:    {ok:'✓ Normal — nom. 400 V',wn:'⚠ Fuera de rango normal',al:'🔴 Tensión fuera de límites'},
+    m_a:    {ok:'✓ Normal — dentro de nominal',wn:'⚠ Próximo al nominal',al:'🔴 Corriente elevada'},
+    m_wpf:  {ok:'✓ FP semanal óptimo',wn:'⚠ Bajo — revisar P.10/P.19',al:'🔴 FP semanal muy bajo'},
+    m_ccu:  {ok:'✓ Normal — límite alarma 125%',wn:'⚠ Próximo al umbral',al:'⚡ Al límite — revisar armónicos',cr:'🔴 Sobrecarga — alarma A05'},
+    m_temp: {ok:'✓ Normal — alarma a 60°C',wn:'⚠ Temperatura elevada',al:'🔴 Temperatura crítica',cr:'🔴 Temperatura crítica'},
+    m_thdv: {ok:'✓ Arm. tensión aceptable',wn:'⚠ THDV moderado — vigilar',al:'🔴 THDV elevado'},
+    m_thdi: {ok:'✓ Arm. corriente normal',wn:'⚠ THDI moderado — vigilar P.44',al:'⚡ Elevado — riesgo resonancia'},
+    m_cosphi:{ok:'✓ Factor potencia óptimo',wn:'⚠ Factor potencia mejorable',al:'🔴 Factor potencia bajo'},
+  };
+  function mCard(id,label,unidad){
+    const v=d[id];if(!v)return '';
+    const cls=sc(id)||'';const txt=(MS[id]||{})[cls]||'';
+    const num=pn(v);
+    const disp=isNaN(num)?v:fmtN(v,Math.abs(num)<10?2:1);
+    if(!cls)return '<div class="mc" style="opacity:.5"><div class="mi"></div><div class="mb"><div class="mn2">'+label+'</div><div class="mv">'+disp+'<span class="mu">'+unidad+'</span></div></div></div>';
+    return '<div class="mc '+cls+'"><div class="mi '+cls+'"></div><div class="mb"><div class="mn2">'+label+'</div><div class="mv">'+disp+'<span class="mu">'+unidad+'</span></div>'+(txt?'<div class="ms '+cls+'">'+txt+'</div>':'')+'</div></div>';
+  }
+  function stepCards(){
+    if(!pasos.length)return '';
+    let h=pasos.map((p,i)=>{const c=STEP_COLORS[i]||STEP_COLORS[0];return '<div class="step-card" style="position:relative;overflow:hidden;"><div style="position:absolute;top:0;left:0;right:0;height:3px;background:'+c.t+';"></div><div class="step-num">Escalón '+(i+1)+'</div><div class="step-kvar" style="color:'+c.v+';">'+p+'</div><div class="step-unit">kVAr</div><div class="step-div"></div><div class="step-act">Contactor KM'+(i+1)+' — Modo MAN</div><div class="step-res '+(verif?'ok':'bl')+'">'+(verif?'✓ Entrada OK':'Pendiente')+'</div></div>';}).join('<div class="steps-arrow">→</div>');
+    h+='<div class="steps-arrow">→</div><div class="step-card" style="position:relative;overflow:hidden;"><div style="position:absolute;top:0;left:0;right:0;height:3px;background:#1a7a3c;"></div><div class="step-num" style="color:#1a7a3c;">Retorno AUT</div><div class="step-kvar" style="color:#1a7a3c;font-size:18px;margin-top:4px;">AUT</div><div class="step-unit">&nbsp;</div><div class="step-div"></div><div class="step-act">Tecla AUT 1 seg. — Control automático normalizado</div><div class="step-res bl">✓ AUT normalizado</div></div>';
+    return h;
+  }
+  function actItem(c){const ok=c.hecho;return '<div class="act"><div class="act-chk" style="'+(ok?'background:#cceedd;border-color:#9ed4b0;color:#1a7a3c;':'background:#f1f5f9;border-color:#d0d4de;color:#8a90a0;')+'border:1.5px solid;">'+(ok?'✓':'○')+'</div><div class="act-b"><div class="act-t">'+c.texto+'</div></div><div class="act-bg '+(ok?'':'w')+'">'+(ok?'✓ OK':'Pendiente')+'</div></div>';}
+  function almSection(){
+    if(!d.alarma)return '';
+    const descCliente=(ctrl.alarmas_cli||{})[d.alarma]||(ctrl.alarmas||{})[d.alarma]||'';
+    // Primer segmento antes del primer guión = nombre corto
+    const titulo=d.alarma+' — '+((ctrl.alarmas||{})[d.alarma]||d.alarma).split('—')[0].trim();
+    let h='<section class="sec"><div class="sec-h"><div class="sec-ico">🔔</div><div class="sec-ttl">Causa de la Intervención — '+d.alarma+'</div><div class="sec-line"></div></div>';
+    h+='<div class="alm at"><div class="alm-ico">⚠️</div><div class="alm-b"><div class="alm-cod">'+d.alarma+' — ACTIVA AL INICIO DE LA INTERVENCIÓN</div><div class="alm-ttl">'+titulo+'</div><div class="alm-txt">'+descCliente+'</div><span class="bdg bdg-r">⚡ Requería intervención técnica</span></div></div>';
+    if(d.alarma_accion)h+='<div class="alm ar"><div class="alm-ico">✅</div><div class="alm-b"><div class="alm-cod">'+d.alarma+' — RESUELTA</div><div class="alm-ttl">Intervención realizada — Equipo normalizado</div><div class="alm-txt">'+d.alarma_accion+'</div><span class="bdg bdg-g">✓ Alarma resuelta · Equipo operativo</span></div></div>';
+    h+='</section>';return h;
+  }
+  function paramsNote(){
+    const params=ctrl.params||[];
+    const pts=params.filter(p=>d[p.id]&&d[p.id].trim()).map(p=>{
+      const lbl=p.label.includes('—')?p.label.split('—').pop().trim():p.label;
+      return '<span class="param-chip">'+lbl+'</span> '+d[p.id];
+    });
+    if(!pts.length)return '';
+    return '<div class="param-note" style="margin-top:6px;"><strong>Parámetros configurados — '+ctrl.nombre+':</strong> '+pts.join(' · ')+'</div>';
+  }
+  function modoManualNote(){
+    if(!ctrl.modo_man)return '';
+    return '<div class="param-note" style="margin-top:6px;background:#f0f9ff;border-left-color:#38bdf8;"><strong>Modo manual — '+ctrl.nombre+':</strong> '+ctrl.modo_man+'</div>';
+  }
+  const STAMP_COLORS={CONFORME:'#1a7a3c',ADVERTENCIA:'#8a6000','CRÍTICO':'#b01c1c'};
+  const stC=STAMP_COLORS[d.estado_gen]||'#1a7a3c';
+  const cpRaw=pn(d.m_cosphi);
+  const cpVal=!isNaN(cpRaw)?fmtN(d.m_cosphi,2):'—';
+  const equiCls=d.estado_gen==='CONFORME'?'g':d.estado_gen==='ADVERTENCIA'?'y':'o';
+  const thdiCls=!isNaN(thdiVal)?(thdiVal<=15?'g':thdiVal<=25?'y':'o'):'g';
+  const cpScCls=sc('m_cosphi');
+  const cpCls=cpScCls==='ok'?'g':cpScCls==='wn'?'y':'o';
+  // Colores dinámicos para el hero de cos φ
+  const CP_THEME = {
+    ok:{bg:'#eaf6ee',bd:'#9ed4b0',fg:'#1a7a3c',label:'Factor de potencia ÓPTIMO'},
+    wn:{bg:'#fdf6e3',bd:'#e8d080',fg:'#8a6000',label:'Factor de potencia MEJORABLE'},
+    al:{bg:'#fdf0e6',bd:'#e8b890',fg:'#b84c00',label:'Factor de potencia BAJO — requiere atención'},
+    cr:{bg:'#fdeaea',bd:'#e0a0a0',fg:'#b01c1c',label:'Factor de potencia CRÍTICO — intervención necesaria'},
+  };
+  const cpTheme=CP_THEME[cpScCls]||CP_THEME.ok;
+
+  // DIAGNÓSTICO: causas y recomendaciones por medida
+  function diagSection(){
+    const items=[];
+    const CAUSAS={
+      m_cosphi:{
+        wn:{t:'Factor de potencia mejorable — cos φ '+cpVal,
+            c:'El banco corrige correctamente durante las horas de mayor carga, pero existen periodos (noche, fin de semana) donde la corrección es insuficiente o el valor de referencia del regulador no está optimizado.',
+            r:'Se recomienda revisar la configuración del regulador para ajustarlo al perfil de carga real de la instalación.'},
+        al:{t:'Factor de potencia bajo — cos φ '+cpVal+' — corrección insuficiente',
+            c:'El banco de condensadores no alcanza el factor de potencia objetivo. Posibles causas: potencia instalada insuficiente para la carga actual, condensadores con pérdida de capacidad, o escalones que no conectan correctamente.',
+            r:'Verificar el funcionamiento de todos los escalones. Revisar el estado de los condensadores. Valorar ampliar la potencia del banco si la carga ha aumentado.'},
+        cr:{t:'Factor de potencia crítico — cos φ '+cpVal+' — intervención urgente',
+            c:'El banco no está realizando corrección reactiva. Posible fallo grave: condensadores averiados, fusibles fundidos, o el regulador no controla el equipo.',
+            r:'INTERVENCIÓN URGENTE. Verificar alimentación del regulador, estado de fusibles, condensadores y contactores. El equipo puede estar completamente inoperativo.'},
+      },
+      m_wpf:{
+        wn:{t:'Factor de potencia semanal mejorable — WPF '+fmtN(d.m_wpf,2),
+            c:'El factor de potencia medio semanal es inferior al instantáneo, lo que indica que durante ciertos periodos (habitualmente fuera del horario productivo) la corrección no es adecuada.',
+            r:'Se recomienda revisar la configuración de sensibilidad del regulador para optimizar el comportamiento en periodos de baja carga.'},
+        al:{t:'Factor de potencia semanal bajo — WPF '+fmtN(d.m_wpf,2),
+            c:'El promedio semanal refleja una corrección deficiente de forma continuada. Puede indicar que el regulador no está bien ajustado al perfil de consumo de la instalación o que el banco está sobredimensionado.',
+            r:'Auditoría del perfil de carga de la instalación y reconfiguración del regulador. Valorar si la potencia instalada es adecuada.'},
+      },
+      m_ccu:{
+        wn:{t:'Corriente en condensadores elevada — '+fmtN(d.m_ccu,0)+'% del nominal',
+            c:'La corriente que circula por los condensadores supera el valor esperado. Causa habitual: presencia de armónicos en la red eléctrica que incrementan la corriente en los condensadores.',
+            r:'Vigilar en próximas visitas. Si se mantiene elevada de forma continuada, se recomienda realizar un análisis de calidad de red e instalar reactancias de desintonización.'},
+        al:{t:'Corriente en condensadores al límite — '+fmtN(d.m_ccu,0)+'% del nominal',
+            c:'La corriente en los condensadores está próxima al límite de protección. La causa más probable es la presencia de armónicos de corriente elevados en la instalación, que pueden generar resonancia con el banco.',
+            r:'Realizar análisis de calidad de red con carácter urgente. Instalar reactancias de desintonización en serie con los condensadores. Vigilar la temperatura del armario.'},
+        cr:{t:'Sobrecarga en condensadores — '+fmtN(d.m_ccu,0)+'% del nominal — riesgo de daño',
+            c:'Los condensadores están operando por encima de su corriente nominal permitida. Existe riesgo de fallo prematuro o inminente de los condensadores.',
+            r:'INTERVENCIÓN URGENTE. Valorar desconexión preventiva del banco hasta instalar reactancias de desintonización. Análisis de calidad de red inmediato.'},
+      },
+      m_thdi:{
+        wn:{t:'Distorsión armónica de corriente moderada — THDI '+fmtN(d.m_thdi,1)+'%',
+            c:'Existen cargas no lineales en la instalación (variadores de frecuencia, rectificadores, equipos electrónicos) que generan armónicos de corriente. El nivel es tolerable pero debe vigilarse.',
+            r:'Se recomienda activar la protección por armónicos en el regulador y revisar la evolución en próximas visitas.'},
+        al:{t:'Distorsión armónica de corriente elevada — THDI '+fmtN(d.m_thdi,1)+'% — riesgo de resonancia',
+            c:'La distorsión armónica de corriente supera el límite recomendado por la norma EN 50160. Las cargas no lineales presentes (variadores, rectificadores, UPS) están generando corrientes armónicas que pueden causar resonancia con el banco de condensadores, incrementando la corriente en los mismos y acelerando su envejecimiento.',
+            r:'1. Activar protección por armónicos en el regulador\n2. Realizar análisis completo de calidad de red\n3. Instalar reactancias de desintonización en serie con cada escalón de condensadores\n4. Valorar filtro activo de armónicos si el nivel es persistente'},
+      },
+      m_temp:{
+        wn:{t:'Temperatura interior del armario elevada — '+fmtN(d.m_temp,0)+'°C',
+            c:'La temperatura medida en el interior del armario está por encima de los valores habituales. Causas: ventilación reducida, filtros obstruidos o temperatura ambiente del local elevada.',
+            r:'Limpiar filtros de ventilación del armario. Verificar que las rejillas de ventilación no estén obstruidas. Comprobar la temperatura ambiente del local.'},
+        cr:{t:'Temperatura interior del armario crítica — '+fmtN(d.m_temp,0)+'°C — riesgo de alarma A08',
+            c:'La temperatura supera el umbral de seguridad. Una temperatura elevada reduce drásticamente la vida útil de los condensadores y puede provocar su fallo prematuro.',
+            r:'REVISIÓN URGENTE. Verificar estado del ventilador del armario, limpiar filtros y asegurar circulación de aire. No demorar la intervención.'},
+      },
+      m_thdv:{
+        wn:{t:'Distorsión armónica de tensión moderada — THDV '+fmtN(d.m_thdv,1)+'%',
+            c:'La red eléctrica presenta cierto nivel de distorsión de tensión, originada por cargas no lineales en la propia instalación o proveniente de la red de distribución.',
+            r:'Monitorizar la evolución en próximas visitas. Si aumenta, se recomienda análisis de calidad de red.'},
+        al:{t:'Distorsión armónica de tensión elevada — THDV '+fmtN(d.m_thdv,1)+'% — supera EN 50160',
+            c:'El nivel de distorsión de tensión supera los límites recomendados. Puede afectar al funcionamiento de equipos electrónicos sensibles y reducir la vida útil de los condensadores.',
+            r:'Análisis de calidad de red para identificar las fuentes de distorsión. Valorar instalación de filtros de armónicos.'},
+      },
+    };
+    medidasCtrl.forEach(m=>{
+      const cls=sc(m.id);
+      if(!cls||cls==='ok')return;
+      const def=(CAUSAS[m.id]||{})[cls];
+      if(!def)return;
+      const borderColor=cls==='wn'?'#ca8a04':cls==='al'?'#b84c00':'#b01c1c';
+      const bgColor=cls==='wn'?'#fefce8':cls==='al'?'#fff7ed':'#fef2f2';
+      items.push(
+        '<div style="background:'+bgColor+';border:1px solid;border-left:4px solid '+borderColor+';border-color:'+borderColor+';border-radius:5px;padding:9px 12px;margin-bottom:6px;break-inside:avoid;">'
+        +'<div style="font-size:9.5px;font-weight:800;color:'+borderColor+';text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">'+def.t+'</div>'
+        +'<div style="font-size:8px;color:#3a4055;margin-bottom:4px;"><strong style="font-size:7.5px;letter-spacing:1px;text-transform:uppercase;color:#1a2f6e;">Posibles causas:</strong> '+def.c+'</div>'
+        +'<div style="font-size:8px;color:#3a4055;"><strong style="font-size:7.5px;letter-spacing:1px;text-transform:uppercase;color:#1a2f6e;">Recomendación:</strong> '+def.r.replace(/\n/g,'<br>')+'</div>'
+        +'</div>'
+      );
+    });
+    if(!items.length)return '';
+    return '<section class="sec">'
+      +'<div class="sec-h"><div class="sec-ico">🔬</div><div class="sec-ttl">Análisis de Medidas — Diagnóstico y Causas Probables</div><div class="sec-line"></div></div>'
+      +items.join('')
+      +'</section>';
+  }
+
+  const css=`@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{--navy:#1a2f6e;--blue:#0066cc;--blue-lt:#e8f1fb;--green:#1a7a3c;--green-lt:#eaf6ee;--green-bd:#9ed4b0;--yellow:#8a6000;--yellow-lt:#fdf6e3;--yellow-bd:#e8d080;--orange:#b84c00;--orange-lt:#fdf0e6;--orange-bd:#e8b890;--red:#b01c1c;--red-lt:#fdeaea;--red-bd:#e0a0a0;--gray-1:#f5f6f8;--gray-3:#d0d4de;--gray-4:#8a90a0;--text:#1a1e2e;--text-mid:#3a4055;--text-soft:#6a7080;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:#cdd0d8;color:var(--text);print-color-adjust:exact;-webkit-print-color-adjust:exact;}
+.page{width:210mm;min-height:297mm;margin:8mm auto;background:#fff;display:flex;flex-direction:column;box-shadow:0 4px 24px rgba(0,0,0,.2);}
+.hdr{background:var(--navy);padding:13px 20px 11px;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;}
+.logo-box{padding:0;display:flex;flex-direction:column;align-items:center;min-width:108px;border-radius:4px;overflow:hidden;}
+.logo-box img{height:44px;width:auto;display:block;}
+.hdr-mid{text-align:center;}.hdr-lbl{font-size:7.5px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:600;}
+.hdr-ttl{font-size:16px;font-weight:900;color:#fff;letter-spacing:-.4px;line-height:1.15;margin-top:2px;}
+.hdr-sub{font-size:9px;color:rgba(255,255,255,.55);margin-top:3px;}
+.hdr-r{text-align:right;display:flex;flex-direction:column;gap:3px;align-items:flex-end;}
+.doc-ref{font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,.5);background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:2px 7px;border-radius:3px;}
+.doc-date{font-size:14px;font-weight:800;color:#fff;}.doc-meta{font-size:8.5px;color:rgba(255,255,255,.55);}
+.stripe{background:var(--gray-1);border-bottom:1.5px solid var(--gray-3);padding:5px 20px;display:flex;align-items:center;gap:16px;font-size:9px;flex-wrap:wrap;}
+.ast{display:flex;align-items:center;gap:5px;}.dot{width:7px;height:7px;border-radius:50%;}
+.dot.g{background:#1ea64a;}.dot.y{background:#c8960a;}.dot.o{background:#d05500;}
+.al{color:var(--text-soft);}.av{color:var(--text);font-weight:700;}.sep{color:var(--gray-3);font-size:10px;}
+.body{padding:12px 20px;display:flex;flex-direction:column;gap:13px;flex:1;}
+.sec{break-inside:avoid;page-break-inside:avoid;}
+.sec-h{display:flex;align-items:center;gap:7px;border-bottom:1.5px solid var(--navy);padding-bottom:4px;margin-bottom:8px;}
+.sec-ico{width:19px;height:19px;background:var(--navy);border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
+.sec-ttl{font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:var(--navy);font-weight:800;}
+.sec-line{flex:1;height:1.5px;background:linear-gradient(90deg,var(--gray-3),transparent);}
+.eq{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.ec{background:var(--gray-1);border:1px solid var(--gray-3);border-radius:5px;padding:7px 9px;}
+.ec.w2{grid-column:span 2;}.ec.w3{grid-column:span 3;}.ec.w4{grid-column:span 4;}
+.el{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-soft);font-weight:600;margin-bottom:2px;}
+.ev{font-size:11px;font-weight:700;color:var(--text);}.ev.mn{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);}
+.es{font-size:8px;color:var(--text-soft);margin-top:1px;}
+.alm{border-radius:6px;padding:9px 13px;display:flex;gap:10px;align-items:flex-start;margin-bottom:6px;}
+.at{background:var(--red-lt);border:1px solid var(--red-bd);border-left:4px solid var(--red);}
+.ar{background:var(--green-lt);border:1px solid var(--green-bd);border-left:4px solid var(--green);}
+.alm-ico{font-size:17px;flex-shrink:0;line-height:1;margin-top:1px;}.alm-b{flex:1;}
+.alm-cod{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;margin-bottom:2px;}
+.at .alm-cod{color:var(--red);}.ar .alm-cod{color:var(--green);}
+.alm-ttl{font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;}.alm-txt{font-size:9px;color:var(--text-mid);line-height:1.55;}
+.bdg{display:inline-block;padding:2px 8px;border-radius:20px;font-size:7.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:5px;}
+.bdg-r{background:#fcd8d8;color:var(--red);border:1px solid var(--red-bd);}
+.bdg-g{background:#cceedd;color:var(--green);border:1px solid var(--green-bd);}
+.cosphi{background:var(--green-lt);border:1.5px solid var(--green-bd);border-radius:7px;padding:11px 15px;display:flex;align-items:center;gap:14px;margin-bottom:8px;}
+.cpn{font-family:'JetBrains Mono',monospace;font-size:42px;font-weight:900;color:var(--green);line-height:1;flex-shrink:0;}
+.cpl{flex:1;}.cps{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-soft);}
+.cpd{font-size:13px;font-weight:700;color:var(--text);margin-top:2px;}.cpn2{font-size:9px;color:var(--text-mid);margin-top:3px;line-height:1.5;}
+.mg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.mc{background:var(--gray-1);border:1px solid var(--gray-3);border-radius:5px;padding:8px 10px;display:flex;align-items:center;gap:8px;position:relative;overflow:hidden;}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;}
+.mc.ok::before{background:#1ea64a;}.mc.wn::before{background:#c8960a;}.mc.al::before{background:#d05500;}.mc.cr::before{background:var(--red);}
+.mi{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.mi.ok{background:#1ea64a;}.mi.wn{background:#c8960a;}.mi.al{background:#d05500;}.mi.cr{background:var(--red);}
+.mb{flex:1;}.mn2{font-size:7.5px;color:var(--text-soft);letter-spacing:.8px;text-transform:uppercase;margin-bottom:1px;}
+.mv{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;color:var(--text);line-height:1;}
+.mu{font-size:9px;color:var(--text-soft);margin-left:2px;}
+.ms{font-size:7px;margin-top:3px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;}
+.ms.ok{color:#1a7a3c;}.ms.wn{color:#8a6000;}.ms.al{color:#b84c00;}.ms.cr{color:var(--red);}
+.param-note{background:#fff;border:1px solid var(--gray-3);border-left:3px solid var(--blue);border-radius:4px;padding:7px 10px;margin-top:6px;font-size:8.5px;color:var(--text-mid);line-height:1.55;}
+.param-note strong{color:var(--navy);}
+.param-chip{display:inline-block;background:var(--blue-lt);color:var(--blue);border:1px solid #b0cef0;border-radius:3px;padding:0 5px;font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:700;margin:0 2px;}
+.steps-panel{background:var(--gray-1);border:1px solid var(--gray-3);border-radius:7px;padding:12px 14px;}
+.steps-ttl{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:10px;}
+.steps-row{display:flex;gap:7px;align-items:stretch;}
+.step-card{flex:1;background:#fff;border:1.5px solid var(--gray-3);border-radius:6px;padding:10px 11px;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.step-num{font-size:7.5px;color:var(--text-soft);letter-spacing:1.5px;text-transform:uppercase;font-weight:700;}
+.step-kvar{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:900;line-height:1;}
+.step-unit{font-size:9.5px;color:var(--text-soft);}.step-div{width:100%;height:1px;background:var(--gray-3);margin:3px 0;}
+.step-act{font-size:8px;color:var(--text-mid);text-align:center;line-height:1.45;}
+.step-res{font-size:7.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 7px;border-radius:10px;}
+.step-res.ok{background:#cceedd;color:var(--green);border:1px solid var(--green-bd);}
+.step-res.bl{background:var(--blue-lt);color:var(--blue);border:1px solid #a0c4f0;}
+.steps-arrow{display:flex;align-items:center;color:var(--gray-4);font-size:14px;align-self:center;flex-shrink:0;}
+.steps-sum{margin-top:8px;background:var(--blue-lt);border:1px solid #b0cef0;border-radius:5px;padding:7px 10px;font-size:9px;color:var(--text-mid);line-height:1.6;}
+.steps-sum strong{color:var(--navy);}
+.acts{display:flex;flex-direction:column;gap:5px;}
+.act{display:flex;align-items:flex-start;gap:8px;padding:8px 11px;background:var(--gray-1);border:1px solid var(--gray-3);border-radius:5px;break-inside:avoid;}
+.act-chk{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;}
+.act-b{flex:1;}.act-t{font-size:10.5px;font-weight:700;color:var(--text);}
+.act-bg{font-size:7.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 7px;border-radius:10px;white-space:nowrap;align-self:flex-start;flex-shrink:0;background:#cceedd;color:var(--green);border:1px solid var(--green-bd);}
+.act-bg.w{background:#faecc8;color:var(--yellow);border-color:var(--yellow-bd);}
+.thd{background:var(--orange-lt);border:1px solid var(--orange-bd);border-left:4px solid var(--orange);border-radius:6px;padding:10px 13px;display:flex;gap:10px;align-items:flex-start;break-inside:avoid;}
+.thd-ico{font-size:17px;flex-shrink:0;}.thd-t{font-size:11px;font-weight:700;color:var(--orange);margin-bottom:3px;}.thd-x{font-size:9px;color:var(--text-mid);line-height:1.55;}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.cc{background:var(--gray-1);border:1px solid var(--gray-3);border-radius:6px;padding:10px 12px;break-inside:avoid;}
+.cc.full{grid-column:span 2;}.cc-tag{font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--navy);font-weight:800;margin-bottom:5px;}
+.cc-txt{font-size:9px;color:var(--text-mid);line-height:1.6;white-space:pre-line;}.cc-txt strong{color:var(--text);}
+.hl{margin-top:7px;border-radius:4px;padding:7px 10px;}
+.hl.y{background:var(--yellow-lt);border:1px solid var(--yellow-bd);border-left:3px solid var(--yellow);}
+.hl.o{background:var(--orange-lt);border:1px solid var(--orange-bd);border-left:3px solid var(--orange);}
+.hl-t{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.hl.y .hl-t{color:var(--yellow);}.hl.o .hl-t{color:var(--orange);}
+.hl-x{font-size:8.5px;color:var(--text-mid);line-height:1.55;white-space:pre-line;}
+.ss{display:flex;align-items:flex-end;gap:16px;margin-top:5px;border-top:1px solid var(--gray-3);padding-top:10px;break-inside:avoid;}
+.sa{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.sb{display:flex;flex-direction:column;gap:3px;}.s-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--text-soft);}
+.s-line{height:1px;background:var(--gray-3);margin:16px 0 4px;}.s-name{font-size:10.5px;color:var(--text);font-weight:700;}.s-role{font-size:8.5px;color:var(--text-soft);}
+.stamp{width:112px;height:112px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;transform:rotate(-12deg);flex-shrink:0;position:relative;background:#fff;}
+.st-m{font-size:15px;font-weight:900;letter-spacing:2px;text-transform:uppercase;}
+.st-s{font-size:7.5px;letter-spacing:1px;text-transform:uppercase;}.st-d{font-family:'JetBrains Mono',monospace;font-size:9px;margin-top:4px;}
+.ftr{background:var(--navy);padding:6px 20px;display:flex;align-items:center;justify-content:space-between;font-size:7.5px;color:rgba(255,255,255,.5);}
+.fc{display:flex;align-items:center;gap:7px;}
+.cbdg{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:3px;padding:1px 5px;font-family:'JetBrains Mono',monospace;font-size:7px;color:rgba(255,255,255,.6);}
+@media print{body{background:#fff;}.page{margin:0;box-shadow:none;}}
+@page{size:A4 portrait;margin:0;}`;
+
+  d=sanitizeReportData(d);
+
+  const cosHero = d.m_cosphi
+    ? '<div class="cosphi" style="background:'+cpTheme.bg+';border:1.5px solid '+cpTheme.bd+';">'
+      +'<div class="cpn" style="color:'+cpTheme.fg+';">'+cpVal+'</div>'
+      +'<div class="cpl">'
+        +'<div class="cps">'+cpTheme.label+'</div>'
+        +'<div class="cpd">cos φ = '+cpVal+' — '+(d.m_cosphi_tipo==='IND'?'Inductivo (IND)':'Capacitivo (CAP)')+' — Modo cierre: '+(d.m_modo_cierre||'AUT')+'</div>'
+        +'<div class="cpn2">'+(d.m_dkvar?'ΔkVAr = '+fmtN(d.m_dkvar,2)+' kVAr. ':'')+(d.m_v?'Tensión red: <strong>'+fmtN(d.m_v,0)+' V</strong>. ':'')+' Regulador DCRL8 en modo <strong>'+(d.m_modo_cierre||'AUT')+'</strong>.</div>'
+      +'</div></div>'
+    : '';
+
+  const medidasCtrl=MEDIDAS.filter(m=>ctrl.med_ids.includes(m.id));
+  const hayMedidas=medidasCtrl.some(m=>d[m.id]);
+
+  const html=`<!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>Informe — ${d.cliente||'Cliente'} — ${fmtFechaLarga(d.fecha)}</title><style>${css}</style></head><body><div class="page">
+<header class="hdr">
+  <div class="logo-box"><img src="${LOGO_B64}" alt="Sagarde S.L. Montajes Eléctricos" style="height:44px;width:auto;display:block;"></div>
+  <div class="hdr-mid"><div class="hdr-lbl">Informe Técnico de Mantenimiento Preventivo</div><div class="hdr-ttl">${d.cliente||'—'} · ${d.ubicacion||'—'}</div><div class="hdr-sub">Batería de Condensadores Automática${d.e_controlador?' — Regulador '+d.e_controlador:''}${d.alarma?' — '+d.alarma+' resuelta':''}</div></div>
+  <div class="hdr-r"><div class="doc-ref">${d.ref||'MNT-'+( d.fecha||'').replace(/-/g,'')}</div><div class="doc-date">${fmtFecha(d.fecha)}</div><div class="doc-meta">Técnico: ${d.tecnico||'—'}</div><div class="doc-meta">Empresa: ${d.empresa||'Sagarde S.L.'}</div></div>
+</header>
+<div class="stripe">
+  <div class="ast"><div class="dot ${equiCls}"></div><span class="al">Equipo:</span><span class="av">${d.estado_gen||'CONFORME'}</span></div>
+  <span class="sep">|</span>
+  ${d.alarma?`<div class="ast"><div class="dot g"></div><span class="al">${d.alarma}:</span><span class="av">RESUELTA</span></div><span class="sep">|</span>`:''}
+  ${d.escalones?`<div class="ast"><div class="dot g"></div><span class="al">Escalones:</span><span class="av">${d.escalones} kVAr${verif?' · '+pasos.length+'/'+pasos.length+' ✓':''}</span></div><span class="sep">|</span>`:''}
+  ${!isNaN(thdiVal)?`<div class="ast"><div class="dot ${thdiCls}"></div><span class="al">THDI:</span><span class="av">${fmtN(d.m_thdi,1)}%</span></div><span class="sep">|</span>`:''}
+  <div class="ast"><div class="dot ${cpCls}"></div><span class="al">cos φ final:</span><span class="av">${cpVal} ${d.m_cosphi_tipo||'CAP'}</span></div>
+</div>
+<div class="body">
+<section class="sec">
+  <div class="sec-h"><div class="sec-ico">⚡</div><div class="sec-ttl">Identificación del Equipo e Instalación</div><div class="sec-line"></div></div>
+  <div class="eq">
+    <div class="ec"><div class="el">Instalación / Cliente</div><div class="ev">${d.cliente||'—'}</div><div class="es">${d.ubicacion||'—'}</div></div>
+    <div class="ec"><div class="el">Fabricante</div><div class="ev">${d.e_fabricante||'—'}</div><div class="es">${d.e_ano?'Año '+d.e_ano:''}</div></div>
+    <div class="ec"><div class="el">Modelo</div><div class="ev">${d.e_modelo||'—'}</div><div class="es">Batería Condensadores Aut.</div></div>
+    <div class="ec"><div class="el">Nº de Serie</div><div class="ev mn">${d.e_serie||'—'}</div></div>
+    <div class="ec"><div class="el">Potencia Total</div><div class="ev">${d.e_kvar||'—'} kVAr</div><div class="es">${d.e_tension||'400'} V / ${d.e_hz||'50'} Hz</div></div>
+    <div class="ec"><div class="el">Escalonamiento</div><div class="ev mn">${d.escalones||'—'}</div><div class="es">${pasos.length?pasos.length+' pasos':''} ${d.e_ncond?'— '+d.e_ncond+' condensadores':''}</div></div>
+    <div class="ec"><div class="el">Corriente Nominal</div><div class="ev">${d.e_anom||'—'} A</div><div class="es">I = Q/(√3·V)</div></div>
+    <div class="ec"><div class="el">Controlador</div><div class="ev">${d.e_controlador||'—'}</div></div>
+    <div class="ec w2"><div class="el">Empresa / Técnico</div><div class="ev">${d.empresa||'Sagarde S.L. Montajes Eléctricos'} — ${d.tecnico||'—'}</div><div class="es">Fecha: ${fmtFechaLarga(d.fecha)} · Modo inicio: ${d.m_modo_inicio||'AUT'}</div></div>
+    <div class="ec w2"><div class="el">Normativa</div><div class="ev" style="font-size:10px;">${d.e_normativa||'CEI 33-5 · UNE-EN 60439 · IEC 60070'}</div></div>
+  </div>
+</section>
+${almSection()}
+${hayMedidas?`<section class="sec">
+  <div class="sec-h"><div class="sec-ico">📊</div><div class="sec-ttl">Lecturas del Regulador DCRL8 en el Momento de la Intervención</div><div class="sec-line"></div></div>
+  ${cosHero}
+  <div class="mg">${medidasCtrl.map(m=>mCard(m.id,m.label,m.unidad)).join('')}</div>
+  ${paramsNote()}
+</section>`:''}
+${diagSection()}
+${pasos.length?`<section class="sec">
+  <div class="sec-h"><div class="sec-ico">🔩</div><div class="sec-ttl">Verificación de Escalones en Modo Manual — Procedimiento DCRL8</div><div class="sec-line"></div></div>
+  <div class="steps-panel">
+    <div class="steps-ttl">Pasos verificados: ${d.escalones} · P.09 tiempo reconexión = ${d.p09||'60'} s</div>
+    <div class="steps-row">${stepCards()}</div>
+    <div class="steps-sum"><strong>Procedimiento — ${ctrl.nombre}:</strong> ${ctrl.modo_man}</div>
+  </div>
+</section>`:''}
+${d.checks&&d.checks.length?`<section class="sec">
+  <div class="sec-h"><div class="sec-ico">🔧</div><div class="sec-ttl">Trabajos Realizados</div><div class="sec-line"></div></div>
+  <div class="acts">${d.checks.map(c=>actItem(c)).join('')}</div>
+</section>`:''}
+${hayAnomalias?`<section class="sec">
+  <div class="sec-h"><div class="sec-ico">🔍</div><div class="sec-ttl">Anomalías e Incidencias Detectadas en Visita</div><div class="sec-line"></div></div>
+  <div class="thd" style="background:#fef9c3;border-color:#fde047;border-left-color:#ca8a04;">
+    <div class="thd-ico">⚠️</div>
+    <div>
+      <div class="thd-t" style="color:#854d0e;">Aspectos a vigilar y registrar en próximas intervenciones</div>
+      <div class="thd-x">
+        ${d.an_checks&&d.an_checks.length?'<ul style="margin:4px 0 4px 14px;line-height:1.8;">'+d.an_checks.map(a=>'<li>'+( AN_LABELS[a]||a)+'</li>').join('')+'</ul>':''}
+        ${d.an_txt?'<div style="margin-top:4px;">'+d.an_txt+'</div>':''}
+      </div>
+    </div>
+  </div>
+</section>`:''}
+${showTHD?`<section class="sec"><div class="thd"><div class="thd-ico">⚡</div><div><div class="thd-t">Observación Técnica: THDI = ${fmtN(d.m_thdi,1)}% — Armónicos elevados${d.p44&&d.p44.toUpperCase()==='OFF'?' — Protección A11 desactivada (P.44 = OFF)':''}</div><div class="thd-x">THDI del <strong>${fmtN(d.m_thdi,1)}%</strong> ${thdiVal>25?'supera ampliamente':'supera'} el límite recomendado EN 50160 (10–15%). ${d.p44&&d.p44.toUpperCase()==='OFF'?'<strong>P.44 = OFF</strong>: el DCRL8 no generará alarma A11 automáticamente. ':''} Riesgos: resonancia condensadores/red · sobrecalentamiento · envejecimiento dieléctrico. <strong>Activar P.44 = 30% y valorar reactancias desintonización 7%.</strong></div></div></div></section>`:''}
+<section class="sec">
+  <div class="sec-h"><div class="sec-ico">📋</div><div class="sec-ttl">Conclusiones y Recomendaciones</div><div class="sec-line"></div></div>
+  <div class="cg">
+    <div class="cc"><div class="cc-tag">Estado General</div><div class="cc-txt">${d.obs_gen||'Equipo revisado. Ver trabajos realizados y medidas registradas arriba.'}</div></div>
+    <div class="cc"><div class="cc-tag">Recomendaciones</div><div class="cc-txt">${d.obs_rec||'Ver puntos técnicos detectados en esta intervención.'}${d.prox_rev?'\n\n<div class="hl y"><div class="hl-t">📅 Próxima revisión</div><div class="hl-x">'+fmtFechaLarga(d.prox_rev)+'</div></div>':''}</div></div>
+  </div>
+  <div class="ss">
+    <div class="sa">
+      <div class="sb"><div class="s-lbl">Técnico Ejecutor</div><div class="s-line"></div><div class="s-name">${d.tecnico||'—'}</div><div class="s-role">${d.empresa||'Sagarde S.L. Montajes Eléctricos'}</div></div>
+      <div class="sb"><div class="s-lbl">Conforme — Responsable Instalación</div><div class="s-line"></div><div class="s-name">___________________________</div><div class="s-role">${d.cliente||'Cliente'} · ${d.ubicacion||'—'}</div></div>
+    </div>
+    <div class="stamp" style="border:3px solid ${stC};"><div class="st-m" style="color:${stC};">${d.estado_gen||'CONFORME'}</div><div class="st-s" style="color:${stC};">Mantenimiento</div><div class="st-s" style="color:${stC};">Ejecutado</div><div class="st-d" style="color:${stC};">${fmtFecha(d.fecha)}</div></div>
+  </div>
+</section>
+</div>
+<footer class="ftr">
+  <div class="fc"><span style="color:rgba(255,255,255,.8);font-weight:600;">${d.empresa||'Sagarde S.L. Montajes Eléctricos'}</span><span>— ${d.tecnico||'—'} —</span>${d.e_normativa?'<span class="cbdg">'+d.e_normativa+'</span>':''}<span>${d.e_fabricante||''} ${d.e_modelo||''} ${d.e_serie?'Nº '+d.e_serie:''} · ${d.e_kvar||'—'} kVAr${d.escalones?' ('+d.escalones+')':''} · ${d.e_ncond?d.e_ncond+' cond.':''} · ${d.e_controlador||''}</span></div>
+  <div style="font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.45);">${d.ref||''} · Pág. 1/1</div>
+</footer>
+</div></body></html>`;
+
+  const blob = new Blob([html], {type:'text/html;charset=utf-8'});
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.target = '_blank'; a.rel = 'noopener';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 30000);
+}
+</script>
+</body>
+</html>

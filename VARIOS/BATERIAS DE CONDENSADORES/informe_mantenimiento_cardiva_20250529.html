@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Informe Mantenimiento — CARDIVA — Sagarde S.L. — 29/05/2025</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap');
+:root {
+  --navy:#1a2f6e; --blue:#0066cc; --blue-lt:#e8f1fb;
+  --green:#1a7a3c; --green-lt:#eaf6ee; --green-bd:#9ed4b0;
+  --yellow:#8a6000; --yellow-lt:#fdf6e3; --yellow-bd:#e8d080;
+  --orange:#b84c00; --orange-lt:#fdf0e6; --orange-bd:#e8b890;
+  --red:#b01c1c; --red-lt:#fdeaea; --red-bd:#e0a0a0;
+  --gray-1:#f5f6f8; --gray-2:#ebedf2; --gray-3:#d0d4de; --gray-4:#8a90a0;
+  --text:#1a1e2e; --text-mid:#3a4055; --text-soft:#6a7080; --border:#d0d4de;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Inter',sans-serif;background:#cdd0d8;color:var(--text);
+  print-color-adjust:exact;-webkit-print-color-adjust:exact;}
+.page{width:210mm;min-height:297mm;margin:8mm auto;background:#fff;
+  display:flex;flex-direction:column;box-shadow:0 4px 24px rgba(0,0,0,.2);}
+
+/* HEADER */
+.hdr{background:var(--navy);padding:13px 20px 11px;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;}
+.logo-box{background:#fff;border-radius:5px;padding:5px 11px;
+  display:flex;flex-direction:column;align-items:center;min-width:108px;}
+.logo-txt{font-size:19px;font-weight:900;color:var(--navy);letter-spacing:-1px;line-height:1;}
+.logo-sub{font-size:6.5px;letter-spacing:2px;text-transform:uppercase;color:var(--navy);
+  font-weight:700;border-top:1.5px solid var(--navy);margin-top:2px;padding-top:2px;width:100%;text-align:center;}
+.hdr-mid{text-align:center;}
+.hdr-lbl{font-size:7.5px;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.55);font-weight:600;}
+.hdr-ttl{font-size:16px;font-weight:900;color:#fff;letter-spacing:-.4px;line-height:1.15;margin-top:2px;}
+.hdr-sub{font-size:9px;color:rgba(255,255,255,.55);margin-top:3px;}
+.hdr-r{text-align:right;display:flex;flex-direction:column;gap:3px;align-items:flex-end;}
+.doc-ref{font-family:'JetBrains Mono',monospace;font-size:8px;color:rgba(255,255,255,.5);
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:2px 7px;border-radius:3px;}
+.doc-date{font-size:14px;font-weight:800;color:#fff;}
+.doc-meta{font-size:8.5px;color:rgba(255,255,255,.55);}
+
+/* STATUS STRIPE */
+.stripe{background:var(--gray-1);border-bottom:1.5px solid var(--gray-3);
+  padding:5px 20px;display:flex;align-items:center;gap:16px;font-size:9px;flex-wrap:wrap;}
+.ast{display:flex;align-items:center;gap:5px;}
+.dot{width:7px;height:7px;border-radius:50%;}
+.dot.g{background:#1ea64a;}.dot.y{background:#c8960a;}.dot.o{background:#d05500;}
+.al{color:var(--text-soft);}.av{color:var(--text);font-weight:700;}
+.sep{color:var(--gray-3);font-size:10px;}
+
+/* CONTENT */
+.body{padding:12px 20px;display:flex;flex-direction:column;gap:13px;flex:1;}
+
+/* SECTION */
+.sec{break-inside:avoid;page-break-inside:avoid;}
+.sec-h{display:flex;align-items:center;gap:7px;border-bottom:1.5px solid var(--navy);padding-bottom:4px;margin-bottom:8px;}
+.sec-ico{width:19px;height:19px;background:var(--navy);border-radius:3px;
+  display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
+.sec-ttl{font-size:8.5px;letter-spacing:2px;text-transform:uppercase;color:var(--navy);font-weight:800;}
+.sec-line{flex:1;height:1.5px;background:linear-gradient(90deg,var(--gray-3),transparent);}
+
+/* EQ GRID */
+.eq{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.ec{background:var(--gray-1);border:1px solid var(--gray-3);border-radius:5px;padding:7px 9px;}
+.ec.w2{grid-column:span 2;}.ec.w3{grid-column:span 3;}.ec.w4{grid-column:span 4;}
+.el{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-soft);font-weight:600;margin-bottom:2px;}
+.ev{font-size:11px;font-weight:700;color:var(--text);}
+.ev.mn{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--blue);}
+.es{font-size:8px;color:var(--text-soft);margin-top:1px;}
+
+/* ALARM */
+.alm{border-radius:6px;padding:9px 13px;display:flex;gap:10px;align-items:flex-start;margin-bottom:6px;}
+.alm:last-child{margin-bottom:0;}
+.at{background:var(--red-lt);border:1px solid var(--red-bd);border-left:4px solid var(--red);}
+.ar{background:var(--green-lt);border:1px solid var(--green-bd);border-left:4px solid var(--green);}
+.alm-ico{font-size:17px;flex-shrink:0;line-height:1;margin-top:1px;}
+.alm-b{flex:1;}
+.alm-cod{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;margin-bottom:2px;}
+.at .alm-cod{color:var(--red);}.ar .alm-cod{color:var(--green);}
+.alm-ttl{font-size:12px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.alm-txt{font-size:9px;color:var(--text-mid);line-height:1.55;}
+.bdg{display:inline-block;padding:2px 8px;border-radius:20px;font-size:7.5px;
+  font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-top:5px;}
+.bdg-r{background:#fcd8d8;color:var(--red);border:1px solid var(--red-bd);}
+.bdg-g{background:#cceedd;color:var(--green);border:1px solid var(--green-bd);}
+.bdg-b{background:var(--blue-lt);color:var(--blue);border:1px solid #a0c4f0;}
+.bdg-o{background:#fde0c8;color:var(--orange);border:1px solid var(--orange-bd);}
+
+/* COS PHI */
+.cosphi{background:var(--green-lt);border:1.5px solid var(--green-bd);border-radius:7px;
+  padding:11px 15px;display:flex;align-items:center;gap:14px;margin-bottom:8px;}
+.cpn{font-family:'JetBrains Mono',monospace;font-size:42px;font-weight:900;
+  color:var(--green);line-height:1;flex-shrink:0;}
+.cpl{flex:1;}
+.cps{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-soft);}
+.cpd{font-size:13px;font-weight:700;color:var(--text);margin-top:2px;}
+.cpn2{font-size:9px;color:var(--text-mid);margin-top:3px;line-height:1.5;}
+
+/* MEAS GRID */
+.mg{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.mc{background:var(--gray-1);border:1px solid var(--gray-3);border-radius:5px;
+  padding:8px 10px;display:flex;align-items:center;gap:8px;position:relative;overflow:hidden;}
+.mc::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px;}
+.mc.ok::before{background:#1ea64a;}.mc.wn::before{background:#c8960a;}
+.mc.al::before{background:#d05500;}.mc.cr::before{background:var(--red);}
+.mi{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.mi.ok{background:#1ea64a;}.mi.wn{background:#c8960a;}
+.mi.al{background:#d05500;}.mi.cr{background:var(--red);}
+.mb{flex:1;}
+.mn2{font-size:7.5px;color:var(--text-soft);letter-spacing:.8px;text-transform:uppercase;margin-bottom:1px;}
+.mv{font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;color:var(--text);line-height:1;}
+.mu{font-size:9px;color:var(--text-soft);margin-left:2px;}
+.ms{font-size:7px;margin-top:3px;font-weight:700;letter-spacing:.7px;text-transform:uppercase;}
+.ms.ok{color:#1a7a3c;}.ms.wn{color:#8a6000;}.ms.al{color:#b84c00;}.ms.cr{color:var(--red);}
+
+/* STEPS */
+.steps-panel{background:var(--gray-1);border:1px solid var(--gray-3);border-radius:7px;padding:12px 14px;}
+.steps-ttl{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--navy);font-weight:700;margin-bottom:10px;}
+.steps-row{display:flex;gap:7px;align-items:stretch;}
+.step-card{flex:1;background:#fff;border:1.5px solid var(--gray-3);border-radius:6px;
+  padding:10px 11px;display:flex;flex-direction:column;align-items:center;gap:4px;position:relative;overflow:hidden;}
+.step-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.step-card.s1::before{background:#0066cc;}.step-card.s2::before{background:#c8960a;}
+.step-card.s3::before{background:#1a7a3c;}.step-card.aut::before{background:var(--green);}
+.step-num{font-size:7.5px;color:var(--text-soft);letter-spacing:1.5px;text-transform:uppercase;font-weight:700;}
+.step-kvar{font-family:'JetBrains Mono',monospace;font-size:24px;font-weight:900;line-height:1;}
+.step-kvar.s1c{color:#0066cc;}.step-kvar.s2c{color:#c8960a;}.step-kvar.s3c{color:#1a7a3c;}.step-kvar.autc{color:var(--green);font-size:18px;margin-top:4px;}
+.step-unit{font-size:9.5px;color:var(--text-soft);}
+.step-div{width:100%;height:1px;background:var(--gray-3);margin:3px 0;}
+.step-ncaps{font-size:8px;font-weight:700;color:var(--text-soft);text-align:center;}
+.step-act{font-size:8px;color:var(--text-mid);text-align:center;line-height:1.45;}
+.step-res{font-size:7.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  padding:2px 7px;border-radius:10px;}
+.step-res.ok{background:#cceedd;color:var(--green);border:1px solid var(--green-bd);}
+.step-res.bl{background:var(--blue-lt);color:var(--blue);border:1px solid #a0c4f0;}
+.steps-arrow{display:flex;align-items:center;color:var(--gray-4);font-size:14px;align-self:center;flex-shrink:0;}
+.steps-sum{margin-top:8px;background:var(--blue-lt);border:1px solid #b0cef0;border-radius:5px;
+  padding:7px 10px;font-size:9px;color:var(--text-mid);line-height:1.6;}
+.steps-sum strong{color:var(--navy);}
+
+/* ACTIONS */
+.acts{display:flex;flex-direction:column;gap:5px;}
+.act{display:flex;align-items:flex-start;gap:8px;padding:8px 11px;
+  background:var(--gray-1);border:1px solid var(--gray-3);border-radius:5px;
+  break-inside:avoid;page-break-inside:avoid;}
+.act-chk{width:18px;height:18px;border-radius:50%;background:#cceedd;border:1.5px solid var(--green-bd);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--green);font-size:9px;}
+.act-b{flex:1;}
+.act-t{font-size:10.5px;font-weight:700;color:var(--text);}
+.act-d{font-size:9px;color:var(--text-mid);margin-top:2px;line-height:1.5;}
+.act-bg{font-size:7.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  padding:2px 7px;border-radius:10px;white-space:nowrap;align-self:flex-start;flex-shrink:0;
+  background:#cceedd;color:var(--green);border:1px solid var(--green-bd);}
+.act-bg.w{background:#faecc8;color:var(--yellow);border-color:var(--yellow-bd);}
+.act-bg.o{background:#fde0c8;color:var(--orange);border-color:var(--orange-bd);}
+
+/* THD */
+.thd{background:var(--orange-lt);border:1px solid var(--orange-bd);border-left:4px solid var(--orange);
+  border-radius:6px;padding:10px 13px;display:flex;gap:10px;align-items:flex-start;
+  break-inside:avoid;page-break-inside:avoid;}
+.thd-ico{font-size:17px;flex-shrink:0;}
+.thd-t{font-size:11px;font-weight:700;color:var(--orange);margin-bottom:3px;}
+.thd-x{font-size:9px;color:var(--text-mid);line-height:1.55;}
+
+/* PARAM NOTE */
+.param-note{background:#fff;border:1px solid var(--gray-3);border-left:3px solid var(--blue);
+  border-radius:4px;padding:7px 10px;margin-top:6px;
+  font-size:8.5px;color:var(--text-mid);line-height:1.55;}
+.param-note strong{color:var(--navy);}
+.param-chip{display:inline-block;background:var(--blue-lt);color:var(--blue);
+  border:1px solid #b0cef0;border-radius:3px;padding:0 5px;font-family:'JetBrains Mono',monospace;
+  font-size:8px;font-weight:700;margin:0 2px;}
+
+/* CONCL */
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.cc{background:var(--gray-1);border:1px solid var(--gray-3);border-radius:6px;padding:10px 12px;
+  break-inside:avoid;page-break-inside:avoid;}
+.cc.full{grid-column:span 2;}
+.cc-tag{font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--navy);font-weight:800;margin-bottom:5px;}
+.cc-txt{font-size:9px;color:var(--text-mid);line-height:1.6;}
+.cc-txt strong{color:var(--text);}
+.hl{margin-top:7px;border-radius:4px;padding:7px 10px;}
+.hl.y{background:var(--yellow-lt);border:1px solid var(--yellow-bd);border-left:3px solid var(--yellow);}
+.hl.o{background:var(--orange-lt);border:1px solid var(--orange-bd);border-left:3px solid var(--orange);}
+.hl-t{font-size:8px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.hl.y .hl-t{color:var(--yellow);}.hl.o .hl-t{color:var(--orange);}
+.hl-x{font-size:8.5px;color:var(--text-mid);line-height:1.55;}
+
+/* SIGN STAMP */
+.ss{display:flex;align-items:flex-end;gap:16px;margin-top:5px;
+  border-top:1px solid var(--gray-3);padding-top:10px;
+  break-inside:avoid;page-break-inside:avoid;}
+.sa{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.sb{display:flex;flex-direction:column;gap:3px;}
+.s-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:var(--text-soft);}
+.s-line{height:1px;background:var(--gray-3);margin:16px 0 4px;}
+.s-name{font-size:10.5px;color:var(--text);font-weight:700;}
+.s-role{font-size:8.5px;color:var(--text-soft);}
+.stamp{width:112px;height:112px;border:3px solid var(--green);border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  transform:rotate(-12deg);flex-shrink:0;position:relative;background:#fff;}
+.stamp::before{content:'';position:absolute;inset:5px;border:1.5px solid var(--green);
+  border-radius:50%;opacity:.35;}
+.st-m{font-size:15px;font-weight:900;color:var(--green);letter-spacing:2px;text-transform:uppercase;}
+.st-s{font-size:7.5px;color:var(--green);letter-spacing:1px;text-transform:uppercase;}
+.st-d{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--green);margin-top:4px;}
+
+/* FOOTER */
+.ftr{background:var(--navy);padding:6px 20px;display:flex;align-items:center;
+  justify-content:space-between;font-size:7.5px;color:rgba(255,255,255,.5);}
+.fc{display:flex;align-items:center;gap:7px;}
+.cbdg{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);
+  border-radius:3px;padding:1px 5px;font-family:'JetBrains Mono',monospace;
+  font-size:7px;color:rgba(255,255,255,.6);}
+
+@media print{body{background:#fff;}.page{margin:0;box-shadow:none;}}
+@page{size:A4 portrait;margin:0;}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<header class="hdr">
+  <div class="logo-box">
+    <div class="logo-txt"><span style="font-style:italic;font-weight:300">S</span>agarde, <span style="font-size:15px">s.l.</span></div>
+    <div class="logo-sub">Montajes Eléctricos</div>
+  </div>
+  <div class="hdr-mid">
+    <div class="hdr-lbl">Informe Técnico de Mantenimiento Preventivo</div>
+    <div class="hdr-ttl">CARDIVA · Lezama (Bizkaia)</div>
+    <div class="hdr-sub">Batería de Condensadores Automática — Regulador LOVATO DCRL8 — Alarma A12 resuelta</div>
+  </div>
+  <div class="hdr-r">
+    <div class="doc-ref">MNT-2025-0529-CVA</div>
+    <div class="doc-date">29 / 05 / 2025</div>
+    <div class="doc-meta">Técnico: Vicente Trancón</div>
+    <div class="doc-meta">Empresa: Sagarde S.L.</div>
+  </div>
+</header>
+
+<!-- STRIPE -->
+<div class="stripe">
+  <div class="ast"><div class="dot g"></div><span class="al">Equipo:</span><span class="av">OPERATIVO</span></div>
+  <span class="sep">|</span>
+  <div class="ast"><div class="dot g"></div><span class="al">Alarma A12:</span><span class="av">RESUELTA</span></div>
+  <span class="sep">|</span>
+  <div class="ast"><div class="dot g"></div><span class="al">Escalones:</span><span class="av">3/3 verificados — 5+10+15 kVAr ✓</span></div>
+  <span class="sep">|</span>
+  <div class="ast"><div class="dot o"></div><span class="al">THDI:</span><span class="av">27,9% elevado · Umbral A11 en OFF</span></div>
+  <span class="sep">|</span>
+  <div class="ast"><div class="dot g"></div><span class="al">cos φ final:</span><span class="av">0,97 CAP ✓</span></div>
+</div>
+
+<div class="body">
+
+<!-- 1. DATOS EQUIPO -->
+<section class="sec">
+  <div class="sec-h"><div class="sec-ico">⚡</div><div class="sec-ttl">Identificación del Equipo e Instalación</div><div class="sec-line"></div></div>
+  <div class="eq">
+    <div class="ec"><div class="el">Instalación / Cliente</div><div class="ev">CARDIVA</div><div class="es">Lezama, Bizkaia</div></div>
+    <div class="ec"><div class="el">Fabricante Equipo</div><div class="ev">Comercial Goval SLU</div><div class="es">Etxebarri · 944 407 748</div></div>
+    <div class="ec"><div class="el">Modelo</div><div class="ev">BCC</div><div class="es">Batería Condensadores Aut.</div></div>
+    <div class="ec"><div class="el">Nº de Serie</div><div class="ev mn">17031277</div><div class="es">Fabricación aprox. 2017</div></div>
+    <div class="ec"><div class="el">Potencia Total</div><div class="ev">30 kVAr</div><div class="es">400 V / 50 Hz — AUT</div></div>
+    <div class="ec"><div class="el">Escalonamiento</div><div class="ev mn">5 + 10 + 15</div><div class="es">3 pasos — 12 condensadores</div></div>
+    <div class="ec"><div class="el">Corriente Nominal</div><div class="ev">43,3 A</div><div class="es">I=Q/(√3·V) = 30000/692,8</div></div>
+    <div class="ec"><div class="el">Controlador</div><div class="ev">LOVATO DCRL8</div><div class="es">8 pasos ampliable a 14</div></div>
+    <div class="ec w2"><div class="el">Empresa Mantenedora / Técnico</div>
+      <div class="ev">Sagarde S.L. Montajes Eléctricos — Vicente Trancón</div>
+      <div class="es">Fecha: 29/05/2025 · Origen: Alarma A12 activa en regulador DCRL8</div></div>
+    <div class="ec w2"><div class="el">Normativa &amp; Certificaciones</div>
+      <div class="ev" style="font-size:10px;">CEI 33-5 · UNE-EN 60439 · IEC 70-70A · ISO 9001 — SGS cert. nº ES04/0182</div>
+      <div class="es">Norma 2: 73/23CEE · 89/336CEE · Medida TRMS · IP65 frontal</div></div>
+  </div>
+</section>
+
+<!-- 2. ALARMA -->
+<section class="sec">
+  <div class="sec-h"><div class="sec-ico">🔔</div><div class="sec-ttl">Causa de la Intervención — Alarma A12</div><div class="sec-line"></div></div>
+  <div class="alm at">
+    <div class="alm-ico">⚠️</div>
+    <div class="alm-b">
+      <div class="alm-cod">ALARMA A12 — ACTIVA AL INICIO DE LA INTERVENCIÓN</div>
+      <div class="alm-ttl">Solicitud de Mantenimiento Periódico</div>
+      <div class="alm-txt">El DCRL8 genera A12 cuando se alcanza el umbral configurado en <span class="param-chip">P.45</span> (intervalo en horas, indicador <em>HR</em>, defecto 9.000 h) o <span class="param-chip">P.54</span> (número de maniobras de relé, indicador <em>CN</em>). Es informativa y no desconecta el equipo. El reset correcto: <strong>comando C01</strong> para alarma por horas; <strong>C01 + C02</strong> si es por maniobras.</div>
+      <span class="bdg bdg-r">⚡ Requería intervención técnica</span>
+    </div>
+  </div>
+  <div class="alm ar">
+    <div class="alm-ico">✅</div>
+    <div class="alm-b">
+      <div class="alm-cod">ALARMA A12 — RESUELTA MEDIANTE COMANDO C01</div>
+      <div class="alm-ttl">Mantenimiento completado — Alarma reseteada — Modo AUT normalizado</div>
+      <div class="alm-txt">Tras completar todos los trabajos y verificar los 3 escalones en modo MAN, se accedió al menú CMD (MODE 5 seg → CMD → AUT → C01 mantenido 3 seg → confirmación OK). Retorno a modo <strong>AUT</strong> con <strong>cos φ = 0,97 CAP</strong>, sin alarmas activas.</div>
+      <span class="bdg bdg-g">✓ Alarma resuelta · Equipo operativo</span>
+    </div>
+  </div>
+</section>
+
+<!-- 3. MEDIDAS -->
+<section class="sec">
+  <div class="sec-h"><div class="sec-ico">📊</div><div class="sec-ttl">Lecturas del Regulador DCRL8 en el Momento de la Intervención</div><div class="sec-line"></div></div>
+  <div class="cosphi">
+    <div class="cpn">0,97</div>
+    <div class="cpl">
+      <div class="cps">Factor de Potencia Instantáneo</div>
+      <div class="cpd">cos φ = 0,97 — Capacitivo (CAP) — Pantalla: 3 escalones visibles y activos</div>
+      <div class="cpn2">Corrección en rango óptimo. Tensión de red: <strong>409 V</strong>. ΔkVAr = 0,01 kVAr (corrección prácticamente perfecta). Pantalla DCRL8 muestra indicadores 1, 2, 3 con barra de estado.</div>
+    </div>
+  </div>
+  <div class="mg">
+    <div class="mc ok"><div class="mi ok"></div><div class="mb"><div class="mn2">Delta kVAr activo</div><div class="mv">0,01<span class="mu">kVAr</span></div><div class="ms ok">✓ Corrección casi perfecta</div></div></div>
+    <div class="mc ok"><div class="mi ok"></div><div class="mb"><div class="mn2">Tensión de Línea</div><div class="mv">409<span class="mu">V</span></div><div class="ms ok">✓ Normal — nom. 400 V (+2,25%)</div></div></div>
+    <div class="mc ok"><div class="mi ok"></div><div class="mb"><div class="mn2">Corriente de Línea</div><div class="mv">31,0<span class="mu">A</span></div><div class="ms ok">✓ Normal — nom. 43,3 A (72%)</div></div></div>
+    <div class="mc wn"><div class="mi wn"></div><div class="mb"><div class="mn2">WPF — FP Medio Semanal</div><div class="mv">0,89<span class="mu">WPF</span></div><div class="ms wn">⚠ Bajo — objetivo ≥ 0,95</div></div></div>
+    <div class="mc wn"><div class="mi wn"></div><div class="mb"><div class="mn2">Corriente Condensadores</div><div class="mv">101<span class="mu">%C.CU</span></div><div class="ms wn">⚠ Al límite — umbral alarma 125%</div></div></div>
+    <div class="mc ok"><div class="mi ok"></div><div class="mb"><div class="mn2">Temperatura Interna</div><div class="mv">24<span class="mu">°C</span></div><div class="ms ok">✓ Normal — umbral A08: 60°C</div></div></div>
+    <div class="mc ok"><div class="mi ok"></div><div class="mb"><div class="mn2">THDV — Arm. Tensión</div><div class="mv">1,4<span class="mu">%</span></div><div class="ms ok">✓ Aceptable — umbral A10: OFF</div></div></div>
+    <div class="mc al"><div class="mi al"></div><div class="mb"><div class="mn2">THDI — Arm. Corriente</div><div class="mv">27,9<span class="mu">%</span></div><div class="ms al">⚠ Elevado — umbral A11: OFF !</div></div></div>
+    <div class="mc ok"><div class="mi ok"></div><div class="mb"><div class="mn2">cos φ — Factor Potencia</div><div class="mv">0,96<span class="mu">CAP</span></div><div class="ms ok">✓ Capacitivo — Óptimo</div></div></div>
+  </div>
+  <div class="param-note" style="margin-top:6px;">
+    <strong>Nota de configuración:</strong> El umbral de alarma <span class="param-chip">P.44</span> (THDI máximo → alarma A11) y <span class="param-chip">P.43</span> (THDV → alarma A10) están en <strong>OFF por defecto</strong>: el DCRL8 no activará A11 aunque el THDI supere cualquier valor. Se recomienda activar P.44 a un valor de alarma (p.ej. 30%) para tener vigilancia automática. Asimismo, <span class="param-chip">P.32</span> (sobrecarga condensadores → alarma A07) está en 125%: el %C.CU actual (101%) no activa alarma pero está próximo.
+  </div>
+</section>
+
+<!-- 4. VERIFICACIÓN ESCALONES -->
+<section class="sec">
+  <div class="sec-h"><div class="sec-ico">🔩</div><div class="sec-ttl">Verificación de Escalones en Modo Manual — Procedimiento DCRL8</div><div class="sec-line"></div></div>
+  <div class="steps-panel">
+    <div class="steps-ttl">Pasos verificados individualmente: 5 kVAr (KM1) → 10 kVAr (KM2) → 15 kVAr (KM3) → Retorno AUT · P.09 tiempo reconexión = 60 s (defecto)</div>
+    <div class="steps-row">
+      <div class="step-card s1">
+        <div class="step-num">Escalón 1</div>
+        <div class="step-kvar s1c">5</div>
+        <div class="step-unit">kVAr</div>
+        <div class="step-div"></div>
+        <div class="step-ncaps">4 condensadores · KM1</div>
+        <div class="step-act">MAN → tecla ▲▼ selecciona paso 1 (parpadeo rápido) → MODE conecta. Si P.09 no expiró, icono MAN parpadea.</div>
+        <div class="step-res ok">✓ Entrada OK</div>
+      </div>
+      <div class="steps-arrow">→</div>
+      <div class="step-card s2">
+        <div class="step-num">Escalón 2</div>
+        <div class="step-kvar s2c">10</div>
+        <div class="step-unit">kVAr</div>
+        <div class="step-div"></div>
+        <div class="step-ncaps">4 condensadores · KM2</div>
+        <div class="step-act">Mismo procedimiento. Contactor KM2 activa. Entrada y salida verificadas. kVAr en pantalla varía +10 sobre base.</div>
+        <div class="step-res ok">✓ Entrada OK</div>
+      </div>
+      <div class="steps-arrow">→</div>
+      <div class="step-card s3">
+        <div class="step-num">Escalón 3</div>
+        <div class="step-kvar s3c">15</div>
+        <div class="step-unit">kVAr</div>
+        <div class="step-div"></div>
+        <div class="step-ncaps">4 condensadores · KM3</div>
+        <div class="step-act">Mismo procedimiento. Contactor KM3 activa. Entrada y salida verificadas. kVAr en pantalla varía +15 sobre base.</div>
+        <div class="step-res ok">✓ Entrada OK</div>
+      </div>
+      <div class="steps-arrow">→</div>
+      <div class="step-card aut">
+        <div class="step-num" style="color:var(--green)">Retorno AUT</div>
+        <div class="step-kvar autc">AUT</div>
+        <div class="step-unit">&nbsp;</div>
+        <div class="step-div"></div>
+        <div class="step-ncaps" style="color:var(--green)">Tecla AUT 1 seg.</div>
+        <div class="step-act">DCRL8 asume control automático normalizando pasos según demanda real de la instalación. Estado estable.</div>
+        <div class="step-res bl">✓ AUT normalizado</div>
+      </div>
+    </div>
+    <div class="steps-sum">
+      <strong>Procedimiento ejecutado:</strong> Con equipo en modo <strong>MAN</strong> (tecla MAN 1 segundo), se seleccionó cada escalón con ▲▼ (el paso seleccionado parpadea) y se activó/desactivó con MODE. Se esperó expiración del tiempo de reconexión <span class="param-chip">P.09</span> (60 s) entre maniobras. Tras verificar los 3 escalones, retorno a <strong>AUT</strong> confirmado con <strong>cos φ = 0,97</strong> estable y pantalla mostrando los 3 indicadores de escalón.
+    </div>
+  </div>
+</section>
+
+<!-- 5. TRABAJOS -->
+<section class="sec">
+  <div class="sec-h"><div class="sec-ico">🔧</div><div class="sec-ttl">Trabajos Realizados</div><div class="sec-line"></div></div>
+  <div class="acts">
+    <div class="act">
+      <div class="act-chk">✓</div>
+      <div class="act-b">
+        <div class="act-t">1. Lectura y registro completo de parámetros del regulador DCRL8</div>
+        <div class="act-d">Se registraron todos los valores de pantalla: ΔkVAr, V, A, WPF, %C.CU, °C, THDV, THDI, cos φ y estado de alarmas. Quedan documentados como línea base para futuras intervenciones y comparativa histórica.</div>
+      </div>
+      <div class="act-bg">✓ Registrado</div>
+    </div>
+    <div class="act">
+      <div class="act-chk">✓</div>
+      <div class="act-b">
+        <div class="act-t">2. Verificación de los 3 escalones en modo manual — 5, 10 y 15 kVAr</div>
+        <div class="act-d">Activación y desactivación individual de cada paso en modo MAN, comprobando correcto funcionamiento de los tres contactores (KM1, KM2, KM3) y variación coherente de kVAr en pantalla. Respeto del tiempo de reconexión P.09 = 60 s entre maniobras. Retorno a AUT con normalización correcta.</div>
+      </div>
+      <div class="act-bg">✓ 3/3 escalones OK</div>
+    </div>
+    <div class="act">
+      <div class="act-chk">✓</div>
+      <div class="act-b">
+        <div class="act-t">3. Inspección visual de los 12 condensadores cilíndricos (3 filas × 4 columnas)</div>
+        <div class="act-d">No se observaron deformaciones (abombamiento de tapas — señal inequívoca de fallo inminente), fisuras, fugas de dieléctrico, quemaduras en terminales ni desprendimiento de la válvula de seguridad. Las resistencias de descarga (visibles en la foto) están correctamente instaladas en todos los condensadores. Estado: <strong>CORRECTO</strong>.</div>
+      </div>
+      <div class="act-bg">✓ Sin anomalías</div>
+    </div>
+    <div class="act">
+      <div class="act-chk">✓</div>
+      <div class="act-b">
+        <div class="act-t">4. Inspección y verificación de fusibles de protección</div>
+        <div class="act-d">Verificados todos los fusibles de cada paso (FU1, FU2, FU8 según esquema Goval) y los auxiliares de alimentación del DCRL8 (FU9, FU10, FU11 — 1A rápidos según características técnicas). Todos con continuidad correcta, sin signos de fusión ni deterioro de los cartuchos.</div>
+      </div>
+      <div class="act-bg">✓ Fusibles OK</div>
+    </div>
+    <div class="act">
+      <div class="act-chk">✓</div>
+      <div class="act-b">
+        <div class="act-t">5. Limpieza interior completa del armario</div>
+        <div class="act-d">Eliminación de polvo y suciedad acumulados sobre los 12 condensadores, cableado de potencia, bornes de conexión y frontal del regulador DCRL8. La acumulación de polvo reduce la disipación térmica de los condensadores y puede provocar tracking superficial o arcos. Ventilación del armario correcta tras limpieza. Limpieza con paño seco (sin disolventes, según manual DCRL8).</div>
+      </div>
+      <div class="act-bg">✓ Limpieza OK</div>
+    </div>
+    <div class="act">
+      <div class="act-chk">✓</div>
+      <div class="act-b">
+        <div class="act-t">6. Reset de alarma A12 mediante comando C01 y verificación final</div>
+        <div class="act-d">Acceso al menú CMD (MODE 5 s → seleccionar CMD → AUT → seleccionar C01 → mantener ▲ hasta cuenta atrás → OK). Reset ejecutado. Funcionamiento verificado: modo AUT, <strong>cos φ = 0,97 CAP</strong>, tensión 409 V, %C.CU 101%, 3 escalones disponibles, sin alarmas activas.</div>
+      </div>
+      <div class="act-bg">✓ cos φ = 0,97</div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. THD -->
+<section class="sec">
+  <div class="thd">
+    <div class="thd-ico">⚡</div>
+    <div>
+      <div class="thd-t">Observación Técnica Crítica: THDI = 27,9% — Protección A11 no configurada (P.44 = OFF)</div>
+      <div class="thd-x">El <strong>THD de corriente del 27,9%</strong> supera ampliamente el límite recomendado EN 50160 (10–15%). La protección de alarma A11 tiene su umbral <span class="param-chip">P.44</span> en <strong>OFF</strong> por defecto: el DCRL8 no generará alarma. Riesgos principales: <strong>(1) resonancia</strong> entre los condensadores y la reactancia de la red a frecuencias armónicas (5ª=250Hz, 7ª=350Hz típicas con variadores) — agravado porque %C.CU ya está al 101%; <strong>(2) sobrecalentamiento</strong> de condensadores y transformador; <strong>(3) aceleración del envejecimiento dieléctrico</strong>. <strong>Acción recomendada: activar P.44 a 30% y valorar reactancias de desintonización al 7% en serie con cada paso.</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. CONCLUSIONES -->
+<section class="sec">
+  <div class="sec-h"><div class="sec-ico">📋</div><div class="sec-ttl">Conclusiones y Recomendaciones</div><div class="sec-line"></div></div>
+  <div class="cg">
+    <div class="cc">
+      <div class="cc-tag">Estado General</div>
+      <div class="cc-txt">El equipo se encuentra en <strong>buen estado general</strong>. Los 12 condensadores no presentan deterioro físico visible. Los 3 escalones (5+10+15 kVAr) funcionan correctamente en modo manual y automático. cos φ = 0,97 tras intervención.</div>
+    </div>
+    <div class="cc">
+      <div class="cc-tag">WPF 0,89 — Factor de Potencia Semanal Bajo</div>
+      <div class="cc-txt">El WPF (0,89) es inferior al cos φ instantáneo (0,97), indicando periodos —posiblemente nocturnos o fin de semana— con baja carga donde la corrección es inadecuada.
+        <div class="hl y"><div class="hl-t">⚠ Recomendación</div><div class="hl-x">Revisar <span class="param-chip">P.19</span> (valor referencia) y <span class="param-chip">P.10</span> (sensibilidad). Considerar activar <span class="param-chip">P.30</span> (sensibilidad a desconexión) para mejor gestión en horas valle.</div></div>
+      </div>
+    </div>
+    <div class="cc full">
+      <div class="cc-tag">⚠ Punto Crítico — THDI = 27,9% + %C.CU = 101% + Umbral A11 inactivo</div>
+      <div class="cc-txt">La combinación de THDI elevado, corriente en condensadores en el límite nominal y ausencia de protección automática por armónicos es el aspecto más relevante de esta intervención.</div>
+      <div class="hl o"><div class="hl-t">⚡ Acciones recomendadas por orden de prioridad</div>
+        <div class="hl-x">
+          <strong>1. Inmediato — Activar protección:</strong> Configurar <span class="param-chip">P.44</span> = 30% (umbral alarma A11-THDI) y <span class="param-chip">P.43</span> = 5% (A10-THDV) para tener vigilancia automática.<br>
+          <strong>2. Corto plazo — Análisis Power Quality:</strong> Medir espectro armónico completo para identificar fuentes dominantes (5ª y 7ª armónica típicas en variadores de frecuencia, rectificadores).<br>
+          <strong>3. Medio plazo — Reactancias de desintonización (7%):</strong> Instalar inductancias en serie con cada paso de condensadores. Reducirá el %C.CU, evitará resonancias y aumentará la vida útil del banco.<br>
+          <strong>4. Vigilancia próxima revisión:</strong> Registrar de nuevo %C.CU y THDI. Si %C.CU ≥ 110% de forma continuada, planificar sustitución preventiva de condensadores.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ss">
+    <div class="sa">
+      <div class="sb">
+        <div class="s-lbl">Técnico Ejecutor</div>
+        <div class="s-line"></div>
+        <div class="s-name">Vicente Trancón</div>
+        <div class="s-role">Sagarde S.L. Montajes Eléctricos</div>
+      </div>
+      <div class="sb">
+        <div class="s-lbl">Conforme — Responsable Instalación</div>
+        <div class="s-line"></div>
+        <div class="s-name">___________________________</div>
+        <div class="s-role">CARDIVA · Lezama, Bizkaia</div>
+      </div>
+    </div>
+    <div class="stamp">
+      <div class="st-m">CONFORME</div>
+      <div class="st-s">Mantenimiento</div>
+      <div class="st-s">Ejecutado</div>
+      <div class="st-d">29/05/2025</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- /body -->
+
+<footer class="ftr">
+  <div class="fc">
+    <span style="color:rgba(255,255,255,.8);font-weight:600;">Sagarde S.L. Montajes Eléctricos</span>
+    <span>— V. Trancón —</span>
+    <span class="cbdg">ISO 9001 · SGS ES04/0182</span>
+    <span class="cbdg">CEI 33-5 · UNE-EN 60439</span>
+    <span>Goval BCC Nº 17031277 · 30 kVAr (5+10+15) · 12 condensadores · DCRL8</span>
+  </div>
+  <div style="font-family:'JetBrains Mono',monospace;color:rgba(255,255,255,.45);">MNT-2025-0529-CVA · Pág. 1/1</div>
+</footer>
+
+</div><!-- /page -->
+</body>
+</html>

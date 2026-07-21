@@ -1,0 +1,2565 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Generador Informes Tierra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#222}
+h1{background:#1a3a5c;color:#fff;padding:14px 20px;font-size:1.1em}
+.tabs{display:flex;background:#dce8f5;border-bottom:2px solid #1a3a5c;flex-wrap:wrap}
+.tab{padding:10px 16px;cursor:pointer;font-size:.88em;color:#1a3a5c;font-weight:700;border-right:1px solid #b0c8e0}
+.tab.active{background:#1a3a5c;color:#fff}
+.panel{display:none;padding:18px;background:#fff}
+.panel.active{display:block}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.full{grid-column:1/-1}
+label{display:block;font-size:.8em;font-weight:700;color:#444;margin-bottom:3px}
+input,select,textarea{width:100%;padding:7px 9px;border:1px solid #bcd;border-radius:4px;font-size:.85em}
+textarea{height:65px;resize:vertical}
+.st{font-weight:700;font-size:.85em;color:#1a3a5c;margin:14px 0 8px;border-bottom:1px solid #dce8f5;padding-bottom:4px}
+.add-btn{background:#1a3a5c;color:#fff;border:none;padding:6px 14px;border-radius:4px;cursor:pointer;font-size:.82em;margin:6px 0}
+.del-btn{background:#c0392b;color:#fff;border:none;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:.78em}
+.row-item{background:#f7fafc;border:1px solid #dce8f5;border-radius:4px;padding:8px;margin-bottom:6px}
+.row-item-fail{background:#fff8e1;border:1px solid #f0c040;border-left:3px solid #c0550a;border-radius:4px;padding:8px;margin-bottom:6px}
+.ref-block{border:1px solid #b0c8e0;border-radius:6px;padding:10px;margin-bottom:10px;background:#f7fafc}
+.para-check{display:flex;align-items:center;gap:5px;font-size:.8em;cursor:pointer;background:#fff8e1;padding:4px 8px;border-radius:4px;border:1px solid #f0c040;margin-bottom:6px}
+.para-check input{width:auto}
+.mcheck{display:flex;gap:10px;margin:8px 0;flex-wrap:wrap}
+.mcheck label{display:flex;align-items:center;gap:5px;font-weight:700;font-size:.85em;cursor:pointer;background:#eaf1fb;padding:6px 10px;border-radius:4px;border:1px solid #b0c8e0}
+.mcheck input[type=checkbox]{width:auto}
+.gen-btn{background:#27ae60;color:#fff;border:none;padding:11px 28px;border-radius:5px;cursor:pointer;font-size:1em;font-weight:700;margin-top:16px;width:100%}
+/* informe */
+#inf-out{display:none;padding:20px;background:#fff}
+.ih{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #1a3a5c;padding-bottom:14px;margin-bottom:16px;padding-top:4px}
+.ilogo{font-size:1.5em;font-weight:900;color:#1a3a5c;display:flex;align-items:center;gap:12px}
+.ilogo::before{display:none}
+.ilogo span{font-size:.5em;display:block;font-weight:600;color:#555;letter-spacing:.08em;text-transform:uppercase;margin-top:1px}
+.itable{width:100%;border-collapse:collapse;margin-bottom:14px}
+.itable td{border:1px solid #aaa;padding:7px 10px;font-size:.88em}
+.itable td:first-child{font-weight:700;background:#eaf1fb;width:32%}
+.isec{margin-bottom:22px;border-radius:0 0 6px 6px;box-shadow:0 2px 7px rgba(26,58,92,.10);border:1px solid #dce8f5;border-top:none}
+.isec h3{color:#fff;padding:9px 13px;font-size:.92em;margin-bottom:10px;letter-spacing:.3px;display:flex;align-items:center;gap:7px}
+.isec h3.azul-sec{background:#1a3a5c}       /* §1 §2 §3 §5 §7 */
+.isec h3.teal-sec{background:#16697a}        /* §4 métodos */
+.isec h3.grey-sec{background:#444}           /* sub-métodos 4A…4F */
+.isec h3.orange-sec{background:#c0550a}      /* §6B condicionantes */
+.isec h3.green-sec{background:#1a6b36}       /* §8 recomendaciones */
+.isec h3.slate-sec{background:#2c3e50}       /* §6 interpretación */
+.isec h3.photo-sec{background:#37474f}       /* §9 fotos */
+/* alias backward-compat */
+.isec h3.dark{background:#444}
+.isec h3.orange{background:#c0550a}
+/* contenido interno con padding */
+.isec>p,.isec>div,.isec>ul,.isec>table{padding:0 13px}
+.isec>p:last-child,.isec>div:last-child,.isec>table:last-child{padding-bottom:12px}
+.isec p,.isec li{font-size:.85em;line-height:1.65;margin-bottom:5px}
+.isec ul{margin-left:18px}
+.rtable{width:100%;border-collapse:collapse;font-size:.85em;margin:8px 0}
+.rtable th{background:#1a3a5c;color:#fff;padding:6px 10px;text-align:left}
+.rtable td{border:1px solid #ccc;padding:6px 10px;vertical-align:middle}
+.rtable tr:nth-child(even) td{background:#f5f8fc}
+.ok{background:#27ae60;color:#fff;padding:3px 10px;border-radius:12px;font-size:.78em;font-weight:700;letter-spacing:.02em;box-shadow:0 1px 3px rgba(39,174,96,.35)}
+.warn{background:#e67e22;color:#fff;padding:3px 10px;border-radius:12px;font-size:.78em;font-weight:700;letter-spacing:.02em;box-shadow:0 1px 3px rgba(230,126,34,.35)}
+.admisible{background:#c0550a;color:#fff;padding:3px 10px;border-radius:12px;font-size:.78em;font-weight:700;letter-spacing:.02em;box-shadow:0 1px 3px rgba(192,85,10,.35)}
+.fail{background:#c0392b;color:#fff;padding:3px 10px;border-radius:12px;font-size:.78em;font-weight:700;letter-spacing:.02em;box-shadow:0 1px 3px rgba(192,57,43,.35)}
+.prtbtn{background:#1a3a5c;color:#fff;border:none;padding:9px 22px;border-radius:4px;cursor:pointer;font-size:.9em;margin:12px 6px 0 0}
+.bckbtn{background:#666;color:#fff;border:none;padding:9px 22px;border-radius:4px;cursor:pointer;font-size:.9em;margin:12px 0 0}
+.calcbox{background:#eaf7ec;border:1px solid #27ae60;border-radius:6px;padding:10px 14px;font-size:.85em;margin-top:8px}
+.concbox{background:#eaf1fb;border-left:4px solid #1a3a5c;padding:10px 14px;font-size:.85em;margin-top:8px;border-radius:0 6px 6px 0;line-height:1.65}
+.scrbox{background:#1a1a1a;color:#7fff7f;font-family:monospace;font-size:.82em;padding:10px 14px;border-radius:6px;margin:8px 0;line-height:1.8}
+.scrbox span{color:#aaffaa}
+/* ── nuevos estilos ── */
+.tip{font-size:.79em;color:#444;background:#f4f7fc;border-left:3px solid #7fb3e0;padding:5px 10px;margin:5px 0;border-radius:0 4px 4px 0;line-height:1.62;font-style:italic}
+.pend-check{display:flex;align-items:center;gap:6px;font-size:.82em;padding:3px 0;cursor:pointer}
+.pend-check input{width:auto}
+.pendbox{background:#fff8e1;border-left:4px solid #e67e22;padding:10px 14px;font-size:.85em;margin-top:8px;border-radius:0 6px 6px 0;line-height:1.65}
+.pendbox-blue{background:#f0f4ff;border-left:4px solid #6690c4;padding:10px 14px;font-size:.85em;margin-top:8px;border-radius:0 6px 6px 0;line-height:1.65}
+.ichecklist{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:8px 0}
+.ichk{display:flex;align-items:center;gap:7px;padding:5px 9px;border-radius:4px;font-size:.81em;font-weight:700;border:1px solid}
+.ichk-ok{background:#eafaf1;color:#1e8449;border-color:#a9dfbf}
+.ichk-nok{background:#fdedec;color:#b03a2e;border-color:#f1948a}
+.gauge-wrap{background:#f8f9fb;border:1px solid #d5e3f0;border-radius:6px;padding:14px 16px;margin:12px 0}
+.gauge-bar{position:relative;height:24px;border-radius:4px;margin:22px 0 26px}
+.gauge-seg{position:absolute;top:0;height:100%}
+.g-needle{position:absolute;top:-5px;bottom:-5px;width:3px;border-radius:2px;z-index:2}
+.g-needle-lbl{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:.7em;font-weight:700;white-space:nowrap;background:#fff;padding:0 3px;border-radius:2px;border:1px solid #b0c8e0}
+.gauge-ticks{display:flex;justify-content:space-between;font-size:.7em;color:#666}
+.gauge-legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;font-size:.74em}
+.leg-c{display:inline-block;width:12px;height:8px;border-radius:2px;vertical-align:middle;margin-right:3px}
+.chart-wrap{background:#f8f9fb;border:1px solid #d5e3f0;border-radius:6px;padding:14px 16px;margin:12px 0}
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0}
+.photo-card{border:1px solid #dce8f5;border-radius:4px;overflow:hidden;background:#f0f4f8;position:relative}
+.photo-card img{width:100%;height:140px;object-fit:cover;display:block}
+.photo-card .pcap{font-size:.72em;padding:3px 7px;background:#1a3a5c;color:#fff}
+.photo-add{border:2px dashed #b0c8e0;border-radius:4px;height:155px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;background:#f0f4ff;gap:5px;font-size:.79em;color:#1a3a5c;font-weight:700}
+.photo-add:hover{background:#dce8f5}
+.pcap-in{width:100%;border:none;border-top:1px solid #dce8f5;padding:3px 7px;font-size:.72em;background:#fff}
+.prm-btn{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.5);color:#fff;border:none;border-radius:50%;width:20px;height:20px;cursor:pointer;font-size:.72em}
+.nav-bar{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:12px;border-top:1px solid #dce8f5}
+.nav-btn{background:#1a3a5c;color:#fff;border:none;padding:7px 18px;border-radius:4px;cursor:pointer;font-size:.84em;font-weight:700}
+.nav-btn.secondary{background:#7f8c8d}
+.nav-saved{font-size:.75em;color:#27ae60;font-weight:700;opacity:0;transition:opacity .4s}
+.nav-saved.show{opacity:1}
+/* ── Estilos sugerencias ── */
+.sug-card{border:1px solid #b0c8e0;border-radius:6px;padding:10px 12px;margin-bottom:8px;background:#f8f9fb;display:flex;gap:10px;align-items:flex-start}
+.sug-card input[type=checkbox]{width:auto;margin-top:3px;flex-shrink:0;accent-color:#1a3a5c}
+.sug-body{flex:1}
+.sug-title{font-weight:700;font-size:.86em;color:#1a3a5c}
+.sug-desc{font-size:.79em;color:#555;margin-top:2px;line-height:1.5}
+.sug-efecto{font-size:.78em;background:#eafaf1;color:#1e8449;border-left:3px solid #a9dfbf;padding:3px 7px;margin-top:4px;border-radius:0 3px 3px 0}
+.sug-warn{font-size:.78em;background:#fef5e7;color:#d35400;border-left:3px solid #f0b429;padding:3px 7px;margin-top:4px;border-radius:0 3px 3px 0}
+.sug-bad{font-size:.78em;background:#fdedec;color:#b03a2e;border-left:3px solid #f1948a;padding:3px 7px;margin-top:4px;border-radius:0 3px 3px 0}
+.val-ok{background:#eafaf1;border:1px solid #a9dfbf;color:#1e8449;padding:4px 10px;border-radius:4px;font-size:.8em;font-weight:700;display:inline-block;margin:2px 4px 2px 0}
+.val-warn{background:#fef5e7;border:1px solid #f0b429;color:#d35400;padding:4px 10px;border-radius:4px;font-size:.8em;font-weight:700;display:inline-block;margin:2px 4px 2px 0}
+.val-bad{background:#fdedec;border:1px solid #f1948a;color:#b03a2e;padding:4px 10px;border-radius:4px;font-size:.8em;font-weight:700;display:inline-block;margin:2px 4px 2px 0}
+/* ── A4 e impresión en color ── */
+@page{size:A4 portrait;margin:18mm 20mm}
+@media print{
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
+  body{background:#fff!important;font-size:9.5pt!important;margin:0!important}
+  h1,.tabs,.panel,.prtbtn,.bckbtn,.gen-btn{display:none!important}
+  #inf-out{display:block!important;padding:0!important;margin:0!important}
+  .photo-add,.prm-btn,.noprint,.nav-bar{display:none!important}
+  .pcap-in{border:none!important;background:transparent!important}
+  .pcap-in:placeholder-shown{visibility:hidden}
+  /* Evitar cortes dentro de bloques */
+  .isec{break-inside:avoid;page-break-inside:avoid}
+  .isec h3{break-after:avoid;page-break-after:avoid}
+  .concbox,.pendbox,.pendbox-blue,.calcbox,.tip,.sug-card{break-inside:avoid;page-break-inside:avoid}
+  .gauge-wrap,.chart-wrap{break-inside:avoid;page-break-inside:avoid}
+  .photo-card{break-inside:avoid;page-break-inside:avoid}
+  .photo-grid{break-before:auto;page-break-before:auto}
+  .sign-area{break-inside:avoid;page-break-inside:avoid}
+  .itable{break-inside:auto}
+  .itable tr,.rtable tr{break-inside:avoid;page-break-inside:avoid}
+  thead{display:table-header-group}
+  /* Nueva sección en nueva página si es muy larga */
+  .isec.brk{break-before:page;page-break-before:always}
+}
+@media(max-width:720px){
+  .grid,.grid3{grid-template-columns:1fr!important}
+  .photo-grid{grid-template-columns:1fr 1fr}
+  .tabs{font-size:.78em}
+  .tab{padding:8px 10px}
+  .ichecklist{grid-template-columns:1fr}
+  h1{font-size:.9em;padding:10px 14px}
+}
+/* ── Interactividad: focus, hover, transiciones ── */
+input,select,textarea{transition:border-color .18s,box-shadow .18s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:#1a3a5c;box-shadow:0 0 0 3px rgba(26,58,92,.11)}
+button{transition:filter .15s,transform .1s}
+.add-btn:hover,.gen-btn:hover,.nav-btn:hover,.prtbtn:hover,.bckbtn:hover{filter:brightness(1.13)}
+.add-btn:active,.gen-btn:active,.nav-btn:active{transform:translateY(1px)}
+.del-btn:hover{filter:brightness(1.18)}
+.tab:hover:not(.active){background:#c5d9ef;transition:background .15s}
+.sug-card{transition:box-shadow .2s,border-color .2s}
+.sug-card:hover{box-shadow:0 2px 10px rgba(26,58,92,.10);border-color:#7fb3e0}
+/* ── Animación entrada filas dinámicas ── */
+@keyframes rowSlideIn{from{opacity:0;transform:translateY(-7px)}to{opacity:1;transform:translateY(0)}}
+.row-item,.row-item-fail{animation:rowSlideIn .2s ease-out}
+/* ── Modo oscuro ── */
+body.dark{background:#0f1923;color:#c8d8e8}
+body.dark h1{background:linear-gradient(135deg,#0d2137 70%,#0a2a4a)}
+body.dark .tabs{background:#0d2137;border-color:#1a3a5c}
+body.dark .tab{color:#7fb3e0}
+body.dark .tab.active{background:#1a3a5c;color:#fff}
+body.dark .tab:hover:not(.active){background:#122840}
+body.dark .panel{background:#121e2d}
+body.dark input,body.dark select,body.dark textarea{background:#1a2535;color:#c8d8e8;border-color:#2a3a50}
+body.dark input:focus,body.dark select:focus,body.dark textarea:focus{border-color:#4a7aaa;box-shadow:0 0 0 3px rgba(74,122,170,.18)}
+body.dark label{color:#8aaccc}
+body.dark .st{color:#7fb3e0;border-color:#2a3a50}
+body.dark .row-item{background:#1a2535;border-color:#2a3a50}
+body.dark .row-item-fail{background:#2a1e14;border-color:#8a4420;border-left-color:#c0550a}
+body.dark .sug-card{background:#1a2535;border-color:#2a3a50}
+body.dark .sug-card:hover{border-color:#4a6a8a;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+body.dark .sug-title{color:#7fb3e0}
+body.dark .sug-desc{color:#8aaccc}
+body.dark .ref-block{background:#1a2535;border-color:#2a3a50}
+body.dark .tip{background:#1a2535;color:#8aaccc;border-color:#4a6a8a}
+body.dark .calcbox{background:#1a2535;border-color:#2a3a50}
+body.dark .concbox{background:#1a2535}
+body.dark .pendbox{background:#2a1e14;border-color:#8a4420}
+body.dark .pendbox-blue{background:#131c2d;border-color:#4a6a8a}
+body.dark .para-check{background:#1a2535;border-color:#4a6a8a}
+body.dark .mcheck label{background:#1a2535;border-color:#2a3a50;color:#c8d8e8}
+body.dark .nav-bar{border-color:#2a3a50}
+body.dark .gauge-wrap,body.dark .chart-wrap{background:#1a2535;border-color:#2a3a50}
+body.dark .g-needle-lbl{background:#1a2535;border-color:#2a3a50;color:#c8d8e8}
+body.dark .photo-add{background:#1a2535;border-color:#2a3a50;color:#7fb3e0}
+body.dark .rtable th{background:#0d2137}
+body.dark .rtable td{border-color:#2a3a50}
+body.dark .rtable tr:nth-child(even) td{background:#1a2535}
+body.dark #inf-out{background:#fff!important}
+body.dark #inf-out *{color:#222}
+</style>
+</head>
+<body>
+<h1 style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+  <span>⚡ Generador de Informes — Red de Tierras | Sagarde S.L.</span>
+  <button id="dark-toggle" onclick="toggleDark()" style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.35);color:#fff;padding:5px 14px;border-radius:20px;cursor:pointer;font-size:.78em;font-weight:700;white-space:nowrap;flex-shrink:0">🌙 Oscuro</button>
+</h1>
+<div class="tabs">
+  <div class="tab active" onclick="showTab('datos')">1. Datos Generales</div>
+  <div class="tab" onclick="showTab('metodos')">2. Condicionantes y Métodos</div>
+  <div class="tab" onclick="showTab('equipo')">3. Equipo</div>
+  <div class="tab" onclick="showTab('sugerencias')">4. 💡 Sugerencias</div>
+  <div class="tab" onclick="showTab('preview')">5. Generar Informe</div>
+</div>
+
+<!-- TAB 1 -->
+<div class="panel active" id="panel-datos">
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <div class="st" style="margin:0;border:none">📋 Datos del Cliente y Obra</div>
+    <span id="restore_msg" style="display:none;font-size:.76em;color:#27ae60;font-weight:700;background:#eafaf1;padding:3px 10px;border-radius:4px;border:1px solid #a9dfbf">✓ Datos restaurados de la última sesión</span>
+  </div>
+  <div style="margin-bottom:8px"></div>
+  <div class="grid">
+    <div><label>Cliente / Empresa</label><input id="cli" placeholder="VUSA"></div>
+    <div><label>Fecha de medición</label><input id="fec" type="date"></div>
+    <div><label>Dirección / Local</label><input id="loc" placeholder="Serralta, Barakaldo"></div>
+    <div><label>Coordenadas GPS (opcional)</label><input id="gps" placeholder="43.299900, -2.981714"></div>
+    <div class="full"><label>Descripción del sistema de tierras</label>
+      <textarea id="desc" placeholder="Red de tierras en fase de ejecución..."></textarea></div>
+    <div class="full"><label>Observaciones de obra / limitaciones</label>
+      <textarea id="notas" placeholder="Estado actual de la obra..."></textarea></div>
+  </div>
+  <div class="st">⚙️ Parámetros de la Instalación</div>
+  <div class="grid3">
+    <div><label>Tipo de edificio</label>
+      <select id="tipo"><option>Edificio de viviendas</option><option>Industrial / nave</option><option>Comercial</option><option>Oficinas</option><option>Infraestructura civil</option><option>Otro</option></select></div>
+    <div><label>Sensibilidad diferencial (IΔn)</label>
+      <select id="idn"><option value="0.030">30 mA (viviendas)</option><option value="0.100">100 mA</option><option value="0.300">300 mA (industrial)</option><option value="0.500">500 mA</option></select></div>
+    <div><label>Tensión límite contacto (UL)</label>
+      <select id="ul"><option value="50">50 V (ordinario)</option><option value="24">24 V (húmedo/especial)</option></select></div>
+  </div>
+  <div class="st" style="margin-top:16px">💾 Sesión</div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+    <button class="add-btn" style="background:#2c3e50;padding:7px 16px;font-size:.84em" onclick="exportarSesion()">⬇ Exportar sesión (.json)</button>
+    <label class="add-btn" style="background:#2c3e50;padding:7px 16px;font-size:.84em;cursor:pointer;margin:0">⬆ Importar sesión
+      <input type="file" id="imp_file" accept=".json" style="display:none" onchange="importarSesion(this)">
+    </label>
+  </div>
+</div>
+
+<!-- TAB 2 -->
+<div class="panel" id="panel-metodos">
+
+  <!-- ── CONDICIONANTES ── -->
+  <div class="st">⚠️ Condicionantes de la Medición</div>
+
+  <div class="st" style="font-size:.78em;margin-top:8px">📏 Cable alargador de medición</div>
+  <label class="para-check"><input type="checkbox" id="cond_cable" onchange="togCable()"> Se utilizó cable alargador para alcanzar el punto de medición</label>
+  <div id="cond_cable_block" style="display:none;margin-top:8px">
+    <div class="grid3">
+      <div><label>Longitud (m)</label><input id="cable_L" type="number" placeholder="120" oninput="calcCable()"></div>
+      <div><label>Sección (mm²)</label><input id="cable_A" type="number" placeholder="2.5" oninput="calcCable()"></div>
+      <div><label>Material</label>
+        <select id="cable_mat" onchange="calcCable()">
+          <option value="0.0175">Cobre (Cu)</option>
+          <option value="0.028">Aluminio (Al)</option>
+        </select>
+      </div>
+    </div>
+    <div class="grid3" style="margin-top:6px">
+      <div><label>R parásita calculada (ida+vuelta)</label>
+        <input id="cable_R_calc" readonly style="background:#fff8e1;font-weight:700;color:#c0392b">
+      </div>
+      <div style="grid-column:span 2">
+        <p style="font-size:.77em;color:#c0392b;margin-top:24px">⚠ El equipo no puede descontar esta resistencia: todos los valores R<sub>A</sub> medidos incluyen la R del cable y son mayores al valor real del electrodo.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="st" style="font-size:.78em;margin-top:14px">🔧 Estado de la instalación en la fecha de medición</div>
+  <div class="grid">
+    <div><label>¿Instalación completa?</label>
+      <select id="inst_completa" onchange="togInstCompleta()">
+        <option value="si">Sí — instalación terminada</option>
+        <option value="no">No — instalación incompleta / en obra</option>
+      </select>
+    </div>
+  </div>
+  <div id="inst_pend_block" style="display:none;margin-top:8px">
+    <p style="font-size:.81em;color:#555;margin-bottom:6px">Marcar los elementos pendientes (afectan al resultado y a la estimación final):</p>
+    <label class="pend-check"><input type="checkbox" id="pend_pica"> Última(s) pica(s) de tierra pendientes de colocar</label>
+    <label class="pend-check"><input type="checkbox" id="pend_vegetal"> Recubrimiento con tierra vegetal pendiente</label>
+    <label class="pend-check"><input type="checkbox" id="pend_union"> Uniones equipotenciales sin ejecutar (viachispas / conductor BT)</label>
+    <label class="pend-check"><input type="checkbox" id="pend_parallel"> Redes de tierra no interconectadas en paralelo todavía</label>
+    <label class="pend-check"><input type="checkbox" id="pend_term"> Terminaciones de red sin completar</label>
+    <div style="margin-top:6px"><label>Otros elementos pendientes</label>
+      <textarea id="pend_otros" placeholder="Describe otros elementos sin ejecutar..."></textarea>
+    </div>
+  </div>
+
+  <!-- ── MÉTODOS ── -->
+  <div class="st" style="margin-top:16px">🔌 Métodos de medición empleados</div>
+  <div class="mcheck">
+    <label><input type="checkbox" id="m3h"   onchange="tog('3h')">   📐 Método 3H</label>
+    <label><input type="checkbox" id="m2h"   onchange="tog('2h')">   📐 Método 2H</label>
+    <label><input type="checkbox" id="mrcd"  onchange="tog('rcd')">  🔴 RCD/RA</label>
+    <label><input type="checkbox" id="mloop" onchange="tog('loop')"> 🔁 LOOP</label>
+    <label><input type="checkbox" id="mrho"  onchange="tog('rho')">  🌍 Resistividad</label>
+    <label><input type="checkbox" id="mpara" onchange="tog('para')"> ⚡ Pararrayos</label>
+  </div>
+  <div id="nomsg" style="padding:20px;color:#888;font-size:.9em">☝️ Selecciona al menos un método.</div>
+
+  <!-- 3H -->
+  <div id="block-3h" style="display:none">
+    <div class="st">📐 Método 3H — Mayor precisión</div>
+    <p style="font-size:.82em;color:#555;margin-bottom:8px">Método 3H del GSC-53. El equipo muestra: <strong>R</strong> (resistencia), <strong>RAVG</strong> (media de tomas), <strong>Vd</strong> (tensión de ruido) y <strong>Test</strong> (nº de tomas). Anota todos los valores de pantalla.</p>
+    <div id="3h_fail_rows"></div>
+    <div id="3h_rows"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+      <button class="add-btn" onclick="addPt('3h')">+ Añadir punto medido</button>
+      <button class="add-btn" style="background:#c0550a" onclick="add3HFallo()">⚠ Registrar intento fallido</button>
+    </div>
+    <div style="margin-top:8px"><label>Observaciones 3H</label><textarea id="3h_obs"></textarea></div>
+  </div>
+
+  <!-- 2H -->
+  <div id="block-2h" style="display:none">
+    <div class="st">📐 Método 2H</div>
+    <p style="font-size:.82em;color:#555;margin-bottom:8px">Mide la resistencia entre el electrodo y una referencia conocida. Selecciona la referencia dentro de cada punto.</p>
+    <div id="2hd_fail_rows"></div>
+    <div id="2hd_rows"></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:4px">
+      <button class="add-btn" onclick="addPtDirect2H()">+ Añadir punto medido</button>
+      <button class="add-btn" style="background:#c0550a" onclick="add2HDescartada()">⚠ Referencia descartada</button>
+    </div>
+    <div style="margin-top:8px"><label>Observaciones 2H</label><textarea id="2h_obs"></textarea></div>
+  </div>
+
+  <!-- RCD -->
+  <div id="block-rcd" style="display:none">
+    <div class="st">🔴 Método RCD/RA — Menor precisión (mide bucle completo)</div>
+    <p style="font-size:.82em;color:#555;margin-bottom:8px">Mide R<sub>A</sub> inyectando ½·IΔn sin disparar el diferencial (apartado 6.3.7 del GSC-53). Incluye la R de todos los cables del bucle.</p>
+    <div class="grid3">
+      <div><label>VP-N (V)</label><input id="rcd_vpn" type="number" placeholder="235"></div>
+      <div><label>VP-PE (V)</label><input id="rcd_vpe" type="number" placeholder="236"></div>
+      <div><label>Frecuencia (Hz)</label><input id="rcd_frq" type="number" value="50.0"></div>
+    </div>
+    <div id="rcd_rows"></div>
+    <button class="add-btn" onclick="addPt('rcd')">+ Añadir punto</button>
+    <div><label>Observaciones RCD/RA</label><textarea id="rcd_obs"></textarea></div>
+  </div>
+
+  <!-- LOOP -->
+  <div id="block-loop" style="display:none">
+    <div class="st">🔁 Método LOOP</div>
+    <p style="font-size:.82em;color:#555;margin-bottom:8px">Mide Z<sub>s</sub> del bucle L-PE. En TT equivale a R<sub>A</sub> (apartado 6.4.4 del GSC-53).</p>
+    <div class="grid3">
+      <div><label>Modalidad</label>
+        <select id="loop_modo">
+          <option value="RA">RA☰ (~15 mA — sin disparo)</option>
+          <option value="PPE">P-PE (~6 A)</option>
+        </select></div>
+      <div><label>VP-N (V)</label><input id="loop_vpn" type="number" placeholder="235"></div>
+      <div><label>VP-PE (V)</label><input id="loop_vpe" type="number" placeholder="236"></div>
+      <div><label>Frecuencia (Hz)</label><input id="loop_frq" type="number" value="50.0"></div>
+    </div>
+    <div id="loop_rows"></div>
+    <button class="add-btn" onclick="addPt('loop')">+ Añadir punto</button>
+    <div><label>Observaciones LOOP</label><textarea id="loop_obs"></textarea></div>
+  </div>
+
+  <!-- RHO -->
+  <div id="block-rho" style="display:none">
+    <div class="st">🌍 Resistividad del Terreno (Wenner)</div>
+    <div class="grid3">
+      <div><label>Distancia entre picas (m)</label><input id="rho_dist" type="number" value="5"></div>
+      <div><label>Orientación eje</label><input id="rho_or" placeholder="N-S"></div>
+    </div>
+    <div id="rho_rows"></div>
+    <button class="add-btn" onclick="addPt('rho')">+ Añadir medida</button>
+    <div><label>Observaciones resistividad</label><textarea id="rho_obs"></textarea></div>
+    <div style="margin-top:10px">
+      <button class="add-btn" style="background:#2c3e50;font-size:.88em;padding:8px 18px" onclick="calcEstimacionElectrodos()">📊 Estimar electrodos necesarios desde ρ</button>
+    </div>
+    <div id="est_result" style="display:none;margin-top:10px"></div>
+  </div>
+
+  <!-- PARARRAYOS -->
+  <div id="block-para" style="display:none">
+    <div class="st">⚡ Sistema de Protección contra el Rayo (SPCR)</div>
+    <p style="font-size:.82em;color:#555;margin-bottom:8px">Normativa: <strong>UNE 21186:2011 / IEC 62305</strong>. Criterio tierra: R<sub>t</sub> ≤ <strong>10 Ω</strong>.</p>
+    <div class="grid3">
+      <div><label>Tipo de pararrayos</label>
+        <select id="para_tipo">
+          <option>PDC (Punta Disipadora de Corriente)</option>
+          <option>Franklin (punta simple)</option>
+          <option>Jaula Faraday</option>
+          <option>Malla conductora</option>
+          <option>Otro</option>
+        </select></div>
+      <div><label>Nivel de protección</label>
+        <select id="para_nivel">
+          <option value="I">Nivel I</option>
+          <option value="II">Nivel II</option>
+          <option value="III">Nivel III</option>
+          <option value="IV">Nivel IV</option>
+        </select></div>
+      <div><label>Nº conductores de bajada</label>
+        <input id="para_nbaj" type="number" min="1" value="1"></div>
+      <div><label>Material conductor bajada</label>
+        <select id="para_mat">
+          <option>Cobre desnudo</option>
+          <option>Cobre aislado</option>
+          <option>Acero galvanizado</option>
+          <option>Aluminio</option>
+        </select></div>
+      <div><label>Sección conductor bajada (mm²)</label>
+        <input id="para_sec" type="number" placeholder="50"></div>
+      <div><label>Tipo de electrodo de tierra</label>
+        <select id="para_elec">
+          <option>Tipo A (picas/radiales)</option>
+          <option>Tipo B (anillo/malla)</option>
+          <option>Mixto A+B</option>
+        </select></div>
+    </div>
+    <div class="st" style="margin-top:14px">🌍 Resistencia de tierra del SPCR</div>
+    <p style="font-size:.82em;color:#555;margin-bottom:8px">Límite: R<sub>t</sub> ≤ 10 Ω (UNE 21186, apartado 6).</p>
+    <div class="grid3">
+      <div><label>Método empleado</label>
+        <select id="para_met">
+          <option value="3h">3H</option>
+          <option value="rcd">RCD/RA</option>
+          <option value="loop">LOOP</option>
+          <option value="2h">2H</option>
+        </select></div>
+      <div><label>VP-N (V)</label><input id="para_vpn" type="number" placeholder="232"></div>
+      <div><label>VP-PE (V)</label><input id="para_vpe" type="number" placeholder="233"></div>
+    </div>
+    <div id="para_tierra_rows"></div>
+    <button class="add-btn" onclick="addParaTierra()">+ Añadir punto de tierra</button>
+    <div class="st" style="margin-top:14px">🔗 Equipotencialidad con tierra general</div>
+    <div class="grid">
+      <div><label>¿Interconectada con tierra general?</label>
+        <select id="para_equip">
+          <option value="si">Sí — conductor de unión directo</option>
+          <option value="vdc">Sí — vía de chispas (VX-1 o similar)</option>
+          <option value="no">No — sistemas independientes</option>
+        </select></div>
+      <div><label>Sección conductor unión (mm²)</label>
+        <input id="para_sec_union" type="number" placeholder="16"></div>
+    </div>
+    <div><label>Observaciones pararrayos</label><textarea id="para_obs"></textarea></div>
+  </div>
+</div>
+
+<!-- TAB 3 -->
+<div class="panel" id="panel-equipo">
+  <div class="st">🔧 Equipo de Medida</div>
+  <div class="grid">
+    <div><label>Modelo</label><input id="eq_mod" value="HT GSC-53"></div>
+    <div><label>Nº de serie</label><input id="eq_sn" placeholder="SN12345678"></div>
+    <div><label>Laboratorio calibración</label><input id="eq_lab" value="SGS"></div>
+    <div><label>Fecha calibración</label><input id="eq_cal" type="date"></div>
+    <div><label>Nº certificado</label><input id="eq_cert" placeholder="Nº 110420"></div>
+    <div><label>Técnico responsable</label><input id="tec" placeholder="Nombre Apellidos"></div>
+  </div>
+  <div class="st">🏢 Empresa emisora</div>
+  <div class="grid">
+    <div><label>Nombre empresa</label><input id="emp" value="SAGARDE S.L."></div>
+    <div><label>Dirección</label><input id="emp_dir" value="PI. Ugarte, Barrio Barrondo Nave C7, 48480 Zaratamo"></div>
+  </div>
+</div>
+
+<!-- TAB 4 — SUGERENCIAS -->
+<div class="panel" id="panel-sugerencias">
+  <div class="st">💡 Sugerencias de Mejora — Orientación del Informe</div>
+  <p style="font-size:.85em;color:#555;margin-bottom:12px">Selecciona las medidas de mejora que quieres proponer en el informe. El sistema las <strong>valida técnicamente</strong> antes de incluirlas: si algo no es adecuado o podría ser contraproducente, te avisará.</p>
+
+  <div class="st" style="font-size:.78em">✅ Medidas técnicas habituales</div>
+  <div id="sug_lista"></div>
+
+  <div class="st" style="font-size:.78em;margin-top:14px">✏️ Sugerencia personalizada</div>
+  <label style="font-size:.8em;font-weight:700;color:#444;margin-bottom:3px">Describe la mejora (el sistema la analizará)</label>
+  <textarea id="sug_custom" placeholder="Ej: instalar electrodo de anillo perimetral, aplicar bentonita conductora, ampliar red con radiales..." style="margin-bottom:6px" oninput="validarCustom()"></textarea>
+  <div id="sug_custom_result" style="display:none"></div>
+
+  <div class="st" style="font-size:.78em;margin-top:14px">🎯 Tono del informe</div>
+  <div class="grid">
+    <div><label>Enfoque del texto de conclusiones y recomendaciones</label>
+      <select id="sug_tono">
+        <option value="neutro">Neutral — solo datos y hechos</option>
+        <option value="favorable">Favorable — perspectiva positiva con mejoras propuestas</option>
+        <option value="accion">Orientado a acción — pasos concretos y prioritarios</option>
+      </select>
+    </div>
+    <div><label>Número de recomendaciones a destacar</label>
+      <select id="sug_prioridad">
+        <option value="todas">Todas las seleccionadas</option>
+        <option value="top3">Las 3 más impactantes</option>
+        <option value="top1">Solo la más urgente</option>
+      </select>
+    </div>
+  </div>
+
+  <div style="margin-top:14px">
+    <button class="add-btn" style="background:#1a3a5c;font-size:.9em;padding:8px 20px" onclick="validarTodasSugerencias()">🔍 Validar y ver impacto estimado</button>
+  </div>
+  <div id="sug_validacion_panel" style="display:none;margin-top:12px"></div>
+
+</div>
+
+<!-- TAB 5 -->
+<div class="panel" id="panel-preview">
+  <p style="color:#555;font-size:.9em;margin-bottom:6px">Revisa todos los datos y las sugerencias antes de generar.</p>
+  <p style="color:#888;font-size:.82em;margin-bottom:14px">Si aún no has revisado la pestaña <strong>💡 Sugerencias</strong>, puedes hacerlo antes de continuar.</p>
+  <button class="gen-btn" onclick="generar()">📄 GENERAR INFORME</button>
+</div>
+
+<!-- ===== INFORME ===== -->
+<div id="inf-out">
+  <div class="ih">
+    <div class="ilogo"><img src="data:image/jpeg;base64,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" alt="Sagarde S.L." style="height:54px;width:auto;display:block"></div>
+    <div style="text-align:right;font-size:.78em;color:#555" id="o_empdir"></div>
+  </div>
+  <div style="background:linear-gradient(135deg,#1a3a5c 78%,#16697a);color:#fff;padding:11px 16px;font-weight:700;font-size:.95em;margin-bottom:14px;letter-spacing:.06em;border-left:5px solid #27ae60;border-radius:0 4px 4px 0">
+    INFORME DE MEDICIÓN — SISTEMA DE PUESTA A TIERRA
+  </div>
+  <table class="itable">
+    <tr><td>Cliente</td><td id="o_cli"></td></tr>
+    <tr><td>Fecha</td><td id="o_fec"></td></tr>
+    <tr><td>Local / Dirección</td><td id="o_loc"></td></tr>
+    <tr><td>Coordenadas GPS</td><td id="o_gps"></td></tr>
+    <tr><td>Tipo de instalación</td><td id="o_tipo"></td></tr>
+    <tr><td>Técnico responsable</td><td id="o_tec"></td></tr>
+    <tr><td>Equipo de medida</td><td id="o_eq"></td></tr>
+  </table>
+
+  <div class="isec">
+    <h3 class="azul-sec">📋 1. OBJETO DEL INFORME</h3>
+    <p>El presente informe tiene como finalidad dejar constancia de las mediciones realizadas sobre el sistema de puesta a tierra de la instalación eléctrica, a cargo de operarios de <strong id="o_emp"></strong>. Su objetivo es documentar de forma clara y trazable los valores obtenidos y verificar si se encuentran dentro de lo que establece el REBT y la normativa relacionada.</p>
+    <p>El alcance del trabajo incluye las mediciones de resistencia de tierra en los puntos definidos y la recopilación de los datos básicos de la instalación y del equipo utilizado.</p>
+    <p id="o_notas" style="font-style:italic;color:#444"></p>
+    <div class="tip" id="o_tip_obj" style="display:none"></div>
+  </div>
+
+  <div class="isec">
+    <h3 class="azul-sec">🏗️ 2. DESCRIPCIÓN DEL SISTEMA Y MARCO NORMATIVO</h3>
+    <p id="o_desc"></p>
+    <div id="o_inst_checklist"></div>
+    <p>Según el REBT (ITC-BT-18), la resistencia de la puesta a tierra debe ser tal que la tensión de contacto no supere los <strong id="o_ul"></strong> V. Para instalaciones protegidas mediante diferencial de <strong id="o_idn"></strong>, el valor límite teórico sería de <strong id="o_rtmax"></strong> Ω.</p>
+    <div class="tip" id="o_tip_norma" style="display:none"></div>
+  </div>
+
+  <div class="isec"><h3 class="azul-sec">🔬 3. ALCANCE Y METODOLOGÍA</h3><div id="o_metod"></div></div>
+
+  <div class="isec" id="b3h"   style="display:none"><h3 class="teal-sec">📐 4A. MÉTODO 3H</h3><div id="o_3h"></div></div>
+  <div class="isec" id="b2h"   style="display:none"><h3 class="teal-sec">📐 4B. MÉTODO 2H</h3><div id="o_2h"></div></div>
+  <div class="isec" id="brcd"  style="display:none">
+    <h3 class="teal-sec">🔴 4C. MÉTODO RCD/RA</h3>
+    <p>Verificación mediante modo <strong>RCD/RA</strong> del GSC-53, inyectando ½·I<sub>Δn</sub> sin disparar el diferencial (apartado 6.3.7). Este método mide el bucle completo (cables + electrodo), por lo que es el menos preciso de los disponibles.</p>
+    <p id="o_rcd_cond"></p><div id="o_rcd_tab"></div><div id="o_rcd_scr"></div>
+    <p id="o_rcd_obs" style="font-style:italic;color:#444"></p>
+  </div>
+  <div class="isec" id="bloop" style="display:none">
+    <h3 class="teal-sec">🔁 4D. MÉTODO LOOP TIERRA</h3>
+    <p id="o_loop_desc"></p>
+    <p id="o_loop_cond"></p><div id="o_loop_tab"></div><div id="o_loop_scr"></div>
+    <p id="o_loop_obs" style="font-style:italic;color:#444"></p>
+  </div>
+  <div class="isec" id="brho" style="display:none">
+    <h3 class="teal-sec">🌍 4E. RESISTIVIDAD DEL TERRENO (WENNER)</h3>
+    <p>Método Wenner 4 picas. ρ = 2π·a·R. Profundidad efectiva ≈ ¾·a.</p>
+    <p id="o_rho_info"></p><div id="o_rho_tab"></div>
+    <p id="o_rho_obs" style="font-style:italic;color:#444"></p>
+  </div>
+  <div class="isec" id="bpara" style="display:none">
+    <h3 class="teal-sec">⚡ 4F. SISTEMA DE PROTECCIÓN CONTRA EL RAYO (SPCR)</h3>
+    <p>Verificación conforme a <strong>UNE 21186:2011 / IEC 62305</strong>. Criterio: R<sub>t</sub> ≤ <strong>10 Ω</strong> (apartado 6.1), más restrictivo que el límite general del REBT.</p>
+    <div class="tip">💡 El límite de 10 Ω para pararrayos es mucho más estricto que el general (~167 Ω) porque un rayo puede descargar más de 100.000 A en microsegundos. Con una resistencia alta, esa energía generaría tensiones peligrosas en la estructura del edificio.</div>
+    <table class="itable" style="margin:10px 0">
+      <tr><td>Tipo de pararrayos</td><td id="o_para_tipo"></td></tr>
+      <tr><td>Nivel de protección</td><td id="o_para_nivel"></td></tr>
+      <tr><td>Nº conductores de bajada</td><td id="o_para_nbaj"></td></tr>
+      <tr><td>Material / sección bajada</td><td id="o_para_matsec"></td></tr>
+      <tr><td>Tipo de electrodo de tierra</td><td id="o_para_elec"></td></tr>
+      <tr><td>Equipotencialidad con tierra general</td><td id="o_para_equip"></td></tr>
+    </table>
+    <div class="isec" style="margin:0">
+      <h3 class="dark">RESISTENCIA DE TIERRA DEL SPCR</h3>
+      <p id="o_para_met_txt"></p>
+      <div id="o_para_tierra"></div>
+      <div id="o_para_scr"></div>
+    </div>
+    <div id="o_para_gauge" style="display:none"></div>
+    <div id="o_para_chart" style="display:none"></div>
+    <p id="o_para_obs" style="font-style:italic;color:#444;margin-top:8px"></p>
+    <div id="o_para_concl" style="margin-top:8px"></div>
+  </div>
+
+  <div class="isec"><h3 class="azul-sec">📋 5. RESUMEN DE RESULTADOS</h3><div id="o_resumen"></div></div>
+  <div class="isec"><h3 class="slate-sec">🧠 6. INTERPRETACIÓN TÉCNICA</h3><div id="o_interp"></div></div>
+  <div class="isec" id="bcond2" style="display:none"><h3 class="orange-sec">⚠️ 6B. CONDICIONANTES DE LA MEDICIÓN</h3><div id="o_cond2"></div></div>
+  <div class="isec"><h3 class="azul-sec">✅ 7. CONCLUSIÓN</h3><div id="o_concl"></div></div>
+  <div class="isec brk" id="b_recom" style="display:none"><h3 class="green-sec">💡 8. RECOMENDACIONES PARA MEJORAR EL SISTEMA DE TIERRA</h3><div id="o_recom"></div></div>
+
+  <div class="isec" id="bfotos">
+    <h3 class="photo-sec">📷 9. FOTOGRAFÍAS DE LA TOMA DE DATOS</h3>
+    <div class="photo-grid" id="photoGrid"></div>
+    <div class="noprint" style="margin-top:8px">
+      <button class="add-btn" onclick="addPhotoSlot()" style="background:#27ae60">📷 Añadir fotografía</button>
+      <span style="font-size:.76em;color:#777;margin-left:8px">Las fotos se incluyen al imprimir / guardar PDF</span>
+    </div>
+  </div>
+
+
+  <div class="sign-area" style="margin-top:28px;border-top:1px solid #ccc;padding-top:14px">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:14px">
+      <div style="border-top:1px solid #aaa;padding-top:8px;text-align:center;margin-top:36px">
+        <div style="font-size:.76em;color:#666">Firma del técnico responsable</div>
+        <div style="font-size:.83em;font-weight:700;margin-top:4px"><span id="o_tec2"></span></div>
+      </div>
+      <div style="border-top:1px solid #aaa;padding-top:8px;text-align:center;margin-top:36px">
+        <div style="font-size:.76em;color:#666">Empresa / Sello</div>
+        <div style="font-size:.83em;font-weight:700;margin-top:4px"><span id="o_emp2"></span></div>
+      </div>
+    </div>
+    <div style="font-size:.76em;color:#666;text-align:center">
+      Equipo: <strong id="o_eq2"></strong> | Cert.: <strong id="o_cert2"></strong>
+    </div>
+  </div>
+  <div style="margin-top:12px">
+    <button class="prtbtn" onclick="window.print()">🖨️ Imprimir / PDF</button>
+    <button class="bckbtn" onclick="volver()">← Volver</button>
+  </div>
+</div>
+
+<script>
+var ptCounts={rcd:0,loop:0,'3h':0,rho:0};
+var LIM_UNE21186=10;
+var OBJ_BUENA=20;
+var ALERTA_BT=40;
+var ETA_PICA=0.85;
+var pt2HdCount=0;
+var n3hFallo=0;
+var n2hDesc=0;
+
+function add3HFallo(){
+  n3hFallo++;
+  var pid='3hf_'+n3hFallo;
+  var c=document.getElementById('3h_fail_rows');
+  var d=document.createElement('div');
+  d.className='row-item-fail';d.id='row_'+pid;
+  d.innerHTML=
+    '<div style="font-size:.78em;font-weight:700;color:#c0550a;margin-bottom:6px">⚠ Intento fallido — sin medida válida</div>'+
+    '<div class="grid3" style="margin-bottom:6px">'+
+      '<div><label>Electrodo / Punto a medir</label>'+
+        '<input id="'+pid+'_elec" placeholder="P1 / Pararrayos 1..."></div>'+
+      '<div><label>Motivo</label>'+
+        '<select id="'+pid+'_mot">'+
+          '<option value="picas">No fue posible clavar las picas auxiliares (terreno rocoso / pavimentado)</option>'+
+          '<option value="inv">Se intentó pero la lectura fue inválida o inestable</option>'+
+          '<option value="interf">Interferencias eléctricas impidieron lectura válida</option>'+
+          '<option value="otro">Otro motivo (ver nota)</option>'+
+        '</select></div>'+
+      '<div><label>Nota adicional (opcional)</label>'+
+        '<input id="'+pid+'_nota" placeholder="Detalle del problema encontrado..."></div>'+
+    '</div>'+
+    '<button class="del-btn" style="margin-top:2px" onclick="document.getElementById(\'row_'+pid+'\').remove()">✕ Eliminar</button>';
+  c.appendChild(d);
+}
+
+function add2HDescartada(){
+  n2hDesc++;
+  var pid='2hd_d'+n2hDesc;
+  var c=document.getElementById('2hd_fail_rows');
+  var d=document.createElement('div');
+  d.className='row-item-fail';d.id='row_'+pid;
+  d.innerHTML=
+    '<div style="font-size:.78em;font-weight:700;color:#c0550a;margin-bottom:6px">⚠ Referencia descartada — sin medida válida</div>'+
+    '<div class="grid3" style="margin-bottom:6px">'+
+      '<div><label>Electrodo / Punto a medir</label>'+
+        '<input id="'+pid+'_elec" placeholder="P1 / Pararrayos 1..."></div>'+
+      '<div><label>Referencia utilizada</label>'+
+        '<select id="'+pid+'_ref">'+
+          '<option>Neutro instalación provisional</option>'+
+          '<option>Tierra instalación provisional</option>'+
+          '<option>Tierra CT próximo</option>'+
+          '<option>Otro electrodo conocido</option>'+
+        '</select></div>'+
+      '<div><label>Motivo del descarte</label>'+
+        '<select id="'+pid+'_mot">'+
+          '<option value="rp">Rp demasiado alta — referencia no válida</option>'+
+          '<option value="rc">Rc demasiado alta — referencia no válida</option>'+
+          '<option value="rprc">Rp y Rc demasiado altas — referencia descartada</option>'+
+        '</select></div>'+
+    '</div>'+
+    '<button class="del-btn" style="margin-top:2px" onclick="document.getElementById(\'row_'+pid+'\').remove()">✕ Eliminar</button>';
+  c.appendChild(d);
+}
+var paraTierraCount=0;
+var nFoto=0;
+
+function addPtDirect2H(){
+  pt2HdCount++;
+  var pid='2hd_p'+pt2HdCount;
+  var c=document.getElementById('2hd_rows');
+  var d=document.createElement('div');
+  d.className='row-item';d.id='row_'+pid;
+  d.innerHTML=
+    '<label class="para-check"><input type="checkbox" id="'+pid+'_para"> ⚡ Punto de pararrayos (criterio ≤ 10 Ω — UNE 21186)</label>'+
+    '<div class="grid3">'+
+      '<div><label>Referencia utilizada</label>'+
+        '<select id="'+pid+'_ref">'+
+          '<option>Neutro instalación provisional</option>'+
+          '<option>Tierra instalación provisional</option>'+
+          '<option>Tierra CT próximo</option>'+
+          '<option>Otro electrodo conocido</option>'+
+        '</select></div>'+
+      '<div><label>Electrodo / Punto medido</label><input id="'+pid+'_l" placeholder="Electrodo '+pt2HdCount+'"></div>'+
+      '<div><label>Resistencia (Ω)</label><input id="'+pid+'_v" type="number" step="0.1" placeholder="—"></div>'+
+    '</div>'+
+    '<div style="margin-top:6px;display:flex;align-items:center;gap:8px">'+
+      '<span id="'+pid+'_b"></span>'+
+      '<button class="add-btn" style="background:#27ae60;margin:0" onclick="check2HPt(\''+pid+'\')">Valorar</button>'+
+      '<button class="del-btn" onclick="document.getElementById(\'row_'+pid+'\').remove()">✕</button>'+
+    '</div>';
+  c.appendChild(d);
+}
+
+// ── Tabs ──
+var _lastTab='datos';
+function showTab(t){
+  _lastTab=t;
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active');});
+  document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('active');});
+  document.getElementById('panel-'+t).classList.add('active');
+  var map={datos:'1.',metodos:'2.',equipo:'3.',sugerencias:'4.',preview:'5.'};
+  document.querySelectorAll('.tab').forEach(function(x){
+    if(x.textContent.trim().startsWith(map[t])) x.classList.add('active');
+  });
+  if(t==='sugerencias') renderSugLista();
+}
+
+// ══════════════════════════════════════════
+// ── CATÁLOGO DE SUGERENCIAS ──
+// ══════════════════════════════════════════
+var SUGS=[
+  {
+    id:'sug_pica',
+    txt:'Añadir pica(s) adicional(es) a la red',
+    descripcion:'Instalar electrodos verticales adicionales en paralelo con los existentes. Las picas deben separarse al menos 2× su longitud para minimizar la interferencia mutua.',
+    efecto:'Cada pica en paralelo reduce la R total. Estimación: −10 a −15 % por pica añadida (factor acoplamiento ≈ 0,85–0,90). Fórmula Dwight: R_n ≈ (ρ/2πL)·(ln(4L/d)−1)/n·η',
+    impacto:0.85,
+    advertencia:null,
+    norma:'REBT ITC-BT-18 / UNE 21186:2011 apdo. 6.3'
+  },
+  {
+    id:'sug_vegetal',
+    txt:'Cubrir los electrodos con tierra vegetal húmeda compactada',
+    descripcion:'Rellenar la zanja/foso de los electrodos con tierra vegetal húmeda bien compactada. Evitar arena, grava o tierra seca.',
+    efecto:'Mejora el contacto electrodo-suelo y reduce la resistividad superficial. Mejora estimada: 5–15 % dependiendo de la humedad.',
+    impacto:0.90,
+    advertencia:null,
+    norma:'Buena práctica — REBT ITC-BT-18'
+  },
+  {
+    id:'sug_sales',
+    txt:'Tratamiento con sales minerales específicas para tierra eléctrica',
+    descripcion:'Aplicar compuesto conductor de baja resistividad alrededor de los electrodos: bentonita conductora, GEM (Ground Enhancement Material), Marconite u otro producto certificado para instalaciones eléctricas.',
+    efecto:'Reduce la resistividad del suelo en el entorno del electrodo de forma duradera. Mejora típica: 20–50 % dependiendo del producto y tipo de suelo.',
+    impacto:0.65,
+    advertencia:'⚠ IMPORTANTE: usar EXCLUSIVAMENTE productos certificados para tierra eléctrica (bentonita, GEM, Marconite). NO usar sal de cocina (NaCl) ni sal industrial: aceleran la corrosión galvánica del electrodo y de los conductores de cobre en contacto con el suelo.',
+    norma:'UNE 21186:2011 apdo. 6.3 / REBT ITC-BT-18'
+  },
+  {
+    id:'sug_paralelo',
+    txt:'Interconectar redes de tierra en paralelo (viachispas / conductor)',
+    descripcion:'Conectar la red de tierra de los pararrayos con la red general de BT mediante elemento viachispas (o conductor directo si la normativa lo permite), poniendo ambas redes en paralelo.',
+    efecto:'Dos redes de igual valor en paralelo reducen la R total a la mitad: R_paralelo = (R1 × R2)/(R1 + R2). Si R1 ≈ R2: R_total ≈ R1/2.',
+    impacto:0.50,
+    advertencia:null,
+    norma:'UNE 21186:2011 / REBT ITC-BT-18 / UNE-EN 62305'
+  },
+  {
+    id:'sug_profundidad',
+    txt:'Aumentar la longitud/profundidad de las picas existentes',
+    descripcion:'Sustituir picas de 2 m por picas más largas (3–4 m) o usar picas acoplables. En terrenos con capa superficial seca, las capas profundas tienen menor resistividad.',
+    efecto:'Duplicar la longitud L reduce R en aprox. 35–45 %. Fórmula Dwight: R ≈ (ρ/2πL)·(ln(4L/d)−1). Mayor L → mayor reducción.',
+    impacto:0.62,
+    advertencia:null,
+    norma:'REBT ITC-BT-18 / UNE 21186:2011 apdo. 6.3'
+  },
+  {
+    id:'sug_anillo',
+    txt:'Instalar electrodo de anillo perimetral (tipo B)',
+    descripcion:'Tendido de conductor desnudo de cobre de 50 mm² en zanja perimetral a 1 m de profundidad alrededor del edificio o de la zona a proteger.',
+    efecto:'El anillo perimetral ofrece una resistencia muy baja en paralelo con las picas. Para un edificio de 10×10 m con ρ = 100 Ω·m: R_anillo ≈ ρ/(2π×perímetro) ≈ 1,6 Ω.',
+    impacto:0.40,
+    advertencia:null,
+    norma:'UNE 21186:2011 apdo. 6 (electrodo tipo B) / IEC 62305'
+  },
+  {
+    id:'sug_humedad',
+    txt:'Riego periódico de la zona de electrodos (mejora temporal)',
+    descripcion:'Humedecer regularmente la tierra alrededor de los electrodos, especialmente en épocas de sequía.',
+    efecto:'Reducción temporal de la resistividad del suelo. La humedad puede reducir la R un 30–60 % según el tipo de suelo, pero el efecto es temporal (requiere mantenimiento).',
+    impacto:0.70,
+    advertencia:'⚠ Esta es una medida temporal. El efecto desaparece en periodos de sequía. Combinar siempre con una mejora estructural permanente (picas adicionales, tratamiento conductor).',
+    norma:'Buena práctica'
+  }
+];
+
+// ── Renderizar lista de sugerencias en la pestaña 4 ──
+function renderSugLista(){
+  var div=document.getElementById('sug_lista');
+  if(!div||div.innerHTML!=='')return;
+  var html='';
+  SUGS.forEach(function(s){
+    var extraInput=s.id==='sug_pica'
+      ?'<div style="margin-top:7px;display:flex;align-items:center;gap:8px">'+
+        '<label style="font-size:.8em;font-weight:700;color:#444">Nº de picas a añadir:</label>'+
+        '<input type="number" id="sug_pica_n" min="1" max="10" value="1" '+
+        'style="width:58px;padding:3px 7px;border:1px solid #bcd;border-radius:4px;font-size:.88em" '+
+        'oninput="actualizarContadorSugs()">'+
+        '<span id="sug_pica_n_lbl" style="font-size:.78em;color:#1e8449;font-weight:700"></span>'+
+        '</div>'
+      :'';
+    html+='<div class="sug-card">'+
+      '<input type="checkbox" id="'+s.id+'" onchange="actualizarContadorSugs()">'+
+      '<div class="sug-body">'+
+        '<div class="sug-title">'+s.txt+'</div>'+
+        '<div class="sug-desc">'+s.descripcion+'</div>'+
+        '<div class="sug-efecto">📈 '+s.efecto+'</div>'+
+        (s.advertencia?'<div class="sug-warn">'+s.advertencia+'</div>':'')+
+        '<div style="font-size:.74em;color:#999;margin-top:3px">Norma: '+s.norma+'</div>'+
+        extraInput+
+      '</div>'+
+    '</div>';
+  });
+  div.innerHTML=html;
+}
+
+function actualizarContadorSugs(){
+  // Actualizar etiqueta dinámica del contador de picas
+  var nEl=document.getElementById('sug_pica_n');
+  var lbl=document.getElementById('sug_pica_n_lbl');
+  if(nEl&&lbl){
+    var n=Math.max(1,parseInt(nEl.value)||1);
+    var factor=Math.pow(ETA_PICA,n);
+    lbl.textContent='→ reducción total ≈ '+Math.round((1-factor)*100)+' % (×'+factor.toFixed(2)+')';
+  }
+  document.getElementById('sug_validacion_panel').style.display='none';
+}
+
+// Factor efectivo de una sugerencia (dinámico para sug_pica según nº de picas)
+function getImpacto(s){
+  if(s.id!=='sug_pica') return s.impacto;
+  var nEl=document.getElementById('sug_pica_n');
+  var n=nEl?Math.max(1,parseInt(nEl.value)||1):1;
+  return Math.max(0.40,Math.pow(ETA_PICA,n));
+}
+
+// ── Validar texto personalizado ──
+var MALOS=[
+  {keys:['sal comun','sal común','sal de cocina','nacl','sal industrial'],
+   msg:'❌ No recomendado: La sal común (NaCl) crea un electrolito agresivo que acelera la corrosión galvánica del cobre y el acero de los electrodos. Su efecto es temporal y degrada rápidamente la instalación. Usar bentonita conductora o sales específicas para tierra eléctrica (GEM, Marconite, etc.).'},
+  {keys:['arena','grava','piedra','hormigon','hormigón','cemento'],
+   msg:'❌ No recomendado: la arena, grava, piedra y cemento tienen resistividad muy alta (500–10.000 Ω·m). No mejorarían la R de tierra; al contrario, aislarían el electrodo del suelo conductor natural. Usar tierra vegetal o compuestos conductores.'},
+  {keys:['agua sola','regar solo','solo agua'],
+   msg:'⚠ El riego solo con agua tiene efecto muy temporal (días o semanas según el clima). Complementar con una mejora estructural permanente.'},
+  {keys:['pintura','barniz','lacado'],
+   msg:'❌ Nunca aplicar ningún recubrimiento aislante sobre los electrodos o conductores de tierra. Eliminaría el contacto eléctrico con el suelo.'}
+];
+var BUENOS=[
+  {keys:['bentonita'],msg:'✅ Bentonita conductora: producto adecuado. Alta capacidad higroscópica, permanece húmeda y conductora a largo plazo.'},
+  {keys:['gem','marconite','conductivo','conductor','mejorador'],msg:'✅ Compuesto mejorador de conductividad: producto adecuado si está certificado para instalaciones de tierra.'},
+  {keys:['anillo','perimetral','radial'],msg:'✅ Electrodo perimetral / radial: medida muy efectiva y conforme a UNE 21186 (electrodo tipo B).'},
+  {keys:['cobre','50mm','16mm','35mm'],msg:'✅ Conductor de cobre: material recomendado para electrodos y conectores de tierra (mínimo 50 mm² según REBT).'}
+];
+function validarCustom(){
+  var txt=document.getElementById('sug_custom').value.toLowerCase();
+  var res=document.getElementById('sug_custom_result');
+  if(!txt.trim()){res.style.display='none';return;}
+  var msgs=[];
+  MALOS.forEach(function(m){m.keys.forEach(function(k){if(txt.includes(k)){msgs.push('<div class="sug-bad">'+m.msg+'</div>');}});});
+  BUENOS.forEach(function(b){b.keys.forEach(function(k){if(txt.includes(k)){msgs.push('<div class="sug-efecto">'+b.msg+'</div>');}});});
+  if(msgs.length===0)msgs.push('<div class="tip">ℹ Sugerencia registrada. Se incluirá en el informe. Si tienes dudas sobre su idoneidad, consulta la normativa REBT ITC-BT-18 o UNE 21186:2011.</div>');
+  res.innerHTML=msgs.join('');
+  res.style.display='block';
+}
+
+// ── Validar todas y mostrar impacto estimado ──
+function validarTodasSugerencias(){
+  var panel=document.getElementById('sug_validacion_panel');
+  var seleccionadas=SUGS.filter(function(s){return document.getElementById(s.id)&&document.getElementById(s.id).checked;});
+  var customTxt=document.getElementById('sug_custom').value.trim();
+  if(seleccionadas.length===0&&!customTxt){
+    panel.innerHTML='<div class="tip">☝ Selecciona al menos una sugerencia para ver el impacto estimado.</div>';
+    panel.style.display='block';return;
+  }
+  // Recoger todos los puntos medidos; distinguir pararrayos (⚡) del resto
+  var paraPuntos=[],allPuntos=[];
+  document.querySelectorAll('.row-item').forEach(function(row){
+    var pid=row.id.replace('row_','');
+    var pEl=document.getElementById(pid+'_para');
+    var vEl=document.getElementById(pid+'_v');
+    var lEl=document.getElementById(pid+'_l');
+    if(!vEl||!(parseFloat(vEl.value)>0))return;
+    var v=parseFloat(vEl.value);
+    var lbl=lEl&&lEl.value?lEl.value:'Punto';
+    var esPar=!!(pEl&&pEl.checked);
+    if(esPar) paraPuntos.push({pt:lbl,v:v});
+    allPuntos.push({pt:lbl,v:v,para:esPar});
+  });
+  // Prioridad: ⚡ pararrayos (límite 10 Ω) > todos los puntos BT (objetivo 20 Ω)
+  // La pestaña actúa como calculadora para cualquier valor, aunque §8 solo aparece con condiciones
+  var puntoBase,limitRef,tieneVals;
+  if(paraPuntos.length>0){
+    puntoBase=paraPuntos; limitRef=LIM_UNE21186; tieneVals=true;
+  } else if(allPuntos.length>0){
+    puntoBase=allPuntos; limitRef=OBJ_BUENA; tieneVals=true;
+  } else {
+    puntoBase=[]; limitRef=OBJ_BUENA; tieneVals=false;
+  }
+  var maxBase=puntoBase.length>0?Math.max.apply(null,puntoBase.map(function(p){return p.v;})):0;
+  var html='<div style="font-size:.84em;font-weight:700;color:#1a3a5c;margin-bottom:8px">Análisis técnico de las sugerencias seleccionadas:</div>';
+  html+='<table class="rtable"><tr><th>Medida</th><th>Estado técnico</th><th>Impacto estimado en R</th></tr>';
+  var estAcum=maxBase>0?maxBase:null;
+  seleccionadas.forEach(function(s){
+    var factor=getImpacto(s);
+    var nPicas=s.id==='sug_pica'?(Math.max(1,parseInt((document.getElementById('sug_pica_n')||{}).value)||1)):null;
+    var estadoBadge=s.advertencia?'<span class="warn">⚠ Válida con condiciones</span>':'<span class="ok">✅ Correcta</span>';
+    var impactoTxt=s.id==='sug_pica'
+      ?'Reducción ≈ '+Math.round((1-factor)*100)+' % ('+nPicas+' pica'+(nPicas>1?'s':'')+' × 15 %)'
+      :(factor<1?'Reducción ~'+Math.round((1-factor)*100)+' %':'Variable');
+    var estTxt='';
+    if(estAcum!==null){var nuevo=parseFloat((estAcum*factor).toFixed(1));estTxt=' ('+estAcum+' → <strong>≈'+nuevo+' Ω</strong>)';estAcum=nuevo;}
+    html+='<tr><td><strong>'+s.txt+'</strong>'+(nPicas?' <em style="font-size:.82em;color:#555">('+nPicas+' pica'+(nPicas>1?'s':'')+' adicionales)</em>':'')+
+      (s.advertencia?'<br><span style="font-size:.77em;color:#d35400">'+s.advertencia+'</span>':'')+
+      '</td><td>'+estadoBadge+'</td><td>'+impactoTxt+estTxt+'</td></tr>';
+  });
+  if(customTxt){
+    var esMalo=MALOS.some(function(m){return m.keys.some(function(k){return customTxt.toLowerCase().includes(k);});});
+    html+='<tr><td><strong>Sugerencia personalizada:</strong><br><span style="font-size:.82em">'+customTxt+'</span></td>'+
+      '<td>'+(esMalo?'<span class="fail">❌ No recomendado</span>':'<span class="ok">✅ Registrada</span>')+'</td>'+
+      '<td>'+(esMalo?'Puede ser contraproducente':'A evaluar in situ')+'</td></tr>';
+  }
+  html+='</table>';
+  // Estimación por puntos que no cumplen su límite
+  if(tieneVals&&seleccionadas.length>0){
+    var puntosFallo=puntoBase.filter(function(p){return p.v>limitRef;});
+    var limNom=limitRef===10?'UNE 21186':'buena práctica (≤20 Ω)';
+    var etiqFallo=limitRef===10?'pararrayos que no cumplen':'puntos BT con R &gt; 20 Ω (objetivo recomendado)';
+    if(puntosFallo.length>0){
+      html+='<div style="font-size:.83em;font-weight:700;color:#333;margin-top:10px;margin-bottom:4px">Estimación por '+etiqFallo+':</div>';
+      puntosFallo.forEach(function(p){
+        var est=p.v;
+        var cadena='<strong>'+(limitRef===LIM_UNE21186?'⚡ ':'')+p.pt+'</strong>: '+p.v+' Ω';
+        seleccionadas.forEach(function(s){
+          var nuevo=parseFloat((est*getImpacto(s)).toFixed(1));
+          cadena+=' → <strong>'+nuevo+' Ω</strong>';
+          est=nuevo;
+        });
+        var col=est<=limitRef?'#27ae60':est<=limitRef*2?'#e67e22':'#c0392b';
+        html+='<div class="concbox" style="border-left-color:'+col+';margin-top:5px;font-size:.83em">'+
+          cadena+' = <strong>≈ '+est+' Ω</strong> — '+
+          (est<=limitRef?'✅ Podría cumplir '+limNom:'⚠ Posiblemente aún por encima de '+limitRef+' Ω')+
+        '</div>';
+      });
+    }
+    html+='<div class="tip" style="margin-top:10px">📌 <strong>Nota importante:</strong> Los valores de estimación son <strong>orientativos</strong>. Se basan en factores medios de mejora obtenidos de la bibliografía técnica y la experiencia práctica. El resultado real dependerá de las condiciones específicas del terreno, la resistividad del suelo, la calidad de los materiales y la correcta ejecución de los trabajos. <strong>Se recomienda repetir la medición una vez aplicadas las mejoras para confirmar el cumplimiento normativo.</strong></div>';
+  }
+
+  // Si hay ⚡ pararrayos Y también puntos BT > 20 Ω, mostrar también la cadena BT
+  if(paraPuntos.length>0&&seleccionadas.length>0){
+    var btExtra=allPuntos.filter(function(p){return !p.para&&p.v>OBJ_BUENA;});
+    if(btExtra.length>0){
+      html+='<div style="margin-top:16px;padding-top:12px;border-top:2px solid #dce8f5">'+
+        '<div style="font-size:.83em;font-weight:700;color:#1a3a5c;margin-bottom:4px">'+
+        '🔵 Red BT — Recomendación de mejora (objetivo ≤'+OBJ_BUENA+' Ω)</div>'+
+        '<p style="font-size:.82em;margin-bottom:6px">La red BT <strong>cumple el REBT</strong> (Ut &lt; UL). '+
+        'Se recomienda reducir hasta ≤'+OBJ_BUENA+' Ω como buena práctica para mayor margen de seguridad.</p>';
+      btExtra.forEach(function(p){
+        var est=p.v;
+        var cadena='<strong>'+p.pt+'</strong>: '+p.v+' Ω';
+        seleccionadas.forEach(function(s){
+          var nuevo=parseFloat((est*getImpacto(s)).toFixed(1));
+          cadena+=' → <strong>'+nuevo+' Ω</strong>';
+          est=nuevo;
+        });
+        var col=est<=OBJ_BUENA?'#27ae60':est<=ALERTA_BT?'#e67e22':'#c0392b';
+        html+='<div class="concbox" style="border-left-color:'+col+';margin-top:5px;font-size:.83em">'+
+          cadena+' = <strong>≈'+est+' Ω</strong> — '+
+          (est<=OBJ_BUENA?'✅ Cumpliría objetivo ≤'+OBJ_BUENA+' Ω':
+           '⚠ Aún por encima de '+OBJ_BUENA+' Ω')+
+        '</div>';
+      });
+      html+='</div>';
+    }
+  }
+
+  panel.innerHTML=html;
+  panel.style.display='block';
+}
+
+// ── Construir sección recomendaciones para el informe ──
+// paraArg: número (pestaña preview) o array de {pt,v} (informe real)
+function buildSugReport(paraArg,cableR_c,limitRef){
+  limitRef=limitRef||LIM_UNE21186;
+  var esPara=limitRef===LIM_UNE21186;
+  var isArr=Array.isArray(paraArg);
+  var maxPara=isArr?(paraArg.length>0?Math.max.apply(null,paraArg.map(function(p){return p.v;})):0):paraArg;
+  var seleccionadas=SUGS.filter(function(s){return document.getElementById(s.id)&&document.getElementById(s.id).checked;});
+  var customTxt=document.getElementById('sug_custom')?document.getElementById('sug_custom').value.trim():'';
+  var tono=document.getElementById('sug_tono')?document.getElementById('sug_tono').value:'neutro';
+  var prioridad=document.getElementById('sug_prioridad')?document.getElementById('sug_prioridad').value:'todas';
+  if(seleccionadas.length===0&&!customTxt)return'';
+
+  var customEsMalo=customTxt&&MALOS.some(function(m){return m.keys.some(function(k){return customTxt.toLowerCase().includes(k);});});
+
+  var sugsAMostrar=seleccionadas.slice();
+  if(prioridad==='top3')sugsAMostrar=sugsAMostrar.sort(function(a,b){return getImpacto(a)-getImpacto(b);}).slice(0,3);
+  else if(prioridad==='top1')sugsAMostrar=sugsAMostrar.sort(function(a,b){return getImpacto(a)-getImpacto(b);}).slice(0,1);
+
+  var introMap={
+    neutro: esPara
+      ?'Se proponen las siguientes medidas técnicas para mejorar el sistema de puesta a tierra y alcanzar el cumplimiento normativo:'
+      :'El sistema de tierra cumple la normativa REBT en las condiciones actuales. Las siguientes medidas se proponen para optimizarlo hasta el objetivo recomendado de ≤20 Ω (buena práctica):',
+    favorable: esPara
+      ?'El sistema de tierra, aunque no alcanza actualmente el límite normativo en las condiciones de medición, dispone de margen de mejora con medidas técnicas accesibles. Se detallan a continuación las actuaciones recomendadas por orden de impacto:'
+      :'El sistema de tierra cumple el REBT (Ut &lt; UL). Para mejorar la seguridad y garantizar mayor margen frente a variaciones estacionales del terreno, se recomienda reducir la resistencia hasta ≤20 Ω. Actuaciones propuestas por orden de impacto:',
+    accion: esPara
+      ?'Para alcanzar el cumplimiento de la UNE 21186:2011 (R<sub>t</sub> ≤ 10 Ω) se deben ejecutar las siguientes actuaciones, ordenadas de mayor a menor impacto sobre la resistencia de tierra:'
+      :'Para alcanzar el objetivo recomendado de ≤20 Ω (buena práctica — el sistema ya cumple el REBT), se proponen las siguientes actuaciones ordenadas de mayor a menor impacto:'
+  };
+  var html='<p>'+introMap[tono]+'</p>';
+  html+='<table class="rtable" style="margin-top:8px"><tr><th>#</th><th>Medida propuesta</th><th>Efecto técnico esperado</th><th>Norma / Referencia</th></tr>';
+
+  var estAcum=maxPara>0?maxPara:null;
+  sugsAMostrar.forEach(function(s,i){
+    var factor=getImpacto(s);
+    var estTxt='';
+    if(estAcum!==null){var nuevo=parseFloat((estAcum*factor).toFixed(1));estTxt='<br><strong>'+estAcum+' → ≈ '+nuevo+' Ω</strong>';estAcum=nuevo;}
+    var nPicas=s.id==='sug_pica'?(Math.max(1,parseInt((document.getElementById('sug_pica_n')||{}).value)||1)):null;
+    var impactoDesc=s.id==='sug_pica'
+      ?'Reducción total ≈ '+Math.round((1-factor)*100)+' % ('+nPicas+' pica'+(nPicas>1?'s':'')+' × 15 %)'
+      :(factor<1?'Reducción ~'+Math.round((1-factor)*100)+' %':'Variable');
+    html+='<tr>'+
+      '<td style="text-align:center;font-weight:700;color:#1a3a5c">'+(i+1)+'</td>'+
+      '<td><strong>'+s.txt+'</strong>'+(nPicas?' <em style="font-size:.82em;color:#555">('+nPicas+' pica'+(nPicas>1?'s adicionales':'')+')</em>':'')+'<br><span style="font-size:.82em;color:#555">'+s.descripcion+'</span>'+
+        (s.advertencia?'<br><span style="font-size:.78em;color:#d35400">'+s.advertencia+'</span>':'')+
+      '</td>'+
+      '<td style="font-size:.82em">'+impactoDesc+estTxt+'</td>'+
+      '<td style="font-size:.77em;color:#666">'+s.norma+'</td>'+
+    '</tr>';
+  });
+
+  if(customTxt&&!customEsMalo){
+    html+='<tr><td style="text-align:center;font-weight:700;color:#1a3a5c">'+(sugsAMostrar.length+1)+'</td>'+
+      '<td><strong>Medida adicional propuesta</strong><br><span style="font-size:.82em;color:#555">'+customTxt+'</span></td>'+
+      '<td style="font-size:.82em">A evaluar in situ <em style="color:#888">(no contabilizada en estimación numérica)</em></td><td style="font-size:.77em;color:#666">—</td></tr>';
+  }
+  html+='</table>';
+
+  if(customEsMalo){
+    html+='<div class="pendbox" style="margin-top:8px">❌ <strong>Sugerencia no incorporada al informe:</strong> "'+customTxt+'" — no se recomienda esta medida por los motivos indicados en la pestaña de sugerencias. Se ha excluido del informe para mantener su rigor técnico.</div>';
+  }
+
+  if(sugsAMostrar.length>0&&maxPara>0){
+    var limNom=esPara?'UNE 21186 (≤10 Ω)':'buena práctica (≤20 Ω)';
+    var normaNom=esPara?'la UNE 21186:2011':'el objetivo recomendado ≤20 Ω';
+    html+='<div style="font-size:.83em;font-weight:700;color:#333;margin-top:12px;margin-bottom:4px">Estimación acumulada con todas las medidas aplicadas:</div>';
+    var puntosFallo=isArr?paraArg.filter(function(p){return p.v>limitRef;}):
+      [{pt:'Electrodo',v:maxPara}];
+    puntosFallo.forEach(function(p){
+      var base=cableR_c>0?parseFloat((p.v-cableR_c).toFixed(1)):p.v;
+      var est=base;
+      var cadena='<strong>'+(esPara?'⚡ ':'')+p.pt+'</strong>: '+p.v+' Ω medido'+(cableR_c>0?' (≈'+base+' Ω real)':'');
+      sugsAMostrar.forEach(function(s){
+        var nuevo=parseFloat((est*getImpacto(s)).toFixed(1));
+        cadena+=' → <strong>'+nuevo+' Ω</strong> ('+s.txt.split(' ').slice(0,3).join(' ')+')';
+        est=nuevo;
+      });
+      var col=est<=limitRef?'#27ae60':est<=limitRef*2?'#e67e22':'#c0392b';
+      html+='<div class="concbox" style="border-left-color:'+col+';margin-top:6px">'+
+        cadena+' = <strong>≈ '+est+' Ω</strong> — '+
+        (est<=limitRef?'✅ Cumpliría '+limNom:
+         est<=limitRef*2?'⚠ Mejora notable pero aún por encima de '+limitRef+' Ω — valorar medidas adicionales':
+         '⚠ Insuficiente — considerar electrodo tipo B (anillo perimetral) o tratamiento intensivo')+
+      '</div>';
+    });
+    if(tono==='accion'&&sugsAMostrar.length>0){
+      html+='<div class="tip" style="margin-top:6px">⚡ <strong>Acción prioritaria:</strong> '+sugsAMostrar[0].txt+'.</div>';
+    }
+    html+='<div class="tip" style="margin-top:8px;border-left-color:#e67e22">📌 <strong>Advertencia sobre las estimaciones:</strong> Los valores anteriores son <strong>orientativos</strong>, calculados a partir de factores medios de mejora técnica. El resultado real dependerá de las condiciones del terreno, la resistividad del suelo, los materiales empleados y la correcta ejecución de los trabajos. <strong>Es imprescindible repetir la medición una vez aplicadas las mejoras para verificar el cumplimiento de '+normaNom+'.</strong></div>';
+  }
+  return html;
+}
+
+function tog(m){
+  var el=document.getElementById('block-'+m);
+  if(el) el.style.display=document.getElementById('m'+m).checked?'block':'none';
+  var any=['3h','2h','rcd','loop','rho','para'].some(function(x){return document.getElementById('m'+x).checked;});
+  document.getElementById('nomsg').style.display=any?'none':'block';
+}
+
+// ── 3H helpers ──
+// Validación Vd (tensión de ruido del terreno — GSC-53)
+// Referencia: cuanto más bajo, mejor calidad de medición
+// Vd < 1 V  → excelente
+// Vd 1–5 V  → aceptable
+// Vd 5–10 V → medición con ruido elevado, verificar
+// Vd > 10 V → medición posiblemente poco fiable
+function checkVd(pid){
+  var vdEl=document.getElementById(pid+'_vd');
+  var div=document.getElementById(pid+'_valid');
+  if(!vdEl||!div) return;
+  var vd=parseFloat(vdEl.value);
+  if(isNaN(vd)){div.innerHTML='';return;}
+  var msg='';
+  if(vd<1)       msg='<span style="color:#27ae60">✓ Vd excelente (&lt;1 V) — medición de alta calidad</span>';
+  else if(vd<5)  msg='<span style="color:#27ae60">✓ Vd aceptable ('+vd+' V)</span>';
+  else if(vd<10) msg='<span style="color:#e67e22">⚠ Vd elevada ('+vd+' V) — ruido significativo en el terreno; verificar que R es estable</span>';
+  else           msg='<span style="color:#c0392b">⚠ Vd muy alta ('+vd+' V) — medición posiblemente poco fiable por interferencias; repetir en otro horario si es posible</span>';
+  div.innerHTML=msg;
+}
+
+// ── Condicionantes ──
+function togCable(){
+  var el=document.getElementById('cond_cable_block');
+  if(el) el.style.display=document.getElementById('cond_cable').checked?'block':'none';
+  calcCable();
+}
+function calcCable(){
+  if(!document.getElementById('cond_cable').checked) return;
+  var L=parseFloat(document.getElementById('cable_L').value)||0;
+  var A=parseFloat(document.getElementById('cable_A').value)||1;
+  var rho=parseFloat(document.getElementById('cable_mat').value)||0.0175;
+  if(L>0&&A>0){
+    var R=(2*rho*L/A).toFixed(2);
+    document.getElementById('cable_R_calc').value=R+' Ω';
+  }
+}
+function togInstCompleta(){
+  var v=document.getElementById('inst_completa').value;
+  document.getElementById('inst_pend_block').style.display=(v==='no')?'block':'none';
+}
+
+// ── Añadir puntos ──
+function addPt(type){
+  ptCounts[type]=(ptCounts[type]||0)+1;
+  var n=ptCounts[type];
+  var pid=type+'_p'+n;
+  var c=document.getElementById(type+'_rows');
+  var d=document.createElement('div');
+  d.className='row-item';d.id='row_'+pid;
+  var paraCheck=(type==='rcd'||type==='loop'||type==='3h')
+    ?'<label class="para-check"><input type="checkbox" id="'+pid+'_para"> ⚡ Punto de pararrayos (criterio ≤ 10 Ω — UNE 21186)</label>':'';
+  if(type==='rcd'||type==='loop'){
+    d.innerHTML=paraCheck+
+      '<div class="grid3">'+
+        '<div><label>Punto / Pilar</label><input id="'+pid+'_l" placeholder="Pilar '+n+'"></div>'+
+        '<div><label>Resistencia Z (Ω)</label><input id="'+pid+'_v" type="number" step="0.1" placeholder="16"></div>'+
+        '<div><label>Ut calculada (V)</label><input id="'+pid+'_u" readonly style="background:#f0fff0;font-weight:700"></div>'+
+      '</div>'+
+      '<div style="margin-top:6px;display:flex;align-items:center;gap:8px">'+
+        '<span id="'+pid+'_b"></span>'+
+        '<button class="add-btn" style="background:#27ae60;margin:0" onclick="calcUt(\''+pid+'\')">Calcular</button>'+
+        '<button class="del-btn" onclick="document.getElementById(\'row_'+pid+'\').remove()">✕</button>'+
+      '</div>';
+  } else if(type==='3h'){
+    d.innerHTML=paraCheck+
+      '<div class="grid3">'+
+        '<div><label>Electrodo / Punto medido</label>'+
+          '<input id="'+pid+'_l" placeholder="Electrodo '+n+'"></div>'+
+        '<div><label><strong>R — resistencia medida (Ω)</strong></label>'+
+          '<input id="'+pid+'_v" type="number" step="0.1" placeholder="9.96" style="border-color:#1a3a5c;font-weight:700"></div>'+
+        '<div><label>RAVG — media de tomas (Ω) <span style="font-weight:400;color:#888">si hay varias</span></label>'+
+          '<input id="'+pid+'_ravg" type="number" step="0.1" placeholder="—"></div>'+
+      '</div>'+
+      '<div class="grid3" style="margin-top:6px">'+
+        '<div><label>Vd — tensión de ruido (V) <span style="font-weight:400;color:#888">pantalla equipo</span></label>'+
+          '<input id="'+pid+'_vd" type="number" step="0.01" placeholder="—" oninput="checkVd(\''+pid+'\')"></div>'+
+        '<div><label>Test — nº de tomas realizadas</label>'+
+          '<input id="'+pid+'_test" type="number" min="1" step="1" placeholder="—"></div>'+
+        '<div><label>Valoración</label><span id="'+pid+'_b"></span></div>'+
+      '</div>'+
+      '<div id="'+pid+'_valid" style="font-size:.78em;margin-top:4px"></div>'+
+      '<div style="margin-top:6px;display:flex;align-items:center;gap:8px">'+
+        '<button class="add-btn" style="background:#27ae60;margin:0" onclick="check3H(\''+pid+'\')">Valorar</button>'+
+        '<button class="del-btn" onclick="document.getElementById(\'row_'+pid+'\').remove()">✕</button>'+
+      '</div>';
+  } else if(type==='rho'){
+    d.innerHTML=
+      '<div class="grid3">'+
+        '<div><label>Orientación / Zona</label><input id="'+pid+'_l" placeholder="Eje N-S"></div>'+
+        '<div><label>R medida (Ω)</label><input id="'+pid+'_v" type="number" step="0.01" placeholder="2.50"></div>'+
+        '<div><label>ρ (Ω·m)</label><input id="'+pid+'_r" readonly style="background:#f0fff0;font-weight:700"></div>'+
+      '</div>'+
+      '<div style="margin-top:6px;display:flex;gap:8px">'+
+        '<button class="add-btn" style="background:#27ae60;margin:0" onclick="calcRho(\''+pid+'\')">Calcular ρ</button>'+
+        '<button class="del-btn" onclick="document.getElementById(\'row_'+pid+'\').remove()">✕</button>'+
+      '</div>';
+  }
+  c.appendChild(d);
+}
+
+// ── Agrupación de medidas por nombre de elemento ──
+function agruparValFin(vf){
+  var map={},orden=[];
+  var prec={'3H':0,'2H':1,'RCD/RA':2,'LOOP':2,'SPCR':3};
+  vf.forEach(function(x){
+    var k=x.pt.trim().toLowerCase();
+    if(!map[k]){map[k]={pt:x.pt,para:x.para,meds:[]};orden.push(k);}
+    map[k].meds.push({met:x.met,v:x.v});
+  });
+  return orden.map(function(k){
+    var g=map[k];
+    var vals=g.meds.map(function(m){return m.v;});
+    g.n=vals.length;
+    g.mean=parseFloat((vals.reduce(function(a,b){return a+b;},0)/vals.length).toFixed(1));
+    g.min=Math.min.apply(null,vals);g.max=Math.max.apply(null,vals);
+    g.conf=g.n>=2;
+    g.best=g.meds.slice().sort(function(a,b){return (prec[a.met]||9)-(prec[b.met]||9);})[0];
+    g.v=g.best?g.best.v:g.mean;
+    return g;
+  });
+}
+
+// ── Helpers de badge — código de colores unificado ──
+// BT: ≤20Ω verde · 20-40Ω naranja · >40Ω ámbar · Ut>UL rojo
+function _btCls(v,idn,ul){
+  if(idn*v>ul) return 'fail';
+  if(v<=OBJ_BUENA) return 'ok';
+  if(v<=ALERTA_BT) return 'warn';
+  return 'admisible';
+}
+function _btLabel(v,idn,ul){
+  if(idn*v>ul) return '✗ No cumple REBT';
+  if(v<=OBJ_BUENA) return '✓ Muy favorable (≤'+OBJ_BUENA+' Ω)';
+  if(v<=ALERTA_BT) return '⚠ Mejorar hasta ≤'+OBJ_BUENA+' Ω';
+  return '⚠ Admisible — margen reducido';
+}
+// Badge sin Ut (para RCD/LOOP donde Ut va en columna separada)
+function _btBadge(v,idn,ul){
+  return '<span class="'+_btCls(v,idn,ul)+'">'+_btLabel(v,idn,ul)+'</span>';
+}
+// Badge con Ut incluida (para 3H/2H donde no hay columna Ut separada)
+function _btBadgeUt(v,idn,ul){
+  var ut=(idn*v).toFixed(2);
+  if(idn*v>ul) return '<span class="fail">✗ Ut='+ut+' V — Fuera de límite</span>';
+  if(v<=OBJ_BUENA) return '<span class="ok">✓ Ut='+ut+' V — Muy favorable (≤'+OBJ_BUENA+' Ω)</span>';
+  if(v<=ALERTA_BT) return '<span class="warn">⚠ Ut='+ut+' V — Mejorar hasta ≤'+OBJ_BUENA+' Ω</span>';
+  return '<span class="admisible">⚠ Ut='+ut+' V — Admisible, margen reducido</span>';
+}
+// Para pararrayos: ≤5Ω verde · ≤10Ω verde · >10Ω rojo
+function _paraBadge(v){
+  if(v<=5) return '<span class="ok">⚡ Muy favorable ('+v+' Ω)</span>';
+  if(v<=LIM_UNE21186) return '<span class="ok">⚡ Cumple UNE 21186 ('+v+' Ω)</span>';
+  return '<span class="fail">⚡ No cumple ('+v+' Ω &gt; '+LIM_UNE21186+' Ω)</span>';
+}
+
+// ── Cálculos ──
+function calcUt(pid){
+  var idn=parseFloat(document.getElementById('idn').value)||0.030;
+  var ul=parseFloat(document.getElementById('ul').value)||50;
+  var vEl=document.getElementById(pid+'_v');
+  var pEl=document.getElementById(pid+'_para');
+  if(!vEl) return;
+  var z=parseFloat(vEl.value)||0;
+  var b=document.getElementById(pid+'_b');
+  var uEl=document.getElementById(pid+'_u');
+  if(z<=0){if(b)b.innerHTML='<span class="warn">⚠ Sin valor</span>';if(uEl)uEl.value='—';return;}
+  var ut=(idn*z).toFixed(2);
+  if(uEl) uEl.value=ut+' V';
+  if(!b) return;
+  var esPara=pEl?pEl.checked:false;
+  if(esPara){
+    if(z<=5)       b.innerHTML='<span class="ok">⚡ Muy favorable ('+z+' Ω)</span>';
+    else if(z<=10) b.innerHTML='<span class="ok">⚡ Cumple UNE 21186 ('+z+' Ω)</span>';
+    else           b.innerHTML='<span class="fail">⚡ No cumple ('+z+' Ω &gt; 10 Ω)</span>';
+  } else {
+    b.innerHTML=_btBadge(z,idn,ul);
+  }
+}
+function check3H(pid){
+  var ul=parseFloat(document.getElementById('ul').value)||50;
+  var idn=parseFloat(document.getElementById('idn').value)||0.030;
+  var vEl=document.getElementById(pid+'_v');
+  var pEl=document.getElementById(pid+'_para');
+  if(!vEl) return;
+  var v=parseFloat(vEl.value)||0;
+  var b=document.getElementById(pid+'_b');
+  if(v<=0){if(b)b.innerHTML='<span class="warn">⚠ Sin valor</span>';return;}
+  if(!b) return;
+  var esPara=pEl?pEl.checked:false;
+  if(esPara){
+    if(v<=5)       b.innerHTML='<span class="ok">⚡ Muy favorable</span>';
+    else if(v<=10) b.innerHTML='<span class="ok">⚡ Cumple UNE 21186</span>';
+    else           b.innerHTML='<span class="fail">⚡ No cumple ('+v+' Ω &gt; 10 Ω)</span>';
+  } else {
+    b.innerHTML=_btBadgeUt(v,idn,ul);
+  }
+}
+function calcRho(pid){
+  var a=parseFloat(document.getElementById('rho_dist').value)||5;
+  var rEl=document.getElementById(pid+'_r');
+  if(a<=0){if(rEl)rEl.value='⚠ Distancia > 0';return;}
+  var vEl=document.getElementById(pid+'_v');
+  if(!vEl) return;
+  var R=parseFloat(vEl.value)||0;
+  if(R<=0){if(rEl)rEl.value='⚠ Sin valor';return;}
+  if(rEl) rEl.value=(2*Math.PI*a*R).toFixed(1)+' Ω·m';
+}
+
+// ── Estimación de electrodos desde resistividad Wenner ──
+function calcEstimacionElectrodos(){
+  var a=parseFloat(document.getElementById('rho_dist').value)||5;
+  var div=document.getElementById('est_result');
+  if(a<=0){div.innerHTML='<div class="tip">⚠ La distancia entre picas debe ser mayor que 0 m.</div>';div.style.display='block';return;}
+  var rhoVals=[];
+  document.getElementById('rho_rows').querySelectorAll('.row-item').forEach(function(row){
+    var pid=row.id.replace('row_','');
+    var vEl=document.getElementById(pid+'_v');
+    if(vEl&&parseFloat(vEl.value)>0) rhoVals.push(2*Math.PI*a*parseFloat(vEl.value));
+  });
+  if(rhoVals.length===0){
+    div.innerHTML='<div class="tip">☝ Añade al menos una medida de resistividad y pulsa "Calcular ρ" antes de estimar.</div>';
+    div.style.display='block';return;
+  }
+  var rho=rhoVals.reduce(function(s,v){return s+v;},0)/rhoVals.length;
+  var idn=parseFloat(document.getElementById('idn').value)||0.030;
+  var ul=parseFloat(document.getElementById('ul').value)||50;
+  var rtmax=ul/idn;
+  // Fórmula de Dwight para pica vertical
+  function rP(L,d){return(rho/(2*Math.PI*L))*(Math.log(4*L/d)-1);}
+  // Fórmula de Endrenyi para anillo horizontal enterrado (a=radio conductor 50mm²=4mm, h=0.8m)
+  function rA(P){var r=P/(2*Math.PI);if(r<=0)return Infinity;var _aCu=Math.sqrt(50/Math.PI)/1000;var v=(rho/(2*Math.PI*Math.PI*r))*(Math.log(8*r/_aCu)-2);return v>0?v:Infinity;}
+  function bk(v,lim){return v<=lim?'<span class="ok">✓</span>':'<span class="fail">✗</span>';}
+  var R2=rP(2,0.0172),R3=rP(3,0.0172);
+  var h='<div class="calcbox"><strong>ρ media: '+rho.toFixed(1)+' Ω·m</strong> — Límite REBT: <strong>≤'+rtmax.toFixed(0)+' Ω</strong> | UNE 21186: <strong>≤10 Ω</strong></div>';
+  h+='<table class="rtable" style="margin-top:8px"><tr><th colspan="5" style="background:#2c3e50">Picas Cu–acero Ø17,2 mm — Dwight (paralelo ideal; real +10–15% por acoplamiento)</th></tr>';
+  h+='<tr><th>Configuración</th><th>Long. total</th><th>R est. (Ω)</th><th>REBT ≤'+rtmax.toFixed(0)+' Ω</th><th>UNE 21186 ≤10 Ω</th></tr>';
+  for(var n=1;n<=6;n++){var r2=(R2/n).toFixed(1);h+='<tr><td><strong>'+n+'</strong> pica'+(n>1?'s':'')+' × 2 m</td><td>'+(2*n)+' m</td><td><strong>≈'+r2+' Ω</strong></td><td>'+bk(parseFloat(r2),rtmax)+'</td><td>'+bk(parseFloat(r2),10)+'</td></tr>';}
+  for(var n2=1;n2<=4;n2++){var r3=(R3/n2).toFixed(1);h+='<tr><td><strong>'+n2+'</strong> pica'+(n2>1?'s':'')+' × 3 m</td><td>'+(3*n2)+' m</td><td><strong>≈'+r3+' Ω</strong></td><td>'+bk(parseFloat(r3),rtmax)+'</td><td>'+bk(parseFloat(r3),10)+'</td></tr>';}
+  h+='</table>';
+  h+='<table class="rtable" style="margin-top:8px"><tr><th colspan="4" style="background:#16697a">Anillo Cu desnudo 50 mm², h=0,8 m — Endrenyi</th></tr>';
+  h+='<tr><th>Perímetro</th><th>R est. (Ω)</th><th>REBT ≤'+rtmax.toFixed(0)+' Ω</th><th>UNE 21186 ≤10 Ω</th></tr>';
+  [10,20,30,40,50,80,100,160].forEach(function(P){
+    var rv=rA(P);var rs=isFinite(rv)?rv.toFixed(1):'—';
+    h+='<tr><td>'+P+' m</td><td><strong>'+(rs==='—'?'—':'≈'+rs+' Ω')+'</strong></td><td>'+bk(parseFloat(rs)||Infinity,rtmax)+'</td><td>'+bk(parseFloat(rs)||Infinity,10)+'</td></tr>';
+  });
+  h+='</table><div class="tip" style="margin-top:6px">📌 Estimaciones orientativas. Variación real ±20–30% según humedad y heterogeneidad del terreno. Separación mínima entre picas en paralelo: 2× longitud. Verificar con medición real una vez ejecutada la instalación.</div>';
+  div.innerHTML=h;div.style.display='block';
+}
+
+// ── 2H ──
+function check2HPt(pid){
+  var ul=parseFloat(document.getElementById('ul').value)||50;
+  var idn=parseFloat(document.getElementById('idn').value)||0.030;
+  var vEl=document.getElementById(pid+'_v');if(!vEl)return;
+  var v=parseFloat(vEl.value)||0;
+  var b=document.getElementById(pid+'_b');
+  if(v<=0){if(b)b.innerHTML='<span class="warn">⚠ Sin valor</span>';return;}
+  if(!b)return;
+  var pEl=document.getElementById(pid+'_para');
+  var esPara=pEl?pEl.checked:false;
+  if(esPara){
+    if(v<=5)       b.innerHTML='<span class="ok">⚡ Muy favorable ('+v+' Ω)</span>';
+    else if(v<=10) b.innerHTML='<span class="ok">⚡ Cumple UNE 21186 ('+v+' Ω)</span>';
+    else           b.innerHTML='<span class="fail">⚡ No cumple ('+v+' Ω &gt; 10 Ω)</span>';
+  } else {
+    b.innerHTML=_btBadge(v,idn,ul);
+  }
+}
+
+// ── Pararrayos tierra ──
+function addParaTierra(){
+  paraTierraCount++;
+  var pid='ptie_'+paraTierraCount;
+  var c=document.getElementById('para_tierra_rows');
+  var d=document.createElement('div');
+  d.className='row-item';d.id='row_'+pid;
+  d.innerHTML=
+    '<div class="grid3">'+
+      '<div><label>Punto / Electrodo</label><input id="'+pid+'_l" placeholder="Electrodo bajada 1"></div>'+
+      '<div><label>Resistencia (Ω)</label><input id="'+pid+'_v" type="number" step="0.1" placeholder="8.5"></div>'+
+      '<div><label>Valoración (≤ 10 Ω)</label><span id="'+pid+'_b"></span></div>'+
+    '</div>'+
+    '<div style="margin-top:6px;display:flex;gap:8px">'+
+      '<button class="add-btn" style="background:#27ae60;margin:0" onclick="checkParaTierra(\''+pid+'\')">Valorar</button>'+
+      '<button class="del-btn" onclick="document.getElementById(\'row_'+pid+'\').remove()">✕</button>'+
+    '</div>';
+  c.appendChild(d);
+}
+function checkParaTierra(pid){
+  var vEl=document.getElementById(pid+'_v');if(!vEl)return;
+  var v=parseFloat(vEl.value)||0;
+  var b=document.getElementById(pid+'_b');
+  if(v<=0){if(b)b.innerHTML='<span class="warn">⚠ Sin valor</span>';return;}
+  if(!b)return;
+  if(v<=5)       b.innerHTML='<span class="ok">✓ Muy favorable ('+v+' Ω)</span>';
+  else if(v<=10) b.innerHTML='<span class="ok">✓ Cumple UNE 21186 ('+v+' Ω)</span>';
+  else           b.innerHTML='<span class="fail">✗ No cumple ('+v+' Ω &gt; 10 Ω) — aplicar apartado 6.3</span>';
+}
+
+// ── Helpers ──
+function _esc(s){return(s||'').replace(/[<>&]/g,function(c){return{'<':'&lt;','>':'&gt;','&':'&amp;'}[c];}).replace(/\n/g,'<br>');}
+function scrBox(rows){
+  var h='<div class="scrbox">';
+  rows.forEach(function(r){h+='<span>'+r[0]+'</span>: '+r[1]+'<br>';});
+  return h+'</div>';
+}
+function readRows(cid){
+  var c=document.getElementById(cid);if(!c)return[];
+  var out=[];
+  c.querySelectorAll('.row-item').forEach(function(row){
+    var pid=row.id.replace('row_','');
+    var lEl=document.getElementById(pid+'_l');
+    var vEl=document.getElementById(pid+'_v');
+    var bEl=document.getElementById(pid+'_b');
+    var pEl=document.getElementById(pid+'_para');
+    out.push({pid:pid,l:lEl?lEl.value||'—':'—',v:vEl?(parseFloat(vEl.value)||0):0,b:bEl?bEl.innerHTML:'',para:pEl?pEl.checked:false});
+  });
+  return out;
+}
+
+// ── Gauge y Chart ──
+function makeGauge(vals, limit, cableR){
+  if(!vals||!vals.length)return'';
+  var maxV=Math.max.apply(null,vals);
+  var maxS=Math.max(limit*6, maxV*1.25, 50);
+  var pG=(limit/maxS*100).toFixed(1);
+  var pO=Math.min((limit*3/maxS*100),(100-parseFloat(pG))).toFixed(1);
+  var pR=Math.max(0,(100-parseFloat(pG)-parseFloat(pO))).toFixed(1);
+  var html='<div class="gauge-wrap"><div style="font-size:.81em;font-weight:700;color:#333;margin-bottom:4px">Resistencia medida vs límite normativo ('+limit+' Ω)</div>';
+  html+='<div class="gauge-bar">';
+  html+='<div class="gauge-seg" style="left:0;width:'+pG+'%;background:#1e8449;border-radius:4px 0 0 4px"></div>';
+  html+='<div class="gauge-seg" style="left:'+pG+'%;width:'+pO+'%;background:#d35400"></div>';
+  html+='<div class="gauge-seg" style="left:'+(parseFloat(pG)+parseFloat(pO))+'%;width:'+pR+'%;background:#b03a2e;border-radius:0 4px 4px 0"></div>';
+  vals.forEach(function(v,i){
+    var pV=Math.min(v/maxS*100,97).toFixed(1);
+    html+='<div class="g-needle" style="left:'+pV+'%;background:#1a3a5c"><div class="g-needle-lbl" style="color:#1a3a5c">'+v+' Ω (P'+(i+1)+')</div></div>';
+  });
+  if(cableR>0){
+    vals.forEach(function(v,i){
+      var rv=parseFloat((v-cableR).toFixed(1));
+      var pV=Math.min(rv/maxS*100,97).toFixed(1);
+      html+='<div class="g-needle" style="left:'+pV+'%;background:#6690c4;opacity:.8"><div class="g-needle-lbl" style="color:#6690c4;border-color:#6690c4">~'+rv+' Ω est.</div></div>';
+    });
+  }
+  html+='</div>';
+  var step=maxS/5;
+  var ticks='';for(var t=0;t<=5;t++)ticks+='<span>'+Math.round(t*step)+' Ω</span>';
+  html+='<div class="gauge-ticks">'+ticks+'</div>';
+  html+='<div class="gauge-legend">';
+  html+='<span><span class="leg-c" style="background:#1e8449"></span>≤ '+limit+' Ω — Cumple norma</span>';
+  html+='<span><span class="leg-c" style="background:#d35400"></span>Zona intermedia</span>';
+  html+='<span><span class="leg-c" style="background:#b03a2e"></span>Fuera de límite</span>';
+  if(cableR>0)html+='<span><span class="leg-c" style="background:#6690c4"></span>Estimación real (sin cable)</span>';
+  html+='</div></div>';
+  return html;
+}
+
+function makeChart(bars, limit, maxY){
+  var W=460,H=200,pL=48,pR=64,pT=22,pB=42;
+  var cW=W-pL-pR,cH=H-pT-pB;
+  function yy(v){return pT+cH-(v/maxY)*cH;}
+  var bW=Math.min(52,Math.floor((cW-(bars.length+1)*8)/bars.length));
+  var gap=(cW-bars.length*bW)/(bars.length+1);
+  var svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" style="display:block;overflow:visible">';
+  [0,limit,maxY/4*1,maxY/4*2,maxY/4*3,maxY].forEach(function(v){
+    var y2=yy(v);var il=(v===limit);
+    svg+='<line x1="'+pL+'" y1="'+y2+'" x2="'+(W-pR)+'" y2="'+y2+'" stroke="'+(il?'#1e8449':'#e0e0e0')+'" stroke-width="'+(il?2:1)+'"'+(il?' stroke-dasharray="7,4"':'')+'/>';
+    svg+='<text x="'+(pL-5)+'" y="'+(y2+4)+'" text-anchor="end" font-size="11" fill="'+(il?'#1e8449':'#888')+'">'+v.toFixed(0)+'</text>';
+  });
+  svg+='<text x="14" y="'+(pT+cH/2)+'" text-anchor="middle" font-size="10" fill="#666" transform="rotate(-90,14,'+(pT+cH/2)+')">Resistencia (Ω)</text>';
+  bars.forEach(function(d,i){
+    var x=pL+gap+i*(bW+gap);var top=yy(d.val);var bot=yy(0);
+    svg+='<rect x="'+x+'" y="'+top+'" width="'+bW+'" height="'+(bot-top)+'" fill="'+d.col+'" rx="2" opacity=".87"/>';
+    svg+='<text x="'+(x+bW/2)+'" y="'+(top-4)+'" text-anchor="middle" font-size="10" fill="'+d.col+'" font-weight="bold">'+d.val+'</text>';
+    d.lbl.split('\n').forEach(function(ln,li){svg+='<text x="'+(x+bW/2)+'" y="'+(bot+13+li*11)+'" text-anchor="middle" font-size="9" fill="#555">'+ln+'</text>';});
+  });
+  var ly=yy(limit);
+  svg+='<text x="'+(W-pR+4)+'" y="'+(ly+4)+'" font-size="10" fill="#1e8449" font-weight="bold">'+limit+' Ω</text>';
+  svg+='<text x="'+(W-pR+4)+'" y="'+(ly+15)+'" font-size="9" fill="#1e8449">Límite</text>';
+  svg+='<line x1="'+pL+'" y1="'+pT+'" x2="'+pL+'" y2="'+(pT+cH)+'" stroke="#555" stroke-width="1.5"/>';
+  svg+='<line x1="'+pL+'" y1="'+(pT+cH)+'" x2="'+(W-pR)+'" y2="'+(pT+cH)+'" stroke="#555" stroke-width="1.5"/>';
+  svg+='</svg>';
+  return '<div class="chart-wrap"><div style="font-size:.81em;font-weight:700;color:#333;margin-bottom:8px">Valores medidos vs límite normativo</div>'+svg+'</div>';
+}
+
+// ── Fotos ──
+function addPhotoSlot(){
+  nFoto++;
+  var id='f'+nFoto;
+  var g=document.getElementById('photoGrid');
+  var wrap=document.createElement('div');
+  wrap.id='wrap_'+id;
+  wrap.innerHTML='<div class="photo-add" onclick="document.getElementById(\'inp_'+id+'\').click()">'+
+    '<span style="font-size:2em">📷</span><span>Añadir foto</span>'+
+    '<input type="file" id="inp_'+id+'" accept="image/*" style="display:none" onchange="cargarFoto(\''+id+'\',this)">'+
+    '</div>';
+  g.appendChild(wrap);
+}
+function cargarFoto(id,input){
+  if(!input.files||!input.files[0])return;
+  var r=new FileReader();
+  r.onload=function(e){
+    var w=document.getElementById('wrap_'+id);
+    w.innerHTML='<div class="photo-card">'+
+      '<button class="prm-btn" onclick="quitarFoto(\''+id+'\')">✕</button>'+
+      '<img src="'+e.target.result+'" alt="">'+
+      '<input class="pcap-in" placeholder="Pie de foto (opcional)..." maxlength="80">'+
+      '</div>';
+  };
+  r.readAsDataURL(input.files[0]);
+}
+function quitarFoto(id){var w=document.getElementById('wrap_'+id);if(w)w.remove();}
+
+// ── GENERAR ──
+function generar(){
+  var _anyMethod=['m3h','m2h','mrcd','mloop','mrho','mpara'].some(function(id){var el=document.getElementById(id);return el&&el.checked;});
+  if(!_anyMethod){alert('Selecciona al menos un método de medición antes de generar el informe.');return;}
+  ['b3h','b2h','brcd','bloop','brho','bpara','bcond2','b_recom'].forEach(function(id){var el=document.getElementById(id);if(el)el.style.display='none';});
+  var idn=parseFloat(document.getElementById('idn').value)||0.030;
+  var ul=parseFloat(document.getElementById('ul').value)||50;
+  var rtmax=(ul/idn).toFixed(0);
+  var idnTxt=(idn*1000).toFixed(0)+' mA';
+
+  function fmtDate(raw){if(!raw)return'—';return new Date(raw+'T12:00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'});}
+
+  var emp=document.getElementById('emp').value||'SAGARDE S.L.';
+  var tec=document.getElementById('tec').value||'—';
+  var cert=document.getElementById('eq_cert').value||'—';
+  var mod=document.getElementById('eq_mod').value||'HT GSC-53';
+  var sn=document.getElementById('eq_sn').value||'—';
+  var lab=document.getElementById('eq_lab').value||'SGS';
+  var calFec=fmtDate(document.getElementById('eq_cal').value);
+
+  document.getElementById('o_cli').textContent=document.getElementById('cli').value||'—';
+  document.getElementById('o_fec').textContent=fmtDate(document.getElementById('fec').value);
+  document.getElementById('o_loc').textContent=document.getElementById('loc').value||'—';
+  document.getElementById('o_gps').textContent=document.getElementById('gps').value||'—';
+  document.getElementById('o_tipo').textContent=document.getElementById('tipo').value;
+  document.getElementById('o_tec').textContent=tec;
+  document.getElementById('o_eq').textContent=mod+' (S/N: '+sn+') — Calibrado por '+lab+' el '+calFec+' | Cert.: '+cert;
+  document.getElementById('o_emp').textContent=emp;
+  document.getElementById('o_empdir').textContent=document.getElementById('emp_dir').value||'';
+  document.getElementById('o_ul').textContent=ul;
+  document.getElementById('o_idn').textContent=idnTxt;
+  document.getElementById('o_rtmax').textContent=rtmax;
+  document.getElementById('o_desc').textContent=document.getElementById('desc').value||'Sistema de puesta a tierra de la instalación eléctrica.';
+  document.getElementById('o_notas').innerHTML=_esc(document.getElementById('notas').value||'');
+  document.getElementById('o_tec2').textContent=tec;
+  document.getElementById('o_emp2').textContent=emp;
+  document.getElementById('o_eq2').textContent=mod+' | '+lab+' '+calFec;
+  document.getElementById('o_cert2').textContent=cert;
+
+  // ── Leer condicionantes ──
+  var usaCable=!!(document.getElementById('cond_cable')&&document.getElementById('cond_cable').checked);
+  var cableL_c=usaCable?(parseFloat(document.getElementById('cable_L').value)||0):0;
+  var cableA_c=usaCable?(parseFloat(document.getElementById('cable_A').value)||1):1;
+  var cableRho_c=usaCable?parseFloat(document.getElementById('cable_mat').value):0.0175;
+  var cableMatNom=usaCable?document.getElementById('cable_mat').options[document.getElementById('cable_mat').selectedIndex].text:'';
+  var cableR_c=(usaCable&&cableL_c>0)?parseFloat((2*cableRho_c*cableL_c/cableA_c).toFixed(2)):0;
+  var showCorr=usaCable&&cableR_c>0;
+
+  var instCompleta=document.getElementById('inst_completa').value==='si';
+  var hasPend=false;
+  var pendItems=[];
+  if(!instCompleta){
+    if(document.getElementById('pend_pica').checked){hasPend=true;pendItems.push({txt:'Última(s) pica(s) de tierra pendientes de colocar',fx:0.85});}
+    if(document.getElementById('pend_vegetal').checked){hasPend=true;pendItems.push({txt:'Recubrimiento con tierra vegetal pendiente',fx:0.90});}
+    if(document.getElementById('pend_union').checked){hasPend=true;pendItems.push({txt:'Uniones equipotenciales sin ejecutar (viachispas / conductor BT)',fx:0.50});}
+    if(document.getElementById('pend_parallel').checked){hasPend=true;pendItems.push({txt:'Redes de tierra no interconectadas en paralelo',fx:0.50});}
+    if(document.getElementById('pend_term').checked){hasPend=true;pendItems.push({txt:'Terminaciones de red sin completar',fx:0.97});}
+    var pOtros=document.getElementById('pend_otros').value.trim();
+    if(pOtros){hasPend=true;pendItems.push({txt:pOtros,fx:1.0});}
+  }
+
+  // Nota cable en §1 si aplica
+  if(showCorr){
+    document.getElementById('o_tip_obj').textContent='Condicionante: Se utilizó cable alargador de '+cableL_c+' m / '+cableA_c+' mm² ('+cableMatNom+'). Resistencia parásita introducida en el bucle: R = 2 × '+cableRho_c+' × '+cableL_c+' / '+cableA_c+' = '+cableR_c+' Ω. Los valores medidos son '+cableR_c+' Ω mayores que el valor real del electrodo.';
+    document.getElementById('o_tip_obj').style.display='block';
+  } else {
+    document.getElementById('o_tip_obj').style.display='none';
+  }
+
+  // Checklist instalación en §2
+  if(!instCompleta&&pendItems.length>0){
+    var chkHtml='<p style="font-size:.84em;font-weight:700;color:#d35400;margin-bottom:6px">Estado de la instalación en la fecha de medición (incompleta):</p><div class="ichecklist">';
+    pendItems.forEach(function(p){chkHtml+='<div class="ichk ichk-nok">❌ '+p.txt+'</div>';});
+    chkHtml+='</div><div class="tip">⚠ La instalación estaba incompleta en el momento de la medición. Los valores obtenidos no son representativos del sistema definitivo.</div>';
+    document.getElementById('o_inst_checklist').innerHTML=chkHtml;
+    document.getElementById('o_tip_norma').textContent='Nota: para pararrayos, la UNE 21186:2011 exige R ≤ 10 Ω, un criterio 16 veces más estricto que el general del REBT (≈ '+rtmax+' Ω).';
+    document.getElementById('o_tip_norma').style.display='block';
+  } else {
+    document.getElementById('o_inst_checklist').innerHTML='';
+    document.getElementById('o_tip_norma').style.display='none';
+  }
+
+  var m3h=document.getElementById('m3h').checked;
+  var m2h=document.getElementById('m2h').checked;
+  var mrcd=document.getElementById('mrcd').checked;
+  var mloop=document.getElementById('mloop').checked;
+  var mrho=document.getElementById('mrho').checked;
+  var mpara=document.getElementById('mpara').checked;
+
+  var errMap={rp_alta:'Rp demasiado alta',rc_alta:'Rc demasiado alta',rprc_alta:'Rp y Rc demasiado altas'};
+  var resumen='<table class="rtable"><tr><th>Elemento</th><th>Método</th><th>Valor obtenido</th></tr>';
+  var interp='';
+  var valFin=[];
+  var _failsMap={}; // filas inválidas agrupadas por nombre de elemento
+
+  // Cabecera corrección si cable
+  var corrHead=showCorr?'<th>R cable (Ω)</th><th>RA real est. (Ω)</th>':'';
+  function corrCells(v){return showCorr?'<td style="text-align:center;color:#888;font-size:.82em">−'+cableR_c+'</td><td style="text-align:center;font-size:.82em">≈'+parseFloat((v-cableR_c).toFixed(1))+'</td>':'';}
+
+  // Metodología
+  var mPrecMap={'3h':'⭐⭐⭐ Alta','2h':'⭐⭐ Media','rcd':'⭐ Baja-Media','loop':'⭐ Baja-Media'};
+  var metodHtml='<table class="rtable"><tr><th>Método</th><th>Precisión</th><th>Estado</th><th>Detalle</th></tr>';
+  if(m3h){
+    var n3h=readRows('3h_rows').length;
+    var nf3h=document.getElementById('3h_fail_rows')?document.getElementById('3h_fail_rows').querySelectorAll('.row-item-fail').length:0;
+    var det3h=n3h>0?'Aplicado ('+n3h+' punto'+(n3h>1?'s':'')+')':'Sin puntos válidos';
+    if(nf3h>0)det3h+=' | '+nf3h+' intento'+(nf3h>1?'s':'')+' fallido'+(nf3h>1?'s':'');
+    metodHtml+='<tr><td><strong>3H</strong></td><td>⭐⭐⭐ Alta</td><td><span class="'+(n3h>0?'ok':'warn')+'">'+det3h+'</span></td><td>Medición directa del electrodo — máxima precisión.</td></tr>';
+  }
+  if(m2h){
+    var n2h=document.getElementById('2hd_rows')?document.getElementById('2hd_rows').querySelectorAll('.row-item').length:0;
+    var nd2h=document.getElementById('2hd_fail_rows')?document.getElementById('2hd_fail_rows').querySelectorAll('.row-item-fail').length:0;
+    var det2h=n2h>0?'Aplicado ('+n2h+' punto'+(n2h>1?'s':'')+')':'Sin puntos válidos';
+    if(nd2h>0)det2h+=' | '+nd2h+' referencia'+(nd2h>1?'s':'')+' descartada'+(nd2h>1?'s':'');
+    metodHtml+='<tr><td><strong>2H</strong></td><td>⭐⭐ Media</td><td><span class="'+(n2h>0?'ok':'warn')+'">'+det2h+'</span></td><td>Medición entre electrodo y referencia conocida.</td></tr>';
+  }
+  if(mrcd)metodHtml+='<tr><td><strong>RCD/RA</strong></td><td>⭐ Baja-Media</td><td><span class="ok">Aplicado</span></td><td>½·IΔn sin disparar diferencial. Mide bucle completo.'+(showCorr?' Cable '+cableL_c+' m / '+cableA_c+' mm² → +'+cableR_c+' Ω parásito.':'')+'</td></tr>';
+  if(mloop)metodHtml+='<tr><td><strong>LOOP</strong></td><td>⭐ Baja-Media</td><td><span class="ok">Aplicado</span></td><td>Zs bucle L-PE. En TT ≡ RA.'+(showCorr?' Cable +'+cableR_c+' Ω parásito.':'')+'</td></tr>';
+  if(mrho)metodHtml+='<tr><td><strong>Wenner</strong></td><td>—</td><td><span class="ok">Aplicado</span></td><td>4 picas, a='+document.getElementById('rho_dist').value+' m.</td></tr>';
+  if(mpara)metodHtml+='<tr><td><strong>SPCR</strong></td><td>—</td><td><span class="ok">Verificado</span></td><td>UNE 21186:2011. Criterio Rt ≤ 10 Ω.</td></tr>';
+  metodHtml+='</table>';
+  if(mrcd||mloop)metodHtml+='<p style="margin-top:8px;font-size:.84em">En sistemas TT, los modos RCD/RA y LOOP asumen la impedancia del bucle como R<sub>A</sub> global (apartados 6.3.7 y 6.4.4 del GSC-53).</p>';
+  document.getElementById('o_metod').innerHTML=metodHtml;
+
+  // 3H
+  if(m3h){
+    document.getElementById('b3h').style.display='block';
+    // Intentos fallidos
+    var h3Fallos='';
+    var fail3hC=document.getElementById('3h_fail_rows');
+    var motShort3h={picas:'NO POSIBLE (sin picas)',inv:'INVÁLIDO',interf:'INVÁLIDO (interferencias)',otro:'NO VÁLIDO'};
+    if(fail3hC){fail3hC.querySelectorAll('.row-item-fail').forEach(function(row){
+      var pid=row.id.replace('row_','');
+      var elecEl=document.getElementById(pid+'_elec');
+      var motEl=document.getElementById(pid+'_mot');
+      var notaEl=document.getElementById(pid+'_nota');
+      if(!motEl)return;
+      var elec=elecEl&&elecEl.value.trim()?elecEl.value.trim():'';
+      var mot=motEl.options[motEl.selectedIndex].text;
+      var nota=notaEl?notaEl.value.trim():'';
+      h3Fallos+='<p style="font-style:italic;color:#c0550a;font-size:.84em;margin-bottom:4px">⚠ '+(elec?'<strong>'+elec+'</strong> — ':'')+mot+(nota?' — '+nota:'')+'.</p>';
+      var _fk3=(elec||'_bt').toLowerCase();if(!_failsMap[_fk3])_failsMap[_fk3]=[];
+      _failsMap[_fk3].push({elec:elec||'Red de Tierras',met:'3H',badge:'<span class="warn">'+(motShort3h[motEl.value]||'NO VÁLIDO')+'</span>'});
+    });}
+    var h3=h3Fallos;
+    var rows3=readRows('3h_rows');
+    if(rows3.length>0){
+      h3+='<table class="rtable"><tr><th>Electrodo</th><th>R (Ω)</th><th>RAVG (Ω)</th><th>Vd (V)</th><th>Test</th>'+corrHead+'<th>Ut (V)</th><th>Criterio</th><th>Valoración</th></tr>';
+      rows3.forEach(function(r){
+        var ravgEl=document.getElementById(r.pid+'_ravg');
+        var vdEl  =document.getElementById(r.pid+'_vd');
+        var testEl=document.getElementById(r.pid+'_test');
+        var ravg=ravgEl?(ravgEl.value||'—'):'—';
+        var vd  =vdEl  ?(vdEl.value  ||'—'):'—';
+        var test=testEl?(testEl.value ||'—'):'—';
+        var vdNum=parseFloat(vd);
+        var vdBadge=isNaN(vdNum)?'':
+          vdNum<1  ?'<span class="ok" style="font-size:.72em">✓ &lt;1V</span>':
+          vdNum<5  ?'<span class="ok" style="font-size:.72em">✓ OK</span>':
+          vdNum<10 ?'<span class="warn" style="font-size:.72em">⚠ alto</span>':
+                    '<span class="fail" style="font-size:.72em">⚠ muy alto</span>';
+        var crit=r.para?'⚡ UNE 21186 (≤10 Ω)':'REBT (≤'+rtmax+' Ω)';
+        h3+='<tr>'+
+          '<td>'+(r.para?'⚡ ':'')+r.l+'</td>'+
+          '<td style="text-align:center"><strong>'+r.v+' Ω</strong></td>'+
+          '<td style="text-align:center">'+ravg+(ravg!=='—'?' Ω':'')+'</td>'+
+          '<td style="text-align:center">'+vd+(vd!=='—'?' V ':' ')+vdBadge+'</td>'+
+          '<td style="text-align:center">'+test+'</td>'+
+          corrCells(r.v)+
+          '<td style="text-align:center">'+(r.para?'—':(idn*r.v).toFixed(2)+' V')+'</td>'+
+          '<td>'+crit+'</td><td>'+r.b+'</td></tr>';
+        if(r.v>0)valFin.push({met:'3H',pt:r.l,v:r.v,para:r.para});
+      });
+      h3+='</table>';
+      var ord3=rows3.filter(function(x){return !x.para;});
+      var par3=rows3.filter(function(x){return x.para;});
+      // §5 BT: filas por elemento generadas desde _btGrp al final
+      // para rows → consolidated after all methods
+    } else {
+      h3+='<p style="color:#888;font-style:italic">No se registraron puntos de medición.</p>';
+    }
+    var obs3=document.getElementById('3h_obs').value;
+    if(obs3)h3+='<p style="font-style:italic;color:#444;margin-top:6px">'+_esc(obs3)+'</p>';
+    document.getElementById('o_3h').innerHTML=h3;
+  } else document.getElementById('b3h').style.display='none';
+
+  // 2H
+  if(m2h){
+    document.getElementById('b2h').style.display='block';
+    // Referencias descartadas
+    var h2='';
+    var motShort2h={rp:'Rp demasiado alta',rc:'Rc demasiado alta',rprc:'Rp y Rc demasiado altas'};
+    var fail2hC=document.getElementById('2hd_fail_rows');
+    if(fail2hC){fail2hC.querySelectorAll('.row-item-fail').forEach(function(row){
+      var pid=row.id.replace('row_','');
+      var elecEl=document.getElementById(pid+'_elec');
+      var refEl=document.getElementById(pid+'_ref');
+      var motEl=document.getElementById(pid+'_mot');
+      if(!refEl||!motEl)return;
+      var elec=elecEl&&elecEl.value.trim()?elecEl.value.trim():'';
+      var motTxt=motShort2h[motEl.value]||motEl.value;
+      h2+='<p style="font-style:italic;color:#c0550a;font-size:.84em;margin-bottom:4px">⚠ '+(elec?'<strong>'+elec+'</strong> — ':'')+refEl.value+' → descartada ('+motTxt+').</p>';
+      var _fk2=(elec||'_bt').toLowerCase();if(!_failsMap[_fk2])_failsMap[_fk2]=[];
+      _failsMap[_fk2].push({elec:elec||'Red de Tierras',met:'2H — '+refEl.value,badge:'<span class="warn">'+motTxt+'</span>'});
+    });}
+    var rows2hd=document.getElementById('2hd_rows');
+    var pts2hd=[];
+    if(rows2hd){
+      rows2hd.querySelectorAll('.row-item').forEach(function(row){
+        var pid=row.id.replace('row_','');
+        var refEl=document.getElementById(pid+'_ref');
+        var lEl=document.getElementById(pid+'_l');
+        var vEl=document.getElementById(pid+'_v');
+        var bEl=document.getElementById(pid+'_b');
+        var pEl=document.getElementById(pid+'_para');
+        pts2hd.push({
+          ref:refEl?refEl.value:'—',
+          l:lEl?lEl.value||'—':'—',
+          v:vEl?(parseFloat(vEl.value)||0):0,
+          b:bEl?bEl.innerHTML:'',
+          para:pEl?pEl.checked:false
+        });
+      });
+    }
+    if(pts2hd.length>0){
+      h2+='<table class="rtable"><tr><th>Referencia</th><th>Electrodo</th><th>R (Ω)</th>'+corrHead+'<th>Criterio</th><th>Valoración</th></tr>';
+      var ord2H=[],par2H=[];
+      pts2hd.forEach(function(r){
+        var crit2h=r.para?'⚡ UNE 21186 (≤10 Ω)':'REBT (≤'+rtmax+' Ω)';
+        h2+='<tr><td style="font-size:.82em;color:#555">'+r.ref+'</td>'+
+          '<td>'+(r.para?'⚡ ':'')+r.l+'</td>'+
+          '<td style="text-align:center">'+r.v+' Ω</td>'+
+          corrCells(r.v)+'<td>'+crit2h+'</td><td>'+r.b+'</td></tr>';
+        if(r.v>0)valFin.push({met:'2H',pt:r.l,v:r.v,para:r.para});
+        if(r.para&&r.v>0)par2H.push(r.v);else if(r.v>0)ord2H.push(r.v);
+      });
+      h2+='</table>';
+      // §5 BT 2H: generado desde _btGrp
+      // para rows → consolidated after all methods
+    } else {
+      h2+='<p style="color:#888;font-style:italic">No se registraron puntos de medición válidos.</p>';
+    }
+    var obs2=document.getElementById('2h_obs').value;
+    if(obs2)h2+='<p style="font-style:italic;color:#444;margin-top:6px">'+_esc(obs2)+'</p>';
+    document.getElementById('o_2h').innerHTML=h2;
+  } else document.getElementById('b2h').style.display='none';
+
+  // RCD
+  if(mrcd){
+    document.getElementById('brcd').style.display='block';
+    var vpn=document.getElementById('rcd_vpn').value||'—';
+    var vpe=document.getElementById('rcd_vpe').value||'—';
+    var frq=document.getElementById('rcd_frq').value||'50.0';
+    document.getElementById('o_rcd_cond').innerHTML='<strong>Condiciones:</strong> FRQ='+frq+' Hz | VP-N='+vpn+' V | VP-PE='+vpe+' V | IΔn='+idnTxt+' | UL='+ul+' V'+(showCorr?' | <strong style="color:#c0392b">R cable: +'+cableR_c+' Ω (incluida en medición)</strong>':'');
+    var rcdRows=readRows('rcd_rows');
+    var tabR='<table class="rtable"><tr><th>Punto</th><th>RA medida (Ω)</th>'+corrHead+'<th>Criterio</th><th>Ut (V)</th><th>Estado</th></tr>';
+    var rcdOrd=[],rcdPar=[];
+    rcdRows.forEach(function(r){
+      var ut=(idn*r.v).toFixed(2);
+      var crit=r.para?'⚡ ≤10 Ω (UNE 21186)':'Ut ≤'+ul+' V (REBT)';
+      var badge=r.para?_paraBadge(r.v):_btBadge(r.v,idn,ul);
+      tabR+='<tr><td>'+(r.para?'⚡ ':'')+r.l+'</td><td style="text-align:center">'+r.v+' Ω</td>'+corrCells(r.v)+'<td>'+crit+'</td><td>'+(r.para?'—':ut+' V')+'</td><td>'+badge+'</td></tr>';
+      if(r.v>0)valFin.push({met:'RCD/RA',pt:r.l,v:r.v,para:r.para});
+      if(r.para)rcdPar.push(r.v);else rcdOrd.push(r.v);
+    });
+    tabR+='</table>';
+    document.getElementById('o_rcd_tab').innerHTML=tabR;
+    if(rcdRows.length>0){
+      document.getElementById('o_rcd_scr').innerHTML=scrBox([
+        ['RA','<strong>'+rcdRows[0].v+' Ω</strong>'+(showCorr?' (real est. ≈ '+parseFloat((rcdRows[0].v-cableR_c).toFixed(1))+' Ω)':'')],
+        ['FRQ',frq+' Hz'],['Ut',(idn*rcdRows[0].v).toFixed(1)+' V'],
+        ['VP-N',vpn+' V'],['VP-PE',vpe+' V'],['IΔn / UL',idnTxt+' / '+ul+' V']
+      ]);
+    }
+    // §5 BT RCD: generado desde _btGrp
+    // para rows → consolidated after all methods
+    document.getElementById('o_rcd_obs').innerHTML=_esc(document.getElementById('rcd_obs').value);
+  } else document.getElementById('brcd').style.display='none';
+
+  // LOOP
+  if(mloop){
+    document.getElementById('bloop').style.display='block';
+    var lm=document.getElementById('loop_modo').value;
+    var lmTxt=lm==='RA'?'RA☰ (~15 mA, sin disparo)':'P-PE (~6 A)';
+    var lvpn=document.getElementById('loop_vpn').value||'—';
+    var lvpe=document.getElementById('loop_vpe').value||'—';
+    var lfrq=document.getElementById('loop_frq').value||'50.0';
+    document.getElementById('o_loop_desc').innerHTML='Posición <strong>LOOP</strong> del GSC-53, modalidad <strong>'+lmTxt+'</strong>. Mide Z<sub>s</sub> del bucle L-PE. En sistemas TT equivale a R<sub>A</sub> (apartado 6.4.4).'+(showCorr?' Cable de extensión: +'+cableR_c+' Ω en bucle.':'');
+    document.getElementById('o_loop_cond').innerHTML='<strong>Condiciones:</strong> FRQ='+lfrq+' Hz | VP-N='+lvpn+' V | VP-PE='+lvpe+' V | Modalidad: '+lm;
+    var loopRows=readRows('loop_rows');
+    var tabL='<table class="rtable"><tr><th>Punto</th><th>Zs medida (Ω)</th>'+corrHead+'<th>Criterio</th><th>Ut (V)</th><th>Estado</th></tr>';
+    var loopOrd=[],loopPar=[];
+    loopRows.forEach(function(r){
+      var ut=(idn*r.v).toFixed(2);
+      var crit=r.para?'⚡ ≤10 Ω (UNE 21186)':'Ut ≤'+ul+' V (REBT)';
+      var badge=r.para?_paraBadge(r.v):_btBadge(r.v,idn,ul);
+      tabL+='<tr><td>'+(r.para?'⚡ ':'')+r.l+'</td><td style="text-align:center">'+r.v+' Ω</td>'+corrCells(r.v)+'<td>'+crit+'</td><td>'+(r.para?'—':ut+' V')+'</td><td>'+badge+'</td></tr>';
+      if(r.v>0)valFin.push({met:'LOOP',pt:r.l,v:r.v,para:r.para});
+      if(r.para)loopPar.push(r.v);else loopOrd.push(r.v);
+    });
+    tabL+='</table>';
+    document.getElementById('o_loop_tab').innerHTML=tabL;
+    if(loopRows.length>0){document.getElementById('o_loop_scr').innerHTML=scrBox([['Zs','<strong>'+loopRows[0].v+' Ω</strong>'],['FRQ',lfrq+' Hz'],['VP-N',lvpn+' V'],['VP-PE',lvpe+' V'],['Modalidad',lm],['Ut',(idn*loopRows[0].v).toFixed(1)+' V']]);}
+    // §5 BT LOOP: generado desde _btGrp
+    // para rows → consolidated after all methods
+    document.getElementById('o_loop_obs').innerHTML=_esc(document.getElementById('loop_obs').value);
+  } else document.getElementById('bloop').style.display='none';
+
+  // RHO
+  if(mrho){
+    document.getElementById('brho').style.display='block';
+    var a=parseFloat(document.getElementById('rho_dist').value)||5;
+    var _rhoOr=document.getElementById('rho_or').value;
+    document.getElementById('o_rho_info').innerHTML='<strong>Distancia:</strong> '+a+' m | Profundidad ≈ '+(a*0.75).toFixed(1)+' m | ρ = 2π·'+a+'·R'+(_rhoOr?' | <strong>Orientación eje:</strong> '+_esc(_rhoOr):'');
+    var rhoRows=readRows('rho_rows');
+    var tabRho='<table class="rtable"><tr><th>Orientación</th><th>R (Ω)</th><th>ρ (Ω·m)</th></tr>';
+    var rhoVals=[];
+    rhoRows.forEach(function(r){
+      var rEl=document.getElementById(r.pid+'_r');
+      var rhoVal=rEl?rEl.value:'—';
+      rhoVals.push(2*Math.PI*a*r.v);
+      tabRho+='<tr><td>'+r.l+'</td><td>'+r.v+' Ω</td><td>'+rhoVal+'</td></tr>';
+    });
+    tabRho+='</table>';
+    document.getElementById('o_rho_tab').innerHTML=tabRho;
+    document.getElementById('o_rho_obs').innerHTML=_esc(document.getElementById('rho_obs').value);
+    if(rhoVals.length>0){
+      var rhoMed=(rhoVals.reduce(function(a,b){return a+b;},0)/rhoVals.length).toFixed(1);
+      resumen+='<tr><td>RESISTIVIDAD</td><td>Wenner</td><td>ρ media: '+rhoMed+' Ω·m</td></tr>';
+      interp+='<p><strong>Resistividad media:</strong> ρ ≈ '+rhoMed+' Ω·m. Estimación orientativa: R_anillo(20m) ≈ '+(2*rhoMed/20).toFixed(1)+' Ω | R_pica(2m) ≈ '+(rhoMed/2).toFixed(1)+' Ω.</p>';
+    }
+  } else document.getElementById('brho').style.display='none';
+
+  // PARARRAYOS
+  var _hasPara=mpara||(valFin.filter(function(x){return x.para&&x.v>0;}).length>0);
+  if(_hasPara&&mpara){
+    document.getElementById('bpara').style.display='block';
+    var pTipo=document.getElementById('para_tipo').value;
+    var pNiv=document.getElementById('para_nivel').value;
+    var pNbaj=document.getElementById('para_nbaj').value||'—';
+    var pMat=document.getElementById('para_mat').value;
+    var pSec=document.getElementById('para_sec').value||'—';
+    var pElec=document.getElementById('para_elec').value;
+    var pEquipV=document.getElementById('para_equip').value;
+    var pEquipMap={si:'Sí — conductor de unión directo',vdc:'Sí — vía de chispas (VX-1)',no:'No — sistemas independientes'};
+    var pSecUn=document.getElementById('para_sec_union').value||'—';
+    var pMetV=document.getElementById('para_met').value;
+    var pMetMap={'3h':'3H',rcd:'RCD/RA',loop:'LOOP','2h':'2H'};
+    var pVpn=document.getElementById('para_vpn').value||'—';
+    var pVpe=document.getElementById('para_vpe').value||'—';
+
+    document.getElementById('o_para_tipo').textContent=pTipo;
+    document.getElementById('o_para_nivel').textContent='Nivel '+pNiv;
+    document.getElementById('o_para_nbaj').textContent=pNbaj;
+    document.getElementById('o_para_matsec').textContent=pMat+' — '+pSec+' mm²';
+    document.getElementById('o_para_elec').textContent=pElec;
+    document.getElementById('o_para_equip').textContent=(pEquipMap[pEquipV]||'—')+(pEquipV!=='no'?' | Sección unión: '+pSecUn+' mm²':'');
+    document.getElementById('o_para_met_txt').innerHTML='Método: <strong>'+pMetMap[pMetV]+'</strong> | VP-N: '+pVpn+' V | VP-PE: '+pVpe+' V'+(showCorr?' | <strong style="color:#c0392b">Cable extensión: +'+cableR_c+' Ω</strong>':'');
+
+    var paraRows=readRows('para_tierra_rows');
+    var tabTie='<table class="rtable"><tr><th>Punto / Electrodo</th><th>Rt medida (Ω)</th>'+corrHead+'<th>Límite</th><th>Estado (UNE 21186)</th></tr>';
+    var tieVals=[];
+    var tieValsReal=[];
+    paraRows.forEach(function(r){
+      tieVals.push(r.v);
+      var rv=showCorr?parseFloat((r.v-cableR_c).toFixed(1)):r.v;
+      tieValsReal.push(rv);
+      if(r.v>0)valFin.push({met:pMetMap[pMetV]||'SPCR',pt:r.l,v:r.v,para:true});
+      tabTie+='<tr><td>'+r.l+'</td><td style="text-align:center">'+r.v+' Ω</td>'+corrCells(r.v)+'<td style="text-align:center">10 Ω</td><td>'+r.b+'</td></tr>';
+    });
+    tabTie+='</table>';
+    document.getElementById('o_para_tierra').innerHTML=tabTie;
+
+    if(tieVals.length>0){
+      var tv=tieVals[0];
+      document.getElementById('o_para_scr').innerHTML=scrBox([
+        ['Método',pMetMap[pMetV]],
+        ['Rt SPCR','<strong>'+tv+' Ω</strong>'+(showCorr?' (real est. ≈ '+(tv-cableR_c).toFixed(1)+' Ω)':'')],
+        ['Límite UNE 21186','10 Ω'],['VP-N',pVpn+' V'],['VP-PE',pVpe+' V'],
+        ['Resultado',tv<=10?'<strong>✓ CUMPLE</strong>':'<strong>✗ NO CUMPLE — verificar instalación completa</strong>']
+      ]);
+
+      var maxTie=Math.max.apply(null,tieVals);
+      var maxTieReal=showCorr?Math.max.apply(null,tieValsReal):maxTie;
+      var pok=maxTie<=10;
+
+      // Gauge
+      document.getElementById('o_para_gauge').innerHTML=makeGauge(tieVals,10,showCorr?cableR_c:0);
+      document.getElementById('o_para_gauge').style.display='block';
+
+      // Chart
+      var chartBars=tieVals.map(function(v,i){return{lbl:'P'+(i+1)+'\nmedido',val:v,col:'#b03a2e'};});
+      if(showCorr)tieValsReal.forEach(function(v,i){chartBars.push({lbl:'P'+(i+1)+'\nreal est.',val:v,col:'#d35400'});});
+      document.getElementById('o_para_chart').innerHTML=makeChart(chartBars,10,Math.max(50,maxTie*1.18));
+      document.getElementById('o_para_chart').style.display='block';
+
+      resumen+='<tr><td>⚡ SPCR</td><td>'+pMetMap[pMetV]+' — UNE 21186</td><td><span class="'+(pok?'ok':'fail')+'">'+maxTie+' Ω '+(pok?'≤ 10 Ω ✓':'&gt; 10 Ω ✗')+'</span></td></tr>';
+
+      if(!pok&&hasPend){
+        // Estimación con factores de mejora
+        var estVal=maxTieReal;
+        var fxLog='<ul style="margin-left:14px;margin-top:4px;font-size:.9em">';
+        pendItems.forEach(function(p){
+          if(p.fx<1){
+            var antes=estVal;var despues=parseFloat((estVal*p.fx).toFixed(1));
+            fxLog+='<li>'+p.txt+': '+antes+' × '+p.fx+' → <strong>≈ '+despues+' Ω</strong></li>';
+            estVal=despues;
+          } else {
+            fxLog+='<li>'+p.txt+'</li>';
+          }
+        });
+        fxLog+='</ul>';
+        var corrTxt=showCorr?' (Rt real est. ≈ '+maxTieReal.toFixed(1)+' Ω descontando cable)':'';
+        document.getElementById('o_para_concl').innerHTML=
+          '<div class="concbox" style="border-left-color:#e67e22">'+
+          '⚠ <strong>SPCR — No cumple en estado actual (UNE 21186):</strong> Rt medida = '+maxTie+' Ω &gt; 10 Ω'+corrTxt+'.<br><br>'+
+          '<strong>Perspectiva una vez finalizada la instalación:</strong>'+fxLog+
+          '<br>Estimación orientativa con instalación completa: <strong>≈ '+estVal+' Ω</strong> '+
+          (estVal<=10?'<span class="ok">✓ Cumpliría UNE 21186</span>':'<span class="fail">✗ Posiblemente aún por encima — valorar electrodos adicionales, mejorador de conductividad o mayor longitud de radiales (Nivel '+pNiv+': 160 m NP-I / 100 m NP-II–IV)</span>')+
+          '<br><br><em>Los valores actuales no son representativos del sistema definitivo. Repetir medición con instalación completa, preferiblemente con método 3H.</em>'+
+          '</div>';
+      } else {
+        document.getElementById('o_para_concl').innerHTML=pok
+          ?'<div class="concbox" style="border-left-color:#27ae60">✅ <strong>SPCR — Favorable (UNE 21186):</strong> R<sub>t</sub> = '+maxTie+' Ω ≤ 10 Ω. Cumple el apartado 6.1 de la UNE 21186:2011.</div>'
+          :'<div class="concbox" style="border-left-color:#c0392b">❌ <strong>SPCR — No cumple (UNE 21186):</strong> R<sub>t</sub> = '+maxTie+' Ω &gt; 10 Ω. Aplicar apartado 6.3: electrodos adicionales, mejorador de conductividad o verificar longitud mínima para Nivel '+pNiv+' (160 m NP-I / 100 m NP-II/III/IV).</div>';
+      }
+    } else {
+      document.getElementById('o_para_scr').innerHTML='';
+      document.getElementById('o_para_concl').innerHTML='';
+      document.getElementById('o_para_gauge').style.display='none';
+      document.getElementById('o_para_chart').style.display='none';
+    }
+    document.getElementById('o_para_obs').innerHTML=_esc(document.getElementById('para_obs').value);
+  } else document.getElementById('bpara').style.display='none';
+
+  // ── Agrupar medidas por elemento ──
+  var _paraGrp=agruparValFin(valFin.filter(function(x){return x.para&&x.v>0;}));
+  var _btGrp=agruparValFin(valFin.filter(function(x){return !x.para&&x.v>0;}));
+  // Copia de _failsMap para §6 (§5 consume/borra las entradas)
+  var _paraFailsCopy={};Object.keys(_failsMap).forEach(function(k){_paraFailsCopy[k]=_failsMap[k].slice();});
+
+  // ── §5 Resumen BT por elemento ──
+  _btGrp.forEach(function(g){
+    var etiq=g.pt&&g.pt.trim()&&g.pt!=='—'?g.pt:'Red de Tierras';
+    var medsStr=g.conf
+      ?g.meds.map(function(m){return m.met+': '+m.v+' Ω';}).join(' · ')
+      :g.meds[0].met;
+    resumen+='<tr>'+
+      '<td><strong>'+etiq+'</strong>'+(g.conf?' <span class="'+_btCls(g.conf?g.mean:g.v,idn,ul)+'" style="font-size:.72em;vertical-align:middle;margin-left:4px">✓ '+g.n+' medidas</span>':'')+'</td>'+
+      '<td>'+medsStr+'</td>'+
+      '<td><span class="'+_btCls(g.v,idn,ul)+'">'+(g.conf?'Media '+g.mean+' Ω':g.v+' Ω')+'</span></td>'+
+    '</tr>';
+  });
+
+  // ── Resumen consolidado de pararrayos (agrupado por elemento, con intentos fallidos) ──
+  _paraGrp.filter(function(g){return g.best&&g.best.met!=='SPCR';}).forEach(function(g){
+    var key=g.pt.trim().toLowerCase();
+    var _fails=_failsMap[key]||[];
+    var _totalRows=_fails.length+g.meds.length;
+    var _intentosBadge=_totalRows>1&&_fails.length>0
+      ?'<span class="'+(g.v<=LIM_UNE21186?'ok':'fail')+'" style="font-size:.72em;vertical-align:middle;margin-left:4px">'+_totalRows+' intentos</span>'
+      :'';
+    var _hadFails=false;
+    // Mostrar primero los intentos fallidos (badge de intentos en la primera fila)
+    if(_fails.length>0){
+      _fails.forEach(function(f,fi){
+        resumen+='<tr><td>'+(fi===0?'⚡ <strong>'+g.pt+'</strong>'+_intentosBadge:'')+'</td><td>'+f.met+'</td><td>'+f.badge+'</td></tr>';
+      });
+      _hadFails=true;
+      delete _failsMap[key];
+    }
+    // Fila con la medida válida (nombre solo si no hubo fallos previos)
+    var medsStr=g.conf
+      ?g.meds.map(function(m){return m.met+': '+m.v+' Ω';}).join(' · ')
+      :(g.meds[0].met+' — UNE 21186 (≤'+LIM_UNE21186+' Ω)');
+    resumen+='<tr>'+
+      '<td>'+(!_hadFails?'⚡ <strong>'+g.pt+'</strong>'+(g.conf?' <span class="ok" style="font-size:.72em;vertical-align:middle;margin-left:4px">✓ '+g.n+' medidas</span>':''):'')+'</td>'+
+      '<td>'+medsStr+'</td>'+
+      '<td><span class="'+(g.v<=LIM_UNE21186?'ok':'fail')+'">'+(g.conf?'Media '+g.mean+' Ω':g.v+' Ω')+' '+(g.v<=LIM_UNE21186?'✓':'✗')+'</span></td>'+
+    '</tr>';
+  });
+  // Intentos fallidos sin medida válida correspondiente
+  Object.keys(_failsMap).forEach(function(key){
+    _failsMap[key].forEach(function(f){
+      resumen+='<tr><td>'+(f.elec?'⚡ <strong>'+f.elec+'</strong>':'Red de Tierras')+'</td><td>'+f.met+'</td><td>'+f.badge+'</td></tr>';
+    });
+  });
+  resumen+='</table>';
+  document.getElementById('o_resumen').innerHTML=resumen;
+
+  // §6B Condicionantes
+  var cond2Html='';
+  if(showCorr){
+    cond2Html+='<div class="pendbox-blue">'+
+      '<strong>Cable alargador — resistencia parásita no compensada por el equipo:</strong><br>'+
+      'Cable de <strong>'+cableL_c+' m / '+cableA_c+' mm² ('+cableMatNom+')</strong>. '+
+      'R = 2 × '+cableRho_c+' × '+cableL_c+' / '+cableA_c+' = <strong>'+cableR_c+' Ω</strong> (ida+vuelta).<br>'+
+      'R<sub>A</sub> real del electrodo ≈ R<sub>A</sub> medida − '+cableR_c+' Ω para todos los puntos medidos con este cable.</div>';
+  }
+  if(hasPend){
+    cond2Html+='<div class="pendbox" style="margin-top:8px">'+
+      '<strong>Instalación incompleta en la fecha de medición:</strong>'+
+      '<ul style="margin-left:16px;margin-top:6px">'+pendItems.map(function(p){return'<li>'+p.txt+'</li>';}).join('')+'</ul><br>'+
+      'Los valores medidos representan el estado parcial de la instalación, no el estado definitivo. '+
+      '<em>Se recomienda medir de nuevo con la instalación completa.</em></div>';
+  }
+  if(cond2Html){
+    document.getElementById('bcond2').style.display='block';
+    document.getElementById('o_cond2').innerHTML=cond2Html;
+  } else {
+    document.getElementById('bcond2').style.display='none';
+  }
+
+  // §6 Interpretación y §7 Conclusión
+  // BT: valor de referencia por elemento = método más preciso disponible
+  var numsOrd=_btGrp.map(function(g){return g.v;});
+  // Para: agrupado por elemento, g.v = método más preciso
+  var paraPoints=_paraGrp;
+  var hasTieVals=paraPoints.length>0;
+  var conclHtml='';
+
+  // ── §6 + §7 Bloque BT ──
+  if(numsOrd.length>0){
+    var mn2=Math.min.apply(null,numsOrd),mx2=Math.max.apply(null,numsOrd);
+    var utMn=(idn*mn2).toFixed(2),utMx=(idn*mx2).toFixed(2);
+    var mets=[];_btGrp.forEach(function(g){g.meds.forEach(function(m){if(mets.indexOf(m.met)===-1)mets.push(m.met);});});
+    var _btOk=parseFloat(utMx)<=ul;
+    // Código de colores según RA (zona óptima / aceptable / admisible / fuera de límite)
+    var _raMax=mx2;
+    var _raIcon,_raLabel,_raColor,_raBorder,_raBg,_raRec;
+    if(!_btOk){
+      _raIcon='✗';_raColor='#c0392b';_raBorder='#c0392b';_raBg='#fdedec';
+      _raLabel='Fuera de límite normativo';_raRec='';
+    } else if(_raMax<=OBJ_BUENA){
+      _raIcon='✓';_raColor='#1a6b36';_raBorder='#27ae60';_raBg='#eaf7ec';
+      _raLabel='Muy favorable — resistencia óptima (≤20 Ω)';
+      _raRec='<div class="tip" style="margin-top:6px">✅ La resistencia de tierra se encuentra en la zona óptima (≤20 Ω). El sistema ofrece un margen de seguridad excelente frente a variaciones estacionales del terreno.</div>';
+    } else if(_raMax<=ALERTA_BT){
+      _raIcon='⚠';_raColor='#d35400';_raBorder='#e67e22';_raBg='#fef5e7';
+      _raLabel='Dentro del límite REBT — se recomienda mejorar hasta ≤20 Ω';
+      _raRec='<div class="tip" style="margin-top:6px;border-left-color:#e67e22">⚠ <strong>¿Por qué se recomienda llegar a ≤20 Ω?</strong> La instalación cumple el REBT, pero: (1) La resistividad del terreno puede aumentar un 50–100 % en periodos de sequía, elevando la R<sub>A</sub> proporcionalmente y pudiendo comprometer el cumplimiento. (2) Una R<sub>A</sub> menor reduce la tensión de contacto en caso de fallo y mejora la coordinación con los diferenciales. (3) Es el objetivo habitual en proyectos de nueva instalación y la buena práctica del sector.</div>';
+    } else {
+      _raIcon='⚠';_raColor='#c0550a';_raBorder='#c0550a';_raBg='#fff3e0';
+      _raLabel='Admisible — cumple REBT, margen de seguridad reducido';
+      _raRec='<div class="tip" style="margin-top:6px;border-left-color:#c0550a">⚠ <strong>¿Por qué se recomienda reducir?</strong> Con R<sub>A</sub> &gt; 40 Ω el margen de seguridad es limitado: una variación estacional del terreno (sequía, helada) puede comprometer el cumplimiento. El objetivo recomendado es ≤20 Ω para garantizar la conformidad en cualquier condición.</div>';
+    }
+    var interpBT='<p>Los valores de la red BT ('+mets.join('/')+') representan la impedancia del sistema. '+
+      'Límite REBT con diferencial de '+idnTxt+': <strong>'+rtmax+' Ω</strong>.</p>'+
+      '<div class="calcbox" style="border-color:'+_raBorder+';background:'+_raBg+'">'+
+      '<strong>Verificación tensión de contacto (REBT ITC-BT-18):</strong><br>'+
+      'IΔn = '+idnTxt+' | UL = '+ul+' V | RA = '+(mn2===mx2?mn2:mn2+'–'+mx2)+' Ω<br>'+
+      'Ut = '+idn+' × '+(mn2===mx2?mn2:mn2+'–'+mx2)+' = <strong>'+utMn+(mn2!==mx2?' – '+utMx:'')+' V</strong> '+
+      (_btOk
+        ?'&lt; <strong>'+ul+' V</strong> → <strong style="color:'+_raColor+'">'+_raIcon+' '+_raLabel+'</strong>'
+        :'&gt; <strong>'+ul+' V</strong> → <strong style="color:#c0392b">✗ Fuera de límite</strong>')+
+      '</div>'+_raRec;
+
+    // Tabla BT por elemento en §6 (cuando hay más de un punto o hay confirmados)
+    if(_btGrp.length>0&&(_btGrp.length>1||_btGrp[0].conf)){
+      var _btTabla='<table class="rtable" style="margin-top:10px">'+
+        '<tr><th>Elemento</th><th>Método</th><th>RA (Ω)</th><th>Ut (V)</th><th>Estado</th></tr>';
+      _btGrp.forEach(function(g){
+        var etiq=g.pt&&g.pt.trim()&&g.pt!=='—'?g.pt:'Red de Tierras';
+        g.meds.forEach(function(m,mi){
+          var ut=(idn*m.v).toFixed(2);
+          _btTabla+='<tr>'+
+            '<td>'+(mi===0?'<strong>'+etiq+'</strong>'+(g.conf?' <span class="'+_btCls(g.conf?g.mean:g.v,idn,ul)+'" style="font-size:.72em;vertical-align:middle;margin-left:4px">✓ '+g.n+' medidas</span>':''):'')+'</td>'+
+            '<td>'+m.met+'</td>'+
+            '<td style="text-align:center">'+m.v+' Ω</td>'+
+            '<td style="text-align:center">'+ut+' V</td>'+
+            '<td>'+_btBadge(m.v,idn,ul)+'</td>'+
+          '</tr>';
+        });
+        if(g.conf){
+          _btTabla+='<tr style="background:#f0f4f8">'+
+            '<td style="font-size:.82em;color:#555">Media ('+g.n+' medidas)</td>'+
+            '<td></td>'+
+            '<td style="text-align:center;font-weight:700">'+g.mean+' Ω</td>'+
+            '<td style="text-align:center;font-weight:700">'+(idn*g.mean).toFixed(2)+' V</td>'+
+            '<td>'+_btBadge(g.mean,idn,ul)+'</td>'+
+          '</tr>';
+        }
+      });
+      _btTabla+='</table>';
+      interpBT+=_btTabla;
+    }
+
+    interp=interpBT+interp;
+    var _raStr='RA = '+(mn2===mx2?mn2:mn2+'–'+mx2)+' Ω, Ut = '+utMn+(mn2!==mx2?' – '+utMx:'')+' V';
+    if(!_btOk){
+      conclHtml+='<div class="concbox" style="border-left-color:#c0392b;background:#fdedec">'+
+        '❌ <strong>Red BT — No cumple REBT ITC-BT-18.</strong><br>'+_raStr+' &gt; '+ul+' V. Revisar instalación.</div>';
+    } else if(_raMax<=OBJ_BUENA){
+      conclHtml+='<div class="concbox" style="border-left-color:#27ae60;background:#eafaf1">'+
+        '✅ <strong>Red BT — Muy favorable (REBT ITC-BT-18).</strong><br>'+_raStr+' &lt; '+ul+' V. Resistencia en zona óptima (≤'+OBJ_BUENA+' Ω).</div>';
+    } else if(_raMax<=ALERTA_BT){
+      conclHtml+='<div class="concbox" style="border-left-color:#e67e22;background:#fef5e7">'+
+        '⚠ <strong>Red BT — Favorable (REBT ITC-BT-18), se recomienda mejorar.</strong><br>'+_raStr+' &lt; '+ul+' V — cumple el REBT. '+
+        'No obstante, con RA &gt; '+OBJ_BUENA+' Ω el margen frente a variaciones estacionales es limitado. '+
+        '<strong>Objetivo recomendado: ≤'+OBJ_BUENA+' Ω</strong> (buena práctica del sector).</div>';
+    } else {
+      conclHtml+='<div class="concbox" style="border-left-color:#c0550a;background:#fff3e0">'+
+        '⚠ <strong>Red BT — Admisible (REBT ITC-BT-18), margen reducido.</strong><br>'+_raStr+' &lt; '+ul+' V — cumple el REBT. '+
+        'Con RA &gt; '+ALERTA_BT+' Ω una variación estacional del terreno podría comprometer el cumplimiento. '+
+        '<strong>Objetivo recomendado: ≤'+OBJ_BUENA+' Ω</strong>.</div>';
+    }
+  }
+
+  // ── §6 + §7 Bloque Pararrayos (análisis individual por electrodo) ──
+  if(hasTieVals){
+    var mt=numsOrd.length>0?'margin-top:10px':'margin-top:0';
+    var nTotal=paraPoints.length;
+    var paraOkPts=paraPoints.filter(function(p){return p.v<=10;});
+    var paraFailPts=paraPoints.filter(function(p){return p.v>10;});
+    var nOk=paraOkPts.length, nFail=paraFailPts.length;
+
+    // Tabla por elemento — con detalle de cada lectura y media cuando hay varias
+    var paraTabla='<table class="rtable" style="margin-top:8px">'+
+      '<tr><th>Pararrayos</th><th>Método</th><th>R medida (Ω)</th>'+
+      (showCorr?'<th>R real est. (Ω)</th>':'')+
+      '<th>UNE 21186 (≤'+LIM_UNE21186+' Ω)</th></tr>';
+    paraPoints.forEach(function(g){
+      var key=g.pt.trim().toLowerCase();
+      var _paraFails=_paraFailsCopy[key]||[];
+      var _totalRows=_paraFails.length+g.meds.length;
+      var _intentosBadge=_totalRows>1&&_paraFails.length>0
+        ?'<span class="'+(g.v<=LIM_UNE21186?'ok':'fail')+'" style="font-size:.72em;vertical-align:middle;margin-left:4px">'+_totalRows+' intentos</span>'
+        :'';
+      var _isFirstCell=true;
+      // Mostrar intentos fallidos antes de las medidas válidas
+      if(_paraFails.length>0){
+        _paraFails.forEach(function(f,fi){
+          paraTabla+='<tr>'+
+            '<td>'+(fi===0?'<strong>'+g.pt+'</strong>'+_intentosBadge:'')+'</td>'+
+            '<td style="font-size:.85em;color:#888">'+f.met+'</td>'+
+            '<td style="text-align:center;color:#888">—</td>'+
+            (showCorr?'<td style="text-align:center;color:#888">—</td>':'')+
+            '<td>'+f.badge+'</td>'+
+          '</tr>';
+          _isFirstCell=false;
+        });
+      }
+      g.meds.forEach(function(m,mi){
+        var rReal=showCorr?parseFloat((m.v-cableR_c).toFixed(1)):null;
+        paraTabla+='<tr>'+
+          '<td>'+(_isFirstCell?'<strong>'+g.pt+'</strong>'+(g.conf?' <span class="ok" style="font-size:.72em;vertical-align:middle;margin-left:4px">✓ '+g.n+' medidas</span>':''):'')+'</td>'+
+          '<td style="font-size:.85em">'+m.met+'</td>'+
+          '<td style="text-align:center">'+m.v+' Ω</td>'+
+          (showCorr?'<td style="text-align:center;color:#888">≈'+rReal+' Ω</td>':'')+
+          '<td>'+(mi===0||!g.conf
+            ?(m.v<=LIM_UNE21186?'<span class="ok">✓ Cumple</span>':'<span class="fail">✗ No cumple</span>')
+            :'')+'</td>'+
+        '</tr>';
+        _isFirstCell=false;
+      });
+      if(g.conf){
+        var rRealMean=showCorr?parseFloat((g.mean-cableR_c).toFixed(1)):null;
+        paraTabla+='<tr style="background:#f0f4f8">'+
+          '<td style="font-size:.82em;color:#555">Media ('+g.n+' medidas)</td>'+
+          '<td></td>'+
+          '<td style="text-align:center;font-weight:700">'+g.mean+' Ω</td>'+
+          (showCorr?'<td style="text-align:center;color:#888">≈'+rRealMean+' Ω</td>':'')+
+          '<td><span class="'+(g.mean<=LIM_UNE21186?'ok':'fail')+'">'+
+          (g.mean<=LIM_UNE21186?'✓ Cumple':'✗ No cumple')+'</span></td>'+
+        '</tr>';
+      }
+    });
+    paraTabla+='</table>';
+
+    // §6 interpretación para
+    var corrTxtInterp=showCorr?' (valores medidos incluyen +'+cableR_c+' Ω del cable de extensión)':'';
+    var interpPara='<p><strong>Mediciones de pararrayos (UNE 21186:2011):'+corrTxtInterp+'</strong></p>'+paraTabla;
+    interp=(interp||'')+interpPara;
+
+    // §7 conclusión según resultados
+    var corrNota=showCorr?'<br><em>Los valores medidos incluyen la resistencia del cable de extensión (+'+cableR_c+' Ω). R<sub>t</sub> real estimada = R medida − '+cableR_c+' Ω.</em>':'';
+
+    if(nFail===0){
+      conclHtml+='<div class="concbox" style="border-left-color:#27ae60;background:#eafaf1;'+mt+'">'+
+        '✅ <strong>SPCR — Todos los pararrayos cumplen UNE 21186:2011.</strong>'+corrNota+
+        paraTabla+
+        '<br>El sistema de protección contra el rayo queda correctamente conectado a tierra. No se requieren actuaciones adicionales.</div>';
+    } else if(nOk>0){
+      conclHtml+='<div class="concbox" style="border-left-color:#e67e22;background:#fef9e7;'+mt+'">'+
+        '⚠ <strong>SPCR — Resultado mixto: '+nOk+' de '+nTotal+' pararrayos cumplen. '+nFail+' requieren actuación.</strong>'+corrNota+
+        paraTabla+
+        '<br><strong>Actuación requerida sobre:</strong> '+paraFailPts.map(function(p){return '<strong>⚡ '+p.pt+'</strong> ('+p.v+' Ω)';}).join(', ')+
+        '. Aplicar apartado 6.3 UNE 21186: electrodos adicionales o tratamiento mejorador de conductividad.'+
+        (hasPend?'<br><em>La instalación estaba incompleta; repetir medición una vez terminada.</em>':'')+'</div>';
+    } else if(hasPend){
+      conclHtml+='<div class="concbox" style="border-left-color:#e67e22;background:#fef9e7;'+mt+'">'+
+        '⚠ <strong>SPCR — No cumple en estado actual. Perspectiva favorable con instalación completa.</strong>'+corrNota+
+        paraTabla+
+        '<br><em>La instalación estaba incompleta en el momento de la medición. Los valores actuales no son representativos del sistema definitivo. Se recomienda repetir la medición una vez terminada la obra.</em></div>';
+    } else {
+      conclHtml+='<div class="concbox" style="border-left-color:#c0392b;background:#fdedec;'+mt+'">'+
+        '❌ <strong>SPCR — Ningún pararrayos cumple UNE 21186:2011. Requiere actuación.</strong>'+corrNota+
+        paraTabla+
+        '<br>Aplicar apartado 6.3 UNE 21186: electrodos adicionales, tratamiento mejorador de conductividad del suelo '+
+        'o verificar longitud mínima de electrodo (160 m NP-I / 100 m NP-II, III y IV).'+
+        (hasPend?'<br><em>Instalación incompleta: repetir medición una vez terminada la obra.</em>':'')+'</div>';
+    }
+  }
+
+  // ── Sin ningún valor ──
+  if(!numsOrd.length&&!hasTieVals){
+    conclHtml='<div class="concbox" style="border-left-color:#888;background:#f4f6f7">'+
+      'No se obtuvieron valores numéricos válidos. Se recomienda repetir las mediciones cuando las condiciones lo permitan.</div>';
+  }
+
+  document.getElementById('o_concl').innerHTML=conclHtml;
+  document.getElementById('o_interp').innerHTML=interp||'<p>Los valores son representativos del comportamiento del sistema en las condiciones de medición indicadas.</p>';
+
+  // ── §8 Recomendaciones ──
+  var paraFailForSug=hasTieVals?paraPoints.filter(function(p){return p.v>LIM_UNE21186;}):[];
+  var btHighPoints=valFin.filter(function(x){return !x.para&&x.v>ALERTA_BT;});
+  var allMeds=valFin.filter(function(x){return x.v>0;});
+  var sugArg,sugLimit;
+  if(paraFailForSug.length>0){
+    // Pararrayos no cumplen UNE 21186 → cadena hacia ≤10 Ω
+    sugArg=paraFailForSug; sugLimit=LIM_UNE21186;
+  } else if(btHighPoints.length>0){
+    // BT > 40 Ω → cadena hacia ≤20 Ω
+    sugArg=btHighPoints; sugLimit=OBJ_BUENA;
+  } else if(hasTieVals){
+    // Pararrayos todos pasan → cadena desde sus valores hacia ≤10 Ω
+    sugArg=paraPoints; sugLimit=LIM_UNE21186;
+  } else if(allMeds.length>0){
+    // BT ≤ 40 Ω cumple REBT → cadena desde valores reales hacia objetivo ≤20 Ω
+    sugArg=allMeds; sugLimit=OBJ_BUENA;
+  } else {
+    sugArg=0; sugLimit=OBJ_BUENA;
+  }
+  var sugHtml=buildSugReport(sugArg,cableR_c,sugLimit);
+
+  // Si hay pararrayos fallidos Y también puntos BT > 20 Ω, añadir sección BT independiente
+  var _btParaSug=valFin.filter(function(x){return !x.para&&x.v>OBJ_BUENA;});
+  if(paraFailForSug.length>0&&_btParaSug.length>0&&sugHtml){
+    var _sel2=SUGS.filter(function(s){return document.getElementById(s.id)&&document.getElementById(s.id).checked;});
+    var _btSec='<div style="margin-top:18px;padding-top:14px;border-top:2px solid #dce8f5">'+
+      '<div style="font-size:.85em;font-weight:700;color:#1a3a5c;margin-bottom:6px">'+
+      '🔵 Red BT — Recomendación de mejora (objetivo ≤'+OBJ_BUENA+' Ω)</div>'+
+      '<p style="font-size:.84em;margin-bottom:8px">La red BT <strong>cumple el REBT</strong> en las condiciones actuales (Ut &lt; UL). '+
+      'No obstante, con R<sub>A</sub> &gt; '+OBJ_BUENA+' Ω el margen de seguridad frente a variaciones estacionales del terreno (sequía, helada) es limitado. '+
+      'Se recomienda alcanzar <strong>≤'+OBJ_BUENA+' Ω</strong> como objetivo de buena práctica del sector.</p>';
+    if(_sel2.length>0){
+      _btParaSug.forEach(function(p){
+        var base=cableR_c>0?parseFloat((p.v-cableR_c).toFixed(1)):p.v;
+        var est=base;
+        var cadena='<strong>'+p.pt+'</strong>: '+p.v+' Ω medido'+(cableR_c>0?' (≈'+base+' Ω real)':'');
+        _sel2.forEach(function(s){
+          var nuevo=parseFloat((est*getImpacto(s)).toFixed(1));
+          cadena+=' → <strong>'+nuevo+' Ω</strong> ('+s.txt.split(' ').slice(0,3).join(' ')+')';
+          est=nuevo;
+        });
+        var col=est<=OBJ_BUENA?'#27ae60':est<=ALERTA_BT?'#e67e22':'#c0392b';
+        _btSec+='<div class="concbox" style="border-left-color:'+col+';margin-top:6px">'+
+          cadena+' = <strong>≈'+est+' Ω</strong> — '+
+          (est<=OBJ_BUENA?'✅ Cumpliría objetivo ≤'+OBJ_BUENA+' Ω (buena práctica)':
+           est<=ALERTA_BT?'⚠ Mejora notable, valorar medidas adicionales para llegar a ≤'+OBJ_BUENA+' Ω':
+           '⚠ Aún por encima de '+ALERTA_BT+' Ω — considerar electrodo tipo B o tratamiento intensivo')+
+        '</div>';
+      });
+    } else {
+      _btSec+='<div class="tip">Seleccione medidas en la pestaña 💡 Sugerencias para ver la cadena de estimación de la red BT.</div>';
+    }
+    _btSec+='</div>';
+    sugHtml+=_btSec;
+  }
+
+  // §8 aparece siempre que hay valores mejorables (>20Ω), con o sin sugerencias seleccionadas
+  var _hayMejorables=_btParaSug.length>0||paraFailForSug.length>0||btHighPoints.length>0;
+  if(sugHtml){
+    document.getElementById('b_recom').style.display='block';
+    document.getElementById('o_recom').innerHTML=sugHtml;
+  } else if(_hayMejorables){
+    document.getElementById('b_recom').style.display='block';
+    document.getElementById('o_recom').innerHTML=
+      '<div class="concbox" style="border-left-color:#e67e22;background:#fef5e7">'+
+      '⚠ <strong>Resistencia de tierra por encima del objetivo recomendado (≤'+OBJ_BUENA+' Ω).</strong><br>'+
+      'Para incluir una propuesta de mejora con estimación numérica, '+
+      'seleccione medidas en la pestaña <strong>💡 Sugerencias</strong> y regenere.'+
+      '</div>';
+  } else {
+    document.getElementById('b_recom').style.display='none';
+  }
+
+  // Iniciar 3 huecos de foto
+  if(!document.getElementById('photoGrid').querySelector('.photo-card')){
+    document.getElementById('photoGrid').innerHTML='';
+    nFoto=0;
+    addPhotoSlot();addPhotoSlot();addPhotoSlot();
+  }
+
+  // Nombre de archivo para imprimir / guardar PDF
+  (function(){
+    function limpiar(s){return(s||'').replace(/[\/\\:*?"<>|]/g,'').trim().replace(/\s+/g,'_');}
+    var cli2=limpiar(document.getElementById('cli').value||'Cliente');
+    var loc2=limpiar(document.getElementById('loc').value||'Direccion');
+    var fecRaw=document.getElementById('fec').value||'';
+    var fp=fecRaw.split('-');
+    var fecFmt=fp.length===3?fp[2]+fp[1]+fp[0]:fecRaw.replace(/-/g,'');
+    document.title='Informe_'+cli2+'_'+loc2+'_'+fecFmt+'_SAGARDE';
+  })();
+
+  document.querySelectorAll('.tabs,.panel').forEach(function(x){x.style.display='none';});
+  document.getElementById('inf-out').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function volver(){
+  document.title='Generador Informes Tierra';
+  document.querySelectorAll('.tabs,.panel').forEach(function(x){x.style.display='';});
+  document.getElementById('inf-out').style.display='none';
+  showTab(_lastTab);
+}
+
+document.getElementById('fec').valueAsDate=new Date();
+
+// ══════════════════════════════════════════
+// ── LOCALST0RAGE — guardar y restaurar ──
+// ══════════════════════════════════════════
+var CAMPOS_PERSISTENTES=[
+  'cli','loc','gps','desc','notas','tipo','idn','ul',
+  'eq_mod','eq_sn','eq_lab','eq_cal','eq_cert','tec','emp','emp_dir'
+];
+
+function exportarSesion(){
+  try{
+    guardarDatos();guardarMediciones();
+    var obj={v1:localStorage.getItem('tierras_v1'),med:localStorage.getItem('tierras_med_v1')};
+    var blob=new Blob([JSON.stringify(obj)],{type:'application/json'});
+    var a=document.createElement('a');
+    var cli=(document.getElementById('cli').value||'sesion').replace(/[^a-zA-Z0-9_-]/g,'_');
+    a.href=URL.createObjectURL(blob);
+    a.download='TIERRAS_'+cli+'_'+new Date().toISOString().slice(0,10)+'.json';
+    a.click();URL.revokeObjectURL(a.href);
+  }catch(e){alert('Error al exportar: '+e.message);}
+}
+function importarSesion(input){
+  if(!input.files||!input.files[0])return;
+  var r=new FileReader();
+  r.onload=function(e){
+    try{
+      var obj=JSON.parse(e.target.result);
+      if(obj.v1)localStorage.setItem('tierras_v1',obj.v1);
+      if(obj.med)localStorage.setItem('tierras_med_v1',obj.med);
+      restaurarDatos();restaurarMediciones();
+      alert('Sesión importada correctamente.');
+    }catch(ex){alert('Archivo no válido: '+ex.message);}
+  };
+  r.readAsText(input.files[0]);input.value='';
+}
+function guardarDatos(){
+  try{
+    var d={};
+    CAMPOS_PERSISTENTES.forEach(function(id){
+      var el=document.getElementById(id);
+      if(el) d[id]=el.value;
+    });
+    try{localStorage.setItem('tierras_v1',JSON.stringify(d));}catch(qe){if(qe.name==='QuotaExceededError'||qe.code===22)console.warn('localStorage lleno');}
+    // Mostrar indicador guardado
+    document.querySelectorAll('.nav-saved').forEach(function(x){
+      x.classList.add('show');
+      setTimeout(function(){x.classList.remove('show');},1200);
+    });
+  }catch(e){}
+}
+
+function restaurarDatos(){
+  try{
+    var raw=localStorage.getItem('tierras_v1');
+    if(!raw) return;
+    var d=JSON.parse(raw);
+    var restaurados=0;
+    CAMPOS_PERSISTENTES.forEach(function(id){
+      var el=document.getElementById(id);
+      if(el&&d[id]!==undefined&&d[id]!==''){el.value=d[id];restaurados++;}
+    });
+    if(restaurados>0){
+      var msg=document.getElementById('restore_msg');
+      if(msg){msg.style.display='inline';setTimeout(function(){msg.style.display='none';},3500);}
+    }
+  }catch(e){}
+}
+
+// Escuchar cambios en los campos persistentes
+(function(){
+  CAMPOS_PERSISTENTES.forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.addEventListener('change',guardarDatos);
+    if(el&&(el.tagName==='INPUT'||el.tagName==='TEXTAREA')) el.addEventListener('input',guardarDatos);
+  });
+  // Restaurar al cargar
+  restaurarDatos();
+})();
+
+// ══════════════════════════════════════════
+// ── NAVEGACIÓN ANTERIOR / SIGUIENTE ──
+// ══════════════════════════════════════════
+var TAB_ORDER=['datos','metodos','equipo','sugerencias','preview'];
+var TAB_LABELS={'datos':'1. Datos','metodos':'2. Condicionantes','equipo':'3. Equipo','sugerencias':'4. Sugerencias','preview':'5. Generar'};
+
+function resetMetodos(){
+  if(!confirm('¿Limpiar todos los puntos de medición?\n\nSe eliminarán todas las filas añadidas (3H, 2H, RCD, LOOP, Resistividad, Pararrayos).\nLos parámetros de método y condicionantes se conservan.'))return;
+  try{var bk=localStorage.getItem('tierras_med_v1');if(bk)localStorage.setItem('tierras_med_v1_backup',bk);}catch(e){}
+  _CONT_DIN.forEach(function(id){var el=document.getElementById(id);if(el)el.innerHTML='';});
+  ptCounts={rcd:0,loop:0,'3h':0,rho:0};
+  pt2HdCount=0;n3hFallo=0;n2hDesc=0;paraTierraCount=0;
+  guardarMediciones();
+  var msg=document.getElementById('restore_msg');
+  if(msg){msg.innerHTML='✓ Limpiado — <a href="#" onclick="deshacerReset();return false;" style="color:#27ae60;font-weight:700">↩ Deshacer</a>';msg.style.display='inline';setTimeout(function(){msg.style.display='none';msg.textContent='✓ Datos restaurados de la última sesión';},10000);}
+}
+function deshacerReset(){
+  try{var bk=localStorage.getItem('tierras_med_v1_backup');if(!bk)return;localStorage.setItem('tierras_med_v1',bk);restaurarMediciones();}catch(e){}
+}
+
+function buildNavBars(){
+  TAB_ORDER.forEach(function(t,i){
+    var panel=document.getElementById('panel-'+t);
+    if(!panel) return;
+    var bar=document.createElement('div');
+    bar.className='nav-bar';
+    var prev=i>0?TAB_ORDER[i-1]:null;
+    var next=i<TAB_ORDER.length-1?TAB_ORDER[i+1]:null;
+    var html='';
+    if(prev) html+='<button class="nav-btn secondary" onclick="showTab(\''+prev+'\')">← '+TAB_LABELS[prev]+'</button>';
+    else html+='<span></span>';
+    var mid='<div style="display:flex;align-items:center;gap:10px">';
+    if(t==='metodos') mid+='<button onclick="resetMetodos()" style="background:#c0392b;color:#fff;border:none;padding:6px 14px;border-radius:4px;cursor:pointer;font-size:.8em;font-weight:700">🗑 Limpiar puntos</button>';
+    mid+='<span class="nav-saved">✓ Guardado</span></div>';
+    html+=mid;
+    if(next) html+='<button class="nav-btn" onclick="showTab(\''+next+'\')">'+TAB_LABELS[next]+' →</button>';
+    else html+='<span></span>';
+    bar.innerHTML=html;
+    panel.appendChild(bar);
+  });
+}
+buildNavBars();
+
+// ── Modo oscuro ──
+function toggleDark(){
+  var isDark=document.body.classList.toggle('dark');
+  var btn=document.getElementById('dark-toggle');
+  if(btn)btn.textContent=isDark?'☀ Claro':'🌙 Oscuro';
+  try{localStorage.setItem('tierras_dark',isDark?'1':'0');}catch(e){}
+}
+(function(){
+  try{
+    if(localStorage.getItem('tierras_dark')==='1'){
+      document.body.classList.add('dark');
+      var btn=document.getElementById('dark-toggle');
+      if(btn)btn.textContent='☀ Claro';
+    }
+  }catch(e){}
+})();
+
+// ══════════════════════════════════════════
+// ── PERSISTENCIA DE MEDICIONES ──
+// Guarda y restaura métodos, puntos dinámicos y sugerencias en localStorage
+// Los campos estáticos (cliente, equipo) los gestiona el bloque LOCALST0RAGE anterior
+// ══════════════════════════════════════════
+var _CHECKS_MED=['m3h','m2h','mrcd','mloop','mrho','mpara','cond_cable','pend_pica','pend_vegetal','pend_union','pend_parallel','pend_term'];
+var _CAMPOS_MED=['rcd_vpn','rcd_vpe','rcd_frq','loop_modo','loop_vpn','loop_vpe','loop_frq','rho_dist','rho_or','cable_L','cable_A','cable_mat','3h_obs','2h_obs','rcd_obs','loop_obs','rho_obs','para_obs','inst_completa','pend_otros','para_tipo','para_nivel','para_nbaj','para_mat','para_sec','para_elec','para_equip','para_sec_union','para_met','para_vpn','para_vpe','sug_tono','sug_prioridad','sug_custom'];
+var _CONT_DIN=['3h_fail_rows','3h_rows','2hd_fail_rows','2hd_rows','rcd_rows','loop_rows','rho_rows','para_tierra_rows'];
+
+// Sincroniza propiedades DOM → atributos HTML para que innerHTML capture los valores actuales
+function _syncDOM(c){
+  c.querySelectorAll('input').forEach(function(inp){
+    if(inp.type==='checkbox'||inp.type==='radio'){if(inp.checked)inp.setAttribute('checked','');else inp.removeAttribute('checked');}
+    else inp.setAttribute('value',inp.value);
+  });
+  c.querySelectorAll('select').forEach(function(sel){
+    Array.from(sel.options).forEach(function(opt,i){if(i===sel.selectedIndex)opt.setAttribute('selected','');else opt.removeAttribute('selected');});
+  });
+  c.querySelectorAll('textarea').forEach(function(ta){ta.textContent=ta.value;});
+}
+
+var _restoring=false;
+var _saveTimer=null;
+function guardarMedicionesDebounced(){clearTimeout(_saveTimer);_saveTimer=setTimeout(guardarMediciones,350);}
+function guardarMediciones(){
+  if(_restoring)return;
+  try{
+    var d={};
+    _CHECKS_MED.forEach(function(id){var el=document.getElementById(id);if(el)d[id]=el.checked;});
+    _CAMPOS_MED.forEach(function(id){var el=document.getElementById(id);if(el)d[id]=el.value;});
+    SUGS.forEach(function(s){var el=document.getElementById(s.id);if(el)d['sug_'+s.id]=el.checked;});
+    var pnEl=document.getElementById('sug_pica_n');if(pnEl)d['sug_pica_n']=pnEl.value;
+    _CONT_DIN.forEach(function(id){var el=document.getElementById(id);if(el){_syncDOM(el);d['_html_'+id]=el.innerHTML;}});
+    try{localStorage.setItem('tierras_med_v1',JSON.stringify(d));}catch(qe){if(qe.name==='QuotaExceededError'||qe.code===22)console.warn('localStorage lleno');}
+  }catch(e){}
+}
+
+function restaurarMediciones(){
+  try{
+    _restoring=true;
+    var raw=localStorage.getItem('tierras_med_v1');
+    if(!raw){_restoring=false;return;}
+    var d=JSON.parse(raw);
+    _CHECKS_MED.forEach(function(id){var el=document.getElementById(id);if(el&&d[id]!==undefined)el.checked=d[id];});
+    _CAMPOS_MED.forEach(function(id){var el=document.getElementById(id);if(el&&d[id]!==undefined)el.value=d[id];});
+    _CONT_DIN.forEach(function(id){var el=document.getElementById(id);if(el&&d['_html_'+id]!==undefined)el.innerHTML=d['_html_'+id];});
+    // Re-sincronizar contadores desde el DOM restaurado
+    function qL(id,sel){var el=document.getElementById(id);return el?el.querySelectorAll(sel).length:0;}
+    ptCounts['3h']=qL('3h_rows','.row-item');
+    ptCounts['rcd']=qL('rcd_rows','.row-item');
+    ptCounts['loop']=qL('loop_rows','.row-item');
+    ptCounts['rho']=qL('rho_rows','.row-item');
+    pt2HdCount=qL('2hd_rows','.row-item');
+    n3hFallo=qL('3h_fail_rows','.row-item-fail');
+    n2hDesc=qL('2hd_fail_rows','.row-item-fail');
+    paraTierraCount=qL('para_tierra_rows','.row-item');
+    // Mostrar/ocultar bloques de métodos
+    ['3h','2h','rcd','loop','rho','para'].forEach(function(m){if(document.getElementById('m'+m))tog(m);});
+    togCable();togInstCompleta();
+    // Pre-renderizar sugerencias y restaurar sus estados
+    renderSugLista();
+    SUGS.forEach(function(s){var el=document.getElementById(s.id);if(el&&d['sug_'+s.id])el.checked=true;});
+    var pnEl=document.getElementById('sug_pica_n');if(pnEl&&d['sug_pica_n'])pnEl.value=d['sug_pica_n'];
+    actualizarContadorSugs();
+    // Indicador de restauración
+    var cnt=_CONT_DIN.reduce(function(acc,id){var el=document.getElementById(id);return acc+(el?el.querySelectorAll('.row-item,.row-item-fail').length:0);},0);
+    if(cnt>0){
+      var msg=document.getElementById('restore_msg');
+      if(msg){msg.textContent='✓ Sesión restaurada ('+cnt+' punto'+(cnt>1?'s':'')+' de medición)';msg.style.display='inline';setTimeout(function(){msg.style.display='none';},4000);}
+    }
+    _restoring=false;
+    guardarMediciones();
+  }catch(e){}
+}
+
+(function(){
+  // MutationObserver: guarda al añadir/eliminar filas dinámicas
+  var obs=new MutationObserver(function(){guardarMediciones();});
+  _CONT_DIN.forEach(function(id){var el=document.getElementById(id);if(el)obs.observe(el,{childList:true,subtree:true});});
+  // Event listeners: guarda al cambiar valores en las pestañas de métodos y sugerencias
+  var mp=document.getElementById('panel-metodos');
+  if(mp){mp.addEventListener('change',guardarMedicionesDebounced);mp.addEventListener('input',guardarMedicionesDebounced);}
+  var sp=document.getElementById('panel-sugerencias');
+  if(sp){sp.addEventListener('change',guardarMedicionesDebounced);sp.addEventListener('input',guardarMedicionesDebounced);}
+  restaurarMediciones();
+})();
+</script>
+</body>
+</html>
