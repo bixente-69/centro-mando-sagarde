@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2025 GERNIKA 32V · Panel Sagarde IA</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --azul:#1A3558;--azul2:#2E6DA4;--azul3:#E4EEF8;
+  --verde:#1A6030;--verde2:#D5EDD9;
+  --naranja:#7A5000;--naranja2:#FEF7D5;
+  --rojo:#8B1A1A;--rojo2:#FDEEED;
+  --lila:#7A50A0;--lila2:#F5F0FA;
+  --gris:#F5F5F5;--borde:rgba(26,53,88,.18);
+  --text:#1A3558;--muted:#6A7A8A;
+}
+body{font-family:'Arial Narrow','Aptos Narrow','Liberation Sans Narrow','Roboto Condensed',Arial,sans-serif;background:var(--gris);color:var(--text);font-size:13px;line-height:1.4}
+a{color:var(--azul2);text-decoration:none}a:hover{text-decoration:underline}
+
+/* ─ Header ─ */
+.top-bar{background:var(--azul);color:#fff;display:grid;grid-template-columns:auto 1fr auto;align-items:center;padding:10px 20px;gap:16px;border-bottom:3px solid var(--azul2)}
+.tb-logo{font-size:18px;font-weight:700;letter-spacing:.06em;line-height:1}
+.tb-logo small{display:block;font-size:8px;letter-spacing:.2em;font-weight:400;opacity:.7;text-transform:uppercase;margin-top:2px}
+.tb-obra{text-align:center}
+.tb-badge{display:inline-block;font-size:8px;letter-spacing:.2em;text-transform:uppercase;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:2px 10px;border-radius:2px;margin-bottom:5px}
+.tb-title{font-size:17px;font-weight:700;letter-spacing:.04em}
+.tb-sub{font-size:9px;opacity:.65;letter-spacing:.07em;margin-top:2px}
+.tb-fecha{text-align:right;font-size:9px;opacity:.65;line-height:1.8}
+.tb-fecha strong{font-size:14px;opacity:1;display:block;letter-spacing:.04em}
+
+/* ─ Layout ─ */
+.content{max-width:960px;margin:0 auto;padding:16px 14px 40px}
+
+/* ─ Sección ─ */
+.sec-title{font-size:8px;font-weight:800;letter-spacing:.22em;text-transform:uppercase;color:var(--azul2);margin:22px 0 8px;display:flex;align-items:center;gap:8px}
+.sec-title::after{content:'';flex:1;height:1px;background:var(--borde)}
+
+/* ─ KPI cards ─ */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.kpi{background:#fff;border:1px solid var(--borde);border-top:3px solid var(--azul2);border-radius:4px;padding:10px 12px}
+.kpi-val{font-size:28px;font-weight:700;color:var(--azul);line-height:1}
+.kpi-lbl{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.kpi.ok  .kpi-val{color:var(--verde)}
+.kpi.warn .kpi-val{color:var(--naranja)}
+.kpi.alert .kpi-val{color:var(--rojo)}
+
+/* ─ Progress bars (portales) ─ */
+.progress-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.prog-card{background:#fff;border:1px solid var(--borde);border-radius:4px;padding:12px 14px}
+.prog-hdr{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.prog-name{font-weight:700;font-size:13px;color:var(--azul)}
+.prog-pct{font-weight:700;color:var(--verde);font-size:15px}
+.prog-bar-wrap{background:var(--gris);border-radius:3px;height:10px;overflow:hidden;margin-bottom:8px}
+.prog-bar{height:10px;border-radius:3px;background:linear-gradient(90deg,#1A6030,#2E9060)}
+.prog-detail{font-size:9px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap}
+.prog-detail span{white-space:nowrap}
+.tag-x {background:var(--verde2);color:var(--verde);font-size:8px;font-weight:700;padding:1px 4px;border-radius:2px;border:1px solid var(--verde)}
+.tag-m {background:var(--naranja2);color:var(--naranja);font-size:8px;font-weight:700;padding:1px 4px;border-radius:2px;border:1px solid var(--naranja)}
+.tag-s {background:var(--lila2);color:var(--lila);font-size:8px;font-weight:700;padding:1px 4px;border-radius:2px;border:1px solid var(--lila)}
+
+/* ─ Prioridades ─ */
+.prio-list{display:flex;flex-direction:column;gap:8px}
+.prio-card{background:#fff;border:1px solid var(--borde);border-radius:4px;border-left:4px solid;padding:10px 14px;display:grid;grid-template-columns:auto 1fr auto;gap:8px;align-items:start}
+.prio-card.critica{border-left-color:var(--rojo)}
+.prio-card.alta   {border-left-color:var(--naranja)}
+.prio-card.media  {border-left-color:var(--azul2)}
+.prio-num{font-size:22px;font-weight:700;color:var(--borde);line-height:1;padding-top:2px;min-width:26px;text-align:center}
+.prio-body{}
+.prio-badge{display:inline-block;font-size:7.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:3px;padding:1px 6px;border:1px solid;margin-bottom:4px}
+.prio-card.critica .prio-badge{background:var(--rojo2);color:var(--rojo);border-color:var(--rojo)}
+.prio-card.alta    .prio-badge{background:var(--naranja2);color:var(--naranja);border-color:var(--naranja)}
+.prio-card.media   .prio-badge{background:var(--azul3);color:var(--azul);border-color:var(--azul)}
+.prio-name{font-weight:700;font-size:13px;color:var(--azul);margin-bottom:2px}
+.prio-desc{font-size:11px;color:var(--muted)}
+.prio-meta{text-align:right;font-size:10px;color:var(--muted);white-space:nowrap}
+.prio-n{font-size:18px;font-weight:700;color:var(--azul);line-height:1}
+
+/* ─ Dependencias externas ─ */
+.dep-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px}
+.dep-card{background:#fff;border:1px solid var(--borde);border-radius:4px;padding:10px 12px}
+.dep-gremio{font-weight:700;font-size:12px;color:var(--lila);margin-bottom:3px}
+.dep-tarea{font-size:11px;color:var(--text);margin-bottom:3px}
+.dep-impacto{font-size:10px;color:var(--muted);font-style:italic}
+
+/* ─ Dudas ─ */
+.duda-list{display:flex;flex-direction:column;gap:7px}
+.duda-card{background:#fff;border:1px solid var(--borde);border-radius:4px;padding:10px 14px;display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:start}
+.duda-id{background:var(--naranja2);color:var(--naranja);border:1px solid var(--naranja);border-radius:3px;font-size:9px;font-weight:800;letter-spacing:.04em;padding:2px 6px;white-space:nowrap}
+.duda-loc{font-size:10px;color:var(--muted);margin-bottom:3px}
+.duda-q{font-size:11.5px;color:var(--text);margin-bottom:4px}
+.duda-acc{font-size:10.5px;color:var(--azul2)}
+.duda-acc::before{content:'→ '}
+
+/* ─ Link documento ─ */
+.doc-link-bar{background:#fff;border:1px solid var(--borde);border-radius:4px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.doc-link-info{font-size:11px;color:var(--muted)}
+.doc-link-info strong{display:block;font-size:13px;color:var(--azul);margin-bottom:2px}
+.btn{display:inline-block;background:var(--azul);color:#fff;font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border:none;border-radius:4px;padding:8px 16px;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--azul2);text-decoration:none;color:#fff}
+.btn.sec{background:transparent;color:var(--azul);border:1px solid var(--borde)}
+.btn.sec:hover{background:var(--azul3)}
+
+/* ─ Footer ─ */
+.foot{margin-top:30px;padding-top:14px;border-top:1px solid var(--borde);font-size:9px;color:var(--muted);display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
+</style></head><body>
+
+<header class="top-bar">
+  <div class="tb-logo">SAGARDE<small>Montajes Eléctricos</small></div>
+  <div class="tb-obra">
+    <div class="tb-badge">Informe Sagarde IA</div>
+    <div class="tb-title">2025 GERNIKA 32V</div>
+    <div class="tb-sub">1 bloque &nbsp;·&nbsp; 2 portales &nbsp;·&nbsp; 32 viviendas &nbsp;·&nbsp; Gernika (Bizkaia)</div>
+  </div>
+  <div class="tb-fecha">
+    Revisión <strong>22/07/2026</strong>
+    Resp. técnico: Manuel
+  </div>
+</header>
+
+<div class="content">
+
+  <!-- ── RESUMEN KPIs ── -->
+  <div class="sec-title">Resumen general</div>
+  <div class="kpi-grid">
+    <div class="kpi ok">
+      <div class="kpi-val">Portal 1</div>
+      <div class="kpi-lbl">~75% completado · En fase mecanizado / pint-2</div>
+    </div>
+    <div class="kpi warn">
+      <div class="kpi-val">Portal 2</div>
+      <div class="kpi-lbl">~40% completado · En fase embornado / cajas</div>
+    </div>
+    <div class="kpi alert">
+      <div class="kpi-val">6</div>
+      <div class="kpi-lbl">Dudas pendientes de resolver</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">7</div>
+      <div class="kpi-lbl">Prioridades de trabajo activas</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-val">5</div>
+      <div class="kpi-lbl">Gremios externos con dependencia</div>
+    </div>
+    <div class="kpi warn">
+      <div class="kpi-val">2</div>
+      <div class="kpi-lbl">Tajos CRÍTICOS bloqueando entrega</div>
+    </div>
+  </div>
+
+  <!-- ── AVANCE POR PORTAL ── -->
+  <div class="sec-title">Avance por portal</div>
+  <div class="progress-grid">
+
+    <div class="prog-card">
+      <div class="prog-hdr">
+        <span class="prog-name">Portal 1</span>
+        <span class="prog-pct">~75%</span>
+      </div>
+      <div class="prog-bar-wrap"><div class="prog-bar" style="width:75%"></div></div>
+      <div class="prog-detail">
+        <span><span class="tag-x">X</span> Infraestructura, tubeados, cableados, embornado, deriv., cuadros</span>
+        <span><span class="tag-m">M</span> Mecanizado 2º–3º, telemecanizado, pint-2, agujeros ZZCC, portero</span>
+        <span><span class="tag-s">—</span> Pendiente: plac-tapas, apliques, casquillos, ilum-rell</span>
+      </div>
+    </div>
+
+    <div class="prog-card">
+      <div class="prog-hdr">
+        <span class="prog-name">Portal 2</span>
+        <span class="prog-pct">~40%</span>
+      </div>
+      <div class="prog-bar-wrap"><div class="prog-bar" style="width:40%;background:linear-gradient(90deg,#7A5000,#C07800)"></div></div>
+      <div class="prog-detail">
+        <span><span class="tag-x">X</span> Infraestructura, tubeados, cableados, pladur, pint-1</span>
+        <span><span class="tag-m">M</span> Cabl-ZZCC, doblar-caj, embornado, deriv-ind, cuadros, techos (PB–1º)</span>
+        <span><span class="tag-s">—</span> Pendiente: mecanizado, telemec, portero, pint-2, tapas, apliques…</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── HOJA DE REVISIÓN ── -->
+  <div class="sec-title">Documento de revisión</div>
+  <div class="doc-link-bar">
+    <div class="doc-link-info">
+      <strong>Hoja de revisión de tajos — Obra completa</strong>
+      Todos los portales · 36 tajos · Estado a 22/07/2026 · Interactiva (clic para cambiar estado)
+    </div>
+    <a href="../REVISIÓN/revision_gernika_22072026.html" class="btn" onclick="openRev(event, 'revision_gernika_22072026.html')">Abrir hoja →</a>
+  </div>
+  <script>
+  function openRev(e, fname) {
+    e.preventDefault();
+    // Intentar abrir relativo a este panel
+    const candidates = [
+      fname,
+      '../REVISIÓN/' + fname,
+      './' + fname,
+    ];
+    window.open(fname, '_blank');
+  }
+  </script>
+
+  <!-- ── PRIORIDADES ── -->
+  <div class="sec-title">Prioridades de trabajo</div>
+  <div class="prio-list">
+
+    <div class="prio-card critica">
+      <div class="prio-num">1</div>
+      <div class="prio-body">
+        <div><span class="prio-badge">Crítica</span></div>
+        <div class="prio-name">Mecanizado eléctrico — Portal 1 · 2º y 3º planta</div>
+        <div class="prio-desc">Completar mecanizado en 2ºA–D y 3ºA–D. Corregir puntos detectados en revisión 30/06. Bloquea: tapas y casquillos P1.</div>
+      </div>
+      <div class="prio-meta"><div class="prio-n">8</div>ubicaciones</div>
+    </div>
+
+    <div class="prio-card critica">
+      <div class="prio-num">2</div>
+      <div class="prio-body">
+        <div><span class="prio-badge">Crítica</span></div>
+        <div class="prio-name">Telemecanizado — Portal 1 completo</div>
+        <div class="prio-desc">Finalizar telemecanizado en todo P1. <strong>Depende de GRK-D06</strong>: cables ICT con problemas de test (Kque). Bloquea: tapas P1.</div>
+      </div>
+      <div class="prio-meta"><div class="prio-n">16</div>ubicaciones</div>
+    </div>
+
+    <div class="prio-card alta">
+      <div class="prio-num">3</div>
+      <div class="prio-body">
+        <div><span class="prio-badge">Alta</span></div>
+        <div class="prio-name">Doblar cajas + embornado + derivaciones — Portal 2</div>
+        <div class="prio-desc">Avanzar P2 en embornado eléctrico, telembornado, derivaciones individuales y cuadros mecanizados en todas las plantas. Desbloquea mecanizado P2.</div>
+      </div>
+      <div class="prio-meta"><div class="prio-n">16</div>ubicaciones</div>
+    </div>
+
+    <div class="prio-card alta">
+      <div class="prio-num">4</div>
+      <div class="prio-body">
+        <div><span class="prio-badge">Alta</span></div>
+        <div class="prio-name">Agujeros iluminación ZZCC — ambos portales</div>
+        <div class="prio-desc">Agujeros para luminarias en rellanos y zonas comunes. Coordinar con acabados de ZZCC. Desbloquea ilum-rell.</div>
+      </div>
+      <div class="prio-meta"><div class="prio-n">8</div>ubicaciones</div>
+    </div>
+
+    <div class="prio-card alta">
+      <div class="prio-num">5</div>
+      <div class="prio-body">
+        <div><span class="prio-badge">Alta</span></div>
+        <div class="prio-name">Videoportero — Portal 2</div>
+        <div class="prio-desc">Localizar y sacar cable de monitor en Bajo A y Bajo D (<strong>resolver GRK-D02</strong>). Verificar continuidad ICT del portal.</div>
+      </div>
+      <div class="prio-meta"><div class="prio-n">8</div>ubicaciones</div>
+    </div>
+
+    <div class="prio-card media">
+      <div class="prio-num">6</div>
+      <div class="prio-body">
+        <div><span class="prio-badge">Media</span></div>
+        <div class="prio-name">Mecanizado eléctrico — Portal 2 PB y 1º</div>
+        <div class="prio-desc">Iniciar mecanizado P2 una vez dobladas cajas y embornado. Seguir plano a rajatabla (GRK-D03 pendiente de plano de iluminación).</div>
+      </div>
+      <div class="prio-meta"><div class="prio-n">8</div>ubicaciones</div>
+    </div>
+
+    <div class="prio-card media">
+      <div class="prio-num">7</div>
+      <div class="prio-body">
+        <div><span class="prio-badge">Media</span></div>
+        <div class="prio-name">Casquillos y bombillas — Portal 1</div>
+        <div class="prio-desc">Instalar en P1 una vez terminada pintura 2ª mano. No ejecutar antes de pint-2. Depende de: mecanizado, telemec, pint-2.</div>
+      </div>
+      <div class="prio-meta"><div class="prio-n">16</div>ubicaciones</div>
+    </div>
+
+  </div>
+
+  <!-- ── DEPENDENCIAS EXTERNAS ── -->
+  <div class="sec-title">Dependencias externas (gremios)</div>
+  <div class="dep-grid">
+    <div class="dep-card">
+      <div class="dep-gremio">Pintores</div>
+      <div class="dep-tarea">Pintura 2ª mano — Portal 1</div>
+      <div class="dep-impacto">Bloquea: plac-tapas, casquillos, apliques P1</div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-gremio">Pintores</div>
+      <div class="dep-tarea">Pintura 2ª mano — Portal 2</div>
+      <div class="dep-impacto">Bloquea: plac-tapas, casquillos P2</div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-gremio">Fachada</div>
+      <div class="dep-tarea">Fachada terminada (ambos portales)</div>
+      <div class="dep-impacto">Bloquea: apliques terraza</div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-gremio">Empresa de cocinas</div>
+      <div class="dep-tarea">Confirmación LED cocinas (GRK-D04)</div>
+      <div class="dep-impacto">Afecta a mecanizado 3ºD y posiblemente más</div>
+    </div>
+    <div class="dep-card">
+      <div class="dep-gremio">Kque / ICT</div>
+      <div class="dep-tarea">Resolución cables ICT defectuosos (GRK-D06)</div>
+      <div class="dep-impacto">Bloquea telemecanizado completo Portal 1</div>
+    </div>
+  </div>
+
+  <!-- ── DUDAS PENDIENTES ── -->
+  <div class="sec-title">Dudas pendientes</div>
+  <div class="duda-list">
+
+    <div class="duda-card">
+      <div><div class="duda-id">GRK-D01</div></div>
+      <div>
+        <div class="duda-loc">Portal 1 · 1ºC · Salón</div>
+        <div class="duda-q">Confirmar si el interruptor del aplique de terraza está puesto o no. Según plano no tiene interruptor propio. Hay 3 interruptores: comprobar si los apliques van directos o controlados.</div>
+        <div class="duda-acc">Ir a pie de obra, comprobar continuidad. Si van directos, cerrar duda.</div>
+      </div>
+    </div>
+
+    <div class="duda-card">
+      <div><div class="duda-id">GRK-D02</div></div>
+      <div>
+        <div class="duda-loc">Portal 2 · Bajo A y Bajo D</div>
+        <div class="duda-q">Confirmar ubicación exacta del monitor del videoportero en ambas viviendas. En visita del 30/06 no se encontró físicamente.</div>
+        <div class="duda-acc">Buscar en plano ICT/videoportero y sacar cable al punto correcto.</div>
+      </div>
+    </div>
+
+    <div class="duda-card">
+      <div><div class="duda-id">GRK-D03</div></div>
+      <div>
+        <div class="duda-loc">Portal 2 · Bajo D · Comedor</div>
+        <div class="duda-q">Punto de luz del comedor: marcado en 1,85 m desde punta dormitorio 2 y 2,15 m hacia pared de entrada. Pendiente plano de iluminación con cotas de promotora.</div>
+        <div class="duda-acc">Buscar plano, confirmar medidas, efectuar agujero definitivo.</div>
+      </div>
+    </div>
+
+    <div class="duda-card">
+      <div><div class="duda-id">GRK-D04</div></div>
+      <div>
+        <div class="duda-loc">Portal 1 · 3ºD · Cocina</div>
+        <div class="duda-q">Tira LED cocina: plano de cocina tiene cota a 900 mm y 210 mm. El interruptor de ese LED no aparece en plano. ¿Directo (empresa de muebles) o a interruptor?</div>
+        <div class="duda-acc">Preguntar a promotora/mueblista. Si empresa cocina lo gestiona, dejar cable directo y cerrar.</div>
+      </div>
+    </div>
+
+    <div class="duda-card">
+      <div><div class="duda-id">GRK-D05</div></div>
+      <div>
+        <div class="duda-loc">Portal 2 · Bajo B · Salón</div>
+        <div class="duda-q">Preinstalación persiana motorizada: marcada en plano pero el propietario podría no quererla. Cable preinstalado sin tender.</div>
+        <div class="duda-acc">Consultar a promotora. Si cancela: tapar. Si ejecuta: tender cable y completar.</div>
+      </div>
+    </div>
+
+    <div class="duda-card">
+      <div><div class="duda-id">GRK-D06</div></div>
+      <div>
+        <div class="duda-loc">Portal 1 · Cuarto técnico ICT</div>
+        <div class="duda-q">Cables de telecomunicaciones con problemas de test según Kque (cables de diferente color o que no testean). Posible cable doblado/pinchado por tornillo.</div>
+        <div class="duda-acc">Llamar a Kque para visita conjunta. Revisar tendido ICT y resolver antes de telemecanizado.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="foot">
+    <span>SAGARDE · Montajes Eléctricos &nbsp;·&nbsp; Informe Sagarde IA &nbsp;·&nbsp; 2025 GERNIKA 32V</span>
+    <span>Generado: 22/07/2026 &nbsp;·&nbsp; Resp. técnico: Manuel</span>
+    <span>panel.html</span>
+  </div>
+
+</div>
+</body></html>

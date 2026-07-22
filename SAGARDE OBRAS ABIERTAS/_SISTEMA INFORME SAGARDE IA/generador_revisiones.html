@@ -89,6 +89,30 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
 .btn-add-s:hover{border-color:var(--blue);color:var(--blue)}
 .btn-rm{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:14px;line-height:1;padding:0}
 .btn-rm:hover{color:var(--red)}
+.blocks-config{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.block-config-card,.portal-structure-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:var(--r);padding:16px 18px}
+.block-config-head,.portal-structure-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:13px}
+.block-config-title,.portal-structure-title{font-size:13px;font-weight:700;color:var(--navy)}
+.block-config-meta,.portal-structure-meta{font-size:10.5px;color:var(--text-muted)}
+.portal-name-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px;margin-top:13px}
+.portal-name-item{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:9px 10px}
+.portal-name-item label{display:block;font-size:9px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px}
+.portal-structures{display:flex;flex-direction:column;gap:16px}
+.portal-structure-card{border-left-color:var(--navy)}
+.portal-structure-card .struct-box{background:var(--bg)}
+.structure-section{margin-top:14px}
+.structure-section:first-of-type{margin-top:0}
+.structure-empty{background:var(--surface);border:1px dashed var(--border-mid);border-radius:var(--r);padding:20px;text-align:center;color:var(--text-muted)}
+.floor-config-list{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.floor-config-card{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:11px 12px}
+.floor-config-head{display:grid;grid-template-columns:minmax(150px,220px) 1fr auto;align-items:end;gap:12px;margin-bottom:9px}
+.floor-config-meta{font-size:10.5px;color:var(--text-muted);padding-bottom:8px}
+.floor-viv-row{gap:6px}
+.floor-viv-row .s-tag{background:#fff}
+.floor-viv-row .s-tag input{width:52px}
+.btn-rm-floor{background:none;border:1px solid var(--border-mid);border-radius:3px;color:var(--text-muted);cursor:pointer;padding:5px 9px;margin-bottom:1px}
+.btn-rm-floor:hover{border-color:var(--red);color:var(--red)}
+@media(max-width:700px){.floor-config-head{grid-template-columns:1fr auto}.floor-config-meta{display:none}}
 
 /* Tajos selector */
 .tj-toolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
@@ -197,19 +221,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
       <!-- STEP 1: Obra -->
       <div class="step-panel" id="step-1">
         <div class="step-h">Datos de la obra</div>
-        <div class="step-sub">Información que aparecerá en la cabecera de la hoja.</div>
+        <div class="step-sub">Datos generales y distribución de bloques y portales de la obra.</div>
         <div class="fg">
           <div class="field w2">
             <label class="fl">Nombre de la obra</label>
             <input type="text" id="f-obra" placeholder="Ej: RESIDENCIAL LAS FLORES" oninput="S.obra=this.value">
-          </div>
-          <div class="field">
-            <label class="fl">Zona / Referencia</label>
-            <input type="text" id="f-ref" placeholder="Ej: ZR1, Bloque A" oninput="S.ref=this.value">
-          </div>
-          <div class="field">
-            <label class="fl">Portal</label>
-            <input type="text" id="f-portal" placeholder="Ej: Portal 01" oninput="S.portal=this.value">
           </div>
           <div class="field">
             <label class="fl">Fecha de revisión</label>
@@ -219,6 +235,15 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
             <label class="fl">Responsable técnico</label>
             <input type="text" id="f-resp" placeholder="Ej: M. García" oninput="S.resp=this.value">
           </div>
+          <div class="field w2">
+            <label class="fl">Número de bloques</label>
+            <input type="number" id="f-nbloques" min="1" max="12" value="1" onchange="rebuildBloques(+this.value)">
+            <div class="hint">Después podrás indicar cuántos portales tiene cada bloque y cambiar sus nombres.</div>
+          </div>
+        </div>
+        <div style="margin-top:18px">
+          <label class="fl">Bloques y portales de la obra</label>
+          <div class="blocks-config" id="bloques-config"></div>
         </div>
         <div class="wiz-foot">
           <button class="btn-pri" onclick="goStep(2)">Siguiente →</button>
@@ -228,25 +253,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
       <!-- STEP 2: Estructura -->
       <div class="step-panel" id="step-2">
         <div class="step-h">Estructura del edificio</div>
-        <div class="step-sub">Define las plantas y las viviendas de cada planta.</div>
-        <div class="fg">
-          <div class="field">
-            <label class="fl">Número de plantas</label>
-            <input type="number" id="f-npl" min="1" max="20" value="6" oninput="rebuildPlantas(+this.value)">
-          </div>
-          <div class="field">
-            <label class="fl">Viviendas por planta</label>
-            <input type="number" id="f-nviv" min="1" max="8" value="4" oninput="rebuildVivs(+this.value)">
-          </div>
-        </div>
-        <div style="margin-top:18px">
-          <label class="fl">Plantas — edita los nombres si es necesario</label>
-          <div class="struct-box"><div class="struct-row" id="plantas-row"></div></div>
-        </div>
-        <div style="margin-top:14px">
-          <label class="fl">Viviendas / identificadores</label>
-          <div class="struct-box"><div class="struct-row" id="vivs-row"></div></div>
-        </div>
+        <div class="step-sub">Configura cada portal y añade o quita viviendas de forma independiente en cada planta.</div>
+        <div class="portal-structures" id="portal-structures"></div>
         <div class="wiz-foot">
           <button class="btn-sec" onclick="goStep(1)">← Atrás</button>
           <button class="btn-pri" onclick="goStep(3)">Siguiente →</button>
@@ -274,7 +282,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
       <!-- STEP 4: Generar -->
       <div class="step-panel" id="step-4">
         <div class="step-h">Generar hoja</div>
-        <div class="step-sub">Revisa el resumen y descarga tu hoja de revisión de tajos.</div>
+        <div class="step-sub">La descarga incluirá todos los bloques y portales en una única revisión de la obra completa.</div>
         <div class="gen-box" id="gen-summary"></div>
         <div class="gen-actions">
           <button class="btn-dl" onclick="doDownload()">⬇ Descargar HTML</button>
@@ -348,17 +356,73 @@ const AMB_LBL  = {v:'',z:'zzcc',d:'edif'};
 /* ════════════════════════════════════════════
    STATE
 ════════════════════════════════════════════ */
-let S = {
-  step: 1,
-  obra:'', ref:'', portal:'', fecha:TODAY_ISO, resp:'',
-  plantas:['PB','1ª','2ª','3ª','4ª','5ª'],
-  vivs:['A','B','C','D'],
-  sel: new Set(CAT.map(t=>t.id)),
-  importData: null,
-};
-
 const DEF_PL  = ['PB','1ª','2ª','3ª','4ª','5ª','6ª','7ª','8ª','9ª','10ª','11ª','12ª'];
 const DEF_VIV = ['A','B','C','D','E','F','G','H'];
+let UID_SEQ = 1;
+
+function uid(prefix){ return prefix+'_'+Date.now().toString(36)+'_'+(UID_SEQ++); }
+function makeFloor(index=0,nombre='',vivs=DEF_VIV.slice(0,4)){
+  return {id:uid('f'),nombre:nombre||DEF_PL[index]||`${index}ª`,vivs:[...vivs]};
+}
+function makePortal(index=0){
+  const baseVivs=DEF_VIV.slice(0,4);
+  return {id:uid('p'),nombre:`Portal ${index+1}`,
+          plantas:DEF_PL.slice(0,6).map((nombre,i)=>makeFloor(i,nombre,baseVivs))};
+}
+function makeBlock(index=0){
+  return {id:uid('b'),nombre:`Bloque ${index+1}`,portales:[makePortal(0)]};
+}
+function escHtml(value){
+  return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function normaliseFloor(planta,index,baseVivs){
+  if(planta&&typeof planta==='object'&&!Array.isArray(planta)){
+    return {
+      id:planta.id||uid('f'),
+      nombre:String(planta.nombre||DEF_PL[index]||`${index}ª`),
+      vivs:Array.isArray(planta.vivs)&&planta.vivs.length?[...planta.vivs]:[...baseVivs],
+    };
+  }
+  return makeFloor(index,String(planta||''),baseVivs);
+}
+function normaliseStructure(source={}){
+  if(Array.isArray(source.bloques)&&source.bloques.length){
+    return source.bloques.map((bloque,bi)=>({
+      id:bloque.id||uid('b'),
+      nombre:String(bloque.nombre||`Bloque ${bi+1}`),
+      portales:(Array.isArray(bloque.portales)&&bloque.portales.length?bloque.portales:[{}]).map((portal,pi)=>{
+        const baseVivs=Array.isArray(portal.vivs)&&portal.vivs.length?[...portal.vivs]:DEF_VIV.slice(0,4);
+        const rawPlantas=Array.isArray(portal.plantas)&&portal.plantas.length?portal.plantas:DEF_PL.slice(0,6);
+        return {
+          id:portal.id||uid('p'),
+          nombre:String(portal.nombre||`Portal ${pi+1}`),
+          plantas:rawPlantas.map((planta,fi)=>normaliseFloor(planta,fi,baseVivs)),
+        };
+      }),
+    }));
+  }
+  const legacyVivs=Array.isArray(source.vivs)&&source.vivs.length?[...source.vivs]:DEF_VIV.slice(0,4);
+  const legacyPlantas=Array.isArray(source.plantas)&&source.plantas.length?source.plantas:DEF_PL.slice(0,6);
+  return [{
+    id:uid('b'),
+    nombre:String(source.ref||'Bloque 1'),
+    portales:[{
+      id:uid('p'),
+      nombre:String(source.portal||'Portal 1'),
+      plantas:legacyPlantas.map((planta,fi)=>normaliseFloor(planta,fi,legacyVivs)),
+    }],
+  }];
+}
+function getPortalEntries(){
+  return S.bloques.flatMap((bloque,bi)=>bloque.portales.map((portal,pi)=>({bloque,portal,bi,pi})));
+}
+
+let S = {
+  step:1, obra:'', fecha:TODAY_ISO, resp:'',
+  bloques:[makeBlock(0)],
+  sel:new Set(CAT.map(t=>t.id)),
+  importData:null,
+};
 
 /* ════════════════════════════════════════════
    NAVIGATION
@@ -370,16 +434,15 @@ function showScreen(id){
 function goHome(){ showScreen('sc-home'); renderRecent(); }
 
 
-function startWizard(){
-  S.fecha = TODAY_ISO;
+function startWizard(resetDate=true){
+  if(resetDate) S.fecha = TODAY_ISO;
+  S.bloques = normaliseStructure(S);
   goStep(1);
   showScreen('sc-wizard');
-  // restore fields
   document.getElementById('f-obra').value = S.obra;
-  document.getElementById('f-ref').value  = S.ref;
-  document.getElementById('f-portal').value = S.portal;
   document.getElementById('f-fecha').value  = S.fecha;
   document.getElementById('f-resp').value   = S.resp;
+  renderBloquesConfig();
 }
 
 /* ════════════════════════════════════════════
@@ -392,6 +455,7 @@ function goStep(n){
   document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('step-'+n).classList.add('active');
   renderSidebar();
+  if(n===1) renderBloquesConfig();
   if(n===2) initStructure();
   if(n===3) renderTajos();
   if(n===4) renderSummary();
@@ -405,42 +469,160 @@ function renderSidebar(){
   }).join('');
 }
 
+/* ── BLOCKS AND PORTALS ── */
+function rebuildBloques(n){
+  n=Math.max(1,Math.min(12,n||1));
+  while(S.bloques.length<n) S.bloques.push(makeBlock(S.bloques.length));
+  S.bloques=S.bloques.slice(0,n);
+  renderBloquesConfig();
+}
+function rebuildPortales(bi,n){
+  const bloque=S.bloques[bi];
+  if(!bloque) return;
+  n=Math.max(1,Math.min(12,n||1));
+  while(bloque.portales.length<n) bloque.portales.push(makePortal(bloque.portales.length));
+  bloque.portales=bloque.portales.slice(0,n);
+  renderBloquesConfig();
+}
+function renderBloquesConfig(){
+  const host=document.getElementById('bloques-config');
+  if(!host) return;
+  const count=document.getElementById('f-nbloques');
+  if(count) count.value=S.bloques.length;
+  host.innerHTML=S.bloques.map((bloque,bi)=>`
+    <div class="block-config-card">
+      <div class="block-config-head">
+        <div>
+          <div class="block-config-title">Bloque ${bi+1}</div>
+          <div class="block-config-meta">${bloque.portales.length} portal${bloque.portales.length!==1?'es':''}</div>
+        </div>
+      </div>
+      <div class="fg">
+        <div class="field">
+          <label class="fl">Nombre del bloque</label>
+          <input type="text" value="${escHtml(bloque.nombre)}" placeholder="Ej: Bloque 1 o ZR1.1"
+                 oninput="S.bloques[${bi}].nombre=this.value">
+        </div>
+        <div class="field">
+          <label class="fl">Número de portales</label>
+          <input type="number" min="1" max="12" value="${bloque.portales.length}"
+                 onchange="rebuildPortales(${bi},+this.value)">
+        </div>
+      </div>
+      <div class="portal-name-grid">
+        ${bloque.portales.map((portal,pi)=>`
+          <div class="portal-name-item">
+            <label>Portal ${pi+1}</label>
+            <input type="text" value="${escHtml(portal.nombre)}" placeholder="Ej: Portal 1"
+                   oninput="S.bloques[${bi}].portales[${pi}].nombre=this.value">
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
 /* ── STRUCTURE ── */
 function initStructure(){
-  document.getElementById('f-npl').value  = S.plantas.length;
-  document.getElementById('f-nviv').value = S.vivs.length;
-  renderPlantas(); renderVivs();
+  renderPortalStructures();
 }
 
-function rebuildPlantas(n){
+function portalAt(bi,pi){ return S.bloques[bi]?.portales[pi]; }
+function rebuildPlantas(bi,pi,n){
+  const portal=portalAt(bi,pi);
+  if(!portal) return;
   n = Math.max(1, Math.min(20,n||1));
-  while(S.plantas.length < n) S.plantas.push(DEF_PL[S.plantas.length]||`${S.plantas.length}ª`);
-  S.plantas = S.plantas.slice(0,n);
-  renderPlantas();
-}
-function rebuildVivs(n){
-  n = Math.max(1, Math.min(8,n||1));
-  while(S.vivs.length < n) S.vivs.push(DEF_VIV[S.vivs.length]||String.fromCharCode(65+S.vivs.length));
-  S.vivs = S.vivs.slice(0,n);
-  renderVivs();
+  while(portal.plantas.length<n){
+    const last=portal.plantas[portal.plantas.length-1];
+    const baseVivs=last&&Array.isArray(last.vivs)?last.vivs:DEF_VIV.slice(0,4);
+    portal.plantas.push(makeFloor(portal.plantas.length,'',baseVivs));
+  }
+  portal.plantas = portal.plantas.slice(0,n);
+  renderPortalStructures();
 }
 
-function renderPlantas(){
-  document.getElementById('plantas-row').innerHTML =
-    S.plantas.map((p,i)=>`<span class="s-tag"><input type="text" value="${p}" maxlength="5" onchange="S.plantas[${i}]=this.value.trim()||S.plantas[${i}]">
-      <button class="btn-rm" onclick="rmPlanta(${i})">×</button></span>`).join('')+
-    `<button class="btn-add-s" onclick="addPlanta()">+ Añadir</button>`;
+function floorVivTags(planta,bi,pi,fi){
+  return planta.vivs.map((value,vi)=>`<span class="s-tag">
+      <input type="text" value="${escHtml(value)}" maxlength="10"
+             onchange="setViv(${bi},${pi},${fi},${vi},this.value)">
+      ${planta.vivs.length>1?`<button class="btn-rm" title="Quitar vivienda de esta planta"
+              onclick="rmViv(${bi},${pi},${fi},${vi})">×</button>`:''}
+    </span>`).join('')+
+    `<button class="btn-add-s" onclick="addViv(${bi},${pi},${fi})">+ Añadir vivienda</button>`;
 }
-function renderVivs(){
-  document.getElementById('vivs-row').innerHTML =
-    S.vivs.map((v,i)=>`<span class="s-tag"><input type="text" value="${v}" maxlength="5" onchange="S.vivs[${i}]=this.value.trim()||S.vivs[${i}]">
-      <button class="btn-rm" onclick="rmViv(${i})">×</button></span>`).join('')+
-    `<button class="btn-add-s" onclick="addViv()">+ Añadir</button>`;
+function renderPortalStructures(){
+  const host=document.getElementById('portal-structures');
+  if(!host) return;
+  const entries=getPortalEntries();
+  if(!entries.length){
+    host.innerHTML='<div class="structure-empty">Primero define los bloques y portales en el apartado Obra.</div>';
+    return;
+  }
+  host.innerHTML=entries.map(({bloque,portal,bi,pi})=>`
+    <div class="portal-structure-card">
+      <div class="portal-structure-head">
+        <div>
+          <div class="portal-structure-title">${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)}</div>
+          <div class="portal-structure-meta">Cada planta puede tener una distribución de viviendas diferente.</div>
+        </div>
+      </div>
+      <div class="fg one">
+        <div class="field">
+          <label class="fl">Número de plantas</label>
+          <input type="number" min="1" max="20" value="${portal.plantas.length}"
+                 onchange="rebuildPlantas(${bi},${pi},+this.value)">
+        </div>
+      </div>
+      <div class="floor-config-list">
+        ${portal.plantas.map((planta,fi)=>`
+          <div class="floor-config-card">
+            <div class="floor-config-head">
+              <div class="field">
+                <label class="fl">Planta ${fi+1}</label>
+                <input type="text" value="${escHtml(planta.nombre)}" maxlength="12"
+                       onchange="setPlanta(${bi},${pi},${fi},this.value)">
+              </div>
+              <div class="floor-config-meta">${planta.vivs.length} vivienda${planta.vivs.length!==1?'s':''} en esta planta</div>
+              <button class="btn-rm-floor" title="Eliminar esta planta"
+                      onclick="rmPlanta(${bi},${pi},${fi})">Eliminar planta</button>
+            </div>
+            <label class="fl">Viviendas de esta planta</label>
+            <div class="struct-box"><div class="struct-row floor-viv-row">${floorVivTags(planta,bi,pi,fi)}</div></div>
+          </div>`).join('')}
+      </div>
+      <button class="btn-add-s" style="margin-top:10px" onclick="addPlanta(${bi},${pi})">+ Añadir planta</button>
+    </div>`).join('');
 }
-function rmPlanta(i){ S.plantas.splice(i,1); document.getElementById('f-npl').value=S.plantas.length; renderPlantas(); }
-function addPlanta(){ S.plantas.push(DEF_PL[S.plantas.length]||`${S.plantas.length}ª`); document.getElementById('f-npl').value=S.plantas.length; renderPlantas(); }
-function rmViv(i){ S.vivs.splice(i,1); document.getElementById('f-nviv').value=S.vivs.length; renderVivs(); }
-function addViv(){ S.vivs.push(DEF_VIV[S.vivs.length]||String.fromCharCode(65+S.vivs.length)); document.getElementById('f-nviv').value=S.vivs.length; renderVivs(); }
+function setPlanta(bi,pi,i,value){
+  const portal=portalAt(bi,pi);
+  if(portal) portal.plantas[i].nombre=value.trim()||portal.plantas[i].nombre;
+}
+function setViv(bi,pi,fi,vi,value){
+  const portal=portalAt(bi,pi);
+  if(portal) portal.plantas[fi].vivs[vi]=value.trim()||portal.plantas[fi].vivs[vi];
+}
+function rmPlanta(bi,pi,i){
+  const portal=portalAt(bi,pi); if(!portal||portal.plantas.length===1) return;
+  portal.plantas.splice(i,1); renderPortalStructures();
+}
+function addPlanta(bi,pi){
+  const portal=portalAt(bi,pi); if(!portal||portal.plantas.length>=20) return;
+  const last=portal.plantas[portal.plantas.length-1];
+  portal.plantas.push(makeFloor(portal.plantas.length,'',last?.vivs||DEF_VIV.slice(0,4)));
+  renderPortalStructures();
+}
+function rmViv(bi,pi,fi,vi){
+  const portal=portalAt(bi,pi);
+  const planta=portal?.plantas[fi];
+  if(!planta||planta.vivs.length===1) return;
+  planta.vivs.splice(vi,1); renderPortalStructures();
+}
+function addViv(bi,pi,fi){
+  const portal=portalAt(bi,pi);
+  const planta=portal?.plantas[fi];
+  if(!planta||planta.vivs.length>=12) return;
+  const used=new Set(planta.vivs.map(v=>String(v).toUpperCase()));
+  const next=DEF_VIV.find(v=>!used.has(v))||`V${planta.vivs.length+1}`;
+  planta.vivs.push(next); renderPortalStructures();
+}
 
 /* ── TAJOS ── */
 function renderTajos(){
@@ -484,26 +666,32 @@ function toggleGroup(hdr){
 
 /* ── SUMMARY ── */
 function renderSummary(){
-  const n = S.sel.size;
-  const pairs = Math.ceil(S.plantas.length/2);
-  const fecha = fmtDate(S.fecha);
+  const n=S.sel.size;
+  const entries=getPortalEntries();
+  const tables=entries.reduce((sum,{portal})=>sum+groupCompleteFloors(portal.plantas).length,0);
+  const fecha=fmtDate(S.fecha);
+  const structure=entries.map(({bloque,portal})=>`
+    <div style="padding:6px 0;border-bottom:1px solid var(--border)">
+      <strong>${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)}</strong>
+      <span style="color:var(--text-muted)"> — ${portal.plantas.map(planta=>`${escHtml(planta.nombre)}: ${planta.vivs.length}`).join(' · ')}</span>
+    </div>`).join('');
   document.getElementById('gen-summary').innerHTML=`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 22px">
       <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Obra</div>
-           <strong>${S.obra||'(sin nombre)'}</strong></div>
-      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Zona / Portal</div>
-           <strong>${S.ref||'—'} · ${S.portal||'—'}</strong></div>
-      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Plantas</div>
-           <strong>${S.plantas.join(', ')}</strong></div>
-      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Viviendas</div>
-           <strong>${S.vivs.join(', ')}</strong></div>
+           <strong>${escHtml(S.obra||'(sin nombre)')}</strong></div>
+      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Alcance</div>
+           <strong>${S.bloques.length} bloque${S.bloques.length!==1?'s':''} · ${entries.length} portal${entries.length!==1?'es':''}</strong></div>
       <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Fecha</div>
            <strong>${fecha||'—'}</strong></div>
       <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Técnico</div>
-           <strong>${S.resp||'—'}</strong></div>
+           <strong>${escHtml(S.resp||'—')}</strong></div>
+      <div style="grid-column:1/-1">
+        <div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Estructura completa</div>
+        ${structure}
+      </div>
       <div style="grid-column:1/-1">
         <div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Contenido</div>
-        <strong>${n} tajos</strong> en ${pairs} bloque${pairs!==1?'s':''} de planta${pairs!==1?'s':''}
+        <strong>${n} tajos</strong> en ${tables} tabla${tables!==1?'s':''} de revisión — agrupando plantas completas según el ancho disponible
       </div>
     </div>`;
 }
@@ -511,12 +699,11 @@ function renderSummary(){
 /* ── CONFIG STORAGE ── */
 function saveConfig(){
   const key = 'sgd_rev_cfg_'+(S.obra||'default').replace(/\s+/g,'_');
-  const cfg = {obra:S.obra,ref:S.ref,portal:S.portal,fecha:S.fecha,resp:S.resp,
-               plantas:S.plantas,vivs:S.vivs,sel:[...S.sel]};
+  const cfg={obra:S.obra,fecha:S.fecha,resp:S.resp,bloques:S.bloques,sel:[...S.sel]};
   localStorage.setItem(key,JSON.stringify(cfg));
-  // Push to recents list
   const recents = JSON.parse(localStorage.getItem('sgd_rev_recents')||'[]');
-  const entry = {key, obra:S.obra, ref:S.ref, fecha:S.fecha, ts:Date.now()};
+  const entry={key,obra:S.obra,fecha:S.fecha,bloques:S.bloques.length,
+               portales:getPortalEntries().length,ts:Date.now()};
   const filtered = recents.filter(r=>r.key!==key);
   filtered.unshift(entry);
   localStorage.setItem('sgd_rev_recents', JSON.stringify(filtered.slice(0,8)));
@@ -531,7 +718,7 @@ function renderRecent(){
   document.getElementById('recent-list').innerHTML = recents.map(r=>`
     <div class="recent-item" onclick="loadConfig('${r.key}')">
       <span class="ri-name">${r.obra||'(sin nombre)'}</span>
-      <span class="ri-meta">${r.ref||''} · ${fmtDate(r.fecha)||''}</span>
+      <span class="ri-meta">${r.bloques||1} bloq. · ${r.portales||1} port. · ${fmtDate(r.fecha)||''}</span>
       <button class="ri-del" onclick="delRecent(event,'${r.key}')">×</button>
     </div>`).join('');
 }
@@ -539,9 +726,9 @@ function renderRecent(){
 function loadConfig(key){
   const cfg=JSON.parse(localStorage.getItem(key)||'{}');
   if(!cfg.obra) return;
-  Object.assign(S,cfg);
-  S.sel=new Set(cfg.sel||CAT.map(t=>t.id));
-  startWizard();
+  S={...S,obra:cfg.obra,fecha:cfg.fecha||TODAY_ISO,resp:cfg.resp||'',
+     bloques:normaliseStructure(cfg),sel:new Set(cfg.sel||CAT.map(t=>t.id)),importData:null};
+  startWizard(false);
 }
 function delRecent(e,key){
   e.stopPropagation();
@@ -556,10 +743,33 @@ function delRecent(e,key){
 ════════════════════════════════════════════ */
 function getActiveTajos(){ return CAT.filter(t=>S.sel.has(t.id)); }
 
+// Agrupa plantas consecutivas sin dividir ninguna entre tablas. Diez viviendas
+// ofrecen un ancho cómodo en A4 vertical; una planta mayor se conserva completa.
+function groupCompleteFloors(plantas,maxViviendas=10){
+  const result=[];
+  let current=[];
+  let used=0;
+  (plantas||[]).forEach(planta=>{
+    const count=Math.max(1,Array.isArray(planta.vivs)?planta.vivs.length:1);
+    if(current.length&&used+count>maxViviendas){
+      result.push(current);
+      current=[];
+      used=0;
+    }
+    current.push(planta);
+    used+=count;
+    if(used>=maxViviendas){
+      result.push(current);
+      current=[];
+      used=0;
+    }
+  });
+  if(current.length) result.push(current);
+  return result;
+}
+
 function generateHTML(cellData={}){
   const tajos   = getActiveTajos();
-  const plantas = S.plantas;
-  const vivs    = S.vivs;
   const fecha   = fmtDate(S.fecha);
   const obraUp  = (S.obra||'OBRA').toUpperCase();
 
@@ -567,63 +777,82 @@ function generateHTML(cellData={}){
   const groups={};
   tajos.forEach(t=>{ (groups[t.g]||(groups[t.g]=[])).push(t); });
 
-  // Plant pairs
-  const pairs=[];
-  for(let i=0;i<plantas.length;i+=2) pairs.push([i, i+1<plantas.length?i+1:null]);
-
-  const blocks = pairs.map(([ia,ib])=>{
-    const has2 = ib!==null;
-    const ncols = 1 + vivs.length*(has2?2:1);
-    const colW  = (72/(vivs.length*(has2?2:1))).toFixed(1)+'%';
+  const entries=getPortalEntries();
+  const portalSections=entries.map(({bloque,portal},portalIndex)=>{
+    const blocks=groupCompleteFloors(portal.plantas).map((plantasGrupo,groupIndex)=>{
+    const viviendaCols=plantasGrupo.flatMap((planta,floorIndex)=>
+      planta.vivs.map((viv,vi)=>({planta,viv,floorIndex,first:vi===0}))
+    );
+    const totalVivs=viviendaCols.length;
+    const ncols=1+totalVivs;
+    const tajoW=totalVivs<=4?48:totalVivs<=6?45:totalVivs<=8?42:totalVivs<=10?40:38;
+    const colW=((100-tajoW)/totalVivs).toFixed(3)+'%';
+    const longestViv=Math.max(...viviendaCols.map(c=>String(c.viv).length),1);
+    const aptFont=Math.max(6.6,Math.min(10.2,11.2-(totalVivs-4)*.34-(longestViv-2)*.3)).toFixed(1);
+    const stateFont=Math.max(9,Math.min(14,15-totalVivs*.45)).toFixed(1);
 
     const rows = Object.entries(groups).map(([gn,gt])=>{
-      const grp = `<tr class="tr-grp"><td colspan="${ncols}">${gn}</td></tr>`;
+      const grp = `<tr class="tr-grp"><td colspan="${ncols}">${escHtml(gn)}</td></tr>`;
       const trs = gt.map(t=>{
         const badge = `<span class="tajo-prop ${t.p}">${PROP_LBL[t.p]}</span>`;
         const amb   = t.a!=='v'?`<span class="tajo-ambito">${AMB_LBL[t.a]}</span>`:'';
-        const mkCells = (pi,first)=> vivs.map((v,vi)=>{
-          const k=`${plantas[pi]}__${t.id}__${v}`;
+        const nameFont=Math.max(7.2,Math.min(9.6,10.2-Math.max(0,t.name.length-24)*.06)).toFixed(1);
+        const cells=viviendaCols.map(({planta,viv,floorIndex,first})=>{
+          const k=`${portal.id}__${planta.id}__${t.id}__${viv}`;
           const st=cellData[k]||'';
           const sym={X:'X',M:'M','/':'/',''  :'','N':'·'}[st]||'';
           const cls={X:'done',M:'prog','/':'half','':'pend','N':'ext'}[st]||'pend';
-          const rf=(first&&vi===0)?' right-first':'';
-          return `<td class="td-st ${cls}${rf}" data-k="${k}">${sym}</td>`;
+          const boundary=floorIndex>0&&first?' right-first':'';
+          return `<td class="td-st ${cls}${boundary}" style="font-size:${stateFont}pt" data-k="${escHtml(k)}" data-st="${st}">${sym}</td>`;
         }).join('');
-        return `<tr class="tr-tajo"><td class="td-name">${badge}${t.name}${amb}</td>`+
-          mkCells(ia,false)+(has2?mkCells(ib,true):'')+`</tr>`;
+        return `<tr class="tr-tajo"><td class="td-name" style="font-size:${nameFont}pt">${badge}${escHtml(t.name)}${amb}</td>${cells}</tr>`;
       }).join('');
       return grp+trs;
     }).join('');
 
     const noteRow=`<tr class="tr-notes"><td colspan="${ncols}"><strong>Obs:</strong>&nbsp;<span class="notes-ln"></span></td></tr>`;
-    const colTpl=`<col style="width:28%">`+vivs.map(()=>`<col style="width:${colW}">`).join('')+(has2?vivs.map(()=>`<col style="width:${colW}">`).join(''):'');
-    const thA=`<th class="th-floor" colspan="${vivs.length}">${plantas[ia]} — Viviendas</th>`;
-    const thB=has2?`<th class="th-floor right-floor" colspan="${vivs.length}">${plantas[ib]} — Viviendas</th>`:'';
-    const aptA=vivs.map(v=>`<th class="th-apt">${v}</th>`).join('');
-    const aptB=has2?vivs.map((v,i)=>`<th class="th-apt${i===0?' right-first':''}">${v}</th>`).join(''):'';
+    const colTpl=`<col style="width:${tajoW}%">`+viviendaCols.map(()=>`<col style="width:${colW}">`).join('');
+    const floorHeads=plantasGrupo.map((planta,floorIndex)=>
+      `<th class="th-floor${floorIndex?' right-floor':''}" colspan="${planta.vivs.length}">Planta ${escHtml(planta.nombre)} · ${planta.vivs.length} viv.</th>`
+    ).join('');
+    const aptHeads=viviendaCols.map(({viv,floorIndex,first})=>
+      `<th class="th-apt${floorIndex>0&&first?' right-first':''}" style="font-size:${aptFont}pt">${escHtml(viv)}</th>`
+    ).join('');
+    const plantNames=plantasGrupo.map(planta=>escHtml(planta.nombre)).join(' · ');
+    const plantLabel=plantasGrupo.length===1?`Planta ${plantNames}`:`Plantas ${plantNames}`;
 
     return `<div class="planta-block"><div class="block-hdr">
-      <span class="block-title">Plantas: ${plantas[ia]}${has2?' — '+plantas[ib]:''}</span>
+      <span class="block-title">${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)} · ${plantLabel}</span>
     </div><div class="tbl-wrap"><table class="rev-table"><colgroup>${colTpl}</colgroup>
-      <thead><tr><th class="th-floor th-floor-tajo" rowspan="2">TAJO</th>${thA}${thB}</tr>
-      <tr>${aptA}${aptB}</tr></thead>
+      <thead><tr><th class="th-floor th-floor-tajo" rowspan="2">TAJO</th>${floorHeads}</tr>
+      <tr>${aptHeads}</tr></thead>
       <tbody>${rows}${noteRow}</tbody></table></div></div>`;
+    }).join('');
+    const distribution=portal.plantas.map(planta=>`${escHtml(planta.nombre)}: ${planta.vivs.length}`).join(' · ');
+    return `<section class="portal-section${portalIndex?' portal-break':''}">
+      <div class="portal-sheet-head">
+        <div><span class="portal-block-name">${escHtml(bloque.nombre)}</span>
+             <span class="portal-name">${escHtml(portal.nombre)}</span></div>
+        <div class="portal-sheet-meta">${portal.plantas.length} plantas · ${distribution}</div>
+      </div>
+      <div class="blocks">${blocks}</div>
+    </section>`;
   }).join('');
 
-  const detail=`${S.ref||''} — ${S.portal||''} &nbsp;|&nbsp; ${plantas.length} plant${plantas.length!==1?'as':'a'} &nbsp;|&nbsp; ${vivs.length} viv./planta`;
-  const respLine = S.resp?`<div class="doc-resp">Resp. técnico: ${S.resp}</div>`:'';
-  const safeKey = encodeURIComponent((S.obra||'obra')+'_'+(S.ref||''));
+  const detail=`${S.bloques.length} bloque${S.bloques.length!==1?'s':''} &nbsp;|&nbsp; ${entries.length} portal${entries.length!==1?'es':''} &nbsp;|&nbsp; Revisión completa`;
+  const respLine=S.resp?`<div class="doc-resp">Resp. técnico: ${escHtml(S.resp)}</div>`:'';
+  const safeKey=encodeURIComponent((S.obra||'obra')+'_'+(S.fecha||TODAY_ISO));
 
   return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
-<title>${S.obra||'Revisión'} · ${S.ref||''} · Sagarde</title>
+<title>${escHtml(S.obra||'Revisión')} · Obra completa · Sagarde</title>
 <style>${sheetCSS()}</style></head><body>
 <div class="wrap">
   <header class="doc-header">
     <div class="hd-brand"><img class="brand-logo" src="${LOGO_URI}" alt="Sagarde"></div>
     <div class="hd-obra">
       <div class="obra-badge">Hoja de revisión de tajos</div>
-      <div class="obra-title">${obraUp}</div>
+      <div class="obra-title">${escHtml(obraUp)}</div>
       <div class="obra-detail">${detail}</div>
     </div>
     <div class="hd-doc">
@@ -646,10 +875,10 @@ function generateHTML(cellData={}){
     <span class="leg-item"><span class="tajo-prop c">COO</span>Coordinación</span>
     <span class="leg-tip">Clic en celda → cambia estado</span>
   </div>
-  <div class="blocks">${blocks}</div>
+  <div class="all-portals">${portalSections}</div>
   <footer class="doc-footer">
     <span>SAGARDE · Montajes Eléctricos · Revisión de tajos</span>
-    <span>${S.ref||''} — ${S.portal||''}</span>
+    <span>Obra completa · ${S.bloques.length} bloque${S.bloques.length!==1?'s':''} · ${entries.length} portal${entries.length!==1?'es':''}</span>
     <span>${fecha||''}</span>
   </footer>
 </div>
@@ -686,8 +915,8 @@ function showToast(m){const t=document.createElement('div');t.style.cssText='pos
 function sheetCSS(){
   return `
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Arial Narrow',Arial,sans-serif;background:#fff;color:#1A3558;font-size:11px;line-height:1.3}
-.wrap{max-width:1100px;margin:0 auto}
+body{font-family:'Arial Narrow','Aptos Narrow','Liberation Sans Narrow','Roboto Condensed',Arial,sans-serif;background:#fff;color:#1A3558;font-size:10px;line-height:1.08}
+.wrap{max-width:210mm;margin:0 auto}
 /* HEADER */
 .doc-header{background:#fff;display:grid;grid-template-columns:auto 1fr auto;align-items:stretch;border-bottom:3px solid #1A3558}
 .hd-brand{padding:8px 16px 6px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(26,53,88,.18)}
@@ -716,28 +945,36 @@ body{font-family:'Arial Narrow',Arial,sans-serif;background:#fff;color:#1A3558;f
 .tajo-ambito{display:inline-block;font-size:6px;color:#888;margin-left:3px;vertical-align:middle;opacity:.7}
 .leg-tip{margin-left:auto;font-size:8.5px;color:#aaa;font-style:italic}
 /* BLOCKS */
-.blocks{padding:8px 8px 12px;display:flex;flex-direction:column;gap:8px}
+.all-portals{display:flex;flex-direction:column}
+.portal-section{padding-top:8px}
+.portal-sheet-head{margin:0 8px;background:#1A3558;color:#fff;border-left:5px solid #2E6DA4;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.portal-block-name{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.portal-name{font-size:11px;margin-left:12px;padding-left:12px;border-left:1px solid rgba(255,255,255,.35)}
+.portal-sheet-meta{font-size:7.5px;line-height:1.15;letter-spacing:.04em;color:rgba(255,255,255,.72);max-width:58%;text-align:right}
+.blocks{padding:5px 8px 9px;display:flex;flex-direction:column;gap:7px}
 .planta-block{background:#fff;border:1px solid rgba(26,53,88,.18);border-left:3px solid #2E6DA4;border-radius:3px;overflow:hidden}
-.block-hdr{background:#E4EEF8;padding:4px 10px;border-bottom:1px solid rgba(26,53,88,.18)}
-.block-title{font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#1A3558}
+.block-hdr{background:#E4EEF8;padding:3px 7px;border-bottom:1px solid rgba(26,53,88,.18)}
+.block-title{font-size:8.5pt;font-weight:700;line-height:1;letter-spacing:.07em;text-transform:uppercase;color:#1A3558}
 .tbl-wrap{overflow-x:auto}
 .rev-table{width:100%;border-collapse:collapse;table-layout:fixed}
-.th-floor{background:#1A3558;color:rgba(255,255,255,.92);font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 5px;text-align:center}
-.th-floor-tajo{text-align:left;padding-left:10px;font-size:7px;color:rgba(255,255,255,.45);font-weight:400}
+.th-floor{background:#1A3558;color:rgba(255,255,255,.94);font-size:8pt;font-weight:700;line-height:1;letter-spacing:.06em;text-transform:uppercase;padding:2.2mm 1.2mm;text-align:center;vertical-align:middle}
+.th-floor-tajo{text-align:left;padding-left:2mm;font-size:7.2pt;color:rgba(255,255,255,.78);font-weight:700}
 .th-floor.right-floor{border-left:3px solid rgba(255,255,255,.25)}
-.th-apt{background:#E4EEF8;color:#1A3558;font-size:8px;font-weight:700;padding:3px;text-align:center;border-bottom:1px solid #1A3558;border-right:1px solid rgba(26,53,88,.1)}
+.th-apt{background:#E4EEF8;color:#1A3558;font-weight:800;line-height:.95;padding:1.2mm .5mm;text-align:center;vertical-align:middle;overflow-wrap:anywhere;border-bottom:1px solid #1A3558;border-right:1px solid rgba(26,53,88,.1)}
 .th-apt.right-first{border-left:3px solid #1A3558}
-.tr-grp td{background:#F5F5F5;font-size:7.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#2E6DA4;padding:3px 10px;border-top:1px solid rgba(26,53,88,.18);border-bottom:1px solid rgba(26,53,88,.1)}
-.tr-tajo{border-bottom:1px solid rgba(26,53,88,.1)}
+.tr-grp td{background:#F5F5F5;font-size:6.5pt;font-weight:800;line-height:1;letter-spacing:.1em;text-transform:uppercase;color:#2E6DA4;padding:1mm 2mm;border-top:1px solid rgba(26,53,88,.18);border-bottom:1px solid rgba(26,53,88,.1)}
+.tr-tajo{height:4.5mm;border-bottom:1px solid rgba(26,53,88,.1)}
 .tr-tajo:hover{background:#F5F9FF}
-.td-name{padding:2px 10px;font-size:9.5px;color:#1A3558;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-right:1px solid rgba(26,53,88,.18);cursor:default}
-.td-st{padding:2px 3px;text-align:center;font-size:9px;font-weight:700;border-right:1px solid rgba(26,53,88,.1);cursor:pointer;user-select:none;transition:background .08s}
+.td-name{padding:.45mm 1.4mm;color:#1A3558;font-weight:600;line-height:.95;white-space:normal;overflow-wrap:anywhere;vertical-align:middle;border-right:1px solid rgba(26,53,88,.18);cursor:default}
+.td-name .tajo-prop{font-size:5.5pt;line-height:8pt;padding:0 1.5px;margin-right:3px}
+.td-name .tajo-ambito{font-size:5.2pt}
+.td-st{height:4.5mm;padding:0;text-align:center;vertical-align:middle;line-height:1;font-weight:800;font-stretch:condensed;border-right:1px solid rgba(26,53,88,.1);cursor:pointer;user-select:none;transition:background .08s}
 .td-st:hover{filter:brightness(.93)}
 .td-st.done{background:#D5EDD9;color:#1A6030}.td-st.half{background:#E4F4EC;color:#1A6040}
 .td-st.prog{background:#FEF7D5;color:#7A5000}.td-st.pend{background:#fff;color:#ccc}
 .td-st.ext{background:#F5F0FA;color:#7A50A0}
 .td-st.right-first{border-left:3px solid #1A3558}
-.tr-notes td{background:#F5F5F5;padding:4px 10px;font-size:8px;color:#888;border-top:1px solid rgba(26,53,88,.18)}
+.tr-notes td{height:4.5mm;background:#F5F5F5;padding:.8mm 2mm;font-size:6.5pt;line-height:1;color:#888;border-top:1px solid rgba(26,53,88,.18)}
 .notes-ln{display:inline-block;border-bottom:1px solid rgba(26,53,88,.15);min-width:200px}
 .doc-footer{display:flex;justify-content:space-between;padding:7px 16px;font-size:7.5px;color:#888;letter-spacing:.08em;border-top:1px solid rgba(26,53,88,.18);background:#F5F5F5}
 /* FLOAT TOOLBAR */
@@ -746,12 +983,27 @@ body{font-family:'Arial Narrow',Arial,sans-serif;background:#fff;color:#1A3558;f
 .float-bar button:hover{background:rgba(255,255,255,.12);color:#fff}
 /* PRINT */
 @media print{
-  @page{size:A4 landscape;margin:9mm 11mm 7mm}
+  @page{size:A4 portrait;margin:7mm 7mm 6mm}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  body{background:#fff!important;font-size:9px}
+  html,body{width:196mm;background:#fff!important;font-size:8pt}
   .wrap{max-width:100%}
-  .blocks{padding:4px 0 7px;gap:5px}
+  .doc-header{border-bottom-width:2px}
+  .hd-brand{padding:2px 6px}.brand-logo{height:29px}
+  .hd-obra{padding:2px 7px}.obra-badge{font-size:5.5pt;padding:1px 5px;margin-bottom:2px}
+  .obra-title{font-size:10.5pt}.obra-detail{font-size:5.8pt;margin-top:1px}
+  .hd-doc{padding:2px 6px}.doc-label{font-size:5.2pt}.doc-fecha{font-size:9.5pt}
+  .doc-resp{font-size:6pt;margin-top:1px}.doc-doctitle{font-size:5.2pt;margin-top:1px}
+  .legend-strip{padding:1.2mm 2mm;gap:8px;flex-wrap:nowrap}
+  .leg-label{font-size:5.3pt}.leg-item{font-size:5.8pt}.leg-dot{width:14px;height:10px;font-size:6pt}
+  .blocks{padding:3px 0 5px;gap:0}
+  .portal-section{padding-top:0}
+  .portal-section.portal-break{break-before:page;page-break-before:always}
+  .portal-sheet-head{margin:0 0 3px;padding:1.2mm 2mm;break-inside:avoid;page-break-inside:avoid}
+  .portal-block-name{font-size:7.5pt}.portal-name{font-size:7pt}
+  .portal-sheet-meta{display:none}
   .planta-block{page-break-inside:avoid;break-inside:avoid;border-radius:0}
+  .planta-block+.planta-block{break-before:page;page-break-before:always}
+  .block-hdr{padding:1mm 2mm}.block-title{font-size:7.3pt}
   .doc-header,.legend-strip{break-inside:avoid}
   .tr-tajo:hover{background:transparent!important}
   .float-bar{display:none}
@@ -765,7 +1017,8 @@ function doDownload(){
   const blob = new Blob([html],{type:'text/html;charset=utf-8'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  const fname = ((S.obra||'REVISION').toUpperCase().replace(/\s+/g,'_'))+'_'+(S.ref||'ZR1').replace(/\s+/g,'')+'_'+(S.fecha||TODAY_ISO).replace(/-/g,'')+'.html';
+  const fname=((S.obra||'REVISION').toUpperCase().replace(/\s+/g,'_'))+
+    '_OBRA_COMPLETA_'+(S.fecha||TODAY_ISO).replace(/-/g,'')+'.html';
   a.download = fname;
   a.click();
   URL.revokeObjectURL(a.href);
@@ -803,9 +1056,6 @@ function showToast(m){
 /* ── INIT ── */
 (function init(){
   renderRecent();
-  // Load API key if set
-
-  if(k) document.getElementById('api-key').value=k;
 })();
 </script>
 </body>

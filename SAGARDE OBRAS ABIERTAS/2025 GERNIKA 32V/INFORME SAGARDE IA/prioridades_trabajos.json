@@ -1,0 +1,100 @@
+{
+  "version": "1.0",
+  "obra": "2025 GERNIKA 32V",
+  "revision": "22/07/2026",
+  "resp_tecnico": "Manuel",
+  "objetivo_inmediato": "Cerrar todas las viviendas de Portal 1. Avanzar Portal 2 hasta mecanizado.",
+  "prioridades": [
+    {
+      "orden": 1,
+      "urgencia": "CRITICA",
+      "tajo_id": "mecanizado",
+      "nombre": "Mecanizado eléctrico — Portal 1 · 2º y 3º planta",
+      "descripcion": "Completar el mecanizado eléctrico en 2ºA, 2ºB, 2ºC, 2ºD, 3ºA, 3ºB, 3ºC, 3ºD. Corregir puntos detectados en revisión 30/06.",
+      "n_ubicaciones": 8,
+      "bloquea": ["plac-tapas","casquillos"]
+    },
+    {
+      "orden": 2,
+      "urgencia": "CRITICA",
+      "tajo_id": "telemec",
+      "nombre": "Telemecanizado — Portal 1 completo",
+      "descripcion": "Finalizar telemecanizado en todo Portal 1. Dependiente de resolución duda GRK-D06 (cables ICT con problemas).",
+      "n_ubicaciones": 16,
+      "bloquea": ["plac-tapas"]
+    },
+    {
+      "orden": 3,
+      "urgencia": "ALTA",
+      "tajo_id": "doblar-caj",
+      "nombre": "Doblar cajas + embornado + derivaciones — Portal 2",
+      "descripcion": "Avanzar Portal 2: doblar cajas, embornado eléctrico y telembornado, derivaciones individuales y cuadros mecanizados en todas las plantas.",
+      "n_ubicaciones": 16,
+      "bloquea": ["mecanizado","telemec"]
+    },
+    {
+      "orden": 4,
+      "urgencia": "ALTA",
+      "tajo_id": "aguj-zzcc",
+      "nombre": "Agujeros iluminación ZZCC — ambos portales",
+      "descripcion": "Hacer agujeros para luminarias en rellanos y zonas comunes. Coordinar con acabados de ZZCC.",
+      "n_ubicaciones": 8,
+      "bloquea": ["ilum-rell"]
+    },
+    {
+      "orden": 5,
+      "urgencia": "ALTA",
+      "tajo_id": "portero",
+      "nombre": "Videoportero — Portal 2",
+      "descripcion": "Localizar y sacar cable de monitor en Bajo A y Bajo D (duda GRK-D02). Verificar continuidad ICT del portal.",
+      "n_ubicaciones": 8,
+      "bloquea": []
+    },
+    {
+      "orden": 6,
+      "urgencia": "MEDIA",
+      "tajo_id": "mecanizado",
+      "nombre": "Mecanizado eléctrico — Portal 2 PB y 1º",
+      "descripcion": "Iniciar mecanizado en Portal 2 una vez embornado y cajas dobladas. Seguir criterio plano a rajatabla.",
+      "n_ubicaciones": 8,
+      "bloquea": ["plac-tapas","casquillos"]
+    },
+    {
+      "orden": 7,
+      "urgencia": "MEDIA",
+      "tajo_id": "casquillos",
+      "nombre": "Casquillos y bombillas — Portal 1",
+      "descripcion": "Instalar casquillos y bombillas en Portal 1 una vez pintura 2ª mano esté terminada. No hacer antes de pint-2.",
+      "n_ubicaciones": 16,
+      "bloquea": [],
+      "depende_de": ["pint-2","mecanizado","telemec"]
+    }
+  ],
+  "dependencias_externas": [
+    {
+      "gremio": "Pintores",
+      "tarea": "Pintura 2ª mano Portal 1",
+      "impacto": "Bloquea: plac-tapas, casquillos, apliques Portal 1"
+    },
+    {
+      "gremio": "Pintores",
+      "tarea": "Pintura 2ª mano Portal 2",
+      "impacto": "Bloquea: plac-tapas, casquillos Portal 2"
+    },
+    {
+      "gremio": "Fachada",
+      "tarea": "Fachada terminada",
+      "impacto": "Bloquea: apliques terraza"
+    },
+    {
+      "gremio": "Empresa de cocinas",
+      "tarea": "Confirmación LED cocinas",
+      "impacto": "Duda GRK-D04 — afecta a mecanizado cocinas 3ºD y posiblemente más"
+    },
+    {
+      "gremio": "Kque / ICT",
+      "tarea": "Resolución cables ICT defectuosos",
+      "impacto": "Bloquea telemecanizado completo Portal 1 (duda GRK-D06)"
+    }
+  ]
+}

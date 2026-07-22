@@ -1,0 +1,56 @@
+{
+  "version": "1.0",
+  "obra": "2025 GERNIKA 32V",
+  "revision": "22/07/2026",
+  "fuente": "Revisión in situ 30/06/2026 + seguimiento julio 2026",
+  "dudas_pendientes": [
+    {
+      "id": "GRK-D01",
+      "estado": "ABIERTA",
+      "tajo": "mecanizado",
+      "ubicacion": "Portal 1 · 1ºC · Salón",
+      "pregunta": "Confirmar si el interruptor del aplique de terraza está puesto o no. Según plano no tiene interruptor propio. Hay 3 interruptores: comprobar si los apliques van directos o controlados desde esos.",
+      "accion": "Ir a pie de obra, comprobar continuidad y estado real. Si van directos, cerrar duda."
+    },
+    {
+      "id": "GRK-D02",
+      "estado": "ABIERTA",
+      "tajo": "portero",
+      "ubicacion": "Portal 2 · Bajo A y Bajo D",
+      "pregunta": "Confirmar ubicación exacta del monitor del videoportero en ambas viviendas. En visita no se encontró físicamente. Localizar en plano y sacar cable al punto correcto.",
+      "accion": "Buscar en plano ICT/videoportero y sacar a la ubicación marcada."
+    },
+    {
+      "id": "GRK-D03",
+      "estado": "ABIERTA",
+      "tajo": "mecanizado",
+      "ubicacion": "Portal 2 · Bajo D · Comedor",
+      "pregunta": "Punto de luz del comedor: marcado con lapicero en 1.85 m desde punta dormitorio 2 y 2.15 m hacia pared de entrada. Pendiente de confirmar con plano de iluminación con cotas que la promotora mencionó.",
+      "accion": "Buscar ese plano (aportado más tarde por promotora), confirmar medidas y efectuar agujero definitivo dejando tubo para fuera."
+    },
+    {
+      "id": "GRK-D04",
+      "estado": "ABIERTA",
+      "tajo": "mecanizado",
+      "ubicacion": "Portal 1 · 3ºD · Cocina",
+      "pregunta": "Tira LED cocina: en plano de cocina tiene cota a 900 mm y a 210 mm de altura. El interruptor de ese LED no aparece en plano. ¿Se conecta directo (a cargo de la empresa de muebles) o se saca a interruptor?",
+      "accion": "Preguntar a la promotora/mueblista. Si la empresa de cocina lo gestiona, dejar cable directo según plano y cerrar duda."
+    },
+    {
+      "id": "GRK-D05",
+      "estado": "ABIERTA",
+      "tajo": "tube-viv",
+      "ubicacion": "Portal 2 · Bajo B · Salón",
+      "pregunta": "Preinstalación de persiana motorizada: en plano viene marcada pero el propietario podría no quererla. Cable sin tender (preinstalado). Confirmar con promotora/propietario si se ejecuta o se cancela.",
+      "accion": "Consultar a promotora. Si se cancela, tapar. Si se ejecuta, tender cable y completar motorización."
+    },
+    {
+      "id": "GRK-D06",
+      "estado": "ABIERTA",
+      "tajo": "telecabl",
+      "ubicacion": "Portal 1 · Cuarto técnico ICT",
+      "pregunta": "Cables de telecomunicaciones con problemas de test según Kque (cables de diferente color o que no testean). Posible cable doblado/pinchado por tornillo.",
+      "accion": "Llamar a Kque para visita conjunta. Revisar tendido ICT, detectar tramos defectuosos y resolver antes de mecanizado teleco."
+    }
+  ]
+}
