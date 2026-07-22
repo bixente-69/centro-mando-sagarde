@@ -27,7 +27,7 @@ if %errorlevel% neq 0 (
 echo.
 
 echo [3/4] Generando portal principal...
-%PY% sagarde_portal.py
+%PY% "_MOTOR_SAGARDE\sagarde_portal.py"
 if %errorlevel% neq 0 (
   echo.
   echo [ERROR] No se pudo generar el portal principal.
