@@ -119,6 +119,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
 .btn-sm{font-family:var(--font);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;padding:5px 11px;border-radius:3px;cursor:pointer;border:1px solid var(--border-mid);background:var(--surface);color:var(--text-mid);transition:all .14s}
 .btn-sm:hover{border-color:var(--blue);color:var(--blue)}
 .tj-count{margin-left:auto;font-size:11.5px;color:var(--text-muted)}
+.tj-count.over{color:#A13D13;font-weight:800}
 .tj-group{margin-bottom:14px}
 .tj-group-hdr{display:flex;align-items:center;gap:10px;padding:4px 0;border-bottom:1px solid var(--border);margin-bottom:7px;cursor:pointer;user-select:none}
 .tj-gname{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);flex:1}
@@ -140,6 +141,10 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
 
 /* Gen summary */
 .gen-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;margin-bottom:22px;font-size:12.5px;line-height:1.75}
+.a4-capacity{grid-column:1/-1;margin-top:4px;padding:10px 12px;border:1px solid #8EB99A;border-left:4px solid #2F7A45;border-radius:3px;background:#F1F8F3;color:#234B30;line-height:1.45}
+.a4-capacity.limit{border-color:#D1A24A;border-left-color:#A86B00;background:#FFF8E8;color:#694500}
+.a4-capacity.warn{border-color:#D68A70;border-left-color:#A13D13;background:#FFF2ED;color:#742D14}
+.a4-capacity button{margin-left:10px;border:1px solid currentColor;border-radius:3px;background:#fff;color:inherit;padding:4px 9px;font-family:var(--font);font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
 .gen-actions{display:flex;gap:10px;flex-wrap:wrap}
 .btn-dl{font-family:var(--font);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--blue);color:#fff;border:none;border-radius:4px;padding:11px 22px;cursor:pointer;transition:background .14s}
 .btn-dl:hover{background:var(--navy)}
@@ -270,7 +275,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
           <button class="btn-sm" onclick="checkAll(false)">✗ Ninguno</button>
           <button class="btn-sm" onclick="checkPreset('sgd')">Solo Sagarde</button>
           <button class="btn-sm" onclick="checkPreset('viv')">Solo vivienda</button>
-          <span class="tj-count" id="tj-count">37 tajos</span>
+          <span class="tj-count" id="tj-count">38 tajos</span>
         </div>
         <div id="tj-sel"></div>
         <div class="wiz-foot">
@@ -352,6 +357,7 @@ const CAT = [
   {id:'ilum-rell',   name:'Ilum. rellanos / ZZCC',   g:'Entrega',              p:'p',a:'z'},
 ];
 
+const MAX_TAJOS_A4 = 38;
 const PROP_LBL = {p:'SGD',e:'EXT',c:'COO'};
 const AMB_LBL  = {v:'',z:'zzcc',d:'edif'};
 
@@ -645,7 +651,12 @@ function renderTajos(){
 }
 
 function toggleT(id,on){ on?S.sel.add(id):S.sel.delete(id); updTjCount(); }
-function updTjCount(){ document.getElementById('tj-count').textContent=`${S.sel.size} tajos`; }
+function updTjCount(){
+  const count=document.getElementById('tj-count');
+  const overflow=Math.max(0,S.sel.size-MAX_TAJOS_A4);
+  count.textContent=overflow?`${S.sel.size} tajos · +${overflow} sobre A4`:`${S.sel.size} tajos · A4 OK`;
+  count.className='tj-count'+(overflow?' over':'');
+}
 
 function checkAll(v){
   CAT.forEach(t=>{ v?S.sel.add(t.id):S.sel.delete(t.id);
@@ -669,6 +680,7 @@ function toggleGroup(hdr){
 /* ── SUMMARY ── */
 function renderSummary(){
   const n=S.sel.size;
+  const overflow=Math.max(0,n-MAX_TAJOS_A4);
   const entries=getPortalEntries();
   const tables=entries.reduce((sum,{portal})=>sum+groupCompleteFloors(portal.plantas).length,0);
   const fecha=fmtDate(S.fecha);
@@ -677,6 +689,16 @@ function renderSummary(){
       <strong>${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)}</strong>
       <span style="color:var(--text-muted)"> — ${portal.plantas.map(planta=>`${escHtml(planta.nombre)}: ${planta.vivs.length}`).join(' · ')}</span>
     </div>`).join('');
+  const capacity=overflow
+    ? `<div class="a4-capacity warn"><strong>Atención: ${n} tajos seleccionados.</strong>
+         Supera en ${overflow} el máximo recomendado de ${MAX_TAJOS_A4} para una tabla A4.
+         Si se genera así, la tabla puede ocupar más de una hoja.
+         <button onclick="goStep(3)">Volver a Tajos</button></div>`
+    : n===MAX_TAJOS_A4
+      ? `<div class="a4-capacity limit"><strong>Capacidad A4: ${n} de ${MAX_TAJOS_A4} tajos.</strong>
+           La hoja está en el límite recomendado actual.</div>`
+      : `<div class="a4-capacity"><strong>Capacidad A4: ${n} de ${MAX_TAJOS_A4} tajos.</strong>
+           Queda margen para ${MAX_TAJOS_A4-n} tajo${MAX_TAJOS_A4-n!==1?'s':''}.</div>`;
   document.getElementById('gen-summary').innerHTML=`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 22px">
       <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Obra</div>
@@ -695,6 +717,7 @@ function renderSummary(){
         <div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Contenido</div>
         <strong>${n} tajos</strong> en ${tables} tabla${tables!==1?'s':''} de revisión — agrupando plantas completas según el ancho disponible
       </div>
+      ${capacity}
     </div>`;
 }
 
@@ -774,6 +797,7 @@ function generateHTML(cellData={}){
   const tajos   = getActiveTajos();
   const fecha   = fmtDate(S.fecha);
   const obraUp  = (S.obra||'OBRA').toUpperCase();
+  const obraFont=Math.max(12.5,Math.min(18.5,19-Math.max(0,obraUp.length-24)*.15)).toFixed(1);
 
   // Group tajos
   const groups={};
@@ -790,7 +814,7 @@ function generateHTML(cellData={}){
     const tajoW=totalVivs<=4?48:totalVivs<=6?45:totalVivs<=8?42:totalVivs<=10?40:38;
     const colW=((100-tajoW)/totalVivs).toFixed(3)+'%';
     const longestViv=Math.max(...viviendaCols.map(c=>String(c.viv).length),1);
-    const aptFont=Math.max(6.6,Math.min(10.2,11.2-(totalVivs-4)*.34-(longestViv-2)*.3)).toFixed(1);
+    const aptFont=Math.max(7.5,Math.min(11.5,12.3-(totalVivs-4)*.38-(longestViv-2)*.25)).toFixed(1);
     const stateFont=Math.max(9,Math.min(14,15-totalVivs*.45)).toFixed(1);
 
     const rows = Object.entries(groups).map(([gn,gt])=>{
@@ -798,7 +822,7 @@ function generateHTML(cellData={}){
       const trs = gt.map(t=>{
         const badge = `<span class="tajo-prop ${t.p}">${PROP_LBL[t.p]}</span>`;
         const amb   = t.a!=='v'?`<span class="tajo-ambito">${AMB_LBL[t.a]}</span>`:'';
-        const nameFont=Math.max(7.2,Math.min(9.6,10.2-Math.max(0,t.name.length-24)*.06)).toFixed(1);
+        const nameFont=Math.max(8.2,Math.min(10.5,11-Math.max(0,t.name.length-24)*.055)).toFixed(1);
         const cells=viviendaCols.map(({planta,viv,floorIndex,first})=>{
           const k=`${portal.id}__${planta.id}__${t.id}__${viv}`;
           const st=cellData[k]||'';
@@ -854,7 +878,7 @@ function generateHTML(cellData={}){
     <div class="hd-brand"><img class="brand-logo" src="${LOGO_URI}" alt="Sagarde"></div>
     <div class="hd-obra">
       <div class="obra-badge">Hoja de revisión de tajos</div>
-      <div class="obra-title">${escHtml(obraUp)}</div>
+      <div class="obra-title" style="font-size:${obraFont}pt">${escHtml(obraUp)}</div>
       <div class="obra-detail">${detail}</div>
     </div>
     <div class="hd-doc">
@@ -917,26 +941,26 @@ function showToast(m){const t=document.createElement('div');t.style.cssText='pos
 function sheetCSS(){
   return `
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Arial Narrow','Aptos Narrow','Liberation Sans Narrow','Roboto Condensed',Arial,sans-serif;background:#fff;color:#1A3558;font-size:10px;line-height:1.08}
+body{font-family:Arial,'Aptos','Liberation Sans',sans-serif;background:#fff;color:#142D4C;font-size:10.5px;line-height:1.12}
 .wrap{max-width:210mm;margin:0 auto}
 /* HEADER */
 .doc-header{background:#fff;display:grid;grid-template-columns:auto 1fr auto;align-items:stretch;border-bottom:3px solid #1A3558}
 .hd-brand{padding:8px 16px 6px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(26,53,88,.18)}
-.brand-logo{height:44px;width:auto;display:block}
+.brand-logo{height:50px;width:auto;display:block}
 .hd-obra{padding:8px 20px 6px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
-.obra-badge{display:inline-block;font-size:7px;letter-spacing:.2em;text-transform:uppercase;background:#E4EEF8;color:#1A3558;border:1px solid rgba(26,53,88,.18);padding:2px 8px;border-radius:2px;margin-bottom:5px}
-.obra-title{font-size:15px;font-weight:700;letter-spacing:.04em;color:#1A3558;line-height:1.15}
-.obra-detail{font-size:8.5px;letter-spacing:.08em;color:#888;margin-top:3px}
+.obra-badge{display:inline-block;font-size:8.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:#E4EEF8;color:#1A3558;border:1px solid #64758A;padding:3px 9px;border-radius:2px;margin-bottom:5px}
+.obra-title{font-size:18px;font-weight:800;letter-spacing:.025em;color:#102A4C;line-height:1.05;overflow-wrap:anywhere}
+.obra-detail{font-size:10px;font-weight:600;letter-spacing:.055em;color:#4D5E73;margin-top:4px}
 .hd-doc{padding:8px 16px 6px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;border-left:1px solid rgba(26,53,88,.18);text-align:right}
-.doc-label{font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:#888}
-.doc-fecha{font-size:14px;font-weight:700;color:#1A3558;letter-spacing:.05em;line-height:1.2;margin-top:2px}
-.doc-resp{font-size:9px;color:#3A5580;margin-top:4px}
-.doc-doctitle{font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:#888;margin-top:2px}
+.doc-label{font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#4D5E73}
+.doc-fecha{font-size:17px;font-weight:800;color:#102A4C;letter-spacing:.035em;line-height:1.1;margin-top:2px}
+.doc-resp{font-size:10.5px;font-weight:700;color:#294B73;margin-top:4px}
+.doc-doctitle{font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4D5E73;margin-top:3px}
 /* LEGEND */
-.legend-strip{background:#E4EEF8;border-top:1px solid rgba(26,53,88,.18);border-bottom:1px solid rgba(26,53,88,.18);padding:4px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-.leg-label{font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:#888;font-weight:700}
-.leg-item{display:flex;align-items:center;gap:4px;font-size:8.5px;color:#3A5580}
-.leg-dot{width:18px;height:13px;border-radius:2px;border:1px solid rgba(26,53,88,.18);display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700}
+.legend-strip{background:#E4EEF8;border-top:1px solid #7A8A9E;border-bottom:1px solid #7A8A9E;padding:5px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.leg-label{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#293E58;font-weight:800}
+.leg-item{display:flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:#213E62}
+.leg-dot{width:21px;height:15px;border-radius:2px;border:1.2px solid #53677F;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
 .leg-dot.done{background:#D5EDD9;color:#1A6030;border-color:#1A6030}
 .leg-dot.half{background:#E4F4EC;color:#1A6040;border-color:#1A6040}
 .leg-dot.prog{background:#FEF7D5;color:#7A5000;border-color:#7A5000}
@@ -950,33 +974,33 @@ body{font-family:'Arial Narrow','Aptos Narrow','Liberation Sans Narrow','Roboto 
 .all-portals{display:flex;flex-direction:column}
 .portal-section{padding-top:8px}
 .portal-sheet-head{margin:0 8px;background:#1A3558;color:#fff;border-left:5px solid #2E6DA4;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
-.portal-block-name{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
-.portal-name{font-size:11px;margin-left:12px;padding-left:12px;border-left:1px solid rgba(255,255,255,.35)}
-.portal-sheet-meta{font-size:7.5px;line-height:1.15;letter-spacing:.04em;color:rgba(255,255,255,.72);max-width:58%;text-align:right}
+.portal-block-name{font-size:14px;font-weight:800;letter-spacing:.065em;text-transform:uppercase}
+.portal-name{font-size:13px;font-weight:700;margin-left:12px;padding-left:12px;border-left:2px solid rgba(255,255,255,.65)}
+.portal-sheet-meta{font-size:9px;font-weight:600;line-height:1.15;letter-spacing:.025em;color:rgba(255,255,255,.9);max-width:58%;text-align:right}
 .blocks{padding:5px 8px 9px;display:flex;flex-direction:column;gap:7px}
 .planta-block{background:#fff;border:1px solid rgba(26,53,88,.18);border-left:3px solid #2E6DA4;border-radius:3px;overflow:hidden}
 .block-hdr{background:#E4EEF8;padding:3px 7px;border-bottom:1px solid rgba(26,53,88,.18)}
-.block-title{font-size:8.5pt;font-weight:700;line-height:1;letter-spacing:.07em;text-transform:uppercase;color:#1A3558}
+.block-title{font-size:9.5pt;font-weight:800;line-height:1.08;letter-spacing:.05em;text-transform:uppercase;color:#102A4C}
 .tbl-wrap{overflow-x:auto}
-.rev-table{width:100%;border-collapse:collapse;table-layout:fixed}
-.th-floor{background:#1A3558;color:rgba(255,255,255,.94);font-size:8pt;font-weight:700;line-height:1;letter-spacing:.06em;text-transform:uppercase;padding:2.2mm 1.2mm;text-align:center;vertical-align:middle}
-.th-floor-tajo{text-align:left;padding-left:2mm;font-size:7.2pt;color:rgba(255,255,255,.78);font-weight:700}
-.th-floor.right-floor{border-left:3px solid rgba(255,255,255,.25)}
-.th-apt{background:#E4EEF8;color:#1A3558;font-weight:800;line-height:.95;padding:1.2mm .5mm;text-align:center;vertical-align:middle;overflow-wrap:anywhere;border-bottom:1px solid #1A3558;border-right:1px solid rgba(26,53,88,.1)}
-.th-apt.right-first{border-left:3px solid #1A3558}
-.tr-grp td{background:#F5F5F5;font-size:6.5pt;font-weight:800;line-height:1;letter-spacing:.1em;text-transform:uppercase;color:#2E6DA4;padding:1mm 2mm;border-top:1px solid rgba(26,53,88,.18);border-bottom:1px solid rgba(26,53,88,.1)}
-.tr-tajo{height:4.5mm;border-bottom:1px solid rgba(26,53,88,.1)}
+.rev-table{width:100%;border-collapse:collapse;table-layout:fixed;border:1.5px solid #1A3558}
+.th-floor{background:#1A3558;color:#fff;font-size:9pt;font-weight:800;line-height:1.05;letter-spacing:.045em;text-transform:uppercase;padding:2.2mm 1mm;text-align:center;vertical-align:middle;border-right:1px solid #718096}
+.th-floor-tajo{text-align:left;padding-left:2mm;font-size:9pt;color:#fff;font-weight:800;border-right:2px solid #fff}
+.th-floor.right-floor{border-left:2.5px solid #fff}
+.th-apt{background:#E7EDF3;color:#102A4C;font-weight:800;line-height:1;padding:1.25mm .45mm;text-align:center;vertical-align:middle;overflow-wrap:anywhere;border-bottom:1.5px solid #1A3558;border-right:1px solid #53677F}
+.th-apt.right-first{border-left:2.5px solid #1A3558}
+.tr-grp td{background:#EDF1F5;font-size:7.2pt;font-weight:800;line-height:1;letter-spacing:.075em;text-transform:uppercase;color:#173A63;padding:.25mm 1.5mm;border-top:1.3px solid #435A74;border-bottom:1.3px solid #435A74}
+.tr-tajo{height:4.65mm;border-bottom:1.15px solid #53677F}
 .tr-tajo:hover{background:#F5F9FF}
-.td-name{padding:.45mm 1.4mm;color:#1A3558;font-weight:600;line-height:.95;white-space:normal;overflow-wrap:anywhere;vertical-align:middle;border-right:1px solid rgba(26,53,88,.18);cursor:default}
-.td-name .tajo-prop{font-size:5.5pt;line-height:8pt;padding:0 1.5px;margin-right:3px}
-.td-name .tajo-ambito{font-size:5.2pt}
-.td-st{height:4.5mm;padding:0;text-align:center;vertical-align:middle;line-height:1;font-weight:800;font-stretch:condensed;border-right:1px solid rgba(26,53,88,.1);cursor:pointer;user-select:none;transition:background .08s}
+.td-name{padding:.4mm 1.2mm;color:#102A4C;font-weight:700;line-height:1;white-space:normal;overflow-wrap:anywhere;vertical-align:middle;border-right:2px solid #1A3558;cursor:default}
+.td-name .tajo-prop{font-size:6.1pt;line-height:8.5pt;padding:0 1.5px;margin-right:3px}
+.td-name .tajo-ambito{font-size:5.8pt;font-weight:700;color:#43556B}
+.td-st{height:4.65mm;padding:0;text-align:center;vertical-align:middle;line-height:1;font-weight:800;border-right:1.15px solid #53677F;cursor:pointer;user-select:none;transition:background .08s}
 .td-st:hover{filter:brightness(.93)}
 .td-st.done{background:#D5EDD9;color:#1A6030}.td-st.half{background:#E4F4EC;color:#1A6040}
 .td-st.prog{background:#FEF7D5;color:#7A5000}.td-st.pend{background:#fff;color:#ccc}
 .td-st.ext{background:#F5F0FA;color:#7A50A0}
-.td-st.right-first{border-left:3px solid #1A3558}
-.tr-notes td{height:4.5mm;background:#F5F5F5;padding:.8mm 2mm;font-size:6.5pt;line-height:1;color:#888;border-top:1px solid rgba(26,53,88,.18)}
+.td-st.right-first{border-left:2.5px solid #1A3558}
+.tr-notes td{height:4.65mm;background:#F3F5F7;padding:.65mm 2mm;font-size:7pt;font-weight:700;line-height:1;color:#43556B;border-top:1.5px solid #1A3558}
 .notes-ln{display:inline-block;border-bottom:1px solid rgba(26,53,88,.15);min-width:200px}
 .doc-footer{display:flex;justify-content:space-between;padding:7px 16px;font-size:7.5px;color:#888;letter-spacing:.08em;border-top:1px solid rgba(26,53,88,.18);background:#F5F5F5}
 /* FLOAT TOOLBAR */
@@ -987,25 +1011,26 @@ body{font-family:'Arial Narrow','Aptos Narrow','Liberation Sans Narrow','Roboto 
 @media print{
   @page{size:A4 portrait;margin:7mm 7mm 6mm}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
-  html,body{width:196mm;background:#fff!important;font-size:8pt}
+  html,body{width:196mm;background:#fff!important;font-size:8.5pt}
   .wrap{max-width:100%}
-  .doc-header{border-bottom-width:2px}
-  .hd-brand{padding:2px 6px}.brand-logo{height:29px}
-  .hd-obra{padding:2px 7px}.obra-badge{font-size:5.5pt;padding:1px 5px;margin-bottom:2px}
-  .obra-title{font-size:10.5pt}.obra-detail{font-size:5.8pt;margin-top:1px}
-  .hd-doc{padding:2px 6px}.doc-label{font-size:5.2pt}.doc-fecha{font-size:9.5pt}
-  .doc-resp{font-size:6pt;margin-top:1px}.doc-doctitle{font-size:5.2pt;margin-top:1px}
-  .legend-strip{padding:1.2mm 2mm;gap:8px;flex-wrap:nowrap}
-  .leg-label{font-size:5.3pt}.leg-item{font-size:5.8pt}.leg-dot{width:14px;height:10px;font-size:6pt}
-  .blocks{padding:3px 0 5px;gap:0}
+  .doc-header{grid-template-columns:28mm minmax(0,1fr) 46mm;min-height:17mm;border-bottom-width:2.5px}
+  .hd-brand{padding:1.8mm 2.5mm}.brand-logo{height:11mm;max-width:22mm;object-fit:contain}
+  .hd-obra{padding:1.4mm 2.5mm}.obra-badge{font-size:7.2pt;padding:.6mm 1.8mm;margin-bottom:.8mm}
+  .obra-detail{font-size:7.3pt;margin-top:.7mm}
+  .hd-doc{padding:1.4mm 2.2mm}.doc-label{font-size:6.8pt}.doc-fecha{font-size:11.5pt}
+  .doc-resp{font-size:7.2pt;margin-top:.6mm}.doc-doctitle{font-size:6.5pt;margin-top:.5mm}
+  .legend-strip{padding:1.25mm 2mm;gap:6px;flex-wrap:nowrap}
+  .leg-label{font-size:7.2pt}.leg-item{font-size:7.3pt}.leg-dot{width:17px;height:12px;font-size:7.2pt}
+  .legend-strip .tajo-prop{font-size:6.4pt;line-height:9pt;padding:0 2px}
+  .blocks{padding:2px 0 3px;gap:0}
   .portal-section{padding-top:0}
   .portal-section.portal-break{break-before:page;page-break-before:always}
-  .portal-sheet-head{margin:0 0 3px;padding:1.2mm 2mm;break-inside:avoid;page-break-inside:avoid}
-  .portal-block-name{font-size:7.5pt}.portal-name{font-size:7pt}
+  .portal-sheet-head{margin:0 0 2px;padding:1.7mm 2.3mm;break-inside:avoid;page-break-inside:avoid}
+  .portal-block-name{font-size:9.2pt}.portal-name{font-size:8.7pt}
   .portal-sheet-meta{display:none}
   .planta-block{page-break-inside:avoid;break-inside:avoid;border-radius:0}
   .planta-block+.planta-block{break-before:page;page-break-before:always}
-  .block-hdr{padding:1mm 2mm}.block-title{font-size:7.3pt}
+  .block-hdr{padding:1.2mm 2mm}.block-title{font-size:8.4pt}
   .doc-header,.legend-strip{break-inside:avoid}
   .tr-tajo:hover{background:transparent!important}
   .float-bar{display:none}
@@ -1014,7 +1039,20 @@ body{font-family:'Arial Narrow','Aptos Narrow','Liberation Sans Narrow','Roboto 
 }
 
 /* ── DOWNLOAD / PREVIEW ── */
+function confirmA4Capacity(){
+  if(S.sel.size<=MAX_TAJOS_A4) return true;
+  const overflow=S.sel.size-MAX_TAJOS_A4;
+  const proceed=window.confirm(
+    `Has seleccionado ${S.sel.size} tajos, ${overflow} más que el máximo recomendado de ${MAX_TAJOS_A4}.\n\n`+
+    'La tabla puede ocupar más de un A4.\n\n'+
+    'Aceptar: generar igualmente.\nCancelar: volver y quitar tajos.'
+  );
+  if(!proceed) goStep(3);
+  return proceed;
+}
+
 function doDownload(){
+  if(!confirmA4Capacity()) return;
   const html = generateHTML(S.importData||{});
   const blob = new Blob([html],{type:'text/html;charset=utf-8'});
   const a = document.createElement('a');
@@ -1029,6 +1067,7 @@ function doDownload(){
 }
 
 function doPreview(){
+  if(!confirmA4Capacity()) return;
   const html = generateHTML(S.importData||{});
   const w = window.open('','_blank');
   w.document.write(html);
