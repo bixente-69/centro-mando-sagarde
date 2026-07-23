@@ -3,33 +3,33 @@
   "catalogo_version": "1.2",
   "obra": "2025 GERNIKA 32V",
   "revision": "22/07/2026",
-  "edad_revision_dias": 0,
+  "edad_revision_dias": 1,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "22/07/2026 22:57",
+  "generado": "23/07/2026 07:15",
   "resumen": {
-    "listos": 2,
-    "verificar": 0,
-    "unidades_listas": 64,
-    "unidades_verificar": 0,
+    "listos": 0,
+    "verificar": 2,
+    "unidades_listas": 0,
+    "unidades_verificar": 64,
     "bloqueados": 3,
     "otros_gremios": 2,
-    "dudas": 0,
+    "dudas": 2,
     "terminados": 26,
     "inventario_total": 33,
     "detalle_total": 1088,
-    "preguntas_pendientes": 0,
+    "preguntas_pendientes": 2,
     "viviendas": 0,
-    "zonas_comunes": 2,
+    "zonas_comunes": 0,
     "edificio": 0
   },
   "items": [
     {
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
-      "situacion": "LISTO",
-      "categoria": "VIABLE",
+      "situacion": "VERIFICAR",
+      "categoria": "DUDAS",
       "ambito": "zona_comun",
       "ambito_nombre": "Zonas comunes",
       "prioridad": "P2",
@@ -328,15 +328,15 @@
       "n_unidades": 32,
       "n_ubicaciones": 32,
       "estado_actual": "Pendiente: 32",
-      "motivo": "Partida común solo para zonas comunes.",
-      "impacto_gremios": "Partida común solo para zonas comunes.",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "impacto_gremios": "Falta confirmar: Techos de zonas comunes.",
       "orden": 1
     },
     {
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
-      "situacion": "LISTO",
-      "categoria": "VIABLE",
+      "situacion": "VERIFICAR",
+      "categoria": "DUDAS",
       "ambito": "zona_comun",
       "ambito_nombre": "Zonas comunes",
       "prioridad": "P2",
@@ -635,8 +635,8 @@
       "n_unidades": 32,
       "n_ubicaciones": 32,
       "estado_actual": "Pendiente: 32",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "impacto_gremios": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "impacto_gremios": "Falta confirmar: Pintura de zonas comunes.",
       "orden": 2
     }
   ],
@@ -26706,13 +26706,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -26734,13 +26734,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -26762,13 +26762,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -26790,13 +26790,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -26818,13 +26818,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -26846,13 +26846,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -26874,13 +26874,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -26902,13 +26902,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -26930,13 +26930,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -26958,13 +26958,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -26986,13 +26986,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27014,13 +27014,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27042,13 +27042,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27070,13 +27070,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27098,13 +27098,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27126,13 +27126,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27154,13 +27154,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27182,13 +27182,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27210,13 +27210,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27238,13 +27238,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27266,13 +27266,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27294,13 +27294,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27322,13 +27322,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27350,13 +27350,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27378,13 +27378,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27406,13 +27406,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27434,13 +27434,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27462,13 +27462,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27490,13 +27490,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27518,13 +27518,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27546,13 +27546,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27574,13 +27574,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -27598,502 +27598,6 @@
       "fase_nombre": "Entrega",
       "display_group": "casquillos_bombillas",
       "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "22/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos Bombilla"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 2",
       "planta": "1",
       "unidad": "A",
       "estado": "",
@@ -28124,6 +27628,502 @@
       "orden_ejecucion": 320,
       "fase_nombre": "Entrega",
       "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "1",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "1",
+      "unidad": "C",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "1",
+      "unidad": "D",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "C",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "D",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "C",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "D",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "C",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "D",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "22/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
       "edificio": "PORTAL 2",
       "planta": "1",
       "unidad": "B",
@@ -28594,13 +28594,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28622,13 +28622,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28650,13 +28650,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28678,13 +28678,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28706,13 +28706,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28734,13 +28734,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28762,13 +28762,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28790,13 +28790,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28818,13 +28818,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28846,13 +28846,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28874,13 +28874,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28902,13 +28902,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28930,13 +28930,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28958,13 +28958,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -28986,13 +28986,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29014,13 +29014,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29042,13 +29042,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29070,13 +29070,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29098,13 +29098,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29126,13 +29126,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29154,13 +29154,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29182,13 +29182,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29210,13 +29210,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29238,13 +29238,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29266,13 +29266,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29294,13 +29294,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29322,13 +29322,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29350,13 +29350,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29378,13 +29378,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29406,13 +29406,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29434,13 +29434,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
@@ -29462,509 +29462,19 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "22/07/2026"
     }
   ],
   "inventario": [
-    {
-      "grupo_id": "agujeros_iluminacion_zzcc",
-      "trabajo": "Agujeros de iluminación en ZZCC",
-      "propiedad": "propio",
-      "orden_ejecucion": 315,
-      "fase_nombre": "Iluminación final",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        }
-      ],
-      "subtajos": [
-        "Agujeros de iluminación en ZZCC"
-      ],
-      "seccion": "VIABLE",
-      "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 32",
-      "resumen_categorias": {
-        "VIABLE": 32
-      },
-      "motivo": "Partida común solo para zonas comunes.",
-      "orden_inventario": 1
-    },
-    {
-      "grupo_id": "iluminacion_rellanos",
-      "trabajo": "Iluminación de rellanos / ZZCC",
-      "propiedad": "propio",
-      "orden_ejecucion": 330,
-      "fase_nombre": "Entrega",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        }
-      ],
-      "subtajos": [
-        "Iluminación de rellanos / ZZCC"
-      ],
-      "seccion": "VIABLE",
-      "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 32",
-      "resumen_categorias": {
-        "VIABLE": 32
-      },
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "orden_inventario": 2
-    },
     {
       "grupo_id": "placas_tapas",
       "trabajo": "Placas y tapas",
@@ -30208,7 +29718,7 @@
         "BLOQUEADO": 32
       },
       "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "orden_inventario": 3
+      "orden_inventario": 1
     },
     {
       "grupo_id": "apliques",
@@ -30453,7 +29963,7 @@
         "BLOQUEADO": 32
       },
       "motivo": "Dependencias pendientes: Fachada terminada.",
-      "orden_inventario": 4
+      "orden_inventario": 2
     },
     {
       "grupo_id": "casquillos_bombillas",
@@ -30698,7 +30208,7 @@
         "BLOQUEADO": 32
       },
       "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "orden_inventario": 5
+      "orden_inventario": 3
     },
     {
       "grupo_id": "pintura",
@@ -31169,7 +30679,7 @@
         "OTROS_GREMIOS": 32
       },
       "motivo": "Condición obligatoria para placas, tapas y luminarias finales. Terminado según la última confirmación válida.",
-      "orden_inventario": 6
+      "orden_inventario": 4
     },
     {
       "grupo_id": "fachada_terminada",
@@ -31414,6 +30924,496 @@
         "OTROS_GREMIOS": 32
       },
       "motivo": "Condición para remates exteriores.",
+      "orden_inventario": 5
+    },
+    {
+      "grupo_id": "agujeros_iluminacion_zzcc",
+      "trabajo": "Agujeros de iluminación en ZZCC",
+      "propiedad": "propio",
+      "orden_ejecucion": 315,
+      "fase_nombre": "Iluminación final",
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        }
+      ],
+      "subtajos": [
+        "Agujeros de iluminación en ZZCC"
+      ],
+      "seccion": "DUDAS",
+      "seccion_nombre": "Dudas pendientes",
+      "n_ubicaciones": 32,
+      "estado_actual": "Pendiente: 32",
+      "resumen_categorias": {
+        "DUDAS": 32
+      },
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "orden_inventario": 6
+    },
+    {
+      "grupo_id": "iluminacion_rellanos",
+      "trabajo": "Iluminación de rellanos / ZZCC",
+      "propiedad": "propio",
+      "orden_ejecucion": 330,
+      "fase_nombre": "Entrega",
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        }
+      ],
+      "subtajos": [
+        "Iluminación de rellanos / ZZCC"
+      ],
+      "seccion": "DUDAS",
+      "seccion_nombre": "Dudas pendientes",
+      "n_ubicaciones": 32,
+      "estado_actual": "Pendiente: 32",
+      "resumen_categorias": {
+        "DUDAS": 32
+      },
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
       "orden_inventario": 7
     },
     {
@@ -37787,7 +37787,224 @@
       "orden_inventario": 33
     }
   ],
-  "dudas_pendientes": [],
+  "dudas_pendientes": [
+    {
+      "codigo": "DEPENDENCIA_SIN_DATO",
+      "tarea_id": "iluminacion_rellanos",
+      "pregunta": "No hay dato de 'Pintura de zonas comunes' para decidir Iluminación de rellanos / ZZCC. Confirmar antes de priorizar.",
+      "n_ubicaciones": 32,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "DEPENDENCIA_SIN_DATO",
+      "tarea_id": "agujeros_iluminacion_zzcc",
+      "pregunta": "No hay dato de 'Techos de zonas comunes' para decidir Agujeros de iluminación en ZZCC. Confirmar antes de priorizar.",
+      "n_ubicaciones": 32,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        }
+      ]
+    }
+  ],
   "avisos": [
     "El inventario incluye todos los tajos encontrados en el historial; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmación.",

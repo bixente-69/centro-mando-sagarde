@@ -3,25 +3,25 @@
   "catalogo_version": "1.2",
   "obra": "2026 BOLUETA ACR",
   "revision": "21/07/2026",
-  "edad_revision_dias": 1,
+  "edad_revision_dias": 2,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "22/07/2026 22:57",
+  "generado": "23/07/2026 07:15",
   "resumen": {
-    "listos": 18,
-    "verificar": 3,
-    "unidades_listas": 685,
-    "unidades_verificar": 104,
+    "listos": 17,
+    "verificar": 4,
+    "unidades_listas": 653,
+    "unidades_verificar": 188,
     "bloqueados": 2,
     "otros_gremios": 9,
-    "dudas": 1,
+    "dudas": 2,
     "terminados": 0,
     "inventario_total": 30,
     "detalle_total": 2868,
-    "preguntas_pendientes": 3,
+    "preguntas_pendientes": 4,
     "viviendas": 12,
-    "zonas_comunes": 3,
+    "zonas_comunes": 2,
     "edificio": 3
   },
   "items": [
@@ -6226,313 +6226,6 @@
       "orden": 17
     },
     {
-      "tarea_id": "agujeros_iluminacion_zzcc",
-      "trabajo": "Agujeros de iluminación en ZZCC",
-      "situacion": "LISTO",
-      "categoria": "VIABLE",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "prioridad": "P2",
-      "orden_ejecucion": 315,
-      "fase_nombre": "Iluminación final",
-      "ubicaciones": [
-        {
-          "edificio": "BOLUETA",
-          "planta": "2",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "2",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "2",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "2",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "6",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "6",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "6",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "6",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "7",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "7",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "7",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "7",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "8",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "8",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "8",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "8",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        }
-      ],
-      "n_unidades": 32,
-      "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 32",
-      "motivo": "Partida común solo para zonas comunes.",
-      "impacto_gremios": "Partida común solo para zonas comunes.",
-      "orden": 18
-    },
-    {
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "situacion": "VERIFICAR",
@@ -6585,7 +6278,7 @@
       "estado_actual": "X: 4",
       "motivo": "Existe una corrección posterior a una X; se conserva X hasta verificar.",
       "impacto_gremios": "Existe una corrección posterior a una X; se conserva X hasta verificar.",
-      "orden": 19
+      "orden": 18
     },
     {
       "tarea_id": "embornado",
@@ -6640,7 +6333,7 @@
       "estado_actual": "X: 4",
       "motivo": "Existe una corrección posterior a una X; se conserva X hasta verificar.",
       "impacto_gremios": "Existe una corrección posterior a una X; se conserva X hasta verificar.",
-      "orden": 20
+      "orden": 19
     },
     {
       "tarea_id": "apliques",
@@ -7523,6 +7216,781 @@
       "estado_actual": "Pendiente: 96",
       "motivo": "Falta confirmar: Fachada terminada.",
       "impacto_gremios": "Falta confirmar: Fachada terminada.",
+      "orden": 20
+    },
+    {
+      "tarea_id": "agujeros_iluminacion_zzcc",
+      "trabajo": "Agujeros de iluminación en ZZCC",
+      "situacion": "VERIFICAR",
+      "categoria": "DUDAS",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "prioridad": "P2",
+      "orden_ejecucion": 315,
+      "fase_nombre": "Iluminación final",
+      "ubicaciones": [
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "11",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "11",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "11",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "11",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "12",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "12",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "12",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "12",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "13",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "13",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "13",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "13",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "14",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "14",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "14",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "14",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "15",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "15",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "15",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "15",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "17",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "17",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "17",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "17",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "18",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "18",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "18",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "18",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "19",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "19",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "19",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "19",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "20",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "20",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "20",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "20",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "21",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "21",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "21",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "21",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "22",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "22",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "22",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "22",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        }
+      ],
+      "n_unidades": 84,
+      "n_ubicaciones": 84,
+      "estado_actual": "Pendiente: 84",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "impacto_gremios": "Falta confirmar: Techos de zonas comunes.",
       "orden": 21
     }
   ],
@@ -82157,13 +82625,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82185,13 +82653,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82213,13 +82681,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82241,13 +82709,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82269,13 +82737,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82297,13 +82765,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82325,13 +82793,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82353,13 +82821,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82381,13 +82849,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82409,13 +82877,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82437,13 +82905,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82465,13 +82933,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82493,13 +82961,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82521,13 +82989,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82549,13 +83017,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82577,13 +83045,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82605,13 +83073,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82633,13 +83101,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82661,13 +83129,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82689,13 +83157,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82717,13 +83185,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82745,13 +83213,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82773,13 +83241,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82801,13 +83269,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82829,13 +83297,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82857,13 +83325,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82885,13 +83353,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82913,13 +83381,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82941,13 +83409,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82969,13 +83437,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -82997,13 +83465,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83025,13 +83493,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83053,13 +83521,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83081,13 +83549,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83109,13 +83577,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83137,13 +83605,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83165,13 +83633,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83193,13 +83661,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83221,13 +83689,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83249,13 +83717,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83277,13 +83745,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83305,13 +83773,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83333,13 +83801,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83361,13 +83829,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Partida común solo para zonas comunes.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83389,13 +83857,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83417,13 +83885,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83445,13 +83913,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83473,13 +83941,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83501,13 +83969,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83529,13 +83997,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83557,13 +84025,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83585,13 +84053,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83613,13 +84081,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83641,13 +84109,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83669,13 +84137,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83697,13 +84165,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83725,13 +84193,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83753,13 +84221,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83781,13 +84249,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83809,13 +84277,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83837,13 +84305,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83865,13 +84333,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83893,13 +84361,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83921,13 +84389,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83949,13 +84417,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -83977,13 +84445,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84005,13 +84473,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84033,13 +84501,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84061,13 +84529,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84089,13 +84557,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84117,13 +84585,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84145,13 +84613,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84173,13 +84641,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84201,13 +84669,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84229,13 +84697,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84257,13 +84725,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84285,13 +84753,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84313,13 +84781,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84341,13 +84809,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84369,13 +84837,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84397,13 +84865,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84425,13 +84893,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84453,13 +84921,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -84481,13 +84949,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Techos de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "21/07/2026"
@@ -96303,616 +96771,6 @@
       "orden_inventario": 17
     },
     {
-      "grupo_id": "agujeros_iluminacion_zzcc",
-      "trabajo": "Agujeros de iluminación en ZZCC",
-      "propiedad": "propio",
-      "orden_ejecucion": 315,
-      "fase_nombre": "Iluminación final",
-      "ubicaciones": [
-        {
-          "edificio": "BOLUETA",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "6",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "6",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "6",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "6",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "7",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "7",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "7",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "7",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "8",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "8",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "8",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "8",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "10",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "10",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "10",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "10",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "11",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "11",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "11",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "11",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "14",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "14",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "14",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "14",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "15",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "15",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "15",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "15",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "17",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "17",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "17",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "17",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "18",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "18",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "18",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "18",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "20",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "20",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "20",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "20",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Agujeros de iluminación en ZZCC"
-      ],
-      "seccion": "VIABLE",
-      "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 84,
-      "estado_actual": "Pendiente: 84",
-      "resumen_categorias": {
-        "BLOQUEADO": 52,
-        "VIABLE": 32
-      },
-      "motivo": "Dependencias pendientes: Techos. Partida común solo para zonas comunes.",
-      "orden_inventario": 18
-    },
-    {
       "grupo_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "propiedad": "propio",
@@ -97604,7 +97462,7 @@
         "BLOQUEADO": 26
       },
       "motivo": "Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
-      "orden_inventario": 19
+      "orden_inventario": 18
     },
     {
       "grupo_id": "telecableado",
@@ -98298,7 +98156,7 @@
         "BLOQUEADO": 26
       },
       "motivo": "Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
-      "orden_inventario": 20
+      "orden_inventario": 19
     },
     {
       "grupo_id": "tabicado",
@@ -98992,7 +98850,7 @@
         "OTROS_GREMIOS": 8
       },
       "motivo": "Sin separaciones de vivienda no se inicia la instalación interior. Terminado según la última confirmación válida.",
-      "orden_inventario": 21
+      "orden_inventario": 20
     },
     {
       "grupo_id": "suelo_radiante",
@@ -99686,7 +99544,7 @@
         "OTROS_GREMIOS": 12
       },
       "motivo": "Condición de coordinación, no producción Sagarde. Terminado según la última confirmación válida.",
-      "orden_inventario": 22
+      "orden_inventario": 21
     },
     {
       "grupo_id": "suelo_recrecido",
@@ -100380,7 +100238,7 @@
         "OTROS_GREMIOS": 16
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
-      "orden_inventario": 23
+      "orden_inventario": 22
     },
     {
       "grupo_id": "perfilado_pladur",
@@ -101074,7 +100932,7 @@
         "OTROS_GREMIOS": 20
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
-      "orden_inventario": 24
+      "orden_inventario": 23
     },
     {
       "grupo_id": "primera_cara_pladur",
@@ -101768,7 +101626,7 @@
         "OTROS_GREMIOS": 24
       },
       "motivo": "Habilita trabajos interiores. Terminado según la última confirmación válida.",
-      "orden_inventario": 25
+      "orden_inventario": 24
     },
     {
       "grupo_id": "segunda_cara_pladur",
@@ -102462,7 +102320,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida. Trabajo externo. Es recomendable completar cableados antes, pero no es una dependencia obligatoria para Pladur.",
-      "orden_inventario": 26
+      "orden_inventario": 25
     },
     {
       "grupo_id": "techos",
@@ -103156,7 +103014,7 @@
         "TERMINADO": 40
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
-      "orden_inventario": 27
+      "orden_inventario": 26
     },
     {
       "grupo_id": "enchapado",
@@ -103850,7 +103708,7 @@
         "OTROS_GREMIOS": 57
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
-      "orden_inventario": 28
+      "orden_inventario": 27
     },
     {
       "grupo_id": "pintura",
@@ -104544,7 +104402,7 @@
         "TERMINADO": 12
       },
       "motivo": "Permite iniciar mecanizado y telemecanizado. Terminado según la última confirmación válida.",
-      "orden_inventario": 29
+      "orden_inventario": 28
     },
     {
       "grupo_id": "apliques",
@@ -105237,6 +105095,615 @@
         "DUDAS": 96
       },
       "motivo": "Falta confirmar: Fachada terminada.",
+      "orden_inventario": 29
+    },
+    {
+      "grupo_id": "agujeros_iluminacion_zzcc",
+      "trabajo": "Agujeros de iluminación en ZZCC",
+      "propiedad": "propio",
+      "orden_ejecucion": 315,
+      "fase_nombre": "Iluminación final",
+      "ubicaciones": [
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "10",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "11",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "11",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "11",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "11",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "12",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "12",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "12",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "12",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "13",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "13",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "13",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "13",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "14",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "14",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "14",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "14",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "15",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "15",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "15",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "15",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "17",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "17",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "17",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "17",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "18",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "18",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "18",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "18",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "19",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "19",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "19",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "19",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "20",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "20",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "20",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "20",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "21",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "21",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "21",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "21",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "22",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "22",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "22",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "22",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        }
+      ],
+      "subtajos": [
+        "Agujeros de iluminación en ZZCC"
+      ],
+      "seccion": "DUDAS",
+      "seccion_nombre": "Dudas pendientes",
+      "n_ubicaciones": 84,
+      "estado_actual": "Pendiente: 84",
+      "resumen_categorias": {
+        "DUDAS": 84
+      },
+      "motivo": "Falta confirmar: Techos de zonas comunes.",
       "orden_inventario": 30
     }
   ],
@@ -105345,6 +105812,114 @@
         {
           "edificio": "BOLUETA",
           "planta": "5",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "DEPENDENCIA_SIN_DATO",
+      "tarea_id": "agujeros_iluminacion_zzcc",
+      "pregunta": "No hay dato de 'Techos de zonas comunes' para decidir Agujeros de iluminación en ZZCC. Confirmar antes de priorizar.",
+      "n_ubicaciones": 84,
+      "ubicaciones": [
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
           "unidad": "D"
         }
       ]

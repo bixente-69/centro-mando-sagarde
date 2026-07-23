@@ -3,25 +3,25 @@
   "catalogo_version": "1.2",
   "obra": "2026 MUNGIA ACR NEINOR",
   "revision": "20/07/2026",
-  "edad_revision_dias": 2,
+  "edad_revision_dias": 3,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "22/07/2026 22:57",
+  "generado": "23/07/2026 07:15",
   "resumen": {
-    "listos": 11,
-    "verificar": 3,
-    "unidades_listas": 64,
-    "unidades_verificar": 79,
+    "listos": 10,
+    "verificar": 4,
+    "unidades_listas": 28,
+    "unidades_verificar": 119,
     "bloqueados": 10,
     "otros_gremios": 9,
-    "dudas": 1,
+    "dudas": 2,
     "terminados": 0,
     "inventario_total": 31,
     "detalle_total": 1240,
-    "preguntas_pendientes": 3,
+    "preguntas_pendientes": 4,
     "viviendas": 5,
-    "zonas_comunes": 3,
+    "zonas_comunes": 2,
     "edificio": 3
   },
   "items": [
@@ -468,349 +468,6 @@
       "orden": 10
     },
     {
-      "tarea_id": "iluminacion_rellanos",
-      "trabajo": "Iluminación de rellanos / ZZCC",
-      "situacion": "LISTO",
-      "categoria": "VIABLE",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "prioridad": "P2",
-      "orden_ejecucion": 330,
-      "fase_nombre": "Entrega",
-      "ubicaciones": [
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidades": [
-            "C2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidades": [
-            "C2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidades": [
-            "C2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "6",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "6",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "1",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "1",
-          "unidades": [
-            "B3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidades": [
-            "B3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidades": [
-            "B3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidades": [
-            "B3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidades": [
-            "B3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "6",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "6",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        }
-      ],
-      "n_unidades": 36,
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "impacto_gremios": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "orden": 11
-    },
-    {
       "tarea_id": "cuadro_mecanizado",
       "trabajo": "Cuadro mecanizado",
       "situacion": "VERIFICAR",
@@ -953,7 +610,7 @@
       "estado_actual": "X: 14",
       "motivo": "Existe una corrección posterior a una X; se conserva X hasta verificar.",
       "impacto_gremios": "Existe una corrección posterior a una X; se conserva X hasta verificar.",
-      "orden": 12
+      "orden": 11
     },
     {
       "tarea_id": "apliques",
@@ -1332,7 +989,7 @@
       "estado_actual": "Pendiente: 40",
       "motivo": "Falta confirmar: Fachada terminada.",
       "impacto_gremios": "Falta confirmar: Fachada terminada.",
-      "orden": 13
+      "orden": 12
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -1576,6 +1233,385 @@
       "estado_actual": "Pendiente: 25",
       "motivo": "Falta confirmar: Pintura — segunda mano.",
       "impacto_gremios": "Falta confirmar: Pintura — segunda mano.",
+      "orden": 13
+    },
+    {
+      "tarea_id": "iluminacion_rellanos",
+      "trabajo": "Iluminación de rellanos / ZZCC",
+      "situacion": "VERIFICAR",
+      "categoria": "DUDAS",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "prioridad": "P2",
+      "orden_ejecucion": 330,
+      "fase_nombre": "Entrega",
+      "ubicaciones": [
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidades": [
+            "B2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidades": [
+            "C2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidades": [
+            "B2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidades": [
+            "C2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidades": [
+            "B2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidades": [
+            "C2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidades": [
+            "B2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidades": [
+            "C3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidades": [
+            "B2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidades": [
+            "C3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidades": [
+            "B2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidades": [
+            "B2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidades": [
+            "C3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidades": [
+            "B3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidades": [
+            "B3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidades": [
+            "C3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidades": [
+            "B3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidades": [
+            "C3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidades": [
+            "B3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidades": [
+            "C3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidades": [
+            "B3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidades": [
+            "C3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "6",
+          "unidades": [
+            "A2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "6",
+          "unidades": [
+            "B2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "PB",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "PB",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "PB",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        }
+      ],
+      "n_unidades": 40,
+      "n_ubicaciones": 40,
+      "estado_actual": "Pendiente: 40",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "impacto_gremios": "Falta confirmar: Pintura de zonas comunes.",
       "orden": 14
     }
   ],
@@ -33197,13 +33233,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33225,13 +33261,13 @@
       "unidad": "B2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33253,13 +33289,13 @@
       "unidad": "C2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33281,13 +33317,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33309,13 +33345,13 @@
       "unidad": "B2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33337,13 +33373,13 @@
       "unidad": "C2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33365,13 +33401,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33393,13 +33429,13 @@
       "unidad": "B2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33421,13 +33457,13 @@
       "unidad": "C2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33449,13 +33485,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33477,13 +33513,13 @@
       "unidad": "B2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33505,13 +33541,13 @@
       "unidad": "C3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33533,13 +33569,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33561,13 +33597,13 @@
       "unidad": "B2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33589,13 +33625,13 @@
       "unidad": "C3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33617,13 +33653,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33645,13 +33681,13 @@
       "unidad": "B2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33673,13 +33709,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33701,13 +33737,13 @@
       "unidad": "B2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33729,13 +33765,13 @@
       "unidad": "C3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33757,13 +33793,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33785,13 +33821,13 @@
       "unidad": "B3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33813,13 +33849,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33841,13 +33877,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33869,13 +33905,13 @@
       "unidad": "B3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33897,13 +33933,13 @@
       "unidad": "C3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33925,13 +33961,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33953,13 +33989,13 @@
       "unidad": "B3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -33981,13 +34017,13 @@
       "unidad": "C3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -34009,13 +34045,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -34037,13 +34073,13 @@
       "unidad": "B3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -34065,13 +34101,13 @@
       "unidad": "C3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -34093,13 +34129,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -34121,13 +34157,13 @@
       "unidad": "B3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -34149,13 +34185,13 @@
       "unidad": "C3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -34177,13 +34213,13 @@
       "unidad": "A2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -34205,13 +34241,13 @@
       "unidad": "B2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "dependencias_cumplidas": [
-        "Techos"
-      ],
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
+      ],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -34233,13 +34269,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -34261,13 +34297,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -34289,13 +34325,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Techos.",
+      "categoria": "DUDAS",
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Techos"
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [
+        "Pintura de zonas comunes"
       ],
-      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "20/07/2026"
@@ -37328,308 +37364,6 @@
       "orden_inventario": 10
     },
     {
-      "grupo_id": "iluminacion_rellanos",
-      "trabajo": "Iluminación de rellanos / ZZCC",
-      "propiedad": "propio",
-      "orden_ejecucion": 330,
-      "fase_nombre": "Entrega",
-      "ubicaciones": [
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidad": "C2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidad": "C2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidad": "C2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "6",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "6",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "1",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "1",
-          "unidad": "B3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidad": "B3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidad": "B3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidad": "B3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidad": "B3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "6",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "6",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Iluminación de rellanos / ZZCC"
-      ],
-      "seccion": "VIABLE",
-      "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 40,
-      "estado_actual": "Pendiente: 40",
-      "resumen_categorias": {
-        "VIABLE": 36,
-        "BLOQUEADO": 4
-      },
-      "motivo": "Dependencias pendientes: Techos. Puede pasar directamente de pendiente a X; la ausencia de M no genera alerta.",
-      "orden_inventario": 11
-    },
-    {
       "grupo_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "propiedad": "propio",
@@ -37929,7 +37663,7 @@
         "BLOQUEADO": 1
       },
       "motivo": "Dependencias pendientes: Tabicado. Terminado según la última confirmación válida.",
-      "orden_inventario": 12
+      "orden_inventario": 11
     },
     {
       "grupo_id": "cableado",
@@ -38231,7 +37965,7 @@
         "BLOQUEADO": 4
       },
       "motivo": "Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
-      "orden_inventario": 13
+      "orden_inventario": 12
     },
     {
       "grupo_id": "telecableado",
@@ -38533,7 +38267,7 @@
         "BLOQUEADO": 4
       },
       "motivo": "Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
-      "orden_inventario": 14
+      "orden_inventario": 13
     },
     {
       "grupo_id": "portero",
@@ -38835,7 +38569,7 @@
         "BLOQUEADO": 4
       },
       "motivo": "Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
-      "orden_inventario": 15
+      "orden_inventario": 14
     },
     {
       "grupo_id": "termostatos",
@@ -39137,7 +38871,7 @@
         "BLOQUEADO": 4
       },
       "motivo": "Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
-      "orden_inventario": 16
+      "orden_inventario": 15
     },
     {
       "grupo_id": "doblar_cajas",
@@ -39439,7 +39173,7 @@
         "BLOQUEADO": 4
       },
       "motivo": "Dependencias pendientes: Segundas caras de Pladur. Terminado según la última confirmación válida.",
-      "orden_inventario": 17
+      "orden_inventario": 16
     },
     {
       "grupo_id": "embornado",
@@ -39741,7 +39475,7 @@
         "BLOQUEADO": 4
       },
       "motivo": "Dependencias pendientes: Cableado eléctrico. Terminado según la última confirmación válida.",
-      "orden_inventario": 18
+      "orden_inventario": 17
     },
     {
       "grupo_id": "telembornado",
@@ -40043,7 +39777,7 @@
         "BLOQUEADO": 4
       },
       "motivo": "Dependencias pendientes: Telecableado. Terminado según la última confirmación válida.",
-      "orden_inventario": 19
+      "orden_inventario": 18
     },
     {
       "grupo_id": "cuadro_mecanizado",
@@ -40346,7 +40080,7 @@
         "BLOQUEADO": 4
       },
       "motivo": "Dependencias pendientes: Cuadros presentados, Cableado eléctrico. Existe una corrección posterior a una X; se conserva X hasta verificar. Terminado según la última confirmación válida.",
-      "orden_inventario": 20
+      "orden_inventario": 19
     },
     {
       "grupo_id": "casquillos_bombillas",
@@ -40649,7 +40383,7 @@
         "BLOQUEADO": 4
       },
       "motivo": "Dependencias pendientes: Cuadro mecanizado, Derivación individual. Falta confirmar: Pintura — segunda mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 21
+      "orden_inventario": 20
     },
     {
       "grupo_id": "tabicado",
@@ -40951,7 +40685,7 @@
         "OTROS_GREMIOS": 1
       },
       "motivo": "Sin separaciones de vivienda no se inicia la instalación interior. Terminado según la última confirmación válida.",
-      "orden_inventario": 22
+      "orden_inventario": 21
     },
     {
       "grupo_id": "suelo_radiante",
@@ -41253,7 +40987,7 @@
         "OTROS_GREMIOS": 4
       },
       "motivo": "Condición de coordinación, no producción Sagarde. Terminado según la última confirmación válida.",
-      "orden_inventario": 23
+      "orden_inventario": 22
     },
     {
       "grupo_id": "suelo_recrecido",
@@ -41555,7 +41289,7 @@
         "OTROS_GREMIOS": 4
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
-      "orden_inventario": 24
+      "orden_inventario": 23
     },
     {
       "grupo_id": "perfilado_pladur",
@@ -41857,7 +41591,7 @@
         "OTROS_GREMIOS": 4
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
-      "orden_inventario": 25
+      "orden_inventario": 24
     },
     {
       "grupo_id": "primera_cara_pladur",
@@ -42159,7 +41893,7 @@
         "OTROS_GREMIOS": 4
       },
       "motivo": "Habilita trabajos interiores. Terminado según la última confirmación válida.",
-      "orden_inventario": 26
+      "orden_inventario": 25
     },
     {
       "grupo_id": "segunda_cara_pladur",
@@ -42461,7 +42195,7 @@
         "OTROS_GREMIOS": 4
       },
       "motivo": "Terminado según la última confirmación válida. Trabajo externo. Es recomendable completar cableados antes, pero no es una dependencia obligatoria para Pladur.",
-      "orden_inventario": 27
+      "orden_inventario": 26
     },
     {
       "grupo_id": "techos",
@@ -42763,7 +42497,7 @@
         "OTROS_GREMIOS": 4
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
-      "orden_inventario": 28
+      "orden_inventario": 27
     },
     {
       "grupo_id": "enchapado",
@@ -43065,7 +42799,7 @@
         "OTROS_GREMIOS": 6
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
-      "orden_inventario": 29
+      "orden_inventario": 28
     },
     {
       "grupo_id": "pintura",
@@ -43367,7 +43101,7 @@
         "OTROS_GREMIOS": 4
       },
       "motivo": "Permite iniciar mecanizado y telemecanizado. Terminado según la última confirmación válida.",
-      "orden_inventario": 30
+      "orden_inventario": 29
     },
     {
       "grupo_id": "apliques",
@@ -43668,6 +43402,307 @@
         "DUDAS": 40
       },
       "motivo": "Falta confirmar: Fachada terminada.",
+      "orden_inventario": 30
+    },
+    {
+      "grupo_id": "iluminacion_rellanos",
+      "trabajo": "Iluminación de rellanos / ZZCC",
+      "propiedad": "propio",
+      "orden_ejecucion": 330,
+      "fase_nombre": "Entrega",
+      "ubicaciones": [
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "B2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "C2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "B2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "C2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "B2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "C2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "B2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "C3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "B2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "C3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidad": "B2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "B2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "C3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidad": "B3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "B3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "C3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "B3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "C3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "B3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "C3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "B3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "C3",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "6",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "6",
+          "unidad": "B2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        }
+      ],
+      "subtajos": [
+        "Iluminación de rellanos / ZZCC"
+      ],
+      "seccion": "DUDAS",
+      "seccion_nombre": "Dudas pendientes",
+      "n_ubicaciones": 40,
+      "estado_actual": "Pendiente: 40",
+      "resumen_categorias": {
+        "DUDAS": 40
+      },
+      "motivo": "Falta confirmar: Pintura de zonas comunes.",
       "orden_inventario": 31
     }
   ],
@@ -43676,6 +43711,114 @@
       "codigo": "DEPENDENCIA_SIN_DATO",
       "tarea_id": "apliques",
       "pregunta": "No hay dato de 'Fachada terminada' para decidir Apliques y enchufes de terraza. Confirmar antes de priorizar.",
+      "n_ubicaciones": 40,
+      "ubicaciones": [
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "B2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "C2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "B2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "C2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "B2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "C2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "B2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "C3"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "B2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "C3"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidad": "B2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "B2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "C3"
+        }
+      ]
+    },
+    {
+      "codigo": "DEPENDENCIA_SIN_DATO",
+      "tarea_id": "iluminacion_rellanos",
+      "pregunta": "No hay dato de 'Pintura de zonas comunes' para decidir Iluminación de rellanos / ZZCC. Confirmar antes de priorizar.",
       "n_ubicaciones": 40,
       "ubicaciones": [
         {

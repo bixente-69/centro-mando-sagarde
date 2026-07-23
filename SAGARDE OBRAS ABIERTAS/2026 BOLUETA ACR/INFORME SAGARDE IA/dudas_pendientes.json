@@ -3,7 +3,7 @@
   "catalogo_version": "1.2",
   "obra": "2026 BOLUETA ACR",
   "revision": "21/07/2026",
-  "generado": "22/07/2026 22:57",
+  "generado": "23/07/2026 07:15",
   "dudas_pendientes": [
     {
       "codigo": "DEPENDENCIA_SIN_DATO",
@@ -109,6 +109,114 @@
         {
           "edificio": "BOLUETA",
           "planta": "5",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "DEPENDENCIA_SIN_DATO",
+      "tarea_id": "agujeros_iluminacion_zzcc",
+      "pregunta": "No hay dato de 'Techos de zonas comunes' para decidir Agujeros de iluminación en ZZCC. Confirmar antes de priorizar.",
+      "n_ubicaciones": 84,
+      "ubicaciones": [
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
           "unidad": "D"
         }
       ]
