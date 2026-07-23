@@ -78,6 +78,11 @@ label.fl{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:up
 input[type=text],input[type=date],input[type=number],input[type=password],select,textarea{background:var(--surface);border:1px solid var(--border-mid);border-radius:4px;padding:7px 10px;font-family:var(--font);font-size:13px;color:var(--text);outline:none;transition:border-color .14s;width:100%}
 input:focus,select:focus,textarea:focus{border-color:var(--blue)}
 .hint{font-size:10px;color:var(--text-muted);margin-top:2px}
+.installed-source{margin-bottom:16px;padding:14px;border:1px solid #A9BDD3;border-left:4px solid var(--blue);border-radius:4px;background:#F2F7FB}
+.installed-source select{background:#fff;font-weight:700;color:var(--navy)}
+.source-status{margin-top:8px;font-size:11px;line-height:1.45;color:#40546C}
+.source-status strong{color:#173A61}
+.source-status.empty{color:var(--text-muted)}
 
 /* Structure builder */
 .struct-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;margin-top:10px}
@@ -227,6 +232,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
       <div class="step-panel" id="step-1">
         <div class="step-h">Datos de la obra</div>
         <div class="step-sub">Datos generales y distribución de bloques y portales de la obra.</div>
+        <div class="field installed-source">
+          <label class="fl">Obra ya instalada con portal informático</label>
+          <select id="f-installed" onchange="loadInstalledWork(this.value)">
+            <option value="">— Configuración manual —</option>
+          </select>
+          <div class="source-status empty" id="installed-status">Elige una obra para cargar su estructura real y los estados X, / y M guardados en el portal.</div>
+        </div>
         <div class="fg">
           <div class="field w2">
             <label class="fl">Nombre de la obra</label>
@@ -306,6 +318,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
 <!-- ══════════════════════════════════════════
      SCREEN: IMPORT
 ══════════════════════════════════════════ -->
+<script src="obras_revisiones.js"></script>
 <script>
 /* ════════════════════════════════════════════
    CONSTANTS
@@ -316,7 +329,7 @@ const TODAY_ISO = new Date().toISOString().split('T')[0];
 const fmtDate   = iso => iso ? new Date(iso+'T00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}) : '';
 
 /* ── CATALOG ── */
-const CAT = [
+let CAT = [
   {id:'tabicado',    name:'Tabicado',             g:'Inicio de obra',       p:'e',a:'v'},
   {id:'rozas',       name:'Rozas de timbres',      g:'Inicio de obra',       p:'p',a:'v'},
   {id:'mont-elec',   name:'Montante eléctrica',    g:'Infraestructura',      p:'p',a:'d'},
@@ -356,6 +369,26 @@ const CAT = [
   {id:'casquillos',  name:'Casquillos y bombillas',  g:'Entrega',              p:'p',a:'v'},
   {id:'ilum-rell',   name:'Ilum. rellanos / ZZCC',   g:'Entrega',              p:'p',a:'z'},
 ];
+const BASE_CAT = CAT.map(t=>({...t}));
+const BASE_SOURCE_ID = {
+  rozas:'rozas_timbres','mont-elec':'montante_electrica','mont-telco':'montante_teleco',
+  'mont-sscc':'montante_sscc','tube-zzcc':'tubeado_zzcc','cabl-zzcc':'cableado_zzcc',
+  'suelo-rad':'suelo_radiante','suelo-rec':'suelo_recrecido','pladur-p':'perfilado_pladur',
+  'pladur-1c':'primera_cara_pladur','cuad-pres':'cuadros_presentados','tube-viv':'tubeado',
+  'cabl-elec':'cableado',telecabl:'telecableado','pladur-2c':'segunda_cara_pladur',
+  'doblar-caj':'doblar_cajas',teleembor:'telembornado','deriv-ind':'derivacion_individual',
+  'cuad-mec':'cuadro_mecanizado','ct-tec':'cuarto_tecnico','techos-zzcc':'techos_zzcc',
+  'pint-1':'pintura_primera','telemec':'telemecanizado','aguj-zzcc':'agujeros_iluminacion_zzcc',
+  'pint-zzcc':'pintura_zzcc','pint-2':'pintura_segunda','plac-tapas':'placas_tapas',
+  fachada:'fachada_terminada',casquillos:'casquillos_bombillas','ilum-rell':'iluminacion_rellanos',
+};
+function catalogForSource(source){
+  const portalCatalog=(Array.isArray(source?.catalog)?source.catalog:[]).map(t=>({...t}));
+  if(!portalCatalog.length) return BASE_CAT.map(t=>({...t}));
+  const sourceIds=new Set(portalCatalog.map(t=>t.id));
+  const missing=BASE_CAT.filter(t=>!sourceIds.has(BASE_SOURCE_ID[t.id]||t.id));
+  return portalCatalog.concat(missing.map((t,index)=>({...t,orden:10000+index})));
+}
 
 const MAX_TAJOS_A4 = 38;
 const PROP_LBL = {p:'SGD',e:'EXT',c:'COO'};
@@ -430,6 +463,8 @@ let S = {
   bloques:[makeBlock(0)],
   sel:new Set(CAT.map(t=>t.id)),
   importData:null,
+  sourceId:null,
+  sourceMeta:null,
 };
 
 /* ════════════════════════════════════════════
@@ -441,6 +476,75 @@ function showScreen(id){
 }
 function goHome(){ showScreen('sc-home'); renderRecent(); }
 
+function installedWorks(){
+  return Array.isArray(window.SAGARDE_OBRAS_REVISION)?window.SAGARDE_OBRAS_REVISION:[];
+}
+function cloneData(value){ return JSON.parse(JSON.stringify(value)); }
+function setSourceStatus(source){
+  const host=document.getElementById('installed-status');
+  if(!host) return;
+  if(!source){
+    const available=installedWorks().length;
+    host.className='source-status empty';
+    host.textContent=available
+      ? 'Configuración manual: la estructura y las celdas no se leen de ningún portal.'
+      : 'No hay registro de portales disponible todavía. Ejecuta la actualización de Sagarde para publicarlo.';
+    return;
+  }
+  const resumen=source.resumen||{};
+  const revision=source.revision||source.generado||'sin fecha';
+  host.className='source-status';
+  host.innerHTML=`<strong>Memoria del portal cargada.</strong> Revisión ${escHtml(revision)} · `+
+    `${CAT.length} tajos disponibles · ${resumen.tajos||0} con memoria · `+
+    `${resumen.estados_precargados||0} celdas con estado previo.`;
+}
+function renderInstalledWorks(){
+  const select=document.getElementById('f-installed');
+  if(!select) return;
+  const obras=installedWorks();
+  select.innerHTML='<option value="">— Configuración manual —</option>'+obras.map(obra=>
+    `<option value="${escHtml(obra.id)}">${escHtml(obra.nombre)}${obra.revision?' · rev. '+escHtml(obra.revision):''}</option>`
+  ).join('');
+  select.value=S.sourceId||'';
+  const source=obras.find(obra=>obra.id===S.sourceId)||S.sourceMeta;
+  setSourceStatus(source||null);
+}
+function loadInstalledWork(id){
+  const source=installedWorks().find(obra=>obra.id===id);
+  if(!id){
+    CAT=BASE_CAT.map(t=>({...t}));
+    S.sel=new Set(CAT.map(t=>t.id));
+    S.importData=null;
+    S.sourceId=null;
+    S.sourceMeta=null;
+    renderInstalledWorks();
+    if(S.step===3) renderTajos();
+    showToast('Modo manual activado');
+    return;
+  }
+  if(!source){
+    setSourceStatus(null);
+    showToast('No se pudo leer esa obra');
+    return;
+  }
+  CAT=catalogForSource(source);
+  S.obra=source.nombre||'';
+  S.bloques=normaliseStructure({bloques:cloneData(source.bloques||[])});
+  S.sel=new Set(CAT.map(t=>t.id));
+  S.importData=cloneData(source.estados||{});
+  S.sourceId=source.id;
+  S.sourceMeta=cloneData({
+    id:source.id,nombre:source.nombre,revision:source.revision,
+    generado:source.generado,resumen:source.resumen||{},
+  });
+  document.getElementById('f-obra').value=S.obra;
+  renderBloquesConfig();
+  renderInstalledWorks();
+  if(S.step===2) renderPortalStructures();
+  if(S.step===3) renderTajos();
+  showToast('Obra y memoria del portal cargadas ✓');
+}
+
 
 function startWizard(resetDate=true){
   if(resetDate) S.fecha = TODAY_ISO;
@@ -450,6 +554,7 @@ function startWizard(resetDate=true){
   document.getElementById('f-obra').value = S.obra;
   document.getElementById('f-fecha').value  = S.fecha;
   document.getElementById('f-resp').value   = S.resp;
+  renderInstalledWorks();
   renderBloquesConfig();
 }
 
@@ -684,6 +789,13 @@ function renderSummary(){
   const entries=getPortalEntries();
   const tables=entries.reduce((sum,{portal})=>sum+groupCompleteFloors(portal.plantas).length,0);
   const fecha=fmtDate(S.fecha);
+  const sourceInfo=S.sourceId&&S.sourceMeta
+    ? `<div style="grid-column:1/-1;padding:8px 10px;background:#F2F7FB;border-left:4px solid var(--blue)">
+         <div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Origen de los datos</div>
+         <strong>Portal informático · revisión ${escHtml(S.sourceMeta.revision||S.sourceMeta.generado||'sin fecha')}</strong> ·
+         ${(S.sourceMeta.resumen||{}).estados_precargados||0} celdas precargadas
+       </div>`
+    : '';
   const structure=entries.map(({bloque,portal})=>`
     <div style="padding:6px 0;border-bottom:1px solid var(--border)">
       <strong>${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)}</strong>
@@ -709,6 +821,7 @@ function renderSummary(){
            <strong>${fecha||'—'}</strong></div>
       <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Técnico</div>
            <strong>${escHtml(S.resp||'—')}</strong></div>
+      ${sourceInfo}
       <div style="grid-column:1/-1">
         <div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Estructura completa</div>
         ${structure}
@@ -724,7 +837,11 @@ function renderSummary(){
 /* ── CONFIG STORAGE ── */
 function saveConfig(){
   const key = 'sgd_rev_cfg_'+(S.obra||'default').replace(/\s+/g,'_');
-  const cfg={obra:S.obra,fecha:S.fecha,resp:S.resp,bloques:S.bloques,sel:[...S.sel]};
+  const cfg={
+    obra:S.obra,fecha:S.fecha,resp:S.resp,bloques:S.bloques,sel:[...S.sel],
+    catalog:CAT,importData:S.importData||null,
+    sourceId:S.sourceId||null,sourceMeta:S.sourceMeta||null,
+  };
   localStorage.setItem(key,JSON.stringify(cfg));
   const recents = JSON.parse(localStorage.getItem('sgd_rev_recents')||'[]');
   const entry={key,obra:S.obra,fecha:S.fecha,bloques:S.bloques.length,
@@ -751,8 +868,11 @@ function renderRecent(){
 function loadConfig(key){
   const cfg=JSON.parse(localStorage.getItem(key)||'{}');
   if(!cfg.obra) return;
+  CAT=(Array.isArray(cfg.catalog)&&cfg.catalog.length?cfg.catalog:BASE_CAT).map(t=>({...t}));
   S={...S,obra:cfg.obra,fecha:cfg.fecha||TODAY_ISO,resp:cfg.resp||'',
-     bloques:normaliseStructure(cfg),sel:new Set(cfg.sel||CAT.map(t=>t.id)),importData:null};
+     bloques:normaliseStructure(cfg),sel:new Set(cfg.sel||CAT.map(t=>t.id)),
+     importData:cfg.importData?cloneData(cfg.importData):null,
+     sourceId:cfg.sourceId||null,sourceMeta:cfg.sourceMeta?cloneData(cfg.sourceMeta):null};
   startWizard(false);
 }
 function delRecent(e,key){

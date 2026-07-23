@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2025 GERNIKA 32V · Revisión 23/07/2026 · Sagarde</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Arial Narrow','Aptos Narrow','Liberation Sans Narrow','Roboto Condensed',Arial,sans-serif;background:#fff;color:#1A3558;font-size:10px;line-height:1.08}
+.wrap{max-width:210mm;margin:0 auto}
+.doc-header{background:#fff;display:grid;grid-template-columns:auto 1fr auto;align-items:stretch;border-bottom:3px solid #1A3558}
+.hd-brand{padding:8px 16px 6px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(26,53,88,.18)}
+.brand-logo{height:44px;width:auto;display:block}
+.hd-obra{padding:8px 20px 6px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.obra-badge{display:inline-block;font-size:7px;letter-spacing:.2em;text-transform:uppercase;background:#E4EEF8;color:#1A3558;border:1px solid rgba(26,53,88,.18);padding:2px 8px;border-radius:2px;margin-bottom:5px}
+.obra-title{font-size:15px;font-weight:700;letter-spacing:.04em;color:#1A3558;line-height:1.15}
+.obra-detail{font-size:8.5px;letter-spacing:.08em;color:#888;margin-top:3px}
+.hd-doc{padding:8px 16px 6px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;border-left:1px solid rgba(26,53,88,.18);text-align:right}
+.doc-label{font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:#888}
+.doc-fecha{font-size:14px;font-weight:700;color:#1A3558;letter-spacing:.05em;line-height:1.2;margin-top:2px}
+.doc-resp{font-size:9px;color:#3A5580;margin-top:4px}
+.doc-doctitle{font-size:7.5px;letter-spacing:.14em;text-transform:uppercase;color:#888;margin-top:2px}
+.legend-strip{background:#E4EEF8;border-top:1px solid rgba(26,53,88,.18);border-bottom:1px solid rgba(26,53,88,.18);padding:4px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.leg-label{font-size:7px;letter-spacing:.18em;text-transform:uppercase;color:#888;font-weight:700}
+.leg-item{display:flex;align-items:center;gap:4px;font-size:8.5px;color:#3A5580}
+.leg-dot{width:18px;height:13px;border-radius:2px;border:1px solid rgba(26,53,88,.18);display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:700}
+.leg-dot.done{background:#D5EDD9;color:#1A6030;border-color:#1A6030}
+.leg-dot.half{background:#E4F4EC;color:#1A6040;border-color:#1A6040}
+.leg-dot.prog{background:#FEF7D5;color:#7A5000;border-color:#7A5000}
+.leg-dot.pend{background:#fff;color:#aaa;border-color:rgba(26,53,88,.18)}
+.leg-dot.ext{background:#F5F0FA;color:#7A50A0;border-color:#7A50A0}
+.leg-dot-sep{border-left:1px solid rgba(26,53,88,.2);margin:0 4px;height:12px}
+.tajo-prop{display:inline-block;font-size:6.5px;font-weight:700;letter-spacing:.04em;border-radius:2px;padding:0 3px;margin-right:4px;vertical-align:middle;line-height:13px;border:1px solid currentColor;background:transparent}
+.tajo-prop.p{color:#1A3558}.tajo-prop.e{color:#7A50A0}.tajo-prop.c{color:#1A5830}
+.tajo-ambito{display:inline-block;font-size:6px;color:#888;margin-left:3px;vertical-align:middle;opacity:.7}
+.leg-tip{margin-left:auto;font-size:8.5px;color:#aaa;font-style:italic}
+.all-portals{display:flex;flex-direction:column}
+.portal-section{padding-top:8px}
+.portal-sheet-head{margin:0 8px;background:#1A3558;color:#fff;border-left:5px solid #2E6DA4;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.portal-block-name{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.portal-name{font-size:11px;margin-left:12px;padding-left:12px;border-left:1px solid rgba(255,255,255,.35)}
+.portal-sheet-meta{font-size:7.5px;line-height:1.15;letter-spacing:.04em;color:rgba(255,255,255,.72);max-width:58%;text-align:right}
+.blocks{padding:5px 8px 9px;display:flex;flex-direction:column;gap:7px}
+.planta-block{background:#fff;border:1px solid rgba(26,53,88,.18);border-left:3px solid #2E6DA4;border-radius:3px;overflow:hidden}
+.block-hdr{background:#E4EEF8;padding:3px 7px;border-bottom:1px solid rgba(26,53,88,.18)}
+.block-title{font-size:8.5pt;font-weight:700;line-height:1;letter-spacing:.07em;text-transform:uppercase;color:#1A3558}
+.tbl-wrap{overflow-x:auto}
+.rev-table{width:100%;border-collapse:collapse;table-layout:fixed}
+.th-floor{background:#1A3558;color:rgba(255,255,255,.94);font-size:8pt;font-weight:700;line-height:1;letter-spacing:.06em;text-transform:uppercase;padding:2.2mm 1.2mm;text-align:center;vertical-align:middle}
+.th-floor-tajo{text-align:left;padding-left:2mm;font-size:7.2pt;color:rgba(255,255,255,.78);font-weight:700}
+.th-floor.right-floor{border-left:3px solid rgba(255,255,255,.25)}
+.th-apt{background:#E4EEF8;color:#1A3558;font-weight:800;line-height:.95;padding:1.2mm .5mm;text-align:center;vertical-align:middle;overflow-wrap:anywhere;border-bottom:1px solid #1A3558;border-right:1px solid rgba(26,53,88,.1)}
+.th-apt.right-first{border-left:3px solid #1A3558}
+.tr-grp td{background:#F5F5F5;font-size:6.5pt;font-weight:800;line-height:1;letter-spacing:.1em;text-transform:uppercase;color:#2E6DA4;padding:1mm 2mm;border-top:1px solid rgba(26,53,88,.18);border-bottom:1px solid rgba(26,53,88,.1)}
+.tr-tajo{height:4.5mm;border-bottom:1px solid rgba(26,53,88,.1)}
+.tr-tajo:hover{background:#F5F9FF}
+.td-name{padding:.45mm 1.4mm;color:#1A3558;font-weight:600;line-height:.95;white-space:normal;overflow-wrap:anywhere;vertical-align:middle;border-right:1px solid rgba(26,53,88,.18);cursor:default}
+.td-name .tajo-prop{font-size:5.5pt;line-height:8pt;padding:0 1.5px;margin-right:3px}
+.td-name .tajo-ambito{font-size:5.2pt}
+.td-st{height:4.5mm;padding:0;text-align:center;vertical-align:middle;line-height:1;font-weight:800;font-stretch:condensed;border-right:1px solid rgba(26,53,88,.1);cursor:pointer;user-select:none;transition:background .08s}
+.td-st:hover{filter:brightness(.93)}
+.td-st.done{background:#D5EDD9;color:#1A6030}.td-st.half{background:#E4F4EC;color:#1A6040}
+.td-st.prog{background:#FEF7D5;color:#7A5000}.td-st.pend{background:#fff;color:#ccc}
+.td-st.ext{background:#F5F0FA;color:#7A50A0}
+.td-st.right-first{border-left:3px solid #1A3558}
+.tr-notes td{height:4.5mm;background:#F5F5F5;padding:.8mm 2mm;font-size:6.5pt;line-height:1;color:#888;border-top:1px solid rgba(26,53,88,.18)}
+.notes-ln{display:inline-block;border-bottom:1px solid rgba(26,53,88,.15);min-width:200px}
+.doc-footer{display:flex;justify-content:space-between;padding:7px 16px;font-size:7.5px;color:#888;letter-spacing:.08em;border-top:1px solid rgba(26,53,88,.18);background:#F5F5F5}
+.float-bar{position:fixed;bottom:0;left:0;right:0;background:#1A3558;display:flex;justify-content:center;gap:20px;padding:8px;z-index:999}
+.float-bar button{font-family:'Arial Narrow',Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.25);border-radius:4px;padding:6px 18px;cursor:pointer;transition:all .15s}
+.float-bar button:hover{background:rgba(255,255,255,.12);color:#fff}
+@media print{
+  @page{size:A4 portrait;margin:7mm 7mm 6mm}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  html,body{width:196mm;background:#fff!important;font-size:8pt}
+  .wrap{max-width:100%}
+  .doc-header{border-bottom-width:2px}
+  .hd-brand{padding:2px 6px}.brand-logo{height:29px}
+  .hd-obra{padding:2px 7px}.obra-badge{font-size:5.5pt;padding:1px 5px;margin-bottom:2px}
+  .obra-title{font-size:10.5pt}.obra-detail{font-size:5.8pt;margin-top:1px}
+  .hd-doc{padding:2px 6px}.doc-label{font-size:5.2pt}.doc-fecha{font-size:9.5pt}
+  .doc-resp{font-size:6pt;margin-top:1px}.doc-doctitle{font-size:5.2pt;margin-top:1px}
+  .legend-strip{padding:1.2mm 2mm;gap:8px;flex-wrap:nowrap}
+  .leg-label{font-size:5.3pt}.leg-item{font-size:5.8pt}.leg-dot{width:14px;height:10px;font-size:6pt}
+  .blocks{padding:3px 0 5px;gap:0}
+  .portal-section{padding-top:0}
+  .portal-section.portal-break{break-before:page;page-break-before:always}
+  .portal-sheet-head{margin:0 0 3px;padding:1.2mm 2mm;break-inside:avoid}
+  .portal-block-name{font-size:7.5pt}.portal-name{font-size:7pt}
+  .portal-sheet-meta{display:none}
+  .planta-block{page-break-inside:avoid;break-inside:avoid;border-radius:0}
+  .planta-block+.planta-block{break-before:page;page-break-before:always}
+  .block-hdr{padding:1mm 2mm}.block-title{font-size:7.3pt}
+  .doc-header,.legend-strip{break-inside:avoid}
+  .tr-tajo:hover{background:transparent!important}
+  .float-bar{display:none}
+  .leg-tip{display:none}
+}
+</style></head><body>
+<div class="wrap">
+<header class="doc-header">
+  <div class="hd-brand">
+    <svg class="brand-logo" viewBox="0 0 110 44" xmlns="http://www.w3.org/2000/svg">
+      <text x="2" y="30" font-family="Arial Narrow,Arial" font-size="21" font-weight="700" fill="#1A3558" letter-spacing="1">SAGARDE</text>
+      <text x="2" y="42" font-family="Arial Narrow,Arial" font-size="7.5" fill="#7A8A9A" letter-spacing=".5">MONTAJES ELÉCTRICOS</text>
+    </svg>
+  </div>
+  <div class="hd-obra">
+    <div class="obra-badge">Hoja de revisión de tajos</div>
+    <div class="obra-title">2025 GERNIKA 32V</div>
+    <div class="obra-detail">1 bloque &nbsp;|&nbsp; 2 portales &nbsp;|&nbsp; 32 viviendas &nbsp;|&nbsp; Revisión completa</div>
+  </div>
+  <div class="hd-doc">
+    <div class="doc-label">Fecha revisión</div>
+    <div class="doc-fecha">23/07/2026</div>
+    <div class="doc-resp">Resp. técnico: Vicente</div>
+    <div class="doc-doctitle">Hoja de revisión de tajos</div>
+  </div>
+</header>
+
+<div class="legend-strip">
+  <span class="leg-label">Estado:</span>
+  <span class="leg-item"><span class="leg-dot done">X</span>Terminado</span>
+  <span class="leg-item"><span class="leg-dot prog">M</span>En marcha &gt;50%</span>
+  <span class="leg-item"><span class="leg-dot half">/</span>Iniciado &lt;50%</span>
+  <span class="leg-item"><span class="leg-dot pend">&nbsp;</span>Pendiente</span>
+  <span class="leg-item"><span class="leg-dot ext">·</span>No aplica / Ext.</span>
+  <span class="leg-dot-sep"></span>
+  <span class="leg-label">Prop:</span>
+  <span class="leg-item"><span class="tajo-prop p">SGD</span>Sagarde</span>
+  <span class="leg-item"><span class="tajo-prop e">EXT</span>Otro gremio</span>
+  <span class="leg-item"><span class="tajo-prop c">COO</span>Coordinación</span>
+  <span class="leg-tip">Clic en celda → cambia estado</span>
+</div>
+
+<div class="all-portals" id="root"></div>
+
+<footer class="doc-footer">
+  <span>SAGARDE · Montajes Eléctricos · Revisión de tajos</span>
+  <span>Obra completa · 1 bloque · 2 portales · 32 viviendas</span>
+  <span>23/07/2026</span>
+</footer>
+</div>
+
+<div class="float-bar">
+  <button onclick="window.print()">🖨 Imprimir</button>
+  <button onclick="doSave()">💾 Guardar</button>
+  <button onclick="doClear()">✕ Limpiar</button>
+</div>
+
+<script>
+const KEY = 'sgd_rev_2025_GERNIKA_32V_20260723_v2';
+
+const PROP_LBL = {p:'SGD',e:'EXT',c:'COO'};
+const AMB_LBL  = {d:'[bloque]',z:'[ZZCC]',v:''};
+const CYCLE    = ['','/',  'M','X'];
+const SYM      = {'':'','/':'/','M':'M','X':'X','N':'·'};
+const CLS      = {'':'pend','/':'half','M':'prog','X':'done','N':'ext'};
+
+const PORTALS = [
+  {id:'p1', nombre:'Portal 1', plantas:[
+    {id:'pb',nombre:'Baja', vivs:['A','B','C','D']},
+    {id:'1', nombre:'1ª',   vivs:['A','B','C','D']},
+    {id:'2', nombre:'2ª',   vivs:['A','B','C','D']},
+    {id:'3', nombre:'3ª',   vivs:['A','B','C','D']},
+  ]},
+  {id:'p2', nombre:'Portal 2', plantas:[
+    {id:'pb',nombre:'Baja', vivs:['A','B','C','D']},
+    {id:'1', nombre:'1ª',   vivs:['A','B','C','D']},
+    {id:'2', nombre:'2ª',   vivs:['A','B','C','D']},
+    {id:'3', nombre:'3ª',   vivs:['A','B','C','D']},
+  ]},
+];
+
+const CAT = [
+  {id:'tabicado',   name:'Tabicado',             g:'Inicio de obra',       p:'e',a:'v'},
+  {id:'rozas',      name:'Rozas de timbres',      g:'Inicio de obra',       p:'p',a:'v'},
+  {id:'mont-elec',  name:'Montante eléctrica',    g:'Infraestructura',      p:'p',a:'d'},
+  {id:'mont-telco', name:'Montante teleco',        g:'Infraestructura',      p:'p',a:'d'},
+  {id:'mont-sscc',  name:'Montante SSCC',          g:'Infraestructura',      p:'p',a:'d'},
+  {id:'tube-zzcc',  name:'Tubeado ZZCC',           g:'Zonas comunes',        p:'p',a:'z'},
+  {id:'cabl-zzcc',  name:'Cableado ZZCC',          g:'Zonas comunes',        p:'p',a:'z'},
+  {id:'suelo-rad',  name:'Suelo radiante',         g:'Obra previa',          p:'c',a:'v'},
+  {id:'suelo-rec',  name:'Suelo recrecido',        g:'Obra previa',          p:'e',a:'v'},
+  {id:'pladur-p',   name:'Perfilado de Pladur',    g:'Pladur',               p:'e',a:'v'},
+  {id:'pladur-1c',  name:'1ªs caras Pladur',       g:'Pladur',               p:'e',a:'v'},
+  {id:'cuad-pres',  name:'Cuadros presentados',    g:'Instalación interior', p:'p',a:'v'},
+  {id:'tube-viv',   name:'Tubeado vivienda',        g:'Instalación interior', p:'p',a:'v'},
+  {id:'cabl-elec',  name:'Cableado eléctrico',     g:'Instalación interior', p:'p',a:'v'},
+  {id:'telecabl',   name:'Telecableado',            g:'Instalación interior', p:'p',a:'v'},
+  {id:'portero',    name:'Portero / videoportero',  g:'Instalación interior', p:'p',a:'v'},
+  {id:'termostatos',name:'Termostatos',             g:'Instalación interior', p:'p',a:'v'},
+  {id:'pladur-2c',  name:'2ªs caras Pladur',        g:'Pladur',               p:'e',a:'v'},
+  {id:'doblar-caj', name:'Doblar cajas',            g:'Recuperación',         p:'p',a:'v'},
+  {id:'embornado',  name:'Embornado eléctrico',     g:'Conexiones',           p:'p',a:'v'},
+  {id:'teleembor',  name:'Telembornado',            g:'Conexiones',           p:'p',a:'v'},
+  {id:'deriv-ind',  name:'Derivación individual',   g:'Cierre técnico',       p:'p',a:'v'},
+  {id:'cuad-mec',   name:'Cuadro mecanizado',       g:'Cierre técnico',       p:'p',a:'v'},
+  {id:'ct-tec',     name:'Cuarto técnico',          g:'Cierre técnico',       p:'p',a:'d'},
+  {id:'techos',     name:'Techos',                  g:'Acabados previos',     p:'e',a:'v'},
+  {id:'enchapado',  name:'Enchapado',               g:'Acabados previos',     p:'e',a:'v'},
+  {id:'pint-1',     name:'Pintura — 1ª mano',       g:'Pintura',              p:'e',a:'v'},
+  {id:'mecanizado', name:'Mecanizado eléctrico',    g:'Mecanismos',           p:'p',a:'v'},
+  {id:'telemec',    name:'Telemecanizado',           g:'Mecanismos',           p:'p',a:'v'},
+  {id:'aguj-zzcc',  name:'Agujeros ilum. ZZCC',     g:'Iluminación',          p:'p',a:'z'},
+  {id:'pint-2',     name:'Pintura — 2ª mano',       g:'Pintura',              p:'e',a:'v'},
+  {id:'plac-tapas', name:'Placas y tapas',          g:'Remates finales',      p:'p',a:'v'},
+  {id:'fachada',    name:'Fachada terminada',        g:'Remates finales',      p:'e',a:'d'},
+  {id:'apliques',   name:'Apliques terraza',         g:'Remates exteriores',   p:'p',a:'v'},
+  {id:'casquillos', name:'Casquillos y bombillas',  g:'Entrega',              p:'p',a:'v'},
+  {id:'ilum-rell',  name:'Ilum. rellanos / ZZCC',  g:'Entrega',              p:'p',a:'z'},
+];
+
+// Sin celdas bloqueadas — todo interactivo
+const EXCLUIDOS = new Set([]);
+
+function getInitState(portalId, plantaId, tajoId) {
+  // No aplica en Gernika
+  if (['suelo-rad','termostatos'].includes(tajoId)) return 'N';
+
+  // Pendientes a 23/07/2026 — falta 2ª mano pintura, placas/tapas,
+  // apliques terraza, casquillos e iluminación de rellanos/ZZCC.
+  // Agujeros ilum. ZZCC y fachada terminada quedaron X el 23/07/2026.
+  if (['pint-2','plac-tapas','apliques','casquillos','ilum-rell'].includes(tajoId)) return '';
+
+  // Todo lo demás terminado
+  return 'X';
+}
+
+// ─── Agrupar tajos por categoría ───
+function groupCat() {
+  const g = {};
+  CAT.forEach(t => { (g[t.g] || (g[t.g] = [])).push(t); });
+  return g;
+}
+
+function esc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ─── Generar HTML de un bloque (grupo de plantas) ───
+function renderBlock(portalId, portalNombre, plantasGrupo) {
+  const cols = plantasGrupo.flatMap((pl, fi) =>
+    pl.vivs.map((v, vi) => ({pl, v, fi, first: vi===0}))
+  );
+  const nVivs = cols.length;
+  const ncols  = 1 + nVivs;
+  const tajoW  = nVivs <= 4 ? 48 : nVivs <= 6 ? 45 : nVivs <= 8 ? 42 : 40;
+  const colW   = ((100 - tajoW) / nVivs).toFixed(3) + '%';
+  const aptFont = Math.max(6.6, Math.min(10.2, 11.2 - (nVivs-4)*.34)).toFixed(1);
+  const stFont  = Math.max(9,   Math.min(14,   15   - nVivs*.45)).toFixed(1);
+
+  const colTpl = `<col style="width:${tajoW}%">` +
+    cols.map(() => `<col style="width:${colW}">`).join('');
+
+  const floorHds = plantasGrupo.map((pl, fi) =>
+    `<th class="th-floor${fi?' right-floor':''}" colspan="${pl.vivs.length}">Planta ${esc(pl.nombre)} · ${pl.vivs.length} viv.</th>`
+  ).join('');
+
+  const aptHds = cols.map(({v, fi, first}) =>
+    `<th class="th-apt${fi>0&&first?' right-first':''}" style="font-size:${aptFont}pt">${esc(v)}</th>`
+  ).join('');
+
+  const groups = groupCat();
+  let rows = '';
+  for (const [gn, gt] of Object.entries(groups)) {
+    rows += `<tr class="tr-grp"><td colspan="${ncols}">${esc(gn)}</td></tr>`;
+    for (const t of gt) {
+      const badge = `<span class="tajo-prop ${t.p}">${PROP_LBL[t.p]}</span>`;
+      const amb   = t.a !== 'v' ? `<span class="tajo-ambito">${AMB_LBL[t.a]}</span>` : '';
+      const nf    = Math.max(7.2, Math.min(9.6, 10.2 - Math.max(0, t.name.length-24)*.06)).toFixed(1);
+      const cells = cols.map(({pl, v, fi, first}) => {
+        const k   = `${portalId}__${pl.id}__${t.id}__${v}`;
+        const st  = getInitState(portalId, pl.id, t.id);
+        const sym = SYM[st] || '';
+        const cls = CLS[st] || 'pend';
+        const rf  = fi > 0 && first ? ' right-first' : '';
+        return `<td class="td-st ${cls}${rf}" style="font-size:${stFont}pt" data-k="${esc(k)}" data-st="${st}">${sym}</td>`;
+      }).join('');
+      rows += `<tr class="tr-tajo"><td class="td-name" style="font-size:${nf}pt">${badge}${esc(t.name)}${amb}</td>${cells}</tr>`;
+    }
+  }
+
+  const noteRow = `<tr class="tr-notes"><td colspan="${ncols}"><strong>Obs:</strong>&nbsp;<span class="notes-ln"></span></td></tr>`;
+  const plantNames = plantasGrupo.map(pl => esc(pl.nombre)).join(' · ');
+  const plantLabel = plantasGrupo.length === 1 ? `Planta ${plantNames}` : `Plantas ${plantNames}`;
+
+  return `<div class="planta-block">
+<div class="block-hdr"><span class="block-title">Gernika 32V · ${esc(portalNombre)} · ${plantLabel}</span></div>
+<div class="tbl-wrap"><table class="rev-table"><colgroup>${colTpl}</colgroup>
+<thead><tr><th class="th-floor th-floor-tajo" rowspan="2">TAJO</th>${floorHds}</tr>
+<tr>${aptHds}</tr></thead>
+<tbody>${rows}${noteRow}</tbody></table></div></div>`;
+}
+
+// ─── Generar todos los portales ───
+function renderAll() {
+  const BLOCK = 2;
+  return PORTALS.map((portal, pi) => {
+    const plantas = portal.plantas;
+    let blocks = '';
+    for (let i = 0; i < plantas.length; i += BLOCK) {
+      blocks += renderBlock(portal.id, portal.nombre, plantas.slice(i, i+BLOCK));
+    }
+    const dist = plantas.map(pl => `${esc(pl.nombre)}: ${pl.vivs.length}`).join(' · ');
+    return `<section class="portal-section${pi?' portal-break':''}">
+<div class="portal-sheet-head">
+  <div><span class="portal-block-name">Gernika 32V</span><span class="portal-name">${esc(portal.nombre)}</span></div>
+  <div class="portal-sheet-meta">${plantas.length} plantas · ${dist}</div>
+</div>
+<div class="blocks">${blocks}</div>
+</section>`;
+  }).join('');
+}
+
+document.getElementById('root').innerHTML = renderAll();
+
+// ─── Interactividad ───
+document.querySelectorAll('.td-st[data-k]').forEach(c => {
+  c.addEventListener('click', () => {
+    const cur = c.dataset.st || '';
+    const tajoId = c.dataset.k.split('__')[2];
+    if (EXCLUIDOS.has(tajoId)) return;
+    const nxt = CYCLE[(CYCLE.indexOf(cur) + 1) % CYCLE.length];
+    c.dataset.st = nxt;
+    c.textContent = SYM[nxt] || '';
+    const rf = c.classList.contains('right-first');
+    c.className = 'td-st ' + (CLS[nxt]||'pend') + (rf?' right-first':'');
+    autoSave();
+  });
+});
+
+function getData() {
+  const d = {};
+  document.querySelectorAll('.td-st[data-k]').forEach(c => { if (c.dataset.st) d[c.dataset.k] = c.dataset.st; });
+  return d;
+}
+function autoSave() { try { localStorage.setItem(KEY, JSON.stringify(getData())); } catch(e){} }
+function doSave() { autoSave(); showToast('Guardado ✓'); }
+function doClear() {
+  if (!confirm('¿Limpiar todos los estados y volver al estado inicial del 23/07/2026?')) return;
+  document.querySelectorAll('.td-st[data-k]').forEach(c => {
+    const parts = c.dataset.k.split('__');
+    const st = getInitState(parts[0], parts[1], parts[2]);
+    c.dataset.st = st; c.textContent = SYM[st]||'';
+    const rf = c.classList.contains('right-first');
+    c.className = 'td-st '+(CLS[st]||'pend')+(rf?' right-first':'');
+  });
+  localStorage.removeItem(KEY);
+}
+function showToast(m) {
+  const t = document.createElement('div');
+  t.style.cssText = 'position:fixed;bottom:60px;right:20px;background:#1A3558;color:#fff;padding:8px 14px;border-radius:4px;font-size:12px;z-index:9999;transition:opacity .3s';
+  t.textContent = m; document.body.appendChild(t);
+  setTimeout(() => { t.style.opacity='0'; setTimeout(()=>t.remove(),300); }, 1600);
+}
+
+// ─── Restaurar desde localStorage ───
+(function restore() {
+  try {
+    const d = JSON.parse(localStorage.getItem(KEY)||'{}');
+    Object.entries(d).forEach(([k,st]) => {
+      const c = document.querySelector(`.td-st[data-k="${k}"]`);
+      if (c && st) {
+        c.dataset.st = st; c.textContent = SYM[st]||st;
+        const rf = c.classList.contains('right-first');
+        c.className = 'td-st '+(CLS[st]||'pend')+(rf?' right-first':'');
+      }
+    });
+  } catch(e) {}
+})();
+</script>
+</body></html>
