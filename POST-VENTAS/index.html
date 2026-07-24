@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Post-ventas Sagarde</title>
 <style>
-:root{--bg:#f4f6f9;--card:#fff;--header:#0b1f3a;--header2:#123a63;--text:#1c2733;--muted:#647184;--accent:#f5a524;--ok:#2e9e5b;--warn:#e07b1a;--bad:#d9483c;--line:#e3e7ee;--radius:10px;}
+:root{--bg:#f4f6f9;--card:#fff;--header:#0b1f3a;--header2:#123a63;--text:#1c2733;--muted:#647184;--accent:#f5a524;--ok:#2e9e5b;--warn:#e07b1a;--bad:#d9483c;--pending:#e2680a;--line:#e3e7ee;--radius:10px;}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.45;}
 .wrap{max-width:1320px;margin:0 auto;padding:22px;}
@@ -17,6 +17,7 @@ h1{font-size:25px;font-weight:750;}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px;}
 .stat{background:var(--card);border-radius:var(--radius);padding:13px 16px;box-shadow:0 1px 3px rgba(0,0,0,.07);}
 .stat-value{font-size:23px;font-weight:800;}
+.stat-value.pending{color:var(--pending);}
 .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
 .toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px;}
 .search{flex:1 1 320px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text);}
@@ -34,6 +35,7 @@ h1{font-size:25px;font-weight:750;}
 .badge{font-size:11px;font-weight:750;border-radius:20px;background:#eef2f7;color:var(--header2);padding:3px 8px;}
 .badge.ok{background:#e8f6ee;color:var(--ok);}
 .badge.muted{color:var(--muted);}
+.badge.pending{background:#fff1e0;color:var(--pending);}
 .last{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:11px 0;margin-bottom:12px;}
 .last span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:800;}
 .last strong{display:block;font-size:18px;margin-top:2px;}
@@ -65,16 +67,17 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     <div>
       <div class="brand">Sagarde Post-ventas</div>
       <h1>Incidencias por obra cerrada</h1>
-      <div class="sub">31 contrato(s) de postventa · ordenado por último archivo · generado 24/07/2026 08:31</div>
+      <div class="sub">31 contrato(s) de postventa · ordenado por último archivo · generado 24/07/2026 20:59</div>
     </div>
   </header>
 
   <section class="stats">
     <div class="stat"><div class="stat-value">31</div><div class="stat-label">Contratos</div></div>
+    <div class="stat"><div class="stat-value pending">87</div><div class="stat-label">Pendientes</div></div>
     <div class="stat"><div class="stat-value">121</div><div class="stat-label">PDF</div></div>
-    <div class="stat"><div class="stat-value">69</div><div class="stat-label">Word</div></div>
+    <div class="stat"><div class="stat-value">70</div><div class="stat-label">Word</div></div>
     <div class="stat"><div class="stat-value">129</div><div class="stat-label">Fotos</div></div>
-    <div class="stat"><div class="stat-value">23/07/2026 14:58</div><div class="stat-label">Última actividad</div></div>
+    <div class="stat"><div class="stat-value">24/07/2026 20:45</div><div class="stat-label">Última actividad</div></div>
   </section>
 
   <div class="toolbar">
@@ -90,7 +93,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
   </div>
 
   <main id="grid" class="grid">
-<article class="obra" data-search="82v zorrozaure acr incidencias 82v zorrozaure acr g577 zorrozaurre partes de incidencia acr 23072026.pdf g577 zorrozaurre partes de incidencia acr 23072026.pdf incidencias postventa zorrozaure acr.docx incidencias resueltas zorrozaure junio.pdf incidencias resueltas zorrozaure 29042026.pdf"
+<article class="obra" data-search="82v zorrozaure acr incidencias 82v zorrozaure acr incidencias postventa zorrozaure acr.docx incidencias postventa zorrozaure acr.docx incidencias postventa zorrozaure acr_backup.docx g577 zorrozaurre partes de incidencia acr 23072026.pdf incidencias resueltas zorrozaure junio.pdf"
   data-recent="true" data-pdf="true"
   data-word="true" data-images="false">
   <div class="card-top">
@@ -98,18 +101,18 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
       <div class="eyebrow">Contrato postventa</div>
       <h2>82V ZORROZAURE ACR</h2>
     </div>
-    <div class="age">ayer</div>
+    <div class="age">hoy</div>
   </div>
   <div class="badges"><span class="badge ok">Reciente</span><span class="badge">PDF</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
-    <strong>23/07/2026 14:58</strong>
-    <em>G577 ZORROZAURRE PARTES DE INCIDENCIA ACR 23072026.pdf</em>
+    <strong>24/07/2026 20:45</strong>
+    <em>INCIDENCIAS postventa ZORROZAURE ACR.docx</em>
   </div>
   <div class="metrics">
-    <div><b>7</b><span>Archivos</span></div>
+    <div><b>8</b><span>Archivos</span></div>
     <div><b>6</b><span>PDF</span></div>
-    <div><b>1</b><span>Word</span></div>
+    <div><b>2</b><span>Word</span></div>
     <div><b>0</b><span>Fotos</span></div>
   </div>
   <div class="actions">
@@ -120,7 +123,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
   </div>
   <details>
     <summary>Últimos documentos</summary>
-    <ul class="docs"><li><a href="INCIDENCIAS%2082V%20ZORROZAURE%20ACR/G577%20ZORROZAURRE%20PARTES%20DE%20INCIDENCIA%20ACR%2023072026.pdf">G577 ZORROZAURRE PARTES DE INCIDENCIA ACR 23072026.pdf</a><span>23/07/2026 14:58 · 23/07/2026 14:58</span></li><li><a href="_PREVIEWS_WORD/INCIDENCIAS_postventa_ZORROZAURE_ACR_402a7ff2ce.html">INCIDENCIAS postventa ZORROZAURE ACR.docx</a><span>Vista HTML · 03/07/2026 15:20</span></li><li><a href="INCIDENCIAS%2082V%20ZORROZAURE%20ACR/INCIDENCIAS%20RESUELTAS%20ZORROZAURE%20JUNIO.pdf">INCIDENCIAS RESUELTAS ZORROZAURE JUNIO.pdf</a><span>03/07/2026 15:19 · 03/07/2026 15:19</span></li><li><a href="INCIDENCIAS%2082V%20ZORROZAURE%20ACR/INCIDENCIAS%20RESUELTAS%20ZORROZAURE%2029042026.pdf">INCIDENCIAS RESUELTAS ZORROZAURE 29042026.pdf</a><span>30/04/2026 08:06 · 30/04/2026 08:06</span></li></ul>
+    <ul class="docs"><li><a href="_PREVIEWS_WORD/INCIDENCIAS_postventa_ZORROZAURE_ACR_402a7ff2ce.html">INCIDENCIAS postventa ZORROZAURE ACR.docx</a><span>Vista HTML · 24/07/2026 20:45</span></li><li><a href="_PREVIEWS_WORD/INCIDENCIAS_postventa_ZORROZAURE_ACR_BACKUP_9813ec81af.html">INCIDENCIAS postventa ZORROZAURE ACR_BACKUP.docx</a><span>Vista HTML · 24/07/2026 20:45</span></li><li><a href="INCIDENCIAS%2082V%20ZORROZAURE%20ACR/G577%20ZORROZAURRE%20PARTES%20DE%20INCIDENCIA%20ACR%2023072026.pdf">G577 ZORROZAURRE PARTES DE INCIDENCIA ACR 23072026.pdf</a><span>24/07/2026 20:31 · 24/07/2026 20:31</span></li><li><a href="INCIDENCIAS%2082V%20ZORROZAURE%20ACR/INCIDENCIAS%20RESUELTAS%20ZORROZAURE%20JUNIO.pdf">INCIDENCIAS RESUELTAS ZORROZAURE JUNIO.pdf</a><span>03/07/2026 15:19 · 03/07/2026 15:19</span></li></ul>
   </details>
 </article>
 
@@ -134,7 +137,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 4 días</div>
   </div>
-  <div class="badges"><span class="badge ok">Reciente</span><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="badges"><span class="badge pending">5 pendientes</span><span class="badge ok">Reciente</span><span class="badge">PDF</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>20/07/2026 19:17</strong>
@@ -168,7 +171,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 7 días</div>
   </div>
-  <div class="badges"><span class="badge ok">Reciente</span><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="badges"><span class="badge pending">5 pendientes</span><span class="badge ok">Reciente</span><span class="badge">PDF</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>17/07/2026 17:41</strong>
@@ -338,7 +341,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 400 días</div>
   </div>
-  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="badges"><span class="badge pending">26 pendientes</span><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>19/06/2025 10:07</strong>
@@ -372,7 +375,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 956 días</div>
   </div>
-  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="badges"><span class="badge pending">5 pendientes</span><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>11/12/2023 08:05</strong>
@@ -406,7 +409,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 1130 días</div>
   </div>
-  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="badges"><span class="badge pending">5 pendientes</span><span class="badge">PDF</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>20/06/2023 15:08</strong>
@@ -440,7 +443,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 1232 días</div>
   </div>
-  <div class="badges"><span class="badge">Word</span></div>
+  <div class="badges"><span class="badge pending">1 pendiente</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>10/03/2023 15:37</strong>
@@ -508,7 +511,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 1478 días</div>
   </div>
-  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="badges"><span class="badge pending">9 pendientes</span><span class="badge">PDF</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>07/07/2022 15:31</strong>
@@ -542,7 +545,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 1565 días</div>
   </div>
-  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="badges"><span class="badge pending">1 pendiente</span><span class="badge">PDF</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>11/04/2022 15:27</strong>
@@ -576,7 +579,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 1570 días</div>
   </div>
-  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="badges"><span class="badge pending">1 pendiente</span><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>06/04/2022 14:39</strong>
@@ -644,7 +647,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 1894 días</div>
   </div>
-  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="badges"><span class="badge pending">2 pendientes</span><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>17/05/2021 07:44</strong>
@@ -678,7 +681,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 2005 días</div>
   </div>
-  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="badges"><span class="badge pending">2 pendientes</span><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>26/01/2021 12:50</strong>
@@ -780,7 +783,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 2370 días</div>
   </div>
-  <div class="badges"><span class="badge">Word</span></div>
+  <div class="badges"><span class="badge pending">3 pendientes</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>27/01/2020 17:07</strong>
@@ -848,7 +851,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 2440 días</div>
   </div>
-  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
+  <div class="badges"><span class="badge pending">10 pendientes</span><span class="badge">PDF</span><span class="badge">Word</span><span class="badge">Fotos</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>18/11/2019 17:15</strong>
@@ -882,7 +885,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 2481 días</div>
   </div>
-  <div class="badges"><span class="badge">Word</span></div>
+  <div class="badges"><span class="badge pending">1 pendiente</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>08/10/2019 18:02</strong>
@@ -916,7 +919,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 2506 días</div>
   </div>
-  <div class="badges"><span class="badge">PDF</span><span class="badge">Word</span></div>
+  <div class="badges"><span class="badge pending">3 pendientes</span><span class="badge">PDF</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>13/09/2019 15:06</strong>
@@ -950,7 +953,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 2509 días</div>
   </div>
-  <div class="badges"><span class="badge">Word</span></div>
+  <div class="badges"><span class="badge pending">7 pendientes</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>10/09/2019 18:13</strong>
@@ -984,7 +987,7 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
     </div>
     <div class="age">hace 2551 días</div>
   </div>
-  <div class="badges"><span class="badge">Word</span></div>
+  <div class="badges"><span class="badge pending">1 pendiente</span><span class="badge">Word</span></div>
   <div class="last">
     <span>Último archivo</span>
     <strong>30/07/2019 16:43</strong>

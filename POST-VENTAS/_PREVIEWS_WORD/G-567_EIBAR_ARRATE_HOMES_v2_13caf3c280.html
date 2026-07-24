@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>G-567 EIBAR ARRATE HOMES (v2).docx</title>
 <style>
-:root{--bg:#f4f6f9;--card:#fff;--header:#0b1f3a;--header2:#123a63;--text:#1c2733;--muted:#647184;--accent:#f5a524;--bad:#d9483c;--line:#e3e7ee;--radius:10px;}
+:root{--bg:#f4f6f9;--card:#fff;--header:#0b1f3a;--header2:#123a63;--text:#1c2733;--muted:#647184;--accent:#f5a524;--bad:#d9483c;--pending:#e2680a;--line:#e3e7ee;--radius:10px;}
 *{box-sizing:border-box;}
 body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.45;}
 .wrap{max-width:1180px;margin:0 auto;padding:20px;}
@@ -23,8 +23,11 @@ h1{font-size:20px;margin:0;line-height:1.25;}
 table{width:100%;border-collapse:collapse;font-size:12px;background:#fff;}
 td{border:1px solid var(--line);padding:6px 7px;vertical-align:top;min-width:72px;}
 tr:first-child td{background:#f8f9fb;font-weight:750;}
-.banner{border-radius:var(--radius);padding:11px 14px;margin-bottom:14px;font-size:13px;}
+tr.pending td{background:#fff1e0;}
+tr.pending td:first-child{box-shadow:inset 4px 0 0 var(--pending);}
+.banner{border-radius:var(--radius);padding:11px 14px;margin-bottom:14px;font-size:13px;font-weight:700;}
 .banner.bad{background:#fdecea;border:1px solid var(--bad);color:#7a231c;}
+.banner.pending{background:#fff1e0;border:1px solid var(--pending);color:#8a3d00;}
 .empty{color:var(--muted);}
 @media(max-width:760px){.wrap{padding:12px;}.header{display:block;}.meta{text-align:left;margin-top:10px;}.actions{justify-content:flex-start;}.doc{padding:14px;}}
 </style>
@@ -37,15 +40,15 @@ tr:first-child td{background:#f8f9fb;font-weight:750;}
       <h1>G-567 EIBAR ARRATE HOMES (v2).docx</h1>
     </div>
     <div class="meta">
-      Generado: 24/07/2026 08:31<br>
+      Generado: 24/07/2026 20:59<br>
       <div class="actions">
         <a class="btn" href="../index.html">Panel</a>
         <a class="btn" href="../INCIDENCIAS%20EIBAR%20ACR/G-567%20EIBAR%20ARRATE%20HOMES%20(v2).docx">Abrir Word</a>
       </div>
     </div>
   </header>
-  
-  <main class="doc"><div class="table-wrap"><table><tr><td>CLIENTE</td><td>Nº</td><td>M</td><td>COD</td><td>INCIDENCIA</td><td>RECIBÍ</td><td>OPERARIO</td><td>SOLUCIÓN</td><td>OK</td><td>FECHA</td></tr><tr><td>BASTARRICA GARCIA JOSE RAMON 943121916 696268089</td><td>A</td><td>5A</td><td>&nbsp;</td><td>601608 (R26-01589) GENERAL: nos acaba de volver a pasar, que salta el diferencial 3, que según pone en el cuadro eléctrico, es la protección del diferencial 1, que es el automático general de la vivienda. Nunca salta ningún otro botón. Esta circunstancia se viene repitiendo.</td><td>24/03/2026</td><td>Alejo</td><td>23/04/2026 Se llama por teléfono y no responde. Se acude in situ y se toca el timbre, no responden. Pendiente reprogramar.</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>ESTEVEZ BISQUERT RUBEN 688628539</td><td>B2</td><td>1B</td><td>&nbsp;</td><td>529195 (R25-01610) BAÑO 1: (C) INTERRUPTOR LUZ TORCIDO</td><td>06/11/2025</td><td>Alejo</td><td>23/04/2026 Solucionado</td><td>S</td><td>23/04/26</td></tr></table></div></main>
+  <div class="banner pending">⚠ 1 incidencia pendiente de resolver (de 3 registradas)</div>
+  <main class="doc"><div class="table-wrap"><table><tr><td>CLIENTE</td><td>Nº</td><td>M</td><td>COD</td><td>INCIDENCIA</td><td>RECIBÍ</td><td>OPERARIO</td><td>SOLUCIÓN</td><td>OK</td><td>FECHA</td></tr><tr class="pending"><td>BASTARRICA GARCIA JOSE RAMON 943121916 696268089</td><td>A</td><td>5A</td><td>&nbsp;</td><td>601608 (R26-01589) GENERAL: nos acaba de volver a pasar, que salta el diferencial 3, que según pone en el cuadro eléctrico, es la protección del diferencial 1, que es el automático general de la vivienda. Nunca salta ningún otro botón. Esta circunstancia se viene repitiendo.</td><td>24/03/2026</td><td>Alejo</td><td>23/04/2026 Se llama por teléfono y no responde. Se acude in situ y se toca el timbre, no responden. Pendiente reprogramar.</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr><td>ESTEVEZ BISQUERT RUBEN 688628539</td><td>B2</td><td>1B</td><td>&nbsp;</td><td>529195 (R25-01610) BAÑO 1: (C) INTERRUPTOR LUZ TORCIDO</td><td>06/11/2025</td><td>Alejo</td><td>23/04/2026 Solucionado</td><td>S</td><td>23/04/26</td></tr></table></div></main>
 </div>
 </body>
 </html>
