@@ -3,23 +3,23 @@
   "catalogo_version": "1.2",
   "obra": "2025 GERNIKA 32V",
   "revision": "23/07/2026",
-  "edad_revision_dias": 0,
+  "edad_revision_dias": 1,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "23/07/2026 16:36",
+  "generado": "24/07/2026 07:29",
   "resumen": {
     "listos": 1,
-    "verificar": 1,
+    "verificar": 0,
     "unidades_listas": 32,
-    "unidades_verificar": 32,
-    "bloqueados": 2,
+    "unidades_verificar": 0,
+    "bloqueados": 3,
     "otros_gremios": 1,
-    "dudas": 1,
+    "dudas": 0,
     "terminados": 28,
     "inventario_total": 33,
     "detalle_total": 1088,
-    "preguntas_pendientes": 1,
+    "preguntas_pendientes": 0,
     "viviendas": 1,
     "zonas_comunes": 0,
     "edificio": 0
@@ -331,313 +331,6 @@
       "motivo": "Rama independiente; requiere fachada terminada.",
       "impacto_gremios": "Rama independiente; requiere fachada terminada.",
       "orden": 1
-    },
-    {
-      "tarea_id": "iluminacion_rellanos",
-      "trabajo": "Iluminación de rellanos / ZZCC",
-      "situacion": "VERIFICAR",
-      "categoria": "DUDAS",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "prioridad": "P2",
-      "orden_ejecucion": 330,
-      "fase_nombre": "Entrega",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        }
-      ],
-      "n_unidades": 32,
-      "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 32",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
-      "impacto_gremios": "Falta confirmar: Pintura de zonas comunes.",
-      "orden": 2
     }
   ],
   "detalle_items": [
@@ -28530,13 +28223,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28558,13 +28251,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28586,13 +28279,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28614,13 +28307,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28642,13 +28335,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28670,13 +28363,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28698,13 +28391,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28726,13 +28419,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28754,13 +28447,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28782,13 +28475,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28810,13 +28503,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28838,13 +28531,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28866,13 +28559,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28894,13 +28587,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28922,13 +28615,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28950,13 +28643,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -28978,13 +28671,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29006,13 +28699,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29034,13 +28727,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29062,13 +28755,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29090,13 +28783,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29118,13 +28811,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29146,13 +28839,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29174,13 +28867,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29202,13 +28895,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29230,13 +28923,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29258,13 +28951,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29286,13 +28979,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29314,13 +29007,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29342,13 +29035,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29370,13 +29063,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -29398,13 +29091,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "DUDAS",
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [
+      "dependencias_bloqueantes": [
         "Pintura de zonas comunes"
       ],
+      "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "23/07/2026"
@@ -30147,6 +29840,251 @@
       "orden_inventario": 3
     },
     {
+      "grupo_id": "iluminacion_rellanos",
+      "trabajo": "Iluminación de rellanos / ZZCC",
+      "propiedad": "propio",
+      "orden_ejecucion": 330,
+      "fase_nombre": "Entrega",
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        }
+      ],
+      "subtajos": [
+        "Iluminación de rellanos / ZZCC"
+      ],
+      "seccion": "BLOQUEADO",
+      "seccion_nombre": "Tajos bloqueados",
+      "n_ubicaciones": 32,
+      "estado_actual": "Pendiente: 32",
+      "resumen_categorias": {
+        "BLOQUEADO": 32
+      },
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "orden_inventario": 4
+    },
+    {
       "grupo_id": "pintura",
       "trabajo": "Pintura",
       "propiedad": "externo",
@@ -30615,251 +30553,6 @@
         "OTROS_GREMIOS": 32
       },
       "motivo": "Condición obligatoria para placas, tapas y luminarias finales. Terminado según la última confirmación válida.",
-      "orden_inventario": 4
-    },
-    {
-      "grupo_id": "iluminacion_rellanos",
-      "trabajo": "Iluminación de rellanos / ZZCC",
-      "propiedad": "propio",
-      "orden_ejecucion": 330,
-      "fase_nombre": "Entrega",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "DUDAS"
-        }
-      ],
-      "subtajos": [
-        "Iluminación de rellanos / ZZCC"
-      ],
-      "seccion": "DUDAS",
-      "seccion_nombre": "Dudas pendientes",
-      "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 32",
-      "resumen_categorias": {
-        "DUDAS": 32
-      },
-      "motivo": "Falta confirmar: Pintura de zonas comunes.",
       "orden_inventario": 5
     },
     {
@@ -37723,116 +37416,7 @@
       "orden_inventario": 33
     }
   ],
-  "dudas_pendientes": [
-    {
-      "codigo": "DEPENDENCIA_SIN_DATO",
-      "tarea_id": "iluminacion_rellanos",
-      "pregunta": "No hay dato de 'Pintura de zonas comunes' para decidir Iluminación de rellanos / ZZCC. Confirmar antes de priorizar.",
-      "n_ubicaciones": 32,
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "C"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "D"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "C"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "D"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "C"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "D"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "C"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "D"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "C"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "D"
-        }
-      ]
-    }
-  ],
+  "dudas_pendientes": [],
   "avisos": [
     "El inventario incluye todos los tajos encontrados en el historial; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmación.",
