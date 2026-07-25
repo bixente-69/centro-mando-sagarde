@@ -328,6 +328,28 @@ const LOGO_URI = 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgM
 const TODAY_ISO = new Date().toISOString().split('T')[0];
 const fmtDate   = iso => iso ? new Date(iso+'T00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}) : '';
 
+// Nombre oficial que reconocen los lectores de revisiones de SAGARDE:
+// REVISION + obra + fecha DDMMAAAA. Se usa exactamente el mismo nombre al
+// descargar el HTML, guardar desde la hoja e imprimirla como PDF.
+function safeRevisionWorkName(value){
+  return String(value||'OBRA')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g,' ')
+    .trim()
+    .replace(/\s+/g,' ');
+}
+function revisionDateToken(iso){
+  const value=String(iso||TODAY_ISO);
+  const match=value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(match) return match[3]+match[2]+match[1];
+  const fallback=TODAY_ISO.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return fallback[3]+fallback[2]+fallback[1];
+}
+function revisionFileBase(obra=S.obra,fecha=S.fecha){
+  return `REVISION ${safeRevisionWorkName(obra)} ${revisionDateToken(fecha)}`;
+}
+
 /* ── CATALOG ── */
 let CAT = [
   {id:'tabicado',    name:'Tabicado',             g:'Inicio de obra',       p:'e',a:'v'},
@@ -918,6 +940,7 @@ function generateHTML(cellData={}){
   const fecha   = fmtDate(S.fecha);
   const obraUp  = (S.obra||'OBRA').toUpperCase();
   const obraFont=Math.max(12.5,Math.min(18.5,19-Math.max(0,obraUp.length-24)*.15)).toFixed(1);
+  const fileBase=revisionFileBase();
 
   // Group tajos
   const groups={};
@@ -991,7 +1014,7 @@ function generateHTML(cellData={}){
 
   return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
-<title>${escHtml(S.obra||'Revisión')} · Obra completa · Sagarde</title>
+<title>${escHtml(fileBase)}</title>
 <style>${sheetCSS()}</style></head><body>
 <div class="wrap">
   <header class="doc-header">
@@ -1029,8 +1052,8 @@ function generateHTML(cellData={}){
   </footer>
 </div>
 <div class="float-bar">
-  <button onclick="window.print()">🖨 Imprimir</button>
-  <button onclick="doSave()">💾 Guardar</button>
+  <button onclick="printRevision()">🖨 Imprimir</button>
+  <button onclick="doSave()">💾 Guardar revisión</button>
   <button onclick="doClear()">✕ Limpiar</button>
 </div>
 <script>
@@ -1038,6 +1061,8 @@ const CYCLE=['','/',  'M','X'];
 const SYM  ={'':'','/':'/','M':'M','X':'X','N':'·'};
 const CLS  ={'':'pend','/':'half','M':'prog','X':'done','N':'ext'};
 const KEY  ='sgd_rev_${safeKey}';
+const REVISION_FILE_BASE=${JSON.stringify(fileBase)};
+document.title=REVISION_FILE_BASE;
 document.querySelectorAll('.td-st[data-k]').forEach(c=>{
   c.addEventListener('click',()=>{
     const cur=c.dataset.st||'';
@@ -1050,7 +1075,25 @@ document.querySelectorAll('.td-st[data-k]').forEach(c=>{
 });
 function getData(){const d={};document.querySelectorAll('.td-st[data-k]').forEach(c=>{if(c.dataset.st)d[c.dataset.k]=c.dataset.st;});return d;}
 function autoSave(){try{localStorage.setItem(KEY,JSON.stringify(getData()));}catch(e){}}
-function doSave(){autoSave();showToast('Guardado ✓');}
+function doSave(){
+  autoSave();
+  document.title=REVISION_FILE_BASE;
+  const source='<!DOCTYPE html>\\n'+document.documentElement.outerHTML;
+  const blob=new Blob([source],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=REVISION_FILE_BASE+'.html';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  showToast('Revisión guardada: '+REVISION_FILE_BASE+'.html');
+}
+function printRevision(){
+  autoSave();
+  document.title=REVISION_FILE_BASE;
+  window.print();
+}
 function doClear(){if(!confirm('¿Limpiar todos los estados?'))return;document.querySelectorAll('.td-st[data-k]').forEach(c=>{c.dataset.st='';c.textContent='';const rf=c.classList.contains('right-first');c.className='td-st pend'+(rf?' right-first':'');});localStorage.removeItem(KEY);}
 function showToast(m){const t=document.createElement('div');t.style.cssText='position:fixed;bottom:76px;right:20px;background:#1A3558;color:#fff;padding:8px 14px;border-radius:4px;font-size:12px;z-index:9999;opacity:1;transition:opacity .3s';t.textContent=m;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300);},1600);}
 (function restore(){try{const d=JSON.parse(localStorage.getItem(KEY)||'{}');Object.entries(d).forEach(([k,st])=>{const c=document.querySelector('.td-st[data-k="'+k+'"]');if(c&&st){c.dataset.st=st;c.textContent=SYM[st]||st;const rf=c.classList.contains('right-first');c.className='td-st '+(CLS[st]||'pend')+(rf?' right-first':'');}});}catch(e){}})();
@@ -1177,12 +1220,11 @@ function doDownload(){
   const blob = new Blob([html],{type:'text/html;charset=utf-8'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  const fname=((S.obra||'REVISION').toUpperCase().replace(/\s+/g,'_'))+
-    '_OBRA_COMPLETA_'+(S.fecha||TODAY_ISO).replace(/-/g,'')+'.html';
+  const fname=revisionFileBase()+'.html';
   a.download = fname;
   a.click();
   URL.revokeObjectURL(a.href);
-  showToast('Descargado ✓');
+  showToast('Descargado: '+fname);
   saveConfig();
 }
 
