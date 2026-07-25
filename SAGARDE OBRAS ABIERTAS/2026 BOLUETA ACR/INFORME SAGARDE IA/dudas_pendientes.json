@@ -2,36 +2,7 @@
   "version": "4.2",
   "catalogo_version": "1.2",
   "obra": "2026 BOLUETA ACR",
-  "revision": "21/07/2026",
-  "generado": "25/07/2026 15:33",
-  "dudas_pendientes": [
-    {
-      "codigo": "NO_QUITAR_X",
-      "tarea_id": "embornado",
-      "pregunta": "'Embornado eléctrico' figuraba como terminado pero la siguiente revisión lo corrige a pendiente. Ir a comprobar en obra si realmente está terminado.",
-      "n_ubicaciones": 4,
-      "ubicaciones": [
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "C"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "D"
-        }
-      ]
-    }
-  ]
+  "revision": "25/07/2026",
+  "generado": "25/07/2026 15:54",
+  "dudas_pendientes": []
 }
