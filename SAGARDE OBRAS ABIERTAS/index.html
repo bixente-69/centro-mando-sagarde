@@ -13,7 +13,12 @@ a{color:inherit;}
 .top-actions{margin-left:auto;display:flex;gap:8px;}
 .top-actions a{text-decoration:none;border:1px solid rgba(255,255,255,.35);color:#fff;padding:9px 12px;border-radius:5px;font-size:13px;font-weight:600;}
 .wrap{max-width:1440px;margin:0 auto;padding:24px 28px 38px;}
-.sub{font-size:13px;color:var(--muted);margin-bottom:18px;}
+.intro{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:18px;}
+.sub{font-size:13px;color:var(--muted);margin:0;}
+.search-wrap{width:min(360px,100%);position:relative;}
+.search{width:100%;height:42px;padding:0 42px 0 14px;border:1px solid #98a2b3;border-radius:6px;background:#fff;font:inherit;}
+.search-symbol{position:absolute;right:14px;top:11px;color:#667085;}
+.empty{display:none;background:#fff;border-radius:var(--radius);padding:30px;text-align:center;color:var(--muted);}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}
 .obra{background:var(--card);border-radius:var(--radius);padding:20px 22px;box-shadow:0 1px 3px rgba(0,0,0,.08);text-decoration:none;color:var(--ink);display:block;transition:transform .1s;border-top:4px solid var(--accent);}
 .obra:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.12);}
@@ -41,129 +46,140 @@ a{color:inherit;}
   </nav>
 </div></header>
 <div class="wrap">
-  <p class="sub">21 obra(s) en carpeta · 4 con panel IA · actualizado 25/07/2026 07:59</p>
-  <div class="grid"><a class="obra" href="2026 BOLUETA ACR/INFORME SAGARDE IA/panel.html"><h2>2026 BOLUETA ACR</h2>
+  <div class="intro">
+    <p class="sub">21 obra(s) en carpeta · 4 con panel IA · actualizado 25/07/2026 10:55</p>
+    <label class="search-wrap"><input id="s" class="search" type="search" placeholder="Buscar obra..."><span class="search-symbol">&#9906;</span></label>
+  </div>
+  <div class="grid" id="grid"><a class="obra" href="2026 BOLUETA ACR/INFORME SAGARDE IA/panel.html" data-search="2026 bolueta acr"><h2>2026 BOLUETA ACR</h2>
 <div class="pct warn">44.0%</div>
 <div class="row"><span>Último archivo</span><span>24/07/2026 08:39</span></div>
 <div class="row"><span>Última revisión</span><span>21/07/2026</span></div>
 <div class="row"><span>Revisiones</span><span>8</span></div>
-<div class="row"><span>Documentos</span><span>86</span></div><div class="alerta">⚠ 6 bloqueo(s)</div></a><a class="obra" href="2026 MUNGIA ACR NEINOR/INFORME SAGARDE IA/panel.html"><h2>2026 MUNGIA ACR NEINOR</h2>
+<div class="row"><span>Documentos</span><span>86</span></div><div class="alerta">⚠ 6 bloqueo(s)</div></a><a class="obra" href="2026 MUNGIA ACR NEINOR/INFORME SAGARDE IA/panel.html" data-search="2026 mungia acr neinor"><h2>2026 MUNGIA ACR NEINOR</h2>
 <div class="pct ok">81.5%</div>
 <div class="row"><span>Último archivo</span><span>23/07/2026 17:59</span></div>
 <div class="row"><span>Última revisión</span><span>20/07/2026</span></div>
 <div class="row"><span>Revisiones</span><span>23</span></div>
-<div class="row"><span>Documentos</span><span>94</span></div><div class="alerta">⚠ Sin cambios en la última revisión · 2 bloqueo(s)</div></a><a class="obra" href="2025 GERNIKA 32V/INFORME SAGARDE IA/panel.html"><h2>2025 GERNIKA 32V</h2>
+<div class="row"><span>Documentos</span><span>94</span></div><div class="alerta">⚠ Sin cambios en la última revisión · 2 bloqueo(s)</div></a><a class="obra" href="2025 GERNIKA 32V/INFORME SAGARDE IA/panel.html" data-search="2025 gernika 32v"><h2>2025 GERNIKA 32V</h2>
 <div class="pct ok">85.3%</div>
 <div class="row"><span>Último archivo</span><span>23/07/2026 15:01</span></div>
 <div class="row"><span>Última revisión</span><span>23/07/2026</span></div>
 <div class="row"><span>Revisiones</span><span>2</span></div>
-<div class="row"><span>Documentos</span><span>183</span></div></a><div class="obra disabled"><h2>2026 BERANGO RESTAURANTE</h2>
+<div class="row"><span>Documentos</span><span>183</span></div></a><div class="obra disabled" data-search="2026 berango restaurante"><h2>2026 BERANGO RESTAURANTE</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>22/07/2026 19:31</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>14</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2026 AMURRIO RESIDENCIA CASTELLANO</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2026 amurrio residencia castellano"><h2>2026 AMURRIO RESIDENCIA CASTELLANO</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>22/07/2026 19:31</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>4</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2026 OLABEAGA BILBAO GRUPO EIBAR</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2026 olabeaga bilbao grupo eibar"><h2>2026 OLABEAGA BILBAO GRUPO EIBAR</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:55</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>2</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2026 MUNGIA CONSTRUCCIONES OLABARRI</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2026 mungia construcciones olabarri"><h2>2026 MUNGIA CONSTRUCCIONES OLABARRI</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:54</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>4</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2025 LEGUTIO</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2025 legutio"><h2>2025 LEGUTIO</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:54</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>4</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2026 COLEGIO EL REGATO BARAKALDO</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2026 colegio el regato barakaldo"><h2>2026 COLEGIO EL REGATO BARAKALDO</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:54</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>10</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2026 GORLIZ HOSPITAL</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2026 gorliz hospital"><h2>2026 GORLIZ HOSPITAL</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:54</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>43</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2026 MEGAPARK</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2026 megapark"><h2>2026 MEGAPARK</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:54</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>91</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2025 GETXO IKER PLANOS</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2025 getxo iker planos"><h2>2025 GETXO IKER PLANOS</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:53</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>7</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2026 ANTZAR SOPELANA</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2026 antzar sopelana"><h2>2026 ANTZAR SOPELANA</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:53</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>3</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2025 BILBAO LANBIDE</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2025 bilbao lanbide"><h2>2025 BILBAO LANBIDE</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:53</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>8</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2025 ZEANURI FOTOVOLTAICA</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2025 zeanuri fotovoltaica"><h2>2025 ZEANURI FOTOVOLTAICA</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:53</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>30</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2026 BILBAO IMQ</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2026 bilbao imq"><h2>2026 BILBAO IMQ</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:52</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>4</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2026 BARAKALDO PORMETXETA TIERRAS CASTELLANO</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2026 barakaldo pormetxeta tierras castellano"><h2>2026 BARAKALDO PORMETXETA TIERRAS CASTELLANO</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:52</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>6</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2026 AYALDE COLEGIO</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2026 ayalde colegio"><h2>2026 AYALDE COLEGIO</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:52</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>9</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2025 URDULIZ POLIDEPORTIVO</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2025 urduliz polideportivo"><h2>2025 URDULIZ POLIDEPORTIVO</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:51</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>257</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled"><h2>2026 SERRALTA BARAKALDO</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><div class="obra disabled" data-search="2026 serralta barakaldo"><h2>2026 SERRALTA BARAKALDO</h2>
 <div class="estado">Pendiente de alta</div>
 <div class="pct pending">—</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 17:50</span></div>
 <div class="row"><span>Panel IA</span><span>No generado</span></div>
 <div class="row"><span>Documentos</span><span>11</span></div>
-<div class="alerta">Añadir adaptador para activar seguimiento</div></div><a class="obra" href="2025 BILBAO OBISPO ORUETA/INFORME SAGARDE IA/panel.html"><h2>2025 BILBAO OBISPO ORUETA</h2>
+<div class="alerta">Añadir adaptador para activar seguimiento</div></div><a class="obra" href="2025 BILBAO OBISPO ORUETA/INFORME SAGARDE IA/panel.html" data-search="2025 bilbao obispo orueta"><h2>2025 BILBAO OBISPO ORUETA</h2>
 <div class="pct ok">100.0%</div>
 <div class="row"><span>Último archivo</span><span>19/07/2026 14:25</span></div>
 <div class="row"><span>Última revisión</span><span>24/09/2025</span></div>
 <div class="row"><span>Revisiones</span><span>12</span></div>
 <div class="row"><span>Documentos</span><span>166</span></div></a></div>
-  <p class="footer">Actualizado 25/07/2026 07:59 · Ejecuta Actualizar_Sagarde.bat para refrescar</p>
-</div></body></html>
+  <div class="empty" id="empty">No hay coincidencias.</div>
+  <p class="footer">Actualizado 25/07/2026 10:55 · Ejecuta Actualizar_Sagarde.bat para refrescar</p>
+</div>
+<script>
+const s=document.getElementById('s'),cards=[...document.querySelectorAll('#grid .obra')],empty=document.getElementById('empty');
+s.addEventListener('input',()=>{const q=s.value.trim().toLowerCase();let n=0;
+cards.forEach(c=>{const ok=!q||(c.dataset.search||'').includes(q);c.style.display=ok?'':'none';if(ok)n++;});
+empty.style.display=n?'none':'block';});
+</script>
+</body></html>

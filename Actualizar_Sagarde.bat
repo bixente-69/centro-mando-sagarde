@@ -12,6 +12,10 @@ echo  Centro de mando Sagarde - actualizacion completa
 echo ============================================
 echo.
 
+echo [0/4] Ejecutando Auditoria Pre-Vuelo de Salud de Datos...
+%PY% "_MOTOR_SAGARDE\scripts\auditor_sagarde.py"
+echo.
+
 echo [1/4] Actualizando Informe Sagarde IA (Obras abiertas)...
 %PY% "SAGARDE OBRAS ABIERTAS\_SISTEMA INFORME SAGARDE IA\generar_todos.py" --no-pdf
 if %errorlevel% neq 0 (
@@ -19,10 +23,14 @@ if %errorlevel% neq 0 (
 )
 echo.
 
-echo [2/4] Actualizando Post-ventas...
+echo [2/4] Actualizando Post-ventas y Mantenimientos...
 %PY% "POST-VENTAS\postventas_index.py"
 if %errorlevel% neq 0 (
   echo   [AVISO] No se pudo actualizar Post-ventas. El portal usara los datos existentes.
+)
+%PY% "MANTENIMIENTOS\mantenimientos_index.py"
+if %errorlevel% neq 0 (
+  echo   [AVISO] No se pudo actualizar Mantenimientos. El portal usara los datos existentes.
 )
 echo.
 

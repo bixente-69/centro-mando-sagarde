@@ -9,18 +9,23 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.45;}
 .wrap{max-width:1320px;margin:0 auto;padding:22px;}
-.header{background:linear-gradient(120deg,var(--header),var(--header2));color:#fff;border-radius:var(--radius);padding:22px 28px;margin-bottom:16px;display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:center;}
-.logo{height:68px;width:auto;border-radius:9px;object-fit:contain;box-shadow:0 0 0 3px #b42318,0 4px 20px rgba(0,0,0,.35);}
-.brand{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:4px;}
-h1{font-size:25px;font-weight:750;}
-.sub{font-size:13px;color:#c7d3e3;margin-top:5px;}
+.top{background:linear-gradient(120deg,var(--header),var(--header2));color:#fff;border-bottom:4px solid #b42318;}
+.top-inner{max-width:1320px;margin:auto;padding:18px 28px;display:flex;align-items:center;gap:20px;}
+.logo{width:min(290px,22vw);height:auto;object-fit:contain;border-radius:9px;box-shadow:0 0 0 3px #b42318,0 6px 28px rgba(0,0,0,.5);}
+.identity{min-width:0;}.identity strong{font-size:21px;display:block;}.identity span{font-size:12px;color:#c7d3e3;}
+.top-actions{margin-left:auto;display:flex;gap:8px;}
+.top-actions a{text-decoration:none;border:1px solid rgba(255,255,255,.35);color:#fff;padding:9px 12px;border-radius:5px;font-size:13px;font-weight:600;}
+.intro{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:14px;}
+.search-wrap{width:min(360px,100%);position:relative;}
+.search-symbol{position:absolute;right:14px;top:11px;color:#667085;}
+.sub{font-size:13px;color:var(--muted);margin:0;}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:14px;}
 .stat{background:var(--card);border-radius:var(--radius);padding:13px 16px;box-shadow:0 1px 3px rgba(0,0,0,.07);}
 .stat-value{font-size:23px;font-weight:800;}
 .stat-value.pending{color:var(--pending);}
 .stat-label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px;}
 .toolbar{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:14px;}
-.search{flex:1 1 320px;border:1px solid var(--line);background:#fff;border-radius:8px;padding:10px 12px;font-size:14px;color:var(--text);}
+.search{width:100%;height:42px;padding:0 42px 0 14px;border:1px solid #98a2b3;border-radius:6px;background:#fff;font:inherit;color:var(--text);}
 .filters{display:flex;gap:7px;flex-wrap:wrap;}
 .filters button{border:1px solid var(--line);background:#fff;color:var(--text);border-radius:8px;padding:9px 12px;font-size:13px;font-weight:650;cursor:pointer;}
 .filters button.active{background:var(--header);border-color:var(--header);color:#fff;}
@@ -58,19 +63,27 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
 .docs span{color:var(--muted);font-size:11px;}
 .empty{display:none;background:#fff;border-radius:var(--radius);padding:30px;text-align:center;color:var(--muted);}
 .footer{text-align:center;font-size:12px;color:var(--muted);padding:18px 0;}
-@media(max-width:760px){.wrap{padding:14px;}.header{grid-template-columns:1fr;padding:20px;}.logo{display:none;}.metrics{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:900px){.logo{width:190px;}}
+@media(max-width:760px){.wrap{padding:14px;}.top-actions{display:none;}.logo{width:150px;}.metrics{grid-template-columns:repeat(2,1fr);}}
 </style>
 </head>
 <body>
+<header class="top"><div class="top-inner">
+<img class="logo" src="logo_sagarde.jpg" alt="Sagarde">
+<div class="identity"><strong>Post-ventas</strong><span>Incidencias, partes resueltos y matrices por obra</span></div>
+<nav class="top-actions">
+  <a href="../index.html">&#8962; Portal</a>
+  <a href="../SAGARDE%20OBRAS%20ABIERTAS/index.html">Obras abiertas</a>
+  <a href="./index.html">Post-ventas</a>
+  <a href="../MANTENIMIENTOS/index.html">Mantenimientos</a>
+  <a href="../SAGARDE%20(OLD)/OBRAS%20CERRADAS/index.html">Obras cerradas</a>
+</nav>
+</div></header>
 <div class="wrap">
-  <header class="header">
-    <img class="logo" src="logo_sagarde.jpg" alt="Sagarde">
-    <div>
-      <div class="brand">Sagarde Post-ventas</div>
-      <h1>Incidencias por obra cerrada</h1>
-      <div class="sub">31 contrato(s) de postventa · incidencias activas primero, luego por último archivo · generado 25/07/2026 08:00</div>
-    </div>
-  </header>
+  <div class="intro">
+    <p class="sub">31 contrato(s) de postventa · incidencias activas primero, luego por último archivo · generado 25/07/2026 10:55</p>
+    <label class="search-wrap"><input id="search" class="search" type="search" placeholder="Buscar obra, archivo, código o incidencia"><span class="search-symbol">&#9906;</span></label>
+  </div>
 
   <section class="stats">
     <div class="stat"><div class="stat-value">31</div><div class="stat-label">Contratos</div></div>
@@ -83,7 +96,6 @@ summary{cursor:pointer;font-size:12.5px;font-weight:750;color:var(--header2);}
   </section>
 
   <div class="toolbar">
-    <input id="search" class="search" type="search" placeholder="Buscar obra, archivo, código o incidencia">
     <div class="filters">
       <button class="active" data-filter="all">Todas</button>
       <button data-filter="recent">Recientes</button>
