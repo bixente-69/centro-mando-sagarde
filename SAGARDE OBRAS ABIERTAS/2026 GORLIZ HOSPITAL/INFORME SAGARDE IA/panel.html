@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panel Sagarde IA · 2026 GORLIZ HOSPITAL</title>
+<script src="../../_SISTEMA INFORME SAGARDE IA/static/chart.min.js"></script>
+<style>
+:root{
+  --bg:#f4f6f9;--card:#fff;--header:#0b1f3a;--header2:#123a63;--text:#1c2733;
+  --muted:#647184;--accent:#f5a524;--accent2:#2e7dd7;--ok:#2e9e5b;--warn:#e07b1a;--bad:#d9483c;
+  --radius:10px;--gap:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5;}
+.wrap{max-width:1320px;margin:0 auto;padding:18px;}
+.header{background:linear-gradient(120deg,var(--header),var(--header2));color:#fff;border-radius:var(--radius);padding:20px 26px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;}
+.header .brand{font-size:11.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);font-weight:700;}
+.header h1{font-size:21px;font-weight:700;margin-top:2px;}
+.header .sub{font-size:12.5px;color:#c7d3e3;margin-top:4px;}
+.header .meta{text-align:right;font-size:12px;color:#c7d3e3;}
+.header a.volver{color:#fff;text-decoration:none;font-size:12.5px;border:1px solid rgba(255,255,255,.35);padding:5px 11px;border-radius:6px;display:inline-block;margin-top:6px;}
+.header a.volver:hover{background:rgba(255,255,255,.12);}
+.nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
+.nav button{border:none;background:#fff;color:var(--text);padding:9px 15px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.07);}
+.nav button.active{background:var(--header);color:#fff;}
+.view{display:none;}
+.view.active{display:block;}
+.banner{background:#fff4e5;border:1px solid var(--accent);color:#7a4c00;border-radius:var(--radius);padding:11px 16px;margin-bottom:14px;font-size:13px;}
+.banner.bad{background:#fdecea;border-color:var(--bad);color:#7a231c;}
+.kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--gap);margin-bottom:var(--gap);}
+.kpi{background:var(--card);border-radius:var(--radius);padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.07);}
+.kpi .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;}
+.kpi .value{font-size:25px;font-weight:700;margin-top:5px;}
+.kpi .hint{font-size:11.5px;color:var(--muted);margin-top:3px;}
+.chart-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:var(--gap);margin-bottom:var(--gap);}
+.card{background:var(--card);border-radius:var(--radius);padding:18px 22px;box-shadow:0 1px 3px rgba(0,0,0,.07);margin-bottom:var(--gap);}
+.card h3{font-size:14px;font-weight:700;margin-bottom:12px;}
+.card canvas{max-height:300px;}
+.table-scroll{overflow-x:auto;}
+table.data{width:100%;border-collapse:collapse;font-size:13px;}
+table.data thead th{text-align:left;padding:8px 10px;border-bottom:2px solid #e3e7ee;color:var(--muted);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.4px;}
+table.data tbody td{padding:8px 10px;border-bottom:1px solid #eef1f5;}
+table.data tbody tr:hover{background:#f8f9fb;}
+.badge{display:inline-block;padding:2px 9px;border-radius:20px;font-size:11px;font-weight:700;}
+.badge.bad{background:#fdecea;color:var(--bad);}.badge.warn{background:#fff4e5;color:var(--warn);}.badge.ok{background:#e8f6ee;color:var(--ok);}
+.badge.f1{background:#e8f0fc;color:#1a3a7a;}.badge.f3{background:#f0f0f0;color:#4a5568;}.badge.f4{background:#f5f5f5;color:#718096;}
+.empty{color:var(--muted);font-size:13.5px;padding:16px 4px;}
+.doc-cat{font-size:12px;font-weight:700;color:var(--header2);text-transform:uppercase;letter-spacing:.5px;margin:14px 0 6px;}
+.doc a{color:var(--accent2);text-decoration:none;}.doc a:hover{text-decoration:underline;}
+.norm li{margin:6px 0 6px 18px;font-size:13.5px;}
+.footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 0;}
+@media(max-width:768px){.header{flex-direction:column;}.kpi-row{grid-template-columns:repeat(2,1fr);}.chart-row{grid-template-columns:1fr;}}
+</style></head><body><div class="wrap">
+<div class="header">
+  <div><div class="brand">Informe Sagarde IA · Panel de obra</div><h1>2026 GORLIZ HOSPITAL</h1><div class="sub">Electricidad y telecomunicaciones · Hospital de Gorliz</div></div>
+  <div class="meta">Generado: 25/07/2026 14:53<br>
+  Última revisión: —<br>
+  <a class="volver" href="../../index.html">← Todas las obras</a>
+  <a class="volver" href="INFORME_EJECUTIVO_2026_GORLIZ_HOSPITAL.pdf" target="_blank" style="background:var(--bad);border-color:var(--bad);margin-left:6px;">📄 Informe Ejecutivo PDF</a></div>
+</div>
+
+<div class="nav">
+  <button class="active" data-view="v-panel">▦ Panel</button>
+  <button data-view="v-trabajos">✓ Trabajos</button>
+  <button data-view="v-materiales">▣ Materiales</button>
+  <button data-view="v-personal">👷 Personal</button>
+  <button data-view="v-prioridades">🎯 Prioridades</button>
+  <button data-view="v-riesgos">⚠ Riesgos</button>
+  <button data-view="v-normativa">📘 Normativa</button>
+  <button data-view="v-docs">📎 Documentos</button>
+  <button data-view="v-actualizar" style="margin-left:auto;background:var(--header2);color:#fff;">↻ Actualizar</button>
+</div>
+
+
+
+<section id="v-panel" class="view active">
+  <div class="kpi-row"><div class="kpi"><div class="label">Avance</div><div class="value">—</div><div class="hint">Sin datos de revisión</div></div></div>
+  <div class="chart-row">
+    <div class="card"><h3>Evolución del avance</h3><canvas id="chartSerie"></canvas></div>
+    <div class="card"><h3>Avance por planta y edificio</h3><canvas id="chartPlanta"></canvas></div>
+  </div>
+  <div class="card"><h3>Ficha de obra</h3><table class="data"><tbody><tr><td style="color:var(--muted);width:42%;">Nombre de la obra</td><td>Proyecto de Ejecución de Obras de Rehabilitación de Cinco Unidades de Hospitalización del Hospital de Gorliz — OSI 57 (Fase 1)</td></tr><tr><td style="color:var(--muted);width:42%;">Dirección</td><td>Urezarantza Ibiltokia, 1, Gorliz (Bizkaia)</td></tr><tr><td style="color:var(--muted);width:42%;">Cliente</td><td>Osakidetza (Servicio Vasco de Salud)</td></tr><tr><td style="color:var(--muted);width:42%;">Promotor</td><td>Osakidetza. Servicio Vasco de Salud. Gobierno Vasco [NIF no localizado en la documentación revisada]</td></tr><tr><td style="color:var(--muted);width:42%;">Constructora</td><td>[No localizado en documentación — pendiente de confirmar] (la documentación revisada es el Proyecto de Ejecución enviado a instaladores; la adjudicación de la obra a una constructora no consta en estos documentos)</td></tr><tr><td style="color:var(--muted);width:42%;">Dirección facultativa</td><td>UTE "Estudio K, s.coop.p. - Elizondo Arkitektura" (adjudicataria conjunta de la redacción del proyecto, la dirección facultativa y la coordinación de seguridad y salud, según el apartado "Actuaciones previas" de la memoria). Estudio K S.Coop.P. — CIF F-48202402, Basagoiti Etorbidea nº69 1º, 48991 Getxo (Bizkaia). Elizondo Arkitektura S.L. — CIF B-95710000, Bidebarri 17 bajo, 48991 Getxo (Bizkaia). Técnicos redactores: Ion Etxabe Gutiérrez, Oier Marcos Etxeandia, Aitor Sarria Bilbao, Yolanda Zugazaga Parra y Kerman Elizondo (arquitectos). Ingeniería de instalaciones (Anejo IV): GAISEC, S.L.</td></tr><tr><td style="color:var(--muted);width:42%;">Responsable de obra (Sagarde)</td><td>[No localizado en documentación — pendiente de confirmar]</td></tr><tr><td style="color:var(--muted);width:42%;">Encargado</td><td>[No localizado en documentación — pendiente de confirmar]</td></tr><tr><td style="color:var(--muted);width:42%;">Fecha de inicio</td><td>[No localizado en documentación — pendiente de confirmar] (memoria fechada 02.2025 v.V5 de 26/06/2025; Anejo IV Instalaciones, última versión 17/07/2025; no consta certificación de inicio real de obra)</td></tr><tr><td style="color:var(--muted);width:42%;">Fecha prevista de fin</td><td>[No localizado en documentación — pendiente de confirmar] directamente. Plazo de ejecución previsto: 18 meses desde el inicio de obra, según el Anejo I de Seguridad y Salud</td></tr><tr><td style="color:var(--muted);width:42%;">Nº edificios / portales</td><td>1 edificio (Hospital de Gorliz, edificio histórico construido en 1911 e inaugurado en 1919, con protección especial de la Diputación Foral de Bizkaia)</td></tr><tr><td style="color:var(--muted);width:42%;">Nº plantas</td><td>Intervención en 3 plantas del edificio (5 de las 6 Unidades de Hospitalización existentes)</td></tr><tr><td style="color:var(--muted);width:42%;">Nº viviendas / locales</td><td>No aplica (uso hospitalario). Superficie construida cerrada del ámbito de Fase 1: 1.327 m², más 413 m² de terraza exterior y 3.600 m² de cubierta</td></tr><tr><td style="color:var(--muted);width:42%;">Alcance contratado</td><td>Instalación de electricidad (Anejo IV, apartados 3.2 y 4.2), dentro del conjunto de instalaciones del proyecto: climatización y ventilación, electricidad, comunicaciones, fontanería y saneamiento, control de accesos, protección contra incendios, gases medicinales y sistema de control BMS</td></tr><tr><td style="color:var(--muted);width:42%;">Trabajos excluidos</td><td>[No localizado en documentación — pendiente de confirmar]</td></tr><tr><td style="color:var(--muted);width:42%;">Estado general</td><td>Según la documentación disponible ("DOC ENVIADA A INSTALADORES"), el proyecto se encuentra en fase de proyecto de ejecución/licitación; no consta en estos documentos evidencia de inicio de obra real</td></tr><tr><td style="color:var(--muted);width:42%;">Observaciones</td><td>Documentación revisada: memoria, 4 anejos (Seguridad y Salud, Control de Calidad, Gestión de Residuos, Instalaciones), planos de arquitectura e instalaciones, pliego de condiciones y presupuesto (Presto). Nº máximo de trabajadores previsto en obra: 10 (Anejo I). Centro asistencial más próximo para casos graves: Hospital de Urduliz. Exp. Estudio K: 2024-21.</td></tr><tr><td style="color:var(--muted);width:42%;">NIF Promotor</td><td>[No localizado en documentación — pendiente de confirmar]</td></tr><tr><td style="color:var(--muted);width:42%;">Nº total de viviendas (proyecto)</td><td>No aplica</td></tr><tr><td style="color:var(--muted);width:42%;">Alcance NO cubierto por el seguimiento actual</td><td>No aplica (obra Tier 2, sin tabla de seguimiento de avance)</td></tr><tr><td style="color:var(--muted);width:42%;">Suministro eléctrico</td><td>[No localizado en documentación — pendiente de confirmar] (no revisado en detalle el apartado 4.2 "Cálculos instalación de Electricidad" del Anejo IV por extensión del documento)</td></tr><tr><td style="color:var(--muted);width:42%;">Fuente de los datos de esta ficha</td><td>Extraídos de "01-memoria_20250626-V5 v.pdf", "02-anejoI-SeguridadSalud_20250626-V3 v.pdf", "05-anejoIV-instalaciones_20250717-V4 v.pdf" y "06-pliegoCondiciones_20250626-V2 v.pdf", dentro de la carpeta "DOC ENVIADA A INSTALADORES".</td></tr></tbody></table></div>
+</section>
+
+<section id="v-trabajos" class="view">
+  <div class="card"><h3>Avance por tarea — cuellos de botella</h3><canvas id="chartTareas" style="max-height:520px;"></canvas></div>
+  <div class="card"><h3>Bloqueos detectados</h3>
+    <table class="data"><thead><tr><th>Tipo</th><th>Edificio</th><th>Planta</th><th>Unidad</th><th>Avance</th><th>Motivo</th></tr></thead>
+    <tbody><tr><td colspan="6" class="empty">No se detectan bloqueos con la heurística actual.</td></tr></tbody></table></div>
+  <div class="card"><h3>Detalle por planta / edificio</h3>
+    <table class="data"><thead><tr><th>Edificio</th><th>Planta</th><th>% estricto</th><th>% estimado</th><th>Nº registros</th></tr></thead>
+    <tbody><tr><td colspan="5" class="empty">Sin datos.</td></tr></tbody></table></div>
+</section>
+
+<section id="v-materiales" class="view"><div class="card"><h3>Materiales</h3><p class="empty">No se encontró hoja de materiales en la carpeta de la obra.</p></div></section>
+
+<section id="v-personal" class="view"><div class="card"><h3>Personal asignado</h3><p class="empty">Sin datos en la ficha de obra.</p></div></section>
+
+<section id="v-prioridades" class="view">
+    <div class="kpi-row">
+      <div class="kpi"><div class="label">Bloques viables</div><div class="value">0</div><div class="hint">0 tajos/unidades agrupados</div></div>
+      <div class="kpi"><div class="label">Bloqueados</div><div class="value">0</div><div class="hint">Tajos propios con dependencias</div></div>
+      <div class="kpi"><div class="label">Otros gremios</div><div class="value">0</div><div class="hint">Control de interferencias</div></div>
+      <div class="kpi"><div class="label">Dudas</div><div class="value">0</div><div class="hint">Preguntar antes de decidir</div></div>
+      <div class="kpi"><div class="label">Terminados</div><div class="value">0</div><div class="hint">Conservados del histórico</div></div>
+      <div class="kpi"><div class="label">Inventario completo</div><div class="value">0</div><div class="hint">Tipos de tajo agrupados</div></div>
+      <div class="kpi"><div class="label">Revisión utilizada</div><div class="value" style="font-size:18px;">—</div><div class="hint">Motor v4.2 · catálogo v1.2</div></div>
+    </div>
+    
+    <div class="banner">✓ No hay preguntas pendientes en esta actualización.</div>
+    <div class="banner">⚠ No hay datos de revisión.</div>
+    <div class="card"><h3>Qué hacer ahora: orden lógico de ejecución</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Primero aparecen los tajos viables de viviendas, después zonas comunes y edificio. Los tajos iguales se agrupan. VERIFICAR nunca se considera ejecutable hasta confirmar la duda. <a href="prioridades_trabajos.json" target="_blank">Ver cálculo y detalle completo</a>.</p>
+      <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <span style="font-size:12px;color:var(--muted);">Filtrar:</span>
+        <select id="filtro-sit" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;">
+          <option value="">LISTO + VERIFICAR</option>
+          <option value="LISTO">Solo LISTO</option>
+          <option value="VERIFICAR">Solo VERIFICAR</option>
+        </select>
+        <span id="prio-count" style="font-size:12px;color:var(--muted);"></span>
+      </div>
+      <div class="table-scroll"><table id="tabla-prio" class="data"><thead><tr><th>#</th><th>Tajo</th><th>Alcance</th><th>Dónde</th><th>En obra</th><th>Motivo / Comprobar</th></tr></thead>
+      <tbody><tr><td colspan="6" class="empty">No se han identificado bloques ejecutables con las reglas y datos actuales.</td></tr></tbody></table></div>
+    </div>
+    <div style="margin:20px 0 10px;"><h2 style="font-size:18px;">Inventario completo de la obra</h2><p style="font-size:12.5px;color:var(--muted);">Incluye todos los tajos encontrados en todas las revisiones. Los terminados no desaparecen: se guardan al final.</p></div>
+    <div class='card'><h3>1. Tajos viables <span class='badge'>0</span></h3><p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>Se pueden ejecutar según los datos disponibles.</p><div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th><th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th></tr></thead><tbody><tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr></tbody></table></div></div><div class='card'><h3>2. Tajos bloqueados <span class='badge'>0</span></h3><p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>Son propios, pero falta una dependencia previa.</p><div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th><th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th></tr></thead><tbody><tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr></tbody></table></div></div><div class='card'><h3>3. Otros gremios e interferencias <span class='badge'>0</span></h3><p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>Se controlan solo para saber cuándo puede entrar electricidad.</p><div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th><th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th></tr></thead><tbody><tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr></tbody></table></div></div><div class='card'><h3>4. Sin clasificar o por verificar <span class='badge'>0</span></h3><p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>No se decide ni se fusiona hasta recibir confirmación.</p><div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th><th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th></tr></thead><tbody><tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr></tbody></table></div></div><details><summary style='cursor:pointer;font-weight:700;margin:14px 0;'>Mostrar 0 tajos terminados</summary><div class='card'><h3>5. Tajos terminados <span class='badge'>0</span></h3><p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>Histórico conservado; siempre se muestra al final.</p><div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th><th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th></tr></thead><tbody><tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr></tbody></table></div></div></details>
+  <div class="card"><h3>Hitos manuales</h3><p class="empty">Sin datos en la ficha de obra.</p></div></section>
+
+<section id="v-riesgos" class="view"><div class="card"><h3>Riesgos (manuales + detectados automáticamente)</h3>
+  <table class="data"><thead><tr><th>Riesgo</th><th>Tipo</th><th>Prob.</th><th>Impacto</th><th>Acción</th><th>Fecha límite</th><th>Estado</th></tr></thead>
+  <tbody><tr><td colspan="7" class="empty">Sin riesgos registrados.</td></tr></tbody></table></div></section>
+
+<section id="v-normativa" class="view"><div class="card"><h3>Normativa y criterios técnicos aplicables</h3>
+  <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px;">Lista de referencia. No sustituye la comprobación de la versión vigente ni las instrucciones de la Dirección Facultativa.</p>
+  <ul class="norm"><li>REBT — Reglamento Electrotécnico para Baja Tensión (RD 842/2002) e ITC-BT aplicables. Verificar versión vigente.</li><li>ITC-BT-10 / previsión de cargas; ITC-BT-25 (viviendas); ITC-BT-28 (locales pública concurrencia) según aplique.</li><li>Normativa ICT vigente (RD 346/2011 y reglamento posterior) para telecomunicaciones. Verificar versión.</li><li>Normas particulares de i-DE / Iberdrola para acometida, CGP y CT cuando sean de aplicación.</li><li>Normas UNE aplicables al proyecto (verificar edición vigente).</li><li>Normativa autonómica de Euskadi y ordenanzas municipales aplicables.</li><li>Proyecto eléctrico y de telecomunicaciones de la obra e instrucciones de la Dirección Facultativa.</li><li>Inspección OCA / Industria antes de la puesta en servicio cuando proceda.</li></ul></div></section>
+
+<section id="v-docs" class="view"><div class="card"><h3>Documentos de la obra</h3>
+  <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px;">Todos los archivos de la carpeta. Clic para abrir (los enlaces funcionan en el PC; en el móvil abre los archivos desde la app de OneDrive).</p>
+  <div class="doc-cat">Comprimidos</div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929.zip" target="_blank">5udsGorliz_planosDWG_20250929.zip</a><span style="color:var(--muted);font-size:11.5px;"> (26856 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos</span></div><div class="doc-cat">Excel</div><div class="doc"><a href="../FICHA DE OBRA.xlsx" target="_blank">FICHA DE OBRA.xlsx</a><span style="color:var(--muted);font-size:11.5px;"> (10 KB)</span></div><div class="doc-cat">Imágenes</div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx/firma Kerman.jpg" target="_blank">firma Kerman.jpg</a><span style="color:var(--muted);font-size:11.5px;"> (38 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx/logoElizondo.jpg" target="_blank">logoElizondo.jpg</a><span style="color:var(--muted);font-size:11.5px;"> (920 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx</span></div><div class="doc-cat">Otros</div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/01.01-situacion.txt" target="_blank">01.01-situacion.txt</a><span style="color:var(--muted);font-size:11.5px;"> (8 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/PlotCfgs/DWF6 ePlot.pc5" target="_blank">DWF6 ePlot.pc5</a><span style="color:var(--muted);font-size:11.5px;"> (1 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/PlotCfgs</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/PlotCfgs/DWG to PDF.pc5" target="_blank">DWG to PDF.pc5</a><span style="color:var(--muted);font-size:11.5px;"> (1 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/PlotCfgs</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/04-presupuesto/GORLIZ CIEGO.Presto" target="_blank">GORLIZ CIEGO.Presto</a><span style="color:var(--muted);font-size:11.5px;"> (2482 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/04-presupuesto</span></div><div class="doc-cat">PDF</div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/01-memoria y anejos/01-memoria_20250626-V5 v.pdf" target="_blank">01-memoria_20250626-V5 v.pdf</a><span style="color:var(--muted);font-size:11.5px;"> (4592 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/01-memoria y anejos</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/01-memoria y anejos/02-anejoI-SeguridadSalud_20250626-V3 v.pdf" target="_blank">02-anejoI-SeguridadSalud_20250626-V3 v.pdf</a><span style="color:var(--muted);font-size:11.5px;"> (1145 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/01-memoria y anejos</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/01-memoria y anejos/03-anejoII-ControlCalidad_20250626-V3 v.pdf" target="_blank">03-anejoII-ControlCalidad_20250626-V3 v.pdf</a><span style="color:var(--muted);font-size:11.5px;"> (793 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/01-memoria y anejos</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/01-memoria y anejos/04-anejoIII-EstudioGestiónResiduos_20250716-V4 v.pdf" target="_blank">04-anejoIII-EstudioGestiónResiduos_20250716-V4 v.pdf</a><span style="color:var(--muted);font-size:11.5px;"> (2456 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/01-memoria y anejos</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/01-memoria y anejos/05-anejoIV-instalaciones_20250717-V4 v.pdf" target="_blank">05-anejoIV-instalaciones_20250717-V4 v.pdf</a><span style="color:var(--muted);font-size:11.5px;"> (16346 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/01-memoria y anejos</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/2025-07-02/Bastidor_ROCA.pdf" target="_blank">Bastidor_ROCA.pdf</a><span style="color:var(--muted);font-size:11.5px;"> (193 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/2025-07-02</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/PDF/Planos Arquitectura v.pdf" target="_blank">Planos Arquitectura v.pdf</a><span style="color:var(--muted);font-size:11.5px;"> (17841 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/PDF</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/PDF/Planos Instalaciones v.pdf" target="_blank">Planos Instalaciones v.pdf</a><span style="color:var(--muted);font-size:11.5px;"> (29762 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/PDF</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/03-pliegoCondiciones/06-pliegoCondiciones_20250626-V2 v.pdf" target="_blank">06-pliegoCondiciones_20250626-V2 v.pdf</a><span style="color:var(--muted);font-size:11.5px;"> (1902 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/03-pliegoCondiciones</span></div><div class="doc-cat">Planos y gráfica</div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/01.01-situacion.dwg" target="_blank">01.01-situacion.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (7338 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/02.01_02-estado actual.dwg" target="_blank">02.01_02-estado actual.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (836 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/03.03-alzadosSecciones.dwg" target="_blank">03.03-alzadosSecciones.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (1577 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/03.04-cubiertas y terrazas.dwg" target="_blank">03.04-cubiertas y terrazas.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (123 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/05.02-carpinteria exterior.dwg" target="_blank">05.02-carpinteria exterior.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (415 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/07.01-07.03-estructura.dwg" target="_blank">07.01-07.03-estructura.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (764 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.01-saneamiento.dwg" target="_blank">10.01-saneamiento.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (684 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.02-fontaneria.dwg" target="_blank">10.02-fontaneria.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (775 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.04-trazadoBandejas.dwg" target="_blank">10.04-trazadoBandejas.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (626 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.05-10.08-PCI.dwg" target="_blank">10.05-10.08-PCI.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (692 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.09-sistemaLlamada.dwg" target="_blank">10.09-sistemaLlamada.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (1913 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.10-vozDatos.dwg" target="_blank">10.10-vozDatos.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (641 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.11-controlAccesos.dwg" target="_blank">10.11-controlAccesos.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (639 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.12-emergencias.dwg" target="_blank">10.12-emergencias.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (652 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.13-electricidad.dwg" target="_blank">10.13-electricidad.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (648 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.14-iluminacion.dwg" target="_blank">10.14-iluminacion.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (692 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.21-gasesMedicinales.dwg" target="_blank">10.21-gasesMedicinales.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (662 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.22-ventilacion.dwg" target="_blank">10.22-ventilacion.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (753 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.27-climatizacion.dwg" target="_blank">10.27-climatizacion.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (861 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/10.32-esqumasBMS.dwg" target="_blank">10.32-esqumasBMS.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (230 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/dwg/aitor.dwg" target="_blank">aitor.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (43 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/dwg</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/dwg/yolanda.dwg" target="_blank">yolanda.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (102 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/dwg</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx/5uds Gorliz - BASE ARQ F1.dwg" target="_blank">5uds Gorliz - BASE ARQ F1.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (2860 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx/caratula F1 900.dwg" target="_blank">caratula F1 900.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (664 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx/caratula F1 A1.dwg" target="_blank">caratula F1 A1.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (665 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx</span></div><div class="doc"><a href="../DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx/esquema fases para planos.dwg" target="_blank">esquema fases para planos.dwg</a><span style="color:var(--muted);font-size:11.5px;"> (1183 KB)</span> <span style='color:var(--muted);font-size:11.5px;'>· DOC ENVIADA A INSTALADORES/02-planos/5udsGorliz_planosDWG_20250929/refx</span></div></div></section>
+
+<section id="v-actualizar" class="view"><div class="card">
+  <h3>↻ Actualizar panel</h3>
+  <p style="font-size:13px;">Este panel es un fichero HTML estático. Se actualizó el <b>25/07/2026 14:53</b>.
+  Para reflejarlo con los últimos archivos de revisión hay que regenerarlo.</p>
+  <div style="margin-top:18px;background:#f0f4ff;border:1px solid #c0cfe8;border-radius:8px;padding:14px 18px;">
+    <b style="font-size:13px;">Paso 1 &mdash; Haz doble clic en este archivo:</b><br>
+    <code style="font-size:13px;display:block;margin:8px 0;">Actualizar_Obras.bat</code>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;">
+      <a href="../../_SISTEMA INFORME SAGARDE IA/Actualizar_Obras.bat" style="background:var(--header2);color:#fff;padding:7px 14px;border-radius:6px;text-decoration:none;font-size:13px;font-weight:600;">⬇ Abrir / descargar .bat</a>
+      <button onclick="navigator.clipboard.writeText('D:\\Nueva carpeta\\OneDrive\\COPIA SEGURIDAD SAGARDE\\SAGARDE OBRAS ABIERTAS\\_SISTEMA INFORME SAGARDE IA\\Actualizar_Obras.bat').then(()=>this.textContent='✓ Copiado!').catch(()=>this.textContent='Error')" style="background:#e8f0fe;border:1px solid #c0cfe8;padding:7px 14px;border-radius:6px;font-size:13px;cursor:pointer;">📋 Copiar ruta completa</button>
+    </div>
+    <div style="font-size:11.5px;color:var(--muted);margin-top:6px;">Ruta: <code>D:\Nueva carpeta\OneDrive\COPIA SEGURIDAD SAGARDE\SAGARDE OBRAS ABIERTAS\_SISTEMA INFORME SAGARDE IA\Actualizar_Obras.bat</code></div>
+  </div>
+  <div style="margin-top:18px;background:#f4f6f9;border-radius:8px;padding:14px 18px;">
+    <b style="font-size:13px;">Paso 2 &mdash; Recarga esta página en el navegador (F5)</b><br>
+    <span style="font-size:12.5px;color:var(--muted);">El .bat regenera el panel.html y abre el índice automáticamente.</span>
+  </div>
+  
+</div></section>
+
+<div class="footer">Informe Sagarde IA · Generado automáticamente a partir de los archivos de la carpeta de la obra. Los porcentajes, bloqueos y prioridades son cálculos de apoyo; no sustituyen la verificación en obra.</div>
+</div>
+<script>
+const DATA = {"serie": [], "por_planta": {"labels": [], "series": {}}, "por_tarea": []};
+document.querySelectorAll('.nav button').forEach(btn=>btn.addEventListener('click',()=>{
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(btn.dataset.view).classList.add('active');
+}));
+function pctColor(p){return p<40?'#d9483c':p<70?'#e07b1a':'#2e9e5b';}
+if(DATA.serie.length) new Chart(document.getElementById('chartSerie'),{type:'line',
+  data:{labels:DATA.serie.map(d=>d.fecha),datasets:[
+    {label:'% estricto',data:DATA.serie.map(d=>d.pct_estricto),borderColor:'#123a63',backgroundColor:'#123a6320',borderWidth:2,tension:.25,fill:true,pointRadius:2},
+    {label:'% estimado',data:DATA.serie.map(d=>d.pct_ponderado),borderColor:'#f5a524',borderWidth:2,borderDash:[5,3],tension:.25,pointRadius:2}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}}}});
+if(Object.keys(DATA.por_planta.series).length){
+  const eds=Object.keys(DATA.por_planta.series),col=['#123a63','#f5a524','#2e7dd7','#8172B3'];
+  new Chart(document.getElementById('chartPlanta'),{type:'bar',
+    data:{labels:DATA.por_planta.labels,datasets:eds.map((e,i)=>({label:e,data:DATA.por_planta.series[e],backgroundColor:col[i%col.length]}))},
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{y:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}}}});
+}
+if(DATA.por_tarea.length) new Chart(document.getElementById('chartTareas'),{type:'bar',
+  data:{labels:DATA.por_tarea.map(t=>t[0]),datasets:[{label:'% avance',data:DATA.por_tarea.map(t=>t[1]),backgroundColor:DATA.por_tarea.map(t=>pctColor(t[1]))}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,max:100,ticks:{callback:v=>v+'%'}}}}});
+document.querySelectorAll('.show-ub').forEach(a=>a.addEventListener('click',function(ev){
+  ev.preventDefault();
+  const extra=this.previousElementSibling;
+  if(extra.style.display==='none'){extra.style.display='block';this.textContent='▲ Ocultar';}
+  else{extra.style.display='none';this.textContent='+'+this.dataset.n+' ubicaciones más';}
+}));
+function filtrarPrio(){
+  const fase=document.getElementById('filtro-fase')?.value||'';
+  const sit=document.getElementById('filtro-sit')?.value||'';
+  const rows=document.querySelectorAll('#tabla-prio tbody tr[data-fase]');
+  let n=0;
+  rows.forEach(tr=>{
+    const ok=(!fase||tr.dataset.fase===fase)&&(!sit||tr.dataset.sit===sit);
+    tr.style.display=ok?'':'none';
+    if(ok)n++;
+  });
+  const cnt=document.getElementById('prio-count');
+  if(cnt)cnt.textContent=n+' bloque(s) visibles';
+}
+document.getElementById('filtro-fase')?.addEventListener('change',filtrarPrio);
+document.getElementById('filtro-sit')?.addEventListener('change',filtrarPrio);
+filtrarPrio();
+</script></body></html>

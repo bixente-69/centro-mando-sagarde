@@ -1,0 +1,21 @@
+{
+  "version": "4.2",
+  "catalogo_version": "1.2",
+  "obra": "2026 GORLIZ HOSPITAL",
+  "revision": null,
+  "estado_obra": null,
+  "historial_confirmado_terminado": false,
+  "resumen": {
+    "listos": 0,
+    "verificar": 0,
+    "bloqueados": 0,
+    "inventario_total": 0
+  },
+  "items": [],
+  "detalle_items": [],
+  "inventario": [],
+  "dudas_pendientes": [],
+  "avisos": [
+    "No hay datos de revisión."
+  ]
+}
