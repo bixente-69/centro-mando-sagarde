@@ -303,7 +303,6 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
         <div class="gen-box" id="gen-summary"></div>
         <div class="gen-actions">
           <button class="btn-dl" onclick="doDownload()">⬇ Descargar HTML</button>
-          <button class="btn-dl" onclick="doDownloadWord()" style="background:#1F5C9A">⬇ Descargar Word</button>
           <button class="btn-sec" onclick="doPreview()">👁 Vista previa</button>
           <button class="btn-sec" onclick="saveConfig()">💾 Guardar config</button>
         </div>
@@ -1223,113 +1222,6 @@ function doDownload(){
   a.href = URL.createObjectURL(blob);
   const fname=revisionFileBase()+'.html';
   a.download = fname;
-  a.click();
-  URL.revokeObjectURL(a.href);
-  showToast('Descargado: '+fname);
-  saveConfig();
-}
-
-function doDownloadWord(){
-  if(!confirmA4Capacity()) return;
-  const html = generateHTML(S.importData||{});
-  const parser = new DOMParser();
-  const wd = parser.parseFromString(html, 'text/html');
-
-  // Colores de estado → inline (Word no aplica @media print ni clases CSS)
-  const BG={done:'#D5EDD9',prog:'#FEF7D5',half:'#E4F4EC',pend:'#FFFFFF',ext:'#F5F0FA'};
-  const FG={done:'#1A6030',prog:'#7A5000',half:'#1A6040',pend:'#cccccc',ext:'#7A50A0'};
-  wd.querySelectorAll('.td-st').forEach(td=>{
-    const st=['done','prog','half','pend','ext'].find(s=>td.classList.contains(s))||'pend';
-    const bdr=td.classList.contains('right-first')?'border-left:2.5px solid #1A3558;':'';
-    td.style.cssText=(td.getAttribute('style')||'')+
-      `;background-color:${BG[st]};color:${FG[st]};font-weight:800;text-align:center;vertical-align:middle;${bdr}`;
-  });
-
-  // Cabeceras de tabla
-  wd.querySelectorAll('.th-floor').forEach(th=>{
-    const bdr=th.classList.contains('right-floor')?'border-left:2.5px solid #fff;':'';
-    th.style.cssText=`background-color:#1A3558;color:#fff;font-weight:800;text-align:center;vertical-align:middle;padding:2.2mm 1mm;${bdr}`;
-  });
-  wd.querySelectorAll('.th-apt').forEach(th=>{
-    const bdr=th.classList.contains('right-first')?'border-left:2.5px solid #1A3558;':'';
-    th.style.cssText=`background-color:#E7EDF3;color:#102A4C;font-weight:800;text-align:center;`+
-      `vertical-align:middle;padding:1.25mm .45mm;border-bottom:1.5px solid #1A3558;border-right:1px solid #53677F;${bdr}`;
-  });
-
-  // Filas de grupo
-  wd.querySelectorAll('.tr-grp td').forEach(td=>{
-    td.style.cssText=`background-color:#EDF1F5;color:#173A63;font-weight:800;font-size:7.2pt;`+
-      `text-transform:uppercase;letter-spacing:.075em;padding:.25mm 1.5mm;`+
-      `border-top:1.3px solid #435A74;border-bottom:1.3px solid #435A74`;
-  });
-
-  // Celda nombre de tajo
-  wd.querySelectorAll('.td-name').forEach(td=>{
-    td.style.cssText=(td.getAttribute('style')||'')+
-      `;color:#102A4C;font-weight:700;padding:.4mm 1.2mm;vertical-align:middle;border-right:2px solid #1A3558`;
-  });
-
-  // Fila de observaciones
-  wd.querySelectorAll('.tr-notes td').forEach(td=>{
-    td.style.cssText=`background-color:#F3F5F7;color:#43556B;font-weight:700;`+
-      `font-size:7pt;padding:.65mm 2mm;border-top:1.5px solid #1A3558`;
-  });
-
-  // Cabecera de portal (barra azul oscura)
-  wd.querySelectorAll('.portal-sheet-head').forEach(el=>{
-    el.style.cssText=`background-color:#1A3558;color:#fff;padding:1.7mm 2.3mm;margin-bottom:2px;display:block`;
-  });
-  wd.querySelectorAll('.portal-block-name').forEach(el=>{
-    el.style.cssText=`font-size:9.2pt;font-weight:800;letter-spacing:.065em;text-transform:uppercase;color:#fff`;
-  });
-  wd.querySelectorAll('.portal-name').forEach(el=>{
-    el.style.cssText=`font-size:8.7pt;font-weight:700;margin-left:12px;padding-left:12px;`+
-      `border-left:2px solid rgba(255,255,255,.65);color:#fff`;
-  });
-
-  // Cabecera de bloque/planta
-  wd.querySelectorAll('.block-hdr').forEach(el=>{
-    el.style.cssText=`background-color:#E4EEF8;padding:1.2mm 2mm;border-bottom:1px solid rgba(26,53,88,.18)`;
-  });
-  wd.querySelectorAll('.block-title').forEach(el=>{
-    el.style.cssText=`font-size:8.4pt;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:#102A4C`;
-  });
-
-  // Tabla principal con borde
-  wd.querySelectorAll('.rev-table').forEach(t=>{
-    t.style.cssText=`width:100%;border-collapse:collapse;table-layout:fixed;border:1.5px solid #1A3558`;
-  });
-
-  // Saltos de página entre portales
-  wd.querySelectorAll('.portal-break').forEach(el=>{
-    el.style.cssText=(el.getAttribute('style')||'')+';page-break-before:always;mso-break-type:page';
-  });
-  // Saltos de página entre bloques/plantas del mismo portal
-  wd.querySelectorAll('.portal-section').forEach(section=>{
-    section.querySelectorAll('.planta-block').forEach((block,i)=>{
-      if(i>0) block.style.cssText=(block.getAttribute('style')||'')+';page-break-before:always';
-    });
-  });
-
-  // Quitar barra flotante, tooltip y scripts interactivos
-  wd.querySelectorAll('.float-bar,.leg-tip,script').forEach(el=>el.remove());
-
-  // CSS de página A4 para Word
-  const ps=wd.createElement('style');
-  ps.textContent=`@page{size:A4 portrait;margin:7mm 7mm 6mm}body{font-family:Arial,sans-serif;font-size:8.5pt;width:196mm}.wrap{max-width:100%}.doc-header{border-bottom:3px solid #1A3558}table{border-collapse:collapse}`;
-  wd.head.appendChild(ps);
-
-  let wordHtml='<!DOCTYPE html>\n'+wd.documentElement.outerHTML;
-  wordHtml=wordHtml.replace('<html lang="es">',
-    '<html xmlns:o="urn:schemas-microsoft-com:office:office" '+
-    'xmlns:w="urn:schemas-microsoft-com:office:word" '+
-    'xmlns="http://www.w3.org/TR/REC-html40" lang="es">');
-
-  const blob=new Blob(['﻿',wordHtml],{type:'application/msword'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  const fname=revisionFileBase()+'.doc';
-  a.download=fname;
   a.click();
   URL.revokeObjectURL(a.href);
   showToast('Descargado: '+fname);
