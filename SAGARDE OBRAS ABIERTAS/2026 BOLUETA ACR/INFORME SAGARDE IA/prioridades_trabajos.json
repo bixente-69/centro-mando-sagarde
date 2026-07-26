@@ -7,11 +7,11 @@
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "26/07/2026 10:56",
+  "generado": "26/07/2026 11:52",
   "resumen": {
     "listos": 18,
     "verificar": 0,
-    "unidades_listas": 753,
+    "unidades_listas": 757,
     "unidades_verificar": 0,
     "bloqueados": 7,
     "otros_gremios": 12,
@@ -3712,6 +3712,42 @@
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "BOLUETA",
           "planta": "10",
           "unidades": [
             "A"
@@ -4026,9 +4062,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 35,
-      "n_ubicaciones": 35,
-      "estado_actual": "Pendiente: 35",
+      "n_unidades": 39,
+      "n_ubicaciones": 39,
+      "estado_actual": "Pendiente: 39",
       "motivo": "Cierra conexiones eléctricas.",
       "impacto_gremios": "Cierra conexiones eléctricas.",
       "orden": 12
@@ -56171,11 +56207,13 @@
       "edificio": "BOLUETA",
       "planta": "9",
       "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "VIABLE",
+      "motivo": "Cierra conexiones eléctricas.",
+      "dependencias_cumplidas": [
+        "Cableado eléctrico"
+      ],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -56197,11 +56235,13 @@
       "edificio": "BOLUETA",
       "planta": "9",
       "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "VIABLE",
+      "motivo": "Cierra conexiones eléctricas.",
+      "dependencias_cumplidas": [
+        "Cableado eléctrico"
+      ],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -56223,11 +56263,13 @@
       "edificio": "BOLUETA",
       "planta": "9",
       "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "VIABLE",
+      "motivo": "Cierra conexiones eléctricas.",
+      "dependencias_cumplidas": [
+        "Cableado eléctrico"
+      ],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -56249,11 +56291,13 @@
       "edificio": "BOLUETA",
       "planta": "9",
       "unidad": "D",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "VIABLE",
+      "motivo": "Cierra conexiones eléctricas.",
+      "dependencias_cumplidas": [
+        "Cableado eléctrico"
+      ],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -75845,10 +75889,10 @@
       "edificio": "BOLUETA",
       "planta": "1",
       "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Permite iniciar mecanizado y telemecanizado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -75872,10 +75916,10 @@
       "edificio": "BOLUETA",
       "planta": "1",
       "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Permite iniciar mecanizado y telemecanizado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -75899,10 +75943,10 @@
       "edificio": "BOLUETA",
       "planta": "1",
       "unidad": "C",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Permite iniciar mecanizado y telemecanizado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -78439,11 +78483,12 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Doblar cajas",
+      "motivo": "Dependencias pendientes: Doblar cajas.",
+      "dependencias_cumplidas": [
         "Pintura — primera mano"
+      ],
+      "dependencias_bloqueantes": [
+        "Doblar cajas"
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -78468,11 +78513,12 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Doblar cajas",
+      "motivo": "Dependencias pendientes: Doblar cajas.",
+      "dependencias_cumplidas": [
         "Pintura — primera mano"
+      ],
+      "dependencias_bloqueantes": [
+        "Doblar cajas"
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -78497,11 +78543,12 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Doblar cajas",
+      "motivo": "Dependencias pendientes: Doblar cajas.",
+      "dependencias_cumplidas": [
         "Pintura — primera mano"
+      ],
+      "dependencias_bloqueantes": [
+        "Doblar cajas"
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -81239,13 +81286,13 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano.",
+      "motivo": "Dependencias pendientes: Doblar cajas.",
       "dependencias_cumplidas": [
-        "Telecableado"
+        "Telecableado",
+        "Pintura — primera mano"
       ],
       "dependencias_bloqueantes": [
-        "Doblar cajas",
-        "Pintura — primera mano"
+        "Doblar cajas"
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -81270,13 +81317,13 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano.",
+      "motivo": "Dependencias pendientes: Doblar cajas.",
       "dependencias_cumplidas": [
-        "Telecableado"
+        "Telecableado",
+        "Pintura — primera mano"
       ],
       "dependencias_bloqueantes": [
-        "Doblar cajas",
-        "Pintura — primera mano"
+        "Doblar cajas"
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -81301,13 +81348,13 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano.",
+      "motivo": "Dependencias pendientes: Doblar cajas.",
       "dependencias_cumplidas": [
-        "Telecableado"
+        "Telecableado",
+        "Pintura — primera mano"
       ],
       "dependencias_bloqueantes": [
-        "Doblar cajas",
-        "Pintura — primera mano"
+        "Doblar cajas"
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -113491,29 +113538,29 @@
           "edificio": "BOLUETA",
           "planta": "9",
           "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
         },
         {
           "edificio": "BOLUETA",
           "planta": "9",
           "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
         },
         {
           "edificio": "BOLUETA",
           "planta": "9",
           "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
         },
         {
           "edificio": "BOLUETA",
           "planta": "9",
           "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
         },
         {
           "edificio": "BOLUETA",
@@ -113942,11 +113989,11 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 96,
-      "estado_actual": "Pendiente: 61 · X: 35",
+      "estado_actual": "Pendiente: 65 · X: 31",
       "resumen_categorias": {
-        "TERMINADO": 35,
+        "TERMINADO": 31,
         "BLOQUEADO": 26,
-        "VIABLE": 35
+        "VIABLE": 39
       },
       "motivo": "Cierra conexiones eléctricas. Dependencias pendientes: Cableado eléctrico. Terminado según la última confirmación válida.",
       "orden_inventario": 12
@@ -117417,7 +117464,7 @@
         "BLOQUEADO": 84,
         "VIABLE": 12
       },
-      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano. Dependencias pendientes: Pintura — primera mano. Remate previo a segunda mano y placas.",
+      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano. Dependencias pendientes: Doblar cajas. Dependencias pendientes: Pintura — primera mano. Remate previo a segunda mano y placas.",
       "orden_inventario": 17
     },
     {
@@ -118111,7 +118158,7 @@
         "BLOQUEADO": 84,
         "VIABLE": 12
       },
-      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano. Dependencias pendientes: Doblar cajas, Telecableado, Pintura — primera mano. Dependencias pendientes: Pintura — primera mano. Remate previo a placas.",
+      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano. Dependencias pendientes: Doblar cajas, Telecableado, Pintura — primera mano. Dependencias pendientes: Doblar cajas. Dependencias pendientes: Pintura — primera mano. Remate previo a placas.",
       "orden_inventario": 18
     },
     {
@@ -129223,8 +129270,8 @@
           "edificio": "BOLUETA",
           "planta": "1",
           "unidad": "A",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "BOLUETA",
@@ -129237,8 +129284,8 @@
           "edificio": "BOLUETA",
           "planta": "1",
           "unidad": "B",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "BOLUETA",
@@ -129251,8 +129298,8 @@
           "edificio": "BOLUETA",
           "planta": "1",
           "unidad": "C",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "BOLUETA",
@@ -130571,10 +130618,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 192,
-      "estado_actual": "M: 3 · /: 3 · Pendiente: 174 · X: 12",
+      "estado_actual": "/: 3 · Pendiente: 174 · X: 15",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 180,
-        "TERMINADO": 12
+        "TERMINADO": 15,
+        "OTROS_GREMIOS": 177
       },
       "motivo": "Condición obligatoria para placas, tapas y luminarias finales. Permite iniciar mecanizado y telemecanizado. Terminado según la última confirmación válida.",
       "orden_inventario": 35
