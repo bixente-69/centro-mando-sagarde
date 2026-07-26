@@ -7,20 +7,20 @@
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "26/07/2026 11:58",
+  "generado": "26/07/2026 12:40",
   "resumen": {
-    "listos": 13,
+    "listos": 12,
     "verificar": 0,
-    "unidades_listas": 227,
+    "unidades_listas": 213,
     "unidades_verificar": 0,
     "bloqueados": 3,
     "otros_gremios": 7,
     "dudas": 0,
-    "terminados": 14,
+    "terminados": 15,
     "inventario_total": 37,
     "detalle_total": 2318,
     "preguntas_pendientes": 0,
-    "viviendas": 10,
+    "viviendas": 9,
     "zonas_comunes": 1,
     "edificio": 2
   },
@@ -72,106 +72,6 @@
       "orden": 1
     },
     {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "situacion": "LISTO",
-      "categoria": "VIABLE",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "prioridad": "P1",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "ubicaciones": [
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidades": [
-            "E"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        }
-      ],
-      "n_unidades": 9,
-      "n_ubicaciones": 9,
-      "estado_actual": "Pendiente: 9",
-      "motivo": "Cableado específico de portero.",
-      "impacto_gremios": "Cableado específico de portero.",
-      "orden": 2
-    },
-    {
       "tarea_id": "termostatos",
       "trabajo": "Termostatos",
       "situacion": "LISTO",
@@ -193,78 +93,6 @@
         },
         {
           "edificio": "ZR2.1",
-          "planta": "1",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "1",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "1",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "1",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
           "planta": "3",
           "unidades": [
             "A"
@@ -385,35 +213,17 @@
           "planta": "5",
           "unidades": [
             "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "PB",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "PB",
-          "unidades": [
-            "B"
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 25,
-      "n_ubicaciones": 25,
-      "estado_actual": "Pendiente: 25",
+      "n_unidades": 15,
+      "n_ubicaciones": 15,
+      "estado_actual": "Pendiente: 15",
       "motivo": "Cableado específico de termostatos.",
       "impacto_gremios": "Cableado específico de termostatos.",
-      "orden": 3
+      "orden": 2
     },
     {
       "tarea_id": "doblar_cajas",
@@ -477,7 +287,7 @@
       "estado_actual": "M: 5",
       "motivo": "Libera el frente para pintura.",
       "impacto_gremios": "Libera el frente para pintura.",
-      "orden": 4
+      "orden": 3
     },
     {
       "tarea_id": "embornado",
@@ -494,54 +304,18 @@
           "edificio": "ZR2.1",
           "planta": "4",
           "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidades": [
             "C"
           ],
           "n_unidades": 1,
           "estado_actual": "/"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 5,
-      "n_ubicaciones": 5,
-      "estado_actual": "/: 1 · Pendiente: 4",
+      "n_unidades": 1,
+      "n_ubicaciones": 1,
+      "estado_actual": "/: 1",
       "motivo": "Cierra conexiones eléctricas.",
       "impacto_gremios": "Cierra conexiones eléctricas.",
-      "orden": 5
+      "orden": 4
     },
     {
       "tarea_id": "telembornado",
@@ -678,7 +452,7 @@
             "A"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -687,7 +461,7 @@
             "B"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -696,7 +470,7 @@
             "C"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -705,7 +479,7 @@
             "D"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -714,7 +488,7 @@
             "E"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -773,10 +547,10 @@
       ],
       "n_unidades": 24,
       "n_ubicaciones": 24,
-      "estado_actual": "M: 15 · Pendiente: 9",
+      "estado_actual": "M: 20 · Pendiente: 4",
       "motivo": "Cierra conexiones de telecomunicaciones.",
       "impacto_gremios": "Cierra conexiones de telecomunicaciones.",
-      "orden": 6
+      "orden": 5
     },
     {
       "tarea_id": "derivacion_individual",
@@ -804,7 +578,7 @@
       "estado_actual": "Pendiente: 1",
       "motivo": "Completa la alimentación de la vivienda.",
       "impacto_gremios": "Completa la alimentación de la vivienda.",
-      "orden": 7
+      "orden": 6
     },
     {
       "tarea_id": "cuadro_mecanizado",
@@ -896,7 +670,7 @@
             "A"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -905,7 +679,7 @@
             "B"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -914,7 +688,7 @@
             "C"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -923,7 +697,7 @@
             "D"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -932,7 +706,7 @@
             "E"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -941,7 +715,7 @@
             "A"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -950,7 +724,7 @@
             "B"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -959,25 +733,7 @@
             "C"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "ZR2.1",
@@ -998,12 +754,12 @@
           "estado_actual": "M"
         }
       ],
-      "n_unidades": 20,
-      "n_ubicaciones": 20,
-      "estado_actual": "M: 10 · Pendiente: 10",
+      "n_unidades": 18,
+      "n_ubicaciones": 18,
+      "estado_actual": "M: 18",
       "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
       "impacto_gremios": "No equivale a cuadros presentados ni a placas y tapas.",
-      "orden": 8
+      "orden": 7
     },
     {
       "tarea_id": "cuarto_tecnico",
@@ -1571,7 +1327,7 @@
       "estado_actual": "Pendiente: 61",
       "motivo": "Partida técnica general.",
       "impacto_gremios": "Partida técnica general.",
-      "orden": 9
+      "orden": 8
     },
     {
       "tarea_id": "mecanizado",
@@ -1667,6 +1423,51 @@
         },
         {
           "edificio": "ZR2.1",
+          "planta": "3",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidades": [
+            "E"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR2.1",
           "planta": "PB",
           "unidades": [
             "A"
@@ -1684,12 +1485,12 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 11,
-      "n_ubicaciones": 11,
-      "estado_actual": "M: 1 · Pendiente: 10",
+      "n_unidades": 16,
+      "n_ubicaciones": 16,
+      "estado_actual": "M: 1 · Pendiente: 15",
       "motivo": "Remate previo a segunda mano y placas.",
       "impacto_gremios": "Remate previo a segunda mano y placas.",
-      "orden": 10
+      "orden": 9
     },
     {
       "tarea_id": "telemecanizado",
@@ -1785,6 +1586,51 @@
         },
         {
           "edificio": "ZR2.1",
+          "planta": "3",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidades": [
+            "E"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR2.1",
           "planta": "PB",
           "unidades": [
             "A"
@@ -1802,12 +1648,12 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 11,
-      "n_ubicaciones": 11,
-      "estado_actual": "M: 1 · Pendiente: 10",
+      "n_unidades": 16,
+      "n_ubicaciones": 16,
+      "estado_actual": "M: 1 · Pendiente: 15",
       "motivo": "Remate previo a placas.",
       "impacto_gremios": "Remate previo a placas.",
-      "orden": 11
+      "orden": 10
     },
     {
       "tarea_id": "apliques",
@@ -2071,14 +1917,23 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "PB",
+          "unidades": [
+            "PORTAL"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 28,
-      "n_ubicaciones": 28,
-      "estado_actual": "Pendiente: 28",
+      "n_unidades": 29,
+      "n_ubicaciones": 29,
+      "estado_actual": "Pendiente: 29",
       "motivo": "Rama independiente; requiere fachada terminada.",
       "impacto_gremios": "Rama independiente; requiere fachada terminada.",
-      "orden": 12
+      "orden": 11
     },
     {
       "tarea_id": "agujeros_iluminacion_zzcc",
@@ -2313,7 +2168,7 @@
       "estado_actual": "Pendiente: 24",
       "motivo": "Partida común solo para zonas comunes.",
       "impacto_gremios": "Partida común solo para zonas comunes.",
-      "orden": 13
+      "orden": 12
     }
   ],
   "detalle_items": [
@@ -27459,13 +27314,11 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de portero.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -27487,13 +27340,11 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de portero.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -27515,13 +27366,11 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de portero.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -27543,13 +27392,11 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de portero.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -27571,13 +27418,11 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "E",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de portero.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -27599,13 +27444,11 @@
       "edificio": "ZR2.1",
       "planta": "5",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de portero.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -27627,13 +27470,11 @@
       "edificio": "ZR2.1",
       "planta": "5",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de portero.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -27655,13 +27496,11 @@
       "edificio": "ZR2.1",
       "planta": "5",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de portero.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -27683,13 +27522,11 @@
       "edificio": "ZR2.1",
       "planta": "5",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de portero.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -28727,13 +28564,11 @@
       "edificio": "ZR2.1",
       "planta": "1",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de termostatos.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -28755,13 +28590,11 @@
       "edificio": "ZR2.1",
       "planta": "1",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de termostatos.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -28783,13 +28616,11 @@
       "edificio": "ZR2.1",
       "planta": "1",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de termostatos.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -28811,13 +28642,11 @@
       "edificio": "ZR2.1",
       "planta": "1",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de termostatos.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -28839,13 +28668,11 @@
       "edificio": "ZR2.1",
       "planta": "2",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de termostatos.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -28867,13 +28694,11 @@
       "edificio": "ZR2.1",
       "planta": "2",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de termostatos.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -28895,13 +28720,11 @@
       "edificio": "ZR2.1",
       "planta": "2",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de termostatos.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -28923,13 +28746,11 @@
       "edificio": "ZR2.1",
       "planta": "2",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de termostatos.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -29343,13 +29164,11 @@
       "edificio": "ZR2.1",
       "planta": "PB",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de termostatos.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -29371,13 +29190,11 @@
       "edificio": "ZR2.1",
       "planta": "PB",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cableado específico de termostatos.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -33881,13 +33698,11 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cierra conexiones eléctricas.",
-      "dependencias_cumplidas": [
-        "Cableado eléctrico"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -33909,13 +33724,11 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cierra conexiones eléctricas.",
-      "dependencias_cumplidas": [
-        "Cableado eléctrico"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -34017,13 +33830,11 @@
       "edificio": "ZR2.1",
       "planta": "5",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cierra conexiones eléctricas.",
-      "dependencias_cumplidas": [
-        "Cableado eléctrico"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -34045,13 +33856,11 @@
       "edificio": "ZR2.1",
       "planta": "5",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cierra conexiones eléctricas.",
-      "dependencias_cumplidas": [
-        "Cableado eléctrico"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -35503,8 +35312,8 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Cierra conexiones de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -35531,8 +35340,8 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Cierra conexiones de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -35559,8 +35368,8 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Cierra conexiones de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -35587,8 +35396,8 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Cierra conexiones de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -35615,8 +35424,8 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "E",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Cierra conexiones de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -38628,8 +38437,8 @@
       "edificio": "ZR2.1",
       "planta": "3",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
       "dependencias_cumplidas": [
@@ -38657,8 +38466,8 @@
       "edificio": "ZR2.1",
       "planta": "3",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
       "dependencias_cumplidas": [
@@ -38686,8 +38495,8 @@
       "edificio": "ZR2.1",
       "planta": "3",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
       "dependencias_cumplidas": [
@@ -38715,8 +38524,8 @@
       "edificio": "ZR2.1",
       "planta": "3",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
       "dependencias_cumplidas": [
@@ -38744,8 +38553,8 @@
       "edificio": "ZR2.1",
       "planta": "3",
       "unidad": "E",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
       "dependencias_cumplidas": [
@@ -38773,8 +38582,8 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
       "dependencias_cumplidas": [
@@ -38802,8 +38611,8 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
       "dependencias_cumplidas": [
@@ -38831,8 +38640,8 @@
       "edificio": "ZR2.1",
       "planta": "4",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
       "dependencias_cumplidas": [
@@ -38912,14 +38721,11 @@
       "edificio": "ZR2.1",
       "planta": "5",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
-      "dependencias_cumplidas": [
-        "Cuadros presentados",
-        "Cableado eléctrico"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -38941,14 +38747,11 @@
       "edificio": "ZR2.1",
       "planta": "5",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
-      "dependencias_cumplidas": [
-        "Cuadros presentados",
-        "Cableado eléctrico"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -41056,8 +40859,8 @@
       "edificio": "ZR1.1",
       "planta": "6",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio. Habilita los agujeros de iluminación en ZZCC.",
       "dependencias_cumplidas": [],
@@ -41082,8 +40885,8 @@
       "edificio": "ZR1.1",
       "planta": "6",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio. Habilita los agujeros de iluminación en ZZCC.",
       "dependencias_cumplidas": [],
@@ -46631,10 +46434,10 @@
       "edificio": "ZR2.1",
       "planta": "3",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Permite iniciar mecanizado y telemecanizado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -46657,10 +46460,10 @@
       "edificio": "ZR2.1",
       "planta": "3",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Permite iniciar mecanizado y telemecanizado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -46683,10 +46486,10 @@
       "edificio": "ZR2.1",
       "planta": "3",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Permite iniciar mecanizado y telemecanizado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -46709,10 +46512,10 @@
       "edificio": "ZR2.1",
       "planta": "3",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Permite iniciar mecanizado y telemecanizado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -46735,10 +46538,10 @@
       "edificio": "ZR2.1",
       "planta": "3",
       "unidad": "E",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Permite iniciar mecanizado y telemecanizado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -48250,14 +48053,13 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — primera mano.",
+      "categoria": "VIABLE",
+      "motivo": "Remate previo a segunda mano y placas.",
       "dependencias_cumplidas": [
-        "Doblar cajas"
-      ],
-      "dependencias_bloqueantes": [
+        "Doblar cajas",
         "Pintura — primera mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -48280,14 +48082,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — primera mano.",
+      "categoria": "VIABLE",
+      "motivo": "Remate previo a segunda mano y placas.",
       "dependencias_cumplidas": [
-        "Doblar cajas"
-      ],
-      "dependencias_bloqueantes": [
+        "Doblar cajas",
         "Pintura — primera mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -48310,14 +48111,13 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — primera mano.",
+      "categoria": "VIABLE",
+      "motivo": "Remate previo a segunda mano y placas.",
       "dependencias_cumplidas": [
-        "Doblar cajas"
-      ],
-      "dependencias_bloqueantes": [
+        "Doblar cajas",
         "Pintura — primera mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -48340,14 +48140,13 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — primera mano.",
+      "categoria": "VIABLE",
+      "motivo": "Remate previo a segunda mano y placas.",
       "dependencias_cumplidas": [
-        "Doblar cajas"
-      ],
-      "dependencias_bloqueantes": [
+        "Doblar cajas",
         "Pintura — primera mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -48370,14 +48169,13 @@
       "unidad": "E",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — primera mano.",
+      "categoria": "VIABLE",
+      "motivo": "Remate previo a segunda mano y placas.",
       "dependencias_cumplidas": [
-        "Doblar cajas"
-      ],
-      "dependencias_bloqueantes": [
+        "Doblar cajas",
         "Pintura — primera mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -49971,15 +49769,14 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — primera mano.",
+      "categoria": "VIABLE",
+      "motivo": "Remate previo a placas.",
       "dependencias_cumplidas": [
         "Doblar cajas",
-        "Telecableado"
-      ],
-      "dependencias_bloqueantes": [
+        "Telecableado",
         "Pintura — primera mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -50002,15 +49799,14 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — primera mano.",
+      "categoria": "VIABLE",
+      "motivo": "Remate previo a placas.",
       "dependencias_cumplidas": [
         "Doblar cajas",
-        "Telecableado"
-      ],
-      "dependencias_bloqueantes": [
+        "Telecableado",
         "Pintura — primera mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -50033,15 +49829,14 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — primera mano.",
+      "categoria": "VIABLE",
+      "motivo": "Remate previo a placas.",
       "dependencias_cumplidas": [
         "Doblar cajas",
-        "Telecableado"
-      ],
-      "dependencias_bloqueantes": [
+        "Telecableado",
         "Pintura — primera mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -50064,15 +49859,14 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — primera mano.",
+      "categoria": "VIABLE",
+      "motivo": "Remate previo a placas.",
       "dependencias_cumplidas": [
         "Doblar cajas",
-        "Telecableado"
-      ],
-      "dependencias_bloqueantes": [
+        "Telecableado",
         "Pintura — primera mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -50095,15 +49889,14 @@
       "unidad": "E",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — primera mano.",
+      "categoria": "VIABLE",
+      "motivo": "Remate previo a placas.",
       "dependencias_cumplidas": [
         "Doblar cajas",
-        "Telecableado"
-      ],
-      "dependencias_bloqueantes": [
+        "Telecableado",
         "Pintura — primera mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -53796,13 +53589,14 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano, Mecanizado eléctrico, Telemecanizado, Cuadro mecanizado.",
-      "dependencias_cumplidas": [],
+      "motivo": "Dependencias pendientes: Pintura — segunda mano, Mecanizado eléctrico, Telemecanizado.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado"
+      ],
       "dependencias_bloqueantes": [
         "Pintura — segunda mano",
         "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
+        "Telemecanizado"
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -53827,13 +53621,14 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano, Mecanizado eléctrico, Telemecanizado, Cuadro mecanizado.",
-      "dependencias_cumplidas": [],
+      "motivo": "Dependencias pendientes: Pintura — segunda mano, Mecanizado eléctrico, Telemecanizado.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado"
+      ],
       "dependencias_bloqueantes": [
         "Pintura — segunda mano",
         "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
+        "Telemecanizado"
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -54917,10 +54712,10 @@
       "edificio": "ZR1.2",
       "planta": "PB",
       "unidad": "PORTAL",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición para remates exteriores.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -56614,12 +56409,12 @@
       "unidad": "PORTAL",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Fachada terminada.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Rama independiente; requiere fachada terminada.",
+      "dependencias_cumplidas": [
         "Fachada terminada"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -62195,13 +61990,13 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano, Cuadro mecanizado.",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
       "dependencias_cumplidas": [
+        "Cuadro mecanizado",
         "Derivación individual"
       ],
       "dependencias_bloqueantes": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado"
+        "Pintura — segunda mano"
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -62226,13 +62021,13 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano, Cuadro mecanizado.",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
       "dependencias_cumplidas": [
+        "Cuadro mecanizado",
         "Derivación individual"
       ],
       "dependencias_bloqueantes": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado"
+        "Pintura — segunda mano"
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -64560,455 +64355,6 @@
       "orden_inventario": 1
     },
     {
-      "grupo_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "propiedad": "propio",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "ubicaciones": [
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidad": "B2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidad": "C2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidad": "B2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidad": "C2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidad": "B2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidad": "C2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidad": "B2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidad": "C3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidad": "B2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidad": "C3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "6",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "6",
-          "unidad": "B2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidad": "B2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidad": "C3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "1",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "1",
-          "unidad": "B3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidad": "B3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidad": "C3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidad": "B3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidad": "C3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidad": "B3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidad": "C3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidad": "B3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidad": "C3",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "6",
-          "unidad": "A2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "6",
-          "unidad": "B2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "PB",
-          "unidad": "PORTAL",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "3",
-          "unidad": "E",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidad": "E",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        }
-      ],
-      "subtajos": [
-        "Portero / videoportero"
-      ],
-      "seccion": "VIABLE",
-      "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 61,
-      "estado_actual": "Pendiente: 9 · X: 52",
-      "resumen_categorias": {
-        "TERMINADO": 52,
-        "VIABLE": 9
-      },
-      "motivo": "Cableado específico de portero. Terminado según la última confirmación válida.",
-      "orden_inventario": 2
-    },
-    {
       "grupo_id": "termostatos",
       "trabajo": "Termostatos",
       "propiedad": "propio",
@@ -65278,57 +64624,57 @@
           "edificio": "ZR2.1",
           "planta": "1",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
           "planta": "1",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
           "planta": "1",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
           "planta": "1",
           "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
           "planta": "2",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
           "planta": "2",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
           "planta": "2",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
           "planta": "2",
           "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
@@ -65432,15 +64778,15 @@
           "edificio": "ZR2.1",
           "planta": "PB",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
           "planta": "PB",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -65449,13 +64795,13 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 61,
-      "estado_actual": "Pendiente: 25 · X: 36",
+      "estado_actual": "Pendiente: 15 · X: 46",
       "resumen_categorias": {
-        "TERMINADO": 36,
-        "VIABLE": 25
+        "TERMINADO": 46,
+        "VIABLE": 15
       },
       "motivo": "Cableado específico de termostatos. Terminado según la última confirmación válida.",
-      "orden_inventario": 3
+      "orden_inventario": 2
     },
     {
       "grupo_id": "doblar_cajas",
@@ -65904,7 +65250,7 @@
         "VIABLE": 5
       },
       "motivo": "Libera el frente para pintura. Terminado según la última confirmación válida.",
-      "orden_inventario": 4
+      "orden_inventario": 3
     },
     {
       "grupo_id": "embornado",
@@ -66267,15 +65613,15 @@
           "edificio": "ZR2.1",
           "planta": "4",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
           "planta": "4",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
@@ -66302,15 +65648,15 @@
           "edificio": "ZR2.1",
           "planta": "5",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
           "planta": "5",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
@@ -66347,13 +65693,13 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 61,
-      "estado_actual": "/: 1 · Pendiente: 4 · X: 56",
+      "estado_actual": "/: 1 · X: 60",
       "resumen_categorias": {
-        "TERMINADO": 56,
-        "VIABLE": 5
+        "TERMINADO": 60,
+        "VIABLE": 1
       },
       "motivo": "Cierra conexiones eléctricas. Terminado según la última confirmación válida.",
-      "orden_inventario": 5
+      "orden_inventario": 4
     },
     {
       "grupo_id": "telembornado",
@@ -66716,35 +66062,35 @@
           "edificio": "ZR2.1",
           "planta": "4",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "4",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "4",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "4",
           "unidad": "D",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "4",
           "unidad": "E",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
@@ -66796,13 +66142,13 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 61,
-      "estado_actual": "M: 15 · Pendiente: 9 · X: 37",
+      "estado_actual": "M: 20 · Pendiente: 4 · X: 37",
       "resumen_categorias": {
         "TERMINADO": 37,
         "VIABLE": 24
       },
       "motivo": "Cierra conexiones de telecomunicaciones. Terminado según la última confirmación válida.",
-      "orden_inventario": 6
+      "orden_inventario": 5
     },
     {
       "grupo_id": "derivacion_individual",
@@ -67251,7 +66597,7 @@
         "VIABLE": 1
       },
       "motivo": "Completa la alimentación de la vivienda. Terminado según la última confirmación válida.",
-      "orden_inventario": 7
+      "orden_inventario": 6
     },
     {
       "grupo_id": "cuadro_mecanizado",
@@ -67579,56 +66925,56 @@
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "D",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "E",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "4",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "4",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "4",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
@@ -67649,15 +66995,15 @@
           "edificio": "ZR2.1",
           "planta": "5",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
           "planta": "5",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
@@ -67694,13 +67040,13 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 61,
-      "estado_actual": "M: 10 · Pendiente: 10 · X: 41",
+      "estado_actual": "M: 18 · X: 43",
       "resumen_categorias": {
-        "TERMINADO": 41,
-        "VIABLE": 20
+        "TERMINADO": 43,
+        "VIABLE": 18
       },
       "motivo": "No equivale a cuadros presentados ni a placas y tapas. Terminado según la última confirmación válida.",
-      "orden_inventario": 8
+      "orden_inventario": 7
     },
     {
       "grupo_id": "cuarto_tecnico",
@@ -68148,7 +67494,7 @@
         "VIABLE": 61
       },
       "motivo": "Partida técnica general.",
-      "orden_inventario": 9
+      "orden_inventario": 8
     },
     {
       "grupo_id": "mecanizado",
@@ -68477,35 +67823,35 @@
           "planta": "3",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "E",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
@@ -68594,11 +67940,11 @@
       "estado_actual": "M: 1 · Pendiente: 25 · X: 35",
       "resumen_categorias": {
         "TERMINADO": 35,
-        "VIABLE": 11,
-        "BLOQUEADO": 15
+        "VIABLE": 16,
+        "BLOQUEADO": 10
       },
       "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano. Dependencias pendientes: Pintura — primera mano. Remate previo a segunda mano y placas. Terminado según la última confirmación válida.",
-      "orden_inventario": 10
+      "orden_inventario": 9
     },
     {
       "grupo_id": "telemecanizado",
@@ -68927,35 +68273,35 @@
           "planta": "3",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "E",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
@@ -69044,11 +68390,11 @@
       "estado_actual": "M: 1 · Pendiente: 25 · X: 35",
       "resumen_categorias": {
         "TERMINADO": 35,
-        "VIABLE": 11,
-        "BLOQUEADO": 15
+        "VIABLE": 16,
+        "BLOQUEADO": 10
       },
       "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano. Dependencias pendientes: Pintura — primera mano. Remate previo a placas. Terminado según la última confirmación válida.",
-      "orden_inventario": 11
+      "orden_inventario": 10
     },
     {
       "grupo_id": "apliques",
@@ -69314,7 +68660,7 @@
           "planta": "PB",
           "unidad": "PORTAL",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "ZR2.1",
@@ -69493,11 +68839,11 @@
       "n_ubicaciones": 61,
       "estado_actual": "Pendiente: 61",
       "resumen_categorias": {
-        "VIABLE": 28,
-        "BLOQUEADO": 33
+        "VIABLE": 29,
+        "BLOQUEADO": 32
       },
       "motivo": "Dependencias pendientes: Fachada terminada. Rama independiente; requiere fachada terminada.",
-      "orden_inventario": 12
+      "orden_inventario": 11
     },
     {
       "grupo_id": "agujeros_iluminacion_zzcc",
@@ -69947,7 +69293,7 @@
         "VIABLE": 24
       },
       "motivo": "Dependencias pendientes: Techos de zonas comunes. Partida común solo para zonas comunes. Terminado según la última confirmación válida.",
-      "orden_inventario": 13
+      "orden_inventario": 12
     },
     {
       "grupo_id": "placas_tapas",
@@ -70395,7 +69741,7 @@
         "BLOQUEADO": 61
       },
       "motivo": "Dependencias pendientes: Pintura — segunda mano, Mecanizado eléctrico, Telemecanizado, Cuadro mecanizado. Dependencias pendientes: Pintura — segunda mano, Mecanizado eléctrico, Telemecanizado. Dependencias pendientes: Pintura — segunda mano, Mecanizado eléctrico. Dependencias pendientes: Pintura — segunda mano, Telemecanizado. Dependencias pendientes: Pintura — segunda mano.",
-      "orden_inventario": 14
+      "orden_inventario": 13
     },
     {
       "grupo_id": "casquillos_bombillas",
@@ -70844,7 +70190,7 @@
         "TERMINADO": 13
       },
       "motivo": "Dependencias pendientes: Pintura — segunda mano, Cuadro mecanizado. Dependencias pendientes: Pintura — segunda mano, Derivación individual. Dependencias pendientes: Pintura — segunda mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 15
+      "orden_inventario": 14
     },
     {
       "grupo_id": "iluminacion_rellanos",
@@ -71292,7 +70638,7 @@
         "BLOQUEADO": 61
       },
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
-      "orden_inventario": 16
+      "orden_inventario": 15
     },
     {
       "grupo_id": "suelo_radiante",
@@ -71741,7 +71087,7 @@
         "OTROS_GREMIOS": 1
       },
       "motivo": "Condición de coordinación, no producción Sagarde. Terminado según la última confirmación válida.",
-      "orden_inventario": 17
+      "orden_inventario": 16
     },
     {
       "grupo_id": "suelo_recrecido",
@@ -72190,7 +71536,7 @@
         "OTROS_GREMIOS": 1
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
-      "orden_inventario": 18
+      "orden_inventario": 17
     },
     {
       "grupo_id": "techos_zzcc",
@@ -72308,14 +71654,14 @@
           "edificio": "ZR1.1",
           "planta": "6",
           "unidad": "A2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "ZR1.1",
           "planta": "6",
           "unidad": "B2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -72633,13 +71979,13 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 61,
-      "estado_actual": "Pendiente: 18 · X: 43",
+      "estado_actual": "/: 2 · Pendiente: 16 · X: 43",
       "resumen_categorias": {
         "TERMINADO": 43,
         "OTROS_GREMIOS": 18
       },
       "motivo": "Condición de otro gremio. Habilita los agujeros de iluminación en ZZCC. Terminado según la última confirmación válida.",
-      "orden_inventario": 19
+      "orden_inventario": 18
     },
     {
       "grupo_id": "enchapado",
@@ -73088,7 +72434,7 @@
         "OTROS_GREMIOS": 1
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
-      "orden_inventario": 20
+      "orden_inventario": 19
     },
     {
       "grupo_id": "pintura",
@@ -73731,8 +73077,8 @@
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
@@ -73745,8 +73091,8 @@
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
@@ -73759,8 +73105,8 @@
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
@@ -73773,8 +73119,8 @@
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
@@ -73787,8 +73133,8 @@
           "edificio": "ZR2.1",
           "planta": "3",
           "unidad": "E",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
@@ -73959,13 +73305,13 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 122,
-      "estado_actual": "Pendiente: 76 · X: 46",
+      "estado_actual": "Pendiente: 71 · X: 51",
       "resumen_categorias": {
-        "TERMINADO": 46,
-        "OTROS_GREMIOS": 76
+        "TERMINADO": 51,
+        "OTROS_GREMIOS": 71
       },
       "motivo": "Condición obligatoria para placas, tapas y luminarias finales. Permite iniciar mecanizado y telemecanizado. Terminado según la última confirmación válida.",
-      "orden_inventario": 21
+      "orden_inventario": 20
     },
     {
       "grupo_id": "fachada_terminada",
@@ -74230,8 +73576,8 @@
           "edificio": "ZR1.2",
           "planta": "PB",
           "unidad": "PORTAL",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR2.1",
@@ -74408,13 +73754,13 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 61,
-      "estado_actual": "Pendiente: 33 · X: 28",
+      "estado_actual": "Pendiente: 32 · X: 29",
       "resumen_categorias": {
-        "TERMINADO": 28,
-        "OTROS_GREMIOS": 33
+        "TERMINADO": 29,
+        "OTROS_GREMIOS": 32
       },
       "motivo": "Condición para remates exteriores. Terminado según la última confirmación válida.",
-      "orden_inventario": 22
+      "orden_inventario": 21
     },
     {
       "grupo_id": "pintura_zzcc",
@@ -74862,7 +74208,7 @@
         "OTROS_GREMIOS": 61
       },
       "motivo": "Condición de otro gremio. Habilita la colocación de luminarias en ZZCC.",
-      "orden_inventario": 23
+      "orden_inventario": 22
     },
     {
       "grupo_id": "tabicado",
@@ -75310,7 +74656,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 24
+      "orden_inventario": 23
     },
     {
       "grupo_id": "rozas_timbres",
@@ -75758,7 +75104,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 25
+      "orden_inventario": 24
     },
     {
       "grupo_id": "montante_electrica",
@@ -76206,7 +75552,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 26
+      "orden_inventario": 25
     },
     {
       "grupo_id": "montante_teleco",
@@ -76654,7 +76000,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 27
+      "orden_inventario": 26
     },
     {
       "grupo_id": "tubeado_zzcc",
@@ -77102,7 +76448,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 28
+      "orden_inventario": 27
     },
     {
       "grupo_id": "cableado_zzcc",
@@ -77550,7 +76896,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 29
+      "orden_inventario": 28
     },
     {
       "grupo_id": "perfilado_pladur",
@@ -77998,7 +77344,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 30
+      "orden_inventario": 29
     },
     {
       "grupo_id": "primera_cara_pladur",
@@ -78446,7 +77792,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 31
+      "orden_inventario": 30
     },
     {
       "grupo_id": "cuadros_presentados",
@@ -78894,7 +78240,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 32
+      "orden_inventario": 31
     },
     {
       "grupo_id": "tubeado",
@@ -79342,7 +78688,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 33
+      "orden_inventario": 32
     },
     {
       "grupo_id": "cableado",
@@ -79790,7 +79136,7 @@
         "TERMINADO": 61
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 34
+      "orden_inventario": 33
     },
     {
       "grupo_id": "telecableado",
@@ -80229,6 +79575,454 @@
       ],
       "subtajos": [
         "Telecableado"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 61,
+      "estado_actual": "X: 61",
+      "resumen_categorias": {
+        "TERMINADO": 61
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 34
+    },
+    {
+      "grupo_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "propiedad": "propio",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "ubicaciones": [
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "C2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "C2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "C2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidad": "B3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "B3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "B3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "B3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "B3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "6",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "6",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "PB",
+          "unidad": "PORTAL",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "E",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "4",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "4",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "4",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "4",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "4",
+          "unidad": "E",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "5",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "5",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "5",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "5",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Portero / videoportero"
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
