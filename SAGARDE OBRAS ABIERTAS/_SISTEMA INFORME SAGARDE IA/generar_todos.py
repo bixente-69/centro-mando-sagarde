@@ -146,17 +146,38 @@ def _correcciones_mas_recientes(carpeta_abs):
         return (m.group(3), m.group(2), m.group(1)) if m else ('0000', '00', '00')
 
     ruta_elegida = max(ficheros, key=fecha)
+    nombre = os.path.basename(ruta_elegida)
     try:
         with open(ruta_elegida, encoding='utf-8') as f:
-            return json.load(f).get('estados') or {}
+            contenido = json.load(f)
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         # Un fichero corrupto no debe tragarse en silencio: es la marca
         # escrita a boli, el dato mas directo que hay. Que grite y siga
         # con la regeneracion (el resto de la obra sigue siendo util).
-        print(f"  [AVISO FICHA] {os.path.basename(ruta_elegida)}: no se pudo "
-              f"leer ({exc}). No se aplicaran las correcciones manuales de "
-              f"esta obra en esta pasada.")
+        print(f"  [AVISO FICHA] {nombre}: no se pudo leer "
+              f"({type(exc).__name__}: {exc}). No se aplicaran las "
+              f"correcciones manuales de esta obra en esta pasada.")
         return {}
+
+    # JSON sintacticamente valido pero con una forma inesperada (null, una
+    # lista, una cadena...) es una corrupcion tan plausible como un JSON
+    # roto -- por ejemplo una escritura a medias. Validar antes de usar
+    # .get() para que esto tampoco tumbe la generacion del panel.
+    if not isinstance(contenido, dict):
+        print(f"  [AVISO FICHA] {nombre}: se esperaba un objeto JSON en la "
+              f"raiz y llego {type(contenido).__name__}. No se aplicaran "
+              f"las correcciones manuales de esta obra en esta pasada.")
+        return {}
+
+    estados = contenido.get('estados')
+    if estados is None:
+        return {}
+    if not isinstance(estados, dict):
+        print(f"  [AVISO FICHA] {nombre}: la clave 'estados' deberia ser un "
+              f"objeto y llego {type(estados).__name__}. No se aplicaran "
+              f"las correcciones manuales de esta obra en esta pasada.")
+        return {}
+    return estados
 
 
 def _mapa_tajos_cortos(obra_id):
@@ -165,33 +186,56 @@ def _mapa_tajos_cortos(obra_id):
     el largo; sin esta traduccion no se pueden cruzar. Con el mapa vacio,
     _reclamar_correcciones() no casa ninguna clave y TODAS las correcciones
     manuales de la obra dejan de aplicarse en esa pasada: si algo falla aqui
-    tiene que avisar, no callarse."""
+    tiene que avisar, no callarse -- y nunca tumbar la generacion del panel."""
     try:
         modulo = __import__(f'adaptador_{obra_id}')
-    except ImportError as exc:
+    except Exception as exc:
+        # Import de codigo de terceros (el adaptador de la obra): puede
+        # fallar de cualquier forma, no solo ImportError -- el cuerpo del
+        # modulo puede lanzar lo que sea. Aqui si es razonable capturar
+        # amplio, pero avisando siempre con el tipo de excepcion para saber
+        # que paso.
         print(f"  [AVISO FICHA] no se pudo importar adaptador_{obra_id} "
-              f"({exc}). No se aplicaran las correcciones manuales de esta "
-              f"obra en esta pasada.")
+              f"({type(exc).__name__}: {exc}). No se aplicaran las "
+              f"correcciones manuales de esta obra en esta pasada.")
         return {}
+
     ruta_cat = os.path.join(BASE_DIR, 'reglas', 'CATALOGO_TAJOS.json')
+    nombre_cat = os.path.basename(ruta_cat)
     try:
         with open(ruta_cat, encoding='utf-8') as f:
             catalogo = json.load(f)
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
-        print(f"  [AVISO FICHA] no se pudo leer {os.path.basename(ruta_cat)} "
-              f"({exc}). No se aplicaran las correcciones manuales de esta "
-              f"obra en esta pasada.")
+        print(f"  [AVISO FICHA] no se pudo leer {nombre_cat} "
+              f"({type(exc).__name__}: {exc}). No se aplicaran las "
+              f"correcciones manuales de esta obra en esta pasada.")
         return {}
 
-    alias = {}
-    for tajo in catalogo.get('tajos', []):
-        alias[fichas._fold(tajo['nombre'])] = tajo['id']
-        for otro in tajo.get('aliases', []):
-            alias[fichas._fold(otro)] = tajo['id']
-    corto = getattr(modulo, 'TAJO_NOMBRE_CATALOGO', None) or \
-        getattr(modulo, 'TAJO_NOMBRE', {})
-    return {c: alias[fichas._fold(n)] for c, n in corto.items()
-            if fichas._fold(n) in alias}
+    if not isinstance(catalogo, dict) or not isinstance(catalogo.get('tajos'), list):
+        print(f"  [AVISO FICHA] {nombre_cat} no tiene la forma esperada (se "
+              f"esperaba un objeto con clave 'tajos' como lista, llego "
+              f"{type(catalogo).__name__}). No se aplicaran las "
+              f"correcciones manuales de esta obra en esta pasada.")
+        return {}
+
+    try:
+        alias = {}
+        for tajo in catalogo['tajos']:
+            alias[fichas._fold(tajo['nombre'])] = tajo['id']
+            for otro in tajo.get('aliases', []):
+                alias[fichas._fold(otro)] = tajo['id']
+        corto = getattr(modulo, 'TAJO_NOMBRE_CATALOGO', None) or \
+            getattr(modulo, 'TAJO_NOMBRE', {})
+        return {c: alias[fichas._fold(n)] for c, n in corto.items()
+                if fichas._fold(n) in alias}
+    except (TypeError, KeyError, AttributeError) as exc:
+        # Defensa final: un tajo del catalogo o una entrada del adaptador
+        # con forma inesperada no debe tumbar el panel tampoco.
+        print(f"  [AVISO FICHA] {nombre_cat} o adaptador_{obra_id} tienen "
+              f"datos con forma inesperada ({type(exc).__name__}: {exc}). "
+              f"No se aplicaran las correcciones manuales de esta obra en "
+              f"esta pasada.")
+        return {}
 
 
 def cargar_ficha_obra(obra):
