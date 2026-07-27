@@ -2,7 +2,187 @@
   "version": "4.2",
   "catalogo_version": "1.2",
   "obra": "2026 MUNGIA ACR NEINOR",
-  "revision": "25/07/2026",
-  "generado": "27/07/2026 06:47",
-  "dudas_pendientes": []
+  "revision": "27/07/2026",
+  "generado": "27/07/2026 14:33",
+  "dudas_pendientes": [
+    {
+      "codigo": "OMITIDO_SIN_X",
+      "tarea_id": "agujeros_iluminacion_zzcc",
+      "pregunta": "Agujeros de iluminación en ZZCC dejó de aparecer con último estado M. Confirmar si terminó o sigue pendiente.",
+      "n_ubicaciones": 2,
+      "ubicaciones": [
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidad": "B2"
+        }
+      ]
+    },
+    {
+      "codigo": "OMITIDO_SIN_X",
+      "tarea_id": "agujeros_iluminacion_zzcc",
+      "pregunta": "Agujeros de iluminación en ZZCC dejó de aparecer con último estado pendiente. Confirmar si terminó o sigue pendiente.",
+      "n_ubicaciones": 32,
+      "ubicaciones": [
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "B3"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "C3"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "B3"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "C3"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "6",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "6",
+          "unidad": "B2"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "OMITIDO_SIN_X",
+      "tarea_id": "iluminacion_rellanos",
+      "pregunta": "Iluminación de rellanos / ZZCC dejó de aparecer con último estado pendiente. Confirmar si terminó o sigue pendiente.",
+      "n_ubicaciones": 9,
+      "ubicaciones": [
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidad": "B3"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "B3"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "C3"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "A2"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "B3"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "C3"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "PB",
+          "unidad": "PORTAL"
+        }
+      ]
+    }
+  ]
 }
