@@ -28,8 +28,9 @@ VARIOS/APPS SAGARDE/
 # Ficha de obra: fuente de verdad de estructura y estados (una por obra)
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/ficha_obra.json
 
-# Documentacion de diseno
+# Documentacion de diseno y planes de implementacion
 !docs/superpowers/specs/*.md
+!docs/superpowers/plans/*.md
 
 # Mantener este archivo rastreado
 !.gitignore
