@@ -878,8 +878,17 @@ def main(hacer_pdf=True):
                 'dudas_pendientes': prioridades.get('dudas_pendientes', []),
             }, salida_dudas)
 
+            # Se leen antes de tocar la ficha porque volcar_apartados() los
+            # necesita, y porque el panel los usa igualmente para toda obra
+            # (tenga ficha o no).
+            materiales = lectores.leer_materiales(os.path.join(carpeta_abs, obra['materiales_rel']))
+            ficha = lectores.leer_ficha(os.path.join(carpeta_abs, 'FICHA DE OBRA.xlsx'))
+            documentos = lectores.listar_documentos(carpeta_abs, salida_dir)
+
             # La ficha absorbe lo que trae esta regeneracion. Si la obra no tiene
             # ficha no pasa nada: sigue funcionando como siempre.
+            # OJO: `ficha` (arriba) es el xlsx recien leido; `ficha_actual` es
+            # la ficha de obra JSON, la base de datos. No confundirlos.
             ficha_actual = fichas.cargar(carpeta_abs)
             if ficha_actual:
                 ficha_actual, cambios_ficha = fichas.actualizar(
@@ -887,13 +896,14 @@ def main(hacer_pdf=True):
                     correcciones=_correcciones_mas_recientes(carpeta_abs),
                     mapa_tajos_cortos=_mapa_tajos_cortos(obra['id']),
                 )
+                tocados = fichas.volcar_apartados(
+                    ficha_actual, ficha_xlsx=ficha, materiales=materiales,
+                    documentos=documentos)
                 fichas.guardar(carpeta_abs, ficha_actual)
                 for linea in fichas.resumen_cambios(cambios_ficha):
                     print(f"  [FICHA] {linea}")
-
-            materiales = lectores.leer_materiales(os.path.join(carpeta_abs, obra['materiales_rel']))
-            ficha = lectores.leer_ficha(os.path.join(carpeta_abs, 'FICHA DE OBRA.xlsx'))
-            documentos = lectores.listar_documentos(carpeta_abs, salida_dir)
+                if tocados:
+                    print(f"  [FICHA] apartados actualizados: {', '.join(tocados)}")
 
             bat_abs = os.path.abspath(os.path.join(BASE_DIR, 'Actualizar_Obras.bat'))
             volver = os.path.relpath(os.path.join(OBRAS_ABIERTAS_DIR, 'index.html'), salida_dir).replace('\\', '/')

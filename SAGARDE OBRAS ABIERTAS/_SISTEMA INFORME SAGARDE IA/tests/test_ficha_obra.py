@@ -337,5 +337,53 @@ class TestRancia(unittest.TestCase):
         self.assertIsNone(ficha_obra.esta_rancia(ficha, prio))
 
 
+class TestApartadosRellenos(unittest.TestCase):
+
+    def test_identidad_toma_los_datos_del_xlsx_sin_pisar_lo_que_ya_hay(self):
+        ficha = fixtures.ficha_minima()
+        ficha['identidad']['tipo_obra'] = 'viviendas'
+        cambiados = ficha_obra.volcar_apartados(ficha, ficha_xlsx={
+            '_disponible': True,
+            'datos': {'Cliente': 'NEINOR', 'Constructora': 'ACR'},
+            'personal': [{'Nombre': 'Bixente', 'Rol': 'Jefe de obra'}],
+            'hitos': [], 'riesgos': [], 'plan': [],
+        })
+        self.assertEqual(ficha['identidad']['cliente'], 'NEINOR')
+        self.assertEqual(ficha['identidad']['constructora'], 'ACR')
+        self.assertEqual(ficha['identidad']['tipo_obra'], 'viviendas')
+        self.assertEqual(len(ficha['contactos']), 1)
+        self.assertIn('identidad', cambiados)
+
+    def test_materiales_guarda_resumen_y_no_la_lista_entera(self):
+        ficha = fixtures.ficha_minima()
+        ficha_obra.volcar_apartados(ficha, materiales={
+            'disponible': True, 'meses': ['Junio26', 'Julio26'],
+            'ultimo_mes': 'Julio26', 'ultima_fecha': '20/07/2026',
+            'dias_desde': 7, 'aviso': None,
+            'items': [{'categoria': 'Cable', 'material': 'RZ1 3G1.5',
+                       'tipo': 'm', 'uni': 'm', 'total': 500}],
+        })
+        self.assertEqual(ficha['materiales']['ultimo_mes'], 'Julio26')
+        self.assertEqual(ficha['materiales']['n_items'], 1)
+        self.assertEqual(ficha['materiales']['dias_desde'], 7)
+
+    def test_documentos_guarda_el_recuento_por_categoria(self):
+        ficha = fixtures.ficha_minima()
+        ficha_obra.volcar_apartados(ficha, documentos=[
+            {'nombre': 'a.pdf', 'categoria': 'Planos', 'subcarpeta': '.',
+             'href': 'a.pdf', 'kb': 100},
+            {'nombre': 'b.pdf', 'categoria': 'Planos', 'subcarpeta': '.',
+             'href': 'b.pdf', 'kb': 50},
+            {'nombre': 'c.xlsx', 'categoria': 'Otros', 'subcarpeta': 'x',
+             'href': 'x/c.xlsx', 'kb': 10},
+        ])
+        self.assertEqual(ficha['documentos']['total'], 3)
+        self.assertEqual(ficha['documentos']['por_categoria']['Planos'], 2)
+
+    def test_sin_datos_no_marca_nada_como_cambiado(self):
+        ficha = fixtures.ficha_minima()
+        self.assertEqual(ficha_obra.volcar_apartados(ficha), [])
+
+
 if __name__ == '__main__':
     unittest.main()

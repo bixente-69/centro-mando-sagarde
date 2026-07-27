@@ -3,15 +3,22 @@
   "id": "mungia",
   "modo": "hibrida",
   "fecha_entrada_digital": "27/07/2026",
-  "actualizado": "27/07/2026 20:47",
+  "actualizado": "27/07/2026 21:07",
   "identidad": {
     "nombre": "2026 MUNGIA ACR NEINOR",
     "carpeta": "2026 MUNGIA ACR NEINOR",
     "tipo_obra": "viviendas",
     "_meta": {
-      "actualizado": "27/07/2026 17:57",
+      "actualizado": "27/07/2026 21:05",
       "origen": "sembrado"
-    }
+    },
+    "direccion": "Parcelas ZR1.1 y ZR1.2 del PEOU U-41, 48100 Mungia (Bizkaia)",
+    "cliente": "Neinor Península, S.L.U.",
+    "promotora": "NEINOR PENÍNSULA, S.L.U. · NIF B95788634 · Paseo de la Castellana 20-5ª, 28046 Madrid · 900110022 · info@neinorhomes.com",
+    "constructora": "ACR [dato deducido del nombre de carpeta \"MUNGIA ACR NEINOR\" — NO confirmado en documentación revisada]",
+    "jefe_obra": "[No localizado en documentación — pendiente de confirmar]",
+    "fecha_inicio": "[No consta fecha explícita. Primera revisión de seguimiento registrada: 16/01/2026 — no confirma el inicio real de obra]",
+    "fecha_fin": "[No localizada en documentación — pendiente]"
   },
   "estructura": {
     "bloques": [
@@ -12894,7 +12901,36 @@
       ]
     }
   ],
-  "materiales": {},
-  "documentos": {},
+  "materiales": {
+    "ultimo_mes": "Mayo26",
+    "ultima_fecha": "08/05/2026",
+    "dias_desde": 80,
+    "meses": [
+      "Febrero26",
+      "Marzo26",
+      "Abril26",
+      "Mayo26"
+    ],
+    "n_items": 50,
+    "aviso": "La hoja de materiales no se actualiza desde 08/05/2026 (80 días). Los datos de consumo/stock pueden estar desfasados.",
+    "_meta": {
+      "actualizado": "27/07/2026 21:05"
+    }
+  },
+  "documentos": {
+    "total": 98,
+    "por_categoria": {
+      "Comprimidos": 1,
+      "Excel": 4,
+      "Imágenes": 4,
+      "Otros": 2,
+      "PDF": 56,
+      "Planos y gráfica": 4,
+      "Word": 27
+    },
+    "_meta": {
+      "actualizado": "27/07/2026 21:05"
+    }
+  },
   "contactos": []
 }

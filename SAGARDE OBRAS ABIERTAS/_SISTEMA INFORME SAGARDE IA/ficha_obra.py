@@ -141,6 +141,88 @@ def asegurar_apartados(ficha):
     return creados
 
 
+# ------------------------------------------------------ volcado de apartados
+
+# Etiqueta tal y como aparece en la hoja 'Datos' del xlsx (normalizada con
+# _fold) -> campo de ficha['identidad']. Se listan varias variantes por
+# campo porque las FICHA DE OBRA.xlsx reales de Mungia/Bolueta/Gernika/
+# Obispo Orueta no comparten una redaccion unica de cabecera.
+CAMPOS_IDENTIDAD = {
+    'cliente': 'cliente',
+    'cliente titular de la instalacion': 'cliente',
+    'promotora': 'promotora', 'promotor': 'promotora',
+    'constructora': 'constructora',
+    'constructora contratista general': 'constructora',
+    'direccion': 'direccion',
+    'codigo': 'codigo', 'codigo de obra': 'codigo',
+    'fecha inicio': 'fecha_inicio', 'fecha de inicio': 'fecha_inicio',
+    'fecha de inicio de obra': 'fecha_inicio',
+    'fecha fin': 'fecha_fin', 'fecha fin prevista': 'fecha_fin',
+    'fecha prevista de fin': 'fecha_fin',
+    'fecha prevista de fin de obra': 'fecha_fin',
+    'jefe de obra': 'jefe_obra', 'responsable': 'jefe_obra',
+    'responsable de obra': 'jefe_obra', 'responsable de obra sagarde': 'jefe_obra',
+}
+
+
+def volcar_apartados(ficha, ficha_xlsx=None, materiales=None, documentos=None):
+    """Rellena identidad, contactos, materiales y documentos desde los lectores.
+
+    Solo escribe lo que viene con dato: nunca pisa un valor existente con
+    vacio, porque la ficha es acumulativa y un xlsx incompleto no debe
+    borrar lo que ya se sabia. Devuelve la lista de apartados que han
+    cambiado."""
+    asegurar_apartados(ficha)
+    cambiados = []
+
+    if ficha_xlsx and ficha_xlsx.get('_disponible'):
+        identidad = ficha['identidad']
+        toco = False
+        for etiqueta, valor in (ficha_xlsx.get('datos') or {}).items():
+            campo = CAMPOS_IDENTIDAD.get(_fold(etiqueta))
+            if campo and valor not in (None, ''):
+                if identidad.get(campo) != valor:
+                    identidad[campo] = valor
+                    toco = True
+        if toco:
+            identidad.setdefault('_meta', {})['actualizado'] = _ahora()
+            cambiados.append('identidad')
+        personal = ficha_xlsx.get('personal') or []
+        if personal and personal != ficha.get('contactos'):
+            ficha['contactos'] = personal
+            cambiados.append('contactos')
+
+    if materiales and materiales.get('disponible'):
+        resumen = {
+            'ultimo_mes': materiales.get('ultimo_mes'),
+            'ultima_fecha': materiales.get('ultima_fecha'),
+            'dias_desde': materiales.get('dias_desde'),
+            'meses': materiales.get('meses') or [],
+            'n_items': len(materiales.get('items') or []),
+            'aviso': materiales.get('aviso'),
+            '_meta': {'actualizado': _ahora()},
+        }
+        if {k: v for k, v in resumen.items() if k != '_meta'} != \
+           {k: v for k, v in (ficha.get('materiales') or {}).items() if k != '_meta'}:
+            ficha['materiales'] = resumen
+            cambiados.append('materiales')
+
+    if documentos:
+        por_categoria = {}
+        for doc in documentos:
+            categoria = doc.get('categoria') or 'Otros'
+            por_categoria[categoria] = por_categoria.get(categoria, 0) + 1
+        resumen = {'total': len(documentos), 'por_categoria': por_categoria,
+                   '_meta': {'actualizado': _ahora()}}
+        anterior = ficha.get('documentos') or {}
+        if (anterior.get('total'), anterior.get('por_categoria')) != \
+           (resumen['total'], resumen['por_categoria']):
+            ficha['documentos'] = resumen
+            cambiados.append('documentos')
+
+    return cambiados
+
+
 def _indice_ubicaciones(ficha):
     """(portal_id, planta_id, ubicacion_id) -> dict de la ubicacion, mas los
     indices por nombre para poder cruzar con lo que dice la revision, que
