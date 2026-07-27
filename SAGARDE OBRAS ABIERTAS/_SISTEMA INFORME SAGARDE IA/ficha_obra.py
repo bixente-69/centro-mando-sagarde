@@ -305,7 +305,7 @@ def _localizar(por_nombre, edificio, planta, unidad):
     return por_nombre.get((_fold(edificio), _fold(planta), _fold(unidad)))
 
 
-def _indice_tajo_por_nombre(ruta_catalogo=None):
+def _indice_tajo_por_nombre(ruta_catalogo=None, avisar=True):
     """Construye indice fold(nombre_largo) y fold(alias) -> id_tajo desde el
     catálogo. Devuelve {} si el catálogo no se puede leer o no tiene forma
     esperada.
@@ -317,18 +317,30 @@ def _indice_tajo_por_nombre(ruta_catalogo=None):
     "Rozas de timbres").
 
     Por defecto lee CATALOGO_TAJOS.json de la carpeta reglas relativa al
-    directorio de este módulo."""
+    directorio de este módulo. Si avisar=True, imprime [AVISO FICHA] en caso
+    de fallo (el catálogo no se puede leer o tiene forma inválida), indicando
+    que los alias no se resolverán en esta pasada."""
     if ruta_catalogo is None:
         base = os.path.dirname(os.path.abspath(__file__))
         ruta_catalogo = os.path.join(base, 'reglas', 'CATALOGO_TAJOS.json')
 
+    nombre_cat = os.path.basename(ruta_catalogo)
     try:
         with open(ruta_catalogo, encoding='utf-8') as f:
             catalogo = json.load(f)
-    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        if avisar:
+            print(f"  [AVISO FICHA] no se pudo leer {nombre_cat} "
+                  f"({type(exc).__name__}: {exc}). Los alias del catalogo "
+                  f"no se resolveran en esta pasada.")
         return {}
 
     if not isinstance(catalogo, dict) or not isinstance(catalogo.get('tajos'), list):
+        if avisar:
+            print(f"  [AVISO FICHA] {nombre_cat} no tiene la forma esperada (se "
+                  f"esperaba un objeto con clave 'tajos' como lista, llego "
+                  f"{type(catalogo).__name__}). Los alias del catalogo "
+                  f"no se resolveran en esta pasada.")
         return {}
 
     indice = {}
@@ -339,7 +351,11 @@ def _indice_tajo_por_nombre(ruta_catalogo=None):
             # Indexar por cada alias
             for alias in tajo.get('aliases') or []:
                 indice[_fold(alias)] = tajo['id']
-    except (TypeError, KeyError, AttributeError):
+    except (TypeError, KeyError, AttributeError) as exc:
+        if avisar:
+            print(f"  [AVISO FICHA] {nombre_cat} o sus tajos tienen "
+                  f"datos con forma inesperada ({type(exc).__name__}: {exc}). "
+                  f"Los alias del catalogo no se resolveran en esta pasada.")
         return {}
 
     return indice

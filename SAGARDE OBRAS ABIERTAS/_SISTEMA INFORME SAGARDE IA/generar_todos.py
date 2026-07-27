@@ -200,41 +200,26 @@ def _mapa_tajos_cortos(obra_id):
               f"correcciones manuales de esta obra en esta pasada.")
         return {}
 
+    # Usar la función compartida de ficha_obra para construir el índice de
+    # alias. Esto evita duplicación de lógica: ambos caminos (correcciones
+    # manuales y snapshot) usan el mismo mapeo del catálogo.
     ruta_cat = os.path.join(BASE_DIR, 'reglas', 'CATALOGO_TAJOS.json')
-    nombre_cat = os.path.basename(ruta_cat)
-    try:
-        with open(ruta_cat, encoding='utf-8') as f:
-            catalogo = json.load(f)
-    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
-        print(f"  [AVISO FICHA] no se pudo leer {nombre_cat} "
-              f"({type(exc).__name__}: {exc}). No se aplicaran las "
-              f"correcciones manuales de esta obra en esta pasada.")
-        return {}
-
-    if not isinstance(catalogo, dict) or not isinstance(catalogo.get('tajos'), list):
-        print(f"  [AVISO FICHA] {nombre_cat} no tiene la forma esperada (se "
-              f"esperaba un objeto con clave 'tajos' como lista, llego "
-              f"{type(catalogo).__name__}). No se aplicaran las "
-              f"correcciones manuales de esta obra en esta pasada.")
+    indice_alias = fichas._indice_tajo_por_nombre(ruta_catalogo=ruta_cat, avisar=True)
+    if not indice_alias:
+        # _indice_tajo_por_nombre ya habrá impreso el aviso si avisar=True
         return {}
 
     try:
-        alias = {}
-        for tajo in catalogo['tajos']:
-            alias[fichas._fold(tajo['nombre'])] = tajo['id']
-            for otro in tajo.get('aliases', []):
-                alias[fichas._fold(otro)] = tajo['id']
         corto = getattr(modulo, 'TAJO_NOMBRE_CATALOGO', None) or \
             getattr(modulo, 'TAJO_NOMBRE', {})
-        return {c: alias[fichas._fold(n)] for c, n in corto.items()
-                if fichas._fold(n) in alias}
+        return {c: indice_alias[fichas._fold(n)] for c, n in corto.items()
+                if fichas._fold(n) in indice_alias}
     except (TypeError, KeyError, AttributeError) as exc:
-        # Defensa final: un tajo del catalogo o una entrada del adaptador
-        # con forma inesperada no debe tumbar el panel tampoco.
-        print(f"  [AVISO FICHA] {nombre_cat} o adaptador_{obra_id} tienen "
-              f"datos con forma inesperada ({type(exc).__name__}: {exc}). "
-              f"No se aplicaran las correcciones manuales de esta obra en "
-              f"esta pasada.")
+        # Defensa final: una entrada del adaptador con forma inesperada
+        # no debe tumbar el panel tampoco.
+        print(f"  [AVISO FICHA] adaptador_{obra_id} tiene datos con forma "
+              f"inesperada ({type(exc).__name__}: {exc}). No se aplicaran "
+              f"las correcciones manuales de esta obra en esta pasada.")
         return {}
 
 
