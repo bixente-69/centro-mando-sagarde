@@ -375,9 +375,16 @@ def _reclamar_correcciones(estados, correcciones, mapa_cortos, ficha,
         destino = f'{portal_id}__{planta_id}__{tajo}__{unidad}'
         if destino not in estados:
             destino = _con_alias(ficha, portal_id, planta_id, tajo, unidad, estados)
-        if destino is None or valor not in MAPA_ESTADO:
+        if destino is None:
             continue
-        nuevo = MAPA_ESTADO[valor]
+        # Normalizar el valor de la corrección igual que el bucle principal
+        valor_norm = _normalizar_estado(valor)
+        nuevo = MAPA_ESTADO.get(valor_norm)
+        if nuevo is None:  # Estado no reconocido
+            if valor_norm and valor_norm not in cambios['estados_no_reconocidos']:
+                cambios['estados_no_reconocidos'].append(valor_norm)
+            continue  # No aplicar corrección con estado desconocido, pero sí registrar
+        # Si llegamos aquí, el valor fue reconocido correctamente
         if estados[destino].get('v') != nuevo:
             cambios['correcciones_reclamadas'].append(
                 (destino, estados[destino].get('v'), nuevo))

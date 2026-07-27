@@ -106,6 +106,80 @@ class TestEstados(unittest.TestCase):
         self.assertTrue(any('ESTADOS NO RECONOCIDOS' in linea for linea in resumen),
                        msg="Estado no reconocido no aparece en el resumen de cambios")
 
+    def test_correcciones_manuales_mayuscula_X_se_normalizan(self):
+        """Una corrección manual con 'X' en mayúscula debe normalizarse y aplicarse.
+        Las correcciones son marcas que el jefe de obra escribe a boli sobre
+        la hoja de campo — el dato más directo que existe."""
+        ficha = fixtures.ficha_minima()
+        # Estado base: 'M' en p1__pb__tubeado__A
+        prio = fixtures.prioridades([fixtures.item(unidad='A', estado='M')])
+        ficha, _ = ficha_obra.actualizar(ficha, prio)
+        # Segunda revisión: procesa un item diferente (B), y aplica corrección en A
+        prio2 = fixtures.prioridades([fixtures.item(unidad='B', estado='X')],
+                                    revision='28/07/2026')
+        correcciones = {'p1__pb__tubeado__A': 'X'}  # mayúscula
+        ficha, cambios = ficha_obra.actualizar(ficha, prio2, correcciones=correcciones)
+        # Debe cambiar A a 'X' (normalizado)
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'X')
+        # Debe registrarse en correcciones_reclamadas
+        self.assertIn(('p1__pb__tubeado__A', 'M', 'X'), cambios['correcciones_reclamadas'])
+        # No debe aparecer en estados_no_reconocidos (porque se reconoció)
+        self.assertNotIn('x', cambios['estados_no_reconocidos'])
+
+    def test_correcciones_manuales_mayuscula_M_y_Pendiente(self):
+        """Correcciones con variantes de 'M', 'Pendiente' en mayúscula también se normalizan."""
+        ficha = fixtures.ficha_minima()
+        # Estado base: '?' en ambas celdas (sin datos)
+        prio = fixtures.prioridades([])  # Sin items, solo estructura
+        # Forzar creación de estados con estado_base
+        prio_base = fixtures.prioridades([fixtures.item(unidad='A', estado='X')])
+        ficha, _ = ficha_obra.actualizar(ficha, prio_base)
+
+        # Correcciones: una con 'M' mayúscula, otra con 'Pendiente' mayúscula
+        prio_rev2 = fixtures.prioridades([fixtures.item(unidad='B', estado='X')],
+                                        revision='29/07/2026')
+        correcciones = {
+            'p1__pb__tubeado__A': 'M',          # mayúscula
+            'p1__1__cableado__B': 'Pendiente',  # mayúscula
+        }
+        ficha, cambios = ficha_obra.actualizar(ficha, prio_rev2, correcciones=correcciones)
+
+        # Ambas correcciones deben aplicarse
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'M')
+        self.assertEqual(ficha['estados']['p1__1__cableado__B']['v'], 'P')
+
+        # Ambas deben estar en correcciones_reclamadas
+        self.assertEqual(len(cambios['correcciones_reclamadas']), 2)
+
+        # Ninguna debe aparecer en estados_no_reconocidos
+        self.assertEqual(cambios['estados_no_reconocidos'], [])
+
+    def test_correcciones_manuales_no_reconocidas_son_visibles(self):
+        """Una corrección con estado no reconocido no se aplica, pero aparece en estados_no_reconocidos."""
+        ficha = fixtures.ficha_minima()
+        # Estado base
+        prio = fixtures.prioridades([fixtures.item(unidad='A', estado='X')])
+        ficha, _ = ficha_obra.actualizar(ficha, prio)
+
+        # Corrección con estado inventado
+        prio_rev2 = fixtures.prioridades([fixtures.item(unidad='B', estado='X')],
+                                        revision='29/07/2026')
+        correcciones = {'p1__pb__tubeado__A': 'INVENTADO'}
+        ficha, cambios = ficha_obra.actualizar(ficha, prio_rev2, correcciones=correcciones)
+
+        # La celda debe mantener su estado anterior (X)
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'X')
+
+        # NO debe estar en correcciones_reclamadas
+        self.assertEqual(len(cambios['correcciones_reclamadas']), 0)
+
+        # DEBE aparecer en estados_no_reconocidos
+        self.assertIn('inventado', cambios['estados_no_reconocidos'])
+
+        # DEBE aparecer en el resumen
+        resumen = ficha_obra.resumen_cambios(cambios)
+        self.assertTrue(any('ESTADOS NO RECONOCIDOS' in linea for linea in resumen))
+
 
 if __name__ == '__main__':
     unittest.main()
