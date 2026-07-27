@@ -307,6 +307,46 @@ def _localizar(por_nombre, edificio, planta, unidad):
 
 # ------------------------------------------------------------- actualizacion
 
+def actualizar_desde_snapshot(ficha, snapshot, revision, correcciones=None,
+                              mapa_tajos_cortos=None):
+    """Igual que `actualizar`, pero comiendo el snapshot CRUDO del adaptador.
+
+    Rompe el ciclo: hasta ahora la ficha se alimentaba de
+    prioridades_trabajos.json, que ya venia del priorizador. Para que el
+    priorizador pueda leer de la ficha, la ficha tiene que alimentarse de algo
+    anterior — el snapshot tal cual sale de la hoja de revision.
+    """
+    id_por_nombre = {}
+    for tajo in (ficha.get('tajos') or {}).get('detalle') or []:
+        id_por_nombre[_fold(tajo.get('nombre') or '')] = tajo['id']
+
+    items = []
+    for reg in snapshot or []:
+        nombre = str(reg.get('task') or '').strip()
+        if not nombre:
+            continue
+        # Un tajo que la ficha no conoce entra por su nombre: `actualizar`
+        # lo dara de alta marcado sin confirmar y avisara.
+        tarea_id = id_por_nombre.get(_fold(nombre), nombre)
+        items.append({
+            'tarea_id': tarea_id,
+            'trabajo': nombre,
+            'ambito': 'vivienda',
+            'propiedad': 'propio',
+            'fase_nombre': 'Sin clasificar',
+            'orden_ejecucion': 9999,
+            'edificio': reg.get('building'),
+            'planta': reg.get('floor'),
+            'unidad': reg.get('unit'),
+            'estado_actual': reg.get('status', ''),
+            'ultima_fecha': revision,
+        })
+
+    prioridades = {'revision': revision, 'detalle_items': items}
+    return actualizar(ficha, prioridades, correcciones=correcciones,
+                      mapa_tajos_cortos=mapa_tajos_cortos)
+
+
 def actualizar(ficha, prioridades, correcciones=None, mapa_tajos_cortos=None):
     """Vuelca en la ficha lo que trae una regeneracion.
 

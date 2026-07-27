@@ -454,6 +454,52 @@ class TestApartadosRellenos(unittest.TestCase):
         self.assertNotIn('documentos', cambiados)
 
 
+class TestActualizarDesdeSnapshot(unittest.TestCase):
+
+    def test_un_snapshot_crudo_actualiza_los_estados(self):
+        ficha = fixtures.ficha_minima()
+        snapshot = [{'task': 'Tubeado', 'floor': 'PB', 'building': 'P1',
+                     'unit': 'A', 'status': 'X'}]
+        ficha, cambios = ficha_obra.actualizar_desde_snapshot(
+            ficha, snapshot, '27/07/2026')
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'X')
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['f'], '27/07/2026')
+
+    def test_la_casilla_vacia_del_snapshot_se_guarda_como_pendiente(self):
+        ficha = fixtures.ficha_minima()
+        snapshot = [{'task': 'Tubeado', 'floor': 'PB', 'building': 'P1',
+                     'unit': 'A', 'status': ''}]
+        ficha, _ = ficha_obra.actualizar_desde_snapshot(
+            ficha, snapshot, '27/07/2026')
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'P')
+
+    def test_reclama_las_correcciones_manuales(self):
+        ficha = fixtures.ficha_minima()
+        snapshot = [{'task': 'Tubeado', 'floor': 'PB', 'building': 'P1',
+                     'unit': 'A', 'status': ''}]
+        ficha, cambios = ficha_obra.actualizar_desde_snapshot(
+            ficha, snapshot, '27/07/2026',
+            correcciones={'p1__pb__tubeado__A': 'X'})
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'X')
+        self.assertEqual(len(cambios['correcciones_reclamadas']), 1)
+
+    def test_una_ubicacion_desconocida_entra_sin_confirmar_y_avisa(self):
+        ficha = fixtures.ficha_minima()
+        snapshot = [{'task': 'Tubeado', 'floor': 'PB', 'building': 'P1',
+                     'unit': 'C', 'status': 'X'}]
+        ficha, cambios = ficha_obra.actualizar_desde_snapshot(
+            ficha, snapshot, '27/07/2026')
+        self.assertTrue(any('unidad C' in a for a in cambios['ubicaciones_nuevas']))
+
+    def test_registra_la_revision(self):
+        ficha = fixtures.ficha_minima()
+        snapshot = [{'task': 'Tubeado', 'floor': 'PB', 'building': 'P1',
+                     'unit': 'A', 'status': 'X'}]
+        ficha, cambios = ficha_obra.actualizar_desde_snapshot(
+            ficha, snapshot, '27/07/2026')
+        self.assertEqual(cambios['revision_registrada'], 'rev_27072026')
+
+
 class TestSnapshotDesdeFicha(unittest.TestCase):
 
     def _ficha_con_estados(self, valores):
