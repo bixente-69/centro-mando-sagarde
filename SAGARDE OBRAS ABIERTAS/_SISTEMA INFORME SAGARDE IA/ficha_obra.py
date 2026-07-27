@@ -180,6 +180,9 @@ def volcar_apartados(ficha, ficha_xlsx=None, materiales=None, documentos=None):
         toco = False
         for etiqueta, valor in (ficha_xlsx.get('datos') or {}).items():
             campo = CAMPOS_IDENTIDAD.get(_fold(etiqueta))
+            # La guarda del valor vacio es el principio de esta funcion: la
+            # ficha es acumulativa y un xlsx a medio rellenar no debe borrar
+            # lo que ya se sabia de la obra.
             if campo and valor not in (None, ''):
                 if identidad.get(campo) != valor:
                     identidad[campo] = valor
@@ -192,7 +195,7 @@ def volcar_apartados(ficha, ficha_xlsx=None, materiales=None, documentos=None):
             ficha['contactos'] = personal
             cambiados.append('contactos')
 
-    if materiales and materiales.get('disponible'):
+    if materiales and materiales.get('disponible') and materiales.get('items'):
         resumen = {
             'ultimo_mes': materiales.get('ultimo_mes'),
             'ultima_fecha': materiales.get('ultima_fecha'),

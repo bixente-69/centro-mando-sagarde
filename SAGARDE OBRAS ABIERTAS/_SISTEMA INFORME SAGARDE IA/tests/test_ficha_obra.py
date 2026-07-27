@@ -384,6 +384,75 @@ class TestApartadosRellenos(unittest.TestCase):
         ficha = fixtures.ficha_minima()
         self.assertEqual(ficha_obra.volcar_apartados(ficha), [])
 
+    def test_identidad_no_pisa_valor_existente_con_cadena_vacia_ni_con_none(self):
+        """Ronda de correccion 1: el revisor comprobo por mutacion que quitar
+        `valor not in (None, '')` dejaba las 40 pruebas en verde -- la prueba
+        original solo protegia 'tipo_obra', que ni siquiera esta en
+        CAMPOS_IDENTIDAD, asi que sobrevivia pasara lo que pasara. Esta
+        prueba ataca directamente el campo que SI se toca (cliente/jefe_obra)
+        con '' y con None, que es lo que la guarda distingue."""
+        ficha = fixtures.ficha_minima()
+        ficha['identidad']['cliente'] = 'NEINOR (ya confirmado)'
+        ficha['identidad']['jefe_obra'] = 'Bixente'
+        cambiados = ficha_obra.volcar_apartados(ficha, ficha_xlsx={
+            '_disponible': True,
+            'datos': {'Cliente': '', 'Responsable': None},
+            'personal': [], 'hitos': [], 'riesgos': [], 'plan': [],
+        })
+        self.assertEqual(ficha['identidad']['cliente'], 'NEINOR (ya confirmado)')
+        self.assertEqual(ficha['identidad']['jefe_obra'], 'Bixente')
+        self.assertNotIn('identidad', cambiados)
+
+    def test_contactos_no_se_vacian_si_el_xlsx_no_trae_personal(self):
+        """Mismo principio que identidad, aplicado a la lista de contactos:
+        un Personal en blanco en el xlsx no debe borrar los contactos que
+        ya se conocian."""
+        ficha = fixtures.ficha_minima()
+        ficha['contactos'] = [{'Nombre': 'Bixente', 'Rol': 'Jefe de obra'}]
+        cambiados = ficha_obra.volcar_apartados(ficha, ficha_xlsx={
+            '_disponible': True, 'datos': {}, 'personal': [],
+            'hitos': [], 'riesgos': [], 'plan': [],
+        })
+        self.assertEqual(ficha['contactos'],
+                         [{'Nombre': 'Bixente', 'Rol': 'Jefe de obra'}])
+        self.assertNotIn('contactos', cambiados)
+
+    def test_materiales_no_se_vacian_si_la_lectura_no_trae_items(self):
+        """Hallazgo de la ronda de correccion 1: a diferencia de identidad,
+        contactos y documentos, la rama de materiales solo comprobaba
+        `disponible` (el fichero existe) pero no si la lectura trajo algun
+        item. Una lectura degradada (p.ej. no se localiza la columna TOTAL)
+        deja 'items': [] con 'disponible': True, y sin esta guarda
+        pisaria en silencio un resumen bueno con uno vacio."""
+        ficha = fixtures.ficha_minima()
+        ficha['materiales'] = {
+            'ultimo_mes': 'Junio26', 'ultima_fecha': '15/06/2026',
+            'dias_desde': 3, 'meses': ['Mayo26', 'Junio26'],
+            'n_items': 50, 'aviso': None,
+            '_meta': {'actualizado': '15/06/2026 10:00'},
+        }
+        cambiados = ficha_obra.volcar_apartados(ficha, materiales={
+            'disponible': True, 'meses': ['Mayo26', 'Junio26', 'Julio26'],
+            'ultimo_mes': 'Julio26', 'ultima_fecha': None, 'dias_desde': None,
+            'aviso': "No se localizó la columna TOTAL en la hoja; se muestra "
+                     "solo la referencia al archivo.",
+            'items': [],
+        })
+        self.assertEqual(ficha['materiales']['n_items'], 50)
+        self.assertEqual(ficha['materiales']['ultimo_mes'], 'Junio26')
+        self.assertNotIn('materiales', cambiados)
+
+    def test_documentos_no_se_vacian_si_la_lista_viene_vacia(self):
+        """Mismo principio en documentos: una carpeta que por lo que sea se
+        recorre vacia (fallo de lectura, ruta temporalmente inaccesible) no
+        debe borrar el recuento que ya se tenia."""
+        ficha = fixtures.ficha_minima()
+        ficha['documentos'] = {'total': 3, 'por_categoria': {'Planos': 2, 'Otros': 1},
+                               '_meta': {'actualizado': '20/07/2026 10:00'}}
+        cambiados = ficha_obra.volcar_apartados(ficha, documentos=[])
+        self.assertEqual(ficha['documentos']['total'], 3)
+        self.assertNotIn('documentos', cambiados)
+
 
 if __name__ == '__main__':
     unittest.main()
