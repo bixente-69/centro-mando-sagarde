@@ -49,3 +49,6 @@ __pycache__/
 
 # Mantener este archivo rastreado
 !.gitignore
+
+# Instrucciones de trabajo del proyecto (se cargan en cada sesion)
+!CLAUDE.md
