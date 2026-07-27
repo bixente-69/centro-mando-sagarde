@@ -2,12 +2,12 @@
   "version": "4.2",
   "catalogo_version": "1.2",
   "obra": "2025 BILBAO OBISPO ORUETA",
-  "revision": "24/09/2025",
-  "edad_revision_dias": 306,
-  "revision_caducada": true,
+  "revision": "27/07/2026",
+  "edad_revision_dias": 0,
+  "revision_caducada": false,
   "estado_obra": "Entregada y en funcionamiento; pendientes postapertura en dos apartamentos de planta baja",
   "historial_confirmado_terminado": true,
-  "generado": "27/07/2026 14:34",
+  "generado": "27/07/2026 15:48",
   "resumen": {
     "listos": 0,
     "verificar": 1,
@@ -16,9 +16,9 @@
     "bloqueados": 0,
     "otros_gremios": 1,
     "dudas": 1,
-    "terminados": 31,
-    "inventario_total": 33,
-    "detalle_total": 2364,
+    "terminados": 34,
+    "inventario_total": 36,
+    "detalle_total": 2404,
     "preguntas_pendientes": 1,
     "viviendas": 0,
     "zonas_comunes": 0,
@@ -65,6 +65,32 @@
   ],
   "detalle_items": [
     {
+      "tarea_id": "tabicado",
+      "trabajo": "Tabicado",
+      "trabajos_originales": [
+        "Tabicado"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 10,
+      "fase_nombre": "Inicio de obra",
+      "display_group": "tabicado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "tabique_separador_cocinas",
       "trabajo": "Tabique separador de cocinas",
       "trabajos_originales": [
@@ -117,6 +143,84 @@
       "ultima_fecha": "Excepción confirmada"
     },
     {
+      "tarea_id": "tabicado",
+      "trabajo": "Tabicado",
+      "trabajos_originales": [
+        "Tabicado"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 10,
+      "fase_nombre": "Inicio de obra",
+      "display_group": "tabicado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "rozas_timbres",
+      "trabajo": "Rozas de timbres",
+      "trabajos_originales": [
+        "Rozas timbres"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 20,
+      "fase_nombre": "Inicio de obra",
+      "display_group": "rozas_timbres",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "rozas_timbres",
+      "trabajo": "Rozas de timbres",
+      "trabajos_originales": [
+        "Rozas timbres"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 20,
+      "fase_nombre": "Inicio de obra",
+      "display_group": "rozas_timbres",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "montante_general",
       "trabajo": "Montantes",
       "trabajos_originales": [
@@ -2145,6 +2249,58 @@
       "ultima_fecha": "07/07/2025"
     },
     {
+      "tarea_id": "perfilado_pladur",
+      "trabajo": "Perfilado de Pladur",
+      "trabajos_originales": [
+        "Perfilado de Pladur"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 100,
+      "fase_nombre": "Pladur",
+      "display_group": "perfilado_pladur",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "perfilado_pladur",
+      "trabajo": "Perfilado de Pladur",
+      "trabajos_originales": [
+        "Perfilado de Pladur"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 100,
+      "fase_nombre": "Pladur",
+      "display_group": "perfilado_pladur",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
@@ -3703,6 +3859,58 @@
       "omitido_ultima": false,
       "forzado_entregado": true,
       "ultima_fecha": "07/07/2025"
+    },
+    {
+      "tarea_id": "primera_cara_pladur",
+      "trabajo": "Primeras caras de Pladur",
+      "trabajos_originales": [
+        "1as caras Pladur"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 110,
+      "fase_nombre": "Pladur",
+      "display_group": "primera_cara_pladur",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "primera_cara_pladur",
+      "trabajo": "Primeras caras de Pladur",
+      "trabajos_originales": [
+        "1as caras Pladur"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 110,
+      "fase_nombre": "Pladur",
+      "display_group": "primera_cara_pladur",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
     },
     {
       "tarea_id": "tubeado",
@@ -5575,6 +5783,58 @@
       "omitido_ultima": false,
       "forzado_entregado": true,
       "ultima_fecha": "24/09/2025"
+    },
+    {
+      "tarea_id": "tubeado",
+      "trabajo": "Tubeado interior",
+      "trabajos_originales": [
+        "Tubeado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 130,
+      "fase_nombre": "Instalación interior",
+      "display_group": "tubeado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "tubeado",
+      "trabajo": "Tubeado interior",
+      "trabajos_originales": [
+        "Tubeado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 130,
+      "fase_nombre": "Instalación interior",
+      "display_group": "tubeado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
     },
     {
       "tarea_id": "tubeado",
@@ -7566,6 +7826,58 @@
       "display_group": "cableado",
       "edificio": "Obispo Orueta 2",
       "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "cableado",
+      "trabajo": "Cableado eléctrico",
+      "trabajos_originales": [
+        "Cableado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 140,
+      "fase_nombre": "Instalación interior",
+      "display_group": "cableado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "cableado",
+      "trabajo": "Cableado eléctrico",
+      "trabajos_originales": [
+        "Cableado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 140,
+      "fase_nombre": "Instalación interior",
+      "display_group": "cableado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
       "unidad": "Zonas Comunes 1",
       "estado": "X",
       "estado_actual": "X",
@@ -12610,6 +12922,58 @@
       "display_group": "telecableado",
       "edificio": "Obispo Orueta 2",
       "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "telecableado",
+      "trabajo": "Telecableado",
+      "trabajos_originales": [
+        "Telecableado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 150,
+      "fase_nombre": "Instalación interior",
+      "display_group": "telecableado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "telecableado",
+      "trabajo": "Telecableado",
+      "trabajos_originales": [
+        "Telecableado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 150,
+      "fase_nombre": "Instalación interior",
+      "display_group": "telecableado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
       "unidad": "Zonas Comunes 1",
       "estado": "X",
       "estado_actual": "X",
@@ -15769,6 +16133,58 @@
       "ultima_fecha": "07/07/2025"
     },
     {
+      "tarea_id": "segunda_cara_pladur",
+      "trabajo": "Segundas caras de Pladur",
+      "trabajos_originales": [
+        "2as caras Pladur"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 180,
+      "fase_nombre": "Pladur",
+      "display_group": "segunda_cara_pladur",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "segunda_cara_pladur",
+      "trabajo": "Segundas caras de Pladur",
+      "trabajos_originales": [
+        "2as caras Pladur"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 180,
+      "fase_nombre": "Pladur",
+      "display_group": "segunda_cara_pladur",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "doblar_cajas",
       "trabajo": "Doblar cajas",
       "trabajos_originales": [
@@ -17329,6 +17745,58 @@
       "ultima_fecha": "07/07/2025"
     },
     {
+      "tarea_id": "doblar_cajas",
+      "trabajo": "Doblar cajas",
+      "trabajos_originales": [
+        "Doblar cajas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 190,
+      "fase_nombre": "Recuperación tras Pladur",
+      "display_group": "doblar_cajas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "doblar_cajas",
+      "trabajo": "Doblar cajas",
+      "trabajos_originales": [
+        "Doblar cajas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 190,
+      "fase_nombre": "Recuperación tras Pladur",
+      "display_group": "doblar_cajas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
@@ -18889,6 +19357,58 @@
       "ultima_fecha": "07/07/2025"
     },
     {
+      "tarea_id": "embornado",
+      "trabajo": "Embornado eléctrico",
+      "trabajos_originales": [
+        "Embornado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 200,
+      "fase_nombre": "Conexiones",
+      "display_group": "embornado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "embornado",
+      "trabajo": "Embornado eléctrico",
+      "trabajos_originales": [
+        "Embornado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 200,
+      "fase_nombre": "Conexiones",
+      "display_group": "embornado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "telembornado",
       "trabajo": "Telembornado",
       "trabajos_originales": [
@@ -20449,6 +20969,58 @@
       "ultima_fecha": "11/04/2025"
     },
     {
+      "tarea_id": "telembornado",
+      "trabajo": "Telembornado",
+      "trabajos_originales": [
+        "Telembornado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 210,
+      "fase_nombre": "Conexiones",
+      "display_group": "telembornado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "telembornado",
+      "trabajo": "Telembornado",
+      "trabajos_originales": [
+        "Telembornado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 210,
+      "fase_nombre": "Conexiones",
+      "display_group": "telembornado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
@@ -23567,6 +24139,58 @@
       "omitido_ultima": false,
       "forzado_entregado": true,
       "ultima_fecha": "07/07/2025"
+    },
+    {
+      "tarea_id": "cuadro_mecanizado",
+      "trabajo": "Cuadro mecanizado",
+      "trabajos_originales": [
+        "Cuadro mecanizado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 230,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuadro_mecanizado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "cuadro_mecanizado",
+      "trabajo": "Cuadro mecanizado",
+      "trabajos_originales": [
+        "Cuadro mecanizado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 230,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuadro_mecanizado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
     },
     {
       "tarea_id": "cuarto_tecnico",
@@ -23931,6 +24555,58 @@
       "omitido_ultima": false,
       "forzado_entregado": true,
       "ultima_fecha": "24/09/2025"
+    },
+    {
+      "tarea_id": "techos_zzcc",
+      "trabajo": "Techos de zonas comunes",
+      "trabajos_originales": [
+        "Techos zzcc"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 237,
+      "fase_nombre": "Acabados previos",
+      "display_group": "techos_zzcc",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "techos_zzcc",
+      "trabajo": "Techos de zonas comunes",
+      "trabajos_originales": [
+        "Techos zzcc"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 237,
+      "fase_nombre": "Acabados previos",
+      "display_group": "techos_zzcc",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
     },
     {
       "tarea_id": "techos",
@@ -27534,6 +28210,32 @@
       "display_group": "techos",
       "edificio": "Obispo Orueta 2",
       "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "techos",
+      "trabajo": "Techos",
+      "trabajos_originales": [
+        "Techos"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 240,
+      "fase_nombre": "Acabados previos",
+      "display_group": "techos",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
       "unidad": "Apartamento 1",
       "estado": "X",
       "estado_actual": "X",
@@ -28247,6 +28949,32 @@
       "omitido_ultima": false,
       "forzado_entregado": true,
       "ultima_fecha": "24/09/2025"
+    },
+    {
+      "tarea_id": "techos",
+      "trabajo": "Techos",
+      "trabajos_originales": [
+        "Techos"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 240,
+      "fase_nombre": "Acabados previos",
+      "display_group": "techos",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
     },
     {
       "tarea_id": "enchapado",
@@ -30056,6 +30784,32 @@
       "display_group": "enchapado",
       "edificio": "Obispo Orueta 2",
       "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "enchapado",
+      "trabajo": "Enchapado",
+      "trabajos_originales": [
+        "Enchapado"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 250,
+      "fase_nombre": "Acabados previos",
+      "display_group": "enchapado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
       "unidad": "Apartamento 1",
       "estado": "X",
       "estado_actual": "X",
@@ -30407,6 +31161,32 @@
       "ultima_fecha": "24/09/2025"
     },
     {
+      "tarea_id": "enchapado",
+      "trabajo": "Enchapado",
+      "trabajos_originales": [
+        "Enchapado"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 250,
+      "fase_nombre": "Acabados previos",
+      "display_group": "enchapado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "lucido_paredes",
       "trabajo": "Lucido de paredes",
       "trabajos_originales": [
@@ -33535,6 +34315,58 @@
       "omitido_ultima": false,
       "forzado_entregado": true,
       "ultima_fecha": "07/07/2025"
+    },
+    {
+      "tarea_id": "pintura_primera",
+      "trabajo": "Pintura — primera mano",
+      "trabajos_originales": [
+        "Pintura primera mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 260,
+      "fase_nombre": "Pintura",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_primera",
+      "trabajo": "Pintura — primera mano",
+      "trabajos_originales": [
+        "Pintura primera mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 260,
+      "fase_nombre": "Pintura",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
     },
     {
       "tarea_id": "mecanizado",
@@ -35344,6 +36176,32 @@
       "display_group": "mecanizado",
       "edificio": "Obispo Orueta 2",
       "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "mecanizado",
+      "trabajo": "Mecanizado eléctrico",
+      "trabajos_originales": [
+        "Mecanizado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 270,
+      "fase_nombre": "Mecanismos",
+      "display_group": "mecanizado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
       "unidad": "Apartamento 1",
       "estado": "X",
       "estado_actual": "X",
@@ -35693,6 +36551,32 @@
       "omitido_ultima": false,
       "forzado_entregado": true,
       "ultima_fecha": "24/09/2025"
+    },
+    {
+      "tarea_id": "mecanizado",
+      "trabajo": "Mecanizado eléctrico",
+      "trabajos_originales": [
+        "Mecanizado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 270,
+      "fase_nombre": "Mecanismos",
+      "display_group": "mecanizado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
     },
     {
       "tarea_id": "mecanismos_wc",
@@ -41620,6 +42504,32 @@
       "display_group": "telemecanizado",
       "edificio": "Obispo Orueta 2",
       "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "telemecanizado",
+      "trabajo": "Telemecanizado",
+      "trabajos_originales": [
+        "telemecanizado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 280,
+      "fase_nombre": "Mecanismos",
+      "display_group": "telemecanizado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
       "unidad": "Apartamento 1",
       "estado": "X",
       "estado_actual": "X",
@@ -41969,6 +42879,32 @@
       "omitido_ultima": false,
       "forzado_entregado": true,
       "ultima_fecha": "24/09/2025"
+    },
+    {
+      "tarea_id": "telemecanizado",
+      "trabajo": "Telemecanizado",
+      "trabajos_originales": [
+        "telemecanizado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 280,
+      "fase_nombre": "Mecanismos",
+      "display_group": "telemecanizado",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
     },
     {
       "tarea_id": "agujeros_focos_wc",
@@ -52033,6 +52969,32 @@
       "ultima_fecha": "24/09/2025"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -53123,6 +54085,32 @@
       "omitido_ultima": false,
       "forzado_entregado": true,
       "ultima_fecha": "24/09/2025"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54922,6 +55910,32 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
         "Placas + Tps. Cuadro"
       ],
       "propiedad": "propio",
@@ -55073,6 +56087,32 @@
       "omitido_ultima": false,
       "forzado_entregado": true,
       "ultima_fecha": "24/09/2025"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": true,
+      "ultima_fecha": "27/07/2026"
     },
     {
       "tarea_id": "focos_habitaciones",
@@ -61621,6 +62661,76 @@
       "orden_inventario": 2
     },
     {
+      "grupo_id": "tabicado",
+      "trabajo": "Tabicado",
+      "propiedad": "externo",
+      "orden_ejecucion": 10,
+      "fase_nombre": "Inicio de obra",
+      "ubicaciones": [
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Tabicado"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 3
+    },
+    {
+      "grupo_id": "rozas_timbres",
+      "trabajo": "Rozas de timbres",
+      "propiedad": "propio",
+      "orden_ejecucion": 20,
+      "fase_nombre": "Inicio de obra",
+      "ubicaciones": [
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Rozas de timbres"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 4
+    },
+    {
       "grupo_id": "montante_general",
       "trabajo": "Montantes",
       "propiedad": "propio",
@@ -61765,7 +62875,7 @@
         "TERMINADO": 18
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 3
+      "orden_inventario": 5
     },
     {
       "grupo_id": "perfilado_pladur",
@@ -62193,6 +63303,20 @@
           "unidad": "Apartamento 10",
           "estado": "X",
           "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -62200,13 +63324,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 60,
-      "estado_actual": "X: 60",
+      "n_ubicaciones": 62,
+      "estado_actual": "X: 62",
       "resumen_categorias": {
-        "TERMINADO": 60
+        "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 4
+      "orden_inventario": 6
     },
     {
       "grupo_id": "primera_cara_pladur",
@@ -62634,6 +63758,20 @@
           "unidad": "Apartamento 10",
           "estado": "X",
           "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -62641,13 +63779,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 60,
-      "estado_actual": "X: 60",
+      "n_ubicaciones": 62,
+      "estado_actual": "X: 62",
       "resumen_categorias": {
-        "TERMINADO": 60
+        "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 5
+      "orden_inventario": 7
     },
     {
       "grupo_id": "tubeado",
@@ -63163,6 +64301,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
           "unidad": "Zonas Comunes 1",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -63180,13 +64332,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 74,
-      "estado_actual": "X: 74",
+      "n_ubicaciones": 76,
+      "estado_actual": "X: 76",
       "resumen_categorias": {
-        "TERMINADO": 74
+        "TERMINADO": 76
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 6
+      "orden_inventario": 8
     },
     {
       "grupo_id": "cableado",
@@ -63702,6 +64854,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
           "unidad": "Zonas Comunes 1",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -63719,13 +64885,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 74,
-      "estado_actual": "X: 74",
+      "n_ubicaciones": 76,
+      "estado_actual": "X: 76",
       "resumen_categorias": {
-        "TERMINADO": 74
+        "TERMINADO": 76
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 7
+      "orden_inventario": 9
     },
     {
       "grupo_id": "ventilacion",
@@ -64166,7 +65332,7 @@
         "TERMINADO": 60
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 8
+      "orden_inventario": 10
     },
     {
       "grupo_id": "cableado_extractor",
@@ -64607,7 +65773,7 @@
         "TERMINADO": 60
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 9
+      "orden_inventario": 11
     },
     {
       "grupo_id": "telecableado",
@@ -65123,6 +66289,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
           "unidad": "Zonas Comunes 1",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -65140,13 +66320,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 74,
-      "estado_actual": "X: 74",
+      "n_ubicaciones": 76,
+      "estado_actual": "X: 76",
       "resumen_categorias": {
-        "TERMINADO": 74
+        "TERMINADO": 76
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 10
+      "orden_inventario": 12
     },
     {
       "grupo_id": "termostatos",
@@ -65587,7 +66767,7 @@
         "TERMINADO": 60
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 11
+      "orden_inventario": 13
     },
     {
       "grupo_id": "segunda_cara_pladur",
@@ -66015,6 +67195,20 @@
           "unidad": "Apartamento 10",
           "estado": "X",
           "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -66022,13 +67216,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 60,
-      "estado_actual": "X: 60",
+      "n_ubicaciones": 62,
+      "estado_actual": "X: 62",
       "resumen_categorias": {
-        "TERMINADO": 60
+        "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 12
+      "orden_inventario": 14
     },
     {
       "grupo_id": "doblar_cajas",
@@ -66456,6 +67650,20 @@
           "unidad": "Apartamento 10",
           "estado": "X",
           "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -66463,13 +67671,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 60,
-      "estado_actual": "X: 60",
+      "n_ubicaciones": 62,
+      "estado_actual": "X: 62",
       "resumen_categorias": {
-        "TERMINADO": 60
+        "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 13
+      "orden_inventario": 15
     },
     {
       "grupo_id": "embornado",
@@ -66897,6 +68105,20 @@
           "unidad": "Apartamento 10",
           "estado": "X",
           "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -66904,13 +68126,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 60,
-      "estado_actual": "X: 60",
+      "n_ubicaciones": 62,
+      "estado_actual": "X: 62",
       "resumen_categorias": {
-        "TERMINADO": 60
+        "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 14
+      "orden_inventario": 16
     },
     {
       "grupo_id": "telembornado",
@@ -67338,6 +68560,20 @@
           "unidad": "Apartamento 10",
           "estado": "X",
           "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -67345,13 +68581,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 60,
-      "estado_actual": "X: 60",
+      "n_ubicaciones": 62,
+      "estado_actual": "X: 62",
       "resumen_categorias": {
-        "TERMINADO": 60
+        "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 15
+      "orden_inventario": 17
     },
     {
       "grupo_id": "derivacion_individual",
@@ -67792,7 +69028,7 @@
         "TERMINADO": 60
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 16
+      "orden_inventario": 18
     },
     {
       "grupo_id": "cuadro_mecanizado",
@@ -68220,6 +69456,20 @@
           "unidad": "Apartamento 10",
           "estado": "X",
           "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -68227,13 +69477,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 60,
-      "estado_actual": "X: 60",
+      "n_ubicaciones": 62,
+      "estado_actual": "X: 62",
       "resumen_categorias": {
-        "TERMINADO": 60
+        "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 17
+      "orden_inventario": 19
     },
     {
       "grupo_id": "cuarto_tecnico",
@@ -68352,7 +69602,42 @@
         "TERMINADO": 14
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 18
+      "orden_inventario": 20
+    },
+    {
+      "grupo_id": "techos_zzcc",
+      "trabajo": "Techos de zonas comunes",
+      "propiedad": "externo",
+      "orden_ejecucion": 237,
+      "fase_nombre": "Acabados previos",
+      "ubicaciones": [
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Techos de zonas comunes"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 21
     },
     {
       "grupo_id": "techos",
@@ -69330,6 +70615,13 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
           "unidad": "Apartamento 1",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -69520,6 +70812,13 @@
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
           "unidad": "Apartamento OF",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
           "estado": "X",
           "categoria": "TERMINADO"
         }
@@ -69530,13 +70829,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 166,
-      "estado_actual": "X: 166",
+      "n_ubicaciones": 168,
+      "estado_actual": "X: 168",
       "resumen_categorias": {
-        "TERMINADO": 166
+        "TERMINADO": 168
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 19
+      "orden_inventario": 22
     },
     {
       "grupo_id": "enchapado",
@@ -70031,6 +71330,13 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
           "unidad": "Apartamento 1",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -70125,6 +71431,13 @@
           "unidad": "Apartamento OF",
           "estado": "X",
           "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -70132,13 +71445,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 83,
-      "estado_actual": "X: 83",
+      "n_ubicaciones": 85,
+      "estado_actual": "X: 85",
       "resumen_categorias": {
-        "TERMINADO": 83
+        "TERMINADO": 85
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 20
+      "orden_inventario": 23
     },
     {
       "grupo_id": "lucido_paredes",
@@ -70579,7 +71892,7 @@
         "TERMINADO": 60
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 21
+      "orden_inventario": 24
     },
     {
       "grupo_id": "pintura",
@@ -72460,6 +73773,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
           "unidad": "Apartamento 1",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -72748,6 +74075,20 @@
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
           "unidad": "Apartamento OF",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
           "estado": "X",
           "categoria": "TERMINADO"
         }
@@ -72756,17 +74097,18 @@
         "Pintura de WC",
         "Pintura de habitaciones",
         "Pintura de pasillos",
-        "Pintura — primera mano"
+        "Pintura — primera mano",
+        "Pintura — segunda mano"
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 309,
-      "estado_actual": "X: 309",
+      "n_ubicaciones": 313,
+      "estado_actual": "X: 313",
       "resumen_categorias": {
-        "TERMINADO": 309
+        "TERMINADO": 313
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 22
+      "orden_inventario": 25
     },
     {
       "grupo_id": "mecanizado",
@@ -73261,6 +74603,13 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
           "unidad": "Apartamento 1",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -73355,6 +74704,13 @@
           "unidad": "Apartamento OF",
           "estado": "X",
           "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -73362,13 +74718,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 83,
-      "estado_actual": "X: 83",
+      "n_ubicaciones": 85,
+      "estado_actual": "X: 85",
       "resumen_categorias": {
-        "TERMINADO": 83
+        "TERMINADO": 85
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 23
+      "orden_inventario": 26
     },
     {
       "grupo_id": "mecanismos_wc",
@@ -73970,7 +75326,7 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 24
+      "orden_inventario": 27
     },
     {
       "grupo_id": "mecanismos_pasillo",
@@ -74516,7 +75872,7 @@
         "TERMINADO": 75
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 25
+      "orden_inventario": 28
     },
     {
       "grupo_id": "telemecanizado",
@@ -75011,6 +76367,13 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
           "unidad": "Apartamento 1",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -75105,6 +76468,13 @@
           "unidad": "Apartamento OF",
           "estado": "X",
           "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -75112,13 +76482,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 83,
-      "estado_actual": "X: 83",
+      "n_ubicaciones": 85,
+      "estado_actual": "X: 85",
       "resumen_categorias": {
-        "TERMINADO": 83
+        "TERMINADO": 85
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 26
+      "orden_inventario": 29
     },
     {
       "grupo_id": "agujeros_focos_wc",
@@ -75720,7 +77090,7 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 27
+      "orden_inventario": 30
     },
     {
       "grupo_id": "agujeros_focos_pasillo",
@@ -76322,7 +77692,7 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 28
+      "orden_inventario": 31
     },
     {
       "grupo_id": "cajas_techo_pasillo",
@@ -76441,7 +77811,7 @@
         "TERMINADO": 14
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 29
+      "orden_inventario": 32
     },
     {
       "grupo_id": "placas_tapas",
@@ -76936,6 +78306,13 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
           "unidad": "Apartamento 1",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -76974,6 +78351,13 @@
           "unidad": "Apartamento OF",
           "estado": "X",
           "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -76981,13 +78365,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 75,
-      "estado_actual": "X: 75",
+      "n_ubicaciones": 77,
+      "estado_actual": "X: 77",
       "resumen_categorias": {
-        "TERMINADO": 75
+        "TERMINADO": 77
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 30
+      "orden_inventario": 33
     },
     {
       "grupo_id": "focos_habitaciones",
@@ -77589,7 +78973,7 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 31
+      "orden_inventario": 34
     },
     {
       "grupo_id": "focos_wc",
@@ -78191,7 +79575,7 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 32
+      "orden_inventario": 35
     },
     {
       "grupo_id": "focos_pasillos",
@@ -78793,7 +80177,7 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 33
+      "orden_inventario": 36
     }
   ],
   "dudas_pendientes": [
