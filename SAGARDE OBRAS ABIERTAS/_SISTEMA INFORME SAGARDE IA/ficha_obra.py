@@ -395,7 +395,6 @@ def _reclamar_correcciones(estados, correcciones, mapa_cortos, ficha,
 def _con_alias(ficha, portal_id, planta_id, tajo, unidad, estados):
     """La correccion puede venir con el nombre historico de la unidad ('A2')
     mientras la ficha usa el canonico ('A')."""
-    return None
     alias = (ficha.get('estructura') or {}).get('alias_historico') or {}
     for clave_alias, historico in alias.items():
         if historico.replace(' ', '') != unidad:
