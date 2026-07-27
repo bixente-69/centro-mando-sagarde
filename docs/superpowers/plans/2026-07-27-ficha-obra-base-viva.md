@@ -13,7 +13,16 @@
 - Raíz del proyecto: `D:\Nueva carpeta\OneDrive\COPIA SEGURIDAD SAGARDE`
 - Sistema: `SAGARDE OBRAS ABIERTAS\_SISTEMA INFORME SAGARDE IA\` (referido como `_SISTEMA` en este plan)
 - **Una obra sin `ficha_obra.json` debe comportarse EXACTAMENTE como hoy.** Cualquier tarea que rompa esto está mal.
-- **Criterio de regresión permanente:** Mungia debe mantener `pct_ponderado = 80.1`. Si cambia, parar e investigar.
+- **Criterio de regresión permanente — CORREGIDO 27/07/2026.** El porcentaje redondeado por sí solo es **ciego**: en Mungia, 3 celdas sobre 2309 no mueven el `80.1`, así que no habría detectado ni el bug del lector de PDF ni su arreglo. Hay que comparar el **desglose completo**:
+
+| Obra | x | m | / | vacío | pct |
+|---|---|---|---|---|---|
+| Mungia | 1798 | 84 | 0 | 436 | 80.1 |
+| Gernika | 928 | 0 | 0 | 288 | 76.3 |
+| Bolueta | 1265 | 76 | 20 | 2287 | 36.1 |
+| Obispo Orueta | 2392 | 0 | 0 | 12 | 80.0 |
+
+  Si cualquiera de esas cifras se mueve sin explicación, parar e investigar.
 - Alfabeto de estados guardados: `X` terminado · `M` más del 50% · `/` iniciado · `P` pendiente confirmado · `?` desconocido · `N` no aplica.
 - **No se persisten categorías derivadas** (`BLOQUEADO`, `DUDAS`, `VIABLE`, `OTROS_GREMIOS`): las calcula el priorizador desde las dependencias. Se guarda lo medido, se recalcula lo derivado.
 - Norma de obra: **lo que se apunta en la última revisión es lo que vale.** Una marca explícita (`X`/`M`/`/`) y una casilla vacía en hoja validada (`P`) mandan sobre el histórico. Solo `?` (el lector no supo leer) no puede bajar una `X`.
@@ -873,12 +882,57 @@ Esperado: Mungia `80.1`, Gernika `76.3`, Bolueta `36.1`, Obispo Orueta `80.0`. A
 
 ---
 
-## Fuera del alcance de este plan
+## Estado final — 27/07/2026
 
-Cada uno tendrá su propio plan cuando este esté cerrado:
+**Las 7 tareas cerradas. 44 pruebas en verde.** P1 y P2 completos: la ficha se
+actualiza sola en cada regeneración y sus 9 apartados están definidos (8 con
+datos en Mungia; `contactos` vacío porque la hoja `Personal` de su
+`FICHA DE OBRA.xlsx` solo tiene cabecera — dato pendiente, no fallo de código).
 
-- **P3 — Gernika y Bolueta**: sembrar sus fichas, con la ronda de confirmación de estructura que hizo falta en Mungia.
-- **P4 — Gorliz**: alta de obra nueva sin ninguna revisión previa, más el lector de carpeta que propone la estructura desde presupuestos y proyectos.
-- **P5 — Panel e informes desde la ficha**: hoy solo la consume el generador de hojas; el panel sigue leyendo de `prioridades_trabajos.json`.
-- **P6 — Limpiar duplicados**: un solo catálogo de tajos (hoy hay tres), un solo registro de obras (hoy `OBRAS` en `generar_todos.py` y `ADAPTADORES` en `generar_informe_ejecutivo.py`), un solo formato de clave de celda (hoy conviven el corto y el largo).
-- **Garajes de Mungia y Gernika**: la Task 3 ya deja el mecanismo listo (entran como alta sin confirmar), pero conviene declararlos en las confirmaciones de estructura cuando llegue el momento.
+Hallazgos del ciclo de revisión, todos verificados por mutación:
+
+| Tarea | Rondas | Qué se cazó |
+|---|---|---|
+| 2 | 2 | Un default convertía cualquier estado desconocido en "comprobado, no hecho". La corrección reintrodujo la misma pérdida por otra puerta. |
+| 4 | 1 | `_con_alias` sin cobertura: es la que hace que las correcciones de Mungia lleguen a su celda. |
+| 5 | 2 | Tres errores tragados en silencio. Al estrecharlos, dos rutas pasaron a tumbar el panel en vez de avisar. |
+| 7 | 1 | El principio "nunca pisar un valor con vacío" no tenía ninguna prueba que lo protegiera. |
+
+Tres de esos hallazgos fueron **defectos de las pruebas que este plan
+especificaba**, no del código: pruebas que parecían verificar algo y no lo
+hacían. Salieron porque cada revisor rompió el código a propósito.
+
+## Fases siguientes — REORDENADAS 27/07/2026
+
+El orden cambia por un hallazgo de otra sesión
+(`project_sagarde_kpis_no_salen_de_la_ficha`): **la ficha es la fuente de
+verdad, pero no es la fuente de los números.** `pct_ponderado` se calcula
+desde `prioridades_trabajos.json` antes de que la ficha absorba nada, así que
+lo que se publica en el panel y en el Centro de Mando se computa con datos que
+la ficha ya ha corregido.
+
+1. **Panel e informes desde la ficha** (era P5, sube a primera). Mientras no
+   esté, la base no es del todo la fuente de verdad y los números publicados
+   pueden ser peores que la realidad.
+2. **Gernika y Bolueta**: sembrar sus fichas, con la ronda de confirmación de
+   estructura que hizo falta en Mungia.
+3. **Gorliz**: alta de obra nueva sin ninguna revisión previa, más el lector de
+   carpeta que propone la estructura desde presupuestos y proyectos.
+4. **Limpiar duplicados**: un solo catálogo de tajos (hoy hay tres), un solo
+   registro de obras (`OBRAS` en `generar_todos.py` frente a `ADAPTADORES` en
+   `generar_informe_ejecutivo.py`), un solo formato de clave de celda.
+
+**Garajes de Mungia y Gernika**: la Task 3 ya deja el mecanismo listo (entran
+como alta sin confirmar y avisan), pero conviene declararlos en las
+confirmaciones de estructura cuando llegue el momento.
+
+## Deuda registrada, fuera de este plan
+
+- `lector_hoja_tajos_pdf.py` no normaliza `PORT AL` → `PORTAL`, así que 3
+  celdas de Mungia se degradan y se rescatan en cada pasada. Hoy no se pierde
+  el dato, pero los KPIs se calculan con el valor degradado.
+- `Actualizar_Sagarde.bat` hace `git add -A`: publica cualquier trabajo a
+  medias. Dos incidentes en un día con mutaciones de prueba abandonadas.
+- `_orden_fecha` colapsa toda fecha malformada a la misma clave (cosmético).
+- Empate de fecha entre dos ficheros de correcciones del mismo día: `max()`
+  elige arbitrariamente sin avisar.
