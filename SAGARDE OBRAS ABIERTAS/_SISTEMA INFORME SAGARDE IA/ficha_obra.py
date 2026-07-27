@@ -226,6 +226,55 @@ def volcar_apartados(ficha, ficha_xlsx=None, materiales=None, documentos=None):
     return cambiados
 
 
+# Estado guardado -> estado que entiende el motor. Los que no aparecen aqui
+# se EXCLUYEN del snapshot a proposito:
+#   '?' desconocido -> meterlo como '' seria afirmar que esta pendiente
+#   'N' no aplica   -> no debe entrar en el denominador del porcentaje
+ESTADO_A_SNAPSHOT = {'X': 'X', 'M': 'M', '/': '/', 'P': ''}
+
+
+def snapshot_desde_ficha(ficha):
+    """Traduce la ficha al formato plano que consume todo el sistema:
+    [{'task','floor','building','unit','status'}, ...]
+
+    Es la pieza que invierte el flujo. Hasta ahora los KPIs, el priorizador,
+    el panel y los informes se calculaban desde lo que leia el adaptador, y la
+    ficha era un subproducto que se escribia despues: corregir la ficha no
+    corregia los numeros publicados. Pasando por aqui, lo que se publica sale
+    de la ficha.
+    """
+    alias = (ficha.get('estructura') or {}).get('alias_historico') or {}
+    nombres_tajo = {t['id']: (t.get('nombre') or t['id'])
+                    for t in (ficha.get('tajos') or {}).get('detalle') or []}
+    estados = ficha.get('estados') or {}
+
+    filas = []
+    for bloque in (ficha.get('estructura') or {}).get('bloques') or []:
+        for portal in bloque.get('portales') or []:
+            edificio = portal.get('referencia') or portal.get('nombre') or portal['id']
+            for planta in portal.get('plantas') or []:
+                for ubi in planta.get('ubicaciones') or []:
+                    clave_alias = f"{portal['id']}__{planta['id']}__{ubi['id']}"
+                    unidad = alias.get(clave_alias, ubi['id'])
+                    for tajo_id, nombre in nombres_tajo.items():
+                        clave = (f"{portal['id']}__{planta['id']}"
+                                 f"__{tajo_id}__{ubi['id']}")
+                        dato = estados.get(clave)
+                        if not dato:
+                            continue
+                        estado = ESTADO_A_SNAPSHOT.get(dato.get('v'))
+                        if estado is None:
+                            continue      # '?' o 'N': fuera del calculo
+                        filas.append({
+                            'task': nombre,
+                            'floor': planta.get('nombre') or planta['id'],
+                            'building': edificio,
+                            'unit': unidad,
+                            'status': estado,
+                        })
+    return filas
+
+
 def _indice_ubicaciones(ficha):
     """(portal_id, planta_id, ubicacion_id) -> dict de la ubicacion, mas los
     indices por nombre para poder cruzar con lo que dice la revision, que

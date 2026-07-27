@@ -454,5 +454,70 @@ class TestApartadosRellenos(unittest.TestCase):
         self.assertNotIn('documentos', cambiados)
 
 
+class TestSnapshotDesdeFicha(unittest.TestCase):
+
+    def _ficha_con_estados(self, valores):
+        """valores: {clave_celda: estado}. Devuelve una ficha con esos
+        estados y el resto de la matriz en '?'."""
+        ficha = fixtures.ficha_minima()
+        ficha, _ = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([fixtures.item(estado='X')]))
+        for clave, valor in valores.items():
+            ficha['estados'][clave] = {'v': valor, 'f': '27/07/2026',
+                                       'r': 'rev_27072026'}
+        return ficha
+
+    def test_devuelve_las_claves_que_espera_el_motor(self):
+        ficha = self._ficha_con_estados({'p1__pb__tubeado__A': 'X'})
+        fila = next(r for r in ficha_obra.snapshot_desde_ficha(ficha)
+                    if r['unit'] == 'A' and r['task'] == 'Tubeado'
+                    and r['floor'] == 'PB')
+        self.assertEqual(set(fila), {'task', 'floor', 'building', 'unit', 'status'})
+        self.assertEqual(fila['building'], 'P1')
+        self.assertEqual(fila['status'], 'X')
+
+    def test_pendiente_confirmado_viaja_como_vacio(self):
+        """P entra en el denominador: se comprobo y no esta hecho."""
+        ficha = self._ficha_con_estados({'p1__pb__tubeado__A': 'P'})
+        fila = next(r for r in ficha_obra.snapshot_desde_ficha(ficha)
+                    if r['unit'] == 'A' and r['task'] == 'Tubeado'
+                    and r['floor'] == 'PB')
+        self.assertEqual(fila['status'], '')
+
+    def test_desconocido_se_excluye_del_snapshot(self):
+        """? no puede contar como pendiente: seria afirmar lo que no consta."""
+        ficha = self._ficha_con_estados({'p1__pb__tubeado__A': '?'})
+        filas = [r for r in ficha_obra.snapshot_desde_ficha(ficha)
+                 if r['unit'] == 'A' and r['task'] == 'Tubeado'
+                 and r['floor'] == 'PB']
+        self.assertEqual(filas, [])
+
+    def test_no_aplica_se_excluye_del_snapshot(self):
+        ficha = self._ficha_con_estados({'p1__pb__tubeado__A': 'N'})
+        filas = [r for r in ficha_obra.snapshot_desde_ficha(ficha)
+                 if r['unit'] == 'A' and r['task'] == 'Tubeado'
+                 and r['floor'] == 'PB']
+        self.assertEqual(filas, [])
+
+    def test_usa_el_nombre_historico_de_la_unidad_si_existe(self):
+        """En Mungia el id canonico es 'A' pero la hoja dice 'A2'."""
+        ficha = self._ficha_con_estados({'p1__pb__tubeado__A': 'X'})
+        ficha['estructura']['alias_historico'] = {'p1__pb__A': 'A2'}
+        unidades = {r['unit'] for r in ficha_obra.snapshot_desde_ficha(ficha)
+                    if r['floor'] == 'PB'}
+        self.assertIn('A2', unidades)
+        self.assertNotIn('A', unidades)
+
+    def test_devuelve_el_nombre_del_tajo_no_su_id(self):
+        ficha = self._ficha_con_estados({'p1__pb__tubeado__A': 'X'})
+        tareas = {r['task'] for r in ficha_obra.snapshot_desde_ficha(ficha)}
+        self.assertIn('Tubeado', tareas)
+        self.assertNotIn('tubeado', tareas)
+
+    def test_una_ficha_sin_estados_devuelve_lista_vacia(self):
+        ficha = fixtures.ficha_minima()
+        self.assertEqual(ficha_obra.snapshot_desde_ficha(ficha), [])
+
+
 if __name__ == '__main__':
     unittest.main()
