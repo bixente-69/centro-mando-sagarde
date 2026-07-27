@@ -275,6 +275,49 @@ class TestCorrecciones(unittest.TestCase):
             ficha, prio, correcciones={'p1__pb__tubeado__A': 'X'})
         self.assertEqual(cambios['correcciones_reclamadas'], [])
 
+    def test_con_alias_traduce_nombre_historico_al_canonico(self):
+        """Reproduces Mungia: A2 (histórico) → A (canónico).
+        La corrección llega con el nombre histórico, pero la ficha
+        lo conoce solo por el canónico. _con_alias hace la traducción."""
+        ficha = fixtures.ficha_minima()
+        # Añadir el alias: A2 es el nombre histórico de A
+        ficha['estructura']['alias_historico']['p1__pb__A'] = 'A2'
+        # Primer actualizar: procesa A con estado X
+        prio = fixtures.prioridades([fixtures.item(unidad='A', estado='X')])
+        ficha, _ = ficha_obra.actualizar(ficha, prio)
+        # Segundo actualizar: la corrección viene con el nombre histórico A2
+        # pero debe encontrar y aplicarse sobre la celda canónica A
+        prio2 = fixtures.prioridades([fixtures.item(unidad='B', estado='X')],
+                                     revision='28/07/2026')
+        ficha, cambios = ficha_obra.actualizar(
+            ficha, prio2, correcciones={'p1__pb__tubeado__A2': 'M'})
+        # La corrección debe haberse aplicado sobre la ubicación canónica
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'M')
+        # Debe estar registrada en correcciones_reclamadas como cambio
+        self.assertIn(('p1__pb__tubeado__A', 'X', 'M'),
+                      cambios['correcciones_reclamadas'])
+
+    def test_alias_no_resuelve_por_casualidad_en_otra_planta(self):
+        """El alias A2 existe en la planta '1', pero la corrección es para
+        la planta 'pb'. _con_alias debe respetar el portal y planta: no
+        case por coincidencia de nombre."""
+        ficha = fixtures.ficha_minima()
+        # Alias A2 en otra planta (planta '1')
+        ficha['estructura']['alias_historico']['p1__1__A'] = 'A2'
+        # Primer actualizar: llena la matriz
+        prio = fixtures.prioridades([fixtures.item(unidad='A', estado='X')])
+        ficha, _ = ficha_obra.actualizar(ficha, prio)
+        # Segundo actualizar: intenta corregir pb con el alias A2
+        # No debe encontrarlo porque el alias está en planta '1'
+        prio2 = fixtures.prioridades([fixtures.item(unidad='B', estado='X')],
+                                     revision='28/07/2026')
+        ficha, cambios = ficha_obra.actualizar(
+            ficha, prio2, correcciones={'p1__pb__tubeado__A2': 'M'})
+        # La corrección no debe aplicarse: A sigue siendo X
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'X')
+        # No debe haber correcciones reclamadas (porque no encontró el alias)
+        self.assertEqual(len(cambios['correcciones_reclamadas']), 0)
+
 
 if __name__ == '__main__':
     unittest.main()
