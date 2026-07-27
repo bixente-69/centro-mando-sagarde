@@ -175,6 +175,53 @@ TAJO_LABELS_PDF = [
     ('mecanizado', 'Mecanizado electrico'),
     ('telemec', 'Telemecanizado'),
     ('plac-tapas', 'Placas y tapas'),
+
+    # --- Redacciones LARGAS del catalogo de obra ----------------------------
+    # La lista de arriba son los nombres CORTOS que imprime el generador en
+    # modo manual (BASE_CAT). Cuando la hoja se genera desde la obra instalada
+    # -el camino normal- el generador usa 'source.catalog' de
+    # obras_revisiones.js, que trae los nombres LARGOS del catalogo. Son OTRO
+    # texto para el mismo tajo, y sin estas entradas la fila no se reconoce:
+    # lector_hoja_tajos_pdf._parsear_tabla_pagina hace 'if not codigo: continue'
+    # y la descarta EN SILENCIO, arrastrando ademas las correcciones manuales
+    # escritas sobre ella. Es el mismo fallo que se corrigio en Mungia (4 tajos
+    # invisibles, 244 celdas y 41 correcciones perdidas en una sola revision).
+    # Se conservan las cortas por compatibilidad con las hojas ya generadas.
+    #
+    # Nota: los textos van sin tildes y sin la raya larga a proposito. _fold()
+    # normaliza con NFKD y colapsa todo lo que no sea [a-z0-9] en espacios, asi
+    # que 'Pintura primera mano' y 'Pintura - primera mano' producen la MISMA
+    # clave. Escribirlos en ASCII evita depender del encoding del fichero.
+    ('pladur-1c', 'Primeras caras de Pladur'),
+    ('pladur-2c', 'Segundas caras de Pladur'),
+    ('tube-viv', 'Tubeado interior'),
+    ('techos-zzcc', 'Techos de zonas comunes'),
+    ('pint-1', 'Pintura primera mano'),
+    ('pint-2', 'Pintura segunda mano'),
+
+    # --- Tajos del catalogo de obra que no existian en esta lista -----------
+    # Los 20 de arriba son el alcance de "OBISPO ORUETA 2A FASE" (planta baja,
+    # viviendas A/B). El catalogo de la obra tiene 39 tajos: estos 19 nunca se
+    # habrian reconocido en una hoja generada desde la obra instalada.
+    ('mont-gen', 'Montantes'),
+    ('ventilacion', 'Cableado de ventilacion'),
+    ('cabl-extractor', 'Cableado de extractor'),
+    ('termostatos', 'Termostatos'),
+    ('deriv-ind', 'Derivacion individual'),
+    ('ct-tec', 'Cuarto tecnico'),
+    ('techos-wc', 'Techos de WC'),
+    ('lucido', 'Lucido de paredes'),
+    ('mec-wc', 'Mecanismos de WC'),
+    ('mec-pasillo', 'Mecanismos de pasillo'),
+    ('aguj-focos-wc', 'Agujeros para focos de WC'),
+    ('aguj-focos-pas', 'Agujeros para focos de pasillo'),
+    ('cajas-techo-pas', 'Cajas de techo en pasillo'),
+    ('pint-hab', 'Pintura de habitaciones'),
+    ('pint-pasillos', 'Pintura de pasillos'),
+    ('pint-wc', 'Pintura de WC'),
+    ('focos-hab', 'Focos de habitaciones'),
+    ('focos-wc', 'Focos de WC'),
+    ('focos-pasillos', 'Focos de pasillos'),
 ]
 
 # Todos estos nombres resuelven contra CATALOGO_TAJOS.json.
@@ -199,6 +246,33 @@ TAJO_NOMBRE_CATALOGO = {
     'mecanizado': 'Mecanizado',
     'telemec': 'telemecanizado',
     'plac-tapas': 'Placas y tapas',
+
+    # Alias EXACTOS de reglas/CATALOGO_TAJOS.json para los 19 tajos anadidos
+    # arriba (los 15 primeros salen del bloque obras['2025 BILBAO OBISPO
+    # ORUETA'].tajos; los 4 restantes, de la lista global). El priorizador
+    # resuelve por 'aliases', no por 'nombre': si el texto no coincide, el
+    # tajo queda como 'sin_clasificar' y desaparece de las prioridades.
+    # Copiados del fichero, NO escritos de memoria (ver alias contraintuitivos
+    # como 'Agujero Focos Pasillo' en singular o 'Cajas TECHO pasillo').
+    'mont-gen': 'Montantes',
+    'ventilacion': 'Ventilación',
+    'cabl-extractor': 'Cableado Extractor',
+    'termostatos': 'Termostatos',
+    'deriv-ind': 'Derivación individual',
+    'ct-tec': 'Cuarto técnico',
+    'techos-wc': 'Techos WC',
+    'lucido': 'Lucido Paredes',
+    'mec-wc': 'Mecanismos WC',
+    'mec-pasillo': 'Mecanismos pasillo',
+    'aguj-focos-wc': 'Agujeros focos WC',
+    'aguj-focos-pas': 'Agujero Focos Pasillo',
+    'cajas-techo-pas': 'Cajas TECHO pasillo',
+    'pint-hab': 'Pintura Hab',
+    'pint-pasillos': 'Pintura Pasillos',
+    'pint-wc': 'Pintura WC',
+    'focos-hab': 'Focos Hab',
+    'focos-wc': 'Focos WC',
+    'focos-pasillos': 'Focos Pasillos',
 }
 
 PORTAL_NOMBRE_PDF = {'p1': BUILDING}
@@ -238,7 +312,18 @@ def _identificar_tajo_pdf(etiqueta):
         return codigo
     # La mini-etiqueta de ambito puede quedar pegada al final.
     sin_tag = re.sub(r'(edif|zzcc)$', '', sin_prefijo, flags=re.I)
-    return _TAJO_NORM_PDF.get(_fold(sin_tag))
+    codigo = _TAJO_NORM_PDF.get(_fold(sin_tag))
+    if codigo:
+        return codigo
+    # Ultimo recurso (igual que en adaptador_mungia): el prefijo SGD/EXT/COO
+    # puede llegar partido por el extractor y dejar suelta una letra o dos
+    # ('D Iluminacion de rellanos'). Solo se intenta cuando los dos intentos
+    # anteriores han fallado, asi que no puede romper ninguna equivalencia que
+    # ya funcionara.
+    suelto = re.sub(r'^[A-Z]{1,3}\s+', '', sin_tag.strip())
+    if suelto != sin_tag.strip():
+        return _TAJO_NORM_PDF.get(_fold(suelto))
+    return None
 
 
 def _portal_id_pdf(texto):

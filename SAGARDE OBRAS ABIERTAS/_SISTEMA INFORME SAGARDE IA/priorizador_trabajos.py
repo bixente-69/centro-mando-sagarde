@@ -257,18 +257,33 @@ def _construir_estado(historial, catalogo, preguntas):
 
 def _aplicar_excepciones_obra(estados, catalogo, preguntas):
     config = catalogo.config_obra
-    if not config.get("forzar_historial_terminado"):
-        return
 
-    for item in estados.values():
-        item["estado"] = "X"
-        item["conflicto"] = False
-        item["omitido_ultima"] = False
-        item["forzado_entregado"] = True
+    # Dos mecanismos INDEPENDIENTES que antes compartian una sola guarda:
+    #
+    # 1) forzar_historial_terminado (booleano): da por terminado TODO el
+    #    historial de la obra. Las obras migradas al cierre por fecha
+    #    (forzar_historial_terminado_hasta) lo tienen en false porque ese
+    #    cierre ya se aplica revision a revision en _construir_estado; aqui
+    #    NO deben pasar o se marcaria como X tambien la fase en curso.
+    #
+    # 2) excepciones: tajos que se inyectan aunque no aparezcan en ninguna
+    #    hoja de revision. No dependen del punto 1: una obra puede declarar
+    #    excepciones sin dar por terminado su historial. Compartir la guarda
+    #    dejaba este bloque inalcanzable en cuanto la obra migraba al _hasta.
+    if config.get("forzar_historial_terminado"):
+        for item in estados.values():
+            item["estado"] = "X"
+            item["conflicto"] = False
+            item["omitido_ultima"] = False
+            item["forzado_entregado"] = True
+
+    excepciones = config.get("excepciones", [])
+    if not excepciones:
+        return
 
     edificios_pb = [x["loc"][0] for x in estados.values() if x["loc"][1] == "PB"]
     edificio = edificios_pb[0] if edificios_pb else "Obispo Orueta 2"
-    for excepcion in config.get("excepciones", []):
+    for excepcion in excepciones:
         if excepcion.get("tipo") != "pendiente_especial":
             continue
         planta = excepcion["planta"]

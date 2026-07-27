@@ -7,19 +7,19 @@
   "revision_caducada": false,
   "estado_obra": "Primera fase entregada; 2A FASE en curso en planta baja (viviendas A/B)",
   "historial_confirmado_terminado": false,
-  "generado": "27/07/2026 18:20",
+  "generado": "27/07/2026 18:50",
   "resumen": {
     "listos": 1,
-    "verificar": 0,
+    "verificar": 1,
     "unidades_listas": 2,
-    "unidades_verificar": 0,
+    "unidades_verificar": 2,
     "bloqueados": 1,
-    "otros_gremios": 2,
-    "dudas": 0,
+    "otros_gremios": 3,
+    "dudas": 1,
     "terminados": 30,
-    "inventario_total": 34,
-    "detalle_total": 2400,
-    "preguntas_pendientes": 0,
+    "inventario_total": 36,
+    "detalle_total": 2404,
+    "preguntas_pendientes": 1,
     "viviendas": 1,
     "zonas_comunes": 0,
     "edificio": 0
@@ -61,6 +61,43 @@
       "motivo": "Remate previo a placas.",
       "impacto_gremios": "Remate previo a placas.",
       "orden": 1
+    },
+    {
+      "tarea_id": "trabajos_electricos_tabique_cocina",
+      "trabajo": "Trabajos eléctricos afectados por tabique de cocina",
+      "situacion": "VERIFICAR",
+      "categoria": "DUDAS",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "prioridad": "P1",
+      "orden_ejecucion": 135,
+      "fase_nombre": "Pendiente postapertura",
+      "ubicaciones": [
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidades": [
+            "Apartamento 1"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidades": [
+            "Apartamento 2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        }
+      ],
+      "n_unidades": 2,
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
+      "motivo": "No decidir tubeado, cableado o mecanismos hasta una nueva revisión.",
+      "impacto_gremios": "No decidir tubeado, cableado o mecanismos hasta una nueva revisión.",
+      "orden": 2
     }
   ],
   "detalle_items": [
@@ -91,6 +128,58 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "tabique_separador_cocinas",
+      "trabajo": "Tabique separador de cocinas",
+      "trabajos_originales": [
+        "Tabique separador de cocinas"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 10,
+      "fase_nombre": "Pendiente postapertura",
+      "display_group": "tabique_separador_cocinas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Apartamento 1",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Bloquea la revisión eléctrica de los apartamentos PB 1 y 2.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "Excepción confirmada"
+    },
+    {
+      "tarea_id": "tabique_separador_cocinas",
+      "trabajo": "Tabique separador de cocinas",
+      "trabajos_originales": [
+        "Tabique separador de cocinas"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 10,
+      "fase_nombre": "Pendiente postapertura",
+      "display_group": "tabique_separador_cocinas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Apartamento 2",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Bloquea la revisión eléctrica de los apartamentos PB 1 y 2.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "Excepción confirmada"
+    },
+    {
       "tarea_id": "tabicado",
       "trabajo": "Tabicado",
       "trabajos_originales": [
@@ -5835,6 +5924,58 @@
       "omitido_ultima": true,
       "forzado_entregado": false,
       "ultima_fecha": "24/09/2025"
+    },
+    {
+      "tarea_id": "trabajos_electricos_tabique_cocina",
+      "trabajo": "Trabajos eléctricos afectados por tabique de cocina",
+      "trabajos_originales": [
+        "Trabajos eléctricos afectados por tabique de cocina"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 135,
+      "fase_nombre": "Pendiente postapertura",
+      "display_group": "trabajos_electricos_tabique_cocina",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Apartamento 1",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "DUDAS",
+      "motivo": "No decidir tubeado, cableado o mecanismos hasta una nueva revisión.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "Excepción confirmada"
+    },
+    {
+      "tarea_id": "trabajos_electricos_tabique_cocina",
+      "trabajo": "Trabajos eléctricos afectados por tabique de cocina",
+      "trabajos_originales": [
+        "Trabajos eléctricos afectados por tabique de cocina"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 135,
+      "fase_nombre": "Pendiente postapertura",
+      "display_group": "trabajos_electricos_tabique_cocina",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Apartamento 2",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "DUDAS",
+      "motivo": "No decidir tubeado, cableado o mecanismos hasta una nueva revisión.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "Excepción confirmada"
     },
     {
       "tarea_id": "cableado",
@@ -63689,6 +63830,41 @@
       "orden_inventario": 2
     },
     {
+      "grupo_id": "tabique_separador_cocinas",
+      "trabajo": "Tabique separador de cocinas",
+      "propiedad": "externo",
+      "orden_ejecucion": 10,
+      "fase_nombre": "Pendiente postapertura",
+      "ubicaciones": [
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Apartamento 1",
+          "estado": "Pendiente",
+          "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Apartamento 2",
+          "estado": "Pendiente",
+          "categoria": "OTROS_GREMIOS"
+        }
+      ],
+      "subtajos": [
+        "Tabique separador de cocinas"
+      ],
+      "seccion": "OTROS_GREMIOS",
+      "seccion_nombre": "Otros gremios e interferencias",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
+      "resumen_categorias": {
+        "OTROS_GREMIOS": 2
+      },
+      "motivo": "Bloquea la revisión eléctrica de los apartamentos PB 1 y 2.",
+      "orden_inventario": 3
+    },
+    {
       "grupo_id": "enchapado",
       "trabajo": "Enchapado",
       "propiedad": "externo",
@@ -64303,7 +64479,7 @@
         "OTROS_GREMIOS": 2
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
-      "orden_inventario": 3
+      "orden_inventario": 4
     },
     {
       "grupo_id": "pintura",
@@ -66520,7 +66696,42 @@
         "OTROS_GREMIOS": 2
       },
       "motivo": "Condición obligatoria para placas, tapas y luminarias finales. Terminado según la última confirmación válida.",
-      "orden_inventario": 4
+      "orden_inventario": 5
+    },
+    {
+      "grupo_id": "trabajos_electricos_tabique_cocina",
+      "trabajo": "Trabajos eléctricos afectados por tabique de cocina",
+      "propiedad": "propio",
+      "orden_ejecucion": 135,
+      "fase_nombre": "Pendiente postapertura",
+      "ubicaciones": [
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Apartamento 1",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Apartamento 2",
+          "estado": "Pendiente",
+          "categoria": "DUDAS"
+        }
+      ],
+      "subtajos": [
+        "Trabajos eléctricos afectados por tabique de cocina"
+      ],
+      "seccion": "DUDAS",
+      "seccion_nombre": "Dudas pendientes",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
+      "resumen_categorias": {
+        "DUDAS": 2
+      },
+      "motivo": "No decidir tubeado, cableado o mecanismos hasta una nueva revisión.",
+      "orden_inventario": 6
     },
     {
       "grupo_id": "tabicado",
@@ -66555,7 +66766,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 5
+      "orden_inventario": 7
     },
     {
       "grupo_id": "rozas_timbres",
@@ -66590,7 +66801,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 6
+      "orden_inventario": 8
     },
     {
       "grupo_id": "montante_general",
@@ -66737,7 +66948,7 @@
         "TERMINADO": 18
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 7
+      "orden_inventario": 9
     },
     {
       "grupo_id": "perfilado_pladur",
@@ -67192,7 +67403,7 @@
         "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 8
+      "orden_inventario": 10
     },
     {
       "grupo_id": "primera_cara_pladur",
@@ -67647,7 +67858,7 @@
         "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 9
+      "orden_inventario": 11
     },
     {
       "grupo_id": "tubeado",
@@ -68200,7 +68411,7 @@
         "TERMINADO": 76
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 10
+      "orden_inventario": 12
     },
     {
       "grupo_id": "cableado",
@@ -68753,7 +68964,7 @@
         "TERMINADO": 76
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 11
+      "orden_inventario": 13
     },
     {
       "grupo_id": "ventilacion",
@@ -69194,7 +69405,7 @@
         "TERMINADO": 60
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 12
+      "orden_inventario": 14
     },
     {
       "grupo_id": "cableado_extractor",
@@ -69635,7 +69846,7 @@
         "TERMINADO": 60
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 13
+      "orden_inventario": 15
     },
     {
       "grupo_id": "telecableado",
@@ -70188,7 +70399,7 @@
         "TERMINADO": 76
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 14
+      "orden_inventario": 16
     },
     {
       "grupo_id": "termostatos",
@@ -70629,7 +70840,7 @@
         "TERMINADO": 60
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 15
+      "orden_inventario": 17
     },
     {
       "grupo_id": "segunda_cara_pladur",
@@ -71084,7 +71295,7 @@
         "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 16
+      "orden_inventario": 18
     },
     {
       "grupo_id": "doblar_cajas",
@@ -71539,7 +71750,7 @@
         "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 17
+      "orden_inventario": 19
     },
     {
       "grupo_id": "embornado",
@@ -71994,7 +72205,7 @@
         "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 18
+      "orden_inventario": 20
     },
     {
       "grupo_id": "telembornado",
@@ -72449,7 +72660,7 @@
         "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 19
+      "orden_inventario": 21
     },
     {
       "grupo_id": "derivacion_individual",
@@ -72890,7 +73101,7 @@
         "TERMINADO": 60
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 20
+      "orden_inventario": 22
     },
     {
       "grupo_id": "cuadro_mecanizado",
@@ -73345,7 +73556,7 @@
         "TERMINADO": 62
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 21
+      "orden_inventario": 23
     },
     {
       "grupo_id": "cuarto_tecnico",
@@ -73464,7 +73675,7 @@
         "TERMINADO": 14
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 22
+      "orden_inventario": 24
     },
     {
       "grupo_id": "techos_zzcc",
@@ -73499,7 +73710,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 23
+      "orden_inventario": 25
     },
     {
       "grupo_id": "techos",
@@ -74697,7 +74908,7 @@
         "TERMINADO": 168
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 24
+      "orden_inventario": 26
     },
     {
       "grupo_id": "lucido_paredes",
@@ -75138,7 +75349,7 @@
         "TERMINADO": 60
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 25
+      "orden_inventario": 27
     },
     {
       "grupo_id": "mecanizado",
@@ -75754,7 +75965,7 @@
         "TERMINADO": 85
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 26
+      "orden_inventario": 28
     },
     {
       "grupo_id": "mecanismos_wc",
@@ -76356,7 +76567,7 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 27
+      "orden_inventario": 29
     },
     {
       "grupo_id": "mecanismos_pasillo",
@@ -76902,7 +77113,7 @@
         "TERMINADO": 75
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 28
+      "orden_inventario": 30
     },
     {
       "grupo_id": "agujeros_focos_wc",
@@ -77504,7 +77715,7 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 29
+      "orden_inventario": 31
     },
     {
       "grupo_id": "agujeros_focos_pasillo",
@@ -78106,7 +78317,7 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 30
+      "orden_inventario": 32
     },
     {
       "grupo_id": "cajas_techo_pasillo",
@@ -78225,7 +78436,7 @@
         "TERMINADO": 14
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 31
+      "orden_inventario": 33
     },
     {
       "grupo_id": "focos_habitaciones",
@@ -78827,7 +79038,7 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 32
+      "orden_inventario": 34
     },
     {
       "grupo_id": "focos_wc",
@@ -79429,7 +79640,7 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 33
+      "orden_inventario": 35
     },
     {
       "grupo_id": "focos_pasillos",
@@ -80031,10 +80242,24 @@
         "TERMINADO": 83
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 34
+      "orden_inventario": 36
     }
   ],
-  "dudas_pendientes": [],
+  "dudas_pendientes": [
+    {
+      "codigo": "ALCANCE_POSTAPERTURA",
+      "tarea_id": "trabajos_electricos_tabique_cocina",
+      "pregunta": "Cuando termine el tabique separador de cocinas, revisar los apartamentos 1 y 2 de PB antes de decidir si quedan tubeado, cableado, mecanismos u otros trabajos.",
+      "n_ubicaciones": 1,
+      "ubicaciones": [
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Apartamentos 1 y 2"
+        }
+      ]
+    }
+  ],
   "avisos": [
     "Primera fase entregada; 2A FASE en curso en planta baja (viviendas A/B).",
     "Primera fase confirmada hasta 24/09/2025 a efectos de priorizacion.",
