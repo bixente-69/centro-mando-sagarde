@@ -410,6 +410,23 @@ def _con_alias(ficha, portal_id, planta_id, tajo, unidad, estados):
     return None
 
 
+def esta_rancia(ficha, prioridades):
+    """Devuelve el motivo si la ficha ha quedado por detras de los datos, o
+    None si esta al dia.
+
+    La ficha alimenta la hoja de campo. Si se queda atras, se genera una hoja
+    con estados de hace dias sin que nadie se entere: por eso conviene que
+    grite en vez de fallar en silencio."""
+    revision = prioridades.get('revision')
+    if not revision:
+        return None
+    registradas = {r.get('fecha') for r in ficha.get('revisiones') or []}
+    if revision not in registradas:
+        return (f'la ficha no ha registrado la revision {revision}; '
+                f'ultima registrada: {max(registradas, key=_orden_fecha) if registradas else "ninguna"}')
+    return None
+
+
 def resumen_cambios(cambios):
     """Lineas legibles para avisar por consola. Vacio si no hubo nada."""
     lineas = []

@@ -275,6 +275,11 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
     viajan como celda vacia, igual que hoy: la hoja de campo los imprime en
     blanco para rellenar. Distinguirlos en la hoja es un paso posterior.
     """
+    motivo = fichas.esta_rancia(ficha, prioridades)
+    if motivo:
+        print(f"  [AVISO FICHA] {obra['nombre']}: {motivo}. "
+              f"La hoja de campo puede salir con estados atrasados.")
+
     alias = (ficha.get('estructura') or {}).get('alias_historico') or {}
     bloques_ficha = (ficha.get('estructura') or {}).get('bloques') or []
     if not bloques_ficha:

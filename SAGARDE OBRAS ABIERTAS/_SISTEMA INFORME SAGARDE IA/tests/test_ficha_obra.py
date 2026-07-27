@@ -319,5 +319,23 @@ class TestCorrecciones(unittest.TestCase):
         self.assertEqual(len(cambios['correcciones_reclamadas']), 0)
 
 
+class TestRancia(unittest.TestCase):
+
+    def test_detecta_que_la_ficha_va_por_detras(self):
+        ficha = fixtures.ficha_minima()
+        ficha, _ = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([fixtures.item()], revision='20/07/2026'))
+        motivo = ficha_obra.esta_rancia(
+            ficha, fixtures.prioridades([fixtures.item()], revision='27/07/2026'))
+        self.assertIsNotNone(motivo)
+        self.assertIn('27/07/2026', motivo)
+
+    def test_no_avisa_cuando_esta_al_dia(self):
+        ficha = fixtures.ficha_minima()
+        prio = fixtures.prioridades([fixtures.item()], revision='27/07/2026')
+        ficha, _ = ficha_obra.actualizar(ficha, prio)
+        self.assertIsNone(ficha_obra.esta_rancia(ficha, prio))
+
+
 if __name__ == '__main__':
     unittest.main()
