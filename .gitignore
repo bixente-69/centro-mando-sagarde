@@ -32,5 +32,20 @@ VARIOS/APPS SAGARDE/
 !docs/superpowers/specs/*.md
 !docs/superpowers/plans/*.md
 
+# Codigo del motor: hasta hoy vivia sin historial y se respaldaba con copias
+# .bak a mano (448 acumuladas). Con git se puede ver que cambio y cuando, y
+# volver atras sin adivinar cual de las copias era la buena.
+!*.py
+__pycache__/
+*.pyc
+*.bak
+*.bak.json
+
+# Espacio de trabajo temporal de los planes
+.superpowers/
+
+# Configuracion local de la herramienta y worktrees temporales
+.claude/
+
 # Mantener este archivo rastreado
 !.gitignore
