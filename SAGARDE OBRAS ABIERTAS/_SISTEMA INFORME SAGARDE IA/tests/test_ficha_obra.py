@@ -499,6 +499,29 @@ class TestActualizarDesdeSnapshot(unittest.TestCase):
             ficha, snapshot, '27/07/2026')
         self.assertEqual(cambios['revision_registrada'], 'rev_27072026')
 
+    def test_resuelve_un_alias_del_catalogo(self):
+        """Un nombre que sea alias en el catálogo debe resolver al id correcto,
+        no crear un tajo nuevo. Mungia emite "Rozas timbres" (alias) pero la
+        ficha guarda "Rozas de timbres" (nombre largo). Sin este mapeo se
+        duplicarían tajos en silencio."""
+        ficha = fixtures.ficha_minima()
+        # Añadir el tajo "Rozas de timbres" (nombre largo del catálogo) a la ficha
+        ficha['tajos']['detalle'].append({
+            'id': 'rozas_timbres', 'nombre': 'Rozas de timbres',
+            'ambito': 'vivienda', 'propiedad': 'propio', 'fase': 'Inicio de obra',
+            'orden': 20})
+        ficha['tajos']['aplicables'].append('rozas_timbres')
+        # Snapshot con el alias "Rozas timbres" del catálogo (no el nombre largo)
+        snapshot = [{'task': 'Rozas timbres', 'floor': 'PB', 'building': 'P1',
+                     'unit': 'A', 'status': 'X'}]
+        ficha, cambios = ficha_obra.actualizar_desde_snapshot(
+            ficha, snapshot, '27/07/2026')
+        # El alias debe haber sido resuelto a su id (rozas_timbres) que ya existe
+        # en la ficha: no debe haber tajos nuevos
+        self.assertEqual(len(cambios['tajos_nuevos']), 0)
+        # Verificar que la celda se escribió bajo el id correcto (no bajo un id nuevo)
+        self.assertIn('p1__pb__rozas_timbres__A', ficha['estados'])
+
 
 class TestSnapshotDesdeFicha(unittest.TestCase):
 

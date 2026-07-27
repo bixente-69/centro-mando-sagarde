@@ -305,6 +305,46 @@ def _localizar(por_nombre, edificio, planta, unidad):
     return por_nombre.get((_fold(edificio), _fold(planta), _fold(unidad)))
 
 
+def _indice_tajo_por_nombre(ruta_catalogo=None):
+    """Construye indice fold(nombre_largo) y fold(alias) -> id_tajo desde el
+    catálogo. Devuelve {} si el catálogo no se puede leer o no tiene forma
+    esperada.
+
+    Este indice se usa como respaldo en `actualizar_desde_snapshot` cuando un
+    nombre de tajo (o su alias) no se reconoce directamente en la ficha: permite
+    que adapatadores que emiten alias en lugar de nombres largos sigan
+    funcionando (p.ej. Mungia emite "Rozas timbres" pero la ficha guarda
+    "Rozas de timbres").
+
+    Por defecto lee CATALOGO_TAJOS.json de la carpeta reglas relativa al
+    directorio de este módulo."""
+    if ruta_catalogo is None:
+        base = os.path.dirname(os.path.abspath(__file__))
+        ruta_catalogo = os.path.join(base, 'reglas', 'CATALOGO_TAJOS.json')
+
+    try:
+        with open(ruta_catalogo, encoding='utf-8') as f:
+            catalogo = json.load(f)
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return {}
+
+    if not isinstance(catalogo, dict) or not isinstance(catalogo.get('tajos'), list):
+        return {}
+
+    indice = {}
+    try:
+        for tajo in catalogo['tajos']:
+            # Indexar por nombre largo
+            indice[_fold(tajo.get('nombre') or '')] = tajo['id']
+            # Indexar por cada alias
+            for alias in tajo.get('aliases') or []:
+                indice[_fold(alias)] = tajo['id']
+    except (TypeError, KeyError, AttributeError):
+        return {}
+
+    return indice
+
+
 # ------------------------------------------------------------- actualizacion
 
 def actualizar_desde_snapshot(ficha, snapshot, revision, correcciones=None,
@@ -315,19 +355,28 @@ def actualizar_desde_snapshot(ficha, snapshot, revision, correcciones=None,
     prioridades_trabajos.json, que ya venia del priorizador. Para que el
     priorizador pueda leer de la ficha, la ficha tiene que alimentarse de algo
     anterior — el snapshot tal cual sale de la hoja de revision.
+
+    Si un nombre de tajo no se encuentra en la ficha, intenta resolverlo
+    contra el catálogo (que indexa tanto nombres largos como alias). Si
+    tampoco está en el catálogo, entra como tajo nuevo marcado sin confirmar.
     """
+    # Indice de nombres (y aliases) desde la ficha
     id_por_nombre = {}
     for tajo in (ficha.get('tajos') or {}).get('detalle') or []:
         id_por_nombre[_fold(tajo.get('nombre') or '')] = tajo['id']
+
+    # Indice de respaldo desde el catálogo (nombres largos + aliases)
+    id_por_alias_catalogo = _indice_tajo_por_nombre()
 
     items = []
     for reg in snapshot or []:
         nombre = str(reg.get('task') or '').strip()
         if not nombre:
             continue
-        # Un tajo que la ficha no conoce entra por su nombre: `actualizar`
-        # lo dara de alta marcado sin confirmar y avisara.
-        tarea_id = id_por_nombre.get(_fold(nombre), nombre)
+        # Buscar en la ficha primero, luego en el catálogo, finalmente usar el nombre
+        nombre_fold = _fold(nombre)
+        tarea_id = id_por_nombre.get(nombre_fold) or \
+                   id_por_alias_catalogo.get(nombre_fold) or nombre
         items.append({
             'tarea_id': tarea_id,
             'trabajo': nombre,
