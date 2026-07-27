@@ -145,41 +145,53 @@ def _correcciones_mas_recientes(carpeta_abs):
         m = re.search(r'(\d{2})(\d{2})(\d{4})', os.path.basename(ruta))
         return (m.group(3), m.group(2), m.group(1)) if m else ('0000', '00', '00')
 
+    ruta_elegida = max(ficheros, key=fecha)
     try:
-        with open(max(ficheros, key=fecha), encoding='utf-8') as f:
+        with open(ruta_elegida, encoding='utf-8') as f:
             return json.load(f).get('estados') or {}
-    except Exception:
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        # Un fichero corrupto no debe tragarse en silencio: es la marca
+        # escrita a boli, el dato mas directo que hay. Que grite y siga
+        # con la regeneracion (el resto de la obra sigue siendo util).
+        print(f"  [AVISO FICHA] {os.path.basename(ruta_elegida)}: no se pudo "
+              f"leer ({exc}). No se aplicaran las correcciones manuales de "
+              f"esta obra en esta pasada.")
         return {}
 
 
 def _mapa_tajos_cortos(obra_id):
     """Codigo corto del adaptador ('cuad-mec') -> id del catalogo
     ('cuadro_mecanizado'). Las correcciones manuales usan el corto y la ficha
-    el largo; sin esta traduccion no se pueden cruzar."""
+    el largo; sin esta traduccion no se pueden cruzar. Con el mapa vacio,
+    _reclamar_correcciones() no casa ninguna clave y TODAS las correcciones
+    manuales de la obra dejan de aplicarse en esa pasada: si algo falla aqui
+    tiene que avisar, no callarse."""
     try:
         modulo = __import__(f'adaptador_{obra_id}')
-    except Exception:
+    except ImportError as exc:
+        print(f"  [AVISO FICHA] no se pudo importar adaptador_{obra_id} "
+              f"({exc}). No se aplicaran las correcciones manuales de esta "
+              f"obra en esta pasada.")
         return {}
     ruta_cat = os.path.join(BASE_DIR, 'reglas', 'CATALOGO_TAJOS.json')
     try:
         with open(ruta_cat, encoding='utf-8') as f:
             catalogo = json.load(f)
-    except Exception:
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        print(f"  [AVISO FICHA] no se pudo leer {os.path.basename(ruta_cat)} "
+              f"({exc}). No se aplicaran las correcciones manuales de esta "
+              f"obra en esta pasada.")
         return {}
-
-    def norm(valor):
-        texto = unicodedata.normalize('NFKD', str(valor or ''))
-        texto = ''.join(c for c in texto if not unicodedata.combining(c))
-        return re.sub(r'[^a-z0-9]+', ' ', texto.lower()).strip()
 
     alias = {}
     for tajo in catalogo.get('tajos', []):
-        alias[norm(tajo['nombre'])] = tajo['id']
+        alias[fichas._fold(tajo['nombre'])] = tajo['id']
         for otro in tajo.get('aliases', []):
-            alias[norm(otro)] = tajo['id']
+            alias[fichas._fold(otro)] = tajo['id']
     corto = getattr(modulo, 'TAJO_NOMBRE_CATALOGO', None) or \
         getattr(modulo, 'TAJO_NOMBRE', {})
-    return {c: alias[norm(n)] for c, n in corto.items() if norm(n) in alias}
+    return {c: alias[fichas._fold(n)] for c, n in corto.items()
+            if fichas._fold(n) in alias}
 
 
 def cargar_ficha_obra(obra):
