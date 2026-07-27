@@ -55,9 +55,11 @@ VERSION = 1
 NOMBRE_FICHERO = 'ficha_obra.json'
 
 # Estado tal y como llega del priorizador -> estado guardado en la ficha
+# Las claves están normalizadas (minúsculas). La cadena vacía sigue siendo 'P':
+# una casilla vacía en hoja validada es un dato que confirma "no está hecho".
 MAPA_ESTADO = {
-    'X': 'X', 'M': 'M', '/': '/',
-    'Pendiente': 'P', '': 'P', 'N': 'N',
+    'x': 'X', 'm': 'M', '/': '/',
+    'pendiente': 'P', '': 'P', 'n': 'N',
 }
 
 APARTADOS = ('identidad', 'estructura', 'tajos', 'estados', 'revisiones',
@@ -115,6 +117,12 @@ def _fold(valor):
 
 def _ahora():
     return datetime.now().strftime('%d/%m/%Y %H:%M')
+
+
+def _normalizar_estado(valor):
+    """Normaliza un estado para búsqueda en MAPA_ESTADO.
+    Convierte a minúsculas y elimina espacios en blanco."""
+    return str(valor or '').strip().lower()
 
 
 # ------------------------------------------------------------- normalizacion
@@ -183,6 +191,7 @@ def actualizar(ficha, prioridades, correcciones=None, mapa_tajos_cortos=None):
         'estados_cambiados': [], 'estados_nuevos': 0,
         'ubicaciones_nuevas': [], 'tajos_nuevos': [],
         'correcciones_reclamadas': [], 'revision_registrada': None,
+        'estados_no_reconocidos': [],
     }
     detalle = prioridades.get('detalle_items') or []
     if not detalle:
@@ -225,7 +234,14 @@ def actualizar(ficha, prioridades, correcciones=None, mapa_tajos_cortos=None):
                 continue
         portal_id, planta_id, ubi_id = trio
         clave = f"{portal_id}__{planta_id}__{item['tarea_id']}__{ubi_id}"
-        nuevo = MAPA_ESTADO.get(str(item.get('estado_actual', '')).strip(), 'P')
+        # Normalizar el estado: minúsculas, sin espacios
+        estado_raw = item.get('estado_actual', '')
+        estado_norm = _normalizar_estado(estado_raw)
+        nuevo = MAPA_ESTADO.get(estado_norm, '?')
+        # Registrar estados no reconocidos (que no sean vacíos)
+        if nuevo == '?' and estado_norm:
+            if estado_norm not in cambios['estados_no_reconocidos']:
+                cambios['estados_no_reconocidos'].append(estado_norm)
         anterior = estados.get(clave)
         if anterior is None:
             estados[clave] = {'v': nuevo, 'f': item.get('ultima_fecha') or revision,
@@ -403,4 +419,7 @@ def resumen_cambios(cambios):
     if cambios['correcciones_reclamadas']:
         lineas.append('correcciones manuales recuperadas: %d'
                       % len(cambios['correcciones_reclamadas']))
+    if cambios.get('estados_no_reconocidos'):
+        lineas.append('ESTADOS NO RECONOCIDOS (guardados como ?): ' +
+                      ', '.join(cambios['estados_no_reconocidos']))
     return lineas

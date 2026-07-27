@@ -41,8 +41,11 @@ class TestEstados(unittest.TestCase):
     def test_pendiente_se_guarda_como_P_no_como_ausencia(self):
         ficha = fixtures.ficha_minima()
         prio = fixtures.prioridades([fixtures.item(estado='Pendiente')])
-        ficha, _ = ficha_obra.actualizar(ficha, prio)
+        ficha, cambios = ficha_obra.actualizar(ficha, prio)
+        # Verificar que se guardó como P
         self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'P')
+        # Verificar que no aparece en estados no reconocidos (porque es reconocido)
+        self.assertNotIn('pendiente', cambios['estados_no_reconocidos'])
 
     def test_las_celdas_sin_dato_nacen_como_desconocido(self):
         ficha = fixtures.ficha_minima()
@@ -76,6 +79,32 @@ class TestEstados(unittest.TestCase):
             [fixtures.item(unidad='A', estado='M')], revision='30/07/2026'))
         self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'M')
         self.assertEqual(ficha['estados']['p1__pb__tubeado__B']['v'], 'X')
+
+    def test_variantes_de_mayusculas_de_pendiente_se_reconocen(self):
+        """'pendiente', 'PENDIENTE', 'Pendiente' deben convertirse todas a 'P'."""
+        for estado_variante in ('pendiente', 'PENDIENTE', 'Pendiente', 'PeNdIeNtE'):
+            ficha = fixtures.ficha_minima()
+            prio = fixtures.prioridades([fixtures.item(estado=estado_variante)])
+            ficha, cambios = ficha_obra.actualizar(ficha, prio)
+            self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'P',
+                           msg=f"Variante '{estado_variante}' no se convirtió a P")
+            self.assertEqual(cambios['estados_no_reconocidos'], [],
+                           msg=f"Variante '{estado_variante}' apareció como no reconocida")
+
+    def test_estado_desconocido_se_guarda_como_desconocido(self):
+        """Un estado que no se reconoce debe guardarse como '?' (desconocido),
+        no como 'P', y debe aparecer en estados_no_reconocidos."""
+        ficha = fixtures.ficha_minima()
+        prio = fixtures.prioridades([fixtures.item(estado='ZZZ')])
+        ficha, cambios = ficha_obra.actualizar(ficha, prio)
+        # Debe guardarse como ?
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], '?')
+        # Debe aparecer en estados_no_reconocidos
+        self.assertIn('zzz', cambios['estados_no_reconocidos'])
+        # Debe aparecer en el resumen de cambios
+        resumen = ficha_obra.resumen_cambios(cambios)
+        self.assertTrue(any('ESTADOS NO RECONOCIDOS' in linea for linea in resumen),
+                       msg="Estado no reconocido no aparece en el resumen de cambios")
 
 
 if __name__ == '__main__':
