@@ -33,6 +33,7 @@ import lectores    # noqa: E402
 import priorizador_trabajos  # noqa: E402
 import memoria_obra as mem  # noqa: E402
 import motor_informes       # noqa: E402
+import ficha_obra as fichas    # noqa: E402
 
 OBRAS = [
     {
@@ -127,6 +128,58 @@ def _clave_planta(valor):
         numero = float(normal.replace(',', '.'))
         return (0 if numero < 0 else 2, numero, ())
     return (3, 0, _clave_natural(texto))
+
+
+def _correcciones_mas_recientes(carpeta_abs):
+    """Devuelve los estados del fichero *.correcciones.json mas reciente de la
+    obra, o {}. Son marcas escritas a boli sobre la hoja de campo: el dato mas
+    directo que hay, y el que mas veces se ha perdido por no casar la clave."""
+    import glob
+    patron = os.path.join(carpeta_abs, 'REVISIONES', '*.correcciones.json')
+    ficheros = glob.glob(patron) or glob.glob(
+        os.path.join(carpeta_abs, 'REVISIONES SAGARDE', '*.correcciones.json'))
+    if not ficheros:
+        return {}
+
+    def fecha(ruta):
+        m = re.search(r'(\d{2})(\d{2})(\d{4})', os.path.basename(ruta))
+        return (m.group(3), m.group(2), m.group(1)) if m else ('0000', '00', '00')
+
+    try:
+        with open(max(ficheros, key=fecha), encoding='utf-8') as f:
+            return json.load(f).get('estados') or {}
+    except Exception:
+        return {}
+
+
+def _mapa_tajos_cortos(obra_id):
+    """Codigo corto del adaptador ('cuad-mec') -> id del catalogo
+    ('cuadro_mecanizado'). Las correcciones manuales usan el corto y la ficha
+    el largo; sin esta traduccion no se pueden cruzar."""
+    try:
+        modulo = __import__(f'adaptador_{obra_id}')
+    except Exception:
+        return {}
+    ruta_cat = os.path.join(BASE_DIR, 'reglas', 'CATALOGO_TAJOS.json')
+    try:
+        with open(ruta_cat, encoding='utf-8') as f:
+            catalogo = json.load(f)
+    except Exception:
+        return {}
+
+    def norm(valor):
+        texto = unicodedata.normalize('NFKD', str(valor or ''))
+        texto = ''.join(c for c in texto if not unicodedata.combining(c))
+        return re.sub(r'[^a-z0-9]+', ' ', texto.lower()).strip()
+
+    alias = {}
+    for tajo in catalogo.get('tajos', []):
+        alias[norm(tajo['nombre'])] = tajo['id']
+        for otro in tajo.get('aliases', []):
+            alias[norm(otro)] = tajo['id']
+    corto = getattr(modulo, 'TAJO_NOMBRE_CATALOGO', None) or \
+        getattr(modulo, 'TAJO_NOMBRE', {})
+    return {c: alias[norm(n)] for c, n in corto.items() if norm(n) in alias}
 
 
 def cargar_ficha_obra(obra):
@@ -763,6 +816,19 @@ def main(hacer_pdf=True):
                 'generado': prioridades.get('generado'),
                 'dudas_pendientes': prioridades.get('dudas_pendientes', []),
             }, salida_dudas)
+
+            # La ficha absorbe lo que trae esta regeneracion. Si la obra no tiene
+            # ficha no pasa nada: sigue funcionando como siempre.
+            ficha_actual = fichas.cargar(carpeta_abs)
+            if ficha_actual:
+                ficha_actual, cambios_ficha = fichas.actualizar(
+                    ficha_actual, prioridades,
+                    correcciones=_correcciones_mas_recientes(carpeta_abs),
+                    mapa_tajos_cortos=_mapa_tajos_cortos(obra['id']),
+                )
+                fichas.guardar(carpeta_abs, ficha_actual)
+                for linea in fichas.resumen_cambios(cambios_ficha):
+                    print(f"  [FICHA] {linea}")
 
             materiales = lectores.leer_materiales(os.path.join(carpeta_abs, obra['materiales_rel']))
             ficha = lectores.leer_ficha(os.path.join(carpeta_abs, 'FICHA DE OBRA.xlsx'))
