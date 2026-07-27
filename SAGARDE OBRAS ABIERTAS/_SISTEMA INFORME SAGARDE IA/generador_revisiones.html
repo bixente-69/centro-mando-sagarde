@@ -318,7 +318,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--blue)}
 <!-- ══════════════════════════════════════════
      SCREEN: IMPORT
 ══════════════════════════════════════════ -->
-<script src="obras_revisiones.js"></script>
+<!-- El registro de obras se recarga SIEMPRE fresco. Sin el parametro de version
+     el navegador (sobre todo en la tablet) se queda con la copia antigua y el
+     generador sigue mostrando la obra como estaba hace dias: era la razon por
+     la que no aparecia la vivienda E de ZR2.1 despues de actualizar.
+     Se usa document.write para conservar la carga sincrona: el resto del
+     script cuenta con que window.SAGARDE_OBRAS_REVISION ya existe. -->
+<script>document.write('<scr'+'ipt src="obras_revisiones.js?v='+Date.now()+'"></scr'+'ipt>');</script>
 <script>
 /* ════════════════════════════════════════════
    CONSTANTS
@@ -890,12 +896,26 @@ function renderRecent(){
 function loadConfig(key){
   const cfg=JSON.parse(localStorage.getItem(key)||'{}');
   if(!cfg.obra) return;
-  CAT=(Array.isArray(cfg.catalog)&&cfg.catalog.length?cfg.catalog:BASE_CAT).map(t=>({...t}));
+  // Una revision guardada conserva la estructura del dia en que se guardo. Si
+  // desde entonces la obra ha cambiado (una vivienda nueva, un portal, los
+  // garajes), hay que traer la version viva: si no, se generaria una hoja de
+  // campo incompleta sin que nadie se entere.
+  const source=cfg.sourceId?installedWorks().find(o=>o.id===cfg.sourceId):null;
+  const refrescar=source&&source.generado&&source.generado!==(cfg.sourceMeta||{}).generado;
+  CAT=refrescar?catalogForSource(source)
+               :(Array.isArray(cfg.catalog)&&cfg.catalog.length?cfg.catalog:BASE_CAT).map(t=>({...t}));
   S={...S,obra:cfg.obra,fecha:cfg.fecha||TODAY_ISO,resp:cfg.resp||'',
-     bloques:normaliseStructure(cfg),sel:new Set(cfg.sel||CAT.map(t=>t.id)),
-     importData:cfg.importData?cloneData(cfg.importData):null,
-     sourceId:cfg.sourceId||null,sourceMeta:cfg.sourceMeta?cloneData(cfg.sourceMeta):null};
+     bloques:refrescar?normaliseStructure({bloques:cloneData(source.bloques||[])})
+                      :normaliseStructure(cfg),
+     sel:new Set(cfg.sel||CAT.map(t=>t.id)),
+     importData:refrescar?cloneData(source.estados||{})
+                         :(cfg.importData?cloneData(cfg.importData):null),
+     sourceId:cfg.sourceId||null,
+     sourceMeta:refrescar?cloneData({id:source.id,nombre:source.nombre,revision:source.revision,
+                                     generado:source.generado,resumen:source.resumen||{}})
+                         :(cfg.sourceMeta?cloneData(cfg.sourceMeta):null)};
   startWizard(false);
+  if(refrescar) showToast('Estructura y estados actualizados desde el portal ✓');
 }
 function delRecent(e,key){
   e.stopPropagation();
