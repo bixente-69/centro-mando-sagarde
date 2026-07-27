@@ -181,5 +181,55 @@ class TestEstados(unittest.TestCase):
         self.assertTrue(any('ESTADOS NO RECONOCIDOS' in linea for linea in resumen))
 
 
+class TestAltasSinConfirmar(unittest.TestCase):
+
+    def test_una_vivienda_nueva_entra_marcada_sin_confirmar_y_avisa(self):
+        ficha = fixtures.ficha_minima()
+        prio = fixtures.prioridades([fixtures.item(unidad='C', estado='X')])
+        ficha, cambios = ficha_obra.actualizar(ficha, prio)
+        pb = ficha['estructura']['bloques'][0]['portales'][0]['plantas'][0]
+        nueva = next(u for u in pb['ubicaciones'] if u['id'] == 'C')
+        self.assertEqual(nueva['origen'], 'revision_sin_confirmar')
+        self.assertIsNone(nueva['confirmado'])
+        self.assertTrue(any('unidad C' in a for a in cambios['ubicaciones_nuevas']))
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__C']['v'], 'X')
+
+    def test_una_planta_nueva_tambien_entra_sin_confirmar(self):
+        ficha = fixtures.ficha_minima()
+        prio = fixtures.prioridades([fixtures.item(planta='2', unidad='A')])
+        ficha, cambios = ficha_obra.actualizar(ficha, prio)
+        plantas = ficha['estructura']['bloques'][0]['portales'][0]['plantas']
+        nueva = next(p for p in plantas if p['nombre'] == '2')
+        self.assertEqual(nueva['origen'], 'revision_sin_confirmar')
+        self.assertTrue(any('planta entera' in a for a in cambios['ubicaciones_nuevas']))
+
+    def test_un_portal_desconocido_NO_se_inventa(self):
+        """Un portal entero que no existe casi siempre es un error de lectura,
+        no una obra que ha crecido. Se ignora y no se ensucia la estructura."""
+        ficha = fixtures.ficha_minima()
+        prio = fixtures.prioridades([fixtures.item(edificio='P9', unidad='A')])
+        ficha, cambios = ficha_obra.actualizar(ficha, prio)
+        portales = ficha['estructura']['bloques'][0]['portales']
+        self.assertEqual([p['id'] for p in portales], ['p1'])
+
+    def test_un_tajo_nuevo_entra_sin_confirmar_y_avisa(self):
+        ficha = fixtures.ficha_minima()
+        prio = fixtures.prioridades([fixtures.item(
+            tarea='mecanizado', trabajo='Mecanizado', orden=30)])
+        ficha, cambios = ficha_obra.actualizar(ficha, prio)
+        self.assertIn('mecanizado', cambios['tajos_nuevos'])
+        nuevo = next(t for t in ficha['tajos']['detalle'] if t['id'] == 'mecanizado')
+        self.assertEqual(nuevo['origen'], 'revision_sin_confirmar')
+        self.assertIn('mecanizado', ficha['tajos']['aplicables'])
+
+    def test_las_plantas_quedan_ordenadas_con_PB_primero(self):
+        ficha = fixtures.ficha_minima()
+        prio = fixtures.prioridades([fixtures.item(planta='2', unidad='A')])
+        ficha, _ = ficha_obra.actualizar(ficha, prio)
+        nombres = [p['nombre'] for p in
+                   ficha['estructura']['bloques'][0]['portales'][0]['plantas']]
+        self.assertEqual(nombres, ['PB', '1', '2'])
+
+
 if __name__ == '__main__':
     unittest.main()
