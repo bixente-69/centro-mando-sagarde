@@ -231,5 +231,50 @@ class TestAltasSinConfirmar(unittest.TestCase):
         self.assertEqual(nombres, ['PB', '1', '2'])
 
 
+class TestCorrecciones(unittest.TestCase):
+
+    def test_traduce_el_codigo_corto_de_tajo_al_largo(self):
+        ficha = fixtures.ficha_minima()
+        prio = fixtures.prioridades([fixtures.item(estado='Pendiente')])
+        ficha, cambios = ficha_obra.actualizar(
+            ficha, prio,
+            correcciones={'p1__pb__tub__A': 'X'},
+            mapa_tajos_cortos={'tub': 'tubeado'})
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'X')
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['origen'],
+                         'correccion manual')
+
+    def test_recompone_una_unidad_partida_por_el_extractor(self):
+        """'PORT AL' es 'PORTAL' con un espacio metido por pdfplumber."""
+        ficha = fixtures.ficha_minima()
+        ficha['estructura']['bloques'][0]['portales'][0]['plantas'][0][
+            'ubicaciones'].append(
+                {'id': 'PORTAL', 'tipo': 'zona_comun', 'origen': 'campo'})
+        prio = fixtures.prioridades([fixtures.item(estado='X')])
+        ficha, _ = ficha_obra.actualizar(
+            ficha, prio, correcciones={'p1__pb__tubeado__PORT AL': 'M'})
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__PORTAL']['v'], 'M')
+
+    def test_llega_a_una_vivienda_que_la_revision_no_conoce(self):
+        """El caso de la vivienda E de Mungia: existe en la ficha, la
+        revision no la lee, pero Bixente si la relleno a boli."""
+        ficha = fixtures.ficha_minima()
+        ficha['estructura']['bloques'][0]['portales'][0]['plantas'][0][
+            'ubicaciones'].append({'id': 'E', 'tipo': 'vivienda',
+                                   'origen': 'confirmado_usuario'})
+        prio = fixtures.prioridades([fixtures.item(unidad='A', estado='X')])
+        ficha, cambios = ficha_obra.actualizar(
+            ficha, prio, correcciones={'p1__pb__cableado__E': 'X'})
+        self.assertEqual(ficha['estados']['p1__pb__cableado__E']['v'], 'X')
+        self.assertEqual(len(cambios['correcciones_reclamadas']), 1)
+
+    def test_una_correccion_que_coincide_no_se_cuenta_como_cambio(self):
+        ficha = fixtures.ficha_minima()
+        prio = fixtures.prioridades([fixtures.item(estado='X')])
+        ficha, cambios = ficha_obra.actualizar(
+            ficha, prio, correcciones={'p1__pb__tubeado__A': 'X'})
+        self.assertEqual(cambios['correcciones_reclamadas'], [])
+
+
 if __name__ == '__main__':
     unittest.main()
