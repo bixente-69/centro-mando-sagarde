@@ -2,42 +2,14 @@
   "version": "4.2",
   "catalogo_version": "1.2",
   "obra": "2026 BOLUETA ACR",
-  "revision": "26/07/2026",
-  "generado": "28/07/2026 18:13",
+  "revision": "28/07/2026",
+  "generado": "28/07/2026 19:59",
   "dudas_pendientes": [
-    {
-      "codigo": "NO_QUITAR_X",
-      "tarea_id": "embornado",
-      "pregunta": "'Embornado eléctrico' figuraba como terminado pero la siguiente revisión lo corrige a pendiente. Ir a comprobar en obra si realmente está terminado.",
-      "n_ubicaciones": 4,
-      "ubicaciones": [
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "C"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidad": "D"
-        }
-      ]
-    },
     {
       "codigo": "OMITIDO_SIN_X",
       "tarea_id": "agujeros_iluminacion_zzcc",
       "pregunta": "Agujeros de iluminación en ZZCC dejó de aparecer con último estado pendiente. Confirmar si terminó o sigue pendiente.",
-      "n_ubicaciones": 84,
+      "n_ubicaciones": 96,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
@@ -101,42 +73,42 @@
         },
         {
           "edificio": "BOLUETA",
-          "planta": "6",
+          "planta": "4",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "6",
+          "planta": "4",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "6",
+          "planta": "4",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "6",
+          "planta": "4",
           "unidad": "D"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "7",
+          "planta": "5",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "7",
+          "planta": "5",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "7",
+          "planta": "5",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "7",
+          "planta": "5",
           "unidad": "D"
         }
       ]
@@ -480,9 +452,117 @@
     },
     {
       "codigo": "OMITIDO_SIN_X",
+      "tarea_id": "casquillos_bombillas",
+      "pregunta": "Casquillos y bombillas dejó de aparecer con último estado pendiente. Confirmar si terminó o sigue pendiente.",
+      "n_ubicaciones": 96,
+      "ubicaciones": [
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "OMITIDO_SIN_X",
       "tarea_id": "embornado",
       "pregunta": "Embornado eléctrico dejó de aparecer con último estado pendiente. Confirmar si terminó o sigue pendiente.",
-      "n_ubicaciones": 61,
+      "n_ubicaciones": 65,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
@@ -491,6 +571,26 @@
         },
         {
           "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
           "planta": "10",
           "unidad": "A"
         },
@@ -563,26 +663,114 @@
           "edificio": "BOLUETA",
           "planta": "13",
           "unidad": "C"
-        },
+        }
+      ]
+    },
+    {
+      "codigo": "OMITIDO_SIN_X",
+      "tarea_id": "iluminacion_rellanos",
+      "pregunta": "Iluminación de rellanos / ZZCC dejó de aparecer con último estado pendiente. Confirmar si terminó o sigue pendiente.",
+      "n_ubicaciones": 96,
+      "ubicaciones": [
         {
           "edificio": "BOLUETA",
-          "planta": "13",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "14",
+          "planta": "1",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "14",
+          "planta": "1",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "14",
+          "planta": "1",
           "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "4",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "5",
+          "unidad": "D"
         }
       ]
     },
@@ -1643,21 +1831,11 @@
       "codigo": "TAJO_NUEVO",
       "tarea_id": "sin_clasificar:agujeros de iluminacion en zzcc",
       "pregunta": "Definir el nuevo tajo 'Agujeros de iluminación en ZZCC': significado, propiedad, posición, estados y dependencias.",
-      "n_ubicaciones": 96,
+      "n_ubicaciones": 81,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
           "planta": "1",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "1",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "1",
           "unidad": "C"
         },
         {
@@ -1667,71 +1845,6 @@
         },
         {
           "edificio": "BOLUETA",
-          "planta": "2",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "2",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "2",
-          "unidad": "C"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "2",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidad": "C"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "4",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "4",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "4",
-          "unidad": "C"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "4",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "5",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
           "planta": "5",
           "unidad": "B"
         },
@@ -1744,6 +1857,81 @@
           "edificio": "BOLUETA",
           "planta": "5",
           "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "6",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "7",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "8",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "C"
         }
       ]
     },
@@ -1859,15 +2047,10 @@
       "codigo": "TAJO_NUEVO",
       "tarea_id": "sin_clasificar:cableado de zonas comunes",
       "pregunta": "Definir el nuevo tajo 'Cableado de zonas comunes': significado, propiedad, posición, estados y dependencias.",
-      "n_ubicaciones": 65,
+      "n_ubicaciones": 64,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
-          "planta": "1",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
           "planta": "9",
           "unidad": "A"
         },
@@ -1960,6 +2143,11 @@
           "edificio": "BOLUETA",
           "planta": "13",
           "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "13",
+          "unidad": "D"
         }
       ]
     },
@@ -1967,7 +2155,7 @@
       "codigo": "TAJO_NUEVO",
       "tarea_id": "sin_clasificar:cableado electrico",
       "pregunta": "Definir el nuevo tajo 'Cableado eléctrico': significado, propiedad, posición, estados y dependencias.",
-      "n_ubicaciones": 26,
+      "n_ubicaciones": 21,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
@@ -1976,31 +2164,6 @@
         },
         {
           "edificio": "BOLUETA",
-          "planta": "16",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "C"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
           "planta": "20",
           "unidad": "A"
         },
@@ -2068,6 +2231,31 @@
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "PB",
+          "unidad": "C"
         }
       ]
     },
@@ -2615,30 +2803,10 @@
       "codigo": "TAJO_NUEVO",
       "tarea_id": "sin_clasificar:montante de telecomunicaciones",
       "pregunta": "Definir el nuevo tajo 'Montante de telecomunicaciones': significado, propiedad, posición, estados y dependencias.",
-      "n_ubicaciones": 56,
+      "n_ubicaciones": 52,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
-          "planta": "11",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "11",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "11",
-          "unidad": "C"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "11",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
           "planta": "12",
           "unidad": "A"
         },
@@ -2715,6 +2883,26 @@
         {
           "edificio": "BOLUETA",
           "planta": "15",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
           "unidad": "D"
         }
       ]
@@ -2831,7 +3019,7 @@
       "codigo": "TAJO_NUEVO",
       "tarea_id": "sin_clasificar:portero videoportero",
       "pregunta": "Definir el nuevo tajo 'Portero / videoportero': significado, propiedad, posición, estados y dependencias.",
-      "n_ubicaciones": 64,
+      "n_ubicaciones": 48,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
@@ -2855,82 +3043,82 @@
         },
         {
           "edificio": "BOLUETA",
-          "planta": "10",
+          "planta": "13",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "10",
+          "planta": "13",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "10",
+          "planta": "13",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "10",
+          "planta": "13",
           "unidad": "D"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "11",
+          "planta": "14",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "11",
+          "planta": "14",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "11",
+          "planta": "14",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "11",
+          "planta": "14",
           "unidad": "D"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "12",
+          "planta": "15",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "12",
+          "planta": "15",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "12",
+          "planta": "15",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "12",
+          "planta": "15",
           "unidad": "D"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "13",
+          "planta": "16",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "13",
+          "planta": "16",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "13",
+          "planta": "16",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "13",
+          "planta": "16",
           "unidad": "D"
         }
       ]
@@ -2939,30 +3127,10 @@
       "codigo": "TAJO_NUEVO",
       "tarea_id": "sin_clasificar:primeras caras de pladur",
       "pregunta": "Definir el nuevo tajo 'Primeras caras de Pladur': significado, propiedad, posición, estados y dependencias.",
-      "n_ubicaciones": 24,
+      "n_ubicaciones": 18,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
-          "planta": "16",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidad": "C"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
           "planta": "20",
           "unidad": "A"
         },
@@ -2990,16 +3158,6 @@
           "edificio": "BOLUETA",
           "planta": "21",
           "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidad": "C"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidad": "D"
         },
         {
           "edificio": "BOLUETA",
@@ -3039,6 +3197,26 @@
         {
           "edificio": "BOLUETA",
           "planta": "23",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "PB",
           "unidad": "D"
         }
       ]
@@ -3155,7 +3333,7 @@
       "codigo": "TAJO_NUEVO",
       "tarea_id": "sin_clasificar:segundas caras de pladur",
       "pregunta": "Definir el nuevo tajo 'Segundas caras de Pladur': significado, propiedad, posición, estados y dependencias.",
-      "n_ubicaciones": 35,
+      "n_ubicaciones": 30,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
@@ -3180,36 +3358,11 @@
         {
           "edificio": "BOLUETA",
           "planta": "16",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
           "planta": "16",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "18",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "18",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "18",
           "unidad": "D"
         },
         {
@@ -3256,6 +3409,31 @@
           "edificio": "BOLUETA",
           "planta": "21",
           "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "21",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "21",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "21",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "22",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "22",
+          "unidad": "B"
         }
       ]
     },
@@ -3263,21 +3441,11 @@
       "codigo": "TAJO_NUEVO",
       "tarea_id": "sin_clasificar:techos de zonas comunes",
       "pregunta": "Definir el nuevo tajo 'Techos de zonas comunes': significado, propiedad, posición, estados y dependencias.",
-      "n_ubicaciones": 96,
+      "n_ubicaciones": 52,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
           "planta": "1",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "1",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "1",
           "unidad": "C"
         },
         {
@@ -3287,82 +3455,92 @@
         },
         {
           "edificio": "BOLUETA",
-          "planta": "2",
+          "planta": "5",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "2",
+          "planta": "5",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "2",
+          "planta": "5",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "2",
+          "planta": "5",
           "unidad": "D"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "3",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "3",
+          "planta": "7",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "3",
+          "planta": "7",
           "unidad": "D"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "4",
+          "planta": "12",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "4",
+          "planta": "12",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "4",
+          "planta": "12",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "4",
+          "planta": "12",
           "unidad": "D"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "5",
+          "planta": "14",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "5",
+          "planta": "14",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "5",
+          "planta": "14",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "5",
+          "planta": "14",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "16",
           "unidad": "D"
         }
       ]
@@ -3371,7 +3549,7 @@
       "codigo": "TAJO_NUEVO",
       "tarea_id": "sin_clasificar:tubeado de zonas comunes",
       "pregunta": "Definir el nuevo tajo 'Tubeado de zonas comunes': significado, propiedad, posición, estados y dependencias.",
-      "n_ubicaciones": 44,
+      "n_ubicaciones": 28,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
@@ -3435,42 +3613,42 @@
         },
         {
           "edificio": "BOLUETA",
-          "planta": "17",
+          "planta": "21",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "17",
+          "planta": "21",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "17",
+          "planta": "21",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "17",
+          "planta": "21",
           "unidad": "D"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "18",
+          "planta": "22",
           "unidad": "A"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "18",
+          "planta": "22",
           "unidad": "B"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "18",
+          "planta": "22",
           "unidad": "C"
         },
         {
           "edificio": "BOLUETA",
-          "planta": "18",
+          "planta": "22",
           "unidad": "D"
         }
       ]
@@ -3479,7 +3657,7 @@
       "codigo": "TAJO_NUEVO",
       "tarea_id": "sin_clasificar:tubeado interior",
       "pregunta": "Definir el nuevo tajo 'Tubeado interior': significado, propiedad, posición, estados y dependencias.",
-      "n_ubicaciones": 26,
+      "n_ubicaciones": 21,
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
@@ -3488,31 +3666,6 @@
         },
         {
           "edificio": "BOLUETA",
-          "planta": "16",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "A"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "B"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "C"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidad": "D"
-        },
-        {
-          "edificio": "BOLUETA",
           "planta": "20",
           "unidad": "A"
         },
@@ -3580,6 +3733,31 @@
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "23",
+          "unidad": "D"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "PB",
+          "unidad": "C"
         }
       ]
     }
