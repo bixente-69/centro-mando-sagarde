@@ -3,11 +3,11 @@
   "catalogo_version": "1.2",
   "obra": "2026 MUNGIA ACR NEINOR",
   "revision": "27/07/2026",
-  "edad_revision_dias": 0,
+  "edad_revision_dias": 1,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "27/07/2026 21:07",
+  "generado": "28/07/2026 00:35",
   "resumen": {
     "listos": 10,
     "verificar": 1,
