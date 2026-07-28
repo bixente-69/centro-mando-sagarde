@@ -860,7 +860,25 @@ def main(hacer_pdf=True):
             # Una obra sin ficha no entra aqui y sigue igual que siempre.
             # OJO: `ficha` (arriba) es el xlsx recien leido; `ficha_actual` es
             # la ficha de obra JSON, la base de datos. No confundirlos.
+            # Guarda de cobertura. Se mide sobre el historial CRUDO, antes de
+            # que la ficha lo compense, porque el aviso interesa igual: dice
+            # que la ultima hoja no cubre la obra entera. Ver el caso de
+            # Obispo Orueta en tests/test_motor_informes.py.
+            motivo_cobertura = motor_informes.cobertura_encogida(historial)
+
             ficha_actual = fichas.cargar(carpeta_abs)
+
+            if motivo_cobertura:
+                if ficha_actual:
+                    print(f"  [AVISO COBERTURA] {obra['nombre']}: "
+                          f"{motivo_cobertura}. La ficha lo compensa: los "
+                          f"numeros salen de la base, no de esta hoja.")
+                else:
+                    print(f"  [AVISO COBERTURA] {obra['nombre']}: "
+                          f"{motivo_cobertura}. ESTA OBRA NO TIENE FICHA: el "
+                          f"porcentaje publicado sale solo de esta hoja. "
+                          f"Sembrar su ficha_obra.json lo corrige.")
+
             if ficha_actual and historial:
                 fecha_ultima, snapshot_crudo = historial[-1]
                 ficha_actual, cambios_ficha = fichas.actualizar_desde_snapshot(

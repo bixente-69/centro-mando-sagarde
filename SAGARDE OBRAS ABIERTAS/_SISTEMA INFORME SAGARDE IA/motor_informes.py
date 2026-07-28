@@ -86,6 +86,50 @@ def kpis_snapshot(snapshot):
     }
 
 
+def cobertura_encogida(historial, umbral=0.5):
+    """Devuelve el motivo si la ultima revision cubre bastantes menos
+    ubicaciones que la anterior, o None si no hay nada que avisar.
+
+    TODO el calculo de una obra se hace sobre `historial[-1]`: el sistema
+    interpreta la ultima hoja como el estado completo de la obra. Eso vale
+    mientras cada revision cubra la obra entera; si una cubre solo un trozo,
+    la obra ENCOGE a ese trozo y el porcentaje publicado pasa a calcularse
+    sobre una fraccion.
+
+    Caso real (Obispo Orueta, 27/07/2026): una hoja de "2a fase" con 40
+    celdas de dos viviendas nuevas de PB dejo fuera 107 ubicaciones y el
+    panel publico un 80.0% sobre esas 40, frente al 62.1% sobre 1288 de la
+    revision anterior. No salto ningun aviso.
+
+    Esto NO corrige el porcentaje: lo corrige la ficha de obra, que acumula
+    en vez de sustituir (ver `generar_todos.registro_revision_desde_ficha`).
+    Sirve para que las obras que aun no tienen ficha no fallen en silencio.
+
+    Se cuentan UBICACIONES (edificio, planta, vivienda), no celdas: una hoja
+    con menos tajos no es una revision parcial, pero una hoja donde
+    desaparecen viviendas enteras si lo es.
+    """
+    if len(historial) < 2:
+        return None
+
+    def _ubicaciones(registros):
+        return {(r.get('building'), r.get('floor'), r.get('unit'))
+                for r in registros}
+
+    fecha_previa, previos = historial[-2]
+    fecha_ultima, ultimos = historial[-1]
+    antes = _ubicaciones(previos)
+    ahora = _ubicaciones(ultimos)
+    if not antes or len(ahora) >= len(antes) * umbral:
+        return None
+
+    huerfanas = len(antes - ahora)
+    return (f'la revision {fecha_ultima} cubre {len(ahora)} ubicaciones '
+            f'frente a {len(antes)} de {fecha_previa}: {huerfanas} se quedan '
+            f'sin datos nuevos y el porcentaje se calcula solo sobre lo que '
+            f'cubre esta hoja')
+
+
 def detectar_bloqueos(snapshot):
     """
     Heuristica generica (no usa umbrales fijos por obra, compara cada grupo
