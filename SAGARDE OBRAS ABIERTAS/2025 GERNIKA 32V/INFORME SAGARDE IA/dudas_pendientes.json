@@ -3,6 +3,871 @@
   "catalogo_version": "1.2",
   "obra": "2025 GERNIKA 32V",
   "revision": "25/07/2026",
-  "generado": "28/07/2026 12:48",
-  "dudas_pendientes": []
+  "generado": "28/07/2026 16:07",
+  "dudas_pendientes": [
+    {
+      "codigo": "OMITIDO_SIN_X",
+      "tarea_id": "apliques",
+      "pregunta": "Apliques y enchufes de terraza dejó de aparecer con último estado pendiente. Confirmar si terminó o sigue pendiente.",
+      "n_ubicaciones": 32,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "OMITIDO_SIN_X",
+      "tarea_id": "casquillos_bombillas",
+      "pregunta": "Casquillos y bombillas dejó de aparecer con último estado pendiente. Confirmar si terminó o sigue pendiente.",
+      "n_ubicaciones": 32,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "OMITIDO_SIN_X",
+      "tarea_id": "iluminacion_rellanos",
+      "pregunta": "Iluminación de rellanos / ZZCC dejó de aparecer con último estado pendiente. Confirmar si terminó o sigue pendiente.",
+      "n_ubicaciones": 32,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "TAJO_NUEVO",
+      "tarea_id": "sin_clasificar:apliques y enchufes de terraza",
+      "pregunta": "Definir el nuevo tajo 'Apliques y enchufes de terraza': significado, propiedad, posición, estados y dependencias.",
+      "n_ubicaciones": 32,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "TAJO_NUEVO",
+      "tarea_id": "sin_clasificar:casquillos y bombillas",
+      "pregunta": "Definir el nuevo tajo 'Casquillos y bombillas': significado, propiedad, posición, estados y dependencias.",
+      "n_ubicaciones": 32,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "TAJO_NUEVO",
+      "tarea_id": "sin_clasificar:iluminacion de rellanos zzcc",
+      "pregunta": "Definir el nuevo tajo 'Iluminación de rellanos / ZZCC': significado, propiedad, posición, estados y dependencias.",
+      "n_ubicaciones": 32,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "TAJO_NUEVO",
+      "tarea_id": "sin_clasificar:pintura de zonas comunes",
+      "pregunta": "Definir el nuevo tajo 'Pintura de zonas comunes': significado, propiedad, posición, estados y dependencias.",
+      "n_ubicaciones": 32,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        }
+      ]
+    },
+    {
+      "codigo": "TAJO_NUEVO",
+      "tarea_id": "sin_clasificar:techos de zonas comunes",
+      "pregunta": "Definir el nuevo tajo 'Techos de zonas comunes': significado, propiedad, posición, estados y dependencias.",
+      "n_ubicaciones": 32,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        }
+      ]
+    }
+  ]
 }
