@@ -1,0 +1,24 @@
+{
+  "_descripcion": "Estructura de Gernika 32V confirmada el 28/07/2026. Propuesta por lectura de las hojas y CONTRASTADA celda a celda contra el historial real del adaptador: 2 portales x 4 plantas x A/B/C/D = 32 ubicaciones, 38 tajos, sin cambios entre las revisiones del 22, 23 y 25/07/2026. No hubo ninguna discrepancia.",
+  "obra": "gernika",
+  "fecha": "28/07/2026",
+  "regla_identificador": {
+    "_nota": "En Gernika la vivienda es solo la letra: A, B, C, D. No hay numero de habitaciones pegado al identificador, al contrario que en Mungia.",
+    "separar_habitaciones": false
+  },
+  "plantas_confirmadas": {
+    "PORTAL 1": {
+      "PB": ["A", "B", "C", "D"],
+      "1": ["A", "B", "C", "D"],
+      "2": ["A", "B", "C", "D"],
+      "3": ["A", "B", "C", "D"]
+    },
+    "PORTAL 2": {
+      "PB": ["A", "B", "C", "D"],
+      "1": ["A", "B", "C", "D"],
+      "2": ["A", "B", "C", "D"],
+      "3": ["A", "B", "C", "D"]
+    }
+  },
+  "notas": {}
+}

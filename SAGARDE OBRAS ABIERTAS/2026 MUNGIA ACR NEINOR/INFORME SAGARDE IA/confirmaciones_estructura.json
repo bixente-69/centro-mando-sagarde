@@ -1,0 +1,48 @@
+{
+  "_descripcion": "Respuestas de Bixente a los huecos detectados al sembrar la ficha de Mungia (27/07/2026). El sembrador las aplica sobre la estructura observada.",
+  "obra": "mungia",
+  "fecha": "27/07/2026",
+
+  "regla_identificador": {
+    "_nota": "En Mungia el numero pegado a la letra es el numero de habitaciones, no parte del identificador. A2 = vivienda A de 2 habitaciones. Solo ocurre en esta obra.",
+    "separar_habitaciones": true
+  },
+
+  "plantas_confirmadas": {
+    "ZR1.1": {
+      "PB": ["A", "B", "C"],
+      "1":  ["A", "B", "C"],
+      "2":  ["A", "B", "C"],
+      "3":  ["A", "B", "C"],
+      "4":  ["A", "B", "C"],
+      "5":  ["A", "B", "C"],
+      "6":  ["A", "B"]
+    },
+    "ZR1.2": {
+      "PB": [],
+      "_zonas_comunes": { "PB": ["PORTAL"] },
+      "1":  ["A", "B"],
+      "2":  ["A", "B", "C"],
+      "3":  ["A", "B", "C"],
+      "4":  ["A", "B", "C"],
+      "5":  ["A", "B", "C"],
+      "6":  ["A", "B"]
+    },
+    "ZR2.1": {
+      "PB": ["A", "B"],
+      "1":  ["A", "B", "C", "D"],
+      "2":  ["A", "B", "C", "D", "E"],
+      "3":  ["A", "B", "C", "D", "E"],
+      "4":  ["A", "B", "C", "D", "E"],
+      "5":  ["A", "B", "C", "D"]
+    }
+  },
+
+  "notas": {
+    "ZR1.1/6": "Solo 2 viviendas: mas grandes y con mas terrazas.",
+    "ZR1.2/PB": "Sin viviendas: es un unico hueco comun (portal).",
+    "ZR1.2/1": "Solo 2 viviendas, geometria distinta. La C no existe.",
+    "ZR2.1/2": "Tiene 5 viviendas. La E nunca se habia registrado.",
+    "ZR2.1/5": "Atico: 4 viviendas."
+  }
+}

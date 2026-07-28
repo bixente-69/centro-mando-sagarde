@@ -28,6 +28,13 @@ VARIOS/APPS SAGARDE/
 # Ficha de obra: fuente de verdad de estructura y estados (una por obra)
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/ficha_obra.json
 
+# Confirmaciones de estructura: las respuestas de Bixente a los huecos que
+# detecta el sembrador. Son la razon POR LA QUE cada ficha es como es, y sin
+# ellas no hay forma de auditar ni de volver a sembrar una obra. Estaban
+# quedando fuera del repositorio en silencio (28/07/2026).
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/confirmaciones_*.json
+!SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/confirmaciones_*.json
+
 # Documentacion de diseno y planes de implementacion
 !docs/superpowers/specs/*.md
 !docs/superpowers/plans/*.md
