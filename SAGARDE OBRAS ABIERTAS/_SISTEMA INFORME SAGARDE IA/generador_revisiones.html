@@ -1031,10 +1031,14 @@ function generateHTML(cellData={}){
     const plantNames=plantasGrupo.map(planta=>escHtml(planta.nombre)).join(' · ');
     const plantLabel=plantasGrupo.length===1?`Planta ${plantNames}`:`Plantas ${plantNames}`;
 
-    return `<div class="planta-block"><div class="block-hdr">
-      <span class="block-title">${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)} · ${plantLabel}</span>
-    </div><div class="tbl-wrap"><table class="rev-table"><colgroup>${colTpl}</colgroup>
-      <thead><tr><th class="th-floor th-floor-tajo" rowspan="2">TAJO</th>${floorHeads}</tr>
+    // La identificacion va DENTRO del thead a proposito: es lo unico que el
+    // navegador repite cuando una tabla se parte entre paginas. Fuera de la
+    // tabla, una hoja de continuacion perderia el portal, y con tres
+    // portales de mismas letras de vivienda eso es irresoluble al escanear.
+    return `<div class="planta-block"><div class="tbl-wrap"><table class="rev-table"><colgroup>${colTpl}</colgroup>
+      <thead>
+      <tr class="tr-ident"><th class="th-ident" colspan="${ncols}">${escHtml(obraUp)} · ${escHtml(fecha)} · ${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)} · ${plantLabel}</th></tr>
+      <tr><th class="th-floor th-floor-tajo" rowspan="2">TAJO</th>${floorHeads}</tr>
       <tr>${aptHeads}</tr></thead>
       <tbody>${rows}${noteRow}</tbody></table></div></div>`;
     }).join('');
@@ -1183,8 +1187,7 @@ body{font-family:Arial,'Aptos','Liberation Sans',sans-serif;background:#fff;colo
 .portal-sheet-meta{font-size:9px;font-weight:600;line-height:1.15;letter-spacing:.025em;color:rgba(255,255,255,.9);max-width:58%;text-align:right}
 .blocks{padding:5px 8px 9px;display:flex;flex-direction:column;gap:7px}
 .planta-block{background:#fff;border:1px solid rgba(26,53,88,.18);border-left:3px solid #2E6DA4;border-radius:3px;overflow:hidden}
-.block-hdr{background:#E4EEF8;padding:3px 7px;border-bottom:1px solid rgba(26,53,88,.18)}
-.block-title{font-size:9.5pt;font-weight:800;line-height:1.08;letter-spacing:.05em;text-transform:uppercase;color:#102A4C}
+.th-ident{background:#E4EEF8;padding:3px 7px;text-align:left;font-size:9.5pt;font-weight:800;line-height:1.08;letter-spacing:.05em;text-transform:uppercase;color:#102A4C;border-bottom:1px solid rgba(26,53,88,.18)}
 .tbl-wrap{overflow-x:auto}
 .rev-table{width:100%;border-collapse:collapse;table-layout:fixed;border:1.5px solid #1A3558}
 .th-floor{background:#1A3558;color:#fff;font-size:9pt;font-weight:800;line-height:1.05;letter-spacing:.045em;text-transform:uppercase;padding:2.2mm 1mm;text-align:center;vertical-align:middle;border-right:1px solid #718096}
@@ -1234,7 +1237,7 @@ body{font-family:Arial,'Aptos','Liberation Sans',sans-serif;background:#fff;colo
   .portal-sheet-meta{display:none}
   .planta-block{page-break-inside:avoid;break-inside:avoid;border-radius:0}
   .planta-block+.planta-block{break-before:page;page-break-before:always}
-  .block-hdr{padding:1.2mm 2mm}.block-title{font-size:8.4pt}
+  .th-ident{padding:1.2mm 2mm;font-size:8.4pt}
   .doc-header,.legend-strip{break-inside:avoid}
   .tr-tajo:hover{background:transparent!important}
   .float-bar{display:none}
