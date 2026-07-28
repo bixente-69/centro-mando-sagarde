@@ -25,6 +25,13 @@ sys.path.insert(0, os.path.join(_SISTEMA_DIR, 'adaptadores'))
 
 import generar_todos as gt
 
+# El propio directorio de pruebas, para que `import fixtures` funcione tanto
+# bajo `discover -s tests` (que ya lo anade) como al invocar una clase por
+# nombre: `python -m unittest tests.test_generar_todos.TestX`.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import fixtures
+
 
 class TestCorreccionesMasRecientes(unittest.TestCase):
     """_correcciones_mas_recientes() localiza y lee el .correcciones.json
@@ -183,6 +190,53 @@ class TestMapaTajosCortos(unittest.TestCase):
         ]})
         resultado = gt._mapa_tajos_cortos('pruebamapafeliz')
         self.assertEqual(resultado, {'tub': 'tubeado'})
+
+
+class TestContratoFuenteEstructura(unittest.TestCase):
+    """El filtro del desplegable del generador se apoya en que
+    `fuente_estructura` valga 'ficha_obra.json' SOLO cuando la hoja sale de
+    la base. Si el camino deducido empezara a marcarlo, la app ofreceria
+    obras sin base de datos y no habria forma de notarlo desde fuera."""
+
+    OBRA = {'id': 'pruebas', 'nombre': 'OBRA DE PRUEBAS'}
+
+    def _ficha(self, estados):
+        ficha = fixtures.ficha_minima()
+        # Sin esto la ficha sale 'rancia' y ensucia la salida con un aviso.
+        ficha['revisiones'] = [{'fecha': '27/07/2026'}]
+        ficha['estados'] = {
+            clave: {'v': valor, 'f': '27/07/2026', 'r': 'rev_27072026'}
+            for clave, valor in estados.items()
+        }
+        return ficha
+
+    def test_la_hoja_desde_la_ficha_se_marca_como_base(self):
+        registro = gt.registro_revision_desde_ficha(
+            self.OBRA,
+            self._ficha({'p1__pb__tubeado__A': 'X'}),
+            fixtures.prioridades([]))
+        self.assertIsNotNone(registro)
+        self.assertEqual(registro['fuente_estructura'], 'ficha_obra.json')
+
+    def test_la_hoja_deducida_no_se_marca_como_base(self):
+        registro = gt.crear_registro_revision(
+            self.OBRA, fixtures.prioridades([fixtures.item()]))
+        self.assertIsNotNone(registro)
+        self.assertNotEqual(registro.get('fuente_estructura'),
+                            'ficha_obra.json')
+
+    def test_lo_no_medido_no_viaja_a_la_hoja(self):
+        """P (comprobado pendiente), ? (nadie lo ha mirado) y N (no aplica)
+        salen como celda en blanco para poder escribir encima a boli."""
+        registro = gt.registro_revision_desde_ficha(
+            self.OBRA,
+            self._ficha({'p1__pb__tubeado__A': 'X',
+                         'p1__pb__tubeado__B': 'P',
+                         'p1__1__tubeado__A': '?',
+                         'p1__1__tubeado__B': 'N'}),
+            fixtures.prioridades([]))
+        self.assertIsNotNone(registro)
+        self.assertEqual(sorted(registro['estados'].values()), ['X'])
 
 
 if __name__ == '__main__':
