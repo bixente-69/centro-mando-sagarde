@@ -172,6 +172,16 @@ TAJO_LABELS_PDF = [
     ('ilum-rell',   'Ilum. rellanos / ZZCC'),
     ('plac-tapas',  'Placas y tapas'),
     ('fachada',     'Fachada terminada'),
+    # --- Wording NUEVO de la app generadora (detectado el 28/07/2026) -------
+    # La hoja pasó a imprimir estos 4 tajos con otro texto. Se añaden como
+    # ALIAS (no se sustituyen los de arriba) para poder seguir leyendo el
+    # historial ya archivado con el wording anterior. Sin esto, el adaptador
+    # dejaba de reconocer las 4 filas y perdía 288 celdas por revisión sin
+    # emitir ningún error.
+    ('techos-zzcc', 'Techos de zonas comunes'),
+    ('pint-zzcc',   'Pintura de zonas comunes'),
+    ('pint-2',      'Pintura — segunda mano'),
+    ('ilum-rell',   'Iluminación de rellanos / ZZCC'),
 ]
 
 # alias corto -> nombre EXACTO usado para 'task' (verificado con
@@ -207,15 +217,29 @@ def _fold(s):
     return re.sub(r'[^a-z0-9]+', ' ', s.lower()).strip()
 
 
+_RE_PREFIJO = re.compile(r'^(EXT|SGD|COO)\s+', re.I)
+
+
 def _quitar_prefijo(s):
-    return re.sub(r'^(EXT|SGD|COO)\s+', '', (s or '').strip(), flags=re.I)
+    return _RE_PREFIJO.sub('', (s or '').strip())
 
 
 _TAJO_NORM_PDF = {_fold(label): codigo for codigo, label in TAJO_LABELS_PDF}
 
 
 def _identificar_tajo_pdf(etiqueta):
-    sin_prefijo = _quitar_prefijo(etiqueta)
+    """Devuelve el codigo interno del tajo, o None si la fila no es un tajo.
+
+    Se EXIGE el distintivo de propiedad (SGD/EXT/COO): en esta hoja lo llevan
+    todas las filas de tajo y ninguna banda de seccion. Sin este requisito, la
+    banda "PINTURA ZZCC" se resolvia como el tajo 'pint-zzcc' y colaba 96
+    celdas fantasma (siempre vacias, porque una banda no tiene columnas de
+    datos) que ademas pisaban las del tajo real con el mismo codigo.
+    """
+    texto = (etiqueta or '').strip()
+    if not _RE_PREFIJO.match(texto):
+        return None
+    sin_prefijo = _quitar_prefijo(texto)
     codigo = _TAJO_NORM_PDF.get(_fold(sin_prefijo))
     if codigo:
         return codigo
