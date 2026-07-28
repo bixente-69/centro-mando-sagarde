@@ -136,14 +136,17 @@ parta cuando sí cabe entera.
   verde y el resto de fondos por estado.
 - Se conservan: logo, cabecera azul corporativa, tipografía, y las bandas de
   sección como separadores estructurales.
-- **Las marcas impresas pasan a gris medio: `#6B7280`** (≈58 % de negro). El
-  discriminador se pone en lo impreso, que es lo único bajo control: ningún boli
-  escribe en gris medio uniforme, y la tipografía impresa es regular y está
-  centrada, frente al trazo irregular del manuscrito. Así la lectura por visión
-  no depende de que Bixente use un boli de un color concreto. El valor exacto
-  puede ajustarse en implementación si la impresión resulta demasiado tenue,
-  pero manteniendo el criterio: ni negro puro ni un color que un boli pueda
-  imitar.
+- **Las marcas impresas pasan a gris medio neutro: `#6E6E6E`** (≈57 % de negro,
+  R=G=B). El discriminador se pone en lo impreso, que es lo único bajo control:
+  ningún boli escribe en gris medio uniforme, y la tipografía impresa es regular
+  y está centrada, frente al trazo irregular del manuscrito. Así la lectura por
+  visión no depende de que Bixente use un boli de un color concreto.
+
+  *Se probó primero `#6B7280` (el gris frío habitual en interfaces) y se cambió
+  a neutro al medirlo sobre el PDF impreso: tenía 21 puntos de desviación hacia
+  el azul, y el criterio es precisamente que ningún boli pueda imitar el color.
+  El valor puede ajustarse si la impresión resulta demasiado tenue, siempre que
+  siga siendo gris neutro: ni negro puro ni un tono con matiz.*
 
 ### 5.4 Lo que NO cambia
 

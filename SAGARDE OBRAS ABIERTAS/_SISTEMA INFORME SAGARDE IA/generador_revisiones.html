@@ -1169,9 +1169,9 @@ body{font-family:Arial,'Aptos','Liberation Sans',sans-serif;background:#fff;colo
 .leg-label{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#293E58;font-weight:800}
 .leg-item{display:flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:#213E62}
 .leg-dot{width:21px;height:15px;border-radius:2px;border:1.2px solid #53677F;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
-.leg-dot.done{background:#D5EDD9;color:#1A6030;border-color:#1A6030}
-.leg-dot.half{background:#E4F4EC;color:#1A6040;border-color:#1A6040}
-.leg-dot.prog{background:#FEF7D5;color:#7A5000;border-color:#7A5000}
+.leg-dot.done{background:#fff;color:#6E6E6E;border-color:#6E6E6E}
+.leg-dot.half{background:#fff;color:#6E6E6E;border-color:#6E6E6E}
+.leg-dot.prog{background:#fff;color:#6E6E6E;border-color:#6E6E6E}
 .leg-dot.pend{background:#fff;color:#aaa;border-color:rgba(26,53,88,.18)}
 .leg-dot-sep{border-left:1px solid rgba(26,53,88,.2);margin:0 4px;height:12px}
 .tajo-prop{display:inline-block;font-size:6.5px;font-weight:700;letter-spacing:.04em;border-radius:2px;padding:0 3px;margin-right:4px;vertical-align:middle;line-height:13px;border:1px solid currentColor;background:transparent}
@@ -1203,9 +1203,14 @@ body{font-family:Arial,'Aptos','Liberation Sans',sans-serif;background:#fff;colo
 .td-name .tajo-ambito{font-size:5.8pt;font-weight:700;color:#43556B}
 .td-st{height:4.65mm;padding:0;text-align:center;vertical-align:middle;line-height:1;font-weight:800;border-right:1.15px solid #53677F;cursor:pointer;user-select:none;transition:background .08s}
 .td-st:hover{filter:brightness(.93)}
-.td-st.done{background:#D5EDD9;color:#1A6030}.td-st.half{background:#E4F4EC;color:#1A6040}
-.td-st.prog{background:#FEF7D5;color:#7A5000}.td-st.pend{background:#fff;color:#ccc}
-.td-st.ext{background:#F5F0FA;color:#7A50A0}
+/* Fondo blanco en todas: es mas facil tachar encima a boli y mas limpio de
+   leer al escanear. La marca impresa va en gris medio y no en negro porque
+   el discriminador tiene que estar en lo impreso, que es lo unico bajo
+   control: el boli cambia segun el dia (negro, azul o pen digital) y ningun
+   boli escribe en gris uniforme. */
+.td-st.done{background:#fff;color:#6E6E6E}.td-st.half{background:#fff;color:#6E6E6E}
+.td-st.prog{background:#fff;color:#6E6E6E}.td-st.pend{background:#fff;color:#ccc}
+.td-st.ext{background:#fff;color:#6E6E6E}
 .td-st.right-first{border-left:2.5px solid #1A3558}
 .tr-notes td{height:4.65mm;background:#F3F5F7;padding:.65mm 2mm;font-size:7pt;font-weight:700;line-height:1;color:#43556B;border-top:1.5px solid #1A3558}
 .notes-ln{display:inline-block;border-bottom:1px solid rgba(26,53,88,.15);min-width:200px}
