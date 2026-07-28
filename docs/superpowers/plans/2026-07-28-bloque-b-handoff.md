@@ -1,5 +1,10 @@
 # Traspaso de sesión — Bloque B del entorno SAGARDE
 
+> **Documento histórico superado.** La restricción de solo lectura de este
+> traspaso dejó de estar vigente cuando Bixente autorizó guardar el
+> diccionario y corregir el sistema. La memoria actual es
+> `docs/2026-07-28-memoria-diccionario-tajos-alertas-informes.md`.
+
 Fecha del traspaso: 28/07/2026
 
 ## Alcance acordado

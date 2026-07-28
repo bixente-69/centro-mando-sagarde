@@ -11,7 +11,7 @@ from collections import Counter, defaultdict
 from datetime import datetime
 
 
-VERSION = "4.2"
+VERSION = "4.3"
 # Unificado con SCORE de motor_informes.py (25/07/2026): mismo valor de "M"
 # en los dos sitios. Si cambia aquí, cambiar también SCORE en motor_informes.py.
 ESTADO_VALOR = {"": 0.0, "/": 0.25, "M": 0.60, "X": 1.0}
@@ -96,7 +96,14 @@ class Catalogo:
             self._registrar_aliases(tajo, especifico=True)
 
     def _registrar_aliases(self, tajo, especifico=False):
-        for alias in tajo.get("aliases", []):
+        # El nombre principal forma parte del diccionario igual que sus
+        # alias. Las hojas nuevas suelen imprimir ``nombre`` mientras que
+        # las antiguas usan un alias abreviado; ambos deben resolver al mismo
+        # id para que el motor no invente a la vez TAJO_NUEVO y OMITIDO_SIN_X.
+        nombres = [tajo.get("nombre")] + list(tajo.get("aliases", []))
+        for alias in nombres:
+            if not alias:
+                continue
             clave = _normalizar(alias)
             anterior = self.aliases.get(clave)
             if anterior and anterior != tajo["id"] and not especifico:

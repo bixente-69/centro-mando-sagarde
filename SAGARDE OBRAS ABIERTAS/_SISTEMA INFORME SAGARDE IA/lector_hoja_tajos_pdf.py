@@ -35,6 +35,8 @@ import os
 import re
 import json
 
+from claves_correcciones import normalizar_unidad, partir_clave
+
 try:
     import pdfplumber
 except ImportError:
@@ -50,6 +52,41 @@ def cargar_correcciones(ruta_pdf):
     with open(ruta_json, encoding='utf-8') as f:
         data = json.load(f)
     return data.get('estados', data)
+
+
+def _indice_correcciones(correcciones):
+    """Indexa por clave normalizada y separa las claves mal formadas."""
+    indice, malformadas = {}, []
+    for clave, valor in correcciones.items():
+        partes = partir_clave(clave)
+        if partes is None:
+            malformadas.append(clave)
+            continue
+        indice[partes] = (clave, valor)
+    return indice, malformadas
+
+
+def _resolver_celdas(portal_id, registros, dudas, indice, usadas):
+    """Aplica correcciones a valores impresos y celdas manuscritas."""
+    celdas, sin_corregir = {}, 0
+    for (planta, codigo, viv), valor in registros.items():
+        clave = (portal_id, planta, codigo, viv)
+        normalizada = (portal_id, planta, codigo, normalizar_unidad(viv))
+        if normalizada in indice:
+            usadas.add(normalizada)
+            celdas[clave] = indice[normalizada][1]
+        else:
+            celdas[clave] = valor
+    for (planta, codigo, viv) in dudas:
+        clave = (portal_id, planta, codigo, viv)
+        normalizada = (portal_id, planta, codigo, normalizar_unidad(viv))
+        if normalizada in indice:
+            usadas.add(normalizada)
+            celdas[clave] = indice[normalizada][1]
+        else:
+            celdas[clave] = ''
+            sin_corregir += 1
+    return celdas, sin_corregir
 
 
 def _planta_id(texto):
@@ -165,6 +202,8 @@ def parsear_pdf(ruta_pdf, identificar_portal, identificar_tajo, nombre_log=''):
         return {}
 
     correcciones = cargar_correcciones(ruta_pdf)
+    indice, malformadas = _indice_correcciones(correcciones)
+    usadas = set()
     registros_dict = {}
     dudas_sin_corregir = 0
     with pdfplumber.open(ruta_pdf) as pdf:
@@ -175,26 +214,52 @@ def parsear_pdf(ruta_pdf, identificar_portal, identificar_tajo, nombre_log=''):
             portal_id, registros, dudas = _parsear_tabla_pagina(tabla, identificar_portal, identificar_tajo)
             if portal_id is None:
                 continue
-            for (planta, codigo, viv), valor in registros.items():
-                clave = (portal_id, planta, codigo, viv)
-                llave_txt = '__'.join(clave)
-                # correcciones pueden sobreescribir valores digitales (p.ej. M→X, X→'')
-                registros_dict[clave] = correcciones.get(llave_txt, valor)
-            for (planta, codigo, viv) in dudas:
-                clave = (portal_id, planta, codigo, viv)
-                llave_txt = '__'.join(clave)
-                if llave_txt in correcciones:
-                    registros_dict[clave] = correcciones[llave_txt]
-                else:
-                    registros_dict[clave] = ''  # sin texto y sin corrección -> pendiente
-                    dudas_sin_corregir += 1
+            celdas, sin_corregir = _resolver_celdas(
+                portal_id, registros, dudas, indice, usadas)
+            registros_dict.update(celdas)
+            dudas_sin_corregir += sin_corregir
 
-    if dudas_sin_corregir:
-        etiqueta = '[{}] '.format(nombre_log) if nombre_log else ''
-        print("  {}AVISO: {} celda(s) manuscrita(s) sin corrección en '{}' "
-              "-> se tratan como pendiente.".format(etiqueta, dudas_sin_corregir, os.path.basename(ruta_pdf)))
+    _avisar(
+        ruta_pdf,
+        nombre_log,
+        dudas_sin_corregir,
+        indice,
+        usadas,
+        malformadas,
+    )
 
     return registros_dict
+
+
+def _avisar(ruta_pdf, nombre_log, dudas_sin_corregir, indice, usadas,
+            malformadas):
+    """Hace visibles celdas pendientes, claves huérfanas y claves inválidas."""
+    etiqueta = '[{}] '.format(nombre_log) if nombre_log else ''
+    fichero = os.path.basename(ruta_pdf)
+
+    if dudas_sin_corregir:
+        print("  {}AVISO: {} celda(s) manuscrita(s) SIN corrección "
+              "transcrita en '{}' -> se tratan como pendiente.".format(
+                  etiqueta, dudas_sin_corregir, fichero))
+
+    huerfanas = sorted(indice[k] for k in indice if k not in usadas)
+    if huerfanas:
+        print("  {}AVISO: {} corrección(es) de '{}' no casan con ninguna "
+              "celda de la hoja; se reintentan sobre la ficha:".format(
+                  etiqueta, len(huerfanas), fichero))
+        for clave, valor in huerfanas[:10]:
+            print("      {} = {}".format(clave, valor))
+        if len(huerfanas) > 10:
+            print("      ... y {} más.".format(len(huerfanas) - 10))
+
+    if malformadas:
+        print("  {}AVISO: {} clave(s) de '{}' no tienen los 4 tramos "
+              "'portal__planta__tajo__unidad': {}".format(
+                  etiqueta,
+                  len(malformadas),
+                  fichero,
+                  ', '.join(sorted(malformadas)[:10]),
+              ))
 
 
 def _fecha_desde_nombre(fn):

@@ -34,77 +34,7 @@ import priorizador_trabajos  # noqa: E402
 import memoria_obra as mem  # noqa: E402
 import motor_informes       # noqa: E402
 import ficha_obra as fichas    # noqa: E402
-
-OBRAS = [
-    {
-        'id': 'gernika',
-        'nombre': '2025 GERNIKA 32V',
-        'subtitulo': 'Electricidad y telecomunicaciones · 1 bloque, 2 portales, 32 viviendas',
-        'adaptador': 'adaptador_gernika',
-        'carpeta_obra': '2025 GERNIKA 32V',
-        'bloque_revision': 'Bloque 1',
-        'materiales_rel': os.path.join('REVISIONES', 'hoja de entrega de materiales GERNIKA.xlsx'),
-    },
-    {
-        'id': 'mungia',
-        'nombre': '2026 MUNGIA ACR NEINOR',
-        'subtitulo': 'Electricidad y telecomunicaciones · Edificios ZR1.1 / ZR1.2',
-        'adaptador': 'adaptador_mungia',
-        'carpeta_obra': '2026 MUNGIA ACR NEINOR',
-        'bloque_revision': 'ZR1',
-        'materiales_rel': os.path.join('REVISIONES', 'hoja de entrega de materiales MUNGIA.xlsx'),
-    },
-    {
-        'id': 'bolueta',
-        'nombre': '2026 BOLUETA ACR',
-        'subtitulo': 'Electricidad y telecomunicaciones · Portal único, B+23',
-        'adaptador': 'adaptador_bolueta',
-        'carpeta_obra': '2026 BOLUETA ACR',
-        'bloque_revision': 'Bolueta',
-        'alias_portales_revision': {'BOLUETA': 'Portal único'},
-        'materiales_rel': os.path.join('REVISIONES', 'hoja de entrega de materiales BOLUETA.xlsx'),
-    },
-    {
-        'id': 'obisporueta',
-        'nombre': '2025 BILBAO OBISPO ORUETA',
-        'subtitulo': 'Electricidad y telecomunicaciones · Obispo Orueta, 2 - Bilbao',
-        'adaptador': 'adaptador_obisporueta',
-        'carpeta_obra': '2025 BILBAO OBISPO ORUETA',
-        'bloque_revision': 'Obispo Orueta 2',
-        'alias_portales_revision': {'Obispo Orueta 2': 'Portal único'},
-        'materiales_rel': os.path.join('REVISIONES SAGARDE', 'hoja de entrega de materiales OBISPO ORUETA.xlsx'),
-    },
-    {
-        'id': 'gorliz',
-        'nombre': '2026 GORLIZ HOSPITAL',
-        'subtitulo': 'Electricidad y telecomunicaciones · Hospital de Gorliz',
-        'adaptador': 'adaptador_gorliz',
-        'carpeta_obra': '2026 GORLIZ HOSPITAL',
-        'bloque_revision': 'Hospital de Gorliz',
-        # Aun sin revisiones (INFORME SAGARDE IA/revision_gorliz_DDMMAAAA.json no existe todavia).
-        # El adaptador ya soporta esto: devuelve historial vacio sin romper el pipeline.
-        # Ruta de materiales anticipada; aun no existe el fichero en la obra.
-        'materiales_rel': os.path.join('REVISIONES', 'hoja de entrega de materiales GORLIZ.xlsx'),
-    },
-    # Añadir aquí la siguiente obra cuando tenga su adaptador.
-    # --- OBRAS CERRADAS (desactivadas — carpetas en SAGARDE (OLD)\OBRAS CERRADAS\) ---
-    # {
-    #     'id': 'zorrozaure',
-    #     'nombre': '2024 BILBAO 88V ZORROZAURE',
-    #     'subtitulo': 'Electricidad y telecomunicaciones · Bloques A1 / A2 (snapshot único, sin serie temporal)',
-    #     'adaptador': 'adaptador_zorrozaure',
-    #     'carpeta_obra': '2024 BILBAO 88V ZORROZAURE',
-    #     'materiales_rel': os.path.join('hoja de entrega de materiales ZORROZAURE.xlsx'),
-    # },
-    # {
-    #     'id': 'egurrola',
-    #     'nombre': '2025 GETXO 12V EGURROLA',
-    #     'subtitulo': 'Electricidad y telecomunicaciones · 12 viviendas, C/ Artibai',
-    #     'adaptador': 'adaptador_egurrola',
-    #     'carpeta_obra': '2025 GETXO 12V EGURROLA',
-    #     'materiales_rel': os.path.join('hoja de entrega de materiales EGURROLA.xlsx'),
-    # },
-]
+from registro_obras import OBRAS  # noqa: E402
 
 
 def _slug(valor):
@@ -136,16 +66,64 @@ def _correcciones_mas_recientes(carpeta_abs):
     directo que hay, y el que mas veces se ha perdido por no casar la clave."""
     import glob
     patron = os.path.join(carpeta_abs, 'REVISIONES', '*.correcciones.json')
-    ficheros = glob.glob(patron) or glob.glob(
+    ficheros = glob.glob(patron) + glob.glob(
         os.path.join(carpeta_abs, 'REVISIONES SAGARDE', '*.correcciones.json'))
     if not ficheros:
         return {}
 
     def fecha(ruta):
         m = re.search(r'(\d{2})(\d{2})(\d{4})', os.path.basename(ruta))
-        return (m.group(3), m.group(2), m.group(1)) if m else ('0000', '00', '00')
+        if not m:
+            return None
+        texto = ''.join(m.groups())
+        try:
+            return datetime.strptime(texto, '%d%m%Y').date()
+        except ValueError:
+            return None
 
-    ruta_elegida = max(ficheros, key=fecha)
+    fechados = [(fecha(ruta), ruta) for ruta in ficheros]
+    malformados = sorted(
+        os.path.basename(ruta) for fecha_archivo, ruta in fechados
+        if fecha_archivo is None
+    )
+    if malformados:
+        print("  [AVISO FICHA] se ignoran correcciones con fecha ausente o "
+              "inválida: " + ', '.join(malformados))
+
+    validos = [(fecha_archivo, ruta) for fecha_archivo, ruta in fechados
+               if fecha_archivo is not None]
+    if not validos:
+        return {}
+
+    fecha_reciente = max(fecha_archivo for fecha_archivo, _ in validos)
+    candidatos = [ruta for fecha_archivo, ruta in validos
+                  if fecha_archivo == fecha_reciente]
+
+    def desempate(ruta):
+        try:
+            mtime = os.stat(ruta).st_mtime_ns
+        except OSError:
+            mtime = -1
+        return (
+            mtime,
+            os.path.basename(ruta).casefold(),
+            os.path.normcase(os.path.abspath(ruta)),
+        )
+
+    ruta_elegida = max(candidatos, key=desempate)
+    if len(candidatos) > 1:
+        nombres = ', '.join(sorted(os.path.basename(r) for r in candidatos))
+        print(
+            "  [AVISO FICHA] hay {} ficheros de correcciones con la misma "
+            "fecha {}: {}. Se usa '{}' por tener la modificación más "
+            "reciente (nombre como desempate).".format(
+                len(candidatos),
+                fecha_reciente.strftime('%d/%m/%Y'),
+                nombres,
+                os.path.basename(ruta_elegida),
+            )
+        )
+
     nombre = os.path.basename(ruta_elegida)
     try:
         with open(ruta_elegida, encoding='utf-8') as f:
@@ -945,7 +923,13 @@ def main(hacer_pdf=True):
 
         try:
             import generar_informe_ejecutivo
-            generar_informe_ejecutivo.generar_para_obra(obra['nombre'])
+            # Usa exactamente el mismo historial que panel, memoria, KPI y
+            # prioridades. Si existe ficha_obra.json, ``historial`` ya lleva
+            # sus correcciones y no debe releerse el PDF crudo.
+            generar_informe_ejecutivo.generar_para_obra(
+                obra['nombre'],
+                historial=historial,
+            )
         except Exception as e_exec:
             print(f"  [AVISO INFORME EJECUTIVO] {e_exec}")
 

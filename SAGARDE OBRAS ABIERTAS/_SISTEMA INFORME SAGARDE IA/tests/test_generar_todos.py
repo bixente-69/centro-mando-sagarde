@@ -18,12 +18,14 @@ import sys
 import tempfile
 import unittest
 from contextlib import redirect_stdout
+from unittest.mock import patch
 
 _SISTEMA_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, _SISTEMA_DIR)
 sys.path.insert(0, os.path.join(_SISTEMA_DIR, 'adaptadores'))
 
 import generar_todos as gt
+import generar_informe_ejecutivo as gie
 
 # El propio directorio de pruebas, para que `import fixtures` funcione tanto
 # bajo `discover -s tests` (que ya lo anade) como al invocar una clase por
@@ -73,6 +75,37 @@ class TestCorreccionesMasRecientes(unittest.TestCase):
                         json.dumps({'estados': {'nuevo': 'M'}}))
         resultado = gt._correcciones_mas_recientes(self.carpeta)
         self.assertEqual(resultado, {'nuevo': 'M'})
+
+    def test_fecha_malformada_se_ignora_y_avisa(self):
+        self._escribir('REVISION SIN FECHA.pdf.correcciones.json',
+                        json.dumps({'estados': {'incorrecto': 'X'}}))
+        self._escribir('REVISION 27072026.pdf.correcciones.json',
+                        json.dumps({'estados': {'correcto': 'M'}}))
+        salida = io.StringIO()
+        with redirect_stdout(salida):
+            resultado = gt._correcciones_mas_recientes(self.carpeta)
+        self.assertEqual(resultado, {'correcto': 'M'})
+        self.assertIn('[AVISO FICHA]', salida.getvalue())
+        self.assertIn('SIN FECHA', salida.getvalue())
+
+    def test_empate_de_fecha_avisa_y_elige_el_mtime_mas_reciente(self):
+        antiguo = self._escribir(
+            'REVISION A 27072026.pdf.correcciones.json',
+            json.dumps({'estados': {'version': 'M'}}),
+        )
+        nuevo = self._escribir(
+            'REVISION B 27072026.pdf.correcciones.json',
+            json.dumps({'estados': {'version': 'X'}}),
+        )
+        os.utime(antiguo, (1000, 1000))
+        os.utime(nuevo, (2000, 2000))
+        salida = io.StringIO()
+        with redirect_stdout(salida):
+            resultado = gt._correcciones_mas_recientes(self.carpeta)
+        self.assertEqual(resultado, {'version': 'X'})
+        self.assertIn('[AVISO FICHA]', salida.getvalue())
+        self.assertIn('misma fecha', salida.getvalue())
+        self.assertIn(os.path.basename(nuevo), salida.getvalue())
 
     def test_json_sintacticamente_invalido_avisa_y_no_se_cae(self):
         self._escribir('REVISION 27072026.pdf.correcciones.json',
@@ -237,6 +270,38 @@ class TestContratoFuenteEstructura(unittest.TestCase):
             fixtures.prioridades([]))
         self.assertIsNotNone(registro)
         self.assertEqual(sorted(registro['estados'].values()), ['X'])
+
+
+class TestFuenteInformeEjecutivo(unittest.TestCase):
+    """El PDF debe usar el historial ya corregido por la ficha de obra."""
+
+    def test_historial_validado_evitas_releer_el_adaptador(self):
+        nombre_obra = '2026 MUNGIA ACR NEINOR'
+        snapshot_validado = [{
+            'task': 'Tubeado',
+            'floor': '1',
+            'building': 'ZR1.1',
+            'unit': 'A2',
+            'status': 'M',
+        }]
+        historial_validado = [('28/07/2026', snapshot_validado)]
+
+        with patch.object(
+            gie.ADAPTADORES[nombre_obra],
+            'cargar_historial',
+            side_effect=AssertionError('no debe releer la hoja original'),
+        ), patch.object(gie, 'generar_pdf_ejecutivo') as generar_pdf:
+            gie.generar_para_obra(
+                nombre_obra,
+                historial=historial_validado,
+            )
+
+        generar_pdf.assert_called_once()
+        self.assertIs(generar_pdf.call_args.args[2], snapshot_validado)
+        self.assertIs(
+            generar_pdf.call_args.kwargs['historial'],
+            historial_validado,
+        )
 
 
 if __name__ == '__main__':

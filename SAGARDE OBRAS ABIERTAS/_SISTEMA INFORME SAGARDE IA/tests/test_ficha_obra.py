@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+import io
 import os
 import sys
 import unittest
+from contextlib import redirect_stdout
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
@@ -586,6 +588,41 @@ class TestSnapshotDesdeFicha(unittest.TestCase):
     def test_una_ficha_sin_estados_devuelve_lista_vacia(self):
         ficha = fixtures.ficha_minima()
         self.assertEqual(ficha_obra.snapshot_desde_ficha(ficha), [])
+
+
+class TestOrdenRevisiones(unittest.TestCase):
+
+    def test_fechas_malformadas_no_colapsan_y_avisan(self):
+        revisiones = [
+            {'id': 'rev_z', 'fecha': 'sin fecha Z'},
+            {'id': 'rev_a', 'fecha': 'sin fecha A'},
+            {'id': 'rev_ok', 'fecha': '27/07/2026'},
+        ]
+        salida = io.StringIO()
+        with redirect_stdout(salida):
+            ficha_obra._ordenar_revisiones(revisiones)
+        self.assertEqual(
+            [r['id'] for r in revisiones],
+            ['rev_a', 'rev_z', 'rev_ok'],
+        )
+        self.assertIn('[AVISO FICHA]', salida.getvalue())
+        self.assertIn('sin fecha A', salida.getvalue())
+        self.assertNotEqual(
+            ficha_obra._orden_fecha('sin fecha A'),
+            ficha_obra._orden_fecha('sin fecha Z'),
+        )
+
+    def test_fechas_duplicadas_avisan_y_se_ordenan_por_id(self):
+        revisiones = [
+            {'id': 'rev_b', 'fecha': '27/07/2026'},
+            {'id': 'rev_a', 'fecha': '27/07/2026'},
+        ]
+        salida = io.StringIO()
+        with redirect_stdout(salida):
+            ficha_obra._ordenar_revisiones(revisiones)
+        self.assertEqual([r['id'] for r in revisiones], ['rev_a', 'rev_b'])
+        self.assertIn('[AVISO FICHA]', salida.getvalue())
+        self.assertIn('duplicada', salida.getvalue())
 
 
 if __name__ == '__main__':

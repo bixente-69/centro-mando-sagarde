@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 """
-generar_informe_ejecutivo.py — Generador de Informes Ejecutivos de Obra (1 Página A4)
+generar_informe_ejecutivo.py — Generador de Informes Ejecutivos A4 de Obra
 
-Genera un resumen ejecutivo en PDF vectorial de 1 página A4 ajustado milimétricamente
-con la identidad corporativa de Montajes Eléctricos Sagarde, S.L.
+Genera un PDF vectorial con una página A4 de resumen general y, cuando la obra
+tiene varios portales o bloques, una página A4 adicional por cada uno, con la
+identidad corporativa de Montajes Eléctricos Sagarde, S.L.
 
 Uso:
     python _MOTOR_SAGARDE/scripts/generar_informe_ejecutivo.py --obra "2026 BOLUETA ACR"
@@ -13,6 +14,7 @@ from __future__ import annotations
 from datetime import datetime
 from pathlib import Path
 import argparse
+import importlib
 import json
 import re
 import sys
@@ -37,33 +39,23 @@ if str(MOTOR_IA_DIR) not in sys.path:
     sys.path.append(str(MOTOR_IA_DIR))
 
 import motor_informes
-from adaptadores import (
-    adaptador_bolueta,
-    adaptador_gernika,
-    adaptador_mungia,
-    adaptador_zorrozaure,
-    adaptador_obisporueta,
-    adaptador_gorliz,
-    adaptador_egurrola,
-)
+from registro_obras import OBRAS, resolver_obra
 
-ADAPTADORES = {
-    "2026 BOLUETA ACR": adaptador_bolueta,
-    "BOLUETA": adaptador_bolueta,
-    "2025 GERNIKA 32V": adaptador_gernika,
-    "GERNIKA": adaptador_gernika,
-    "2026 MUNGIA ACR NEINOR": adaptador_mungia,
-    "MUNGIA": adaptador_mungia,
-    "2025 BILBAO OBISPO ORUETA": adaptador_obisporueta,
-    "OBISPO ORUETA": adaptador_obisporueta,
-    "2026 GORLIZ HOSPITAL": adaptador_gorliz,
-    "GORLIZ": adaptador_gorliz,
-}
-# NOTA (25/07/2026): este diccionario es un SEGUNDO registro de obras,
-# independiente del OBRAS de generar_todos.py. Dar de alta una obra ahí
-# no la da de alta aquí (y viceversa) — hay que tocar los dos ficheros.
-# Ver auditoria del 25/07/2026: registro duplicado detectado como punto
-# fragil del sistema.
+
+def _cargar_adaptadores():
+    """Deriva nombre/alias -> módulo desde el registro único de obras."""
+    resultado = {}
+    for obra in OBRAS:
+        modulo = importlib.import_module(
+            f"adaptadores.{obra['adaptador']}")
+        for nombre in [obra['nombre'], *obra.get('aliases', [])]:
+            resultado[nombre] = modulo
+    return resultado
+
+
+# Compatibilidad con las llamadas y pruebas existentes. El mapa ya no se
+# mantiene a mano: nace siempre de registro_obras.OBRAS.
+ADAPTADORES = _cargar_adaptadores()
 
 # ─── Identidad Visual Sagarde ──────────────────────────────────────────────
 PAGE_W, PAGE_H = A4
@@ -105,7 +97,7 @@ def _make_mini_bar(pct: float, w_mm: float = 34) -> Table:
     return t
 
 
-# ─── Generación de Bloque de 1 Página A4 ──────────────────────────────────
+# ─── Generación de cada bloque de 1 página A4 ─────────────────────────────
 def _construir_bloque_ejecutivo(story: list, nombre_obra: str, sub_titulo: str, fecha_rev: str, snapshot: list[dict], content_w: float) -> None:
     kpis = motor_informes.kpis_snapshot(snapshot)
     bloqueos = motor_informes.detectar_bloqueos(snapshot)
@@ -362,28 +354,44 @@ def generar_pdf_ejecutivo(nombre_obra: str, fecha_rev: str, snapshot: list[dict]
 
 
 # ─── Entry Point ──────────────────────────────────────────────────────────
-def generar_para_obra(nombre_obra: str) -> Path | None:
-    adaptador = ADAPTADORES.get(nombre_obra)
-    if not adaptador:
-        print(f"[ERROR] No hay adaptador registrado para la obra '{nombre_obra}'.")
+def generar_para_obra(
+    nombre_obra: str,
+    historial: list | None = None,
+) -> Path | None:
+    obra = resolver_obra(nombre_obra)
+    if obra is None:
+        print(f"[ERROR] No hay obra registrada con el nombre '{nombre_obra}'.")
         return None
+    nombre_oficial = obra['nombre']
 
-    print(f"[1/2] Cargando historial de revisiones para '{nombre_obra}'...")
-    historial = adaptador.cargar_historial()
+    if historial is None:
+        adaptador = ADAPTADORES[nombre_oficial]
+        print(f"[1/2] Cargando historial de revisiones para '{nombre_oficial}'...")
+        historial = adaptador.cargar_historial()
+    else:
+        print(f"[1/2] Usando el historial validado por la ficha para '{nombre_oficial}'...")
+
     if not historial:
-        print(f"[ERROR] No se encontraron revisiones para '{nombre_obra}'.")
+        print(f"[ERROR] No se encontraron revisiones para '{nombre_oficial}'.")
         return None
 
     fecha_rev, snapshot = historial[-1]
     print(f"      Ultima revision: {fecha_rev} ({len(snapshot)} registros)")
 
     # Ruta de salida PDF
-    carpeta_obra = OBRAS_DIR / nombre_obra / "INFORME SAGARDE IA"
+    carpeta_obra = OBRAS_DIR / obra['carpeta_obra'] / "INFORME SAGARDE IA"
     carpeta_obra.mkdir(parents=True, exist_ok=True)
-    output_pdf = carpeta_obra / f"INFORME_EJECUTIVO_{nombre_obra.replace(' ', '_')}.pdf"
+    output_pdf = carpeta_obra / (
+        f"INFORME_EJECUTIVO_{nombre_oficial.replace(' ', '_')}.pdf")
 
-    print(f"[2/2] Generando PDF Ejecutivo de 1 pagina A4 en: {output_pdf}...")
-    generar_pdf_ejecutivo(nombre_obra, fecha_rev, snapshot, output_pdf, historial=historial)
+    print(f"[2/2] Generando PDF Ejecutivo A4 en: {output_pdf}...")
+    generar_pdf_ejecutivo(
+        nombre_oficial,
+        fecha_rev,
+        snapshot,
+        output_pdf,
+        historial=historial,
+    )
     print(f"[OK] Informe ejecutivo creado con exito: {output_pdf}")
     return output_pdf
 

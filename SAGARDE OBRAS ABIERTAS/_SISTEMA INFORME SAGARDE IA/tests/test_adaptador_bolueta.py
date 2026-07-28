@@ -73,5 +73,58 @@ class TestBandasDeSeccionNoSonTajos(unittest.TestCase):
                 )
 
 
+class TestPintadoHistoricoEspecializado(unittest.TestCase):
+    """El antiguo Pintado se traduce a las dos manos que agrupaba."""
+
+    def _estados_expandidos(self, estado):
+        registro = {
+            'task': 'Pintado',
+            'floor': '1',
+            'building': 'BOLUETA',
+            'unit': 'A',
+            'status': estado,
+        }
+        return [
+            (r['task'], r['status'])
+            for r in ab._especializar_pintado_historico([registro])
+        ]
+
+    def test_pendiente_deja_ambas_manos_pendientes(self):
+        self.assertEqual(
+            self._estados_expandidos(''),
+            [('Pintura primera mano', ''), ('Pintura segunda mano', '')],
+        )
+
+    def test_iniciado_corresponde_a_primera_mano_iniciada(self):
+        self.assertEqual(
+            self._estados_expandidos('/'),
+            [('Pintura primera mano', '/'), ('Pintura segunda mano', '')],
+        )
+
+    def test_m_corresponde_a_primera_mano_terminada(self):
+        self.assertEqual(
+            self._estados_expandidos('M'),
+            [('Pintura primera mano', 'X'), ('Pintura segunda mano', '')],
+        )
+
+    def test_x_corresponde_a_las_dos_manos_terminadas(self):
+        self.assertEqual(
+            self._estados_expandidos('X'),
+            [('Pintura primera mano', 'X'), ('Pintura segunda mano', 'X')],
+        )
+
+    def test_otro_tajo_no_se_modifica(self):
+        registro = {
+            'task': 'Mecanizado',
+            'floor': '1',
+            'building': 'BOLUETA',
+            'unit': 'A',
+            'status': 'M',
+        }
+        resultado = ab._especializar_pintado_historico([registro])
+        self.assertEqual(resultado, [registro])
+        self.assertIsNot(resultado[0], registro)
+
+
 if __name__ == '__main__':
     unittest.main()

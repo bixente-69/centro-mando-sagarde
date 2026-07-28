@@ -9,7 +9,9 @@ MUY DISTINTO al de Mungia:
     documentacion oficial (OCA / planos de arquitectura): "Obispo Orueta, 2,
     Bilbao". No se ha encontrado ningun indicio de mas de un portal/bloque
     en las hojas de revision ni en los planos revisados, asi que se usa un
-    unico valor fijo de 'building'.
+    unico valor fijo de 'building'. Es un HOTEL: para aplicar el modelo
+    comun del sistema, cada habitacion se trata como una vivienda individual
+    y los pasillos como zonas comunes.
 
   - Cada TABLA del .docx = UNA PLANTA COMPLETA (no un bloque de 2 plantas
     como en Mungia). La fila 0 de cada tabla trae, en una sola celda fusil
@@ -46,28 +48,26 @@ MUY DISTINTO al de Mungia:
     aparece ningun '/' en ningun fichero de esta obra (se deja mapeado en
     el codigo por si apareciera en el futuro).
 
-    Se han encontrado, ademas, DOS EXCEPCIONES puntuales, sin ninguna hoja
-    de leyenda en la carpeta de la obra que las explique (se ha buscado
-    "gemini/leyenda/prompt/instruccion" y no existe nada equivalente al
-    "gemini prompt tabla.docx" de Mungia). Se han mapeado por INFERENCIA
-    propia, NO por confirmacion documental, y se avisa por consola cada
-    vez que se cargan revisiones con estas casillas:
+    Se han encontrado, ademas, DOS EXCEPCIONES puntuales. No existe una hoja
+    de leyenda en la carpeta, pero su interpretacion operativa fue confirmada
+    por el encargado el 28/07/2026:
 
       * Tareas "Pintura Hab" y "Pintura Pasillos": usan una escala propia
         de "manos de pintura" con valores '1' y '2', y tambien 'X'. Se ha
         comprobado en el corpus completo que conviven '1', '2' y 'X' para
         la MISMA tarea en la MISMA revision (p.ej. 24/09/2025: Pintura Hab
-        tiene 24x'1', 26x'2' y 1x'X'), lo que sugiere una progresion
-        logica 1ª mano -> 2ª mano -> terminado. INFERENCIA aplicada:
-        '1' -> '/' (iniciado <50%), '2' -> 'M' (avanzado >50%). Afecta a
+        tiene 24x'1', 26x'2' y 1x'X'). Confirmado: 1 = primera mano,
+        2 = segunda mano y X = tajo terminado. Para unificarlo con la escala
+        comun se aplica '1' -> '/' y '2' -> 'M'. Afecta a
         un volumen relevante de celdas (~113 en la ultima revision), por
         lo que dejarlas sin mapear (como "vacio") distorsionaria bastante
         el % de avance a la baja.
       * Tarea "Mecanismos WC": aparecen puntualmente (8 celdas en todo el
-        corpus) los valores 'T' y 'C' conviviendo con 'X'. No hay indicio
-        claro de cual va antes/despues, asi que INFERENCIA conservadora:
-        ambos -> '/' (iniciado <50%), es decir "hay algo hecho pero no se
-        da por completo" sin comprometerse a un % concreto.
+        corpus) los valores 'T' y 'C' conviviendo con 'X'. Se ha confirmado
+        que uno significa iniciado y el otro M (>50 %), pero no cual es cual.
+        Ambos permanecen sin cambios entre 15/09/2025 y 24/09/2025, por lo
+        que el historial tampoco permite ordenarlos. Se aplica el criterio
+        conservador: ambos -> '/', para no sobrevalorar ninguna celda.
 
     Cualquier OTRO simbolo no reconocido (fuera de estos dos casos ya
     documentados) se deja pasar tal cual en 'status' para no perder
@@ -283,8 +283,8 @@ RE_HEADER_PLANTA = re.compile(r'^PLANTA\s+(-?\d+|BAJA)\s*(.*)$', re.IGNORECASE)
 
 _SIMBOLOS_DESCONOCIDOS = set()
 
-# Ver docstring del modulo: dos excepciones de codificacion de estado
-# detectadas e inferidas (sin leyenda documental que las confirme).
+# Ver docstring del modulo: escalas historicas confirmadas por el encargado.
+# T/C se mantienen ambos en "/" porque no se pudo confirmar cual era M.
 _TAREAS_PINTURA = {'Pintura Hab', 'Pintura Pasillos'}
 _MAPEO_PINTURA = {'1': '/', '2': 'M'}
 _TAREA_MECANISMOS_WC = 'Mecanismos WC'
@@ -384,7 +384,7 @@ def _normalizar_estado(tarea, v):
         return _MAPEO_PINTURA[v]
     if tarea == _TAREA_MECANISMOS_WC and v in _MAPEO_MECANISMOS_WC:
         return _MAPEO_MECANISMOS_WC[v]
-    # Simbolo no reconocido y no cubierto por las inferencias documentadas:
+    # Simbolo no reconocido y no cubierto por los mapeos documentados:
     # se deja tal cual para no perder informacion, pero se avisa por
     # consola. El motor lo contara como "vacio" al no ser 'X'/'M'/'/'.
     _SIMBOLOS_DESCONOCIDOS.add((tarea, v))

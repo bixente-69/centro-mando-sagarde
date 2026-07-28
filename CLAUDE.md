@@ -50,19 +50,19 @@ produce efecto observable.
 x = terminadas   m = más del 50%   slash = iniciadas   vacio = pendientes
 ```
 
-**Los KPIs no salen de la ficha.** `pct_ponderado` se calcula desde
-`prioridades_trabajos.json` (construido por el adaptador/lector) **antes** de
-que `ficha_obra.json` absorba nada. Una mitigación aguas abajo arregla la
-ficha pero no los números publicados. Al juzgar si un fallo "ya está
-mitigado", mirar si la mitigación está aguas arriba o abajo del cálculo.
+**Los KPI salen del historial validado por la ficha cuando existe.** El flujo
+vigente es adaptador → historial crudo → ficha/correcciones → historial
+validado. Memoria, prioridades, KPI, panel e informe ejecutivo leen ese mismo
+historial. En obras sin `ficha_obra.json`, se usa la última hoja del adaptador.
+Comprobar siempre que todos los consumidores muestran el mismo desglose.
 
 **Probar por mutación.** Romper el código a propósito y comprobar que la
 prueba se entera. Hoy eso destapó 3 pruebas que parecían verificar algo y no
 verificaban nada.
 
 **Antes de dar nada por bueno:**
-- Que las obras no implicadas no se mueven (Mungia 80.1, Gernika 76.3,
-  Bolueta 36.1, Obispo Orueta 80.0). Si se mueven, hay efecto colateral.
+- Que las obras no implicadas no se mueven (Mungia 79.8, Gernika 76.3,
+  Bolueta 41.7, Obispo Orueta 80.0). Si se mueven, hay efecto colateral.
 - Reportar el antes/después a Bixente. Aplicar en silencio una corrección que
   mueve cifras es repetir el problema desde el otro lado.
 
@@ -185,6 +185,14 @@ primera: ha ido y ha visto que faltaba algo. Solo la **ausencia** de marca
 ---
 
 ## 8. Memoria
+
+**Memoria funcional y técnica vigente (28/07/2026):**
+`docs/2026-07-28-memoria-diccionario-tajos-alertas-informes.md`.
+Contiene el diccionario confirmado, las traducciones históricas, la
+especialización de tajos, la corrección de falsas alertas y el contrato del
+informe ejecutivo. Leerla antes de volver a preguntar por esos asuntos.
+
+**Revisiones de campo a memoria:** cuando el usuario entregue un PDF corregido a boli, aplicar el flujo completo de `_MOTOR_SAGARDE/CLAUDE.md` y la skill local `sagarde-revision`: validar trazos negros y corrector blanco, crear sidecar y PDF oficial, incorporar la revisión a ficha/memoria, y comprobar por separado el registro del generador. No cerrar con fechas o recuentos discordantes.
 
 Guardar en memoria: reglas de interpretación de hojas, estructura de cada
 obra, nombres de tajos, criterios de cálculo, dependencias entre gremios,

@@ -93,12 +93,12 @@ uno equivalente (para no romper la continuidad de memoria_obra.py). Casos
 notables:
   - El Word antiguo trackeaba pintura como una sola tarea "Pintado"; la
     hoja PDF nueva la separa en "Pintura primera mano" / "Pintura segunda
-    mano" / "Pintura zzcc". Esto NO genera dudas falsas: CATALOGO_TAJOS.json
-    ya declara "Pintado" como alias de "pintura_primera", así que el
-    priorizador (que resuelve por id de catálogo, no por texto literal) ve
-    continuidad real. "Pintura segunda mano"/"Pintura zzcc" son tajos
-    nuevos que Bolueta no trackeaba antes (progreso empieza desde cero, no
-    es un error).
+    mano" / "Pintura zzcc". El significado histórico ha sido confirmado:
+    "/" era pintura iniciada, "M" era la primera mano terminada (la mitad
+    del tajo conjunto) y "X" era la segunda mano terminada. Por eso los
+    registros Word se especializan explícitamente en las dos manos antes
+    de entregarlos al motor: / -> primera /; M -> primera X; X -> ambas X.
+    "Pintura zzcc" sí es un tajo nuevo que el Word antiguo no cubría.
   - "Escaleras agujeros ilum" (ya en el historial) es el mismo tajo que el
     PDF imprime como "Agujeros de iluminación en ZZCC" — mismo id de
     catálogo, se usa el nombre antiguo para mantener continuidad.
@@ -361,6 +361,37 @@ def _parsear_tabla(ruta):
     return registros
 
 
+def _especializar_pintado_historico(registros):
+    """Desdobla el antiguo tajo conjunto ``Pintado`` en sus dos manos.
+
+    Criterio confirmado por el encargado:
+      - vacío: ninguna mano iniciada;
+      - /: primera mano iniciada;
+      - M: primera mano terminada;
+      - X: primera y segunda mano terminadas.
+
+    Las ubicaciones y el resto de tajos se conservan sin cambios. Un símbolo
+    ajeno al diccionario histórico tampoco se interpreta aquí.
+    """
+    estados = {
+        '': ('', ''),
+        '/': ('/', ''),
+        'M': ('X', ''),
+        'X': ('X', 'X'),
+    }
+    resultado = []
+    for registro in registros:
+        base = dict(registro)
+        if base.get('task') != 'Pintado' or base.get('status') not in estados:
+            resultado.append(base)
+            continue
+        estado_primera, estado_segunda = estados[base['status']]
+        primera = dict(base, task='Pintura primera mano', status=estado_primera)
+        segunda = dict(base, task='Pintura segunda mano', status=estado_segunda)
+        resultado.extend((primera, segunda))
+    return resultado
+
+
 def cargar_historial():
     if not os.path.isdir(CARPETA_REVISIONES):
         raise FileNotFoundError(f"No se encuentra la carpeta de revisiones: {CARPETA_REVISIONES}")
@@ -383,7 +414,7 @@ def cargar_historial():
     historial_docx = []
     for clave, display, fn in archivos:
         ruta = os.path.join(CARPETA_REVISIONES, fn)
-        registros = _parsear_tabla(ruta)
+        registros = _especializar_pintado_historico(_parsear_tabla(ruta))
         if registros:
             historial_docx.append((clave, display, registros))
 

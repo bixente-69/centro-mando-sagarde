@@ -9,7 +9,7 @@ El usuario es el gestor/técnico que supervisa el avance de cada obra.
 
 | Skill | Cuándo usarlo |
 |-------|--------------|
-| `/sagarde-actualizar` | Refrescar KPIs del Centro de Mando tras cualquier cambio |
+| `/sagarde-actualizar` | Actualizar una obra, el generador o el portal con alcance controlado |
 | `/sagarde-revision` | Crear nueva hoja de revisión para una obra |
 | `/sagarde-nueva-obra` | Configurar el entorno digital de una nueva obra |
 
@@ -31,7 +31,10 @@ lector_hoja_tajos_pdf.py / lector_hoja_tajos_html.py  →  motores GENÉRICOS de
        ↓
 adaptador_{id}.py  →  historial normalizado [(fecha, [registros]), ...]
        ↓
-generar_todos.py  →  resumen_obras.json + panel.html (por obra)
+ficha_obra.json + correcciones (cuando existen) → historial validado
+       ↓
+generar_todos.py  →  memoria + prioridades + KPI + panel + informe ejecutivo
+                     desde el MISMO historial validado
        ↓
 sagarde_portal.py  →  index.html (Centro de Mando local)
        ↓
@@ -68,12 +71,26 @@ informe → auditor), tiene que cumplir:
    adaptador (ver `_normalizar_zr12_pb` en `adaptador_mungia.py` como
    ejemplo) — si no, el priorizador genera "dudas" falsas de tajos que
    "desaparecen".
-7. **Dar de alta la obra en los DOS registros si es la primera vez en este
-   formato**: la lista `OBRAS` de `generar_todos.py` Y el diccionario
-   `ADAPTADORES` de `_MOTOR_SAGARDE/scripts/generar_informe_ejecutivo.py`.
-   Son registros independientes — confirmado el 25/07/2026 con el caso de
-   Gorliz, que estaba en uno y no en el otro.
+7. **Dar de alta la obra en el registro único**:
+   `_SISTEMA INFORME SAGARDE IA/registro_obras.py`. `generar_todos.py` y
+   `generar_informe_ejecutivo.py` lo importan y comparten; no hay un segundo
+   diccionario que mantener.
 8. Ejecutar `generar_todos.py` para regenerar memoria/prioridades/panel/informe.
+
+### Flujo obligatorio: PDF corregido a boli hasta memoria y generador
+
+Cuando el usuario entregue una hoja corregida a mano, no basta con archivarla:
+
+1. Conservar el original y validar visualmente trazos negros, corrector blanco y fecha.
+2. Transcribir las marcas verificadas en `<pdf>.correcciones.json`; un blanco expl?cito tambi?n es un dato.
+3. Crear un PDF oficial limpio y comparar todas sus celdas contra `campo + sidecar`.
+4. Incorporarlo con `python _MOTOR_SAGARDE/scripts/regenerar_obra.py <obra_id>` para no reprocesar otras obras.
+5. Comparar ficha y PDF mediante IDs normalizados con `Catalogo.resolver()`: los aliases textuales pueden diferir sin que el tajo sea distinto.
+6. Confirmar en ficha `rev_DDMMAAAA`, celdas y cambios; en memoria/prioridades/panel, la fecha nueva. Blanco revisado pasa a `P`; fuera de alcance permanece `?`.
+7. Comprobar aparte `obras_revisiones.js`: actualizar memoria no actualiza el generador. Usar `generar_todos.py --solo-revisiones` para el registro local o `Actualizar_Sagarde.bat` solo con autorizaci?n de publicaci?n.
+8. Reportar recuentos `X`, `M`, `/`, blanco y KPIs antes/despu?s; no cerrar con fechas o recuentos discordantes.
+
+La detecci?n vectorial solo localiza candidatos. La clasificaci?n final de una marca manuscrita o blanca requiere inspecci?n visual.
 
 ### Receta: dar de alta el PDF en una obra nueva
 
@@ -109,7 +126,7 @@ patrón (funciones `_portal_id_pdf` y `_parsear_pdf`/`_cargar_historial_pdf`):
 6. Revisar si hace falta alguna normalización histórica como
    `_normalizar_zr12_pb` (punto 6 del protocolo arriba) al fusionar con
    revisiones antiguas de esa obra.
-7. Dar de alta la obra en los DOS registros (punto 7 del protocolo arriba).
+7. Dar de alta la obra en el registro único (punto 7 del protocolo arriba).
 
 ### Protocolo: cuándo un HTML de hoja de tajos es una revisión oficial válida
 
@@ -140,15 +157,13 @@ ejecutar nada). Antes de aceptar uno de estos ficheros como revisión oficial:
    `CATALOGO_TAJOS.json` (formato `snake_case`), pero unos pocos tajos usan
    códigos cortos "legacy" (`suelo-rad`, `techos-zzcc`, `pint-zzcc`
    confirmados hasta ahora) que NO están en el catálogo. Cada adaptador debe
-   mantener su propio `TAREA_ID_A_NOMBRE_HTML` (id → nombre EXACTO ya usado
-   por esa obra) para no romper continuidad en el priorizador — **no** usar
-   directamente el campo `"nombre"` de `CATALOGO_TAJOS.json`: se comprobó con
-   Gernika que ese nombre no siempre coincide con ningún alias del propio
-   catálogo (validar cada id con `priorizador_trabajos.Catalogo.resolver()`
-   antes de aceptarlo).
+   mantener su propio `TAREA_ID_A_NOMBRE_HTML` (id → nombre principal o alias
+   EXACTO del catálogo) para no romper continuidad en el priorizador. Desde
+   el motor 4.3, `Catalogo.resolver()` registra tanto `"nombre"` como los
+   alias confirmados; validar igualmente cada id antes de aceptarlo.
 6. **Comparar ubicaciones contra el historial anterior** (mismo criterio que
    el punto 6 del protocolo PDF) antes de aceptarlo como oficial.
-7. Dar de alta la obra en los DOS registros si es la primera vez (punto 7).
+7. Dar de alta la obra en el registro único si es la primera vez (punto 7).
 
 ## Rutas clave
 
@@ -161,16 +176,19 @@ ejecutar nada). Antes de aceptar uno de estos ficheros como revisión oficial:
 | Motor lectura PDF (genérico) | `_SISTEMA INFORME SAGARDE IA\lector_hoja_tajos_pdf.py` |
 | Motor lectura HTML tajos (genérico) | `_SISTEMA INFORME SAGARDE IA\lector_hoja_tajos_html.py` |
 | Motor | `_MOTOR_SAGARDE\` (este directorio) |
+| Memoria vigente | `docs\2026-07-28-memoria-diccionario-tajos-alertas-informes.md` |
 | Centro de Mando URL | https://bixente-69.github.io/centro-mando-sagarde/ |
 
 ## Reglas de trabajo
 
 1. **Cuidado al parsear HTML de revisión**: la mayoría de exports antiguos de la app generan las celdas `data-k`/`data-st` en runtime JS (no están en el HTML fuente) — para esos, usar el JSON companion. Pero desde 25/07/2026 la app también puede guardar el HTML YA renderizado con los valores embebidos de verdad (confirmado con Gernika) — en ese caso sí se puede leer con `lector_hoja_tajos_html.py` (regex sobre texto, sin ejecutar JS). Antes de asumir uno u otro, comprobar con `grep -o 'data-k="[^"]*"'`: si aparecen placeholders tipo `${k}` o `${esc(k)}`, es el caso viejo (usar JSON); si aparecen claves reales (`src_...` o `pN__...`), es el caso nuevo (usar el lector HTML).
-2. **TAJO_NOMBRE debe ser exacto** — los alias del catálogo difieren del nombre intuitivo. Ver `.claude/agents/sagarde-revision.md` para el dict completo.
+2. **TAJO_NOMBRE debe ser exacto** — usar el nombre principal o un alias
+   confirmado del catálogo. No se usa similitud. Desde el motor 4.3 ambos
+   resuelven al mismo id. Ver `.claude/agents/sagarde-revision.md`.
 3. **Después de crear/modificar una revisión (JSON o PDF)**, siempre correr `generar_todos.py --no-pdf` + `sagarde_portal.py` para refrescar datos locales. Ver "Protocolo: cuándo un PDF es una revisión oficial válida" arriba antes de dar por buena una revisión en PDF.
 4. **Para publicar en GitHub Pages**, el usuario ejecuta `Actualizar_Sagarde.bat` — no hacer push directamente.
 5. **panel.html en INFORME SAGARDE IA** se sobreescribe con cada ejecución de `generar_todos.py`. Es normal.
-6. **Dar de alta una obra nueva (adaptador) en los DOS registros**: `OBRAS` en `generar_todos.py` y `ADAPTADORES` en `generar_informe_ejecutivo.py`. Son independientes — ver protocolo arriba, punto 7.
+6. **Dar de alta una obra nueva (adaptador) en el registro único**: editar `_SISTEMA INFORME SAGARDE IA/registro_obras.py`; panel e informe ejecutivo lo comparten — ver protocolo arriba, punto 7.
 7. **SCORE (motor_informes.py) y ESTADO_VALOR (priorizador_trabajos.py) deben tener siempre los mismos valores** para cada estado (unificados el 25/07/2026, ambos M=0.60). Si se cambia uno, cambiar el otro.
 
 ## Estructura estándar de obra (ejemplo Gernika)

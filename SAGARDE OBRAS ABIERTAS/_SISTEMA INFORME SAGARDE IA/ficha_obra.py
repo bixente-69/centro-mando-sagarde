@@ -51,6 +51,8 @@ import re
 import unicodedata
 from datetime import datetime
 
+from claves_correcciones import normalizar_unidad, partir_clave
+
 VERSION = 1
 NOMBRE_FICHERO = 'ficha_obra.json'
 
@@ -511,7 +513,7 @@ def actualizar(ficha, prioridades, correcciones=None, mapa_tajos_cortos=None):
             'celdas': len(detalle),
             'cambios': len(cambios['estados_cambiados']),
         })
-        revisiones.sort(key=lambda r: _orden_fecha(r.get('fecha')))
+        _ordenar_revisiones(revisiones)
         cambios['revision_registrada'] = rev_id
 
     ficha['actualizado'] = _ahora()
@@ -520,8 +522,50 @@ def actualizar(ficha, prioridades, correcciones=None, mapa_tajos_cortos=None):
 
 
 def _orden_fecha(fecha):
-    partes = str(fecha or '').split('/')
-    return tuple(reversed(partes)) if len(partes) == 3 else ('0000',)
+    """Clave cronológica que conserva diferencias entre fechas inválidas."""
+    texto = str(fecha or '').strip()
+    try:
+        valor = datetime.strptime(texto, '%d/%m/%Y').date()
+    except ValueError:
+        # Las inválidas se mantienen antes que las válidas, como hacía el
+        # sistema anterior, pero ya no colapsan todas en ('0000',).
+        return (0, 0, _fold(texto), texto)
+    return (1, valor.toordinal(), '', '')
+
+
+def _ordenar_revisiones(revisiones):
+    """Ordena de forma estable y avisa de fechas inválidas o duplicadas."""
+    invalidas = []
+    por_fecha = {}
+    for revision in revisiones:
+        texto = str(revision.get('fecha') or '').strip()
+        try:
+            fecha_valida = datetime.strptime(texto, '%d/%m/%Y').date()
+        except ValueError:
+            invalidas.append(texto or '<vacía>')
+            continue
+        por_fecha.setdefault(fecha_valida, []).append(revision)
+
+    if invalidas:
+        print("  [AVISO FICHA] fechas de revisión ausentes o inválidas; "
+              "se conservan y ordenan por texto: "
+              + ', '.join(sorted(set(invalidas), key=_fold)))
+
+    duplicadas = {
+        fecha: grupo for fecha, grupo in por_fecha.items() if len(grupo) > 1
+    }
+    for fecha, grupo in sorted(duplicadas.items()):
+        ids = ', '.join(sorted(
+            str(r.get('id') or '<sin id>') for r in grupo))
+        print("  [AVISO FICHA] fecha de revisión duplicada {}: {}. "
+              "Se conserva todo y el orden se resuelve por id.".format(
+                  fecha.strftime('%d/%m/%Y'), ids))
+
+    revisiones.sort(key=lambda revision: (
+        _orden_fecha(revision.get('fecha')),
+        str(revision.get('id') or '').casefold(),
+        json.dumps(revision, ensure_ascii=False, sort_keys=True, default=str),
+    ))
 
 
 def _alta_ubicacion(ficha, item, revision, cambios, por_id, por_nombre):
@@ -605,12 +649,11 @@ def _reclamar_correcciones(estados, correcciones, mapa_cortos, ficha,
     extractor de PDF parte 'PORTAL' en 'PORT AL', o porque la ubicacion no
     existia en la estructura deducida."""
     for clave, valor in correcciones.items():
-        try:
-            portal_id, planta_id, tajo_corto, unidad = clave.split('__')
-        except ValueError:
+        partes = partir_clave(clave)
+        if partes is None:
             continue
+        portal_id, planta_id, tajo_corto, unidad = partes
         tajo = mapa_cortos.get(tajo_corto, tajo_corto)
-        unidad = unidad.replace(' ', '')
         destino = f'{portal_id}__{planta_id}__{tajo}__{unidad}'
         if destino not in estados:
             destino = _con_alias(ficha, portal_id, planta_id, tajo, unidad, estados)
@@ -636,7 +679,7 @@ def _con_alias(ficha, portal_id, planta_id, tajo, unidad, estados):
     mientras la ficha usa el canonico ('A')."""
     alias = (ficha.get('estructura') or {}).get('alias_historico') or {}
     for clave_alias, historico in alias.items():
-        if historico.replace(' ', '') != unidad:
+        if normalizar_unidad(historico) != unidad:
             continue
         try:
             p, pl, u = clave_alias.split('__')
