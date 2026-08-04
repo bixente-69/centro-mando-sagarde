@@ -113,7 +113,7 @@ def sembrar(obra_id, carpeta, modo, tipo_obra):
 
     # --- estructura definitiva = la confirmada -------------------------
     portales, mapa_ids, alias = [], {}, {}
-    nuevas, desaparecidas = [], []
+    nuevas, desaparecidas, exclusiones = [], [], []
     for i, ed in enumerate(sorted(confirmadas), 1):
         pid = f'p{i}'
         plantas = []
@@ -146,6 +146,17 @@ def sembrar(obra_id, carpeta, modo, tipo_obra):
             for letra in vistas:
                 if letra not in declaradas:
                     desaparecidas.append(f'{ed} planta {pl} unidad {vistas[letra]}')
+                    # Se guarda el descarte, no solo se imprime: el adaptador
+                    # volvera a emitir esta unidad en cada regeneracion y la
+                    # ficha tiene que poder decir que no existe. Sin esto la
+                    # correccion se revertia sola (Bolueta: 101 ubicaciones en
+                    # vez de 97).
+                    exclusiones.append({
+                        'portal': ed, 'planta': pl, 'unidad': vistas[letra],
+                        'motivo': 'la hoja la imprime pero la estructura '
+                                  'confirmada no la incluye',
+                        'confirmado': conf['fecha'],
+                    })
             nota = notas.get(f'{ed}/{pl}')
             planta = {'id': plid, 'nombre': pl,
                       'orden': clave_planta(pl)[1] if clave_planta(pl)[0] else 0,
@@ -238,6 +249,7 @@ def sembrar(obra_id, carpeta, modo, tipo_obra):
                       '_meta': {'actualizado': prio.get('generado'), 'origen': 'sembrado'}},
         'estructura': {'bloques': [{'id': 'b1', 'nombre': 'ZR1', 'portales': portales}],
                        'alias_historico': alias,
+                       'exclusiones': exclusiones,
                        '_meta': {'actualizado': conf['fecha'],
                                  'origen': 'sembrado + confirmado por usuario'}},
         'tajos': {'plantilla': f'{tipo_obra}_v1', 'aplicables': orden_tajos,

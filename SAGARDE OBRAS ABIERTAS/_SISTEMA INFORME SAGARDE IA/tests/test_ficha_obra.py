@@ -233,6 +233,100 @@ class TestAltasSinConfirmar(unittest.TestCase):
         self.assertEqual(nombres, ['PB', '1', '2'])
 
 
+class TestExclusionesConfirmadas(unittest.TestCase):
+    """Una ubicacion descartada a proposito no puede volver al regenerar.
+
+    El caso real son las 4 viviendas fantasma de la PB de Bolueta: la hoja las
+    imprime, el adaptador las emite, y la ficha las readmitia en cada pasada
+    aunque la confirmacion de Bixente dijera que PB no tiene viviendas, solo
+    dos locales. La ficha declaraba 101 ubicaciones en vez de 97.
+    """
+
+    def _ficha_con_exclusion(self):
+        ficha = fixtures.ficha_minima()
+        ficha['estructura']['exclusiones'] = [{
+            'portal': 'P1', 'planta': 'PB', 'unidad': 'C',
+            'motivo': 'la hoja la imprime pero no existe',
+            'confirmado': '28/07/2026',
+        }]
+        return ficha
+
+    def test_una_ubicacion_excluida_no_vuelve_a_darse_de_alta(self):
+        ficha = self._ficha_con_exclusion()
+        prio = fixtures.prioridades([fixtures.item(unidad='C', estado='X')])
+        ficha, _ = ficha_obra.actualizar(ficha, prio)
+        pb = ficha['estructura']['bloques'][0]['portales'][0]['plantas'][0]
+        self.assertEqual([u['id'] for u in pb['ubicaciones']], ['A', 'B'])
+
+    def test_la_celda_de_una_ubicacion_excluida_tampoco_se_guarda(self):
+        """Si la ubicacion no existe, su estado no puede contar para el KPI."""
+        ficha = self._ficha_con_exclusion()
+        prio = fixtures.prioridades([fixtures.item(unidad='C', estado='X')])
+        ficha, _ = ficha_obra.actualizar(ficha, prio)
+        self.assertNotIn('p1__pb__tubeado__C', ficha['estados'])
+
+    def test_la_exclusion_se_reporta_y_no_es_silenciosa(self):
+        """Un descarte que no se cuenta es indistinguible de un fallo."""
+        ficha = self._ficha_con_exclusion()
+        prio = fixtures.prioridades([fixtures.item(unidad='C', estado='X')])
+        ficha, cambios = ficha_obra.actualizar(ficha, prio)
+        self.assertTrue(any('unidad C' in a
+                            for a in cambios['ubicaciones_excluidas']))
+
+    def test_el_descarte_sale_por_consola(self):
+        """resumen_cambios es lo unico que Bixente ve al regenerar."""
+        ficha = self._ficha_con_exclusion()
+        prio = fixtures.prioridades([fixtures.item(unidad='C', estado='X')])
+        _, cambios = ficha_obra.actualizar(ficha, prio)
+        lineas = ficha_obra.resumen_cambios(cambios)
+        self.assertTrue(any('excluida' in l and 'unidad C' in l for l in lineas),
+                        f'no se reporta el descarte: {lineas}')
+
+    def test_una_ubicacion_nueva_DE_VERDAD_sigue_entrando(self):
+        """La exclusion es quirurgica: no puede cerrar la puerta a lo demas."""
+        ficha = self._ficha_con_exclusion()
+        prio = fixtures.prioridades([fixtures.item(unidad='D', estado='X')])
+        ficha, cambios = ficha_obra.actualizar(ficha, prio)
+        pb = ficha['estructura']['bloques'][0]['portales'][0]['plantas'][0]
+        self.assertIn('D', [u['id'] for u in pb['ubicaciones']])
+        self.assertTrue(any('unidad D' in a
+                            for a in cambios['ubicaciones_nuevas']))
+
+    def test_la_exclusion_distingue_la_planta(self):
+        """'C' esta excluida en PB, pero eso no dice nada de la planta 1."""
+        ficha = self._ficha_con_exclusion()
+        prio = fixtures.prioridades([fixtures.item(planta='1', unidad='C')])
+        ficha, _ = ficha_obra.actualizar(ficha, prio)
+        plantas = ficha['estructura']['bloques'][0]['portales'][0]['plantas']
+        p1 = next(p for p in plantas if p['nombre'] == '1')
+        self.assertIn('C', [u['id'] for u in p1['ubicaciones']])
+
+    def test_una_ubicacion_que_YA_existe_no_la_borra_la_exclusion(self):
+        """La exclusion frena altas nuevas; no destruye lo ya confirmado.
+
+        Borrar en silencio seria el mismo fallo por el otro lado.
+        """
+        ficha = self._ficha_con_exclusion()
+        ficha['estructura']['bloques'][0]['portales'][0]['plantas'][0][
+            'ubicaciones'].append({'id': 'C', 'tipo': 'vivienda',
+                                   'origen': 'confirmado_usuario'})
+        prio = fixtures.prioridades([fixtures.item(unidad='C', estado='X')])
+        ficha, _ = ficha_obra.actualizar(ficha, prio)
+        pb = ficha['estructura']['bloques'][0]['portales'][0]['plantas'][0]
+        self.assertIn('C', [u['id'] for u in pb['ubicaciones']])
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__C']['v'], 'X')
+
+    def test_manda_tambien_en_el_camino_del_snapshot_crudo(self):
+        """El camino de produccion es este, no el de prioridades."""
+        ficha = self._ficha_con_exclusion()
+        snapshot = [{'building': 'P1', 'floor': 'PB', 'unit': 'C',
+                     'task': 'Tubeado', 'status': 'X'}]
+        ficha, _ = ficha_obra.actualizar_desde_snapshot(
+            ficha, snapshot, '27/07/2026')
+        pb = ficha['estructura']['bloques'][0]['portales'][0]['plantas'][0]
+        self.assertEqual([u['id'] for u in pb['ubicaciones']], ['A', 'B'])
+
+
 class TestCorrecciones(unittest.TestCase):
 
     def test_traduce_el_codigo_corto_de_tajo_al_largo(self):

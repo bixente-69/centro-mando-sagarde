@@ -432,7 +432,7 @@ def actualizar(ficha, prioridades, correcciones=None, mapa_tajos_cortos=None):
         'estados_cambiados': [], 'estados_nuevos': 0,
         'ubicaciones_nuevas': [], 'tajos_nuevos': [],
         'correcciones_reclamadas': [], 'revision_registrada': None,
-        'estados_no_reconocidos': [],
+        'estados_no_reconocidos': [], 'ubicaciones_excluidas': [],
     }
     detalle = prioridades.get('detalle_items') or []
     if not detalle:
@@ -568,6 +568,22 @@ def _ordenar_revisiones(revisiones):
     ))
 
 
+def _esta_excluida(ficha, edificio, planta_nom, unidad):
+    """La estructura confirmada manda sobre lo que emite el adaptador.
+
+    Una ubicacion que se descarto a proposito (la hoja la imprime pero no
+    existe) no puede volver a entrar en cada regeneracion. Sin esto, la
+    correccion se revertia sola: es lo que dejaba la ficha de Bolueta con 101
+    ubicaciones en vez de las 97 confirmadas.
+    """
+    for exc in (ficha.get('estructura') or {}).get('exclusiones') or []:
+        if (_fold(exc.get('portal')) == _fold(edificio)
+                and _fold(exc.get('planta')) == _fold(planta_nom)
+                and _fold(exc.get('unidad')) == _fold(unidad)):
+            return exc
+    return None
+
+
 def _alta_ubicacion(ficha, item, revision, cambios, por_id, por_nombre):
     """Da de alta una ubicacion que la revision trae y la ficha no conoce.
 
@@ -578,6 +594,16 @@ def _alta_ubicacion(ficha, item, revision, cambios, por_id, por_nombre):
     planta_nom = str(item.get('planta') or '').strip()
     unidad = str(item.get('unidad') or '').strip()
     if not (edificio and planta_nom and unidad) or unidad in {'—', '-'}:
+        return None
+
+    # Antes de crear nada: si se descarto a proposito, no vuelve. Se comprueba
+    # aqui arriba para no dar de alta tampoco la planta que la contendria.
+    excluida = _esta_excluida(ficha, edificio, planta_nom, unidad)
+    if excluida is not None:
+        aviso = (f'{edificio} planta {planta_nom} unidad {unidad}'
+                 f" ({excluida.get('motivo') or 'excluida'})")
+        if aviso not in cambios['ubicaciones_excluidas']:
+            cambios['ubicaciones_excluidas'].append(aviso)
         return None
 
     bloques = (ficha.get('estructura') or {}).get('bloques') or []
@@ -718,6 +744,9 @@ def resumen_cambios(cambios):
         lineas.append('TAJOS NUEVOS sin confirmar: ' + ', '.join(cambios['tajos_nuevos']))
     for ubi in cambios['ubicaciones_nuevas']:
         lineas.append(f'UBICACION NUEVA sin confirmar: {ubi}')
+    # Un descarte que no se cuenta es indistinguible de un fallo de lectura.
+    for ubi in cambios.get('ubicaciones_excluidas') or []:
+        lineas.append(f'ubicacion excluida por la estructura confirmada: {ubi}')
     if cambios['estados_cambiados']:
         lineas.append('celdas que cambian de estado: %d' % len(cambios['estados_cambiados']))
     if cambios['estados_nuevos']:
