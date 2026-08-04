@@ -202,6 +202,23 @@ normas internas confirmadas, errores ya resueltos, decisiones de arquitectura.
 algo, verificar que sigue siendo cierto antes de actuar: la memoria refleja lo
 que era verdad cuando se escribió.
 
+### Entorno IA compartido y CARDIVA
+
+El registro central de contexto, memoria y skills compartidas por Codex,
+Claude y Gemini es `docs/SAGARDE_ENTORNO_IA_Y_SKILLS.md`.
+
+Para informes preventivos CARDIVA:
+
+- usar la skill de proyecto
+  `.claude/skills/generate-cardiva-report/SKILL.md`;
+- invocarla como `/generate-cardiva-report`;
+- considerar fuente canónica únicamente
+  `MANTENIMIENTOS/MANTENIMIENTO CARDIVA/APP_CARDIVA/skills/generate-cardiva-report`;
+- trabajar solo con los documentos que el usuario declare autorizados;
+- mantener resultados y estados sin código de colores;
+- sincronizar las copias multi-IA mediante
+  `MANTENIMIENTOS/MANTENIMIENTO CARDIVA/APP_CARDIVA/tools/sync_cardiva_skill_agents.ps1`.
+
 ---
 
 ## 9. Reglas que no se saltan
