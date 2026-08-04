@@ -7,6 +7,12 @@ from urllib.parse import quote
 import json
 import os
 
+from avisos import (
+    aviso_caducado,
+    dias_desde_timestamp,
+    es_aviso_por_antiguedad,
+)
+
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "index.html"
@@ -43,9 +49,9 @@ AREA_META = {
 RESUMEN_OBRAS_JSON = ROOT / "SAGARDE OBRAS ABIERTAS" / "_SISTEMA INFORME SAGARDE IA" / "resumen_obras.json"
 RESUMEN_POSTVENTAS_JSON = ROOT / "POST-VENTAS" / "postventas_resumen.json"
 
-DIAS_OBRA_INACTIVA = 14  # aviso si una obra con seguimiento IA lleva mas dias sin ningun archivo nuevo
+DIAS_OBRA_INACTIVA = 14  # aviso entre 15 y 399 dias sin archivos nuevos
 DIAS_POSTVENTA_RECIENTE = 45  # ya definido asi en postventas_index.py, se reutiliza el mismo criterio
-DIAS_MANTENIMIENTO_INACTIVO = 90  # aviso si un contrato de mantenimiento lleva mas de 90 dias sin revisiones o documentos nuevos
+DIAS_MANTENIMIENTO_INACTIVO = 90  # aviso entre 91 y 399 dias sin revisiones o documentos nuevos
 
 
 def url(path: Path) -> str:
@@ -75,9 +81,7 @@ def clase_pct(p: float) -> str:
 
 
 def dias_desde(ts: float | None) -> int | None:
-    if not ts:
-        return None
-    return int((datetime.now().timestamp() - ts) / 86400)
+    return dias_desde_timestamp(ts)
 
 
 def scan_area(folder: Path) -> dict:
@@ -783,25 +787,37 @@ def construir_alertas(ro: dict | None = None, rp: dict | None = None, mant: list
             )
             alertas.append(("warn", f"{len(sin_cambios_obras)} obra(s) sin cambios respecto a su revision anterior — comprobar si la hoja de campo esta al dia: {nombres_sc}"))
 
-        inactivas = [o for o in obras
-                     if o.get("con_panel") and dias_desde(o.get("ultimo_archivo_ts")) and dias_desde(o.get("ultimo_archivo_ts")) > DIAS_OBRA_INACTIVA]
+        inactivas = [
+            o for o in obras
+            if o.get("con_panel")
+            and es_aviso_por_antiguedad(
+                dias_desde(o.get("ultimo_archivo_ts")),
+                DIAS_OBRA_INACTIVA,
+            )
+        ]
         if inactivas:
             nombres_inact = ", ".join(
                 f'<a href="{escape(o["href"])}" style="color:inherit;text-decoration:underline"><b>{escape(o["nombre"])}</b> ({dias_desde(o.get("ultimo_archivo_ts"))} dias)</a>'
                 if o.get("href") else f"<b>{escape(o['nombre'])}</b> ({dias_desde(o.get('ultimo_archivo_ts'))} dias)"
                 for o in inactivas[:3]
             )
-            alertas.append(("warn", f"{len(inactivas)} obra(s) con seguimiento IA sin archivos nuevos en mas de {DIAS_OBRA_INACTIVA} dias: {nombres_inact}"))
+            alertas.append(("warn", f"{len(inactivas)} obra(s) con seguimiento IA sin archivos nuevos entre {DIAS_OBRA_INACTIVA + 1} y 399 dias: {nombres_inact}"))
 
     # 2. MANTENIMIENTOS
     if mant:
-        mant_inactivos = [m for m in mant if dias_desde(m.get("ultima_ts")) and dias_desde(m.get("ultima_ts")) > DIAS_MANTENIMIENTO_INACTIVO]
+        mant_inactivos = [
+            m for m in mant
+            if es_aviso_por_antiguedad(
+                dias_desde(m.get("ultima_ts")),
+                DIAS_MANTENIMIENTO_INACTIVO,
+            )
+        ]
         if mant_inactivos:
             nombres_m = ", ".join(
                 f'<a href="MANTENIMIENTOS/{escape(m["sub_url"])}" style="color:inherit;text-decoration:underline"><b>{escape(m["nombre"])}</b> ({dias_desde(m["ultima_ts"])} dias)</a>'
                 for m in mant_inactivos[:3]
             )
-            alertas.append(("warn", f"{len(mant_inactivos)} contrato(s) de mantenimiento sin revision ni archivos nuevos en mas de {DIAS_MANTENIMIENTO_INACTIVO} dias: {nombres_m}"))
+            alertas.append(("warn", f"{len(mant_inactivos)} contrato(s) de mantenimiento sin revision ni archivos nuevos entre {DIAS_MANTENIMIENTO_INACTIVO + 1} y 399 dias: {nombres_m}"))
 
     # 3. POST-VENTAS
     if rp and rp.get("contratos"):
@@ -820,7 +836,11 @@ def construir_alertas(ro: dict | None = None, rp: dict | None = None, mant: list
         try:
             with open(diag_path, encoding="utf-8") as f:
                 diag = json.load(f)
-            warnings_audit = [i for i in diag.get("issues", []) if i.get("nivel") == "warning"]
+            warnings_audit = [
+                i for i in diag.get("issues", [])
+                if i.get("nivel") == "warning"
+                and not aviso_caducado(i.get("dias_antiguedad"))
+            ]
             if warnings_audit:
                 detalles = ", ".join(f"<b>{escape(w['obra'])}</b> ({escape(w['codigo'])})" for w in warnings_audit[:3])
                 alertas.append(("warn", f"⚠️ Salud de Datos: {len(warnings_audit)} aviso(s) de formato en archivos de inspección: {detalles}"))

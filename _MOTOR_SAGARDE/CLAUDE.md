@@ -190,6 +190,7 @@ ejecutar nada). Antes de aceptar uno de estos ficheros como revisión oficial:
 5. **panel.html en INFORME SAGARDE IA** se sobreescribe con cada ejecución de `generar_todos.py`. Es normal.
 6. **Dar de alta una obra nueva (adaptador) en el registro único**: editar `_SISTEMA INFORME SAGARDE IA/registro_obras.py`; panel e informe ejecutivo lo comparten — ver protocolo arriba, punto 7.
 7. **SCORE (motor_informes.py) y ESTADO_VALOR (priorizador_trabajos.py) deben tener siempre los mismos valores** para cada estado (unificados el 25/07/2026, ambos M=0.60). Si se cambia uno, cambiar el otro.
+8. **Caducidad de avisos por antigüedad**: los avisos siguen visibles hasta 399 días y desaparecen al cumplir 400. No se elimina la obra o contrato; solo deja de figurar como aviso accionable. La regla compartida vive en `_MOTOR_SAGARDE/avisos.py`.
 
 ## Estructura estándar de obra (ejemplo Gernika)
 

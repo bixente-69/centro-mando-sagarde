@@ -7,7 +7,7 @@ Analiza la salud del repositorio de datos (Obras Abiertas, Post-Ventas y Manteni
 para detectar proactivamente:
   - Ficheros de revisión Word/Excel sin fecha válida DD/MM/AAAA en el nombre
   - Fechas duplicadas de revisión en la misma obra
-  - Obras abiertas sin revisión reciente (>30 días)
+  - Obras abiertas sin revisión reciente (31-399 días)
   - Documentos o planos enlazados rotos / faltantes
   - Anomalías en contratos de mantenimiento o post-ventas
 
@@ -27,6 +27,10 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent.parent
 MOTOR_DIR = ROOT / "_MOTOR_SAGARDE"
 DIAGNOSTICO_JSON = MOTOR_DIR / "auditoria_diagnostico.json"
+if str(MOTOR_DIR) not in sys.path:
+    sys.path.insert(0, str(MOTOR_DIR))
+
+from avisos import dias_desde_timestamp, es_aviso_por_antiguedad
 
 WORD_EXTS = {".doc", ".docx"}
 EXCEL_EXTS = {".xls", ".xlsx", ".xlsm"}
@@ -114,16 +118,17 @@ def audit_obras_abiertas() -> list[dict]:
                     "solucion": "El motor seleccionará automáticamente el archivo con modificación más reciente."
                 })
 
-        # 3. Chequeo de inactividad de inspección en obra abierta (>30 días)
+        # 3. Inactividad en obra abierta: aviso desde 31 hasta 399 días.
         if rev_files:
             latest_mtime = max(rf.stat().st_mtime for rf in rev_files)
-            dias_sin_rev = (datetime.now() - datetime.fromtimestamp(latest_mtime)).days
-            if dias_sin_rev > 30:
+            dias_sin_rev = dias_desde_timestamp(latest_mtime)
+            if es_aviso_por_antiguedad(dias_sin_rev, desde_dias=30):
                 issues.append({
                     "nivel": "info",
                     "area": "Obras Abiertas",
                     "obra": nombre_obra,
                     "codigo": "OBRA_SIN_REVISION_RECIENTE",
+                    "dias_antiguedad": dias_sin_rev,
                     "mensaje": f"La obra no registra nuevos partes de revisión desde hace {dias_sin_rev} días.",
                     "archivo": str(obra_dir.relative_to(ROOT)),
                     "solucion": "Añadir la última hoja de revisión actualizada al visitar la obra."
@@ -154,13 +159,14 @@ def audit_mantenimientos() -> list[dict]:
             continue
 
         latest_mtime = max(f.stat().st_mtime for f in files)
-        dias_inactivo = (datetime.now() - datetime.fromtimestamp(latest_mtime)).days
-        if dias_inactivo > 90:
+        dias_inactivo = dias_desde_timestamp(latest_mtime)
+        if es_aviso_por_antiguedad(dias_inactivo, desde_dias=90):
             issues.append({
                 "nivel": "warning",
                 "area": "Mantenimientos",
                 "obra": c.name.replace("MANTENIMIENTO ", "").strip(),
                 "codigo": "MANTENIMIENTO_DESACTUALIZADO",
+                "dias_antiguedad": dias_inactivo,
                 "mensaje": f"Contrato sin partes o visitas registradas en {dias_inactivo} días.",
                 "archivo": str(c.relative_to(ROOT)),
                 "solucion": "Realizar la inspección periódica y registrar la hoja de mantenimiento."

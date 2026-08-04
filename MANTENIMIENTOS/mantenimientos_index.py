@@ -16,9 +16,16 @@ from datetime import datetime
 from html import escape
 from pathlib import Path
 import json
+import sys
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent
+MOTOR_DIR = ROOT.parent / "_MOTOR_SAGARDE"
+if str(MOTOR_DIR) not in sys.path:
+    sys.path.insert(0, str(MOTOR_DIR))
+
+from avisos import dias_desde_timestamp, es_aviso_por_antiguedad
+
 INDEX_PATH = ROOT / "index.html"
 RESUMEN_JSON = ROOT / "mantenimientos_resumen.json"
 
@@ -27,7 +34,7 @@ IGNORE_FILES = {"desktop.ini", "thumbs.db", "index.html"}
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".heic", ".webp"}
 DOC_EXTS = {".pdf", ".doc", ".docx", ".xls", ".xlsx", ".dwg"}
 
-DIAS_ALERTA_MANTENIMIENTO = 90  # > 90 días sin revisión ni documentos = alerta
+DIAS_ALERTA_MANTENIMIENTO = 90  # alerta desde 91 hasta 399 días
 
 
 def fmt_dt(ts: float | None) -> str:
@@ -48,9 +55,8 @@ def days_text(ts: float | None) -> str:
 
 
 def days_count(ts: float | None) -> int:
-    if not ts:
-        return 9999
-    return (datetime.now().date() - datetime.fromtimestamp(ts).date()).days
+    dias = dias_desde_timestamp(ts)
+    return 9999 if dias is None else dias
 
 
 def clean_name(folder_name: str) -> str:
@@ -123,6 +129,8 @@ def scan_mantenimientos() -> list[dict]:
             "ultima_str": fmt_dt(ultima_ts),
             "hace_texto": days_text(ultima_ts),
             "dias_inactivo": dias_inactivo,
+            "aviso_activo": es_aviso_por_antiguedad(
+                dias_inactivo, DIAS_ALERTA_MANTENIMIENTO),
             "estado_actividad": estado_actividad,
             "estado_label": estado_label,
             "clase_estado": clase_estado,
@@ -135,8 +143,7 @@ def scan_mantenimientos() -> list[dict]:
 
 
 def escribir_resumen_json(contratos: list[dict]):
-    dias_alerta = DIAS_ALERTA_MANTENIMIENTO
-    inactivos = [c for c in contratos if c["dias_inactivo"] > dias_alerta]
+    inactivos = [c for c in contratos if c["aviso_activo"]]
 
     resumen = {
         "generado": datetime.now().strftime("%d/%m/%Y %H:%M"),
@@ -202,7 +209,7 @@ a{{color:inherit;}}
 </div></header>
 <div class="wrap">
   <div class="intro">
-    <p class="sub">{n_contratos} contrato(s) de mantenimiento &middot; {n_alertas} sin revisión en &gt;90 días &middot; actualizado {generado}</p>
+    <p class="sub">{n_contratos} contrato(s) de mantenimiento &middot; {n_alertas} aviso(s) entre 91 y 399 días sin revisión &middot; actualizado {generado}</p>
     <label class="search-wrap"><input id="s" class="search" type="search" placeholder="Buscar contrato..."><span class="search-symbol">&#9906;</span></label>
   </div>
   <div class="grid" id="grid">{tarjetas}</div>
@@ -244,7 +251,7 @@ def generar_html_index(contratos: list[dict]):
         )
         tarjetas_html += t
 
-    n_alertas = sum(1 for c in contratos if c["dias_inactivo"] > DIAS_ALERTA_MANTENIMIENTO)
+    n_alertas = sum(1 for c in contratos if c["aviso_activo"])
     html_out = INDEX_TEMPLATE.format(
         n_contratos=len(contratos),
         n_alertas=n_alertas,
