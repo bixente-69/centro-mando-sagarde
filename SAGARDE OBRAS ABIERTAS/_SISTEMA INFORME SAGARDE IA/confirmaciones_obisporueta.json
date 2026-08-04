@@ -1,0 +1,53 @@
+{
+  "_descripcion": "Estructura de Obispo Orueta confirmada por Bixente el 04/08/2026 en ronda de preguntas, tras contrastar las 13 revisiones del historial. Un solo edificio, 'Obispo Orueta 2', con 102 ubicaciones. Se descartan 15 filas que la plantilla imprime y no existen: los Apartamentos 3 a 10 de PB (en PB solo hay 2 apartamentos, A y B, y son de 2a fase) y, en la planta 6, los Apartamentos 1 a 5 mas Montantes 1 y Zonas Comunes 1 (no existen los apartamentos a los que corresponderian). La planta -1 y las dependencias de uso comun de PB EXISTEN y estan TERMINADAS: se trataron aparte en su dia, por eso nunca llevaron marca en la hoja. 'A' y 'B' NO son 'Apartamento 1' y 'Apartamento 2' renombrados: comparten solo 2 tajos de 16, porque A/B llevan tajos de construccion y los Apartamento N llevan tajos de acabado.",
+  "obra": "obisporueta",
+  "fecha": "04/08/2026",
+  "_fuente_estados": "Se siembra de lo MEDIDO en las 13 revisiones, no de prioridades_trabajos.json. Con la ultima revision parcial (40 celdas), el priorizador arrastra 'Terminado segun la ultima confirmacion valida' y declara terminadas 1444 celdas de 2404 que nadie ha medido. Contrastado celda a celda: de las 948 que si tienen medida, 870 coinciden y 78 son M que el priorizador sube a X.",
+  "fuente_estados": "historial",
+  "regla_identificador": {
+    "_nota": "Las unidades ya vienen con su etiqueta completa ('Apartamento 10', 'Montantes 2'). No hay numero de habitaciones pegado al identificador.",
+    "separar_habitaciones": false
+  },
+  "plantas_confirmadas": {
+    "Obispo Orueta 2": {
+      "-1": [],
+      "PB": ["A", "B"],
+      "1": ["Apartamento 1", "Apartamento 2", "Apartamento 3", "Apartamento 4", "Apartamento 5", "Apartamento 6", "Apartamento 7", "Apartamento 8", "Apartamento 9", "Apartamento 10"],
+      "2": ["Apartamento 1", "Apartamento 2", "Apartamento 3", "Apartamento 4", "Apartamento 5", "Apartamento 6", "Apartamento 7", "Apartamento 8", "Apartamento 9", "Apartamento 10"],
+      "3": ["Apartamento 1", "Apartamento 2", "Apartamento 3", "Apartamento 4", "Apartamento 5", "Apartamento 6", "Apartamento 7", "Apartamento 8", "Apartamento 9", "Apartamento 10"],
+      "4": ["Apartamento 1", "Apartamento 2", "Apartamento 3", "Apartamento 4", "Apartamento 5", "Apartamento 6", "Apartamento 7", "Apartamento 8", "Apartamento 9", "Apartamento 10"],
+      "5": ["Apartamento 1", "Apartamento 2", "Apartamento 3", "Apartamento 4", "Apartamento 5", "Apartamento 6", "Apartamento 7", "Apartamento 8", "Apartamento 9", "Apartamento 10"],
+      "6": ["Apartamento 6", "Apartamento 7", "Apartamento 8", "Apartamento 9", "Apartamento 10"],
+      "_zonas_comunes": {
+        "-1": ["Apartamento GYM", "Apartamento H1", "Apartamento H2", "Apartamento H3", "Apartamento V1", "Apartamento V2", "Apartamento V3", "Apartamento WC1", "Apartamento WC2"],
+        "PB": ["Apartamento 1", "Apartamento 2", "Apartamento C1", "Apartamento C2", "Apartamento C3", "Apartamento OF", "Zonas Comunes 1", "Zonas Comunes 2"],
+        "1": ["Montantes 1", "Montantes 2", "Montantes 3", "Zonas Comunes 1", "Zonas Comunes 2"],
+        "2": ["Montantes 1", "Montantes 2", "Montantes 3", "Zonas Comunes 1", "Zonas Comunes 2"],
+        "3": ["Montantes 1", "Montantes 2", "Montantes 3", "Zonas Comunes 1", "Zonas Comunes 2"],
+        "4": ["Montantes 1", "Montantes 2", "Montantes 3", "Zonas Comunes 1", "Zonas Comunes 2"],
+        "5": ["Montantes 1", "Montantes 2", "Montantes 3", "Zonas Comunes 1", "Zonas Comunes 2"],
+        "6": ["Montantes 2", "Montantes 3", "Zonas Comunes 2"]
+      }
+    }
+  },
+  "terminado_completo": {
+    "_motivo": "Bixente, 04/08/2026, textual: 'OBISPO ORUETA TODO TERMINADO A FALTA DE LA SEGUNDA FASE. A DUDA QUE TENGAS ESTA TERMINADO. SE HAYA MARCADO O NO. TEN EN CUENTA QUE DESDE LA ULTIMA QUE SE HIZO A TERMINADO NO HA HABIDO INTERMEDIAS.' La obra acabo despues de la ultima revision y no hubo hoja que lo recogiera, asi que las marcas de septiembre de 2025 (151 M y 38 barras) y los huecos ya no describen la realidad. Es la norma de obra aplicada a la letra: lo que dice la ultima confirmacion es lo que vale. No toca las celdas 'N', porque terminar una obra no inventa trabajo donde no lo hay.",
+    "excepto": {
+      "Obispo Orueta 2": {
+        "PB": ["A", "B"]
+      }
+    }
+  },
+  "terminadas_al_100": {
+    "_motivo": "Confirmado por Bixente el 04/08/2026. Son dependencias que se trataron aparte y estan acabadas; nunca llevaron marca en la hoja porque no se revisaban en ella. Sin esta declaracion entrarian como '?' (nadie las ha mirado) y no reflejarian la realidad de la obra.",
+    "Obispo Orueta 2": {
+      "-1": ["Apartamento GYM", "Apartamento H1", "Apartamento H2", "Apartamento H3", "Apartamento V1", "Apartamento V2", "Apartamento V3", "Apartamento WC1", "Apartamento WC2"],
+      "PB": ["Apartamento 1", "Apartamento 2", "Apartamento C1", "Apartamento C2", "Apartamento C3", "Apartamento OF", "Zonas Comunes 1", "Zonas Comunes 2"]
+    }
+  },
+  "notas": {
+    "Obispo Orueta 2/-1": "Dependencias del sotano (gimnasio, vestuarios, aseos). No son apartamentos pese a la etiqueta 'Apartamento' que arrastra la plantilla.",
+    "Obispo Orueta 2/PB": "Solo 2 apartamentos reales (A y B, de 2a fase). El resto son dependencias de uso comun ya acabadas.",
+    "Obispo Orueta 2/6": "Media planta: solo existen los apartamentos 6 a 10, y por eso le corresponden Montantes 2 y 3 y Zonas Comunes 2."
+  }
+}
