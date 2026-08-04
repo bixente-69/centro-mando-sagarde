@@ -304,5 +304,35 @@ class TestFuenteInformeEjecutivo(unittest.TestCase):
         )
 
 
+class TestObraSinRevisiones(unittest.TestCase):
+    """Una obra sin medir no es una obra al 0 %.
+
+    Caso real: 2026 GORLIZ HOSPITAL. Esta dada de alta con su documentacion de
+    proyecto pero no tiene ni una revision de campo, y el indice la pintaba
+    como '0%' en rojo, al lado de Mungia con 79.8. Eso es sustituir un
+    desconocido por cero, que es de las cosas que este proyecto no hace.
+    """
+
+    def test_sin_revisiones_no_dice_un_porcentaje(self):
+        bloque = gt.bloque_pct(0, n_rev=0)
+        self.assertNotIn('%', bloque)
+        self.assertIn('Sin revisiones', bloque)
+
+    def test_sin_revisiones_no_se_pinta_como_alarma(self):
+        """Rojo significa 'va mal'. Sin datos no se sabe si va mal."""
+        self.assertNotIn('bad', gt.bloque_pct(0, n_rev=0))
+
+    def test_con_revisiones_sigue_diciendo_el_porcentaje(self):
+        bloque = gt.bloque_pct(79.8, n_rev=25)
+        self.assertIn('79.8%', bloque)
+        self.assertIn('ok', bloque)
+
+    def test_un_cero_MEDIDO_si_es_un_cero(self):
+        """Obra revisada y sin nada hecho: ahi el 0 % es un dato."""
+        bloque = gt.bloque_pct(0, n_rev=3)
+        self.assertIn('0%', bloque)
+        self.assertIn('bad', bloque)
+
+
 if __name__ == '__main__':
     unittest.main()

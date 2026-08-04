@@ -558,7 +558,7 @@ empty.style.display=n?'none':'block';});
 </body></html>"""
 
 TARJETA = """<a class="obra" href="__HREF__" data-search="__BUSCA__"><h2>__NOMBRE__</h2>
-<div class="pct __CLASE__">__PCT__%</div>
+__BLOQUE_PCT__
 <div class="row"><span>Último archivo</span><span>__ULTIMO_ARCHIVO__</span></div>
 <div class="row"><span>Última revisión</span><span>__ULTIMA__</span></div>
 <div class="row"><span>Revisiones</span><span>__NREV__</span></div>
@@ -575,6 +575,19 @@ TARJETA_PENDIENTE = """<div class="obra disabled" data-search="__BUSCA__"><h2>__
 
 def clase_pct(p):
     return 'ok' if p >= 70 else 'warn' if p >= 40 else 'bad'
+
+
+def bloque_pct(pct, n_rev):
+    """El numero grande de la tarjeta de la obra.
+
+    Una obra sin ninguna revision no esta al 0 %: no se sabe como esta. Pintar
+    un 0 en rojo al lado de las obras medidas es sustituir un desconocido por
+    cero, y ademas la lee como si fuera mal. Un 0 % MEDIDO si es un dato y se
+    muestra como tal.
+    """
+    if not n_rev:
+        return '<div class="pct pending">Sin revisiones</div>'
+    return f'<div class="pct {clase_pct(pct)}">{pct}%</div>'
 
 
 def fecha_corta(timestamp):
@@ -654,8 +667,7 @@ def generar_index(resultados):
                 ('__HREF__', html.escape(r['href'], quote=True)),
                 ('__BUSCA__', html.escape(r['nombre'].lower(), quote=True)),
                 ('__NOMBRE__', html.escape(r['nombre'])),
-                ('__PCT__', str(r['pct'])),
-                ('__CLASE__', clase_pct(r['pct'])),
+                ('__BLOQUE_PCT__', bloque_pct(r['pct'], r['n_rev'])),
                 ('__ULTIMO_ARCHIVO__', html.escape(ultimo_archivo)),
                 ('__ULTIMA__', html.escape(str(r['ultima']))),
                 ('__NREV__', str(r['n_rev'])),
