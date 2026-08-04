@@ -276,6 +276,40 @@ def _fecha_desde_nombre(fn):
     return aaaa + mm + dd, "{}/{}/{}".format(dd, mm, aaaa)
 
 
+def aporta_datos_de_campo(ruta_pdf, n_anotaciones, hay_sidecar):
+    """True si el PDF trae algo que no supieramos ya.
+
+    Una hoja recien generada por la app NO es una revision: lleva impreso el
+    estado que ya esta en la base y nada mas. Como la app imprime en blanco lo
+    que no sabe, leerla de vuelta convierte los '?' en 'P' y hace bajar el
+    porcentaje sin que nadie haya pisado la obra. Paso con
+    REVISION MUNGIA 28072026.pdf: 35 celdas de la vivienda E y Mungia de 79.8
+    a 78.6.
+
+    Aporta si tiene marcas de pen digital (anotaciones) o si alguien ha
+    transcrito lo escrito a boli en el sidecar. Un escaneo de papel no lleva
+    anotaciones, asi que para el vale el sidecar.
+    """
+    return bool(n_anotaciones) or bool(hay_sidecar)
+
+
+def _mide_aportacion(ruta_pdf):
+    """(n_anotaciones, hay_sidecar) de un PDF concreto."""
+    hay_sidecar = os.path.isfile(ruta_pdf + '.correcciones.json')
+    n_anotaciones = 0
+    try:
+        import pdfplumber
+        with pdfplumber.open(ruta_pdf) as pdf:
+            n_anotaciones = sum(len(p.annots or []) for p in pdf.pages)
+    except Exception as exc:
+        # Si no se puede mirar, se deja pasar y que lo juzgue el parser: es
+        # peor descartar una revision buena que colar una hoja sin usar.
+        print(f"  AVISO: no se pudo comprobar si '{os.path.basename(ruta_pdf)}' "
+              f"lleva marcas ({type(exc).__name__}). Se acepta.")
+        return 1, hay_sidecar
+    return n_anotaciones, hay_sidecar
+
+
 def listar_revisiones_pdf(carpeta, contiene=None, prefijo='REVISION', nombre_log=''):
     """
     Busca ficheros '<prefijo> ... <contiene> ... DDMMAAAA.pdf' dentro de
@@ -299,6 +333,18 @@ def listar_revisiones_pdf(carpeta, contiene=None, prefijo='REVISION', nombre_log
             continue
         clave, display = _fecha_desde_nombre(fn)
         if clave:
+            etiqueta = '[{}] '.format(nombre_log) if nombre_log else ''
+            n_anot, sidecar = _mide_aportacion(os.path.join(carpeta, fn))
+            if not aporta_datos_de_campo(fn, n_anot, sidecar):
+                # Se avisa pero NO se descarta: excluirla haria retroceder a
+                # una hoja anterior, y una hoja mas vieja tiene mas celdas en
+                # blanco todavia. El dano de las celdas en blanco se ataja
+                # donde nace, en ficha_obra: una casilla sin marca no baja un
+                # estado ya conocido.
+                print("{}AVISO: '{}' no lleva marcas ni correcciones "
+                      "transcritas. Parece una hoja impresa y no usada: no "
+                      "aporta nada que no este ya en la base.".format(
+                          etiqueta, fn))
             archivos.append((clave, display, fn))
         else:
             etiqueta = '[{}] '.format(nombre_log) if nombre_log else ''

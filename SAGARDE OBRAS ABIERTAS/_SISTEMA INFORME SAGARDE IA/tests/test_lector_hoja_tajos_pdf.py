@@ -76,6 +76,37 @@ class TestCorreccionesNoAplicables(unittest.TestCase):
         self.assertEqual(malformadas, ['p2__pb__suelo-rad'])
 
 
+class TestHojaSinUsar(unittest.TestCase):
+    """Una hoja recien impresa NO es una revision.
+
+    Caso real: REVISION MUNGIA 28072026.pdf. La app la genero desde la ficha,
+    nadie la llevo a obra y aun asi entro como revision oficial. Como la app
+    imprime en blanco lo que no sabe, sus celdas vacias se leyeron como
+    'pendiente confirmado' y tumbaron 35 celdas de la vivienda E de '?' a 'P'.
+    Mungia bajaba de 79.8 a 78.6 sin que nadie hubiera pisado la obra.
+
+    El protocolo del HTML ya se defiende de las plantillas en blanco; el del
+    PDF no tenia guarda equivalente.
+    """
+
+    def test_sin_marcas_y_sin_sidecar_no_aporta_nada(self):
+        self.assertFalse(lector.aporta_datos_de_campo(
+            'x.pdf', n_anotaciones=0, hay_sidecar=False))
+
+    def test_con_pen_digital_si_aporta(self):
+        self.assertTrue(lector.aporta_datos_de_campo(
+            'x.pdf', n_anotaciones=56, hay_sidecar=False))
+
+    def test_un_escaneo_transcrito_si_aporta(self):
+        """Un escaneo no lleva anotaciones: lo que vale es su sidecar."""
+        self.assertTrue(lector.aporta_datos_de_campo(
+            'x.pdf', n_anotaciones=0, hay_sidecar=True))
+
+    def test_con_marcas_y_sidecar_tambien(self):
+        self.assertTrue(lector.aporta_datos_de_campo(
+            'x.pdf', n_anotaciones=12, hay_sidecar=True))
+
+
 class TestNormalizacionCompartida(unittest.TestCase):
 
     def test_lector_y_ficha_usan_el_mismo_contrato(self):

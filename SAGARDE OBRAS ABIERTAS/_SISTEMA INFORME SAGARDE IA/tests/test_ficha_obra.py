@@ -69,6 +69,67 @@ class TestEstados(unittest.TestCase):
         self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'M')
         self.assertIn(('p1__pb__tubeado__A', 'X', 'M'), cambios['estados_cambiados'])
 
+    def test_una_casilla_en_blanco_NO_baja_un_estado_conocido(self):
+        """La otra mitad de la norma: 'solo la ausencia de marca no puede
+        bajar una X'.
+
+        Caso real: REVISION MUNGIA 28072026.pdf era una hoja generada por la
+        app y nunca usada -0 anotaciones, sin sidecar-. La app imprime en
+        blanco lo que no sabe, asi que al releerla 35 celdas de la vivienda E
+        pasaron de '?' a 'P' y Mungia bajo de 79.8 a 78.6 sin que nadie
+        hubiera pisado la obra. Una casilla vacia es 'no se leyo', no
+        'se comprobo y no esta'.
+        """
+        ficha = fixtures.ficha_minima()
+        ficha, _ = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([fixtures.item(estado='X')]))
+        ficha, cambios = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([fixtures.item(estado='')],
+                                        revision='30/07/2026'))
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'X')
+        self.assertEqual(cambios['estados_cambiados'], [])
+
+    def test_una_casilla_en_blanco_tampoco_baja_una_M(self):
+        ficha = fixtures.ficha_minima()
+        ficha, _ = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([fixtures.item(estado='M')]))
+        ficha, _ = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([fixtures.item(estado='')],
+                                        revision='30/07/2026'))
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'M')
+
+    def test_pero_un_PENDIENTE_explicito_si_baja_una_X(self):
+        """Escribir 'Pendiente' es ir y ver que no esta. Eso manda."""
+        ficha = fixtures.ficha_minima()
+        ficha, _ = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([fixtures.item(estado='X')]))
+        ficha, _ = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([fixtures.item(estado='Pendiente')],
+                                        revision='30/07/2026'))
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'P')
+
+    def test_una_casilla_en_blanco_NO_convierte_un_desconocido_en_pendiente(self):
+        """El caso exacto de la vivienda E de Mungia.
+
+        La celda estaba en '?' porque nadie la habia mirado. La app imprime en
+        blanco lo que no sabe, y al releer la hoja el blanco la paso a 'P'
+        -'se comprobo y no esta'-, que es justo lo contrario de lo que pasaba.
+        Dos ausencias de informacion no hacen un dato.
+        """
+        ficha = fixtures.ficha_minima()
+        ficha['estados']['p1__pb__tubeado__A'] = {'v': '?', 'f': None, 'r': None}
+        ficha, cambios = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([fixtures.item(estado='')]))
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], '?')
+        self.assertEqual(cambios['estados_cambiados'], [])
+
+    def test_una_casilla_en_blanco_sin_nada_previo_sigue_siendo_P(self):
+        """Primera vez que se ve la celda: no hay estado que proteger."""
+        ficha = fixtures.ficha_minima()
+        ficha, _ = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([fixtures.item(estado='')]))
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__A']['v'], 'P')
+
     def test_no_toca_las_celdas_que_la_revision_no_menciona(self):
         """Si la hoja no cubre una celda, su dato anterior se conserva.
         Una revision parcial no puede borrar lo que no ha mirado."""

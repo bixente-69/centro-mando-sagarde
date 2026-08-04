@@ -484,6 +484,16 @@ def actualizar(ficha, prioridades, correcciones=None, mapa_tajos_cortos=None):
             if estado_norm not in cambios['estados_no_reconocidos']:
                 cambios['estados_no_reconocidos'].append(estado_norm)
         anterior = estados.get(clave)
+        # NORMA DE OBRA, la otra mitad: "solo la ausencia de marca no puede
+        # bajar una X". Una casilla vacia es 'no se leyo', no 'se comprobo y
+        # no esta'. Sin esta guarda, una hoja generada por la app y nunca
+        # usada tumba estados ya conocidos: paso con REVISION MUNGIA
+        # 28072026.pdf (0 anotaciones, sin sidecar), que bajo 35 celdas de la
+        # vivienda E de '?' a 'P' y Mungia de 79.8 a 78.6.
+        # Un 'Pendiente' EXPLICITO si baja: eso es haber ido y haberlo visto.
+        if not estado_norm and anterior is not None:
+            anterior['f'] = anterior.get('f') or item.get('ultima_fecha') or revision
+            continue
         if anterior is None:
             estados[clave] = {'v': nuevo, 'f': item.get('ultima_fecha') or revision,
                               'r': rev_id}
