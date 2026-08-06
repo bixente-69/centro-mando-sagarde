@@ -278,6 +278,15 @@ def construir_ficha(obra_id, carpeta, tipo_obra, hoja, fichero):
     (nombre_obra, fecha, orden_bloques, bloques,
      orden_tajos, tajos, _marcas) = hoja
 
+    # La hoja imprime los tajos AGRUPADOS POR FASE, que no es el orden de
+    # ejecucion: "2as caras Pladur" (180) sale antes que "Cuadros
+    # presentados" (120) porque van en el mismo bloque PLADUR. La ficha tiene
+    # que guardar el orden de ejecucion del catalogo, que es el que usan el
+    # priorizador y los informes, y es lo que hace el sembrador de las obras
+    # reales. Guardar el orden de impresion desordena las dependencias sin
+    # que nada de error.
+    orden_tajos = sorted(orden_tajos, key=lambda t: (tajos[t]['orden'], t))
+
     estructura, i_portal = [], 0
     por_bloque = {}
     for bloque_nom, portal_nom in orden_bloques:

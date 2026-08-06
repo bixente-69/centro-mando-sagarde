@@ -166,7 +166,7 @@ cd "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA" && python -m unittest di
 | `X` | terminado |
 | `M` | más del 50% |
 | `/` | iniciado |
-| `P` | **pendiente confirmado**: se comprobó en campo y no está hecho |
+| `P` | **pendiente confirmado**: se comprobó en campo y no está hecho, o la hoja se revisó y esa casilla salió en blanco. Pesa 0 y **cuenta** en el porcentaje |
 | `?` | **desconocido**: nadie lo ha mirado nunca |
 | `N` | no aplica a esa ubicación |
 
@@ -209,6 +209,12 @@ es poner la marca en la fila equivocada.
 - **Nada se descarta solo:** una celda con poca tinta sale como DUDOSA y hay
   que resolverla a mano, aunque sea marcándola `descartada`.
 - **La fecha no se deduce de la hoja**: la de la cabecera es la de generación.
+- **Las casillas en blanco de una hoja usada pasan a `P`**, no se quedan en
+  `?`. Norma de Bixente, textual: *"el no tener ninguna marca no significa que
+  no se haya revisado, es que ni siquiera existe [ese tajo todavía]"*. Una
+  obra dura meses y muchos tajos son casi del final. Solo asciende `?`→`P`:
+  un blanco **nunca** baja una `X`, `M` o `/`. Con `--sin-marca desconocido`
+  se desactiva, para una hoja que no cubra la obra entera.
 - Para dar de alta una obra nueva desde su hoja **en blanco**:
   `alta_obra_desde_hoja.py`. La distribución la manda la hoja: si trae 15
   bloques, se registran 15.

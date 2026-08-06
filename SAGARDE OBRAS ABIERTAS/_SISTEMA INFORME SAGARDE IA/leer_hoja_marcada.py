@@ -206,6 +206,22 @@ def preparar(ruta, obra, ficha, carpeta_recortes=None, zoom=6):
                     'valor': None,
                 })
 
+    # Todas las celdas que la hoja imprime, tengan tinta o no. Hacen falta
+    # para el paso siguiente: si la hoja se ha llevado a obra, una casilla en
+    # blanco NO es "sin mirar", es "ese tajo no ha empezado". Textual de
+    # Bixente: "el no tener ninguna marca no significa que no se haya
+    # revisado, es que ni siquiera existe". Una obra dura meses y muchos
+    # tajos son casi del final.
+    celdas_hoja = []
+    for npag, tabla in paginas.items():
+        for c in tabla['celdas']:
+            clave_ficha = indice.get(
+                (tabla['bloque'], tabla['portal'], c['planta'], c['viv']))
+            if clave_ficha is None:
+                continue
+            pid, plid, uid = clave_ficha
+            celdas_hoja.append(f'{pid}__{plid}__{c["tajo"]}__{uid}')
+
     candidatas.sort(key=lambda c: (c['pagina'], c['clave']))
     return {
         'version': 1,
@@ -214,11 +230,40 @@ def preparar(ruta, obra, ficha, carpeta_recortes=None, zoom=6):
         'fecha_cabecera': next(iter(paginas.values()))['fecha'] if paginas else None,
         'puntos_fuera_de_la_rejilla': fuera_total,
         'trazos_sin_puntos': sin_tinta,
+        'celdas_hoja': sorted(set(celdas_hoja)),
         'candidatas': candidatas,
     }
 
 
 # ------------------------------------------------------------------ aplicar
+
+def marcar_no_empezados(estados, celdas_hoja, marcadas, fecha, rev_id):
+    """Las casillas en blanco de una hoja que SI se llevo a obra.
+
+    Bixente, textual: *"el no tener ninguna marca no significa que no se haya
+    revisado, es que ni siquiera existe [ese tajo todavia]"*. Una obra dura
+    meses: empiezan unos tajos y otros se hacen encima de los ya hechos, casi
+    al final. Por eso una casilla vacia de una hoja usada es un dato -- el
+    tajo no ha empezado -- y tiene que contar en el denominador. Su estado es
+    `P`, pendiente confirmado, que pesa 0.
+
+    Solo asciende `?` -> `P`. **Nunca baja una X, una M ni una /**: esa es la
+    otra mitad de la norma de obra, que la ausencia de marca no puede bajar
+    un estado conocido. Sin esa guarda, una hoja donde Bixente solo anota los
+    avances borraria todo lo anterior.
+    """
+    cambios = []
+    for clave in celdas_hoja:
+        if clave in marcadas or clave not in estados:
+            continue
+        antes = (estados[clave] or {}).get('v')
+        if antes != '?':
+            continue
+        estados[clave] = {'v': 'P', 'f': fecha, 'r': rev_id,
+                          'origen': 'hoja revisada sin marca'}
+        cambios.append((clave, antes, 'P'))
+    return cambios
+
 
 def aplicar(ficha, candidatas, clasificacion, fecha, rev_id):
     """Devuelve (estados_nuevos, cambios, dudas). No toca la ficha."""
@@ -278,6 +323,13 @@ def main():
     p.add_argument('--preparar', action='store_true')
     p.add_argument('--aplicar', metavar='CLASIFICACION.json')
     p.add_argument('--fecha', help='DD/MM/AAAA de la revision')
+    p.add_argument('--sin-marca', choices=['pendiente', 'desconocido'],
+                   default='pendiente',
+                   help='que hacer con las casillas en blanco de la hoja. '
+                        '"pendiente" (por defecto): la hoja se llevo a obra, '
+                        'asi que en blanco significa que ese tajo no ha '
+                        'empezado y cuenta en el porcentaje. "desconocido": '
+                        'la hoja no cubrio esa parte y se dejan como estaban.')
     p.add_argument('--escribir', action='store_true')
     args = p.parse_args()
 
@@ -332,11 +384,24 @@ def main():
     estados, cambios, dudas = aplicar(
         ficha, datos['candidatas'], clasificacion, args.fecha, rev_id)
 
+    en_blanco = []
+    if args.sin_marca == 'pendiente':
+        # Una candidata DESCARTADA no lleva marca: su tinta era el rabo del
+        # trazo de al lado. Asi que es una casilla en blanco como cualquier
+        # otra y le toca el mismo trato, no quedarse en '?'.
+        con_marca = {c['clave'] for c in datos['candidatas']
+                     if clasificacion.get(c['clave']) != DESCARTADA}
+        en_blanco = marcar_no_empezados(
+            estados, datos.get('celdas_hoja') or [], con_marca,
+            args.fecha, rev_id)
+        cambios = cambios + en_blanco
+
     conteo = Counter(nuevo for _k, _a, nuevo in cambios)
     print(f'HOJA: {datos["hoja"]}   obra: {obra["nombre"]}   '
           f'fecha: {args.fecha}')
     print(f'  candidatas: {len(datos["candidatas"])}   '
           f'cambios: {len(cambios)}   descartadas: {len(dudas)}')
+    print(f'  de ellos, casillas en blanco -> tajo no empezado: {len(en_blanco)}')
     print(f'  por valor: {dict(conteo)}')
     de_a = Counter((a, n) for _k, a, n in cambios)
     for (antes, nuevo), n in sorted(de_a.items(), key=lambda x: -x[1]):
@@ -359,9 +424,15 @@ def main():
     ficha['estados'] = estados
     revisiones = [r for r in (ficha.get('revisiones') or [])
                   if r.get('id') != rev_id]
+    # Lo que MIDIO la revision, no lo que cambio en esta pasada: si se vuelve
+    # a aplicar la misma hoja no hay cambios y quedaria registrada como una
+    # revision que no midio nada.
+    medidas = sum(1 for k in (datos.get('celdas_hoja') or [])
+                  if (estados.get(k) or {}).get('v') in VALIDOS)
     revisiones.append({'id': rev_id, 'fecha': args.fecha,
                        'origen': 'hoja marcada leida por la IA',
-                       'celdas_medidas': len(cambios)})
+                       'celdas_medidas': medidas,
+                       'celdas_cambiadas': len(cambios)})
     ficha['revisiones'] = revisiones
     fichas.guardar(carpeta, ficha)
     print(f'\n  sidecar: {sidecar}')

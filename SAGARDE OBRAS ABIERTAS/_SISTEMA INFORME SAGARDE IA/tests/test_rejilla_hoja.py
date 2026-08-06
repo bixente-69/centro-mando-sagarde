@@ -140,6 +140,19 @@ class TestUnaCeldaPorTajoYVivienda(unittest.TestCase):
             rejilla.leer_tabla(filas, lambda b: 'BLOQUE 2 Portal 1', TAJOS))
 
 
+class TestOrdenDeEjecucion(unittest.TestCase):
+    """La hoja imprime los tajos agrupados por fase, que NO es el orden de
+    ejecucion. La ficha tiene que guardar el de ejecucion, que es el que usan
+    el priorizador y los informes."""
+
+    def test_el_orden_impreso_no_es_el_de_ejecucion(self):
+        indice = rejilla.tabla_de_tajos()
+        segundas = indice[rejilla.fold('2ªs caras Pladur')]
+        cuadros = indice[rejilla.fold('Cuadros presentados')]
+        # En la hoja "2as caras" sale antes, por ir en el bloque PLADUR.
+        self.assertGreater(segundas['orden'], cuadros['orden'])
+
+
 class TestTraduccionDeTajos(unittest.TestCase):
     """La hoja imprime nombres cortos y el catalogo guarda los largos."""
 

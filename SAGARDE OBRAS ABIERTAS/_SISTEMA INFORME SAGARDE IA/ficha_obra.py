@@ -59,9 +59,15 @@ NOMBRE_FICHERO = 'ficha_obra.json'
 # Estado tal y como llega del priorizador -> estado guardado en la ficha
 # Las claves están normalizadas (minúsculas). La cadena vacía sigue siendo 'P':
 # una casilla vacía en hoja validada es un dato que confirma "no está hecho".
+# 'p' se añadió el 05/08/2026: el alfabeto que documenta el CLAUDE.md usa la
+# letra 'P', pero aqui solo entraban '' y 'pendiente'. Un sidecar escrito con
+# el alfabeto de la casa se guardaba como '?' -- avisando, pero guardandose
+# mal. Y 'P' (comprobado, no esta hecho) y '?' (nadie lo ha mirado) son
+# distintos a proposito: confundirlos es la causa de casi todo lo que ha
+# fallado aqui.
 MAPA_ESTADO = {
     'x': 'X', 'm': 'M', '/': '/',
-    'pendiente': 'P', '': 'P', 'n': 'N',
+    'pendiente': 'P', 'p': 'P', '': 'P', 'n': 'N',
 }
 
 APARTADOS = ('identidad', 'estructura', 'tajos', 'estados', 'revisiones',

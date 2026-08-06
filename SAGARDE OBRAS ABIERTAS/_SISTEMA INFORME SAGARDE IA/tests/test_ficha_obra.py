@@ -780,5 +780,31 @@ class TestOrdenRevisiones(unittest.TestCase):
         self.assertIn('duplicada', salida.getvalue())
 
 
+class TestAlfabetoDeEstados(unittest.TestCase):
+    """El alfabeto que documenta el CLAUDE.md tiene que entrar entero.
+
+    Hasta el 05/08/2026 `MAPA_ESTADO` aceptaba '' y 'pendiente' pero NO la
+    letra 'P', que es justamente la canonica. Un sidecar escrito con el
+    alfabeto de la casa se degradaba a '?' -- avisaba, pero se degradaba, y
+    'P' (comprobado, no esta hecho) y '?' (nadie lo ha mirado) son distintos
+    a proposito. Lo destapo el lector de hojas marcadas, que escribe 'P'.
+    """
+
+    def test_las_letras_del_alfabeto_se_reconocen_todas(self):
+        for letra, esperado in [('X', 'X'), ('M', 'M'), ('/', '/'),
+                                ('P', 'P'), ('N', 'N')]:
+            with self.subTest(letra):
+                clave = ficha_obra._normalizar_estado(letra)
+                self.assertIn(clave, ficha_obra.MAPA_ESTADO)
+                self.assertEqual(ficha_obra.MAPA_ESTADO[clave], esperado)
+
+    def test_la_casilla_vacia_sigue_siendo_pendiente(self):
+        """Los sidecars antiguos escriben '' donde el alfabeto escribe 'P'.
+        Las dos formas tienen que seguir significando lo mismo."""
+        self.assertEqual(
+            ficha_obra.MAPA_ESTADO[ficha_obra._normalizar_estado('')],
+            ficha_obra.MAPA_ESTADO[ficha_obra._normalizar_estado('P')])
+
+
 if __name__ == '__main__':
     unittest.main()

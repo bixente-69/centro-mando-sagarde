@@ -71,6 +71,36 @@ generada, si tiene un bloque uno, si tiene 15 pues 15"*.
   para el formato anterior al 25/07/2026; el actual trae 1216 `data-k`
   estáticos. Verificar antes de descartar un camino.
 
+## 4bis. Qué es el 100 %, cerrado con Bixente el mismo día
+
+> *"Yo entiendo por 100 % acabada cuando todos los tajos que se han definido
+> para ella se encuentran acabados. La pega no es que no esté revisada, sí lo
+> está, lo que pasa es que ese tajo no ha comenzado. El no tener ninguna marca
+> no significa que no se haya revisado, es que ni siquiera existe."*
+
+Una obra dura meses: empiezan unos tajos y otros se hacen encima de los ya
+hechos, muchos casi al final. Así que **una casilla vacía de una hoja que sí
+se llevó a obra es un dato**, no una laguna: ese tajo no ha empezado.
+
+El motor ya calculaba bien (`X`=1, `M`=0.6, `/`=0.25, vacío=0, y `N` fuera del
+denominador). Lo que estaba mal era el dato guardado: el lector dejaba esas
+celdas en `?`, que queda fuera. Ahora las escribe como `P` — pendiente
+confirmado, peso 0, dentro del denominador. **Se arregló donde nace, no en el
+cálculo.** OBRA PRUEBA pasa de 92.4 (sobre lo medido) a **6.4 sobre las 1.178
+celdas**, que es la lectura correcta de una obra recién empezada.
+
+Guarda que se mantiene: un blanco solo asciende `?`→`P`; **nunca baja una
+`X`, `M` o `/`**. Sin ella, una hoja donde Bixente solo anota los avances
+borraría todo lo anterior.
+
+Eso destapó otro fallo de la misma familia: `MAPA_ESTADO` aceptaba `''` y
+`'pendiente'` pero **no la letra `'P'`**, la canónica del alfabeto que
+documenta el `CLAUDE.md`. Un sidecar escrito con el alfabeto de la casa se
+guardaba como `?`: avisaba por consola, pero se guardaba mal.
+
+Y un fallo mío: el alta guardaba los tajos en el orden en que los imprime la
+hoja (agrupado por fase), no en el de ejecución del catálogo. Corregido.
+
 ## 5. Lo siguiente
 
 - **Contrastar con tinta real de una obra de verdad**:
