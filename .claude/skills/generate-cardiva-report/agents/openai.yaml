@@ -1,0 +1,4 @@
+interface:
+  display_name: "Informe preventivo CARDIVA"
+  short_description: "Genera informes CARDIVA en Word y PDF"
+  default_prompt: "Usa $generate-cardiva-report para convertir los partes 01–06 de CARDIVA en el informe preventivo final 01–09."

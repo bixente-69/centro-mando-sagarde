@@ -61,8 +61,12 @@ __pycache__/
 # Espacio de trabajo temporal de los planes
 .superpowers/
 
-# Configuracion local de la herramienta y worktrees temporales
-.claude/
+# Configuracion local de la herramienta y worktrees temporales.
+# OJO: tiene que ser `.claude/*` y no `.claude/`. Con `.claude/` git no
+# desciende al directorio, y entonces los `!.claude/skills/**` de abajo NO se
+# aplican: las skills llevaban desde el 05/08/2026 declaradas como publicables
+# y `git ls-files .claude/` devolvia cero ficheros (detectado el 07/08/2026).
+.claude/*
 
 # Las skills SI se publican: Bixente usa Claude, Codex y Gemini
 # indistintamente, asi que el procedimiento no puede vivir en la carpeta
