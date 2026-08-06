@@ -3,7 +3,7 @@
   "id": "mungia",
   "modo": "hibrida",
   "fecha_entrada_digital": "27/07/2026",
-  "actualizado": "06/08/2026 09:33",
+  "actualizado": "06/08/2026 11:24",
   "identidad": {
     "nombre": "2026 MUNGIA ACR NEINOR",
     "carpeta": "2026 MUNGIA ACR NEINOR",
@@ -1232,9 +1232,10 @@
       "r": "rev_27072026"
     },
     "p1__pb__casquillos_bombillas__A": {
-      "v": "M",
+      "v": "P",
       "f": "28/07/2026",
-      "r": "rev_28072026"
+      "r": "rev_28072026",
+      "origen": "correccion manual"
     },
     "p1__pb__iluminacion_rellanos__A": {
       "v": "P",
@@ -1422,9 +1423,10 @@
       "r": "rev_27072026"
     },
     "p1__pb__casquillos_bombillas__B": {
-      "v": "M",
+      "v": "P",
       "f": "28/07/2026",
-      "r": "rev_28072026"
+      "r": "rev_28072026",
+      "origen": "correccion manual"
     },
     "p1__pb__iluminacion_rellanos__B": {
       "v": "P",
@@ -1612,9 +1614,10 @@
       "r": "rev_27072026"
     },
     "p1__pb__casquillos_bombillas__C": {
-      "v": "M",
+      "v": "P",
       "f": "28/07/2026",
-      "r": "rev_28072026"
+      "r": "rev_28072026",
+      "origen": "correccion manual"
     },
     "p1__pb__iluminacion_rellanos__C": {
       "v": "P",
@@ -2147,9 +2150,10 @@
       "r": "rev_28072026"
     },
     "p1__1__telemecanizado__C": {
-      "v": "M",
+      "v": "X",
       "f": "28/07/2026",
-      "r": "rev_28072026"
+      "r": "rev_28072026",
+      "origen": "correccion manual"
     },
     "p1__1__pintura_segunda__C": {
       "v": "P",
@@ -4959,9 +4963,10 @@
       "r": "rev_28072026"
     },
     "p2__pb__derivacion_individual__PORTAL": {
-      "v": "P",
+      "v": "X",
       "f": "27/07/2026",
-      "r": "rev_27072026"
+      "r": "rev_27072026",
+      "origen": "hoja marcada"
     },
     "p2__pb__cuadro_mecanizado__PORTAL": {
       "v": "X",
@@ -8255,9 +8260,10 @@
       "r": "rev_27072026"
     },
     "p3__pb__agujeros_iluminacion_zzcc__A": {
-      "v": "P",
+      "v": "X",
       "f": "27/07/2026",
-      "r": "rev_27072026"
+      "r": "rev_27072026",
+      "origen": "hoja marcada"
     },
     "p3__pb__pintura_zzcc__A": {
       "v": "P",
@@ -8445,9 +8451,10 @@
       "r": "rev_27072026"
     },
     "p3__pb__agujeros_iluminacion_zzcc__B": {
-      "v": "P",
+      "v": "X",
       "f": "27/07/2026",
-      "r": "rev_27072026"
+      "r": "rev_27072026",
+      "origen": "hoja marcada"
     },
     "p3__pb__pintura_zzcc__B": {
       "v": "P",
@@ -11298,9 +11305,10 @@
       "r": "rev_27072026"
     },
     "p3__4__agujeros_iluminacion_zzcc__A": {
-      "v": "P",
+      "v": "X",
       "f": "27/07/2026",
-      "r": "rev_27072026"
+      "r": "rev_27072026",
+      "origen": "hoja marcada"
     },
     "p3__4__pintura_zzcc__A": {
       "v": "P",
@@ -11488,9 +11496,10 @@
       "r": "rev_27072026"
     },
     "p3__4__agujeros_iluminacion_zzcc__B": {
-      "v": "P",
+      "v": "X",
       "f": "27/07/2026",
-      "r": "rev_27072026"
+      "r": "rev_27072026",
+      "origen": "hoja marcada"
     },
     "p3__4__pintura_zzcc__B": {
       "v": "P",
@@ -11678,9 +11687,10 @@
       "r": "rev_27072026"
     },
     "p3__4__agujeros_iluminacion_zzcc__C": {
-      "v": "P",
+      "v": "X",
       "f": "27/07/2026",
-      "r": "rev_27072026"
+      "r": "rev_27072026",
+      "origen": "hoja marcada"
     },
     "p3__4__pintura_zzcc__C": {
       "v": "P",
@@ -11868,9 +11878,10 @@
       "r": "rev_27072026"
     },
     "p3__4__agujeros_iluminacion_zzcc__D": {
-      "v": "P",
+      "v": "X",
       "f": "27/07/2026",
-      "r": "rev_27072026"
+      "r": "rev_27072026",
+      "origen": "hoja marcada"
     },
     "p3__4__pintura_zzcc__D": {
       "v": "P",
@@ -12058,9 +12069,10 @@
       "r": "rev_27072026"
     },
     "p3__4__agujeros_iluminacion_zzcc__E": {
-      "v": "P",
+      "v": "X",
       "f": "27/07/2026",
-      "r": "rev_27072026"
+      "r": "rev_27072026",
+      "origen": "hoja marcada"
     },
     "p3__4__pintura_zzcc__E": {
       "v": "P",
@@ -12840,17 +12852,18 @@
   },
   "revisiones": [
     {
-      "id": "rev_27072026",
-      "fecha": "27/07/2026",
-      "origen": "historial existente",
-      "celdas_medidas": 2318
-    },
-    {
       "id": "rev_28072026",
       "fecha": "28/07/2026",
       "procesada": "05/08/2026 06:48",
       "celdas": 2356,
       "cambios": 0
+    },
+    {
+      "id": "rev_27072026",
+      "fecha": "27/07/2026",
+      "origen": "hoja marcada leida por la IA",
+      "celdas_medidas": 2309,
+      "celdas_cambiadas": 12
     }
   ],
   "dudas": [
@@ -12925,18 +12938,18 @@
     }
   },
   "documentos": {
-    "total": 99,
+    "total": 326,
     "por_categoria": {
       "Comprimidos": 1,
       "Excel": 4,
-      "Imágenes": 4,
-      "Otros": 2,
+      "Imágenes": 229,
+      "Otros": 4,
       "PDF": 57,
       "Planos y gráfica": 4,
       "Word": 27
     },
     "_meta": {
-      "actualizado": "05/08/2026 06:48"
+      "actualizado": "06/08/2026 11:24"
     }
   },
   "contactos": []

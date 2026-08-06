@@ -64,6 +64,13 @@ __pycache__/
 # Configuracion local de la herramienta y worktrees temporales
 .claude/
 
+# Las skills SI se publican: Bixente usa Claude, Codex y Gemini
+# indistintamente, asi que el procedimiento no puede vivir en la carpeta
+# personal de una sola IA. El CLAUDE.md lleva desde julio declarando una skill
+# 'sagarde-revision' que no existia en ninguna parte (05/08/2026).
+!.claude/skills/
+!.claude/skills/**
+
 # Mantener este archivo rastreado
 !.gitignore
 

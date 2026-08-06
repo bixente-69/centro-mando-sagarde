@@ -307,12 +307,17 @@ def preparar(ruta, obra, ficha, carpeta_recortes=None, zoom=6):
     # revisado, es que ni siquiera existe". Una obra dura meses y muchos
     # tajos son casi del final.
     celdas_hoja = []
+    sin_mapear = set()
     for npag, tabla in paginas.items():
         pid = resolver_portal(ficha, tabla['etiquetas'],
                               aviso=f'pagina {npag}: ')
         for c in tabla['celdas']:
             clave_ficha = indice.get((pid, c['planta'], c['viv']))
             if clave_ficha is None:
+                # No se salta en silencio: una columna que la hoja imprime y
+                # la ficha no reconoce es una ubicacion que se queda sin
+                # medir, y el recuento saldria bien igualmente.
+                sin_mapear.add((pid, c['planta'], c['viv']))
                 continue
             plid, uid = clave_ficha
             celdas_hoja.append(f'{pid}__{plid}__{c["tajo"]}__{uid}')
@@ -326,6 +331,8 @@ def preparar(ruta, obra, ficha, carpeta_recortes=None, zoom=6):
         'puntos_fuera_de_la_rejilla': fuera_total,
         'trazos_sin_puntos': sin_tinta,
         'celdas_hoja': sorted(set(celdas_hoja)),
+        'columnas_sin_mapear': sorted(f'{a} / planta {b} / {c}'
+                                      for a, b, c in sin_mapear),
         'candidatas': candidatas,
     }
 
@@ -461,6 +468,9 @@ def main():
             por_portal[f'{c["bloque"]} / {c["portal"]}'] += 1
         for k, n in sorted(por_portal.items()):
             print(f'    {k}: {n}')
+        for col in datos.get('columnas_sin_mapear') or []:
+            print(f'  [SIN MAPEAR] la hoja imprime {col} y la ficha no la '
+                  f'reconoce: esa ubicacion se queda sin medir')
         for c in dudosas:
             print(f'  [DUDOSA] {c["clave"]} ({c["puntos"]} punto/s) '
                   f'-> {c["recorte"]}')

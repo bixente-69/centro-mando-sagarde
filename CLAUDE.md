@@ -219,6 +219,10 @@ es poner la marca en la fila equivocada.
   `alta_obra_desde_hoja.py`. La distribución la manda la hoja: si trae 15
   bloques, se registran 15.
 - La lectura de rejilla es común: `rejilla_hoja.py`. **No reescribirla.**
+- **Blanco borra, negro escribe.** El corrector (`[1,1,1]`, 17–28 px) tapa una
+  marca impresa que ya no vale → `P`. El boli (`[0,0,0]`, 1.5–3 px) escribe el
+  estado nuevo. Si hay los dos en una celda, manda el negro.
+- Procedimiento completo en la skill `.claude/skills/sagarde-revision/`.
 
 No cerrar con fechas o recuentos discordantes, y reportar siempre el
 antes/después.
