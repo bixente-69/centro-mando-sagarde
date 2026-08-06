@@ -418,7 +418,58 @@ function catalogForSource(source){
   return portalCatalog.concat(missing.map((t,index)=>({...t,orden:10000+index})));
 }
 
-const MAX_TAJOS_A4 = 38;
+/* ── PAGINACIÓN A4 ──────────────────────────────────────────────────────
+   Alturas MEDIDAS con pdfplumber sobre el PDF real que produce el navegador
+   (Mungia, 06/08/2026), no deducidas del CSS: el CSS declara la fila de tajo
+   a 4.65mm y en el papel mide 5.01mm, porque bordes y relleno suman.
+
+   Contar tajos e ignorar los rótulos de fase era el error de MAX_TAJOS_A4:
+   38 tajos con 18 fases necesitan 249.42mm y había 249.70. La hoja cabía por
+   0.28mm. Eso no es un diseño, es una casualidad, y por eso el navegador
+   escupía restos de tabla en páginas sueltas. */
+const MM = {
+  filaTajo: 5.01,
+  filaGrupo: 3.28,
+  cabeceraTabla: 28.00,   // thead (3 filas) + observaciones, ya recortados
+  altoUtil: 284.00,       // A4 297 - 7 de margen arriba - 6 abajo
+  colchon: 4.00,          // nada debe rozar el borde
+};
+
+function cupoFilasMM(){ return MM.altoUtil - MM.cabeceraTabla - MM.colchon; }
+
+function alturaFilasMM(tajos){
+  const lista = Array.isArray(tajos) ? tajos : [];
+  const fases = new Set(lista.map(t=>t.g));
+  return lista.length*MM.filaTajo + fases.size*MM.filaGrupo;
+}
+
+function repartirEn(lista,n){
+  const porHoja = Math.ceil(lista.length/n);
+  const hojas = [];
+  for(let i=0;i<lista.length;i+=porHoja) hojas.push(lista.slice(i,i+porHoja));
+  return hojas;
+}
+
+/* Cuántas hojas hacen falta y con qué reparto.
+
+   El reparto es EQUILIBRADO a propósito: 55 tajos en 2 hojas son 28 y 27, no
+   42 y 13. Cuesta el mismo papel y se lee mejor.
+
+   No hace falta guarda contra rótulos de fase huérfanos: se reparten tajos,
+   no filas, y generateHTML reconstruye los grupos de cada hoja, así que un
+   rótulo sólo aparece si detrás va al menos un tajo suyo. */
+function repartirTajosEnHojas(tajos){
+  const lista = Array.isArray(tajos) ? tajos : [];
+  if(!lista.length) return [lista];
+  const cupo = cupoFilasMM();
+  for(let n=1;n<=lista.length;n++){
+    const hojas = repartirEn(lista,n);
+    if(hojas.every(h=>alturaFilasMM(h)<=cupo)) return hojas;
+  }
+  return lista.map(t=>[t]);
+}
+
+const MAX_TAJOS_A4 = 38;   // sólo informativo: el límite real es cupoFilasMM()
 const PROP_LBL = {p:'SGD',e:'EXT',c:'COO'};
 const AMB_LBL  = {v:'',z:'zzcc',d:'edif'};
 
@@ -802,9 +853,13 @@ function renderTajos(){
 function toggleT(id,on){ on?S.sel.add(id):S.sel.delete(id); updTjCount(); }
 function updTjCount(){
   const count=document.getElementById('tj-count');
-  const overflow=Math.max(0,S.sel.size-MAX_TAJOS_A4);
-  count.textContent=overflow?`${S.sel.size} tajos · +${overflow} sobre A4`:`${S.sel.size} tajos · A4 OK`;
-  count.className='tj-count'+(overflow?' over':'');
+  // Se cuenta en hojas, que es lo que sale por la impresora. "+17 sobre A4"
+  // no le decia a nadie cuantas hojas iban a salir.
+  const hojas=repartirTajosEnHojas(getActiveTajos()).length;
+  count.textContent=hojas>1
+    ? `${S.sel.size} tajos · ${hojas} hojas por tabla`
+    : `${S.sel.size} tajos · 1 hoja por tabla`;
+  count.className='tj-count'+(hojas>1?' over':'');
 }
 
 function checkAll(v){
@@ -829,9 +884,10 @@ function toggleGroup(hdr){
 /* ── SUMMARY ── */
 function renderSummary(){
   const n=S.sel.size;
-  const overflow=Math.max(0,n-MAX_TAJOS_A4);
   const entries=getPortalEntries();
-  const tables=entries.reduce((sum,{portal})=>sum+groupCompleteFloors(portal.plantas).length,0);
+  const hojasPorTabla=repartirTajosEnHojas(getActiveTajos()).length;
+  const gruposDePlantas=entries.reduce((sum,{portal})=>sum+groupCompleteFloors(portal.plantas).length,0);
+  const tables=gruposDePlantas*hojasPorTabla;
   const fecha=fmtDate(S.fecha);
   const sourceInfo=S.sourceId&&S.sourceMeta
     ? `<div style="grid-column:1/-1;padding:8px 10px;background:#F2F7FB;border-left:4px solid var(--blue)">
@@ -845,16 +901,18 @@ function renderSummary(){
       <strong>${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)}</strong>
       <span style="color:var(--text-muted)"> — ${portal.plantas.map(planta=>`${escHtml(planta.nombre)}: ${planta.vivs.length}`).join(' · ')}</span>
     </div>`).join('');
-  const capacity=overflow
-    ? `<div class="a4-capacity warn"><strong>Atención: ${n} tajos seleccionados.</strong>
-         Supera en ${overflow} el máximo recomendado de ${MAX_TAJOS_A4} para una tabla A4.
-         Si se genera así, la tabla puede ocupar más de una hoja.
+  // La capacidad se expresa en milimetros y en hojas, no en un tope de tajos:
+  // 38 tajos con 18 fases ocupan 249.42mm y caben 252. Contar tajos ignoraba
+  // los rotulos de fase, que se comen 59mm.
+  const altoUsado=alturaFilasMM(getActiveTajos());
+  const capacity=hojasPorTabla>1
+    ? `<div class="a4-capacity warn"><strong>Atención: ${n} tajos ocupan ${altoUsado.toFixed(0)} mm.</strong>
+         En un A4 caben ${cupoFilasMM().toFixed(0)} mm de filas, así que cada tabla saldrá
+         repartida en <strong>${hojasPorTabla} hojas</strong> con el cabecero de viviendas repetido.
+         Total: ${tables} páginas de tabla.
          <button onclick="goStep(3)">Volver a Tajos</button></div>`
-    : n===MAX_TAJOS_A4
-      ? `<div class="a4-capacity limit"><strong>Capacidad A4: ${n} de ${MAX_TAJOS_A4} tajos.</strong>
-           La hoja está en el límite recomendado actual.</div>`
-      : `<div class="a4-capacity"><strong>Capacidad A4: ${n} de ${MAX_TAJOS_A4} tajos.</strong>
-           Queda margen para ${MAX_TAJOS_A4-n} tajo${MAX_TAJOS_A4-n!==1?'s':''}.</div>`;
+    : `<div class="a4-capacity"><strong>Capacidad A4: ${altoUsado.toFixed(0)} de ${cupoFilasMM().toFixed(0)} mm.</strong>
+         ${n} tajos en 1 hoja por tabla · ${tables} páginas de tabla.</div>`;
   document.getElementById('gen-summary').innerHTML=`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 22px">
       <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Obra</div>
@@ -872,7 +930,7 @@ function renderSummary(){
       </div>
       <div style="grid-column:1/-1">
         <div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Contenido</div>
-        <strong>${n} tajos</strong> en ${tables} tabla${tables!==1?'s':''} de revisión — agrupando plantas completas según el ancho disponible
+        <strong>${n} tajos</strong> en ${tables} tabla${tables!==1?'s':''} de revisión — una por página, agrupando plantas completas según el ancho disponible
       </div>
       ${capacity}
     </div>`;
@@ -989,7 +1047,9 @@ function generateHTML(cellData={}){
 
   const entries=getPortalEntries();
   const portalSections=entries.map(({bloque,portal},portalIndex)=>{
-    const blocks=groupCompleteFloors(portal.plantas).map((plantasGrupo,groupIndex)=>{
+    const hojasDeTajos=repartirTajosEnHojas(tajos);
+    const blocks=groupCompleteFloors(portal.plantas).flatMap((plantasGrupo,groupIndex)=>
+      hojasDeTajos.map((tajosHoja,hojaIndex)=>{
     const viviendaCols=plantasGrupo.flatMap((planta,floorIndex)=>
       planta.vivs.map((viv,vi)=>({planta,viv,floorIndex,first:vi===0}))
     );
@@ -1001,7 +1061,11 @@ function generateHTML(cellData={}){
     const aptFont=Math.max(7.5,Math.min(11.5,12.3-(totalVivs-4)*.38-(longestViv-2)*.25)).toFixed(1);
     const stateFont=Math.max(9,Math.min(14,15-totalVivs*.45)).toFixed(1);
 
-    const rows = Object.entries(groups).map(([gn,gt])=>{
+    // Los grupos de fase se reconstruyen POR HOJA: el rótulo sólo aparece en
+    // la hoja donde hay algún tajo suyo, así que nunca queda huérfano.
+    const gruposHoja={};
+    tajosHoja.forEach(t=>{ (gruposHoja[t.g]||(gruposHoja[t.g]=[])).push(t); });
+    const rows = Object.entries(gruposHoja).map(([gn,gt])=>{
       const grp = `<tr class="tr-grp"><td colspan="${ncols}">${escHtml(gn)}</td></tr>`;
       const trs = gt.map(t=>{
         const badge = `<span class="tajo-prop ${t.p}">${PROP_LBL[t.p]}</span>`;
@@ -1030,6 +1094,10 @@ function generateHTML(cellData={}){
     ).join('');
     const plantNames=plantasGrupo.map(planta=>escHtml(planta.nombre)).join(' · ');
     const plantLabel=plantasGrupo.length===1?`Planta ${plantNames}`:`Plantas ${plantNames}`;
+    // Sólo cuando la tabla necesita varias hojas: si no, no se ensucia la
+    // identificación de la inmensa mayoría de las hojas.
+    const rotuloHoja=hojasDeTajos.length>1
+      ? ` · HOJA ${hojaIndex+1} DE ${hojasDeTajos.length}` : '';
 
     // La identificacion va DENTRO del thead a proposito: es lo unico que el
     // navegador repite cuando una tabla se parte entre paginas. Fuera de la
@@ -1037,11 +1105,11 @@ function generateHTML(cellData={}){
     // portales de mismas letras de vivienda eso es irresoluble al escanear.
     return `<div class="planta-block"><div class="tbl-wrap"><table class="rev-table"><colgroup>${colTpl}</colgroup>
       <thead>
-      <tr class="tr-ident"><th class="th-ident" colspan="${ncols}">${escHtml(obraUp)} · ${escHtml(fecha)} · ${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)} · ${plantLabel}</th></tr>
+      <tr class="tr-ident"><th class="th-ident" colspan="${ncols}">${escHtml(obraUp)} · ${escHtml(fecha)} · ${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)} · ${plantLabel}${rotuloHoja}</th></tr>
       <tr><th class="th-floor th-floor-tajo" rowspan="2">TAJO</th>${floorHeads}</tr>
       <tr>${aptHeads}</tr></thead>
       <tbody>${rows}${noteRow}</tbody></table></div></div>`;
-    }).join('');
+    })).join('');
     const distribution=portal.plantas.map(planta=>`${escHtml(planta.nombre)}: ${planta.vivs.length}`).join(' · ');
     return `<section class="portal-section${portalIndex?' portal-break':''}">
       <div class="portal-sheet-head">
@@ -1236,13 +1304,37 @@ body{font-family:Arial,'Aptos','Liberation Sans',sans-serif;background:#fff;colo
   .legend-strip .tajo-prop{font-size:6.4pt;line-height:9pt;padding:0 2px}
   .blocks{padding:2px 0 3px;gap:0}
   .portal-section{padding-top:0}
-  .portal-section.portal-break{break-before:page;page-break-before:always}
+  /* La cabecera y la leyenda ocupan la pagina 1 a proposito. Antes le robaban
+     el sitio a la primera tabla —32mm— y esa pagina salia con 7 celdas de
+     nada. UN solo salto: ponerlo en las dos generaba dos portadas. */
+  .doc-header{break-after:auto;page-break-after:auto}
+  .legend-strip{break-after:page;page-break-after:always}
+  /* Cada tabla empieza donde acaba la anterior, no en una pagina forzada:
+     ahora cabe por construccion y es el break-after quien cierra la pagina. */
+  .portal-section.portal-break{break-before:auto;page-break-before:auto}
   .portal-sheet-head{margin:0 0 2px;padding:1.7mm 2.3mm;break-inside:avoid;page-break-inside:avoid}
   .portal-block-name{font-size:9.2pt}.portal-name{font-size:8.7pt}
   .portal-sheet-meta{display:none}
-  .planta-block{page-break-inside:avoid;break-inside:avoid;border-radius:0}
-  .planta-block+.planta-block{break-before:page;page-break-before:always}
-  .th-ident{padding:1.2mm 2mm;font-size:8.4pt}
+  /* Una tabla por pagina, innegociable: rejilla_hoja.leer_pdf coge solo
+     tablas[0] de cada pagina, asi que dos tablas en una hoja harian
+     desaparecer la segunda en silencio. */
+  .planta-block{page-break-inside:avoid;break-inside:avoid;border-radius:0;
+                break-after:page;page-break-after:always}
+  .planta-block+.planta-block{break-before:auto;page-break-before:auto}
+  .planta-block:last-child{break-after:auto;page-break-after:auto}
+  /* El rotulo de portal y el pie se quedaban solos en una pagina entre tablas
+     (medido: 2 de las 7 paginas de OBRA PRUEBA eran eso y nada mas). En papel
+     no hacen falta: el bloque y el portal van dentro de la identificacion de
+     CADA tabla, que es justo por lo que esa fila vive en el thead. */
+  .portal-sheet-head{display:none}
+  .doc-footer{display:none}
+  /* Colchon comprado recortando el thead, de 34.3mm a 28mm. NO se encogen las
+     casillas de marcar: siguen a 5.01mm, que es lo que necesita el boli en
+     obra y lo que necesita el recorte que luego lee la IA. */
+  .th-ident{padding:.6mm 2mm;font-size:8.2pt}
+  .th-floor{padding:1.1mm 1mm}
+  .th-apt{padding:.7mm .45mm}
+  .tr-notes td{height:3.6mm;padding:.4mm 2mm}
   .doc-header,.legend-strip{break-inside:avoid}
   .tr-tajo:hover{background:transparent!important}
   .float-bar{display:none}
@@ -1251,17 +1343,68 @@ body{font-family:Arial,'Aptos','Liberation Sans',sans-serif;background:#fff;colo
 }
 
 /* ── DOWNLOAD / PREVIEW ── */
-function confirmA4Capacity(){
-  if(S.sel.size<=MAX_TAJOS_A4) return true;
-  const overflow=S.sel.size-MAX_TAJOS_A4;
-  const proceed=window.confirm(
-    `Has seleccionado ${S.sel.size} tajos, ${overflow} más que el máximo recomendado de ${MAX_TAJOS_A4}.\n\n`+
-    'La tabla puede ocupar más de un A4.\n\n'+
-    'Aceptar: generar igualmente.\nCancelar: volver y quitar tajos.'
-  );
-  if(!proceed) goStep(3);
-  return proceed;
+
+/* Cuántas celdas IMPRESAS de cada tajo están ya en X.
+
+   Esto NO se puede llamar "terminado". Al generador sólo le llegan X, M y /:
+   generar_todos.py:237 documenta que `P` (pendiente confirmado), `?`
+   (desconocido) y `N` (no aplica) viajan los tres como celda vacía. El
+   generador no distingue "falta por hacer" de "aquí no aplica".
+
+   Medido el 07/08/2026: si "terminado" fuese "todas sus celdas en X", Orueta
+   —la única obra que no cabe en una hoja— tendría CERO tajos terminados,
+   porque le cuentan como pendientes las celdas que en realidad son N. Por eso
+   se enseña el recuento y decide Bixente, en vez de decidir el generador con
+   un criterio ciego. */
+function recuentoPorTajo(){
+  const columnas=getPortalEntries().flatMap(({portal})=>
+    portal.plantas.flatMap(pl=>pl.vivs.map(v=>({p:portal.id,f:pl.id,v}))));
+  const datos=S.importData||{};
+  const r={};
+  CAT.forEach(t=>{ r[t.id]={x:0,total:0}; });
+  columnas.forEach(c=>CAT.forEach(t=>{
+    const e=r[t.id];
+    e.total++;
+    if(datos[`${c.p}__${c.f}__${t.id}__${c.v}`]==='X') e.x++;
+  }));
+  return r;
 }
+
+function confirmA4Capacity(){
+  const activos=getActiveTajos();
+  const hojas=repartirTajosEnHojas(activos).length;
+  if(hojas<=1) return true;
+  const cuenta=recuentoPorTajo();
+  const alCien=activos.filter(t=>cuenta[t.id]&&cuenta[t.id].total
+                                 &&cuenta[t.id].x===cuenta[t.id].total);
+  const ranking=activos.slice()
+    .filter(t=>cuenta[t.id]&&cuenta[t.id].total)
+    .sort((a,b)=>(cuenta[b.id].x/cuenta[b.id].total)-(cuenta[a.id].x/cuenta[a.id].total))
+    .slice(0,8)
+    .map(t=>`   ${t.name}: ${cuenta[t.id].x} de ${cuenta[t.id].total} celdas en X`)
+    .join('\n');
+  const opcion=alCien.length
+    ? `Aceptar: quitar los ${alCien.length} tajos cuyas celdas están TODAS en X, y volver a Tajos.`
+    : 'Aceptar: volver a Tajos para quitarlos a mano. Ninguno tiene todas sus celdas en X.';
+  const seguir=window.confirm(
+    `Con ${activos.length} tajos, cada tabla saldrá en ${hojas} hojas.\n`+
+    `Ocupan ${alturaFilasMM(activos).toFixed(0)} mm y en un A4 caben ${cupoFilasMM().toFixed(0)} mm.\n\n`+
+    `Los más avanzados:\n${ranking}\n\n`+
+    `${opcion}\n`+
+    `Cancelar: generar igualmente en ${hojas} hojas (cada una lleva su cabecero de viviendas).`
+  );
+  if(!seguir) return true;                   // generar igualmente: es seguro
+  if(alCien.length){
+    alCien.forEach(t=>{ S.sel.delete(t.id);
+      const cb=document.getElementById('cb-'+t.id); if(cb) cb.checked=false; });
+    showToast(`Quitados ${alCien.length} tajos con todas sus celdas en X`);
+  } else {
+    showToast('Ninguno está al 100%: quítalos a mano');
+  }
+  goStep(3); renderTajos();
+  return false;
+}
+
 
 function doDownload(){
   if(!confirmA4Capacity()) return;
