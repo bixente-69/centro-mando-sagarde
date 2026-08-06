@@ -35,6 +35,16 @@ VARIOS/APPS SAGARDE/
 !SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/confirmaciones_*.json
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/confirmaciones_*.json
 
+# Traza de una hoja marcada en obra y leida por la IA (paso 4 del ciclo).
+# Son el POR QUE de los estados de la ficha: la clasificacion dice que letra
+# se leyo en cada recorte, y el sidecar que celdas cambiaron y desde que
+# valor. Sin ellos, un estado de la base no se puede auditar contra la hoja.
+# NO se publican ni el PDF de la hoja ni los recortes PNG: pesan y viven en
+# OneDrive, igual que las revisiones DOCX/PDF de las demas obras. El
+# .candidatas.json tampoco: se regenera del PDF con --preparar.
+!SAGARDE OBRAS ABIERTAS/*/REVISIONES*/*.correcciones.json
+!SAGARDE OBRAS ABIERTAS/*/REVISIONES*/*.clasificacion.json
+
 # Documentacion de diseno y planes de implementacion
 !docs/superpowers/specs/*.md
 !docs/superpowers/plans/*.md

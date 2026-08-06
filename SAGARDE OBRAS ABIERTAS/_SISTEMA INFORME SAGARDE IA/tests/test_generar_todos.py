@@ -272,6 +272,84 @@ class TestContratoFuenteEstructura(unittest.TestCase):
         self.assertEqual(sorted(registro['estados'].values()), ['X'])
 
 
+class TestTodosLosBloquesLleganAlGenerador(unittest.TestCase):
+    """La hoja manda: si declara 2 bloques, salen los 2.
+
+    Hasta el 05/08/2026 `registro_revision_desde_ficha` leia
+    `bloques_ficha[0]` y descartaba el resto EN SILENCIO. Las 4 obras con
+    ficha tienen 1 bloque, asi que nadie lo noto; lo destapo OBRA PRUEBA, que
+    nace de una hoja de 2 bloques. Perder un bloque no da error: la obra
+    simplemente sale mas pequena de lo que es.
+    """
+
+    OBRA = {'id': 'pruebas', 'nombre': 'OBRA DE PRUEBAS'}
+
+    def _ficha_dos_bloques(self):
+        ficha = fixtures.ficha_minima()
+        ficha['revisiones'] = [{'fecha': '27/07/2026'}]
+        segundo = {
+            'id': 'b2', 'nombre': 'Bloque 2',
+            'portales': [{
+                'id': 'p2', 'nombre': 'P2', 'referencia': 'P2',
+                'plantas': [
+                    {'id': 'pb', 'nombre': 'PB', 'orden': 0, 'ubicaciones': [
+                        {'id': 'C', 'tipo': 'vivienda', 'origen': 'campo'},
+                    ]},
+                ],
+            }],
+        }
+        ficha['estructura']['bloques'].append(segundo)
+        ficha['estados'] = {
+            'p2__pb__tubeado__C': {'v': 'X', 'f': '27/07/2026',
+                                   'r': 'rev_27072026'},
+        }
+        return ficha
+
+    def _ubicaciones(self, registro):
+        return sum(len(planta['vivs'])
+                   for bloque in registro['bloques']
+                   for portal in bloque['portales']
+                   for planta in portal['plantas'])
+
+    def test_no_se_pierde_ninguna_ubicacion_del_segundo_bloque(self):
+        registro = gt.registro_revision_desde_ficha(
+            self.OBRA, self._ficha_dos_bloques(), fixtures.prioridades([]))
+        self.assertIsNotNone(registro)
+        # 4 del bloque 1 (PB y 1a, A y B) + 1 del bloque 2 (PB, C)
+        self.assertEqual(self._ubicaciones(registro), 5)
+        self.assertEqual(registro['resumen']['viviendas_planta'], 5)
+
+    def test_los_dos_bloques_conservan_su_nombre(self):
+        registro = gt.registro_revision_desde_ficha(
+            self.OBRA, self._ficha_dos_bloques(), fixtures.prioridades([]))
+        self.assertEqual([b['nombre'] for b in registro['bloques']],
+                         ['Bloque 1', 'Bloque 2'])
+
+    def test_un_estado_del_segundo_bloque_llega_precargado(self):
+        """Sin esto la celda saldria en blanco y la hoja de campo pediria
+        remarcar a boli algo que la base ya sabia."""
+        registro = gt.registro_revision_desde_ficha(
+            self.OBRA, self._ficha_dos_bloques(), fixtures.prioridades([]))
+        self.assertEqual(sorted(registro['estados'].values()), ['X'])
+        self.assertEqual(registro['resumen']['estados_precargados'], 1)
+
+    def test_una_obra_de_un_bloque_no_cambia(self):
+        """Guarda contra efecto colateral: las 4 obras reales tienen 1
+        bloque y su registro debe salir identico al de antes del arreglo."""
+        ficha = fixtures.ficha_minima()
+        ficha['revisiones'] = [{'fecha': '27/07/2026'}]
+        ficha['estados'] = {'p1__pb__tubeado__A': {'v': 'X', 'f': '27/07/2026',
+                                                   'r': 'rev_27072026'}}
+        registro = gt.registro_revision_desde_ficha(
+            self.OBRA, ficha, fixtures.prioridades([]))
+        self.assertEqual(len(registro['bloques']), 1)
+        self.assertEqual(registro['bloques'][0]['id'], 'src_pruebas_b1')
+        self.assertEqual(
+            [p['id'] for p in registro['bloques'][0]['portales']],
+            ['src_pruebas_p1'])
+        self.assertEqual(self._ubicaciones(registro), 4)
+
+
 class TestFuenteInformeEjecutivo(unittest.TestCase):
     """El PDF debe usar el historial ya corregido por la ficha de obra."""
 

@@ -3,7 +3,7 @@
   "id": "mungia",
   "modo": "hibrida",
   "fecha_entrada_digital": "27/07/2026",
-  "actualizado": "05/08/2026 06:48",
+  "actualizado": "06/08/2026 02:02",
   "identidad": {
     "nombre": "2026 MUNGIA ACR NEINOR",
     "carpeta": "2026 MUNGIA ACR NEINOR",
@@ -12911,7 +12911,7 @@
   "materiales": {
     "ultimo_mes": "Mayo26",
     "ultima_fecha": "08/05/2026",
-    "dias_desde": 89,
+    "dias_desde": 90,
     "meses": [
       "Febrero26",
       "Marzo26",
@@ -12919,9 +12919,9 @@
       "Mayo26"
     ],
     "n_items": 50,
-    "aviso": "La hoja de materiales no se actualiza desde 08/05/2026 (89 días). Los datos de consumo/stock pueden estar desfasados.",
+    "aviso": "La hoja de materiales no se actualiza desde 08/05/2026 (90 días). Los datos de consumo/stock pueden estar desfasados.",
     "_meta": {
-      "actualizado": "05/08/2026 06:48"
+      "actualizado": "06/08/2026 02:02"
     }
   },
   "documentos": {

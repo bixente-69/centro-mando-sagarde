@@ -249,33 +249,52 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
         return None
 
     slug = _slug(obra['id'])
-    portales, mapa = [], {}
-    for i_portal, portal in enumerate(bloques_ficha[0].get('portales') or [], 1):
-        portal_id = f'src_{slug}_p{i_portal}'
-        plantas = []
-        for i_planta, planta in enumerate(portal.get('plantas') or [], 1):
-            planta_id = f'{portal_id}_f{i_planta}'
-            vivs = []
-            for ubi in planta.get('ubicaciones') or []:
-                # Se muestra el nombre historico ('A2' = vivienda A de 2
-                # habitaciones en Mungia) para que la hoja de campo siga
-                # siendo reconocible; el id canonico es la letra.
-                clave_alias = f"{portal['id']}__{planta['id']}__{ubi['id']}"
-                vivs.append(alias.get(clave_alias, ubi['id']))
-                mapa[(portal['id'], planta['id'], ubi['id'])] = (
-                    portal_id, planta_id, alias.get(clave_alias, ubi['id']))
-            if not vivs:
-                continue
-            plantas.append({'id': planta_id, 'nombre': planta.get('nombre'),
-                            'vivs': vivs})
-        if plantas:
-            portales.append({
-                'id': portal_id,
-                'nombre': portal.get('nombre'),
-                'referencia_portal': portal.get('referencia') or portal.get('nombre'),
-                'plantas': plantas,
+    # Se recorren TODOS los bloques. Hasta el 05/08/2026 aqui ponia
+    # `bloques_ficha[0]` y el resto se perdia sin dar error: la obra salia mas
+    # pequena de lo que es y no habia forma de notarlo. Las 4 obras con ficha
+    # tienen 1 bloque, asi que nadie lo vio hasta que OBRA PRUEBA nacio de una
+    # hoja de 2 bloques. Manda la hoja: si declara 15 bloques, salen 15.
+    # El contador de portales es GLOBAL a proposito: dos portales de bloques
+    # distintos chocarian en el mismo `src_{slug}_p1`. Con un solo bloque el
+    # numero coincide con el de siempre, asi que las obras reales no se mueven.
+    bloques, mapa = [], {}
+    i_portal = 0
+    for i_bloque, bloque_ficha in enumerate(bloques_ficha, 1):
+        portales = []
+        for portal in bloque_ficha.get('portales') or []:
+            i_portal += 1
+            portal_id = f'src_{slug}_p{i_portal}'
+            plantas = []
+            for i_planta, planta in enumerate(portal.get('plantas') or [], 1):
+                planta_id = f'{portal_id}_f{i_planta}'
+                vivs = []
+                for ubi in planta.get('ubicaciones') or []:
+                    # Se muestra el nombre historico ('A2' = vivienda A de 2
+                    # habitaciones en Mungia) para que la hoja de campo siga
+                    # siendo reconocible; el id canonico es la letra.
+                    clave_alias = f"{portal['id']}__{planta['id']}__{ubi['id']}"
+                    vivs.append(alias.get(clave_alias, ubi['id']))
+                    mapa[(portal['id'], planta['id'], ubi['id'])] = (
+                        portal_id, planta_id, alias.get(clave_alias, ubi['id']))
+                if not vivs:
+                    continue
+                plantas.append({'id': planta_id, 'nombre': planta.get('nombre'),
+                                'vivs': vivs})
+            if plantas:
+                portales.append({
+                    'id': portal_id,
+                    'nombre': portal.get('nombre'),
+                    'referencia_portal': portal.get('referencia') or portal.get('nombre'),
+                    'plantas': plantas,
+                })
+        if portales:
+            bloques.append({
+                'id': f'src_{slug}_b{i_bloque}',
+                'nombre': (bloque_ficha.get('nombre')
+                           or obra.get('bloque_revision') or obra['nombre']),
+                'portales': portales,
             })
-    if not portales:
+    if not bloques:
         return None
 
     catalogo = []
@@ -324,17 +343,16 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
             'tajos': len(catalogo),
             'estados_precargados': len(estados),
             'viviendas_planta': sum(
-                len(planta['vivs']) for portal in portales for planta in portal['plantas']
+                len(planta['vivs'])
+                for bloque_reg in bloques
+                for portal in bloque_reg['portales']
+                for planta in portal['plantas']
             ),
             'listos': resumen.get('listos', 0),
             'verificar': resumen.get('verificar', 0),
             'bloqueados': resumen.get('bloqueados', 0),
         },
-        'bloques': [{
-            'id': f'src_{slug}_b1',
-            'nombre': bloques_ficha[0].get('nombre') or obra.get('bloque_revision') or obra['nombre'],
-            'portales': portales,
-        }],
+        'bloques': bloques,
         'catalog': catalogo,
         'estados': estados,
     }

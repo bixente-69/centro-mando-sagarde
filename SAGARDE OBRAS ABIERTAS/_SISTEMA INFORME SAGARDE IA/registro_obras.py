@@ -69,6 +69,22 @@ OBRAS = [
         'materiales_rel': os.path.join(
             'REVISIONES', 'hoja de entrega de materiales GORLIZ.xlsx'),
     },
+    {
+        # Obra ficticia. Sirve para verificar la lectura de hojas marcadas en
+        # obra sin tocar datos reales: como se controlan sus dos revisiones,
+        # la respuesta correcta se conoce de antemano. Nacio de su propia
+        # hoja de alta (REVISION OBRA PRUEBA 05082026.pdf), en blanco, que es
+        # la que fija su distribucion: 2 bloques, 3 portales, 31 ubicaciones.
+        'id': 'prueba',
+        'nombre': '2026 OBRA PRUEBA',
+        'aliases': ['OBRA PRUEBA'],
+        'subtitulo': 'Obra de pruebas · No es una obra real · 2 bloques, 3 portales, 31 ubicaciones',
+        'adaptador': 'adaptador_prueba',
+        'carpeta_obra': '2026 OBRA PRUEBA',
+        'bloque_revision': 'BLOQUE 1',
+        'materiales_rel': os.path.join(
+            'REVISIONES', 'hoja de entrega de materiales OBRA PRUEBA.xlsx'),
+    },
 ]
 
 

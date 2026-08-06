@@ -192,7 +192,30 @@ Contiene el diccionario confirmado, las traducciones históricas, la
 especialización de tajos, la corrección de falsas alertas y el contrato del
 informe ejecutivo. Leerla antes de volver a preguntar por esos asuntos.
 
-**Revisiones de campo a memoria:** cuando el usuario entregue un PDF corregido a boli, aplicar el flujo completo de `_MOTOR_SAGARDE/CLAUDE.md` y la skill local `sagarde-revision`: validar trazos negros y corrector blanco, crear sidecar y PDF oficial, incorporar la revisión a ficha/memoria, y comprobar por separado el registro del generador. No cerrar con fechas o recuentos discordantes.
+**Revisiones de campo a la base (paso 4 del ciclo, implementado el
+05/08/2026).** Cuando Bixente entregue una hoja marcada a boli:
+
+```bash
+python leer_hoja_marcada.py "<hoja.pdf>" <id_obra> --preparar
+# la IA mira los recortes de <hoja>.recortes/ y escribe <hoja>.clasificacion.json
+python leer_hoja_marcada.py "<hoja.pdf>" <id_obra> --aplicar <clasificacion> --fecha DD/MM/AAAA --escribir
+```
+
+Son **dos fases a propósito**: el código pone la clave de cada celda por
+geometría y la vista pone la letra. El error caro no es confundir `X` con `M`,
+es poner la marca en la fila equivocada.
+
+- **Sin tinta no hay cambio.** Clasificar una celda sin tinta aborta.
+- **Nada se descarta solo:** una celda con poca tinta sale como DUDOSA y hay
+  que resolverla a mano, aunque sea marcándola `descartada`.
+- **La fecha no se deduce de la hoja**: la de la cabecera es la de generación.
+- Para dar de alta una obra nueva desde su hoja **en blanco**:
+  `alta_obra_desde_hoja.py`. La distribución la manda la hoja: si trae 15
+  bloques, se registran 15.
+- La lectura de rejilla es común: `rejilla_hoja.py`. **No reescribirla.**
+
+No cerrar con fechas o recuentos discordantes, y reportar siempre el
+antes/después.
 
 Guardar en memoria: reglas de interpretación de hojas, estructura de cada
 obra, nombres de tajos, criterios de cálculo, dependencias entre gremios,
