@@ -7,7 +7,7 @@
   "revision_caducada": false,
   "estado_obra": "Primera fase entregada; 2A FASE en curso en planta baja (viviendas A/B)",
   "historial_confirmado_terminado": false,
-  "generado": "06/08/2026 09:06",
+  "generado": "06/08/2026 09:24",
   "resumen": {
     "listos": 1,
     "verificar": 1,
@@ -18,7 +18,7 @@
     "dudas": 1,
     "terminados": 30,
     "inventario_total": 36,
-    "detalle_total": 2404,
+    "detalle_total": 2534,
     "preguntas_pendientes": 1,
     "viviendas": 1,
     "zonas_comunes": 0,
@@ -48280,6 +48280,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Apartamento 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -48310,6 +48336,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Apartamento 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -48384,6 +48436,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Apartamento 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -48414,6 +48492,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Apartamento 4",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -48488,6 +48592,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Apartamento 5",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -48518,6 +48648,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Apartamento 6",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -48592,6 +48748,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Apartamento 7",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -48622,6 +48804,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Apartamento 8",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -48696,6 +48904,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Apartamento 9",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -48736,6 +48970,162 @@
       "edificio": "Obispo Orueta 2",
       "planta": "1",
       "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Montantes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Zonas Comunes 2",
       "estado": "X",
       "estado_actual": "X",
       "categoria": "TERMINADO",
@@ -48800,6 +49190,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Apartamento 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -48830,6 +49246,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Apartamento 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -48904,6 +49346,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Apartamento 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -48934,6 +49402,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Apartamento 4",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -49008,6 +49502,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Apartamento 5",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -49038,6 +49558,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Apartamento 6",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -49112,6 +49658,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Apartamento 7",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -49142,6 +49714,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Apartamento 8",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -49216,6 +49814,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Apartamento 9",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -49256,6 +49880,162 @@
       "edificio": "Obispo Orueta 2",
       "planta": "2",
       "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Montantes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Zonas Comunes 2",
       "estado": "X",
       "estado_actual": "X",
       "categoria": "TERMINADO",
@@ -49320,6 +50100,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Apartamento 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -49350,6 +50156,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Apartamento 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -49424,6 +50256,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Apartamento 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -49454,6 +50312,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Apartamento 4",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -49528,6 +50412,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Apartamento 5",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -49558,6 +50468,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Apartamento 6",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -49632,6 +50568,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Apartamento 7",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -49662,6 +50624,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Apartamento 8",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -49736,6 +50724,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Apartamento 9",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -49776,6 +50790,162 @@
       "edificio": "Obispo Orueta 2",
       "planta": "3",
       "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Montantes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Zonas Comunes 2",
       "estado": "X",
       "estado_actual": "X",
       "categoria": "TERMINADO",
@@ -49840,6 +51010,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Apartamento 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -49870,6 +51066,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Apartamento 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -49944,6 +51166,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Apartamento 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -49974,6 +51222,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Apartamento 4",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -50048,6 +51322,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Apartamento 5",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -50078,6 +51378,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Apartamento 6",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -50152,6 +51478,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Apartamento 7",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -50182,6 +51534,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Apartamento 8",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -50256,6 +51634,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Apartamento 9",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -50296,6 +51700,162 @@
       "edificio": "Obispo Orueta 2",
       "planta": "4",
       "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Montantes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Zonas Comunes 2",
       "estado": "X",
       "estado_actual": "X",
       "categoria": "TERMINADO",
@@ -50360,6 +51920,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Apartamento 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -50390,6 +51976,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Apartamento 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -50464,6 +52076,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Apartamento 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -50494,6 +52132,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Apartamento 4",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -50568,6 +52232,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Apartamento 5",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -50598,6 +52288,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Apartamento 6",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -50672,6 +52388,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Apartamento 7",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -50702,6 +52444,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Apartamento 8",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -50776,6 +52544,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Apartamento 9",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -50816,6 +52610,162 @@
       "edificio": "Obispo Orueta 2",
       "planta": "5",
       "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Montantes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Zonas Comunes 2",
       "estado": "X",
       "estado_actual": "X",
       "categoria": "TERMINADO",
@@ -51140,6 +53090,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "6",
+      "unidad": "Apartamento 6",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -51170,6 +53146,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "6",
+      "unidad": "Apartamento 7",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -51244,6 +53246,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "6",
+      "unidad": "Apartamento 8",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -51274,6 +53302,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "6",
+      "unidad": "Apartamento 9",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -51336,6 +53390,110 @@
       "edificio": "Obispo Orueta 2",
       "planta": "6",
       "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "6",
+      "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "6",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "6",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "6",
+      "unidad": "Zonas Comunes 2",
       "estado": "X",
       "estado_actual": "X",
       "categoria": "TERMINADO",
@@ -51378,6 +53536,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "-1",
+      "unidad": "Apartamento GYM",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -51430,6 +53614,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "-1",
+      "unidad": "Apartamento H1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -51482,6 +53692,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "-1",
+      "unidad": "Apartamento H2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -51534,6 +53770,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "-1",
+      "unidad": "Apartamento H3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -51586,6 +53848,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "-1",
+      "unidad": "Apartamento V1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -51638,6 +53926,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "-1",
+      "unidad": "Apartamento V2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -51690,6 +54004,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "-1",
+      "unidad": "Apartamento V3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -51742,6 +54082,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "-1",
+      "unidad": "Apartamento WC1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -51794,6 +54160,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "-1",
+      "unidad": "Apartamento WC2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -51894,6 +54286,32 @@
       "ultima_fecha": "27/07/2026"
     },
     {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Apartamento 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
       "tarea_id": "pintura_habitaciones",
       "trabajo": "Pintura de habitaciones",
       "trabajos_originales": [
@@ -51924,6 +54342,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Apartamento 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -52392,6 +54836,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Apartamento C1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -52444,6 +54914,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Apartamento C2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -52496,6 +54992,32 @@
       "trabajo": "Pintura de WC",
       "trabajos_originales": [
         "Pintura WC"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Apartamento C3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
       ],
       "propiedad": "externo",
       "ambito": "vivienda",
@@ -52583,11 +55105,89 @@
       "display_group": "pintura",
       "edificio": "Obispo Orueta 2",
       "planta": "PB",
+      "unidad": "Apartamento OF",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "pintura_segunda",
+      "trabajo": "Pintura — segunda mano",
+      "trabajos_originales": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 290,
+      "fase_nombre": "Pintura final",
+      "display_group": "pintura",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Zonas Comunes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -54757,7 +57357,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -54783,7 +57384,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -54809,7 +57411,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -54835,7 +57438,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -54861,7 +57465,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -54887,7 +57492,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -54913,7 +57519,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -54939,7 +57546,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -54965,7 +57573,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -54991,7 +57600,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55017,7 +57627,138 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Montantes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "1",
+      "unidad": "Zonas Comunes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55043,7 +57784,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55069,7 +57811,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55095,7 +57838,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55121,7 +57865,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55147,7 +57892,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55173,7 +57919,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55199,7 +57946,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55225,7 +57973,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55251,7 +58000,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55277,7 +58027,138 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Montantes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "2",
+      "unidad": "Zonas Comunes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55303,7 +58184,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55329,7 +58211,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55355,7 +58238,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55381,7 +58265,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55407,7 +58292,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55433,7 +58319,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55459,7 +58346,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55485,7 +58373,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55511,7 +58400,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55537,7 +58427,138 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Montantes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "3",
+      "unidad": "Zonas Comunes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55563,7 +58584,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55589,7 +58611,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55615,7 +58638,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55641,7 +58665,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55667,7 +58692,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55693,7 +58719,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55719,7 +58746,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55745,7 +58773,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55771,7 +58800,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55797,7 +58827,138 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Montantes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "4",
+      "unidad": "Zonas Comunes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55823,7 +58984,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55849,7 +59011,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55875,7 +59038,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55901,7 +59065,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55927,7 +59092,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55953,7 +59119,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -55979,7 +59146,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56005,7 +59173,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56031,7 +59200,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56042,6 +59212,136 @@
       "edificio": "Obispo Orueta 2",
       "planta": "5",
       "unidad": "Apartamento 10",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Montantes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "5",
+      "unidad": "Zonas Comunes 2",
       "estado": "X",
       "estado_actual": "X",
       "categoria": "TERMINADO",
@@ -56187,7 +59487,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56213,7 +59514,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56239,7 +59541,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56265,7 +59568,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56291,7 +59595,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56317,7 +59622,86 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "6",
+      "unidad": "Montantes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "6",
+      "unidad": "Montantes 3",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "6",
+      "unidad": "Zonas Comunes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56343,7 +59727,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56369,7 +59754,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56395,7 +59781,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56421,7 +59808,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56447,7 +59835,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56473,7 +59862,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56499,7 +59889,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56525,7 +59916,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56585,7 +59977,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56611,7 +60004,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56637,7 +60031,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56663,7 +60058,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56689,7 +60085,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56715,7 +60112,8 @@
       "tarea_id": "placas_tapas",
       "trabajo": "Placas y tapas",
       "trabajos_originales": [
-        "Placas + Tps. Cuadro"
+        "Placas + Tps. Cuadro",
+        "Placas y tapas"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -56766,6 +60164,58 @@
         "Pintura de pasillos",
         "Telemecanizado"
       ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Zonas Comunes 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/07/2026"
+    },
+    {
+      "tarea_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "trabajos_originales": [
+        "Placas y tapas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "display_group": "placas_tapas",
+      "edificio": "Obispo Orueta 2",
+      "planta": "PB",
+      "unidad": "Zonas Comunes 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -63943,6 +67393,41 @@
         },
         {
           "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Montantes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Zonas Comunes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
           "planta": "2",
           "unidad": "Apartamento 1",
           "estado": "X",
@@ -64013,6 +67498,41 @@
         },
         {
           "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Montantes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Zonas Comunes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
           "planta": "3",
           "unidad": "Apartamento 1",
           "estado": "X",
@@ -64083,6 +67603,41 @@
         },
         {
           "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Montantes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Zonas Comunes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
           "planta": "4",
           "unidad": "Apartamento 1",
           "estado": "X",
@@ -64153,6 +67708,41 @@
         },
         {
           "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Montantes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Zonas Comunes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
           "planta": "5",
           "unidad": "Apartamento 1",
           "estado": "X",
@@ -64223,6 +67813,41 @@
         },
         {
           "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Montantes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Zonas Comunes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
           "planta": "6",
           "unidad": "Apartamento 1",
           "estado": "X",
@@ -64288,6 +67913,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "6",
           "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "6",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "6",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "6",
+          "unidad": "Zonas Comunes 2",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -64409,6 +68055,20 @@
           "unidad": "B",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Zonas Comunes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -64416,10 +68076,10 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 77,
-      "estado_actual": "Pendiente: 2 · X: 75",
+      "n_ubicaciones": 107,
+      "estado_actual": "Pendiente: 2 · X: 105",
       "resumen_categorias": {
-        "TERMINADO": 75,
+        "TERMINADO": 105,
         "BLOQUEADO": 2
       },
       "motivo": "Dependencias pendientes: Pintura de habitaciones, Pintura de WC, Pintura de pasillos, Telemecanizado. Terminado según la última confirmación válida.",
@@ -65115,7 +68775,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "1",
-          "unidad": "Apartamento 2",
+          "unidad": "Apartamento 1",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65137,6 +68797,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "1",
           "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Apartamento 3",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65199,7 +68880,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "1",
-          "unidad": "Apartamento 5",
+          "unidad": "Apartamento 4",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65221,6 +68902,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "1",
           "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Apartamento 6",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65283,6 +68985,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "1",
+          "unidad": "Apartamento 7",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Apartamento 8",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
           "unidad": "Apartamento 8",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -65339,7 +69055,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "1",
-          "unidad": "Apartamento 10",
+          "unidad": "Apartamento 9",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65361,6 +69077,55 @@
           "edificio": "Obispo Orueta 2",
           "planta": "1",
           "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Montantes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "1",
+          "unidad": "Zonas Comunes 2",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65395,7 +69160,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "2",
-          "unidad": "Apartamento 2",
+          "unidad": "Apartamento 1",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65417,6 +69182,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "2",
           "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Apartamento 3",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65479,7 +69265,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "2",
-          "unidad": "Apartamento 5",
+          "unidad": "Apartamento 4",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65501,6 +69287,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "2",
           "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Apartamento 6",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65563,6 +69370,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "2",
+          "unidad": "Apartamento 7",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Apartamento 8",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
           "unidad": "Apartamento 8",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -65619,7 +69440,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "2",
-          "unidad": "Apartamento 10",
+          "unidad": "Apartamento 9",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65641,6 +69462,55 @@
           "edificio": "Obispo Orueta 2",
           "planta": "2",
           "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Montantes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "2",
+          "unidad": "Zonas Comunes 2",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65675,7 +69545,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "3",
-          "unidad": "Apartamento 2",
+          "unidad": "Apartamento 1",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65697,6 +69567,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "3",
           "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Apartamento 3",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65759,7 +69650,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "3",
-          "unidad": "Apartamento 5",
+          "unidad": "Apartamento 4",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65781,6 +69672,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "3",
           "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Apartamento 6",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65843,6 +69755,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "3",
+          "unidad": "Apartamento 7",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Apartamento 8",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
           "unidad": "Apartamento 8",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -65899,7 +69825,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "3",
-          "unidad": "Apartamento 10",
+          "unidad": "Apartamento 9",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65921,6 +69847,55 @@
           "edificio": "Obispo Orueta 2",
           "planta": "3",
           "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Montantes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "3",
+          "unidad": "Zonas Comunes 2",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65955,7 +69930,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "4",
-          "unidad": "Apartamento 2",
+          "unidad": "Apartamento 1",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -65977,6 +69952,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "4",
           "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Apartamento 3",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66039,7 +70035,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "4",
-          "unidad": "Apartamento 5",
+          "unidad": "Apartamento 4",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66061,6 +70057,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "4",
           "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Apartamento 6",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66123,6 +70140,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "4",
+          "unidad": "Apartamento 7",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Apartamento 8",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
           "unidad": "Apartamento 8",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -66179,7 +70210,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "4",
-          "unidad": "Apartamento 10",
+          "unidad": "Apartamento 9",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66201,6 +70232,55 @@
           "edificio": "Obispo Orueta 2",
           "planta": "4",
           "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Montantes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "4",
+          "unidad": "Zonas Comunes 2",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66235,7 +70315,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "5",
-          "unidad": "Apartamento 2",
+          "unidad": "Apartamento 1",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66257,6 +70337,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "5",
           "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Apartamento 3",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66319,7 +70420,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "5",
-          "unidad": "Apartamento 5",
+          "unidad": "Apartamento 4",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66341,6 +70442,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "5",
           "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Apartamento 5",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Apartamento 6",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66403,6 +70525,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "5",
+          "unidad": "Apartamento 7",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Apartamento 8",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
           "unidad": "Apartamento 8",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -66459,7 +70595,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "5",
-          "unidad": "Apartamento 10",
+          "unidad": "Apartamento 9",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66481,6 +70617,55 @@
           "edificio": "Obispo Orueta 2",
           "planta": "5",
           "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Montantes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "5",
+          "unidad": "Zonas Comunes 2",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66655,7 +70840,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "6",
-          "unidad": "Apartamento 7",
+          "unidad": "Apartamento 6",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66677,6 +70862,27 @@
           "edificio": "Obispo Orueta 2",
           "planta": "6",
           "unidad": "Apartamento 7",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "6",
+          "unidad": "Apartamento 7",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "6",
+          "unidad": "Apartamento 7",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "6",
+          "unidad": "Apartamento 8",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66739,7 +70945,7 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "6",
-          "unidad": "Apartamento 10",
+          "unidad": "Apartamento 9",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66761,6 +70967,48 @@
           "edificio": "Obispo Orueta 2",
           "planta": "6",
           "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "6",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "6",
+          "unidad": "Apartamento 10",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "6",
+          "unidad": "Montantes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "6",
+          "unidad": "Montantes 3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "6",
+          "unidad": "Zonas Comunes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "-1",
+          "unidad": "Apartamento GYM",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66809,6 +71057,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "-1",
+          "unidad": "Apartamento H1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "-1",
+          "unidad": "Apartamento H2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "-1",
           "unidad": "Apartamento H2",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -66824,6 +71086,13 @@
           "edificio": "Obispo Orueta 2",
           "planta": "-1",
           "unidad": "Apartamento H2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "-1",
+          "unidad": "Apartamento H3",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66872,6 +71141,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "-1",
+          "unidad": "Apartamento V1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "-1",
+          "unidad": "Apartamento V2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "-1",
           "unidad": "Apartamento V2",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -66914,6 +71197,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "-1",
+          "unidad": "Apartamento V3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "-1",
+          "unidad": "Apartamento WC1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "-1",
           "unidad": "Apartamento WC1",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -66929,6 +71226,13 @@
           "edificio": "Obispo Orueta 2",
           "planta": "-1",
           "unidad": "Apartamento WC1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "-1",
+          "unidad": "Apartamento WC2",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -66991,6 +71295,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
+          "unidad": "Apartamento 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Apartamento 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
           "unidad": "Apartamento 2",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -67201,6 +71519,20 @@
         {
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
+          "unidad": "Apartamento C1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Apartamento C2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
           "unidad": "Apartamento C2",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -67237,6 +71569,20 @@
           "edificio": "Obispo Orueta 2",
           "planta": "PB",
           "unidad": "Apartamento C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Apartamento C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Apartamento OF",
           "estado": "X",
           "categoria": "TERMINADO"
         },
@@ -67274,6 +71620,20 @@
           "unidad": "B",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Zonas Comunes 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Obispo Orueta 2",
+          "planta": "PB",
+          "unidad": "Zonas Comunes 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -67285,10 +71645,10 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 313,
-      "estado_actual": "Pendiente: 2 · X: 311",
+      "n_ubicaciones": 413,
+      "estado_actual": "Pendiente: 2 · X: 411",
       "resumen_categorias": {
-        "TERMINADO": 311,
+        "TERMINADO": 411,
         "OTROS_GREMIOS": 2
       },
       "motivo": "Condición obligatoria para placas, tapas y luminarias finales. Terminado según la última confirmación válida.",

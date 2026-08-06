@@ -38,6 +38,7 @@
       }
     }
   },
+  "_declaracion_05082026": "Bixente, 05/08/2026: 'orueta esta terminada puedes poner x en todas ellas'. Se aplico a las 200 celdas que seguian en '?': 100 de 'Pintura segunda mano' y 100 de 'Placas y tapas'. Esos dos tajos NO existian en la ficha el 04/08 cuando se declaro terminado_completo: los trajo la revision del 27/07/2026, que solo cubria PB/A y PB/B, y _completar_matriz creo las otras 100 ubicaciones de cada uno como '?'. Por eso la declaracion anterior no los alcanzo. Las 8 celdas en 'P' de PB/A y PB/B NO se tocan: son la segunda fase, que la propia declaracion del 04/08 excluye y que la revision del 27/07 midio en campo como pendientes. Obispo Orueta pasa de 99.6 a 99.7.",
   "terminadas_al_100": {
     "_motivo": "Confirmado por Bixente el 04/08/2026. Son dependencias que se trataron aparte y estan acabadas; nunca llevaron marca en la hoja porque no se revisaban en ella. Sin esta declaracion entrarian como '?' (nadie las ha mirado) y no reflejarian la realidad de la obra.",
     "Obispo Orueta 2": {

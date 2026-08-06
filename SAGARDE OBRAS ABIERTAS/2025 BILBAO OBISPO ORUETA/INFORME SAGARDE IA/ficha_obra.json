@@ -3,7 +3,7 @@
   "id": "obisporueta",
   "modo": "hibrida",
   "fecha_entrada_digital": "27/07/2026",
-  "actualizado": "06/08/2026 09:06",
+  "actualizado": "06/08/2026 09:24",
   "identidad": {
     "nombre": "2025 BILBAO OBISPO ORUETA",
     "carpeta": "2025 BILBAO OBISPO ORUETA",
@@ -23219,1004 +23219,1204 @@
       "r": "rev_27072026"
     },
     "p1__pb__pintura_segunda__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__placas_tapas__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__pintura_segunda__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__placas_tapas__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__pintura_segunda__Apartamento C1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__placas_tapas__Apartamento C1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__pintura_segunda__Apartamento C2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__placas_tapas__Apartamento C2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__pintura_segunda__Apartamento C3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__placas_tapas__Apartamento C3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__pintura_segunda__Apartamento OF": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__placas_tapas__Apartamento OF": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__pintura_segunda__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__placas_tapas__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__pintura_segunda__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__pb__placas_tapas__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__pintura_segunda__Apartamento GYM": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__placas_tapas__Apartamento GYM": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__pintura_segunda__Apartamento H1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__placas_tapas__Apartamento H1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__pintura_segunda__Apartamento H2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__placas_tapas__Apartamento H2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__pintura_segunda__Apartamento H3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__placas_tapas__Apartamento H3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__pintura_segunda__Apartamento V1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__placas_tapas__Apartamento V1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__pintura_segunda__Apartamento V2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__placas_tapas__Apartamento V2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__pintura_segunda__Apartamento V3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__placas_tapas__Apartamento V3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__pintura_segunda__Apartamento WC1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__placas_tapas__Apartamento WC1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__pintura_segunda__Apartamento WC2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__-1__placas_tapas__Apartamento WC2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Montantes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Montantes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Apartamento 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Apartamento 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Apartamento 4": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Apartamento 4": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Apartamento 5": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Apartamento 5": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__pintura_segunda__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__1__placas_tapas__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Montantes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Montantes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Apartamento 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Apartamento 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Apartamento 4": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Apartamento 4": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Apartamento 5": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Apartamento 5": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__pintura_segunda__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__2__placas_tapas__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Montantes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Montantes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Apartamento 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Apartamento 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Apartamento 4": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Apartamento 4": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Apartamento 5": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Apartamento 5": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__pintura_segunda__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__3__placas_tapas__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Montantes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Montantes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Apartamento 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Apartamento 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Apartamento 4": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Apartamento 4": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Apartamento 5": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Apartamento 5": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__pintura_segunda__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__4__placas_tapas__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Montantes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Montantes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Zonas Comunes 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Apartamento 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Apartamento 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Apartamento 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Apartamento 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Apartamento 4": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Apartamento 4": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Apartamento 5": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Apartamento 5": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__pintura_segunda__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__5__placas_tapas__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__pintura_segunda__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__placas_tapas__Montantes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__pintura_segunda__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__placas_tapas__Montantes 3": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__pintura_segunda__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__placas_tapas__Zonas Comunes 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__pintura_segunda__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__placas_tapas__Apartamento 6": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__pintura_segunda__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__placas_tapas__Apartamento 7": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__pintura_segunda__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__placas_tapas__Apartamento 8": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__pintura_segunda__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__placas_tapas__Apartamento 9": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__pintura_segunda__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     },
     "p1__6__placas_tapas__Apartamento 10": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "05/08/2026",
+      "r": null,
+      "origen": "confirmado_usuario: obra terminada (05/08/2026)"
     }
   },
   "revisiones": [
