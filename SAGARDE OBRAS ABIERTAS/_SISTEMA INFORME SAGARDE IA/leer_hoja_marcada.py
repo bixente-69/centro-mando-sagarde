@@ -103,6 +103,28 @@ def puntos_de(anot):
             for p in crudos]
 
 
+def tipo_de_trazo(anot):
+    """'corrector' o 'marca'. Es la diferencia entre borrar y escribir.
+
+    Medido el 05/08/2026 en las hojas reales de Bolueta y Mungia:
+
+        negro  [0,0,0]  ancho 1.5-3      -> lo escrito a boli
+        blanco [1,1,1]  ancho 17-28.5    -> corrector, tapa lo impreso
+
+    El corrector NO es un error ni ruido: es la tecnica correcta de Bixente
+    para decir "esta marca impresa ya no vale", y tiene sentido justamente
+    porque quien lee es la vista. En Mungia aparece el patron completo: una
+    pasada de corrector y encima un trazo negro con el estado nuevo.
+
+    Tratarlos igual invierte el significado: una celda tapada se leeria como
+    una celda marcada.
+    """
+    stroke = (anot.colors or {}).get('stroke') or []
+    if len(stroke) >= 3 and min(stroke[:3]) >= 0.85:
+        return 'corrector'
+    return 'marca'
+
+
 def repartir(puntos, celdas):
     """clave de celda -> nº de puntos que caen dentro. Y los que caen fuera.
 
@@ -125,20 +147,72 @@ def repartir(puntos, celdas):
 # ------------------------------------------------------- claves de la ficha
 
 def indice_de_ficha(ficha):
-    """(portal_nombre, planta_nombre, viv, ) -> (portal_id, planta_id, ubi_id).
+    """(portal_id, planta_nombre, etiqueta_vivienda) -> (planta_id, ubi_id).
 
-    La hoja trae nombres ("PORTAL 2", "1ª", "A") y la ficha guarda ids
-    ("p2", "1ª", "A"). Se resuelve por nombre exacto: si no casa, se para.
+    Dos motivos para no resolver por nombre exacto:
+
+    - La hoja imprime la vivienda por su ALIAS, no por su id. En Mungia la
+      ubicacion 'A' se imprime 'A2' (vivienda A de 2 habitaciones). Buscar
+      por id no encuentra ninguna y la revision entera se pierde.
+    - El portal no se resuelve aqui sino en `resolver_portal`, porque el
+      formato viejo de hoja llama "bloque" a lo que la ficha llama portal.
     """
+    alias = (ficha.get('estructura') or {}).get('alias_historico') or {}
     indice = {}
     for bloque in (ficha.get('estructura') or {}).get('bloques') or []:
         for portal in bloque.get('portales') or []:
             for planta in portal.get('plantas') or []:
                 for ubi in planta.get('ubicaciones') or []:
-                    clave = (bloque.get('nombre'), portal.get('nombre'),
-                             planta.get('nombre'), ubi['id'])
-                    indice[clave] = (portal['id'], planta['id'], ubi['id'])
+                    destino = (planta['id'], ubi['id'])
+                    etiqueta = alias.get(
+                        f"{portal['id']}__{planta['id']}__{ubi['id']}")
+                    for nombre in {ubi['id'], etiqueta} - {None}:
+                        indice[(portal['id'], planta.get('nombre'),
+                                str(nombre))] = destino
     return indice
+
+
+def resolver_portal(ficha, etiquetas, aviso=''):
+    """Que portal de la ficha es el que identifica esta tabla.
+
+    La identificacion de la hoja no tiene un formato estable:
+
+        OBRA PRUEBA · 05/08/2026 · BLOQUE 1 · PORTAL 1 · PLANTAS ...   (hoy)
+        ZR1 · ZR1.2 · PLANTA PB                                        (Mungia)
+        BOLUETA · PORTAL UNICO · PLANTAS PB · 1                        (Bolueta)
+
+    En la de Bolueta, "BOLUETA" es lo que la ficha guarda como PORTAL y
+    "PORTAL UNICO" es solo una etiqueta. Tomar la posicion como buena pondria
+    las marcas en otro portal, que es el error caro de este proyecto.
+
+    Por eso no se adivina: se busca que par (bloque, portal) de la ficha casa
+    con las etiquetas. Si no hay exactamente uno, se para.
+    """
+    pares = []
+    for bloque in (ficha.get('estructura') or {}).get('bloques') or []:
+        for portal in bloque.get('portales') or []:
+            pares.append((rejilla.fold(bloque.get('nombre')),
+                          rejilla.fold(portal.get('nombre')),
+                          portal['id'], bloque.get('nombre'),
+                          portal.get('nombre')))
+    vistas = {rejilla.fold(e) for e in etiquetas}
+
+    # 1) casan bloque Y portal: es lo que hace falta cuando dos bloques
+    #    repiten nombre de portal ("PORTAL 1" en BLOQUE 1 y en BLOQUE 2).
+    exactos = [p for p in pares if p[0] in vistas and p[1] in vistas]
+    if len(exactos) == 1:
+        return exactos[0][2]
+    # 2) casa solo el portal, y es unico en toda la obra.
+    solo = [p for p in pares if p[1] in vistas]
+    if len(solo) == 1:
+        return solo[0][2]
+
+    conocidos = ', '.join(f'{b} / {p}' for _fb, _fp, _id, b, p in pares)
+    raise LecturaImposible(
+        f'{aviso}la identificacion {etiquetas} no casa con un portal unico de '
+        f'la ficha. La ficha tiene: {conocidos}. Antes que elegir uno se para: '
+        f'una marca en el portal equivocado es un dato plausible en el sitio '
+        f'equivocado.')
 
 
 # ----------------------------------------------------------------- preparar
@@ -165,46 +239,66 @@ def preparar(ruta, obra, ficha, carpeta_recortes=None, zoom=6):
                 f'pagina no tiene rejilla legible. Antes que perder la marca, '
                 f'se para.')
         celdas = {(c['planta'], c['viv'], c['tajo']): c for c in tabla['celdas']}
+        portal_id = resolver_portal(ficha, tabla['etiquetas'],
+                                    aviso=f'pagina {npag}: ')
 
+        # Se acumula POR CELDA antes de decidir nada: una misma celda puede
+        # llevar corrector y encima un trazo negro, que es como se anota un
+        # cambio sobre una marca impresa.
+        por_celda = defaultdict(lambda: {'marca': 0, 'corrector': 0})
         for anot in anots:
             puntos = puntos_de(anot)
             if not puntos:
                 sin_tinta += 1
                 continue
+            tipo = tipo_de_trazo(anot)
             reparto, fuera = repartir(puntos, list(celdas.values()))
             fuera_total += fuera
-            for (planta, viv, tajo), n_pts in reparto.items():
-                celda = celdas[(planta, viv, tajo)]
-                clave_ficha = indice.get(
-                    (tabla['bloque'], tabla['portal'], planta, viv))
-                if clave_ficha is None:
-                    raise LecturaImposible(
-                        f'pagina {npag}: la hoja marca '
-                        f'{tabla["bloque"]}/{tabla["portal"]}/{planta}/{viv} '
-                        f'y la ficha de la obra no tiene esa ubicacion.')
-                pid, plid, uid = clave_ficha
-                clave = f'{pid}__{plid}__{tajo}__{uid}'
-                recorte = None
-                if carpeta_recortes:
-                    x0, t0, x1, t1 = celda['bbox']
-                    pix = pagina.get_pixmap(
-                        matrix=fitz.Matrix(zoom, zoom),
-                        clip=fitz.Rect(x0 - 1, t0 - 1, x1 + 1, t1 + 1))
-                    recorte = f'{clave}.png'
-                    pix.save(os.path.join(carpeta_recortes, recorte))
-                candidatas.append({
-                    'clave': clave,
-                    'pagina': npag,
-                    'bloque': tabla['bloque'], 'portal': tabla['portal'],
-                    'planta': planta, 'vivienda': viv,
-                    'tajo': tajo, 'tajo_nombre': celda['tajo_nombre'],
-                    'puntos': n_pts,
-                    'dudosa': n_pts < PUNTOS_DUDOSA,
-                    'antes': ((ficha.get('estados') or {})
-                              .get(clave, {}) or {}).get('v'),
-                    'recorte': recorte,
-                    'valor': None,
-                })
+            for destino, n_pts in reparto.items():
+                por_celda[destino][tipo] += n_pts
+
+        for (planta, viv, tajo), cuenta in por_celda.items():
+            celda = celdas[(planta, viv, tajo)]
+            clave_ficha = indice.get((portal_id, planta, viv))
+            if clave_ficha is None:
+                raise LecturaImposible(
+                    f'pagina {npag}: la hoja marca planta {planta} / '
+                    f'vivienda {viv} del portal {portal_id}, y la ficha '
+                    f'no tiene esa ubicacion (ni por id ni por alias).')
+            plid, uid = clave_ficha
+            clave = f'{portal_id}__{plid}__{tajo}__{uid}'
+            recorte = None
+            if carpeta_recortes:
+                x0, t0, x1, t1 = celda['bbox']
+                pix = pagina.get_pixmap(
+                    matrix=fitz.Matrix(zoom, zoom),
+                    clip=fitz.Rect(x0 - 1, t0 - 1, x1 + 1, t1 + 1))
+                recorte = f'{clave}.png'
+                pix.save(os.path.join(carpeta_recortes, recorte))
+            # Manda el trazo negro: si hay corrector Y marca, es que se tapo
+            # lo viejo y se escribio lo nuevo encima.
+            if cuenta['marca'] >= PUNTOS_DUDOSA:
+                tipo = 'marca'
+            elif cuenta['corrector'] >= PUNTOS_DUDOSA:
+                tipo = 'corrector'
+            else:
+                tipo = 'dudosa'
+            candidatas.append({
+                'clave': clave,
+                'pagina': npag,
+                'bloque': tabla['bloque'], 'portal': tabla['portal'],
+                'planta': planta, 'vivienda': viv,
+                'tajo': tajo, 'tajo_nombre': celda['tajo_nombre'],
+                'puntos': cuenta['marca'] + cuenta['corrector'],
+                'puntos_marca': cuenta['marca'],
+                'puntos_corrector': cuenta['corrector'],
+                'tipo': tipo,
+                'dudosa': tipo == 'dudosa',
+                'antes': ((ficha.get('estados') or {})
+                          .get(clave, {}) or {}).get('v'),
+                'recorte': recorte,
+                'valor': None,
+            })
 
     # Todas las celdas que la hoja imprime, tengan tinta o no. Hacen falta
     # para el paso siguiente: si la hoja se ha llevado a obra, una casilla en
@@ -214,12 +308,13 @@ def preparar(ruta, obra, ficha, carpeta_recortes=None, zoom=6):
     # tajos son casi del final.
     celdas_hoja = []
     for npag, tabla in paginas.items():
+        pid = resolver_portal(ficha, tabla['etiquetas'],
+                              aviso=f'pagina {npag}: ')
         for c in tabla['celdas']:
-            clave_ficha = indice.get(
-                (tabla['bloque'], tabla['portal'], c['planta'], c['viv']))
+            clave_ficha = indice.get((pid, c['planta'], c['viv']))
             if clave_ficha is None:
                 continue
-            pid, plid, uid = clave_ficha
+            plid, uid = clave_ficha
             celdas_hoja.append(f'{pid}__{plid}__{c["tajo"]}__{uid}')
 
     candidatas.sort(key=lambda c: (c['pagina'], c['clave']))
@@ -330,6 +425,8 @@ def main():
                         'asi que en blanco significa que ese tajo no ha '
                         'empezado y cuenta en el porcentaje. "desconocido": '
                         'la hoja no cubrio esa parte y se dejan como estaban.')
+    p.add_argument('--reemplazar', action='store_true',
+                   help='sustituir un sidecar que ya exista para esa hoja')
     p.add_argument('--escribir', action='store_true')
     args = p.parse_args()
 
@@ -351,10 +448,14 @@ def main():
             json.dump(datos, f, ensure_ascii=False, indent=2)
         cand = datos['candidatas']
         dudosas = [c for c in cand if c['dudosa']]
+        por_tipo = Counter(c['tipo'] for c in cand)
         print(f'HOJA: {datos["hoja"]}   obra: {obra["nombre"]}')
         print(f'  celdas con tinta: {len(cand)}   '
-              f'dudosas (<{PUNTOS_DUDOSA} puntos): {len(dudosas)}   '
-              f'puntos fuera de la rejilla: {datos["puntos_fuera_de_la_rejilla"]}')
+              f'marcas: {por_tipo.get("marca", 0)}   '
+              f'corrector: {por_tipo.get("corrector", 0)}   '
+              f'dudosas (<{PUNTOS_DUDOSA} puntos): {len(dudosas)}')
+        print(f'  puntos fuera de la rejilla: '
+              f'{datos["puntos_fuera_de_la_rejilla"]}')
         por_portal = defaultdict(int)
         for c in cand:
             por_portal[f'{c["bloque"]} / {c["portal"]}'] += 1
@@ -410,7 +511,18 @@ def main():
         print('\n[SIMULACION] no se ha escrito nada.')
         return
 
-    sidecar = base + '.correcciones.json'
+    # Mismo nombre que usa el resto del sistema: "<hoja.pdf>.correcciones.json".
+    # generar_todos elige el sidecar mas reciente por la FECHA del nombre, asi
+    # que dos ficheros de la misma revision compiten y gana uno cualquiera.
+    sidecar = args.hoja + '.correcciones.json'
+    if os.path.isfile(sidecar) and not args.reemplazar:
+        anterior = (json.load(open(sidecar, encoding='utf-8')).get('estados')
+                    or {})
+        raise SystemExit(
+            f'\nYa existe {os.path.basename(sidecar)} con {len(anterior)} '
+            f'celdas, probablemente transcritas a mano. No se pisa sin '
+            f'decirlo: es la unica copia de ese trabajo. Compara primero y '
+            f'usa --reemplazar si de verdad quieres sustituirlo.')
     with open(sidecar, 'w', encoding='utf-8') as f:
         json.dump({
             'version': 1, 'hoja': datos['hoja'], 'obra': obra['id'],

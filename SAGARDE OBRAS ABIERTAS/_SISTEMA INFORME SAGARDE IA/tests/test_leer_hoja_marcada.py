@@ -5,6 +5,7 @@ Todo lo que se prueba aqui protege la misma frontera: el codigo pone la clave
 de la celda, la vista pone la letra, y ninguna de las dos puede colarse en la
 base sin que se vea.
 """
+import json
 import os
 import sys
 import unittest
@@ -122,14 +123,74 @@ class TestClaveDesdeLaGeometria(unittest.TestCase):
 
     def test_el_indice_traduce_nombres_a_ids(self):
         indice = lector.indice_de_ficha(fixtures.ficha_minima())
-        self.assertEqual(indice[('Bloque 1', 'P1', 'PB', 'A')],
-                         ('p1', 'pb', 'A'))
-        self.assertEqual(indice[('Bloque 1', 'P1', '1', 'B')],
-                         ('p1', '1', 'B'))
+        self.assertEqual(indice[('p1', 'PB', 'A')], ('pb', 'A'))
+        self.assertEqual(indice[('p1', '1', 'B')], ('1', 'B'))
 
     def test_una_ubicacion_que_la_ficha_no_conoce_no_esta_en_el_indice(self):
         indice = lector.indice_de_ficha(fixtures.ficha_minima())
-        self.assertNotIn(('Bloque 1', 'P1', 'PB', 'Z'), indice)
+        self.assertNotIn(('p1', 'PB', 'Z'), indice)
+
+    def test_la_vivienda_se_encuentra_tambien_por_su_alias(self):
+        """La hoja imprime 'A2' (vivienda A de 2 habitaciones, Mungia) donde
+        la ficha guarda 'A'. Buscar solo por id pierde la revision entera."""
+        ficha = fixtures.ficha_minima()
+        ficha['estructura']['alias_historico'] = {'p1__pb__A': 'A2'}
+        indice = lector.indice_de_ficha(ficha)
+        self.assertEqual(indice[('p1', 'PB', 'A2')], ('pb', 'A'))
+        self.assertEqual(indice[('p1', 'PB', 'A')], ('pb', 'A'))
+
+
+class TestResolverElPortal(unittest.TestCase):
+    """La identificacion de la hoja no tiene formato estable. En la de
+    Bolueta, 'BOLUETA' es lo que la ficha guarda como PORTAL y 'PORTAL UNICO'
+    es solo una etiqueta: tomar la posicion como buena pondria las marcas en
+    otro portal."""
+
+    def test_casa_por_bloque_y_portal(self):
+        self.assertEqual(
+            lector.resolver_portal(fixtures.ficha_minima(),
+                                   ['Bloque 1', 'P1']), 'p1')
+
+    def test_casa_aunque_solo_aparezca_el_portal(self):
+        self.assertEqual(
+            lector.resolver_portal(fixtures.ficha_minima(),
+                                   ['BOLUETA', 'P1', 'lo que sea']), 'p1')
+
+    def test_si_no_casa_ninguno_se_para(self):
+        with self.assertRaises(lector.LecturaImposible) as caso:
+            lector.resolver_portal(fixtures.ficha_minima(), ['ZR9', 'ZR9.9'])
+        self.assertIn('no casa', str(caso.exception))
+
+    def test_dos_bloques_con_el_mismo_nombre_de_portal_exigen_el_bloque(self):
+        ficha = fixtures.ficha_minima()
+        segundo = json.loads(json.dumps(ficha['estructura']['bloques'][0]))
+        segundo['id'] = 'b2'
+        segundo['nombre'] = 'Bloque 2'
+        segundo['portales'][0]['id'] = 'p2'
+        ficha['estructura']['bloques'].append(segundo)
+        self.assertEqual(
+            lector.resolver_portal(ficha, ['Bloque 2', 'P1']), 'p2')
+        with self.assertRaises(lector.LecturaImposible):
+            lector.resolver_portal(ficha, ['P1'])
+
+
+class TestCorrectorNoEsUnaMarca(unittest.TestCase):
+    """Blanco borra, negro escribe. Tratarlos igual invierte el significado."""
+
+    class _Anot:
+        def __init__(self, stroke):
+            self.colors = {'stroke': stroke}
+
+    def test_el_trazo_blanco_es_corrector(self):
+        self.assertEqual(
+            lector.tipo_de_trazo(self._Anot([1.0, 1.0, 1.0])), 'corrector')
+
+    def test_el_trazo_negro_es_una_marca(self):
+        self.assertEqual(
+            lector.tipo_de_trazo(self._Anot([0.0, 0.0, 0.0])), 'marca')
+
+    def test_un_trazo_sin_color_se_trata_como_marca(self):
+        self.assertEqual(lector.tipo_de_trazo(self._Anot([])), 'marca')
 
 
 class TestRepartoDeLaTinta(unittest.TestCase):

@@ -103,6 +103,17 @@ def tabla_de_tajos(ruta_generador=GENERADOR, ruta_catalogo=CATALOGO):
         raise HojaIlegible(
             'Tajos del generador que no existen en el catalogo comun: '
             + ', '.join(huerfanos))
+
+    # Y tambien por el nombre LARGO del catalogo y sus alias: las hojas
+    # anteriores imprimian "Montante de telecomunicaciones" donde la de hoy
+    # pone "Montante teleco". Sin esto una hoja de julio no se puede releer.
+    # Los nombres del generador mandan si hubiera choque, porque son los que
+    # imprime la hoja actual.
+    for tajo in por_id.values():
+        for nombre in [tajo.get('nombre'), *(tajo.get('aliases') or [])]:
+            clave = fold(nombre)
+            if clave and clave not in indice:
+                indice[clave] = tajo
     return indice
 
 
@@ -116,19 +127,43 @@ def leer_tabla(filas, texto, indice_tajos, aviso=''):
 
     Devuelve None si la tabla no es una tabla de revision (portada, pie...).
     """
+    # La fila de identificacion se busca por ESTRUCTURA, no por su contenido:
+    # ocupa toda la anchura (una celda) y va seguida de la fila de plantas
+    # (varias celdas) y la de viviendas. Anclarla en la fecha dejaba fuera el
+    # formato anterior de hoja, que no la lleva: la de Bolueta del 26/07/2026
+    # pone solo "BOLUETA · PORTAL UNICO · PLANTAS PB · 1".
     idx = ident = None
-    for i, (_bbox, celdas) in enumerate(filas):
-        candidato = texto(celdas[0]) if len(celdas) == 1 else ''
-        if FECHA.search(candidato or ''):
-            idx, ident = i, candidato
-            break
-    if idx is None or idx + 2 >= len(filas):
+    for i, (_bbox, celdas) in enumerate(filas[:-2]):
+        if len(celdas) != 1:
+            continue
+        candidato = texto(celdas[0])
+        if not candidato or '·' not in candidato:
+            continue
+        if len(filas[i + 1][1]) < 2:
+            continue
+        idx, ident = i, candidato
+        break
+    if idx is None:
         return None
 
     partes = [p.strip() for p in ident.split('·')]
-    if len(partes) < 4:
+    # La cola "PLANTAS PB · 1 · 2" no identifica nada: la reparte la geometria.
+    cabeza = []
+    for p in partes:
+        if re.match(r'^PLANTAS?\b', p, re.I):
+            break
+        cabeza.append(p)
+    if len(cabeza) < 2:
         raise HojaIlegible(f'{aviso}identificacion incompleta: {ident!r}')
-    obra, fecha, bloque, portal = partes[0], partes[1], partes[2], partes[3]
+
+    fechas = [p for p in cabeza if FECHA.fullmatch(p)]
+    # OJO: esta fecha es la de GENERACION de la hoja, no la de la revision.
+    # La de Bolueta pone 25/07/2026 y el fichero es del 26. Se devuelve como
+    # dato informativo; quien aplica la revision manda su fecha.
+    fecha = fechas[0] if fechas else None
+    etiquetas = [p for p in cabeza if p not in fechas]
+    obra = etiquetas[0] if len(etiquetas) > 2 else None
+    bloque, portal = etiquetas[-2], etiquetas[-1]
 
     # --- plantas: cada cabecera ocupa un rango x -------------------------
     plantas = []
@@ -195,6 +230,12 @@ def leer_tabla(filas, texto, indice_tajos, aviso=''):
 
     return {
         'obra': obra, 'fecha': fecha, 'bloque': bloque, 'portal': portal,
+        # Todas las etiquetas de la identificacion, sin interpretar. Quien
+        # resuelve contra la ficha las necesita: el formato viejo llama
+        # "bloque" a lo que la ficha llama portal (la hoja de Bolueta pone
+        # "BOLUETA · PORTAL UNICO" y la ficha guarda bloque ZR1 / portal
+        # BOLUETA). Adivinar la posicion pone las marcas en otro portal.
+        'etiquetas': etiquetas,
         'plantas': [{'nombre': p['nombre'], 'vivs': p['vivs']} for p in plantas],
         'columnas': columnas, 'tajos': tajos, 'celdas': celdas,
         'x_rejilla': x_rejilla,
