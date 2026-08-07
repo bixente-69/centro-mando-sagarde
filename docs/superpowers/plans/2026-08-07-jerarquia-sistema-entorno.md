@@ -932,6 +932,17 @@ sys.path.insert(0, os.path.join(ROOT_DIR, "_SISTEMA", "MOTOR", "scripts"))
 sys.path.insert(0, os.path.join(ROOT_DIR, '_SISTEMA', 'MOTOR', 'scripts'))
 ```
 
+**No te fíes de esta lista: búscalos.** Hay más de un fichero de prueba con
+ese `sys.path.insert` (la tarea 3 añadió `SIS/tests/test_auditor_sagarde.py`
+con el mismo patrón). Antes de dar el paso por terminado:
+
+```bash
+cd "D:/Nueva carpeta/OneDrive/COPIA SEGURIDAD SAGARDE" && grep -rn "_MOTOR_SAGARDE" --include=*.py --include=*.bat --include=*.cmd . | grep -v "^./_SISTEMA/MOTOR/_bak/"
+```
+
+Tiene que devolver **cero líneas de código** — sólo comentarios o
+documentación histórica, si acaso.
+
 Y los dos comentarios: `SIS/lector_hoja_tajos_pdf.py:29` y
 `SIS/adaptadores/adaptador_mungia.py:177`, donde dicen
 `_MOTOR_SAGARDE/CLAUDE.md`, poner `_SISTEMA/MOTOR/CLAUDE.md`.
