@@ -16,7 +16,11 @@ from avisos import (
 
 ROOT = Path(__file__).resolve().parent.parent
 OUTPUT = ROOT / "index.html"
-IGNORE_DIRS = {".git", ".memory", "__pycache__", "_PREVIEWS_WORD", "_MOTOR_SAGARDE"}
+# "_SISTEMA" es la carpeta tecnica de cada apartado (norma del 07/08/2026).
+# El portal publica como area de negocio TODO lo que encuentra: sin esta
+# entrada, _SISTEMA saldria en la portada como si fuera documentacion.
+IGNORE_DIRS = {".git", ".memory", "__pycache__", "_PREVIEWS_WORD",
+               "_MOTOR_SAGARDE", "_SISTEMA", "docs", "scratch"}
 IGNORE_NAMES = {"index.html"}
 APP_HINTS = ("app", "panel", "sagarde", "plantilla", "generador")
 DOC_EXTS = {".doc", ".docx", ".pdf", ".xls", ".xlsx", ".xlsm"}

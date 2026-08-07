@@ -29,7 +29,7 @@ from avisos import dias_desde_timestamp, es_aviso_por_antiguedad
 INDEX_PATH = ROOT / "index.html"
 RESUMEN_JSON = ROOT / "mantenimientos_resumen.json"
 
-IGNORE_DIRS = {".memory", "__pycache__"}
+IGNORE_DIRS = {".memory", "__pycache__", "_SISTEMA"}
 IGNORE_FILES = {"desktop.ini", "thumbs.db", "index.html"}
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".heic", ".webp"}
 DOC_EXTS = {".pdf", ".doc", ".docx", ".xls", ".xlsx", ".dwg"}

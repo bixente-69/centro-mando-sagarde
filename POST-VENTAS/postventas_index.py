@@ -23,7 +23,7 @@ RESUMEN_JSON = ROOT / "postventas_resumen.json"
 PREVIEW_DIR_NAME = "_PREVIEWS_WORD"
 PREVIEW_DIR = ROOT / PREVIEW_DIR_NAME
 
-IGNORE_DIRS = {".memory", "__pycache__", PREVIEW_DIR_NAME}
+IGNORE_DIRS = {".memory", "__pycache__", PREVIEW_DIR_NAME, "_SISTEMA"}
 IGNORE_FILES = {"desktop.ini", "thumbs.db", "index.html"}
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".gif", ".bmp", ".heic", ".webp"}
 WORD_EXTS = {".doc", ".docx"}
