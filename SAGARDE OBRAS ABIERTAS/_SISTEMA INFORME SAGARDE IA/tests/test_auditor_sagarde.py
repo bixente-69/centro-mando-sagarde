@@ -1,33 +1,48 @@
 # -*- coding: utf-8 -*-
 """Regresion para la guarda de carpetas tecnicas de auditor_sagarde.py.
 
-Hasta el 07/08/2026 la linea `"_SISTEMA" in f.parts or "INFORME SAGARDE IA"
-in str(f)` solo filtraba de verdad por la segunda mitad: la carpeta real se
-llama '_SISTEMA INFORME SAGARDE IA' y '"_SISTEMA" in f.parts' exige que un
-tramo de ruta sea EXACTAMENTE '_SISTEMA', cosa que no ocurria en ningun
-fichero real (ver Tarea 3 del plan 2026-08-07-jerarquia-sistema-entorno).
+Hasta el commit 1c11e97 (Tarea 3, 07/08/2026) la linea
+`"_SISTEMA" in f.parts or "INFORME SAGARDE IA" in str(f)` ya filtraba los
+tres nombres reales, pero solo gracias a la SEGUNDA clausula (substring
+sobre la ruta completa). La primera, `"_SISTEMA" in f.parts`, exige que un
+tramo de ruta sea EXACTAMENTE '_SISTEMA' y no caso nunca con nada en el
+arbol real porque la carpeta se llama '_SISTEMA INFORME SAGARDE IA'.
 
-Esta prueba fija el comportamiento correcto para los tres nombres que debe
-reconocer CARPETAS_SISTEMA -incluido el caso '_SISTEMA' a secas, la norma
-nueva- y, con un control fuera de esas carpetas, demuestra que la propia
-prueba SI se entera si alguien vuelve a romper el filtro.
+Que SI detectan las 5 pruebas de comportamiento de mas abajo (Grupo A):
+que alguien deje de reconocer alguno de los tres nombres -en particular
+'_SISTEMA' a secas, la norma nueva del 07/08- al tocar CARPETAS_SISTEMA o
+la forma en que se comprueban los tramos de ruta.
+
+Que NO detectan esas 5: revertir el fichero ENTERO al codigo anterior a
+1c11e97. Comprobado a mano (ver task-3-report.md, ronda 1): la guarda vieja
+de dos clausulas con "or" tambien filtra correctamente los tres nombres via
+su segunda clausula, asi que las 5 pruebas de comportamiento pasarian igual
+contra ese codigo -no distinguen "arreglado" de "funciona por accidente".
+Por eso el Grupo B es una sexta prueba, deliberadamente redundante con el
+diagnostico de comportamiento: comprueba que la constante CARPETAS_SISTEMA
+existe. Esa constante no existe en el codigo pre-fix, asi que revertir el
+fichero entero SI la hace fallar.
 """
+import os
 import sys
 import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import patch
 
-MOTOR_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(MOTOR_DIR))
-sys.path.insert(0, str(MOTOR_DIR / "scripts"))
+SISTEMA_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(os.path.dirname(SISTEMA_DIR))
+sys.path.insert(0, SISTEMA_DIR)
+sys.path.insert(0, os.path.join(SISTEMA_DIR, 'adaptadores'))
+sys.path.insert(0, os.path.join(ROOT_DIR, '_MOTOR_SAGARDE', 'scripts'))
 
 import auditor_sagarde
 
 
 class TestGuardaCarpetasSistema(unittest.TestCase):
-    """audit_obras_abiertas() no debe generar avisos por ficheros que
-    cuelguen de una carpeta tecnica reconocida."""
+    """Grupo A: comportamiento de audit_obras_abiertas() ante carpetas
+    tecnicas. No distinguen el fix de la guarda vieja (ver docstring del
+    modulo) - fijan el comportamiento correcto hacia adelante."""
 
     def _auditar_fichero_en(self, *carpetas_tecnicas):
         """Crea 'SAGARDE OBRAS ABIERTAS/OBRA PRUEBA/<carpetas_tecnicas>/
@@ -71,6 +86,23 @@ class TestGuardaCarpetasSistema(unittest.TestCase):
         issues = self._auditar_fichero_en()
         self.assertEqual(len(issues), 1)
         self.assertEqual(issues[0]["codigo"], "NOMBRE_FECHA_INVALIDA")
+
+
+class TestConstanteCarpetasSistema(unittest.TestCase):
+    """Grupo B: la asercion barata que SI distingue el fix de un revert
+    completo del fichero. CARPETAS_SISTEMA no existe en el codigo anterior
+    a 1c11e97 (esa version solo tiene el 'or' de dos clausulas inline)."""
+
+    def test_la_constante_CARPETAS_SISTEMA_existe(self):
+        self.assertTrue(
+            hasattr(auditor_sagarde, "CARPETAS_SISTEMA"),
+            "CARPETAS_SISTEMA no existe: el fichero parece revertido al "
+            "codigo anterior a la Tarea 3 (commit 1c11e97).")
+
+    def test_CARPETAS_SISTEMA_reconoce_los_tres_nombres(self):
+        self.assertEqual(
+            auditor_sagarde.CARPETAS_SISTEMA,
+            {"_SISTEMA", "_SISTEMA INFORME SAGARDE IA", "INFORME SAGARDE IA"})
 
 
 if __name__ == "__main__":
