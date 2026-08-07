@@ -78,5 +78,14 @@ __pycache__/
 # Mantener este archivo rastreado
 !.gitignore
 
+# GitHub Pages pasa el sitio por Jekyll, y Jekyll DESCARTA toda carpeta que
+# empiece por guion bajo. Con eso, `_SISTEMA INFORME SAGARDE IA` entero y
+# `_MOTOR_SAGARDE` daban 404 aunque estuvieran publicados: el enlace al
+# generador desde la portada llevaba a una pagina que no existia, y
+# obras_revisiones.js tampoco cargaba, asi que el generador no habria
+# reconocido ninguna obra. Este fichero vacio desactiva Jekyll.
+# Comprobado el 07/08/2026: index.html 200, generador_revisiones.html 404.
+!.nojekyll
+
 # Instrucciones de trabajo del proyecto (se cargan en cada sesion)
 !CLAUDE.md
