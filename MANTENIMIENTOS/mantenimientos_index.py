@@ -139,6 +139,13 @@ def scan_mantenimientos() -> list[dict]:
         })
 
     contratos.sort(key=lambda c: -c["ultima_ts"])
+
+    if not contratos:
+        raise SystemExit(
+            f"[ERROR] Ningun contrato de mantenimiento bajo {ROOT}. "
+            f"Si el script se ha movido, ROOT esta mal calculado. "
+            f"No se reescribe index.html con un indice vacio.")
+
     return contratos
 
 

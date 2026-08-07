@@ -121,6 +121,15 @@ def scan_obras() -> list[dict]:
             "latest_files": latest_files,
         })
 
+    # Un recuento de 0 es senal de alarma, no de "no aplica". Si este script
+    # se mueve de carpeta, ROOT deja de apuntar a POST-VENTAS y el indice
+    # saldria vacio con codigo de salida 0: el .bat solo mira errorlevel.
+    if not obras:
+        raise SystemExit(
+            f"[ERROR] Ninguna carpeta de incidencias bajo {ROOT}. "
+            f"Si el script se ha movido, ROOT esta mal calculado. "
+            f"No se reescribe index.html con un indice vacio.")
+
     return sorted(obras, key=lambda o: (-o["last_ts"], o["name"].casefold()))
 
 
