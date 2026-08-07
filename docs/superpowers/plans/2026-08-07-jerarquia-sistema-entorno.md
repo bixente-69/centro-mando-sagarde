@@ -1161,8 +1161,32 @@ logo_sagarde.jpg se queda: lo referencian todas las paginas generadas."
 - Mover a `MANTENIMIENTOS/_SISTEMA/`: `mantenimientos_index.py`,
   `mantenimientos_resumen.json`
 - Modificar: `mantenimientos_index.py` (ROOT, MOTOR_DIR, RESUMEN_JSON)
-- Modificar: `_SISTEMA/MOTOR/sagarde_portal.py` (si cita el resumen)
+- Modificar: `_SISTEMA/MOTOR/sagarde_portal.py:152` **y su fallback**
 - Modificar: `Actualizar_Sagarde.bat:31`
+
+> **Aviso descubierto en la revisión de la tarea 1 — léelo antes de mover nada.**
+>
+> `sagarde_portal.py:152` hace:
+> ```python
+> json_path = ROOT / "MANTENIMIENTOS" / "mantenimientos_resumen.json"
+> ```
+> Al mover ese JSON a `_SISTEMA/`, `json_path.is_file()` da falso y el código
+> **cae a un fallback** (≈ línea 176) que itera `base.iterdir()` **sin aplicar
+> `IGNORE_DIRS` ni ningún filtro**: publicaría `_SISTEMA` como un contrato de
+> mantenimiento más. Y el `except Exception: pass` de la línea 172 se traga
+> cualquier error por el camino, así que degradaría en silencio.
+>
+> Hay que corregir **las dos cosas**: la ruta de la línea 152 y el filtro del
+> fallback. Y comprobar que el fallback funciona, forzándolo (renombrando el
+> JSON un momento) en vez de suponerlo.
+>
+> **Además:** dos generadores escriben `MANTENIMIENTOS/index.html` —
+> `mantenimientos_index.py:262` con plantilla `card` y
+> `sagarde_portal.py:443` con plantilla `pv-list`. Como el `.bat` ejecuta el
+> portal en último lugar, **la plantilla `card` no ha llegado nunca a verse**
+> desde que se escribió el 27/07. Los datos son idénticos en ambas; sólo
+> cambia el aspecto. Qué plantilla debe ganar lo decide Bixente: preguntar
+> antes de tocar, y no borrar ninguna de las dos por iniciativa propia.
 
 - [ ] **Paso 1: Mover**
 
