@@ -27,6 +27,10 @@ import sys
 ROOT = Path(__file__).resolve().parent.parent.parent
 MOTOR_DIR = ROOT / "_MOTOR_SAGARDE"
 DIAGNOSTICO_JSON = MOTOR_DIR / "auditoria_diagnostico.json"
+
+# Carpetas tecnicas reconocidas en todo el entorno.
+CARPETAS_SISTEMA = {"_SISTEMA", "_SISTEMA INFORME SAGARDE IA",
+                    "INFORME SAGARDE IA"}
 if str(MOTOR_DIR) not in sys.path:
     sys.path.insert(0, str(MOTOR_DIR))
 
@@ -54,8 +58,12 @@ def audit_obras_abiertas() -> list[dict]:
         rev_files = []
         for f in obra_dir.rglob("*"):
             if f.is_file() and f.suffix.lower() in DATA_EXTS and not f.name.startswith("~$"):
-                # Ignorar archivos en subcarpetas de sistema
-                if "_SISTEMA" in f.parts or "INFORME SAGARDE IA" in str(f):
+                # Carpetas tecnicas: la norma "_SISTEMA" (07/08/2026) y sus
+                # dos alias historicos. Hasta hoy la primera condicion no
+                # casaba con nada: '_SISTEMA' in f.parts es igualdad exacta
+                # y la carpeta se llama '_SISTEMA INFORME SAGARDE IA'.
+                # Funcionaba solo por la segunda.
+                if CARPETAS_SISTEMA & set(f.parts):
                     continue
                 if "REVISION" in f.name.upper() or "PARTE" in f.name.upper():
                     rev_files.append(f)
