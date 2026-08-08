@@ -184,7 +184,62 @@ primera: ha ido y ha visto que faltaba algo. Solo la **ausencia** de marca
 
 ---
 
-## 8. Memoria
+## 8. Jerarquía de carpetas: la norma `_SISTEMA`
+
+**Cada apartado y cada obra tiene como mucho una carpeta técnica, llamada
+`_SISTEMA`. Dentro va todo lo informático. Fuera queda sólo lo que abriría
+una persona.** (Norma del 07/08/2026, permanente. Aplicada el 08/08/2026.)
+
+Es informático: `.py`, `.bat`, `.cmd`, `.ps1`, `__pycache__`, JSON de trabajo
+del motor, HTML de preview generado, memorias `.memory`, capturas de
+depuración, documentación técnica, y los sidecars del lector de hojas
+(`.correcciones.json`, `.clasificacion.json`, `.candidatas.json`,
+`.recortes/`).
+
+No lo es: DOCX y PDF de revisión, planos, fotos, XLSX de materiales,
+catálogos, el `index.html` de navegación y los paneles de obra.
+
+**`.bak` y `.log` dependen de quién los escribe, y esto importa.** AutoCAD
+deja un `<plano>.bak` (cabecera `AC1027`) junto a cada `.dwg` y un `plot.log`
+con qué plano se imprimió, cuándo y en qué impresora: eso es **dato de obra**,
+vive donde debe y la norma no lo toca. Un `.bak` sólo cuenta como técnico
+cuando el nombre delata que respalda código (`sagarde_portal.py.ANTES_….bak`).
+Confundirlos metía 30 ficheros de AutoCAD en la misma bolsa que el motor.
+
+**Dos alias históricos**, que ya implementan la norma con otro nombre y **no
+se renombran**: `_SISTEMA INFORME SAGARDE IA` (el motor de obras) e
+`INFORME SAGARDE IA` (dentro de cada obra; sus `panel.html` están publicados
+y renombrarlos rompería las URL del móvil).
+
+**Nueve elementos de la raíz están anclados** por requisitos de herramienta y
+sólo se ocultan, nunca se mueven: `.gitignore`, `.nojekyll`, `CLAUDE.md`,
+`GEMINI.md`, `.claudeignore`, `.claude\`, `.gemini\`, `.agents\`,
+`.superpowers\`. Lo mismo con las `.claude\` de los subproyectos de `VARIOS`.
+Cómo volver a verlos está en `_SISTEMA/docs/SAGARDE_ENTORNO_IA_Y_SKILLS.md`.
+
+**`VARIOS` y `APP_CARDIVA` quedan fuera de la norma**: son subproyectos
+autocontenidos con su propia raíz. Además, la ruta
+`APP_CARDIVA/skills/generate-cardiva-report` es canónica y
+`sync_cardiva_skill_agents.ps1` depende de ella.
+
+La norma **se comprueba sola**: `tests/test_jerarquia_sistema.py` falla si
+aparece un fichero técnico fuera de una carpeta `_SISTEMA`. Las excepciones
+viven en la lista `EXCEPCIONES` de esa prueba, con su razón escrita al lado.
+Un fichero nuevo que no cumpla la norma no llega a `main`.
+
+`__pycache__` **no** lo audita esa prueba, y no es un descuido: nadie lo
+escribe, Python lo genera junto al `.py` que importa, así que su sitio ya lo
+gobierna la norma. Auditarlo hacía la prueba no determinista, porque la propia
+suite lo regenera al ejecutarse.
+
+**Al crear una obra o un apartado nuevo**, su carpeta técnica se llama
+`_SISTEMA`. Al añadir un script, va dentro de una. Si un generador recorre el
+disco, `_SISTEMA` tiene que estar en su lista de ignorados **antes** de que
+la carpeta exista.
+
+---
+
+## 9. Memoria
 
 **Memoria funcional y técnica vigente (28/07/2026):**
 `_SISTEMA/docs/2026-07-28-memoria-diccionario-tajos-alertas-informes.md`.
@@ -254,7 +309,7 @@ Para informes preventivos CARDIVA:
 
 ---
 
-## 9. Reglas que no se saltan
+## 10. Reglas que no se saltan
 
 - No inventar datos ni rellenar huecos sin autorización.
 - No declarar terminada una tarea sin pruebas.

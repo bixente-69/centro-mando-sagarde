@@ -131,3 +131,10 @@ class TestJerarquiaSistema(unittest.TestCase):
             sorted(fantasmas), [],
             "\nEstas entradas de PENDIENTES ya no existen en disco. "
             "Borralas: una lista con fantasmas deja de avisar de nada.")
+
+    def test_la_norma_esta_aplicada(self):
+        """PENDIENTES vacia: no queda deuda de la reordenacion del 07/08/2026."""
+        self.assertEqual(
+            PENDIENTES, set(),
+            "Quedan violaciones declaradas sin resolver: la reordenacion "
+            "no esta terminada.")
