@@ -105,10 +105,6 @@ def _violaciones():
 
 # Violaciones conocidas al escribir el plan. Se vacian tarea a tarea.
 PENDIENTES = {
-    # tarea 6 (raiz con referencias)
-    "Servidor_Local.bat",
-    "ABRIR_CLAUDE_SAGARDE.cmd",
-    "ABRIR_GEMINI_SAGARDE.cmd",
     # tarea 8 (_MOTOR_SAGARDE -> _SISTEMA/MOTOR)
     # Los 3 .bak los recogio la tarea 5 en _bak/, pero eso no los saca de la
     # norma: _MOTOR_SAGARDE no es una carpeta _SISTEMA. Los absorbe esta.
