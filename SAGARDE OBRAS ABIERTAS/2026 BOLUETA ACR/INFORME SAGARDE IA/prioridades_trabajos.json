@@ -7,19 +7,19 @@
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "08/08/2026 06:27",
+  "generado": "08/08/2026 06:39",
   "resumen": {
     "listos": 19,
     "verificar": 25,
-    "unidades_listas": 751,
-    "unidades_verificar": 100,
+    "unidades_listas": 747,
+    "unidades_verificar": 104,
     "bloqueados": 6,
     "otros_gremios": 12,
     "dudas": 0,
     "terminados": 0,
     "inventario_total": 37,
     "detalle_total": 3648,
-    "preguntas_pendientes": 25,
+    "preguntas_pendientes": 26,
     "viviendas": 12,
     "zonas_comunes": 3,
     "edificio": 4
@@ -3253,42 +3253,6 @@
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
-          "planta": "9",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "9",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
           "planta": "10",
           "unidades": [
             "A"
@@ -3648,9 +3612,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 44,
-      "n_ubicaciones": 44,
-      "estado_actual": "Pendiente: 44",
+      "n_unidades": 40,
+      "n_ubicaciones": 40,
+      "estado_actual": "Pendiente: 40",
       "motivo": "Cierra conexiones eléctricas.",
       "impacto_gremios": "Cierra conexiones eléctricas.",
       "orden": 12
@@ -7873,6 +7837,42 @@
       "ubicaciones": [
         {
           "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "X"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "X"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "X"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "X"
+        },
+        {
+          "edificio": "BOLUETA",
           "planta": "PB",
           "unidades": [
             "A"
@@ -7908,11 +7908,11 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 4,
-      "n_ubicaciones": 4,
-      "estado_actual": "Pendiente: 4",
-      "motivo": "El tajo desapareció sin una X previa; confirmar su estado.",
-      "impacto_gremios": "El tajo desapareció sin una X previa; confirmar su estado.",
+      "n_unidades": 8,
+      "n_ubicaciones": 8,
+      "estado_actual": "Pendiente: 4 · X: 4",
+      "motivo": "El tajo desapareció sin una X previa; confirmar su estado. Existe una corrección posterior a una X; se conserva X hasta verificar.",
+      "impacto_gremios": "El tajo desapareció sin una X previa; confirmar su estado. Existe una corrección posterior a una X; se conserva X hasta verificar.",
       "orden": 33
     },
     {
@@ -58316,13 +58316,11 @@
       "edificio": "BOLUETA",
       "planta": "9",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cierra conexiones eléctricas.",
-      "dependencias_cumplidas": [
-        "Cableado eléctrico"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "DUDAS",
+      "motivo": "Existe una corrección posterior a una X; se conserva X hasta verificar.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -58345,13 +58343,11 @@
       "edificio": "BOLUETA",
       "planta": "9",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cierra conexiones eléctricas.",
-      "dependencias_cumplidas": [
-        "Cableado eléctrico"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "DUDAS",
+      "motivo": "Existe una corrección posterior a una X; se conserva X hasta verificar.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -58374,13 +58370,11 @@
       "edificio": "BOLUETA",
       "planta": "9",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cierra conexiones eléctricas.",
-      "dependencias_cumplidas": [
-        "Cableado eléctrico"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "DUDAS",
+      "motivo": "Existe una corrección posterior a una X; se conserva X hasta verificar.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -58403,13 +58397,11 @@
       "edificio": "BOLUETA",
       "planta": "9",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Cierra conexiones eléctricas.",
-      "dependencias_cumplidas": [
-        "Cableado eléctrico"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "DUDAS",
+      "motivo": "Existe una corrección posterior a una X; se conserva X hasta verificar.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
@@ -116395,29 +116387,29 @@
           "edificio": "BOLUETA",
           "planta": "9",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "DUDAS"
         },
         {
           "edificio": "BOLUETA",
           "planta": "9",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "DUDAS"
         },
         {
           "edificio": "BOLUETA",
           "planta": "9",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "DUDAS"
         },
         {
           "edificio": "BOLUETA",
           "planta": "9",
           "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "DUDAS"
         },
         {
           "edificio": "BOLUETA",
@@ -116846,14 +116838,14 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 96,
-      "estado_actual": "Pendiente: 65 · X: 31",
+      "estado_actual": "Pendiente: 61 · X: 35",
       "resumen_categorias": {
         "TERMINADO": 31,
         "BLOQUEADO": 17,
-        "VIABLE": 44,
-        "DUDAS": 4
+        "DUDAS": 8,
+        "VIABLE": 40
       },
-      "motivo": "Cierra conexiones eléctricas. Dependencias pendientes: Cableado eléctrico. El tajo desapareció sin una X previa; confirmar su estado. Terminado según la última confirmación válida.",
+      "motivo": "Cierra conexiones eléctricas. Dependencias pendientes: Cableado eléctrico. El tajo desapareció sin una X previa; confirmar su estado. Existe una corrección posterior a una X; se conserva X hasta verificar. Terminado según la última confirmación válida.",
       "orden_inventario": 12
     },
     {
@@ -134888,6 +134880,34 @@
     }
   ],
   "dudas_pendientes": [
+    {
+      "codigo": "NO_QUITAR_X",
+      "tarea_id": "embornado",
+      "pregunta": "'Embornado eléctrico' figuraba como terminado pero la siguiente revisión lo corrige a pendiente. Ir a comprobar en obra si realmente está terminado.",
+      "n_ubicaciones": 4,
+      "ubicaciones": [
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "D"
+        }
+      ]
+    },
     {
       "codigo": "OMITIDO_SIN_X",
       "tarea_id": "agujeros_iluminacion_zzcc",

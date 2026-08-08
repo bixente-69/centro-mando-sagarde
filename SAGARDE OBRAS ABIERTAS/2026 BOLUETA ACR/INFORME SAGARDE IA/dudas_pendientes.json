@@ -3,8 +3,36 @@
   "catalogo_version": "1.3",
   "obra": "2026 BOLUETA ACR",
   "revision": "28/07/2026",
-  "generado": "08/08/2026 06:27",
+  "generado": "08/08/2026 06:39",
   "dudas_pendientes": [
+    {
+      "codigo": "NO_QUITAR_X",
+      "tarea_id": "embornado",
+      "pregunta": "'Embornado eléctrico' figuraba como terminado pero la siguiente revisión lo corrige a pendiente. Ir a comprobar en obra si realmente está terminado.",
+      "n_ubicaciones": 4,
+      "ubicaciones": [
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "A"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "B"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "C"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "9",
+          "unidad": "D"
+        }
+      ]
+    },
     {
       "codigo": "OMITIDO_SIN_X",
       "tarea_id": "agujeros_iluminacion_zzcc",

@@ -65,9 +65,17 @@ def _correcciones_mas_recientes(carpeta_abs):
     obra, o {}. Son marcas escritas a boli sobre la hoja de campo: el dato mas
     directo que hay, y el que mas veces se ha perdido por no casar la clave."""
     import glob
-    patron = os.path.join(carpeta_abs, 'REVISIONES', '*.correcciones.json')
-    ficheros = glob.glob(patron) + glob.glob(
-        os.path.join(carpeta_abs, 'REVISIONES SAGARDE', '*.correcciones.json'))
+    # Norma _SISTEMA (07/08/2026): los sidecars viven en REVISIONES*/_SISTEMA/.
+    # Se siguen aceptando los sueltos en REVISIONES* por si queda alguno de
+    # antes: perder un .correcciones.json es perder marcas escritas a boli,
+    # el dato mas directo que hay.
+    ficheros = []
+    for carpeta_rev in ('REVISIONES', 'REVISIONES SAGARDE'):
+        ficheros += glob.glob(
+            os.path.join(carpeta_abs, carpeta_rev, '*.correcciones.json'))
+        ficheros += glob.glob(
+            os.path.join(carpeta_abs, carpeta_rev, '_SISTEMA',
+                         '*.correcciones.json'))
     if not ficheros:
         return {}
 

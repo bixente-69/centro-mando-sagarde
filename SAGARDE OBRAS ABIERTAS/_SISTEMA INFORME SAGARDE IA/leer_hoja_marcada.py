@@ -82,6 +82,23 @@ class LecturaImposible(Exception):
     pass
 
 
+# ------------------------------------------------------- donde se escribe
+
+def _ruta_sistema(ruta):
+    """Devuelve la misma ruta pero dentro del _SISTEMA de su carpeta.
+
+    Norma _SISTEMA (07/08/2026): la hoja PDF es el documento y se queda en
+    REVISIONES*/; lo que genera el lector -candidatas, recortes y sidecar de
+    correcciones- baja a REVISIONES*/_SISTEMA/. Crea la carpeta si no existe,
+    porque el sidecar son marcas escritas a boli y no puede fallar al
+    guardarlas por una carpeta que falta.
+    """
+    carpeta, nombre = os.path.split(ruta)
+    destino = os.path.join(carpeta, '_SISTEMA')
+    os.makedirs(destino, exist_ok=True)
+    return os.path.join(destino, nombre)
+
+
 # --------------------------------------------------------------- la tinta
 
 def puntos_de(anot):
@@ -445,7 +462,10 @@ def main():
             f'{obra["nombre"]} no tiene ficha_obra.json. El lector exige base '
             f'previa: sin ella no se sabe que habia impreso en cada celda.')
 
-    base = os.path.splitext(args.hoja)[0]
+    # Norma _SISTEMA (07/08/2026): lo que genera el lector -candidatas,
+    # recortes y sidecar- vive en REVISIONES*/_SISTEMA/, junto a la hoja pero
+    # sin mezclarse con ella. La hoja PDF no se mueve: es el documento.
+    base = _ruta_sistema(os.path.splitext(args.hoja)[0])
     ruta_candidatas = base + '.candidatas.json'
 
     if args.preparar:
@@ -524,7 +544,9 @@ def main():
     # Mismo nombre que usa el resto del sistema: "<hoja.pdf>.correcciones.json".
     # generar_todos elige el sidecar mas reciente por la FECHA del nombre, asi
     # que dos ficheros de la misma revision compiten y gana uno cualquiera.
-    sidecar = args.hoja + '.correcciones.json'
+    # Desde el 07/08/2026 se escribe en REVISIONES*/_SISTEMA/ (norma _SISTEMA);
+    # el glob de generar_todos mira las dos ubicaciones.
+    sidecar = _ruta_sistema(args.hoja) + '.correcciones.json'
     if os.path.isfile(sidecar) and not args.reemplazar:
         anterior = (json.load(open(sidecar, encoding='utf-8')).get('estados')
                     or {})

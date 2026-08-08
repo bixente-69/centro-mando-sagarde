@@ -42,8 +42,14 @@ VARIOS/APPS SAGARDE/
 # NO se publican ni el PDF de la hoja ni los recortes PNG: pesan y viven en
 # OneDrive, igual que las revisiones DOCX/PDF de las demas obras. El
 # .candidatas.json tampoco: se regenera del PDF con --preparar.
+# Norma _SISTEMA (07/08/2026): los sidecars bajaron a REVISIONES*/_SISTEMA/.
+# Se dejan las dos rutas: si quedara alguno suelto de antes, se sigue
+# publicando. Un .correcciones.json sin publicar son marcas de boli que solo
+# existen en este disco.
 !SAGARDE OBRAS ABIERTAS/*/REVISIONES*/*.correcciones.json
 !SAGARDE OBRAS ABIERTAS/*/REVISIONES*/*.clasificacion.json
+!SAGARDE OBRAS ABIERTAS/*/REVISIONES*/_SISTEMA/*.correcciones.json
+!SAGARDE OBRAS ABIERTAS/*/REVISIONES*/_SISTEMA/*.clasificacion.json
 
 # Documentacion de diseno y planes de implementacion.
 # Norma _SISTEMA (07/08/2026): docs/ paso a _SISTEMA/docs/. Si esta ruta no
