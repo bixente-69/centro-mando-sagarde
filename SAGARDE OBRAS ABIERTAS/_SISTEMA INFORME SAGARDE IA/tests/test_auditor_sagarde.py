@@ -34,7 +34,7 @@ SISTEMA_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(os.path.dirname(SISTEMA_DIR))
 sys.path.insert(0, SISTEMA_DIR)
 sys.path.insert(0, os.path.join(SISTEMA_DIR, 'adaptadores'))
-sys.path.insert(0, os.path.join(ROOT_DIR, '_MOTOR_SAGARDE', 'scripts'))
+sys.path.insert(0, os.path.join(ROOT_DIR, '_SISTEMA', 'MOTOR', 'scripts'))
 
 import auditor_sagarde
 

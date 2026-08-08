@@ -7,7 +7,7 @@ tiene varios portales o bloques, una página A4 adicional por cada uno, con la
 identidad corporativa de Montajes Eléctricos Sagarde, S.L.
 
 Uso:
-    python _MOTOR_SAGARDE/scripts/generar_informe_ejecutivo.py --obra "2026 BOLUETA ACR"
+    python _SISTEMA/MOTOR/scripts/generar_informe_ejecutivo.py --obra "2026 BOLUETA ACR"
 """
 from __future__ import annotations
 
@@ -29,10 +29,11 @@ from reportlab.platypus import (
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
 
-ROOT = Path(__file__).resolve().parent.parent.parent
+# _SISTEMA/MOTOR/scripts/generar_informe_ejecutivo.py -> cuatro niveles.
+ROOT = Path(__file__).resolve().parent.parent.parent.parent
 OBRAS_DIR = ROOT / "SAGARDE OBRAS ABIERTAS"
 MOTOR_IA_DIR = OBRAS_DIR / "_SISTEMA INFORME SAGARDE IA"
-ASSETS_DIR = ROOT / "_MOTOR_SAGARDE" / "assets"
+ASSETS_DIR = ROOT / "_SISTEMA" / "MOTOR" / "assets"
 LOGO_PATH = ASSETS_DIR / "logo_sagarde.jpg"
 
 if str(MOTOR_IA_DIR) not in sys.path:

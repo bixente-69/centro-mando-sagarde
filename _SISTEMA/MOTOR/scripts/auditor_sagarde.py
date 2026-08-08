@@ -11,10 +11,10 @@ para detectar proactivamente:
   - Documentos o planos enlazados rotos / faltantes
   - Anomalías en contratos de mantenimiento o post-ventas
 
-Genera _MOTOR_SAGARDE/auditoria_diagnostico.json y emite resumen por pantalla.
+Genera _SISTEMA/MOTOR/auditoria_diagnostico.json y emite resumen por pantalla.
 
 Uso:
-  python _MOTOR_SAGARDE/scripts/auditor_sagarde.py
+  python _SISTEMA/MOTOR/scripts/auditor_sagarde.py
 """
 from __future__ import annotations
 
@@ -24,8 +24,9 @@ import json
 import re
 import sys
 
-ROOT = Path(__file__).resolve().parent.parent.parent
-MOTOR_DIR = ROOT / "_MOTOR_SAGARDE"
+# _SISTEMA/MOTOR/scripts/auditor_sagarde.py -> cuatro niveles hasta la raiz.
+ROOT = Path(__file__).resolve().parent.parent.parent.parent
+MOTOR_DIR = ROOT / "_SISTEMA" / "MOTOR"
 DIAGNOSTICO_JSON = MOTOR_DIR / "auditoria_diagnostico.json"
 
 # Carpetas tecnicas reconocidas en todo el entorno.

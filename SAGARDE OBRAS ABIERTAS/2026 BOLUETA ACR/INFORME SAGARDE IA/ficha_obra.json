@@ -3,7 +3,7 @@
   "id": "bolueta",
   "modo": "hibrida",
   "fecha_entrada_digital": "26/07/2026",
-  "actualizado": "07/08/2026 08:10",
+  "actualizado": "08/08/2026 05:48",
   "identidad": {
     "nombre": "2026 BOLUETA ACR",
     "carpeta": "2026 BOLUETA ACR",
@@ -19818,7 +19818,7 @@
   "materiales": {
     "ultimo_mes": "Julio26",
     "ultima_fecha": "13/07/2026",
-    "dias_desde": 25,
+    "dias_desde": 26,
     "meses": [
       "Marzo26",
       "Abril26",
@@ -19829,7 +19829,7 @@
     "n_items": 35,
     "aviso": null,
     "_meta": {
-      "actualizado": "07/08/2026 07:49"
+      "actualizado": "08/08/2026 05:48"
     }
   },
   "documentos": {

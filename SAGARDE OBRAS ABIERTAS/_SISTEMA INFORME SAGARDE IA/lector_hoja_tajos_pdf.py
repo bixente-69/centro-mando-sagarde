@@ -26,7 +26,7 @@ Lo que SI es igual en todas las obras (porque lo genera la misma app):
     esas celdas quedan pendientes — nunca se inventa un valor)
 
 Ver protocolo completo ("cuando un PDF es una revision oficial valida") y
-la receta para dar de alta una obra nueva en `_MOTOR_SAGARDE/CLAUDE.md`.
+la receta para dar de alta una obra nueva en `_SISTEMA/MOTOR/CLAUDE.md`.
 
 Requiere 'pdfplumber' (pip install pdfplumber --break-system-packages). Si
 no esta instalado, se avisa y se devuelve vacio (no rompe otros formatos).

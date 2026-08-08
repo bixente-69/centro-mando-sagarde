@@ -174,7 +174,7 @@ def _identificar_tajo_pdf(etiqueta):
 def _portal_id_pdf(texto):
     """Especifico de Mungia: sus portales se imprimen como 'ZR1.1'/'ZR1.2'/
     'ZR2.1' en la cabecera de cada tabla. Otra obra necesitara su propia
-    version de esta funcion (ver receta en _MOTOR_SAGARDE/CLAUDE.md)."""
+    version de esta funcion (ver receta en _SISTEMA/MOTOR/CLAUDE.md)."""
     m = re.search(r'ZR(\d)\.(\d)', texto or '')
     if not m:
         return None

@@ -26,7 +26,7 @@ RESUMEN_JSON = os.path.join(BASE_DIR, 'resumen_obras.json')
 REVISIONES_JS = os.path.join(BASE_DIR, 'obras_revisiones.js')
 sys.path.insert(0, BASE_DIR)
 sys.path.insert(0, os.path.join(BASE_DIR, "adaptadores"))
-sys.path.insert(0, os.path.join(ROOT_DIR, "_MOTOR_SAGARDE", "scripts"))
+sys.path.insert(0, os.path.join(ROOT_DIR, "_SISTEMA", "MOTOR", "scripts"))
 
 import panel_obra  # noqa: E402
 import lectores    # noqa: E402

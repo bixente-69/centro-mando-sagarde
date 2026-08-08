@@ -14,13 +14,15 @@ from avisos import (
 )
 
 
-ROOT = Path(__file__).resolve().parent.parent
+# _SISTEMA/MOTOR/sagarde_portal.py -> tres niveles hasta la raiz del entorno.
+ROOT = Path(__file__).resolve().parent.parent.parent
 OUTPUT = ROOT / "index.html"
 # "_SISTEMA" es la carpeta tecnica de cada apartado (norma del 07/08/2026).
 # El portal publica como area de negocio TODO lo que encuentra: sin esta
 # entrada, _SISTEMA saldria en la portada como si fuera documentacion.
+# Ya no hace falta "_MOTOR_SAGARDE": el motor vive dentro de _SISTEMA.
 IGNORE_DIRS = {".git", ".memory", "__pycache__", "_PREVIEWS_WORD",
-               "_MOTOR_SAGARDE", "_SISTEMA", "docs", "scratch"}
+               "_SISTEMA", "docs", "scratch"}
 IGNORE_NAMES = {"index.html"}
 APP_HINTS = ("app", "panel", "sagarde", "plantilla", "generador")
 DOC_EXTS = {".doc", ".docx", ".pdf", ".xls", ".xlsx", ".xlsm"}
@@ -853,7 +855,7 @@ def construir_alertas(ro: dict | None = None, rp: dict | None = None, mant: list
             alertas.append(("info", f"{len(pv_recientes)} contrato(s) de post-venta con incidencias activas recientemente: {nombres_pv}"))
 
     # 4. AUDITORÍA DE DATOS Y PRE-PUBLICACIÓN
-    diag_path = ROOT / "_MOTOR_SAGARDE" / "auditoria_diagnostico.json"
+    diag_path = ROOT / "_SISTEMA" / "MOTOR" / "auditoria_diagnostico.json"
     if diag_path.is_file():
         try:
             with open(diag_path, encoding="utf-8") as f:

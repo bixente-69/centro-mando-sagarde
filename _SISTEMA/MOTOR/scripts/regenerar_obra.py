@@ -39,7 +39,10 @@ import sys
 import json
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OBRAS_ABIERTAS_DIR = os.path.join(BASE_DIR, os.pardir, "SAGARDE OBRAS ABIERTAS")
+# BASE_DIR es _SISTEMA/MOTOR: hacen falta DOS pardir para la raiz, no uno.
+# Con uno solo se caeria en _SISTEMA y las obras no aparecerian.
+OBRAS_ABIERTAS_DIR = os.path.join(BASE_DIR, os.pardir, os.pardir,
+                                  "SAGARDE OBRAS ABIERTAS")
 MOTOR_IA_DIR = os.path.join(OBRAS_ABIERTAS_DIR, "_SISTEMA INFORME SAGARDE IA")
 MOTOR_IA_DIR = os.path.normpath(MOTOR_IA_DIR)
 CACHE_PATH = os.path.join(MOTOR_IA_DIR, "_cache_resultados_regen.json")

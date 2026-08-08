@@ -13,7 +13,7 @@ echo ============================================
 echo.
 
 echo [0/4] Ejecutando Auditoria Pre-Vuelo de Salud de Datos...
-%PY% "_MOTOR_SAGARDE\scripts\auditor_sagarde.py"
+%PY% "_SISTEMA\MOTOR\scripts\auditor_sagarde.py"
 echo.
 
 echo [1/4] Actualizando Informe Sagarde IA (Obras abiertas)...
@@ -35,7 +35,7 @@ if %errorlevel% neq 0 (
 echo.
 
 echo [3/4] Generando portal principal...
-%PY% "_MOTOR_SAGARDE\sagarde_portal.py"
+%PY% "_SISTEMA\MOTOR\sagarde_portal.py"
 if %errorlevel% neq 0 (
   echo.
   echo [ERROR] No se pudo generar el portal principal.

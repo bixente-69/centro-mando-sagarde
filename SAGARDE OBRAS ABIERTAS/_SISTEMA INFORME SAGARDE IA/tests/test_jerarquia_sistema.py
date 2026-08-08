@@ -105,21 +105,6 @@ def _violaciones():
 
 # Violaciones conocidas al escribir el plan. Se vacian tarea a tarea.
 PENDIENTES = {
-    # tarea 8 (_MOTOR_SAGARDE -> _SISTEMA/MOTOR)
-    # Los 3 .bak los recogio la tarea 5 en _bak/, pero eso no los saca de la
-    # norma: _MOTOR_SAGARDE no es una carpeta _SISTEMA. Los absorbe esta.
-    "_MOTOR_SAGARDE/_bak/sagarde_portal.py.ANTES_FASE3_MANTENIMIENTOS_20260725.bak",
-    "_MOTOR_SAGARDE/_bak/sagarde_portal.py.ANTES_FIX_APPS_DUPLICADOS_20260725.bak",
-    "_MOTOR_SAGARDE/_bak/sagarde_portal.py.ANTES_MEJORA_ALERTAS_20260725.bak",
-    "_MOTOR_SAGARDE/avisos.py",
-    "_MOTOR_SAGARDE/sagarde_portal.py",
-    "_MOTOR_SAGARDE/scripts/auditor_sagarde.py",
-    "_MOTOR_SAGARDE/scripts/generar_informe_ejecutivo.py",
-    "_MOTOR_SAGARDE/scripts/generar_parte_incidencia.py",
-    "_MOTOR_SAGARDE/scripts/regenerar_obra.py",
-    "_MOTOR_SAGARDE/scripts/validar_revision_pdf.py",
-    "_MOTOR_SAGARDE/tests/__init__.py",
-    "_MOTOR_SAGARDE/tests/test_avisos.py",
     # tarea 10 (POST-VENTAS)
     "POST-VENTAS/Actualizar_Postventas.bat",
     "POST-VENTAS/postventas_index.py",

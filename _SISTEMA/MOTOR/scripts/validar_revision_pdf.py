@@ -34,7 +34,8 @@ import sys
 import importlib
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-MOTOR_IA_DIR = os.path.normpath(os.path.join(BASE_DIR, os.pardir, "SAGARDE OBRAS ABIERTAS", "_SISTEMA INFORME SAGARDE IA"))
+# BASE_DIR es _SISTEMA/MOTOR: dos pardir hasta la raiz, no uno.
+MOTOR_IA_DIR = os.path.normpath(os.path.join(BASE_DIR, os.pardir, os.pardir, "SAGARDE OBRAS ABIERTAS", "_SISTEMA INFORME SAGARDE IA"))
 sys.path.insert(0, MOTOR_IA_DIR)
 sys.path.insert(0, os.path.join(MOTOR_IA_DIR, "adaptadores"))
 import lector_hoja_tajos_pdf as lector_pdf  # noqa: E402
@@ -54,7 +55,7 @@ def validar(obra_id, ruta_pdf):
         print("[ERROR] Obra '{}' no está registrada en OBRAS de generar_todos.py.".format(obra_id))
         print("Disponibles: {}".format(disponibles))
         print("Si es una obra nueva en PDF, primero hay que construir su adaptador")
-        print("siguiendo la receta de _MOTOR_SAGARDE/CLAUDE.md.")
+        print("siguiendo la receta de _SISTEMA/MOTOR/CLAUDE.md.")
         return
 
     adaptador = importlib.import_module(obra_cfg['adaptador'])

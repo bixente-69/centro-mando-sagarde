@@ -20,7 +20,7 @@ import sys
 from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent
-MOTOR_DIR = ROOT.parent / "_MOTOR_SAGARDE"
+MOTOR_DIR = ROOT.parent / "_SISTEMA" / "MOTOR"
 if str(MOTOR_DIR) not in sys.path:
     sys.path.insert(0, str(MOTOR_DIR))
 
