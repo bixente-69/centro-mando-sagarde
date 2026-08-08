@@ -628,6 +628,15 @@ Comprobado en la exploración: ningún `.py`, `.bat`, `.cmd`, `.ps1`, `.html`,
 >    violaciones en una ruta nueva y sin declarar: la prueba fallaría. Sus
 >    entradas de `PENDIENTES` se **actualizan a la ruta nueva**, no se borran;
 >    las absorbe la Tarea 8 al mover `_MOTOR_SAGARDE` dentro de `_SISTEMA`.
+> 3. **El trinquete deja de auditar `__pycache__`** (visto al ejecutar esta
+>    tarea: la suite pasó a fallar sola). Nadie escribe un `__pycache__` —
+>    Python lo genera junto al `.py` que importa, y la propia suite regeneraba
+>    `_MOTOR_SAGARDE/__pycache__` al terminar. La prueba pasaba en un árbol
+>    limpio y fallaba justo después de correrla; declararlo en `PENDIENTES`
+>    fallaría al revés en una máquina que no la hubiera ejecutado. Su
+>    ubicación es una consecuencia automática de dónde esté el código, que es
+>    lo que la prueba ya gobierna. Se limpia como mantenimiento y lo cubre
+>    `.gitignore`, no el trinquete.
 
 **Ficheros:**
 - Mover: 7 PNG de la raíz → `_SISTEMA/capturas/`

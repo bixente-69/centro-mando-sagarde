@@ -25,7 +25,17 @@ RAMAS_EXCLUIDAS = {
     ".git",                # interno de git
     "SAGARDE (OLD)",       # archivo historico, 46 GB, fuera de alcance
     ".claude", ".gemini", ".agents", ".superpowers",  # ancladas a su raiz
-    "__pycache__",         # se comprueba aparte, como carpeta
+    # __pycache__ NO se audita, y no es un descuido (08/08/2026). Nadie lo
+    # escribe: Python lo genera junto al .py que importa. Su sitio es una
+    # consecuencia automatica de donde este el codigo, que es justo lo que
+    # esta prueba ya gobierna -movido el .py, la cache le sigue sola-.
+    # Auditarlo ademas hacia la prueba no determinista: la propia suite
+    # regenera _MOTOR_SAGARDE/__pycache__ al importar sus modulos, asi que
+    # pasaba en un arbol limpio y fallaba al terminar de ejecutarse.
+    # Declararlo en PENDIENTES fallaria al reves, en una maquina que no
+    # hubiera corrido la suite todavia. Se limpia como mantenimiento (lo
+    # hizo la tarea 5) y lo cubre .gitignore, no el trinquete.
+    "__pycache__",
 }
 
 EXT_CODIGO = {".py", ".bat", ".cmd", ".ps1"}
@@ -84,9 +94,6 @@ def _violaciones():
         if partes & CARPETAS_SISTEMA:
             dirnames[:] = []          # dentro de una carpeta tecnica todo vale
             continue
-        for d in dirnames:
-            if d == "__pycache__":
-                malas.append(os.path.join(rel, d).replace("\\", "/"))
         for fn in filenames:
             if fn in EXCEPCIONES:
                 continue
@@ -98,20 +105,16 @@ def _violaciones():
 
 # Violaciones conocidas al escribir el plan. Se vacian tarea a tarea.
 PENDIENTES = {
-    # tarea 5 (raiz, riesgo nulo)
-    "_MOTOR_SAGARDE/sagarde_portal.py.ANTES_FASE3_MANTENIMIENTOS_20260725.bak",
-    "_MOTOR_SAGARDE/sagarde_portal.py.ANTES_FIX_APPS_DUPLICADOS_20260725.bak",
-    "_MOTOR_SAGARDE/sagarde_portal.py.ANTES_MEJORA_ALERTAS_20260725.bak",
-    "MANTENIMIENTOS/__pycache__",
-    "POST-VENTAS/__pycache__",
-    "_MOTOR_SAGARDE/__pycache__",
-    "_MOTOR_SAGARDE/scripts/__pycache__",
-    "_MOTOR_SAGARDE/tests/__pycache__",
     # tarea 6 (raiz con referencias)
     "Servidor_Local.bat",
     "ABRIR_CLAUDE_SAGARDE.cmd",
     "ABRIR_GEMINI_SAGARDE.cmd",
     # tarea 8 (_MOTOR_SAGARDE -> _SISTEMA/MOTOR)
+    # Los 3 .bak los recogio la tarea 5 en _bak/, pero eso no los saca de la
+    # norma: _MOTOR_SAGARDE no es una carpeta _SISTEMA. Los absorbe esta.
+    "_MOTOR_SAGARDE/_bak/sagarde_portal.py.ANTES_FASE3_MANTENIMIENTOS_20260725.bak",
+    "_MOTOR_SAGARDE/_bak/sagarde_portal.py.ANTES_FIX_APPS_DUPLICADOS_20260725.bak",
+    "_MOTOR_SAGARDE/_bak/sagarde_portal.py.ANTES_MEJORA_ALERTAS_20260725.bak",
     "_MOTOR_SAGARDE/avisos.py",
     "_MOTOR_SAGARDE/sagarde_portal.py",
     "_MOTOR_SAGARDE/scripts/auditor_sagarde.py",
