@@ -420,6 +420,29 @@ lista completa de violaciones. Cada tarea siguiente vacía su parte.
 **Produce:** `PENDIENTES`, la lista que las tareas 5-11 van vaciando y que la
 tarea 12 deja a cero.
 
+> **Ejecutada el 08/08/2026. El código de abajo NO es el que quedó**, y el
+> fichero real manda. Escrito tal cual, fallaba las dos pruebas y el inventario
+> era erróneo en tres puntos:
+>
+> 1. **`EXT_TECNICAS` con `.bak` y `.log` metía 30 ficheros de AutoCAD en la
+>    misma bolsa que el código**: 17 `.bak` con cabecera `AC1027` (el respaldo
+>    del unifilar, junto a su `.dwg`) y 13 `plot.log` (qué plano se imprimió,
+>    cuándo y en qué impresora). Eso es dato de obra. Decisión de Bixente: se
+>    estrecha la regla a `_es_tecnico()` — `.bak` solo cuenta si el nombre
+>    delata que respalda código, `.log` no cuenta nunca.
+> 2. **El plan nunca inventarió `APP_CARDIVA`**: sus 3 `.ps1` salían como
+>    violaciones no declaradas. Decisión de Bixente: excepción permanente, como
+>    los subproyectos de `VARIOS`. El `CLAUDE.md` declara canónica la ruta
+>    `APP_CARDIVA/skills/generate-cardiva-report` y `sync_cardiva_skill_agents.ps1`
+>    depende de ella: moverlos rompe la skill.
+> 3. **`VARIOS/plot.log` era un fantasma por contradicción del propio plan**:
+>    `VARIOS` está en `EXCEPCIONES`, así que su subárbol nunca se recorre y esa
+>    entrada no podía aparecer jamás. Fuera, junto a la de `SAGARDE OBRAS
+>    ABIERTAS`.
+>
+> Resultado: `PENDIENTES` queda en **24 entradas**, no 26, y cuadra exactamente
+> con las 24 violaciones en disco.
+
 - [ ] **Paso 1: Escribir la prueba**
 
 ```python
@@ -571,7 +594,9 @@ cd "D:/Nueva carpeta/OneDrive/COPIA SEGURIDAD SAGARDE" && rm "APLICACIONES/colad
 
 - [ ] **Paso 4: Suite completa y commit**
 
-Ejecutar la suite de referencia. Esperado: `Ran 193 tests` … `OK` (191 + 2).
+Ejecutar la suite de referencia. Esperado: `Ran 200 tests` … `OK` (198 + 2).
+Son 198 y no 191 porque la Tarea 3 movió su regresión del auditor a esta misma
+suite, sumando 7.
 
 ```bash
 cd "D:/Nueva carpeta/OneDrive/COPIA SEGURIDAD SAGARDE" && git add "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/tests/test_jerarquia_sistema.py" && git commit -m "Prueba-trinquete de la norma de jerarquia
@@ -591,12 +616,25 @@ fantasmas y deje de avisar."
 Comprobado en la exploración: ningún `.py`, `.bat`, `.cmd`, `.ps1`, `.html`,
 `.js`, `.json` ni `.md` del entorno menciona estos ficheros.
 
+> **Corregido el 08/08/2026, al ejecutar la Tarea 4.** Dos cosas de este
+> apartado estaban mal y se arreglan aquí:
+>
+> 1. **Los `plot.log` salen del alcance.** Son registros de impresión de
+>    AutoCAD (plano, impresora, fecha, escala), no informática. Decisión de
+>    Bixente: la norma no los cubre. Ya no se mueven ni figuran en
+>    `PENDIENTES`.
+> 2. **Mover los 3 `.bak` a `_MOTOR_SAGARDE/_bak/` no los saca de la norma.**
+>    `_MOTOR_SAGARDE` no es una carpeta `_SISTEMA`, así que seguirían siendo
+>    violaciones en una ruta nueva y sin declarar: la prueba fallaría. Sus
+>    entradas de `PENDIENTES` se **actualizan a la ruta nueva**, no se borran;
+>    las absorbe la Tarea 8 al mover `_MOTOR_SAGARDE` dentro de `_SISTEMA`.
+
 **Ficheros:**
 - Mover: 7 PNG de la raíz → `_SISTEMA/capturas/`
-- Mover: 2 `plot.log` → el `_SISTEMA/` de su apartado
 - Mover: 3 `.bak` → `_MOTOR_SAGARDE/_bak/`
 - Borrar: 9 `__pycache__`, `PARA SOBREESCRIBIR/`
-- Modificar: `tests/test_jerarquia_sistema.py` (vaciar sus entradas)
+- Modificar: `tests/test_jerarquia_sistema.py` (5 `__pycache__` fuera, 3 `.bak`
+  reapuntados)
 
 - [ ] **Paso 1: Verificar de nuevo que nadie los referencia**
 
@@ -610,7 +648,7 @@ la tarea 6, no como riesgo nulo.
 - [ ] **Paso 2: Mover**
 
 ```bash
-cd "D:/Nueva carpeta/OneDrive/COPIA SEGURIDAD SAGARDE" && mkdir -p "_SISTEMA/capturas" "SAGARDE OBRAS ABIERTAS/_SISTEMA" "VARIOS/_SISTEMA" "_MOTOR_SAGARDE/_bak" && mv bol_p2.png bol_p6.png bol_p6_zoom.png mun_contactos.png mun_p2_mec.png mun_p3_cm.png mun_planta1.png "_SISTEMA/capturas/" && mv "SAGARDE OBRAS ABIERTAS/plot.log" "SAGARDE OBRAS ABIERTAS/_SISTEMA/" && mv "VARIOS/plot.log" "VARIOS/_SISTEMA/" && mv _MOTOR_SAGARDE/*.bak "_MOTOR_SAGARDE/_bak/" && ls "_SISTEMA/capturas" | wc -l
+cd "D:/Nueva carpeta/OneDrive/COPIA SEGURIDAD SAGARDE" && mkdir -p "_SISTEMA/capturas" "_MOTOR_SAGARDE/_bak" && mv bol_p2.png bol_p6.png bol_p6_zoom.png mun_contactos.png mun_p2_mec.png mun_p3_cm.png mun_planta1.png "_SISTEMA/capturas/" && mv _MOTOR_SAGARDE/*.bak "_MOTOR_SAGARDE/_bak/" && ls "_SISTEMA/capturas" | wc -l
 ```
 
 Esperado: `7`.
@@ -624,11 +662,14 @@ cd "D:/Nueva carpeta/OneDrive/COPIA SEGURIDAD SAGARDE" && find . -path ./.git -p
 Si `rmdir` falla, la carpeta **no estaba vacía**: parar, listar el contenido y
 preguntar a Bixente. No usar `rm -rf` sobre ella.
 
-- [ ] **Paso 4: Vaciar sus entradas de PENDIENTES**
+- [ ] **Paso 4: Actualizar PENDIENTES**
 
-Borrar de `PENDIENTES` en `tests/test_jerarquia_sistema.py` las 10 entradas
-marcadas `# tarea 5`, y sustituir el comentario `# tarea 5 (raiz, riesgo nulo)`
-por nada.
+En `tests/test_jerarquia_sistema.py`, bloque `# tarea 5` (8 entradas):
+
+- **Borrar** las 5 de `__pycache__`: dejan de existir.
+- **Reapuntar** las 3 de `.bak` a `_MOTOR_SAGARDE/_bak/…`: siguen fuera de una
+  carpeta `_SISTEMA` hasta la Tarea 8. Mover el comentario a `# tarea 8`, que
+  es la que de verdad las resuelve.
 
 - [ ] **Paso 5: Verificar**
 
@@ -636,7 +677,9 @@ por nada.
 cd "D:/Nueva carpeta/OneDrive/COPIA SEGURIDAD SAGARDE/SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA" && python -m unittest discover -s tests
 ```
 
-Esperado: `Ran 193 tests` … `OK`.
+Esperado: `Ran 200 tests` … `OK`. Comprobar además que `PENDIENTES` y las
+violaciones en disco siguen cuadrando exactamente: si `test_pendientes_no_caduca`
+falla, algún `.bak` se reapuntó mal.
 
 ```bash
 cd "D:/Nueva carpeta/OneDrive/COPIA SEGURIDAD SAGARDE" && python "_MOTOR_SAGARDE/sagarde_portal.py" && git diff --stat index.html
