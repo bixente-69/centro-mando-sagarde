@@ -24,11 +24,11 @@ if %errorlevel% neq 0 (
 echo.
 
 echo [2/4] Actualizando Post-ventas y Mantenimientos...
-%PY% "POST-VENTAS\postventas_index.py"
+%PY% "POST-VENTAS\_SISTEMA\postventas_index.py"
 if %errorlevel% neq 0 (
   echo   [AVISO] No se pudo actualizar Post-ventas. El portal usara los datos existentes.
 )
-%PY% "MANTENIMIENTOS\mantenimientos_index.py"
+%PY% "MANTENIMIENTOS\_SISTEMA\mantenimientos_index.py"
 if %errorlevel% neq 0 (
   echo   [AVISO] No se pudo actualizar Mantenimientos. El portal usara los datos existentes.
 )

@@ -151,7 +151,8 @@ def _contar_archivos_carpeta(path: Path, _presupuesto: list[int] | None = None) 
 
 
 def escanear_mantenimientos() -> list[dict]:
-    json_path = ROOT / "MANTENIMIENTOS" / "mantenimientos_resumen.json"
+    json_path = (ROOT / "MANTENIMIENTOS" / "_SISTEMA"
+                 / "mantenimientos_resumen.json")
     if json_path.is_file():
         try:
             with open(json_path, encoding="utf-8") as f:
@@ -171,14 +172,23 @@ def escanear_mantenimientos() -> list[dict]:
                         "estado_actividad": c.get("estado_actividad", "al_dia")
                     })
                 return contratos
-        except Exception:
-            pass
+        except Exception as exc:
+            # Antes era 'except Exception: pass'. Un JSON corrupto degradaba
+            # al barrido de carpetas sin que nadie se enterase, y el barrido
+            # da otros numeros. Si pasa, que se vea.
+            print(f"  [AVISO] No se pudo leer {json_path.name} ({exc}). "
+                  f"Se recurre al barrido de carpetas, que puede dar un "
+                  f"recuento distinto.")
 
     base = ROOT / "MANTENIMIENTOS"
     contratos = []
     if base.is_dir():
         for p in sorted(base.iterdir()):
             if not p.is_dir():
+                continue
+            # El barrido NO tenia filtro: con el JSON fuera de sitio publicaba
+            # _SISTEMA como un contrato de mantenimiento mas.
+            if p.name in IGNORE_DIRS:
                 continue
             n_archivos, ultima = _contar_archivos_carpeta(p)
             nombre = p.name.replace("MANTENIMIENTO ", "", 1).strip() or p.name

@@ -104,10 +104,13 @@ def _violaciones():
 
 
 # Violaciones conocidas al escribir el plan. Se vacian tarea a tarea.
-PENDIENTES = {
-    # tarea 11 (MANTENIMIENTOS)
-    "MANTENIMIENTOS/mantenimientos_index.py",
-}
+#
+# VACIA desde el 08/08/2026: la norma esta aplicada. A partir de aqui el
+# trinquete solo tiene un trabajo, impedir que vuelva a entrar nada. Anadir
+# una entrada aqui en vez de mover el fichero es saltarse la norma; si hay
+# una razon de verdad para que un fichero tecnico viva fuera de _SISTEMA,
+# va a EXCEPCIONES con el porque escrito.
+PENDIENTES = set()
 
 
 class TestJerarquiaSistema(unittest.TestCase):

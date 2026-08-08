@@ -19,7 +19,10 @@ import json
 import sys
 from urllib.parse import quote
 
-ROOT = Path(__file__).resolve().parent
+# El script vive en MANTENIMIENTOS/_SISTEMA/ pero ROOT es MANTENIMIENTOS:
+# es la carpeta que recorre.
+SISTEMA_DIR = Path(__file__).resolve().parent
+ROOT = SISTEMA_DIR.parent
 MOTOR_DIR = ROOT.parent / "_SISTEMA" / "MOTOR"
 if str(MOTOR_DIR) not in sys.path:
     sys.path.insert(0, str(MOTOR_DIR))
@@ -27,7 +30,7 @@ if str(MOTOR_DIR) not in sys.path:
 from avisos import dias_desde_timestamp, es_aviso_por_antiguedad
 
 INDEX_PATH = ROOT / "index.html"
-RESUMEN_JSON = ROOT / "mantenimientos_resumen.json"
+RESUMEN_JSON = SISTEMA_DIR / "mantenimientos_resumen.json"
 
 IGNORE_DIRS = {".memory", "__pycache__", "_SISTEMA"}
 IGNORE_FILES = {"desktop.ini", "thumbs.db", "index.html"}
