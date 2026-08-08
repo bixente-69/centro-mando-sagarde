@@ -45,9 +45,11 @@ VARIOS/APPS SAGARDE/
 !SAGARDE OBRAS ABIERTAS/*/REVISIONES*/*.correcciones.json
 !SAGARDE OBRAS ABIERTAS/*/REVISIONES*/*.clasificacion.json
 
-# Documentacion de diseno y planes de implementacion
-!docs/superpowers/specs/*.md
-!docs/superpowers/plans/*.md
+# Documentacion de diseno y planes de implementacion.
+# Norma _SISTEMA (07/08/2026): docs/ paso a _SISTEMA/docs/. Si esta ruta no
+# acompana al movimiento, las specs dejan de publicarse sin dar ningun error.
+!_SISTEMA/docs/superpowers/specs/*.md
+!_SISTEMA/docs/superpowers/plans/*.md
 
 # Codigo del motor: hasta hoy vivia sin historial y se respaldaba con copias
 # .bak a mano (448 acumuladas). Con git se puede ver que cambio y cuando, y

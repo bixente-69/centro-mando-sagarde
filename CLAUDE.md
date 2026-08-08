@@ -187,7 +187,7 @@ primera: ha ido y ha visto que faltaba algo. Solo la **ausencia** de marca
 ## 8. Memoria
 
 **Memoria funcional y técnica vigente (28/07/2026):**
-`docs/2026-07-28-memoria-diccionario-tajos-alertas-informes.md`.
+`_SISTEMA/docs/2026-07-28-memoria-diccionario-tajos-alertas-informes.md`.
 Contiene el diccionario confirmado, las traducciones históricas, la
 especialización de tajos, la corrección de falsas alertas y el contrato del
 informe ejecutivo. Leerla antes de volver a preguntar por esos asuntos.
@@ -238,7 +238,7 @@ que era verdad cuando se escribió.
 ### Entorno IA compartido y CARDIVA
 
 El registro central de contexto, memoria y skills compartidas por Codex,
-Claude y Gemini es `docs/SAGARDE_ENTORNO_IA_Y_SKILLS.md`.
+Claude y Gemini es `_SISTEMA/docs/SAGARDE_ENTORNO_IA_Y_SKILLS.md`.
 
 Para informes preventivos CARDIVA:
 

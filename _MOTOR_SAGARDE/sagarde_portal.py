@@ -572,7 +572,10 @@ def generar_index_aplicaciones(apps: list[dict]) -> None:
 
 def generar_portal_movil(ro: dict | None, rp: dict | None,
                           mant: list[dict], obras_cerradas: list[dict]) -> None:
-    output = ROOT / "PORTAL SAGARDE.html"
+    # Norma _SISTEMA (07/08/2026): el portal movil es una vista generada,
+    # no un documento que Bixente abra desde la raiz.
+    output = ROOT / "_SISTEMA" / "PORTAL SAGARDE.html"
+    output.parent.mkdir(parents=True, exist_ok=True)
     generated = datetime.now().strftime("%d/%m/%Y %H:%M")
 
     tot_ro = (ro or {}).get("totales", {})
@@ -607,6 +610,21 @@ def generar_portal_movil(ro: dict | None, rp: dict | None,
             alertas_raw.append(("warn", f"{len(sin_cambios)} obra(s) sin cambios respecto a la ultima revision: {', '.join(sin_cambios)}"))
     alertas_html = "".join(f'<div class="al {t}">{txt}</div>' for t, txt in alertas_raw) \
         if alertas_raw else '<div class="al ok">Sin bloqueos activos en las obras con seguimiento IA.</div>'
+
+    # ATENCION (08/08/2026): esta funcion NO GENERA NADA. Termina aqui, sin
+    # write_text: kpi_html y alertas_html se calculan y se tiran. El
+    # 'PORTAL SAGARDE.html' que habia en la raiz era un resto del 25/07/2026,
+    # congelado desde entonces, y el portal lo seguia enlazando como si
+    # estuviera al dia. Es decir: llevaba meses ensenando KPIs viejos.
+    #
+    # No se restaura esa copia -datos del 25/07 presentados como de hoy es
+    # justo lo que este proyecto no hace-. Se avisa en cada ejecucion en vez
+    # de callar, que era el problema. Repararla es trabajo aparte: hay que
+    # escribir el cuerpo que faltó y decidir con Bixente si el portal movil
+    # sigue haciendo falta.
+    print("  [AVISO] Portal movil NO generado: generar_portal_movil() esta "
+          "incompleta (sin write_text). Ver comentario en sagarde_portal.py.")
+
 
 def _render_sparkline_svg(historico: list[float] | None, width: int = 70, height: int = 22) -> str:
     if not historico or len(historico) < 2:

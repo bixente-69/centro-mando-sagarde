@@ -176,7 +176,7 @@ ejecutar nada). Antes de aceptar uno de estos ficheros como revisión oficial:
 | Motor lectura PDF (genérico) | `_SISTEMA INFORME SAGARDE IA\lector_hoja_tajos_pdf.py` |
 | Motor lectura HTML tajos (genérico) | `_SISTEMA INFORME SAGARDE IA\lector_hoja_tajos_html.py` |
 | Motor | `_MOTOR_SAGARDE\` (este directorio) |
-| Memoria vigente | `docs\2026-07-28-memoria-diccionario-tajos-alertas-informes.md` |
+| Memoria vigente | `_SISTEMA\docs\2026-07-28-memoria-diccionario-tajos-alertas-informes.md` |
 | Centro de Mando URL | https://bixente-69.github.io/centro-mando-sagarde/ |
 
 ## Reglas de trabajo
