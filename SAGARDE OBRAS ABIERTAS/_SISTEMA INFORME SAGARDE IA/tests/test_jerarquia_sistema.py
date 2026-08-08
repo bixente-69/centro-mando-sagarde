@@ -105,10 +105,6 @@ def _violaciones():
 
 # Violaciones conocidas al escribir el plan. Se vacian tarea a tarea.
 PENDIENTES = {
-    # tarea 10 (POST-VENTAS)
-    "POST-VENTAS/Actualizar_Postventas.bat",
-    "POST-VENTAS/postventas_index.py",
-    "POST-VENTAS/postventas_sync.py",
     # tarea 11 (MANTENIMIENTOS)
     "MANTENIMIENTOS/mantenimientos_index.py",
 }

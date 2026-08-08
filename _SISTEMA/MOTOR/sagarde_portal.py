@@ -53,7 +53,7 @@ AREA_META = {
 # el portal degrada con gracia: no inventa cifras, simplemente omite la
 # seccion o cae al recuento generico de carpetas/archivos.
 RESUMEN_OBRAS_JSON = ROOT / "SAGARDE OBRAS ABIERTAS" / "_SISTEMA INFORME SAGARDE IA" / "resumen_obras.json"
-RESUMEN_POSTVENTAS_JSON = ROOT / "POST-VENTAS" / "postventas_resumen.json"
+RESUMEN_POSTVENTAS_JSON = ROOT / "POST-VENTAS" / "_SISTEMA" / "postventas_resumen.json"
 
 DIAS_OBRA_INACTIVA = 14  # aviso entre 15 y 399 dias sin archivos nuevos
 DIAS_POSTVENTA_RECIENTE = 45  # ya definido asi en postventas_index.py, se reutiliza el mismo criterio
