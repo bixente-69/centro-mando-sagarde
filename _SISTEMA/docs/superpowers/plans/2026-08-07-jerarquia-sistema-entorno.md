@@ -1040,6 +1040,20 @@ Nueve elementos de la raíz están anclados por requisitos de herramienta.
 
 **Ficheros:** ninguno se mueve ni se edita. Sólo cambia un atributo.
 
+> **Ejecutada el 08/08/2026.** Los nueve quedan ocultos, más las cuatro
+> carpetas `.claude` de los subproyectos de `VARIOS`. La raíz visible sale
+> exactamente como pedía el paso 3.
+>
+> **No genera ningún commit, y no es un olvido:** el atributo oculto de
+> Windows no cambia el contenido de ningún fichero, así que git no ve nada;
+> y `SAGARDE_ENTORNO_IA_Y_SKILLS.md`, donde se documenta cómo revertirlo,
+> está ignorado por la lista blanca. El paso 4 del plan pedía un
+> `git commit` que aquí no tendría nada que registrar.
+>
+> Verificado que ocultar no rompe nada: `git status` sigue limpio (la lista
+> blanca se lee), las 6 skills siguen rastreadas, `.nojekyll` sigue presente
+> y la suite sigue en 200, OK.
+
 - [ ] **Paso 1: Ocultar**
 
 ```powershell
