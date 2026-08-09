@@ -36,6 +36,27 @@ ESPERADAS = {'gernika': 1216, 'mungia': 2356, 'bolueta': 3686,
              'obisporueta': 5610, 'prueba': 1178}
 
 
+def _tabla_de(obra):
+    """Tabla de tajos de esa obra: la comun mas los suyos propios.
+
+    Se lee la ficha por el id corto del generador. Si la obra no tiene ficha
+    -o el registro no la conoce- se cae a la tabla comun, que es lo que habia
+    antes: nunca queda peor que sin esto.
+    """
+    import ficha_obra
+    from registro_obras import OBRAS
+    entrada = next((o for o in OBRAS if o.get('id') == obra), None)
+    if entrada and entrada.get('carpeta_obra'):
+        carpeta = os.path.join(os.path.dirname(AQUI), entrada['carpeta_obra'])
+        try:
+            ficha = ficha_obra.cargar(carpeta)
+        except Exception:
+            ficha = None
+        if ficha:
+            return rejilla_hoja.tabla_con_tajos_de_obra(ficha)
+    return rejilla_hoja.tabla_de_tajos()
+
+
 def generar_html(obra, destino):
     """Escribe la hoja que produce hoy el generador para esa obra."""
     with open(destino, 'w', encoding='utf-8') as f:
@@ -58,7 +79,7 @@ def imprimir_pdf(html, pdf):
     return pdf
 
 
-def validar(pdf, esperadas):
+def validar(pdf, esperadas, obra):
     """[] si todo esta bien; si no, la lista de problemas concretos."""
     import pdfplumber
     problemas = []
@@ -102,13 +123,14 @@ def validar(pdf, esperadas):
         problemas.append('ninguna pagina con tabla de revision')
 
     try:
-        leidas = rejilla_hoja.leer_pdf(pdf, rejilla_hoja.tabla_de_tajos())
+        # Con los tajos propios de la obra, como los lee leer_hoja_marcada.
+        # Con solo el catalogo comun, Orueta era 'NO VERIFICABLE' porque 16 de
+        # sus 40 tajos desglosan por zona y no estan en el comun (08/08/2026).
+        leidas = rejilla_hoja.leer_pdf(pdf, _tabla_de(obra))
         total = sum(len(t['celdas']) for _, t in leidas)
         if total != esperadas:
             problemas.append('celdas leidas %d, esperadas %d' % (total, esperadas))
     except rejilla_hoja.HojaIlegible as exc:
-        # Se distingue a proposito de un fallo de paginacion: hay obras cuyos
-        # tajos propios no estan en el catalogo comun (Orueta, 07/08/2026).
         problemas.append('NO VERIFICABLE por datos de la obra: %s' % exc)
     return problemas
 
@@ -126,7 +148,7 @@ def main(obras):
             import pdfplumber
             with pdfplumber.open(pdf) as doc:
                 npaginas = len(doc.pages)
-            problemas = validar(pdf, esperadas)
+            problemas = validar(pdf, esperadas, obra)
             duros = [p for p in problemas if not p.startswith('NO VERIFICABLE')]
             avisos = [p for p in problemas if p.startswith('NO VERIFICABLE')]
             estado = 'OK' if not duros else 'FALLA'

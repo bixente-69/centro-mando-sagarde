@@ -181,7 +181,7 @@ class PdfReal(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             html = V.generar_html('prueba', os.path.join(tmp, 'h.html'))
             pdf = V.imprimir_pdf(html, os.path.join(tmp, 'h.pdf'))
-            self.assertEqual(V.validar(pdf, 1178), [])
+            self.assertEqual(V.validar(pdf, 1178, 'prueba'), [])
 
 
 if __name__ == '__main__':

@@ -238,7 +238,12 @@ def preparar(ruta, obra, ficha, carpeta_recortes=None, zoom=6):
     import fitz
 
     doc = fitz.open(ruta)
-    paginas = dict(rejilla.leer_pdf(ruta))
+    # Se le pasa la tabla ampliada con los tajos propios de ESTA obra. Sin
+    # esto, una obra con tajos que no estan en el catalogo comun -Orueta
+    # desglosa por zona: 16 de sus 40- no se puede leer: el lector rechaza la
+    # hoja entera. Los ids salen de su ficha, no se inventan.
+    paginas = dict(rejilla.leer_pdf(
+        ruta, rejilla.tabla_con_tajos_de_obra(ficha)))
     indice = indice_de_ficha(ficha)
 
     if carpeta_recortes:

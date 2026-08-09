@@ -117,6 +117,35 @@ def tabla_de_tajos(ruta_generador=GENERADOR, ruta_catalogo=CATALOGO):
     return indice
 
 
+def tabla_con_tajos_de_obra(ficha, base=None):
+    """La tabla comun MAS los tajos propios que declara la ficha de una obra.
+
+    Hay obras con tajos que no existen en el catalogo comun y no deberian
+    existir: Orueta desglosa por zona ('Focos WC', 'Pintura Pasillos',
+    'Mecanismos pasillo'...) y meter esas 16 entradas en el catalogo comun
+    ensuciaria el de todas las demas obras. Pero su hoja SI las imprime, asi
+    que el lector la rechazaba entera y esa obra no se podia leer.
+
+    Lo que cambia no es la guarda, es de donde sale la lista de lo conocido:
+    un tajo declarado en la ficha de su obra NO es un id inventado, ya esta
+    en el modelo de datos de esa obra y en sus estados. Un tajo que no este
+    ni en el catalogo comun ni en la ficha se sigue rechazando igual, que es
+    lo que impide colar una fila en el sitio equivocado.
+
+    El catalogo comun manda si hubiera choque de nombre: es el que comparten
+    todas las obras.
+    """
+    indice = dict(base if base is not None else tabla_de_tajos())
+    for tajo in (ficha.get('tajos') or {}).get('detalle') or []:
+        if not isinstance(tajo, dict) or not tajo.get('id'):
+            continue
+        for nombre in [tajo.get('nombre'), *(tajo.get('aliases') or [])]:
+            clave = fold(nombre)
+            if clave and clave not in indice:
+                indice[clave] = tajo
+    return indice
+
+
 # ------------------------------------------------------- lectura de una tabla
 
 def leer_tabla(filas, texto, indice_tajos, aviso=''):
