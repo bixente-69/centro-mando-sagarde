@@ -451,47 +451,6 @@ def _page_html(title: str, subtitle: str, logo: str, nav: list[tuple[str, str]],
     )
 
 
-def generar_index_mantenimientos(mant: list[dict]) -> None:
-    output = ROOT / "MANTENIMIENTOS" / "index.html"
-    if not output.parent.is_dir():
-        return
-    nav = [
-        ("⌂ Portal", "../index.html"),
-        ("Obras abiertas", "../SAGARDE%20OBRAS%20ABIERTAS/index.html"),
-        ("Post-ventas", "../POST-VENTAS/index.html"),
-        ("Mantenimientos", "./index.html"),
-        ("Obras cerradas", "../SAGARDE%20(OLD)/OBRAS%20CERRADAS/index.html"),
-    ]
-    rows = "".join(
-        f'<a class="pv-row" href="{m["sub_url"]}" data-search="{escape(m["nombre"].lower())}">'
-        f'<span class="pv-main"><strong>{escape(m["nombre"])}</strong>'
-        f'<small>{m["n_archivos"]} archivos</small></span>'
-        f'<span class="pv-badge">{fmt_date(m["ultima_ts"])}</span></a>'
-        for m in mant
-    ) or '<p style="color:var(--muted);padding:20px">No hay contratos.</p>'
-    search_js = (
-        "const s=document.getElementById('s'),rows=[...document.querySelectorAll('.pv-row')],"
-        "empty=document.getElementById('empty');"
-        "s.addEventListener('input',()=>{const q=s.value.trim().toLowerCase();let n=0;"
-        "rows.forEach(r=>{const ok=!q||(r.dataset.search||'').includes(q);"
-        "r.style.display=ok?'':'none';if(ok)n++;});"
-        "empty.style.display=n?'none':'block';});"
-    )
-    content = (
-        f'<div class="intro"><div><h1>Mantenimientos</h1>'
-        f'<p class="sub">Contratos, revisiones e incidencias de mantenimiento</p></div>'
-        f'<label class="search-wrap"><input id="s" class="search" type="search" placeholder="Buscar contrato...">'
-        f'<span class="search-symbol">&#9906;</span></label></div>'
-        f'<div class="section-head"><h2>Contratos</h2>'
-        f'<span>{len(mant)} contrato(s) · por actividad reciente</span></div>'
-        f'<section class="pv-list">{rows}'
-        f'<div class="empty" id="empty">No hay coincidencias.</div></section>'
-        f'<script>{search_js}</script>'
-    )
-    output.write_text(_page_html("Mantenimientos", "Contratos y revisiones", "../POST-VENTAS/logo_sagarde.jpg", nav, content), encoding="utf-8")
-    print(f"  Mantenimientos index: {output}")
-
-
 def generar_index_obras_cerradas(obras_cerradas: list[dict]) -> None:
     output = ROOT / "SAGARDE (OLD)" / "OBRAS CERRADAS" / "index.html"
     if not output.parent.is_dir():
@@ -582,6 +541,40 @@ def generar_index_aplicaciones(apps: list[dict]) -> None:
     print(f"  Aplicaciones index: {output}")
 
 
+# CSS del portal movil. Copiado literal del ultimo fichero que llego a
+# generarse (25/07/2026, commit d71371f) para que la pantalla que Bixente
+# conocia siga siendo la misma: esto es una reparacion, no un rediseno.
+_MOVIL_CSS = """
+:root{--bg:#eef1f4;--ink:#182230;--mut:#647184;--line:#d0d5dd;--brand:#b42318;--nav:#0b1f3a;--nav2:#123a63;--ok:#2e9e5b;--warn:#e07b1a;--bad:#d9483c;--r:9px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif}
+.hd{background:linear-gradient(120deg,var(--nav),var(--nav2));color:#fff;border-bottom:3px solid var(--brand);padding:13px 16px;display:flex;align-items:center;gap:12px}
+.logo{height:42px;width:auto;border-radius:6px;box-shadow:0 0 0 2px var(--brand)}
+.ht{font-size:17px;font-weight:700}.hs{font-size:11px;color:#c7d3e3;margin-top:2px}
+.tab-bar{display:flex;overflow-x:auto;background:var(--nav);border-bottom:3px solid var(--brand);-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tab-bar::-webkit-scrollbar{display:none}
+.tp{flex:none;padding:11px 15px;color:rgba(255,255,255,.6);font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-3px;white-space:nowrap;touch-action:manipulation}
+.tp.on{color:#fff;border-bottom-color:#f5a524}
+.tc{display:none;padding:14px 14px 28px;max-width:860px;margin:0 auto}
+.kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.kpi{background:#fff;border-radius:var(--r);padding:12px 8px;text-align:center;border:1px solid var(--line)}
+.kpi strong{display:block;font-size:22px;font-weight:800}.kpi span{font-size:10px;color:var(--mut);display:block;margin-top:2px;line-height:1.2}
+.al{border-radius:var(--r);padding:10px 13px;font-size:12px;font-weight:600;margin-bottom:8px;border:1px solid transparent;line-height:1.4}
+.al.bad{background:#fdecea;border-color:#f3b9b2;color:#7a231c}.al.warn{background:#fdf1e0;border-color:#f0cf9a;color:#7a4b0a}.al.ok{background:#e8f6ee;border-color:#b9e3c8;color:#155c34}
+.card{background:#fff;border:1px solid var(--line);border-top:3px solid var(--brand);border-radius:var(--r);padding:14px;margin-bottom:10px;color:inherit}
+.cn{font-size:14px;font-weight:700;margin-bottom:6px;line-height:1.3}
+.pct{font-size:28px;font-weight:800;margin-bottom:4px}.pct.ok{color:var(--ok)}.pct.warn{color:var(--warn)}.pct.bad{color:var(--bad)}
+.meta{font-size:11px;color:var(--mut);line-height:1.5}.alert-tag{margin-top:7px;font-size:11px;color:var(--bad);font-weight:700}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:8px;padding:10px 13px;margin-bottom:6px;font-size:13px;text-decoration:none;color:inherit}
+a.row:active,a.card:active{background:#f2f4f7}
+.rn{font-weight:600;line-height:1.3}.muted{font-size:11px;color:var(--mut);white-space:nowrap;flex-shrink:0}
+.sh{font-size:14px;font-weight:700;margin:0 0 10px}
+.search{width:100%;height:42px;border:1px solid #98a2b3;border-radius:6px;padding:0 12px;font-size:15px;margin-bottom:10px;background:#fff}
+.empty{color:var(--mut);font-size:13px;padding:16px 0;text-align:center}
+.ft{font-size:10px;color:var(--mut);text-align:center;padding:16px;border-top:1px solid var(--line)}
+"""
+
+
 def generar_portal_movil(ro: dict | None, rp: dict | None,
                           mant: list[dict], obras_cerradas: list[dict]) -> None:
     # Norma _SISTEMA (07/08/2026): el portal movil es una vista generada,
@@ -623,19 +616,123 @@ def generar_portal_movil(ro: dict | None, rp: dict | None,
     alertas_html = "".join(f'<div class="al {t}">{txt}</div>' for t, txt in alertas_raw) \
         if alertas_raw else '<div class="al ok">Sin bloqueos activos en las obras con seguimiento IA.</div>'
 
-    # ATENCION (08/08/2026): esta funcion NO GENERA NADA. Termina aqui, sin
-    # write_text: kpi_html y alertas_html se calculan y se tiran. El
-    # 'PORTAL SAGARDE.html' que habia en la raiz era un resto del 25/07/2026,
-    # congelado desde entonces, y el portal lo seguia enlazando como si
-    # estuviera al dia. Es decir: llevaba meses ensenando KPIs viejos.
-    #
-    # No se restaura esa copia -datos del 25/07 presentados como de hoy es
-    # justo lo que este proyecto no hace-. Se avisa en cada ejecucion en vez
-    # de callar, que era el problema. Repararla es trabajo aparte: hay que
-    # escribir el cuerpo que faltó y decidir con Bixente si el portal movil
-    # sigue haciendo falta.
-    print("  [AVISO] Portal movil NO generado: generar_portal_movil() esta "
-          "incompleta (sin write_text). Ver comentario en sagarde_portal.py.")
+    # El fichero vive en _SISTEMA/, un nivel por debajo de la raiz, y todos
+    # los href de los resumenes son relativos a la raiz.
+    p = "../"
+
+    # --- Obras con seguimiento IA -------------------------------------
+    tarjetas = []
+    for o in sorted((x for x in (ro or {}).get("obras", []) if x.get("con_panel")),
+                    key=lambda x: -(x.get("pct_ponderado") or 0)):
+        pct = o.get("pct_ponderado")
+        clase = "bad" if pct is None or pct < 40 else ("warn" if pct < 75 else "ok")
+        meta = []
+        if o.get("ultima_revision"):
+            meta.append(f"Rev: {escape(str(o['ultima_revision']))}")
+        if o.get("n_rev"):
+            meta.append(f"{o['n_rev']} revisiones")
+        if o.get("n_docs"):
+            meta.append(f"{o['n_docs']} docs")
+        aviso = (f'<div class="alert-tag">{o["n_bloqueos"]} bloqueo(s)</div>'
+                 if o.get("n_bloqueos") else "")
+        cuerpo = (f'<div class="cn">{escape(o["nombre"])}</div>'
+                  f'<div class="pct {clase}">{pct:.0f}%</div>'
+                  f'<div class="meta">{" &middot; ".join(meta)}</div>{aviso}'
+                  if pct is not None else
+                  f'<div class="cn">{escape(o["nombre"])}</div>'
+                  f'<div class="pct">—</div>'
+                  f'<div class="meta">Sin revisiones</div>{aviso}')
+        if o.get("href"):
+            tarjetas.append(f'<a class="card" style="display:block;'
+                            f'text-decoration:none" href="{p}{o["href"]}">'
+                            f'{cuerpo}</a>')
+        else:
+            tarjetas.append(f'<div class="card">{cuerpo}</div>')
+    obras_html = ("".join(tarjetas) or
+                  '<p class="empty">Ninguna obra con seguimiento IA todavia.</p>')
+
+    # --- Post-ventas ---------------------------------------------------
+    filas_pv = []
+    for c in (rp or {}).get("contratos", []):
+        ts = c.get("ultima_incidencia_ts") or c.get("ultimo_archivo_ts")
+        cuando = fmt_date(ts) if ts else "—"
+        filas_pv.append(
+            f'<a class="row" href="{p}{c["href"]}">'
+            f'<span class="rn">{escape(c["nombre"])}</span>'
+            f'<span class="muted">{cuando}</span></a>')
+    pv_html = (f'<p class="sh">Post-ventas &middot; {tot_rp.get("n_contratos", 0)}'
+               f' contratos</p>' + ("".join(filas_pv) or
+               '<p class="empty">Sin contratos de post-venta.</p>'))
+
+    # --- Mantenimientos ------------------------------------------------
+    filas_mant = "".join(
+        f'<a class="row" href="{p}{m["url"]}">'
+        f'<span class="rn">{escape(m["nombre"])}</span>'
+        f'<span class="muted">{fmt_date(m["ultima_ts"])}</span></a>'
+        for m in mant)
+    mant_html = (f'<p class="sh">{len(mant)} contrato(s) de mantenimiento</p>'
+                 + (filas_mant or '<p class="empty">Sin contratos.</p>'))
+
+    # --- Obras cerradas (con buscador) ---------------------------------
+    filas_cerradas = "".join(
+        f'<a class="row" data-s="{escape(c["nombre"].lower(), quote=True)}" '
+        f'href="{p}{c["url"]}">'
+        f'<span class="rn">{escape(c["nombre"])}</span>'
+        f'<span class="muted">{fmt_date(c["ultima_ts"])}</span></a>'
+        for c in obras_cerradas)
+    cerradas_html = (
+        '<input id="si" class="search" type="search" '
+        'placeholder="Buscar obra cerrada...">'
+        f'<p class="sh">{len(obras_cerradas)} obras cerradas</p>'
+        + (filas_cerradas or '<p class="empty">Sin obras cerradas.</p>'))
+
+    n_ia = tot_ro.get("n_con_panel", 0)
+    html = (
+        '<!doctype html><html lang="es"><head>\n'
+        '<meta charset="utf-8">'
+        '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
+        '<title>Portal Sagarde</title>\n'
+        f'<style>{_MOVIL_CSS}</style></head><body>\n'
+        '<header class="hd">\n'
+        f'  <img class="logo" src="{p}POST-VENTAS/logo_sagarde.jpg" '
+        'alt="Sagarde" onerror="this.style.display=\'none\'">\n'
+        '  <div><div class="ht">Portal Sagarde</div>'
+        f'<div class="hs">Centro de mando &middot; {generated}</div></div>\n'
+        '</header>\n'
+        '<nav class="tab-bar">\n'
+        '  <button class="tp" onclick="tab(0)">Inicio</button>\n'
+        f'  <button class="tp" onclick="tab(1)">Obras ({n_ia} IA)</button>\n'
+        f'  <button class="tp" onclick="tab(2)">Post-ventas '
+        f'({tot_rp.get("n_contratos", 0)})</button>\n'
+        f'  <button class="tp" onclick="tab(3)">Mantenimientos '
+        f'({len(mant)})</button>\n'
+        f'  <button class="tp" onclick="tab(4)">Cerradas '
+        f'({len(obras_cerradas)})</button>\n'
+        '</nav>\n'
+        f'<div class="tc" id="tab0"><div class="kpis">{kpi_html}</div>'
+        f'{alertas_html}</div>\n'
+        f'<div class="tc" id="tab1">{obras_html}</div>\n'
+        f'<div class="tc" id="tab2">{pv_html}</div>\n'
+        f'<div class="tc" id="tab3">{mant_html}</div>\n'
+        f'<div class="tc" id="tab4">{cerradas_html}</div>\n'
+        f'<p class="ft">Generado {generated} &middot; '
+        'Actualizar_Sagarde.bat para refrescar</p>\n'
+        '<script>\n'
+        "function tab(n){document.querySelectorAll('.tp').forEach("
+        "function(b,i){b.classList.toggle('on',i===n)});"
+        "document.querySelectorAll('.tc').forEach(function(c,i){"
+        "c.style.display=i===n?'block':'none';});}\n"
+        'tab(0);\n'
+        "var si=document.getElementById('si');\n"
+        "if(si)si.addEventListener('input',function(){"
+        "var q=si.value.trim().toLowerCase();"
+        "document.querySelectorAll('#tab4 .row').forEach(function(r){"
+        "r.style.display=(!q||(r.dataset.s||'').includes(q))?'':'none';});});\n"
+        '</script>\n'
+        '</body></html>\n'
+    )
+    output.write_text(html, encoding="utf-8")
+    print(f"  Portal movil: {output}")
 
 
 def _render_sparkline_svg(historico: list[float] | None, width: int = 70, height: int = 22) -> str:
@@ -1110,7 +1207,13 @@ def main() -> None:
     mant = escanear_mantenimientos()
     planilla = escanear_planilla()
     obras_cerradas = escanear_obras_cerradas()
-    generar_index_mantenimientos(mant)
+    # MANTENIMIENTOS/index.html lo escribe su propio generador,
+    # MANTENIMIENTOS/_SISTEMA/mantenimientos_index.py, igual que
+    # POST-VENTAS. Hasta el 08/08/2026 el portal lo sobreescribia aqui
+    # con otra plantilla, y como corre el ultimo, la del apartado no se
+    # llego a ver nunca desde que se escribio el 27/07. La suya avisa de
+    # los contratos sin revisar; esta no lo hacia. Las paginas POR
+    # contrato si las sigue generando el portal, justo debajo.
     for m in mant:
         generar_pagina_mantenimiento(m)
     generar_index_obras_cerradas(obras_cerradas)
