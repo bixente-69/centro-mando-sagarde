@@ -3,11 +3,11 @@
   "catalogo_version": "1.3",
   "obra": "2026 BOLUETA ACR",
   "revision": "28/07/2026",
-  "edad_revision_dias": 11,
+  "edad_revision_dias": 13,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "08/08/2026 08:52",
+  "generado": "10/08/2026 10:34",
   "resumen": {
     "listos": 19,
     "verificar": 25,
