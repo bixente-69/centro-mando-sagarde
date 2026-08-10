@@ -57,6 +57,14 @@ VARIOS/APPS SAGARDE/
 !_SISTEMA/docs/superpowers/specs/*.md
 !_SISTEMA/docs/superpowers/plans/*.md
 
+# Documentacion de referencia del entorno: memoria funcional vigente, mapa
+# mental, glosario y registro multi-IA. CLAUDE.md manda leer la memoria del
+# 28/07/2026 antes de preguntar por el diccionario de tajos, y esa memoria
+# nunca ha estado rastreada: solo existia en este disco, sin historial ni
+# forma de ver que cambio (detectado el 10/08/2026). Las specs y los planes
+# de al lado si se publicaban, por la misma razon que ahora se publican estos.
+!_SISTEMA/docs/*.md
+
 # Codigo del motor: hasta hoy vivia sin historial y se respaldaba con copias
 # .bak a mano (448 acumuladas). Con git se puede ver que cambio y cuando, y
 # volver atras sin adivinar cual de las copias era la buena.
