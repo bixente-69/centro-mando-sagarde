@@ -94,7 +94,7 @@ _BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _BASE not in sys.path:
     sys.path.insert(0, _BASE)
 
-from tests.linea_base_prioridades import medir_prioridades
+from linea_base_prioridades import medir_prioridades
 
 
 class TestLineaBase(unittest.TestCase):
@@ -188,8 +188,8 @@ Esperado: `OK`.
 ```
 cd "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA" && python -c "
 import json, sys
-sys.path.insert(0, '.')
-from tests.linea_base_prioridades import medir_fichero, tajos_sin_orden
+sys.path.insert(0, 'tests')
+from linea_base_prioridades import medir_fichero, tajos_sin_orden
 OBRAS = ['2025 GERNIKA 32V', '2026 MUNGIA ACR NEINOR', '2026 BOLUETA ACR',
          '2025 BILBAO OBISPO ORUETA', '2026 OBRA PRUEBA']
 for o in OBRAS:
@@ -399,7 +399,7 @@ if _BASE not in sys.path:
     sys.path.insert(0, _BASE)
 
 from priorizador_trabajos import Catalogo, estado_desde_ficha
-from tests import fixtures
+import fixtures
 
 
 def _ficha_con_estados(pares):
