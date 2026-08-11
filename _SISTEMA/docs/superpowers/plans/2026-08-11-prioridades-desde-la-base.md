@@ -328,7 +328,24 @@ cd "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA" && python -m unittest te
 Esperado: `test_ningun_orden_duplicado_entre_tajos_comunes` FALLA con
 `{50: ['montante_sscc', 'montante_general']}`. Las otras cinco pasan.
 
-- [ ] **Paso 3: CHECKPOINT — preguntar a Bixente antes de tocar el dato**
+- [x] **Paso 3: CHECKPOINT — preguntar a Bixente antes de tocar el dato**
+
+**RESUELTO el 11/08/2026.** Comprobado antes de decidir: nada depende de
+`montante_general`, no tiene dependencias propias, y de las cinco bases solo
+Orueta lo usa. Cambiar su orden es cosmético y reversible. Se le da **orden 25**
+—donde empieza el trabajo de montantes— en vez de dejarlo empatado en 50 con
+`montante_sscc`.
+
+**DECISIÓN DE BIXENTE (11/08/2026): `reglas/` NO entra en git.** El `.gitignore`
+lo atrapa con el `*` de la línea 2 y se deja así. Consecuencias asumidas:
+
+- El cambio de orden de `montante_general` vive solo en disco.
+- La única copia del catálogo es el historial de versiones de OneDrive.
+- `test_catalogo_invariantes.py` sí se publica, y depende de un fichero que no.
+  En una copia limpia del repositorio fallaría. No importa en la práctica
+  porque el entorno se ejecuta en una sola máquina con ficheros `.bat`, pero
+  **no se debe mutar el catálogo para una prueba**: no hay `git checkout` que
+  lo restaure. Si hace falta mutarlo, copiarlo antes a mano.
 
 **No inventar la respuesta.** `montante_general` ("Montantes") es el agregado
 histórico que los criterios marcan explícitamente como no confirmado. Preguntar:
