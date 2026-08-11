@@ -73,7 +73,11 @@ def _orden_natural(valor):
 def _scope(meta, original, unidad):
     ambito = meta.get("ambito", "vivienda")
     texto = _normalizar(f"{original} {unidad}")
-    if "zona comun" in texto or "zzcc" in texto:
+    # Buscaba solo "zona comun" y el catalogo escribe "zonas comunes", igual
+    # que las unidades de Orueta ("Zonas Comunes 1"): esa mitad de la
+    # condicion no se cumplia NUNCA. Solo funcionaba el "zzcc".
+    if ("zona comun" in texto or "zonas comunes" in texto
+            or "zzcc" in texto):
         return "zona_comun"
     if ambito == "dinamico":
         if any(x in texto for x in ("pasillo", "rellano", "escalera")):

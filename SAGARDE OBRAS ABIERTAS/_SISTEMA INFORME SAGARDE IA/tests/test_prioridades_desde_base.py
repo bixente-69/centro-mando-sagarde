@@ -18,7 +18,7 @@ if _BASE not in sys.path:
 import fixtures
 from priorizador_trabajos import (Catalogo, _agrupar_inventario,
                                   _agrupar_prioridades, _clasificar_detalle,
-                                  estado_desde_ficha, priorizar_ficha,
+                                  _scope, estado_desde_ficha, priorizar_ficha,
                                   sembrar_reglas, sin_base, verificar_rejilla)
 
 
@@ -478,6 +478,55 @@ class TestPrevision(unittest.TestCase):
 
     def test_una_obra_sin_base_no_tiene_prevision(self):
         self.assertEqual(sin_base('X')['prevision'], [])
+
+
+class TestCorreccionesMenores(unittest.TestCase):
+
+    def test_zonas_comunes_en_plural_se_reconoce(self):
+        """La guarda buscaba 'zona comun' y todo el catalogo escribe 'zonas
+        comunes': esa mitad de la condicion no se cumplia nunca."""
+        self.assertEqual(
+            _scope({'ambito': 'vivienda'}, 'Tubeado de zonas comunes', 'A'),
+            'zona_comun')
+
+    def test_una_unidad_llamada_zonas_comunes_se_reconoce(self):
+        """Orueta tiene unidades 'Zonas Comunes 1' y 'Zonas Comunes 2'."""
+        self.assertEqual(
+            _scope({'ambito': 'vivienda'}, 'Tubeado interior',
+                   'Zonas Comunes 1'),
+            'zona_comun')
+
+    def test_zzcc_sigue_funcionando(self):
+        self.assertEqual(
+            _scope({'ambito': 'vivienda'}, 'Iluminación de rellanos / ZZCC',
+                   'A'),
+            'zona_comun')
+
+    def test_una_vivienda_normal_no_se_convierte_en_zona_comun(self):
+        self.assertEqual(
+            _scope({'ambito': 'vivienda'}, 'Tubeado interior', 'A'),
+            'vivienda')
+
+    def test_el_recorte_avisa_en_la_salida(self):
+        """El limite recortaba en silencio. Con tabicado terminado el tubeado
+        es viable, asi que hay al menos un bloque que recortar."""
+        ficha = _ficha_con_estados({
+            ('pb', 'tabicado', 'A'): 'X',
+            ('pb', 'tubeado', 'A'): 'P',
+        }, tajos_extra=[TABICADO])
+        completo = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        self.assertTrue(completo['items'])
+        self.assertEqual([a for a in completo['avisos'] if 'recortado' in a],
+                         [])
+
+        ficha = _ficha_con_estados({
+            ('pb', 'tabicado', 'A'): 'X',
+            ('pb', 'tubeado', 'A'): 'P',
+        }, tajos_extra=[TABICADO])
+        recortado = priorizar_ficha(ficha, limite=0, hoy=date(2026, 8, 11))
+        self.assertEqual(recortado['items'], [])
+        self.assertEqual(
+            len([a for a in recortado['avisos'] if 'recortado' in a]), 1)
 
 
 class TestRejillaCompleta(unittest.TestCase):
