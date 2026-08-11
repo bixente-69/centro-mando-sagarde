@@ -1,0 +1,153 @@
+# -*- coding: utf-8 -*-
+"""Prioridades leyendo de la base de obra en vez del historial crudo.
+
+La base ya es el estado resuelto: trae la norma de la ultima revision
+aplicada, la fecha y la revision de origen de cada celda, y las ubicaciones
+descartadas fuera del arbol de estructura. Reconstruirlo desde el historial
+crudo es lo que metia 4 viviendas inexistentes en Bolueta y 15 en Orueta.
+"""
+import os
+import sys
+import unittest
+
+_BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _BASE not in sys.path:
+    sys.path.insert(0, _BASE)
+
+import fixtures
+from priorizador_trabajos import (Catalogo, estado_desde_ficha,
+                                  verificar_rejilla)
+
+
+def _ficha_con_estados(pares, tajos_extra=()):
+    """pares: {(planta_id, tajo_id, ubicacion_id): estado}
+
+    No se toca fixtures.ficha_minima(): test_ficha_obra comprueba que produce
+    exactamente 8 celdas. Los tajos que hagan falta de mas se anaden aqui.
+    """
+    ficha = fixtures.ficha_minima()
+    ficha['revisiones'] = [{'id': 'rev_28072026', 'fecha': '28/07/2026'}]
+    for tajo in tajos_extra:
+        ficha['tajos']['detalle'].insert(0, dict(tajo))
+        ficha['tajos']['aplicables'].insert(0, tajo['id'])
+    for (planta, tajo, ubi), valor in pares.items():
+        clave = 'p1__%s__%s__%s' % (planta, tajo, ubi)
+        ficha['estados'][clave] = {'v': valor, 'f': '28/07/2026',
+                                   'r': 'rev_28072026'}
+    return ficha
+
+
+TABICADO = {'id': 'tabicado', 'nombre': 'Tabicado', 'ambito': 'vivienda',
+            'propiedad': 'externo', 'fase': 'Inicio de obra', 'orden': 5}
+
+
+class TestEstadoDesdeFicha(unittest.TestCase):
+
+    def test_traduce_los_estados_medidos(self):
+        ficha = _ficha_con_estados({
+            ('pb', 'tubeado', 'A'): 'X',
+            ('pb', 'tubeado', 'B'): 'M',
+            ('1', 'tubeado', 'A'): '/',
+            ('1', 'tubeado', 'B'): 'P',
+        })
+        estados, _fecha = estado_desde_ficha(ficha, Catalogo())
+        self.assertEqual(estados[(('P1', 'PB', 'A'), 'tubeado')]['estado'], 'X')
+        self.assertEqual(estados[(('P1', 'PB', 'B'), 'tubeado')]['estado'], 'M')
+        self.assertEqual(estados[(('P1', '1', 'A'), 'tubeado')]['estado'], '/')
+        self.assertEqual(estados[(('P1', '1', 'B'), 'tubeado')]['estado'], '')
+
+    def test_conserva_el_estado_crudo_de_la_base(self):
+        """'P', '?' y 'N' valen todos '' para el motor, pero significan cosas
+        distintas y la clasificacion los tiene que poder separar."""
+        ficha = _ficha_con_estados({
+            ('pb', 'tubeado', 'A'): '?',
+            ('pb', 'tubeado', 'B'): 'N',
+            ('1', 'tubeado', 'A'): 'P',
+        })
+        estados, _fecha = estado_desde_ficha(ficha, Catalogo())
+        self.assertEqual(
+            estados[(('P1', 'PB', 'A'), 'tubeado')]['estado_base'], '?')
+        self.assertEqual(
+            estados[(('P1', 'PB', 'B'), 'tubeado')]['estado_base'], 'N')
+        self.assertEqual(
+            estados[(('P1', '1', 'A'), 'tubeado')]['estado_base'], 'P')
+        for loc in (('P1', 'PB', 'A'), ('P1', 'PB', 'B'), ('P1', '1', 'A')):
+            self.assertEqual(estados[(loc, 'tubeado')]['estado'], '')
+
+    def test_una_ubicacion_fuera_del_arbol_no_aparece(self):
+        """Las excluidas no estan en estructura.bloques: recorrer el arbol es,
+        por si solo, respetar estructura.exclusiones. Es el caso de las 4
+        viviendas fantasma de PB en Bolueta y las 15 de Orueta."""
+        ficha = _ficha_con_estados({('pb', 'tubeado', 'A'): 'X'})
+        ficha['estados']['p1__pb__tubeado__FANTASMA'] = {
+            'v': 'X', 'f': '28/07/2026', 'r': 'rev_28072026'}
+        estados, _fecha = estado_desde_ficha(ficha, Catalogo())
+        unidades = {loc[2] for loc, _tid in estados}
+        self.assertNotIn('FANTASMA', unidades)
+
+    def test_conserva_la_fecha_y_la_revision_de_cada_celda(self):
+        ficha = _ficha_con_estados({('pb', 'tubeado', 'A'): 'X'})
+        estados, _fecha = estado_desde_ficha(ficha, Catalogo())
+        celda = estados[(('P1', 'PB', 'A'), 'tubeado')]
+        self.assertEqual(celda['ultima_fecha'], '28/07/2026')
+
+    def test_la_fecha_es_la_de_la_ultima_revision_registrada(self):
+        ficha = _ficha_con_estados({('pb', 'tubeado', 'A'): 'X'})
+        ficha['revisiones'] = [
+            {'id': 'rev_26072026', 'fecha': '26/07/2026'},
+            {'id': 'rev_28072026', 'fecha': '28/07/2026'},
+        ]
+        _estados, fecha = estado_desde_ficha(ficha, Catalogo())
+        self.assertEqual(fecha, '28/07/2026')
+
+    def test_la_fecha_no_depende_del_orden_de_la_lista(self):
+        ficha = _ficha_con_estados({('pb', 'tubeado', 'A'): 'X'})
+        ficha['revisiones'] = [
+            {'id': 'rev_28072026', 'fecha': '28/07/2026'},
+            {'id': 'rev_26072026', 'fecha': '26/07/2026'},
+        ]
+        _estados, fecha = estado_desde_ficha(ficha, Catalogo())
+        self.assertEqual(fecha, '28/07/2026')
+
+    def test_una_base_sin_celdas_no_revienta(self):
+        ficha = fixtures.ficha_minima()
+        estados, fecha = estado_desde_ficha(ficha, Catalogo())
+        self.assertEqual(estados, {})
+        self.assertIsNone(fecha)
+
+    def test_el_id_de_la_base_manda_si_el_catalogo_lo_conoce(self):
+        ficha = _ficha_con_estados({('pb', 'tubeado', 'A'): 'X'})
+        estados, _fecha = estado_desde_ficha(ficha, Catalogo())
+        celda = estados[(('P1', 'PB', 'A'), 'tubeado')]
+        self.assertFalse(celda['desconocido'])
+        self.assertEqual(celda['meta']['id'], 'tubeado')
+
+
+class TestRejillaCompleta(unittest.TestCase):
+    """La base tiene que ser una rejilla densa: ubicaciones x tajos. Si falta
+    una celda, calcular sobre datos parciales es peor que avisar."""
+
+    def _ficha_completa(self):
+        pares = {(p, t, u): 'P'
+                 for p in ('pb', '1') for u in ('A', 'B')
+                 for t in ('tubeado', 'cableado')}
+        return _ficha_con_estados(pares)
+
+    def test_una_rejilla_completa_no_avisa(self):
+        self.assertEqual(verificar_rejilla(self._ficha_completa()), [])
+
+    def test_una_celda_que_falta_se_reporta_con_cifras(self):
+        ficha = self._ficha_completa()
+        del ficha['estados']['p1__pb__tubeado__A']
+        avisos = verificar_rejilla(ficha)
+        self.assertEqual(len(avisos), 1)
+        self.assertIn('7', avisos[0])    # celdas encontradas
+        self.assertIn('8', avisos[0])    # celdas esperadas
+
+    def test_una_base_recien_creada_no_avisa(self):
+        """Sin celdas no hay nada que comparar; el aviso lo da sin_base."""
+        self.assertEqual(verificar_rejilla(fixtures.ficha_minima()), [])
+
+
+if __name__ == '__main__':
+    unittest.main()

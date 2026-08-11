@@ -15,6 +15,12 @@ VERSION = "4.3"
 # Unificado con SCORE de motor_informes.py (25/07/2026): mismo valor de "M"
 # en los dos sitios. Si cambia aquí, cambiar también SCORE en motor_informes.py.
 ESTADO_VALOR = {"": 0.0, "/": 0.25, "M": 0.60, "X": 1.0}
+# Estado guardado en la base -> estado que entiende el motor.
+# '?' (nadie lo ha mirado) y 'N' (no aplica) NO tienen equivalente: valen ''
+# igual que 'P', pero significan cosas distintas. Se conservan en
+# 'estado_base' y los separa _clasificar_detalle. Confundirlos es la causa de
+# casi todo lo que ha fallado aqui.
+ESTADO_BASE_A_MOTOR = {"X": "X", "M": "M", "/": "/", "P": ""}
 AMBITO_ORDEN = {"vivienda": 0, "zona_comun": 1, "edificio": 2}
 AMBITO_NOMBRE = {
     "vivienda": "Viviendas",
@@ -260,6 +266,99 @@ def _construir_estado(historial, catalogo, preguntas):
         item["omitido_ultima"] = key not in vistos_ultima
 
     return estados, vistos_ultima, ultima_fecha
+
+
+def _ultima_revision_ficha(ficha):
+    """La fecha mas reciente registrada en la base, o None si no hay ninguna."""
+    fechas = [r.get("fecha") for r in (ficha.get("revisiones") or [])
+              if r.get("fecha")]
+    if not fechas:
+        return None
+    return max(fechas, key=_fecha)
+
+
+def estado_desde_ficha(ficha, catalogo):
+    """Construye el estado por celda leyendo la base de la obra.
+
+    Sustituye a _construir_estado. La base YA es el estado resuelto: trae la
+    norma de la ultima revision aplicada, la fecha y la revision de origen de
+    cada celda, y las ubicaciones descartadas fuera del arbol de estructura.
+
+    Recorrer el arbol es, por si solo, respetar estructura.exclusiones: por eso
+    aqui no hay ninguna comprobacion de exclusiones. Reconstruir esto desde el
+    historial crudo metia 4 viviendas inexistentes en Bolueta y 15 en Orueta.
+    """
+    estructura = ficha.get("estructura") or {}
+    alias = estructura.get("alias_historico") or {}
+    tajos = (ficha.get("tajos") or {}).get("detalle") or []
+    guardados = ficha.get("estados") or {}
+
+    estados = {}
+    for bloque in estructura.get("bloques") or []:
+        for portal in bloque.get("portales") or []:
+            edificio = (portal.get("referencia") or portal.get("nombre")
+                        or portal["id"])
+            for planta in portal.get("plantas") or []:
+                planta_nom = planta.get("nombre") or planta["id"]
+                for ubi in planta.get("ubicaciones") or []:
+                    clave_alias = "%s__%s__%s" % (portal["id"], planta["id"],
+                                                  ubi["id"])
+                    unidad = alias.get(clave_alias, ubi["id"])
+                    loc = (edificio, planta_nom, unidad)
+                    for tajo in tajos:
+                        clave = "%s__%s__%s__%s" % (
+                            portal["id"], planta["id"], tajo["id"], ubi["id"])
+                        dato = guardados.get(clave)
+                        if not dato:
+                            continue
+                        nombre = tajo.get("nombre") or tajo["id"]
+                        # El id de la base manda si el catalogo lo conoce; si
+                        # no, se resuelve por nombre para pillar los alias.
+                        meta = catalogo.meta(tajo["id"])
+                        if meta:
+                            task_id, desconocido = tajo["id"], False
+                        else:
+                            task_id, meta, desconocido = catalogo.resolver(nombre)
+                        valor = str(dato.get("v") or "")
+                        estados[(loc, task_id)] = {
+                            "estado": ESTADO_BASE_A_MOTOR.get(valor, ""),
+                            "estado_base": valor,
+                            "originales": {nombre},
+                            "meta": meta,
+                            "desconocido": desconocido,
+                            "loc": loc,
+                            "task_id": task_id,
+                            "primera_fecha": dato.get("f"),
+                            "ultima_fecha": dato.get("f"),
+                            "conflicto": False,
+                            "omitido_ultima": False,
+                            "forzado_entregado": False,
+                        }
+    return estados, _ultima_revision_ficha(ficha)
+
+
+def verificar_rejilla(ficha):
+    """La base debe ser una rejilla densa: ubicaciones x tajos.
+
+    Si falta alguna celda, calcular sobre datos parciales es peor que avisar
+    con las cifras. Las cinco bases lo cumplian el 11/08/2026.
+    """
+    estructura = ficha.get("estructura") or {}
+    tajos = (ficha.get("tajos") or {}).get("detalle") or []
+    ubicaciones = sum(
+        len(planta.get("ubicaciones") or [])
+        for bloque in estructura.get("bloques") or []
+        for portal in bloque.get("portales") or []
+        for planta in portal.get("plantas") or []
+    )
+    esperadas = ubicaciones * len(tajos)
+    encontradas = len(ficha.get("estados") or {})
+    if not esperadas or not encontradas or encontradas == esperadas:
+        return []
+    return ["La base no es una rejilla completa: %d celdas encontradas frente "
+            "a %d esperadas (%d ubicaciones x %d tajos). Los tajos que falten "
+            "no se pueden priorizar."
+            % (encontradas, esperadas, ubicaciones, len(tajos))]
 
 
 def _aplicar_excepciones_obra(estados, catalogo, preguntas):
