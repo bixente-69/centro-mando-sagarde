@@ -15,7 +15,8 @@ if _BASE not in sys.path:
     sys.path.insert(0, _BASE)
 
 import fixtures
-from priorizador_trabajos import (Catalogo, estado_desde_ficha,
+from priorizador_trabajos import (Catalogo, _agrupar_inventario,
+                                  _clasificar_detalle, estado_desde_ficha,
                                   verificar_rejilla)
 
 
@@ -121,6 +122,60 @@ class TestEstadoDesdeFicha(unittest.TestCase):
         celda = estados[(('P1', 'PB', 'A'), 'tubeado')]
         self.assertFalse(celda['desconocido'])
         self.assertEqual(celda['meta']['id'], 'tubeado')
+
+
+class TestDesconocidoYNoAplica(unittest.TestCase):
+    """'P', '?' y 'N' valen todos '' para el motor y significan cosas
+    distintas. Confundirlos es la causa de casi todo lo que ha fallado aqui."""
+
+    def _clasificar(self, pares, tajos_extra=()):
+        ficha = _ficha_con_estados(pares, tajos_extra=tajos_extra)
+        catalogo = Catalogo()
+        estados, fecha = estado_desde_ficha(ficha, catalogo)
+        detalle, _edad, _cad = _clasificar_detalle(estados, catalogo, fecha, {})
+        return detalle
+
+    def test_no_aplica_no_entra_en_el_calculo(self):
+        detalle = self._clasificar({('pb', 'tubeado', 'A'): 'N'})
+        self.assertEqual(detalle, [])
+
+    def test_nunca_revisado_tiene_categoria_propia(self):
+        detalle = self._clasificar({('pb', 'tubeado', 'A'): '?'})
+        self.assertEqual(len(detalle), 1)
+        self.assertEqual(detalle[0]['categoria'], 'SIN_REVISAR')
+
+    def test_nunca_revisado_no_se_confunde_con_pendiente(self):
+        detalle = self._clasificar({
+            ('pb', 'tubeado', 'A'): '?',
+            ('pb', 'tubeado', 'B'): 'P',
+        })
+        por_unidad = {d['unidad']: d['categoria'] for d in detalle}
+        self.assertEqual(por_unidad['A'], 'SIN_REVISAR')
+        self.assertNotEqual(por_unidad['B'], 'SIN_REVISAR')
+
+    def test_nunca_revisado_gana_a_la_propiedad_del_tajo(self):
+        """Un tajo de otro gremio que nadie ha mirado es 'sin revisar', no
+        'otros gremios': la accion sigue siendo ir a mirarlo."""
+        detalle = self._clasificar({('pb', 'tabicado', 'A'): '?'},
+                                   tajos_extra=[TABICADO])
+        self.assertEqual(detalle[0]['categoria'], 'SIN_REVISAR')
+
+    def test_un_grupo_entero_sin_mirar_va_a_su_seccion(self):
+        detalle = self._clasificar({
+            ('pb', 'tabicado', 'A'): '?',
+            ('pb', 'tabicado', 'B'): '?',
+        }, tajos_extra=[TABICADO])
+        inventario = _agrupar_inventario(detalle)
+        self.assertEqual(inventario[0]['seccion'], 'SIN_REVISAR')
+        self.assertEqual(inventario[0]['seccion_nombre'], 'Sin revisar nunca')
+
+    def test_un_grupo_mezclado_no_se_va_a_sin_revisar(self):
+        detalle = self._clasificar({
+            ('pb', 'tabicado', 'A'): '?',
+            ('pb', 'tabicado', 'B'): 'X',
+        }, tajos_extra=[TABICADO])
+        inventario = _agrupar_inventario(detalle)
+        self.assertNotEqual(inventario[0]['seccion'], 'SIN_REVISAR')
 
 
 class TestRejillaCompleta(unittest.TestCase):

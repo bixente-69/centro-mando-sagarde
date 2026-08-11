@@ -32,13 +32,15 @@ SECCION_ORDEN = {
     "BLOQUEADO": 1,
     "OTROS_GREMIOS": 2,
     "DUDAS": 3,
-    "TERMINADO": 4,
+    "SIN_REVISAR": 4,
+    "TERMINADO": 5,
 }
 SECCION_NOMBRE = {
     "VIABLE": "Tajos viables",
     "BLOQUEADO": "Tajos bloqueados",
     "OTROS_GREMIOS": "Otros gremios e interferencias",
     "DUDAS": "Dudas pendientes",
+    "SIN_REVISAR": "Sin revisar nunca",
     "TERMINADO": "Tajos terminados",
 }
 DISPLAY_NAMES = {"pintura": "Pintura", "techos": "Techos"}
@@ -438,10 +440,25 @@ def _clasificar_detalle(estados, catalogo, ultima_fecha, preguntas):
         estado = item["estado"]
         propiedad = meta.get("propiedad", "desconocido")
         ambito = _scope(meta, " ".join(item["originales"]), loc[2])
+        estado_base = item.get("estado_base", "")
         bloqueos = []
         cumplidas = []
 
-        if item.get("conflicto"):
+        # 'N' no aplica a esta ubicacion: no es trabajo pendiente ni
+        # terminado, simplemente no existe ahi. No entra en el calculo.
+        if estado_base == "N":
+            continue
+
+        if estado_base == "?":
+            # Nadie lo ha mirado nunca. No es 'pendiente': afirmar que lo esta
+            # seria inventarse el dato. Va antes que la propiedad del tajo
+            # porque un tajo de otro gremio sin mirar tambien hay que ir a
+            # verlo. En Bolueta esto son 5 ubicaciones reales que hasta ahora
+            # no aparecian en ninguna parte.
+            categoria = "SIN_REVISAR"
+            motivo = ("Nadie lo ha mirado nunca. Hay que ir a comprobarlo "
+                      "antes de poder decidir.")
+        elif item.get("conflicto"):
             categoria = "DUDAS"
             motivo = "Existe una corrección posterior a una X; se conserva X hasta verificar."
             _pregunta(
@@ -607,7 +624,12 @@ def _agrupar_inventario(detalle):
     salida = []
     for g in grupos.values():
         cats = g["categorias"]
-        if g["propiedad"] == "desconocido":
+        if cats.get("SIN_REVISAR") == sum(cats.values()):
+            # Todas las celdas del grupo estan sin mirar. El grupo entero es
+            # 'sin revisar', sea de quien sea el tajo: igual que en la cascada,
+            # no haberlo mirado gana sobre la propiedad.
+            seccion = "SIN_REVISAR"
+        elif g["propiedad"] == "desconocido":
             seccion = "DUDAS"
         elif g["propiedad"] in ("externo", "coordinacion"):
             seccion = "TERMINADO" if sum(v for k, v in cats.items() if k != "TERMINADO") == 0 else "OTROS_GREMIOS"
@@ -617,6 +639,8 @@ def _agrupar_inventario(detalle):
             seccion = "BLOQUEADO"
         elif cats.get("DUDAS"):
             seccion = "DUDAS"
+        elif cats.get("SIN_REVISAR"):
+            seccion = "SIN_REVISAR"
         else:
             seccion = "TERMINADO"
         g["seccion"] = seccion
