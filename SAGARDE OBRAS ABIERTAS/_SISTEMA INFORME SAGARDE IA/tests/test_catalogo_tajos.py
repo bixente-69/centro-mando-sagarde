@@ -4,13 +4,15 @@ import json
 import os
 import sys
 import unittest
+from datetime import date
 
 _BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _CATALOGO = os.path.join(_BASE, 'reglas', 'CATALOGO_TAJOS.json')
 if _BASE not in sys.path:
     sys.path.insert(0, _BASE)
 
-from priorizador_trabajos import Catalogo, priorizar_historial
+import fixtures
+from priorizador_trabajos import Catalogo, priorizar_ficha
 
 
 class TestCatalogoTajosConfirmado(unittest.TestCase):
@@ -81,21 +83,33 @@ class TestCatalogoTajosConfirmado(unittest.TestCase):
                 self.assertEqual(tajo_id, tajo['id'])
                 self.assertFalse(desconocido)
 
-    def test_cambio_de_alias_a_nombre_no_genera_desaparicion(self):
-        base = {
-            'floor': '1',
-            'building': 'PORTAL 1',
-            'unit': 'A',
-            'status': '/',
-        }
-        historial = [
-            ('27/07/2026', [dict(base, task='Apliques')]),
-            ('28/07/2026', [dict(base, task='Apliques y enchufes de terraza')]),
+    def test_un_alias_resuelve_igual_que_el_nombre_principal(self):
+        """Antes esto se probaba sobre el historial crudo: una revision decia
+        'Apliques' y la siguiente 'Apliques y enchufes de terraza', y el motor
+        inventaba a la vez TAJO_NUEVO y OMITIDO_SIN_X.
+
+        Leyendo de la base ese caso no existe —la base guarda un id por tajo—
+        pero el invariante sigue vigente por otra via: un tajo cuya CLAVE no
+        esta en el catalogo pero cuyo NOMBRE es un alias tiene que resolver
+        limpio y recibir su orden. Es lo que arregla los 18 tajos de Orueta.
+        """
+        ficha = fixtures.ficha_minima()
+        ficha['tajos']['detalle'] = [
+            {'id': 'apliques_viejo', 'nombre': 'Apliques', 'orden': 9999},
         ]
-        resultado = priorizar_historial(historial)
+        ficha['tajos']['aplicables'] = ['apliques_viejo']
+        ficha['revisiones'] = [{'id': 'r', 'fecha': '28/07/2026'}]
+        ficha['estados'] = {
+            'p1__pb__apliques_viejo__A': {'v': '/', 'f': '28/07/2026',
+                                          'r': 'r'},
+        }
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
         codigos = {d['codigo'] for d in resultado['dudas_pendientes']}
+        codigos |= {p['codigo'] for p in resultado['preguntas_orden']}
         self.assertNotIn('TAJO_NUEVO', codigos)
-        self.assertNotIn('OMITIDO_SIN_X', codigos)
+        self.assertNotIn('TAJO_FUERA_DEL_CATALOGO', codigos)
+        self.assertNotIn('ORDEN_SIN_CONFIRMAR', codigos)
+        self.assertEqual(ficha['tajos']['detalle'][0]['orden'], 310)
 
 
 if __name__ == '__main__':

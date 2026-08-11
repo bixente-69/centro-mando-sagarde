@@ -157,120 +157,6 @@ def _pregunta(registro, codigo, texto, task_id=None, loc=None):
         item["ubicaciones"].add(loc)
 
 
-def _construir_estado(historial, catalogo, preguntas):
-    revisiones = sorted(historial or [], key=lambda x: _fecha(x[0]))
-    if not revisiones:
-        return {}, set(), None
-
-    estados = {}
-    ultima_fecha = revisiones[-1][0]
-    vistos_ultima = set()
-
-    # Algunas obras abren una fase nueva despues de tener una fase anterior
-    # confirmada como entregada. Para el priorizador (solo para el), las
-    # revisiones hasta esa fecha se consideran cerradas en X. El historial
-    # original sigue intacto para KPIs y graficos.
-    cierre_historico = catalogo.config_obra.get("forzar_historial_terminado_hasta")
-    fecha_cierre = None
-    if cierre_historico:
-        try:
-            fecha_cierre = _fecha(cierre_historico)
-        except Exception:
-            _pregunta(
-                preguntas, "ERROR_CONFIG_OBRA",
-                "Fecha forzar_historial_terminado_hasta no valida: {}.".format(cierre_historico),
-            )
-
-    for indice, (fecha, snapshot) in enumerate(revisiones):
-        por_revision = {}
-        fecha_revision = _fecha(fecha)
-        for reg in snapshot:
-            original = str(reg.get("task", "")).strip()
-            task_id, meta, desconocido = catalogo.resolver(original)
-            edificio = str(reg.get("building", "")).strip() or "—"
-            planta = str(reg.get("floor", "")).strip() or "—"
-            unidad = str(reg.get("unit", "")).strip() or "—"
-            loc = (edificio, planta, unidad)
-            key = (loc, task_id)
-            nuevo = _estado(reg.get("status", ""))
-            if fecha_cierre is not None and fecha_revision <= fecha_cierre:
-                nuevo = "X"
-            actual_rev = por_revision.get(key)
-            if actual_rev is None:
-                por_revision[key] = {
-                    "estado": nuevo, "originales": {original}, "meta": meta,
-                    "desconocido": desconocido, "loc": loc, "task_id": task_id,
-                }
-            else:
-                actual_rev["originales"].add(original)
-                if actual_rev["estado"] != nuevo:
-                    _pregunta(
-                        preguntas, "ESTADOS_DUPLICADOS",
-                        f"El tajo {meta.get('nombre', original)} aparece dos veces con estados distintos en la revisión {fecha}. Confirmar el estado correcto.",
-                        task_id, loc,
-                    )
-                    if ESTADO_VALOR[nuevo] < ESTADO_VALOR[actual_rev["estado"]]:
-                        actual_rev["estado"] = nuevo
-
-        for key, nuevo in por_revision.items():
-            anterior = estados.get(key)
-            if anterior is None:
-                estados[key] = {
-                    **nuevo, "primera_fecha": fecha, "ultima_fecha": fecha,
-                    "conflicto": False, "forzado_entregado": False,
-                }
-            else:
-                anterior["originales"].update(nuevo["originales"])
-                anterior["ultima_fecha"] = fecha
-                anterior["meta"] = nuevo["meta"]
-                anterior["desconocido"] = nuevo["desconocido"]
-                if anterior["estado"] == "X" and nuevo["estado"] != "X":
-                    # NORMA DE OBRA: lo que se apunta en la ultima revision es
-                    # lo que vale. Si el revisor escribe una marca explicita
-                    # (M o /) sobre algo que figuraba terminado, es que ha ido
-                    # y ha visto que faltaba algo. Se acepta a la primera: no
-                    # es un retroceso, es una correccion.
-                    if nuevo["estado"]:
-                        anterior["estado"] = nuevo["estado"]
-                        anterior["conflicto"] = False
-                        anterior.pop("estado_conflictivo", None)
-                        anterior.pop("conflicto_n", None)
-                    elif anterior.get("conflicto"):
-                        # Celda VACIA (sin marca). No es lo mismo que una marca:
-                        # hoy no se puede distinguir "he ido y no esta hecho" de
-                        # "el lector no supo leer la marca a boli" (488 celdas
-                        # asi en la ultima hoja de Mungia). Se mantiene la
-                        # cautela de 2 revisiones hasta que la ficha de obra
-                        # separe 'P' (pendiente confirmado) de '?' (desconocido).
-                        n = anterior.get("conflicto_n", 1) + 1
-                        anterior["conflicto_n"] = n
-                        anterior["estado_conflictivo"] = nuevo["estado"]
-                        if n >= 2:
-                            anterior["estado"] = nuevo["estado"]
-                            anterior["conflicto"] = False
-                            anterior.pop("estado_conflictivo", None)
-                            anterior.pop("conflicto_n", None)
-                    else:
-                        # Primera vez que aparece vacia tras una X: pendiente de confirmar
-                        anterior["conflicto"] = True
-                        anterior["estado_conflictivo"] = nuevo["estado"]
-                        anterior["conflicto_n"] = 1
-                else:
-                    anterior["estado"] = nuevo["estado"]
-                    if nuevo["estado"] == "X":
-                        anterior["conflicto"] = False
-                        anterior.pop("estado_conflictivo", None)
-                        anterior.pop("conflicto_n", None)
-
-        if indice == len(revisiones) - 1:
-            vistos_ultima = set(por_revision)
-
-    for key, item in estados.items():
-        item["omitido_ultima"] = key not in vistos_ultima
-
-    return estados, vistos_ultima, ultima_fecha
-
-
 def _ultima_revision_ficha(ficha):
     """La fecha mas reciente registrada en la base, o None si no hay ninguna."""
     fechas = [r.get("fecha") for r in (ficha.get("revisiones") or [])
@@ -323,7 +209,14 @@ def estado_desde_ficha(ficha, catalogo):
                         else:
                             task_id, meta, desconocido = catalogo.resolver(nombre)
                         valor = str(dato.get("v") or "")
-                        estados[(loc, task_id)] = {
+                        # La CLAVE es el id de la base, no el del catalogo.
+                        # Dos filas distintas de la base pueden resolver al
+                        # mismo tajo del catalogo (en Orueta, placas_tps_cuadro
+                        # cae en placas_tapas por alias). Indexar por el id del
+                        # catalogo hacia que una pisara a la otra y se perdian
+                        # 98 celdas en silencio. sembrar_reglas lo saca como
+                        # pregunta; aqui no se pierde ninguna fila.
+                        estados[(loc, tajo["id"])] = {
                             "estado": ESTADO_BASE_A_MOTOR.get(valor, ""),
                             "estado_base": valor,
                             "originales": {nombre},
@@ -387,6 +280,29 @@ def sembrar_reglas(ficha, catalogo):
                 "parecidos": [],
             })
 
+    # Dos filas de la base que resuelven al mismo tajo del catalogo son un
+    # duplicado que hay que resolver: en Orueta, placas_tps_cuadro cae en
+    # placas_tapas por alias. No se fusionan solas ni se descarta ninguna.
+    por_catalogo = {}
+    for tajo in detalle:
+        meta = catalogo.meta(tajo["id"])
+        if meta:
+            resuelto = tajo["id"]
+        else:
+            resuelto, _m, desconocido = catalogo.resolver(
+                tajo.get("nombre") or tajo["id"])
+            if desconocido:
+                continue
+        por_catalogo.setdefault(resuelto, []).append(tajo["id"])
+    for resuelto, ids in sorted(por_catalogo.items()):
+        if len(ids) > 1:
+            preguntas.append({
+                "codigo": "TAJO_DUPLICADO_EN_LA_BASE",
+                "tarea_id": resuelto,
+                "nombre": catalogo.meta(resuelto).get("nombre", resuelto),
+                "parecidos": sorted(ids),
+            })
+
     # Una dependencia que apunta a un tajo que esta obra no tiene vale 0 y
     # bloquea para siempre en silencio: "Dependencias pendientes: Tabicado"
     # sin que Tabicado exista en la obra. Se avisa en vez de callar.
@@ -405,27 +321,60 @@ def sembrar_reglas(ficha, catalogo):
 
 
 def verificar_rejilla(ficha):
-    """La base debe ser una rejilla densa: ubicaciones x tajos.
+    """La base debe ser una rejilla densa: ubicaciones x tajos, y cada
+    ubicacion tiene que ser distinguible de las demas.
 
-    Si falta alguna celda, calcular sobre datos parciales es peor que avisar
-    con las cifras. Las cinco bases lo cumplian el 11/08/2026.
+    Dos comprobaciones, las dos contra perdidas silenciosas:
+
+    1. Faltan celdas. Calcular sobre datos parciales es peor que avisar.
+    2. Dos ubicaciones distintas producen el mismo (edificio, planta, unidad).
+       Pasa cuando dos plantas comparten el NOMBRE aunque tengan ids
+       distintos: OBRA PRUEBA tiene dos plantas llamadas '1a' y por eso el
+       motor veia 26 de sus 31 ubicaciones. La base las guarda separadas —la
+       clave lleva el id— pero al priorizar se fusionan y una pisa a la otra.
     """
+    avisos = []
     estructura = ficha.get("estructura") or {}
     tajos = (ficha.get("tajos") or {}).get("detalle") or []
-    ubicaciones = sum(
-        len(planta.get("ubicaciones") or [])
-        for bloque in estructura.get("bloques") or []
-        for portal in bloque.get("portales") or []
-        for planta in portal.get("plantas") or []
-    )
+    alias = estructura.get("alias_historico") or {}
+
+    ubicaciones = 0
+    locs = {}
+    for bloque in estructura.get("bloques") or []:
+        for portal in bloque.get("portales") or []:
+            edificio = (portal.get("referencia") or portal.get("nombre")
+                        or portal["id"])
+            for planta in portal.get("plantas") or []:
+                planta_nom = planta.get("nombre") or planta["id"]
+                for ubi in planta.get("ubicaciones") or []:
+                    ubicaciones += 1
+                    clave_alias = "%s__%s__%s" % (portal["id"], planta["id"],
+                                                  ubi["id"])
+                    unidad = alias.get(clave_alias, ubi["id"])
+                    locs.setdefault((edificio, planta_nom, unidad), []).append(
+                        "%s/%s" % (planta["id"], ubi["id"]))
+
     esperadas = ubicaciones * len(tajos)
     encontradas = len(ficha.get("estados") or {})
-    if not esperadas or not encontradas or encontradas == esperadas:
-        return []
-    return ["La base no es una rejilla completa: %d celdas encontradas frente "
+    if esperadas and encontradas and encontradas != esperadas:
+        avisos.append(
+            "La base no es una rejilla completa: %d celdas encontradas frente "
             "a %d esperadas (%d ubicaciones x %d tajos). Los tajos que falten "
             "no se pueden priorizar."
-            % (encontradas, esperadas, ubicaciones, len(tajos))]
+            % (encontradas, esperadas, ubicaciones, len(tajos)))
+
+    chocan = {k: v for k, v in locs.items() if len(v) > 1}
+    if chocan:
+        detalle = "; ".join(
+            "%s planta %s unidad %s <- %s" % (k[0], k[1], k[2], ", ".join(v))
+            for k, v in sorted(chocan.items())[:5])
+        avisos.append(
+            "%d ubicaciones de la base se fusionan al priorizar porque "
+            "producen la misma clave (%d ubicaciones declaradas, %d "
+            "distinguibles). Suele ser que dos plantas comparten nombre. "
+            "Afectadas: %s."
+            % (ubicaciones - len(locs), ubicaciones, len(locs), detalle))
+    return avisos
 
 
 def _aplicar_excepciones_obra(estados, catalogo, preguntas):
@@ -768,27 +717,54 @@ def _serializar_preguntas(preguntas):
     return salida
 
 
-def priorizar_historial(historial, obra="", limite=200):
+def sin_base(obra=""):
+    """DECISION: una obra sin base de datos no calcula prioridades.
+
+    Un recuento vacio es senal de alarma, no de 'no aplica'. Asi se ve de un
+    vistazo que obras faltan por dar de alta, en vez de publicar un 0 % que
+    parece un dato.
+    """
+    catalogo = Catalogo(obra)
+    return {
+        "version": VERSION, "catalogo_version": catalogo.version,
+        "obra": obra, "revision": None, "sin_base": True,
+        "estado_obra": catalogo.config_obra.get("estado_obra"),
+        "historial_confirmado_terminado": bool(
+            catalogo.config_obra.get("forzar_historial_terminado")),
+        "generado": datetime.now().strftime("%d/%m/%Y %H:%M"),
+        "resumen": {"listos": 0, "verificar": 0, "bloqueados": 0,
+                    "sin_revisar": 0, "inventario_total": 0,
+                    "preguntas_pendientes": 0},
+        "items": [], "detalle_items": [], "inventario": [],
+        "dudas_pendientes": [], "preguntas_orden": [], "prevision": [],
+        "avisos": ["Esta obra no tiene base de datos todavía. Sembrarla con "
+                   "sembrar_ficha_obra.py habilita las prioridades."],
+    }
+
+
+def priorizar_ficha(ficha, obra="", limite=200, hoy=None):
+    """Prioriza leyendo la base de la obra. Sustituye a priorizar_historial.
+
+    La base es el estado; el catalogo es la regla. `sembrar_reglas` vuelca la
+    regla sobre la base antes de clasificar, para que el orden y las
+    dependencias salgan siempre del catalogo.
+    """
     preguntas = {}
     catalogo = Catalogo(obra)
     for error in catalogo.errores:
         _pregunta(preguntas, "ERROR_CATALOGO", error)
 
-    estados, _vistos_ultima, ultima_fecha = _construir_estado(historial, catalogo, preguntas)
+    preguntas_orden = sembrar_reglas(ficha, catalogo)
+    avisos_rejilla = verificar_rejilla(ficha)
+    estados, ultima_fecha = estado_desde_ficha(ficha, catalogo)
     if not estados:
-        return {
-            "version": VERSION, "catalogo_version": catalogo.version,
-            "obra": obra, "revision": ultima_fecha,
-            "estado_obra": catalogo.config_obra.get("estado_obra"),
-            "historial_confirmado_terminado": bool(catalogo.config_obra.get("forzar_historial_terminado")),
-            "resumen": {"listos": 0, "verificar": 0, "bloqueados": 0, "inventario_total": 0},
-            "items": [], "detalle_items": [], "inventario": [],
-            "dudas_pendientes": [], "avisos": ["No hay datos de revisión."],
-        }
+        return sin_base(obra)
 
     _aplicar_excepciones_obra(estados, catalogo, preguntas)
-    detalle, edad_dias, caducada = _clasificar_detalle(estados, catalogo, ultima_fecha, preguntas)
-    items = _agrupar_prioridades(detalle, limite=limite)
+    detalle, edad_dias, caducada = _clasificar_detalle(
+        estados, catalogo, ultima_fecha, preguntas, hoy=hoy)
+    items, recortados = _agrupar_prioridades(detalle, limite=limite,
+                                             con_recorte=True)
     inventario = _agrupar_inventario(detalle)
     dudas = _serializar_preguntas(preguntas)
 
@@ -802,39 +778,49 @@ def priorizar_historial(historial, obra="", limite=200):
         "bloqueados": secciones.get("BLOQUEADO", 0),
         "otros_gremios": secciones.get("OTROS_GREMIOS", 0),
         "dudas": secciones.get("DUDAS", 0),
+        "sin_revisar": secciones.get("SIN_REVISAR", 0),
+        "unidades_sin_revisar": sum(
+            1 for x in detalle if x["categoria"] == "SIN_REVISAR"),
         "terminados": secciones.get("TERMINADO", 0),
         "inventario_total": len(inventario),
         "detalle_total": len(detalle),
-        "preguntas_pendientes": len(dudas),
+        "preguntas_pendientes": len(dudas) + len(preguntas_orden),
         "viviendas": sum(1 for x in listos if x["ambito"] == "vivienda"),
         "zonas_comunes": sum(1 for x in listos if x["ambito"] == "zona_comun"),
         "edificio": sum(1 for x in listos if x["ambito"] == "edificio"),
     }
-    avisos = [
-        "El inventario incluye todos los tajos encontrados en el historial; los terminados aparecen al final.",
-        "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmación.",
-        "Una X histórica se conserva aunque el tajo desaparezca; nunca se rebaja sin verificación.",
+    avisos = list(avisos_rejilla) + [
+        "El inventario incluye todos los tajos de la base; los terminados "
+        "aparecen al final.",
+        "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta "
+        "confirmación.",
         "El orden sigue la secuencia lógica definida en CATALOGO_TAJOS.json.",
     ]
     if catalogo.config_obra.get("estado_obra"):
         avisos.insert(0, catalogo.config_obra["estado_obra"] + ".")
-    if catalogo.config_obra.get("forzar_historial_terminado_hasta"):
-        avisos.insert(1, "Primera fase confirmada hasta {} a efectos de priorizacion.".format(
-            catalogo.config_obra["forzar_historial_terminado_hasta"]
-        ))
-    if caducada and not catalogo.config_obra.get("forzar_historial_terminado"):
-        avisos.append(f"La revisión tiene {edad_dias} días; los tajos pendientes requieren verificación.")
+    if caducada:
+        avisos.append(
+            "La revisión es del %s (%s días). Los tajos conservan su "
+            "clasificación; confirmar en obra antes de ejecutar."
+            % (ultima_fecha, edad_dias))
+    if recortados:
+        avisos.append(
+            "La lista se ha recortado a %d bloques; hay %d más sin mostrar."
+            % (limite, recortados))
 
     return {
         "version": VERSION, "catalogo_version": catalogo.version,
-        "obra": obra, "revision": ultima_fecha,
+        "obra": obra, "revision": ultima_fecha, "sin_base": False,
         "edad_revision_dias": edad_dias, "revision_caducada": caducada,
         "estado_obra": catalogo.config_obra.get("estado_obra"),
-        "historial_confirmado_terminado": bool(catalogo.config_obra.get("forzar_historial_terminado")),
+        "historial_confirmado_terminado": bool(
+            catalogo.config_obra.get("forzar_historial_terminado")),
         "generado": datetime.now().strftime("%d/%m/%Y %H:%M"),
         "resumen": resumen, "items": items,
         "detalle_items": detalle, "inventario": inventario,
-        "dudas_pendientes": dudas, "avisos": avisos,
+        "dudas_pendientes": dudas, "preguntas_orden": preguntas_orden,
+        "prevision": [],
+        "avisos": avisos,
     }
 
 

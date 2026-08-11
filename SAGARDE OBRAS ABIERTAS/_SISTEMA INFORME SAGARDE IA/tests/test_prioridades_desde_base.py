@@ -18,8 +18,8 @@ if _BASE not in sys.path:
 import fixtures
 from priorizador_trabajos import (Catalogo, _agrupar_inventario,
                                   _agrupar_prioridades, _clasificar_detalle,
-                                  estado_desde_ficha, sembrar_reglas,
-                                  verificar_rejilla)
+                                  estado_desde_ficha, priorizar_ficha,
+                                  sembrar_reglas, sin_base, verificar_rejilla)
 
 
 def _item(ambito, planta, unidad, tarea='cuarto_tecnico', edificio='P1',
@@ -293,6 +293,30 @@ class TestSembrarReglas(unittest.TestCase):
         self.assertNotIn('TAJO_FUERA_DEL_CATALOGO',
                          {p['codigo'] for p in preguntas})
 
+    def test_dos_filas_que_caen_en_el_mismo_tajo_se_avisan(self):
+        """En Orueta, placas_tps_cuadro resuelve por alias a placas_tapas, que
+        ya existe en la base. No se fusionan solas: se pregunta."""
+        ficha = self._ficha([
+            {'id': 'placas_tapas', 'nombre': 'Placas y tapas', 'orden': 9999},
+            {'id': 'placas_tps_cuadro', 'nombre': 'Placas y tapas',
+             'orden': 9999},
+        ])
+        preguntas = sembrar_reglas(ficha, Catalogo())
+        dup = [p for p in preguntas
+               if p['codigo'] == 'TAJO_DUPLICADO_EN_LA_BASE']
+        self.assertEqual(len(dup), 1)
+        self.assertEqual(dup[0]['parecidos'],
+                         ['placas_tapas', 'placas_tps_cuadro'])
+
+    def test_sin_duplicados_no_hay_aviso(self):
+        ficha = self._ficha([
+            {'id': 'tubeado', 'nombre': 'Tubeado interior', 'orden': 9999},
+            {'id': 'cableado', 'nombre': 'Cableado eléctrico', 'orden': 9999},
+        ])
+        preguntas = sembrar_reglas(ficha, Catalogo())
+        self.assertNotIn('TAJO_DUPLICADO_EN_LA_BASE',
+                         {p['codigo'] for p in preguntas})
+
     def test_una_dependencia_que_la_obra_no_tiene_se_avisa(self):
         """Hoy vale 0 y bloquea para siempre en silencio."""
         ficha = self._ficha([
@@ -354,6 +378,57 @@ class TestAntiguedadEsAviso(unittest.TestCase):
         self.assertFalse(caducada)
 
 
+class TestPuntoDeEntrada(unittest.TestCase):
+
+    def test_una_obra_sin_base_no_calcula_nada(self):
+        resultado = sin_base('2026 GORLIZ HOSPITAL')
+        self.assertIs(resultado['sin_base'], True)
+        self.assertEqual(resultado['resumen']['inventario_total'], 0)
+        self.assertIn('no tiene base de datos', resultado['avisos'][0])
+
+    def test_priorizar_ficha_devuelve_la_forma_de_siempre(self):
+        ficha = _ficha_con_estados({('pb', 'tubeado', 'A'): 'X'})
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        for clave in ('version', 'catalogo_version', 'revision', 'resumen',
+                      'items', 'detalle_items', 'inventario',
+                      'dudas_pendientes', 'preguntas_orden', 'avisos',
+                      'historial_confirmado_terminado'):
+            self.assertIn(clave, resultado)
+
+    def test_cableado_es_viable_con_el_tubeado_terminado(self):
+        ficha = _ficha_con_estados({
+            ('pb', 'tubeado', 'A'): 'X',
+            ('pb', 'cableado', 'A'): 'P',
+        })
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        cableado = [d for d in resultado['detalle_items']
+                    if d['tarea_id'] == 'cableado']
+        self.assertEqual(cableado[0]['categoria'], 'VIABLE')
+
+    def test_cableado_esta_bloqueado_sin_tubeado(self):
+        ficha = _ficha_con_estados({
+            ('pb', 'tubeado', 'A'): 'P',
+            ('pb', 'cableado', 'A'): 'P',
+        })
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        cableado = [d for d in resultado['detalle_items']
+                    if d['tarea_id'] == 'cableado']
+        self.assertEqual(cableado[0]['categoria'], 'BLOQUEADO')
+        self.assertIn('Tubeado interior',
+                      cableado[0]['dependencias_bloqueantes'])
+
+    def test_una_base_vacia_cae_en_sin_base(self):
+        resultado = priorizar_ficha(fixtures.ficha_minima())
+        self.assertIs(resultado['sin_base'], True)
+
+    def test_las_preguntas_de_orden_cuentan_en_el_resumen(self):
+        ficha = _ficha_con_estados({('pb', 'tubeado', 'A'): 'P'})
+        ficha['tajos']['detalle'].append(
+            {'id': 'inventado_xyz', 'nombre': 'Inventado', 'orden': 9999})
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        self.assertGreater(resultado['resumen']['preguntas_pendientes'], 0)
+
+
 class TestRejillaCompleta(unittest.TestCase):
     """La base tiene que ser una rejilla densa: ubicaciones x tajos. Si falta
     una celda, calcular sobre datos parciales es peor que avisar."""
@@ -378,6 +453,22 @@ class TestRejillaCompleta(unittest.TestCase):
     def test_una_base_recien_creada_no_avisa(self):
         """Sin celdas no hay nada que comparar; el aviso lo da sin_base."""
         self.assertEqual(verificar_rejilla(fixtures.ficha_minima()), [])
+
+    def test_dos_plantas_con_el_mismo_nombre_se_avisan(self):
+        """OBRA PRUEBA tiene dos plantas llamadas '1a' con ids distintos: la
+        base las guarda separadas pero al priorizar se fusionan y el motor
+        veia 26 de sus 31 ubicaciones."""
+        ficha = self._ficha_completa()
+        plantas = ficha['estructura']['bloques'][0]['portales'][0]['plantas']
+        plantas[1]['nombre'] = plantas[0]['nombre']   # '1' pasa a llamarse 'PB'
+        avisos = verificar_rejilla(ficha)
+        self.assertEqual(len(avisos), 1)
+        self.assertIn('se fusionan al priorizar', avisos[0])
+        self.assertIn('4 ubicaciones declaradas', avisos[0])
+        self.assertIn('2 distinguibles', avisos[0])
+
+    def test_plantas_con_nombres_distintos_no_avisan(self):
+        self.assertEqual(verificar_rejilla(self._ficha_completa()), [])
 
 
 if __name__ == '__main__':
