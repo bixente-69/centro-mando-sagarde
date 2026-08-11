@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import difflib
 import json
 import os
 import re
@@ -337,6 +338,70 @@ def estado_desde_ficha(ficha, catalogo):
                             "forzado_entregado": False,
                         }
     return estados, _ultima_revision_ficha(ficha)
+
+
+CAMPOS_SEMBRADOS = ("orden", "propiedad", "ambito", "fase", "deps")
+
+
+def sembrar_reglas(ficha, catalogo):
+    """Vuelca orden, propiedad, ambito, fase y deps del catalogo sobre la base.
+
+    DECISION: el catalogo manda. La base guarda el ESTADO; el catalogo guarda
+    la REGLA. Un tajo que el catalogo no conoce NO recibe orden inventado:
+    sale como pregunta para ampliar el catalogo, que es SIEMPRE AMPLIABLE.
+
+    En Orueta habia 18 tajos con orden 9999 y 14 de ellos tenian orden real en
+    el catalogo: el orden estaba declarado y el motor lo ignoraba. Los otros 4
+    son deriva de nombre (focos_hab / focos_habitaciones), y para esos la
+    pregunta trae los ids parecidos para poder resolverla de un vistazo.
+
+    Devuelve la lista de preguntas. Modifica ficha['tajos']['detalle'] en sitio.
+    """
+    preguntas = []
+    detalle = (ficha.get("tajos") or {}).get("detalle") or []
+    ids_catalogo = list(catalogo.tajos)
+
+    for tajo in detalle:
+        meta = catalogo.meta(tajo["id"])
+        if not meta:
+            nombre = tajo.get("nombre") or tajo["id"]
+            _resuelto, meta_alias, desconocido = catalogo.resolver(nombre)
+            if desconocido:
+                preguntas.append({
+                    "codigo": "TAJO_FUERA_DEL_CATALOGO",
+                    "tarea_id": tajo["id"],
+                    "nombre": nombre,
+                    "parecidos": difflib.get_close_matches(
+                        tajo["id"], ids_catalogo, n=3, cutoff=0.5),
+                })
+                continue
+            meta = meta_alias
+        for campo in CAMPOS_SEMBRADOS:
+            if campo in meta:
+                tajo[campo] = meta[campo]
+        if (tajo.get("orden") or 9999) >= 9999:
+            preguntas.append({
+                "codigo": "ORDEN_SIN_CONFIRMAR",
+                "tarea_id": tajo["id"],
+                "nombre": tajo.get("nombre") or tajo["id"],
+                "parecidos": [],
+            })
+
+    # Una dependencia que apunta a un tajo que esta obra no tiene vale 0 y
+    # bloquea para siempre en silencio: "Dependencias pendientes: Tabicado"
+    # sin que Tabicado exista en la obra. Se avisa en vez de callar.
+    presentes = {t["id"] for t in detalle}
+    for tajo in detalle:
+        ausentes = sorted(d["id"] for d in (tajo.get("deps") or [])
+                          if d["id"] not in presentes)
+        if ausentes:
+            preguntas.append({
+                "codigo": "DEPENDENCIA_AUSENTE_EN_LA_OBRA",
+                "tarea_id": tajo["id"],
+                "nombre": tajo.get("nombre") or tajo["id"],
+                "parecidos": ausentes,
+            })
+    return preguntas
 
 
 def verificar_rejilla(ficha):

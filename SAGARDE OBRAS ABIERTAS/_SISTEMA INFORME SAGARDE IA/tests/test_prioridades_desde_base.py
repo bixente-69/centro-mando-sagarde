@@ -17,7 +17,8 @@ if _BASE not in sys.path:
 import fixtures
 from priorizador_trabajos import (Catalogo, _agrupar_inventario,
                                   _agrupar_prioridades, _clasificar_detalle,
-                                  estado_desde_ficha, verificar_rejilla)
+                                  estado_desde_ficha, sembrar_reglas,
+                                  verificar_rejilla)
 
 
 def _item(ambito, planta, unidad, tarea='cuarto_tecnico', edificio='P1',
@@ -232,6 +233,93 @@ class TestConteoPorAmbito(unittest.TestCase):
                                                   con_recorte=True)
         self.assertEqual(len(grupos), 200)
         self.assertEqual(recortados, 60)
+
+
+class TestSembrarReglas(unittest.TestCase):
+    """El catalogo manda sobre orden y dependencias; la base guarda el estado.
+    Lo que el catalogo no conoce NO recibe orden inventado: sale como
+    pregunta, porque el catalogo es SIEMPRE AMPLIABLE."""
+
+    def _ficha(self, detalle):
+        ficha = fixtures.ficha_minima()
+        ficha['tajos']['detalle'] = detalle
+        return ficha
+
+    def test_el_catalogo_manda_sobre_el_orden(self):
+        ficha = self._ficha([
+            {'id': 'tubeado', 'nombre': 'Tubeado interior', 'orden': 9999}])
+        sembrar_reglas(ficha, Catalogo())
+        self.assertEqual(ficha['tajos']['detalle'][0]['orden'], 130)
+
+    def test_siembra_propiedad_ambito_fase_y_deps(self):
+        ficha = self._ficha([
+            {'id': 'cableado', 'nombre': 'Cableado eléctrico', 'orden': 9999}])
+        sembrar_reglas(ficha, Catalogo())
+        tajo = ficha['tajos']['detalle'][0]
+        self.assertEqual(tajo['propiedad'], 'propio')
+        self.assertEqual(tajo['ambito'], 'vivienda')
+        self.assertEqual(tajo['fase'], 'Instalación interior')
+        self.assertEqual([d['id'] for d in tajo['deps']], ['tubeado'])
+
+    def test_un_tajo_que_el_catalogo_no_conoce_sale_como_pregunta(self):
+        ficha = self._ficha([
+            {'id': 'placas_tps_cuadro', 'nombre': 'Placas tapas cuadro',
+             'orden': 9999}])
+        preguntas = sembrar_reglas(ficha, Catalogo())
+        self.assertIn('TAJO_FUERA_DEL_CATALOGO',
+                      {p['codigo'] for p in preguntas})
+
+    def test_nunca_se_inventa_un_orden(self):
+        ficha = self._ficha([
+            {'id': 'inventado_xyz', 'nombre': 'Inventado', 'orden': 9999}])
+        sembrar_reglas(ficha, Catalogo())
+        self.assertEqual(ficha['tajos']['detalle'][0]['orden'], 9999)
+
+    def test_la_pregunta_sugiere_ids_parecidos(self):
+        """focos_hab en la base, focos_habitaciones en el catalogo: la deriva
+        de nombre que dejo 18 tajos de Orueta en 9999."""
+        ficha = self._ficha([
+            {'id': 'focos_hab', 'nombre': 'Zzz sin alias', 'orden': 9999}])
+        preguntas = sembrar_reglas(
+            ficha, Catalogo('2025 BILBAO OBISPO ORUETA'))
+        self.assertIn('focos_habitaciones', preguntas[0]['parecidos'])
+
+    def test_resuelve_por_nombre_cuando_el_id_no_esta(self):
+        ficha = self._ficha([
+            {'id': 'id_raro', 'nombre': 'Tubeado interior', 'orden': 9999}])
+        preguntas = sembrar_reglas(ficha, Catalogo())
+        self.assertEqual(ficha['tajos']['detalle'][0]['orden'], 130)
+        self.assertNotIn('TAJO_FUERA_DEL_CATALOGO',
+                         {p['codigo'] for p in preguntas})
+
+    def test_una_dependencia_que_la_obra_no_tiene_se_avisa(self):
+        """Hoy vale 0 y bloquea para siempre en silencio."""
+        ficha = self._ficha([
+            {'id': 'cableado', 'nombre': 'Cableado eléctrico', 'orden': 9999}])
+        preguntas = sembrar_reglas(ficha, Catalogo())
+        avisos = [p for p in preguntas
+                  if p['codigo'] == 'DEPENDENCIA_AUSENTE_EN_LA_OBRA']
+        self.assertEqual(len(avisos), 1)
+        self.assertEqual(avisos[0]['tarea_id'], 'cableado')
+        self.assertIn('tubeado', avisos[0]['parecidos'])
+
+    def test_si_la_dependencia_esta_en_la_obra_no_se_avisa(self):
+        """cableado depende de tubeado y tubeado SI esta: no hay aviso por
+        cableado. Que lo haya por tubeado (depende de tabicado, que no esta)
+        es justo lo que se quiere: cada tajo responde de sus propias deps."""
+        ficha = self._ficha([
+            {'id': 'tubeado', 'nombre': 'Tubeado interior', 'orden': 9999},
+            {'id': 'cableado', 'nombre': 'Cableado eléctrico', 'orden': 9999},
+        ])
+        preguntas = sembrar_reglas(ficha, Catalogo())
+        por_cableado = [p for p in preguntas
+                        if p['codigo'] == 'DEPENDENCIA_AUSENTE_EN_LA_OBRA'
+                        and p['tarea_id'] == 'cableado']
+        self.assertEqual(por_cableado, [])
+        por_tubeado = [p for p in preguntas
+                       if p['codigo'] == 'DEPENDENCIA_AUSENTE_EN_LA_OBRA'
+                       and p['tarea_id'] == 'tubeado']
+        self.assertEqual(por_tubeado[0]['parecidos'], ['tabicado'])
 
 
 class TestRejillaCompleta(unittest.TestCase):
