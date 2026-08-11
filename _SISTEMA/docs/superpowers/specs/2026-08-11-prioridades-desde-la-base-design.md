@@ -239,7 +239,11 @@ del motor.
 `deps`, `propiedad`, `ambito` y `fase` del catálogo sobre `tajos.detalle` de la
 base. Lo que el catálogo no conoce **no se inventa**: sale como pregunta.
 
-**`prevision_desbloqueos(detalle, catalogo)`** — ver sección 8.
+**`prevision_desbloqueos(detalle)`** — ver sección 9.
+
+**`verificar_rejilla(ficha)`** — comprueba que la base es una rejilla densa
+(`celdas == ubicaciones × tajos`) y devuelve el aviso con las cifras si no
+cuadra. Ver §10.
 
 ### 6.3 Se conserva intacto
 
