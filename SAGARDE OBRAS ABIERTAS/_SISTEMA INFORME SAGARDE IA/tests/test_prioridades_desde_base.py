@@ -429,6 +429,57 @@ class TestPuntoDeEntrada(unittest.TestCase):
         self.assertGreater(resultado['resumen']['preguntas_pendientes'], 0)
 
 
+class TestPrevision(unittest.TestCase):
+    """Saber que acabar el suelo de tres plantas libera 40 viviendas de
+    tubeado es lo que permite llevar el orden de una obra de meses."""
+
+    def test_dice_cuantas_unidades_libera_cada_tajo(self):
+        ficha = _ficha_con_estados({
+            ('pb', 'tubeado', 'A'): 'P', ('pb', 'cableado', 'A'): 'P',
+            ('pb', 'tubeado', 'B'): 'P', ('pb', 'cableado', 'B'): 'P',
+            ('1', 'tubeado', 'A'): 'X', ('1', 'cableado', 'A'): 'P',
+        })
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        por_tajo = {p['tarea_id']: p for p in resultado['prevision']}
+        self.assertEqual(por_tajo['tubeado']['desbloquea'], 2)
+        self.assertIn('Cableado eléctrico',
+                      por_tajo['tubeado']['tajos_afectados'])
+
+    def test_ordena_por_lo_que_mas_libera(self):
+        ficha = _ficha_con_estados({
+            ('pb', 'tubeado', 'A'): 'P', ('pb', 'cableado', 'A'): 'P',
+            ('pb', 'tubeado', 'B'): 'P', ('pb', 'cableado', 'B'): 'P',
+            ('1', 'tubeado', 'A'): 'P', ('1', 'cableado', 'A'): 'P',
+        })
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        valores = [p['desbloquea'] for p in resultado['prevision']]
+        self.assertEqual(valores, sorted(valores, reverse=True))
+
+    def test_la_fila_bloqueada_dice_cuanto_falta(self):
+        ficha = _ficha_con_estados({
+            ('pb', 'tubeado', 'A'): 'M', ('pb', 'cableado', 'A'): 'P',
+        })
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        cableado = [d for d in resultado['detalle_items']
+                    if d['tarea_id'] == 'cableado'][0]
+        dep = [x for x in cableado['dependencias_detalle']
+               if x['id'] == 'tubeado'][0]
+        self.assertEqual(dep['estado'], 'M')
+        self.assertEqual(dep['minimo'], 1.0)
+        self.assertFalse(dep['cumplida'])
+
+    def test_una_dependencia_cumplida_no_aparece_en_la_prevision(self):
+        ficha = _ficha_con_estados({
+            ('pb', 'tubeado', 'A'): 'X', ('pb', 'cableado', 'A'): 'P',
+        })
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        self.assertNotIn('tubeado',
+                         {p['tarea_id'] for p in resultado['prevision']})
+
+    def test_una_obra_sin_base_no_tiene_prevision(self):
+        self.assertEqual(sin_base('X')['prevision'], [])
+
+
 class TestRejillaCompleta(unittest.TestCase):
     """La base tiene que ser una rejilla densa: ubicaciones x tajos. Si falta
     una celda, calcular sobre datos parciales es peor que avisar."""

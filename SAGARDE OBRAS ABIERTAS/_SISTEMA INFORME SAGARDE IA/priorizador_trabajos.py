@@ -462,6 +462,7 @@ def _clasificar_detalle(estados, catalogo, ultima_fecha, preguntas, hoy=None):
         estado_base = item.get("estado_base", "")
         bloqueos = []
         cumplidas = []
+        deps_detalle = []
 
         # 'N' no aplica a esta ubicacion: no es trabajo pendiente ni
         # terminado, simplemente no existe ahi. No entra en el calculo.
@@ -518,7 +519,15 @@ def _clasificar_detalle(estados, catalogo, ultima_fecha, preguntas, hoy=None):
                 nombre_dep = dep_meta.get("nombre", dep_id)
                 # None = nunca visto en ninguna revisión = no iniciado = 0%
                 dep_valor = ESTADO_VALOR.get(dep_estado, 0.0)
-                if dep_valor < float(dep.get("minimo", 1.0)):
+                minimo = float(dep.get("minimo", 1.0))
+                # Se guarda el detalle para poder decir CUANTO falta, no solo
+                # que falta: "Tubeado interior: M - falta X".
+                deps_detalle.append({
+                    "id": dep_id, "nombre": nombre_dep,
+                    "estado": dep_estado if dep_estado else "Pendiente",
+                    "minimo": minimo, "cumplida": dep_valor >= minimo,
+                })
+                if dep_valor < minimo:
                     bloqueos.append(nombre_dep)
                 else:
                     cumplidas.append(nombre_dep)
@@ -546,6 +555,7 @@ def _clasificar_detalle(estados, catalogo, ultima_fecha, preguntas, hoy=None):
             "motivo": motivo,
             "dependencias_cumplidas": cumplidas,
             "dependencias_bloqueantes": bloqueos,
+            "dependencias_detalle": deps_detalle,
             "dependencias_sin_dato": [],
             "omitido_ultima": bool(item.get("omitido_ultima")),
             "forzado_entregado": bool(item.get("forzado_entregado")),
@@ -699,6 +709,45 @@ def _agrupar_inventario(detalle):
     return salida
 
 
+def prevision_desbloqueos(detalle):
+    """Que se libera al terminar cada tajo.
+
+    Es el valor de este apartado en una obra de meses: no solo saber que el
+    tubeado de la 12 espera al tabique, sino que acabar el suelo de tres
+    plantas libera 40 viviendas de tubeado. Se ordena por lo que mas libera.
+
+    Cuenta unidades reales (segun el ambito del tajo bloqueado), no celdas.
+    """
+    muestra = {}
+    for item in detalle:
+        muestra.setdefault(item["tarea_id"], item)
+
+    libera = defaultdict(lambda: {"unidades": set(), "tajos": set()})
+    for item in detalle:
+        if item["categoria"] != "BLOQUEADO":
+            continue
+        for dep in item.get("dependencias_detalle") or []:
+            if dep.get("cumplida"):
+                continue
+            registro = libera[dep["id"]]
+            registro["unidades"].add((_clave_unidad(item), item["tarea_id"]))
+            registro["tajos"].add(item["trabajo"])
+
+    salida = []
+    for dep_id, registro in libera.items():
+        ref = muestra.get(dep_id)
+        salida.append({
+            "tarea_id": dep_id,
+            "trabajo": ref["trabajo"] if ref else dep_id,
+            "estado_actual": ref["estado_actual"] if ref else "—",
+            "propiedad": ref["propiedad"] if ref else "desconocido",
+            "desbloquea": len(registro["unidades"]),
+            "tajos_afectados": sorted(registro["tajos"]),
+        })
+    salida.sort(key=lambda x: (-x["desbloquea"], x["trabajo"].casefold()))
+    return salida
+
+
 def _serializar_preguntas(preguntas):
     salida = []
     for item in preguntas.values():
@@ -819,7 +868,7 @@ def priorizar_ficha(ficha, obra="", limite=200, hoy=None):
         "resumen": resumen, "items": items,
         "detalle_items": detalle, "inventario": inventario,
         "dudas_pendientes": dudas, "preguntas_orden": preguntas_orden,
-        "prevision": [],
+        "prevision": prevision_desbloqueos(detalle),
         "avisos": avisos,
     }
 
