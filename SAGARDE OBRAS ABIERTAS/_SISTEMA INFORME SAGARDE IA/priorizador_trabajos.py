@@ -484,18 +484,23 @@ def _buscar_dep(por_loc, dep_id):
     return item["estado"] if item else None
 
 
-def _clasificar_detalle(estados, catalogo, ultima_fecha, preguntas):
+def _clasificar_detalle(estados, catalogo, ultima_fecha, preguntas, hoy=None):
     por_loc = defaultdict(dict)
     for item in estados.values():
         por_loc[item["loc"]][item["task_id"]] = item
 
+    # DECISION (11/08/2026): la antiguedad es un AVISO, no un interruptor.
+    # Volcar toda la obra a DUDAS a los 30 dias apagaba cuatro obras el mismo
+    # dia, y calcular la edad con datetime.now() dentro del cálculo hacia que
+    # el mismo dato produjera paneles distintos segun cuando se regenerara.
+    # `hoy` se inyecta para que el resultado sea reproducible.
     edad_dias = None
+    referencia = hoy or datetime.now().date()
     try:
-        edad_dias = (datetime.now().date() - _fecha(ultima_fecha).date()).days
+        edad_dias = (referencia - _fecha(ultima_fecha).date()).days
     except Exception:
         pass
     caducada = edad_dias is None or edad_dias > 30
-    ignorar_caducidad = bool(catalogo.config_obra.get("forzar_historial_terminado"))
 
     detalle = []
     for item in estados.values():
@@ -556,9 +561,6 @@ def _clasificar_detalle(estados, catalogo, ultima_fecha, preguntas):
                 f"{meta.get('nombre', task_id)} dejó de aparecer con último estado {estado or 'pendiente'}. Confirmar si terminó o sigue pendiente.",
                 task_id, loc,
             )
-        elif caducada and not ignorar_caducidad:
-            categoria = "DUDAS"
-            motivo = f"La revisión tiene {edad_dias} días; actualizar antes de ejecutar."
         else:
             for dep in meta.get("deps", []):
                 dep_id = dep["id"]

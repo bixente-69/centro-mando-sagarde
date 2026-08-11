@@ -9,6 +9,7 @@ crudo es lo que metia 4 viviendas inexistentes en Bolueta y 15 en Orueta.
 import os
 import sys
 import unittest
+from datetime import date
 
 _BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _BASE not in sys.path:
@@ -320,6 +321,37 @@ class TestSembrarReglas(unittest.TestCase):
                        if p['codigo'] == 'DEPENDENCIA_AUSENTE_EN_LA_OBRA'
                        and p['tarea_id'] == 'tubeado']
         self.assertEqual(por_tubeado[0]['parecidos'], ['tabicado'])
+
+
+class TestAntiguedadEsAviso(unittest.TestCase):
+    """A los 30 dias el motor volcaba TODA la obra a DUDAS de golpe, y con la
+    fecha de generacion dentro del calculo el mismo dato daba paneles
+    distintos segun cuando se lanzara."""
+
+    def _clasificar(self, fecha_revision, hoy):
+        ficha = _ficha_con_estados({('pb', 'tubeado', 'A'): 'P'})
+        ficha['revisiones'] = [{'id': 'r', 'fecha': fecha_revision}]
+        catalogo = Catalogo()
+        estados, fecha = estado_desde_ficha(ficha, catalogo)
+        return _clasificar_detalle(estados, catalogo, fecha, {}, hoy=hoy)
+
+    def test_una_revision_vieja_ya_no_tumba_la_clasificacion(self):
+        detalle, edad, caducada = self._clasificar('01/01/2026',
+                                                   date(2026, 8, 11))
+        self.assertEqual(edad, 222)
+        self.assertTrue(caducada)
+        self.assertNotEqual(detalle[0]['categoria'], 'DUDAS')
+
+    def test_el_resultado_no_depende_del_dia_en_que_se_genera(self):
+        d1, _e, _c = self._clasificar('01/07/2026', date(2026, 7, 20))
+        d2, _e, _c = self._clasificar('01/07/2026', date(2026, 12, 31))
+        self.assertEqual([x['categoria'] for x in d1],
+                         [x['categoria'] for x in d2])
+
+    def test_la_edad_se_calcula_contra_la_fecha_que_se_pasa(self):
+        _d, edad, caducada = self._clasificar('01/08/2026', date(2026, 8, 11))
+        self.assertEqual(edad, 10)
+        self.assertFalse(caducada)
 
 
 class TestRejillaCompleta(unittest.TestCase):
