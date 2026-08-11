@@ -3,19 +3,25 @@
   "catalogo_version": "1.3",
   "obra": "2026 GORLIZ HOSPITAL",
   "revision": null,
+  "sin_base": true,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
+  "generado": "12/08/2026 01:07",
   "resumen": {
     "listos": 0,
     "verificar": 0,
     "bloqueados": 0,
-    "inventario_total": 0
+    "sin_revisar": 0,
+    "inventario_total": 0,
+    "preguntas_pendientes": 0
   },
   "items": [],
   "detalle_items": [],
   "inventario": [],
   "dudas_pendientes": [],
+  "preguntas_orden": [],
+  "prevision": [],
   "avisos": [
-    "No hay datos de revisión."
+    "Esta obra no tiene base de datos todavía. Sembrarla con sembrar_ficha_obra.py habilita las prioridades."
   ]
 }

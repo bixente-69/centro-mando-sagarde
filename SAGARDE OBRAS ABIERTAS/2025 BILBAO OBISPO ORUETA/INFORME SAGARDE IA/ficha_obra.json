@@ -3,7 +3,7 @@
   "id": "obisporueta",
   "modo": "hibrida",
   "fecha_entrada_digital": "27/07/2026",
-  "actualizado": "10/08/2026 10:34",
+  "actualizado": "12/08/2026 01:07",
   "identidad": {
     "nombre": "2025 BILBAO OBISPO ORUETA",
     "carpeta": "2025 BILBAO OBISPO ORUETA",
@@ -1076,7 +1076,8 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Inicio de obra",
-        "orden": 10
+        "orden": 10,
+        "deps": []
       },
       {
         "id": "rozas_timbres",
@@ -1084,7 +1085,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Inicio de obra",
-        "orden": 20
+        "orden": 20,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "montante_general",
@@ -1092,7 +1099,8 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Infraestructura",
-        "orden": 50
+        "orden": 25,
+        "deps": []
       },
       {
         "id": "perfilado_pladur",
@@ -1100,7 +1108,8 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Pladur",
-        "orden": 100
+        "orden": 100,
+        "deps": []
       },
       {
         "id": "primera_cara_pladur",
@@ -1108,7 +1117,8 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Pladur",
-        "orden": 110
+        "orden": 110,
+        "deps": []
       },
       {
         "id": "tubeado",
@@ -1116,7 +1126,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 130
+        "orden": 130,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cableado",
@@ -1124,7 +1140,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 140
+        "orden": 140,
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "telecableado",
@@ -1132,7 +1154,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 150
+        "orden": 150,
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "termostatos",
@@ -1140,7 +1168,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 170
+        "orden": 170,
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "segunda_cara_pladur",
@@ -1148,7 +1182,8 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Pladur",
-        "orden": 180
+        "orden": 180,
+        "deps": []
       },
       {
         "id": "doblar_cajas",
@@ -1156,7 +1191,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Recuperación tras Pladur",
-        "orden": 190
+        "orden": 190,
+        "deps": [
+          {
+            "id": "segunda_cara_pladur",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "embornado",
@@ -1164,7 +1205,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Conexiones",
-        "orden": 200
+        "orden": 200,
+        "deps": [
+          {
+            "id": "cableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "telembornado",
@@ -1172,7 +1219,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Conexiones",
-        "orden": 210
+        "orden": 210,
+        "deps": [
+          {
+            "id": "telecableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "derivacion_individual",
@@ -1180,7 +1233,8 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Cierre técnico",
-        "orden": 220
+        "orden": 220,
+        "deps": []
       },
       {
         "id": "cuadro_mecanizado",
@@ -1188,7 +1242,17 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Cierre técnico",
-        "orden": 230
+        "orden": 230,
+        "deps": [
+          {
+            "id": "cuadros_presentados",
+            "minimo": 1
+          },
+          {
+            "id": "cableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cuarto_tecnico",
@@ -1196,7 +1260,8 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cierre técnico",
-        "orden": 235
+        "orden": 235,
+        "deps": []
       },
       {
         "id": "techos_zzcc",
@@ -1204,7 +1269,8 @@
         "ambito": "zona_comun",
         "propiedad": "externo",
         "fase": "Acabados previos",
-        "orden": 237
+        "orden": 237,
+        "deps": []
       },
       {
         "id": "techos",
@@ -1212,7 +1278,8 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Acabados previos",
-        "orden": 240
+        "orden": 240,
+        "deps": []
       },
       {
         "id": "enchapado",
@@ -1220,7 +1287,8 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Acabados previos",
-        "orden": 250
+        "orden": 250,
+        "deps": []
       },
       {
         "id": "pintura_primera",
@@ -1228,7 +1296,8 @@
         "ambito": "dinamico",
         "propiedad": "externo",
         "fase": "Pintura",
-        "orden": 260
+        "orden": 260,
+        "deps": []
       },
       {
         "id": "mecanizado",
@@ -1236,7 +1305,17 @@
         "ambito": "dinamico",
         "propiedad": "propio",
         "fase": "Mecanismos",
-        "orden": 270
+        "orden": 270,
+        "deps": [
+          {
+            "id": "doblar_cajas",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_primera",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "telemecanizado",
@@ -1244,171 +1323,335 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Mecanismos",
-        "orden": 280
+        "orden": 280,
+        "deps": [
+          {
+            "id": "doblar_cajas",
+            "minimo": 1
+          },
+          {
+            "id": "telecableado",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_primera",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "agujero_focos_pasillo",
         "nombre": "Agujero Focos Pasillo",
-        "ambito": "vivienda",
+        "ambito": "zona_comun",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "fase": "Iluminación específica",
+        "orden": 283,
+        "origen": "propio_de_la_obra",
+        "deps": [
+          {
+            "id": "techos",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "agujeros_focos_wc",
         "nombre": "Agujeros focos WC",
         "ambito": "vivienda",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "fase": "Iluminación específica",
+        "orden": 282,
+        "origen": "propio_de_la_obra",
+        "deps": [
+          {
+            "id": "techos",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cableado_extractor",
         "nombre": "Cableado Extractor",
         "ambito": "vivienda",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "fase": "Instalación interior",
+        "orden": 146,
+        "origen": "propio_de_la_obra",
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cajas_techo_pasillo",
         "nombre": "Cajas TECHO pasillo",
-        "ambito": "vivienda",
+        "ambito": "zona_comun",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "fase": "Iluminación específica",
+        "orden": 284,
+        "origen": "propio_de_la_obra",
+        "deps": [
+          {
+            "id": "techos",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "focos_hab",
         "nombre": "Focos Hab",
         "ambito": "vivienda",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "fase": "Iluminación definitiva",
+        "orden": 340,
+        "origen": "propio_de_la_obra",
+        "deps": [
+          {
+            "id": "pintura_segunda",
+            "minimo": 1
+          },
+          {
+            "id": "cuadro_mecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "derivacion_individual",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "focos_pasillos",
         "nombre": "Focos Pasillos",
-        "ambito": "vivienda",
+        "ambito": "zona_comun",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "fase": "Iluminación definitiva",
+        "orden": 342,
+        "origen": "propio_de_la_obra",
+        "deps": [
+          {
+            "id": "agujeros_focos_pasillo",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_pasillos",
+            "minimo": 1
+          },
+          {
+            "id": "cuadro_mecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "derivacion_individual",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "focos_wc",
         "nombre": "Focos WC",
         "ambito": "vivienda",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "fase": "Iluminación definitiva",
+        "orden": 341,
+        "origen": "propio_de_la_obra",
+        "deps": [
+          {
+            "id": "agujeros_focos_wc",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_wc",
+            "minimo": 1
+          },
+          {
+            "id": "cuadro_mecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "derivacion_individual",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "lucido_paredes",
         "nombre": "Lucido Paredes",
         "ambito": "vivienda",
-        "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "propiedad": "externo",
+        "fase": "Acabados previos",
+        "orden": 255,
+        "origen": "propio_de_la_obra",
+        "deps": []
       },
       {
         "id": "mecanismos_pasillo",
         "nombre": "Mecanismos pasillo",
-        "ambito": "vivienda",
+        "ambito": "zona_comun",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "fase": "Mecanismos",
+        "orden": 272,
+        "origen": "propio_de_la_obra",
+        "deps": [
+          {
+            "id": "pintura_primera",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "mecanismos_wc",
         "nombre": "Mecanismos WC",
         "ambito": "vivienda",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "fase": "Mecanismos",
+        "orden": 271,
+        "origen": "propio_de_la_obra",
+        "deps": [
+          {
+            "id": "pintura_primera",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "pintura_hab",
         "nombre": "Pintura Hab",
         "ambito": "vivienda",
-        "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "propiedad": "externo",
+        "fase": "Pintura final",
+        "orden": 290,
+        "origen": "propio_de_la_obra",
+        "deps": []
       },
       {
         "id": "pintura_pasillos",
         "nombre": "Pintura Pasillos",
-        "ambito": "vivienda",
-        "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Pintura final",
+        "orden": 290,
+        "origen": "propio_de_la_obra",
+        "deps": []
       },
       {
         "id": "pintura_segunda",
         "nombre": "Pintura segunda mano",
-        "ambito": "vivienda",
-        "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
+        "ambito": "dinamico",
+        "propiedad": "externo",
+        "fase": "Pintura final",
+        "orden": 290,
         "origen": "revision_sin_confirmar",
-        "visto_en": "27/07/2026"
+        "visto_en": "27/07/2026",
+        "deps": []
       },
       {
         "id": "pintura_wc",
         "nombre": "Pintura WC",
         "ambito": "vivienda",
-        "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "propiedad": "externo",
+        "fase": "Pintura final",
+        "orden": 290,
+        "origen": "propio_de_la_obra",
+        "deps": []
       },
       {
         "id": "placas_tapas",
         "nombre": "Placas y tapas",
         "ambito": "vivienda",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
+        "fase": "Remates finales",
+        "orden": 300,
         "origen": "revision_sin_confirmar",
-        "visto_en": "27/07/2026"
+        "visto_en": "27/07/2026",
+        "deps": [
+          {
+            "id": "pintura_habitaciones",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_wc",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_pasillos",
+            "minimo": 1
+          },
+          {
+            "id": "mecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "telemecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "cuadro_mecanizado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "placas_tps_cuadro",
         "nombre": "Placas + Tps. Cuadro",
         "ambito": "vivienda",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "fase": "Remates finales",
+        "orden": 300,
+        "origen": "propio_de_la_obra",
+        "deps": [
+          {
+            "id": "pintura_habitaciones",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_wc",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_pasillos",
+            "minimo": 1
+          },
+          {
+            "id": "mecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "telemecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "cuadro_mecanizado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "techos_wc",
         "nombre": "Techos WC",
         "ambito": "vivienda",
-        "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "propiedad": "externo",
+        "fase": "Acabados previos",
+        "orden": 240,
+        "origen": "propio_de_la_obra",
+        "deps": []
       },
       {
         "id": "ventilacion",
         "nombre": "Ventilación",
         "ambito": "vivienda",
         "propiedad": "propio",
-        "fase": "Sin clasificar",
-        "orden": 9999,
-        "origen": "propio_de_la_obra"
+        "fase": "Instalación interior",
+        "orden": 145,
+        "origen": "propio_de_la_obra",
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
       }
     ],
     "_meta": {

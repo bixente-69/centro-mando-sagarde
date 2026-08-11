@@ -3,11 +3,12 @@
   "catalogo_version": "1.3",
   "obra": "2025 GERNIKA 32V",
   "revision": "25/07/2026",
-  "edad_revision_dias": 16,
+  "sin_base": false,
+  "edad_revision_dias": 18,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "10/08/2026 10:33",
+  "generado": "12/08/2026 01:06",
   "resumen": {
     "listos": 2,
     "verificar": 0,
@@ -16,6 +17,8 @@
     "bloqueados": 3,
     "otros_gremios": 4,
     "dudas": 0,
+    "sin_revisar": 0,
+    "unidades_sin_revisar": 0,
     "terminados": 28,
     "inventario_total": 37,
     "detalle_total": 1216,
@@ -325,8 +328,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 32,
+      "n_celdas": 32,
       "n_ubicaciones": 32,
+      "n_unidades": 32,
       "estado_actual": "Pendiente: 32",
       "motivo": "Cableado específico de termostatos.",
       "impacto_gremios": "Cableado específico de termostatos.",
@@ -632,8 +636,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 32,
+      "n_celdas": 32,
       "n_ubicaciones": 32,
+      "n_unidades": 32,
       "estado_actual": "Pendiente: 32",
       "motivo": "Rama independiente; requiere fachada terminada.",
       "impacto_gremios": "Rama independiente; requiere fachada terminada.",
@@ -1477,8 +1482,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1504,8 +1508,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1531,8 +1534,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1558,8 +1560,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1585,8 +1586,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1612,8 +1612,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1639,8 +1638,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1666,8 +1664,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1693,8 +1690,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1720,8 +1716,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1747,8 +1742,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1774,8 +1768,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1801,8 +1794,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1828,8 +1820,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1855,8 +1846,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1882,8 +1872,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1909,8 +1898,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1936,8 +1924,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1963,8 +1950,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -1990,8 +1976,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2017,8 +2002,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2044,8 +2028,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2071,8 +2054,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2098,8 +2080,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2125,8 +2106,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2152,8 +2132,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2179,8 +2158,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2206,8 +2184,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2233,8 +2210,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2260,8 +2236,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2287,8 +2262,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2314,8 +2288,7 @@
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
-        "Rozas de timbres",
-        "Rozas timbres"
+        "Rozas de timbres"
       ],
       "propiedad": "propio",
       "ambito": "vivienda",
@@ -2341,7 +2314,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2368,7 +2340,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2395,7 +2366,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2422,7 +2392,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2449,7 +2418,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2476,7 +2444,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2503,7 +2470,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2530,7 +2496,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2557,7 +2522,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2584,7 +2548,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2611,7 +2574,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2638,7 +2600,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2665,7 +2626,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2692,7 +2652,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2719,7 +2678,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2746,7 +2704,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2773,7 +2730,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2800,7 +2756,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2827,7 +2782,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2854,7 +2808,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2881,7 +2834,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2908,7 +2860,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2935,7 +2886,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2962,7 +2912,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -2989,7 +2938,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -3016,7 +2964,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -3043,7 +2990,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -3070,7 +3016,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -3097,7 +3042,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -3124,7 +3068,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -3151,7 +3094,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -3178,7 +3120,6 @@
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "trabajos_originales": [
-        "Montante electrica",
         "Montante eléctrica"
       ],
       "propiedad": "propio",
@@ -3205,8 +3146,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3232,8 +3172,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3259,8 +3198,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3286,8 +3224,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3313,8 +3250,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3340,8 +3276,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3367,8 +3302,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3394,8 +3328,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3421,8 +3354,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3448,8 +3380,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3475,8 +3406,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3502,8 +3432,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3529,8 +3458,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3556,8 +3484,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3583,8 +3510,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3610,8 +3536,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3637,8 +3562,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3664,8 +3588,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3691,8 +3614,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3718,8 +3640,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3745,8 +3666,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3772,8 +3692,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3799,8 +3718,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3826,8 +3744,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3853,8 +3770,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3880,8 +3796,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3907,8 +3822,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3934,8 +3848,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3961,8 +3874,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -3988,8 +3900,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4015,8 +3926,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4042,8 +3952,7 @@
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
-        "Montante de telecomunicaciones",
-        "Montante teleco"
+        "Montante de telecomunicaciones"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4069,8 +3978,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4096,8 +4004,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4123,8 +4030,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4150,8 +4056,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4177,8 +4082,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4204,8 +4108,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4231,8 +4134,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4258,8 +4160,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4285,8 +4186,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4312,8 +4212,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4339,8 +4238,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4366,8 +4264,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4393,8 +4290,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4420,8 +4316,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4447,8 +4342,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4474,8 +4368,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4501,8 +4394,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4528,8 +4420,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4555,8 +4446,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4582,8 +4472,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4609,8 +4498,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4636,8 +4524,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4663,8 +4550,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4690,8 +4576,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4717,8 +4602,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4744,8 +4628,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4771,8 +4654,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4798,8 +4680,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4825,8 +4706,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4852,8 +4732,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4879,8 +4758,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4906,8 +4784,7 @@
       "tarea_id": "montante_sscc",
       "trabajo": "Montante de servicios comunes",
       "trabajos_originales": [
-        "Montante de servicios comunes",
-        "Montante sscc"
+        "Montante de servicios comunes"
       ],
       "propiedad": "propio",
       "ambito": "edificio",
@@ -4933,8 +4810,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -4960,8 +4836,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -4987,8 +4862,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5014,8 +4888,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5041,8 +4914,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5068,8 +4940,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5095,8 +4966,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5122,8 +4992,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5149,8 +5018,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5176,8 +5044,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5203,8 +5070,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5230,8 +5096,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5257,8 +5122,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5284,8 +5148,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5311,8 +5174,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5338,8 +5200,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5365,8 +5226,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5392,8 +5252,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5419,8 +5278,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5446,8 +5304,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5473,8 +5330,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5500,8 +5356,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5527,8 +5382,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5554,8 +5408,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5581,8 +5434,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5608,8 +5460,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5635,8 +5486,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5662,8 +5512,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5689,8 +5538,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5716,8 +5564,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5743,8 +5590,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5770,8 +5616,7 @@
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
-        "Tubeado de zonas comunes",
-        "Tubeado zzcc"
+        "Tubeado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5797,8 +5642,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5824,8 +5668,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5851,8 +5694,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5878,8 +5720,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5905,8 +5746,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5932,8 +5772,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5959,8 +5798,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -5986,8 +5824,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6013,8 +5850,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6040,8 +5876,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6067,8 +5902,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6094,8 +5928,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6121,8 +5954,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6148,8 +5980,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6175,8 +6006,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6202,8 +6032,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6229,8 +6058,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6256,8 +6084,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6283,8 +6110,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6310,8 +6136,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6337,8 +6162,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6364,8 +6188,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6391,8 +6214,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6418,8 +6240,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6445,8 +6266,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6472,8 +6292,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6499,8 +6318,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6526,8 +6344,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6553,8 +6370,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6580,8 +6396,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6607,8 +6422,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -6634,8 +6448,7 @@
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
-        "Cableado de zonas comunes",
-        "Cableado zzcc"
+        "Cableado de zonas comunes"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -9157,7 +8970,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9184,7 +8996,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9211,7 +9022,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9238,7 +9048,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9265,7 +9074,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9292,7 +9100,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9319,7 +9126,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9346,7 +9152,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9373,7 +9178,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9400,7 +9204,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9427,7 +9230,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9454,7 +9256,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9481,7 +9282,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9508,7 +9308,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9535,7 +9334,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9562,7 +9360,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9589,7 +9386,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9616,7 +9412,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9643,7 +9438,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9670,7 +9464,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9697,7 +9490,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9724,7 +9516,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9751,7 +9542,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9778,7 +9568,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9805,7 +9594,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9832,7 +9620,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9859,7 +9646,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9886,7 +9672,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9913,7 +9698,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9940,7 +9724,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9967,7 +9750,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -9994,7 +9776,6 @@
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
-        "1as caras Pladur",
         "Primeras caras de Pladur"
       ],
       "propiedad": "externo",
@@ -10853,7 +10634,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -10880,7 +10660,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -10907,7 +10686,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -10934,7 +10712,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -10961,7 +10738,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -10988,7 +10764,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11015,7 +10790,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11042,7 +10816,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11069,7 +10842,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11096,7 +10868,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11123,7 +10894,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11150,7 +10920,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11177,7 +10946,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11204,7 +10972,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11231,7 +10998,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11258,7 +11024,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11285,7 +11050,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11312,7 +11076,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11339,7 +11102,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11366,7 +11128,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11393,7 +11154,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11420,7 +11180,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11447,7 +11206,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11474,7 +11232,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11501,7 +11258,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11528,7 +11284,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11555,7 +11310,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11582,7 +11336,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11609,7 +11362,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11636,7 +11388,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11663,7 +11414,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11690,7 +11440,6 @@
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
-        "Tubeado",
         "Tubeado interior"
       ],
       "propiedad": "propio",
@@ -11717,7 +11466,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -11744,7 +11492,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -11771,7 +11518,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -11798,7 +11544,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -11825,7 +11570,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -11852,7 +11596,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -11879,7 +11622,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -11906,7 +11648,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -11933,7 +11674,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -11960,7 +11700,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -11987,7 +11726,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12014,7 +11752,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12041,7 +11778,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12068,7 +11804,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12095,7 +11830,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12122,7 +11856,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12149,7 +11882,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12176,7 +11908,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12203,7 +11934,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12230,7 +11960,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12257,7 +11986,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12284,7 +12012,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12311,7 +12038,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12338,7 +12064,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12365,7 +12090,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12392,7 +12116,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12419,7 +12142,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12446,7 +12168,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12473,7 +12194,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12500,7 +12220,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12527,7 +12246,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -12554,7 +12272,6 @@
       "tarea_id": "cableado",
       "trabajo": "Cableado eléctrico",
       "trabajos_originales": [
-        "Cableado",
         "Cableado eléctrico"
       ],
       "propiedad": "propio",
@@ -13413,7 +13130,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13440,7 +13156,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13467,7 +13182,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13494,7 +13208,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13521,7 +13234,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13548,7 +13260,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13575,7 +13286,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13602,7 +13312,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13629,7 +13338,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13656,7 +13364,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13683,7 +13390,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13710,7 +13416,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13737,7 +13442,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13764,7 +13468,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13791,7 +13494,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13818,7 +13520,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13845,7 +13546,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13872,7 +13572,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13899,7 +13598,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13926,7 +13624,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13953,7 +13650,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -13980,7 +13676,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -14007,7 +13702,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -14034,7 +13728,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -14061,7 +13754,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -14088,7 +13780,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -14115,7 +13806,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -14142,7 +13832,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -14169,7 +13858,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -14196,7 +13884,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -14223,7 +13910,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -14250,7 +13936,6 @@
       "tarea_id": "portero",
       "trabajo": "Portero / videoportero",
       "trabajos_originales": [
-        "Portero",
         "Portero / videoportero"
       ],
       "propiedad": "propio",
@@ -15173,7 +14858,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15200,7 +14884,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15227,7 +14910,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15254,7 +14936,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15281,7 +14962,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15308,7 +14988,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15335,7 +15014,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15362,7 +15040,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15389,7 +15066,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15416,7 +15092,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15443,7 +15118,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15470,7 +15144,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15497,7 +15170,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15524,7 +15196,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15551,7 +15222,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15578,7 +15248,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15605,7 +15274,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15632,7 +15300,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15659,7 +15326,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15686,7 +15352,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15713,7 +15378,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15740,7 +15404,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15767,7 +15430,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15794,7 +15456,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15821,7 +15482,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15848,7 +15508,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15875,7 +15534,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15902,7 +15560,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15929,7 +15586,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15956,7 +15612,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -15983,7 +15638,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -16010,7 +15664,6 @@
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
-        "2as caras Pladur",
         "Segundas caras de Pladur"
       ],
       "propiedad": "externo",
@@ -16869,7 +16522,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -16896,7 +16548,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -16923,7 +16574,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -16950,7 +16600,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -16977,7 +16626,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17004,7 +16652,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17031,7 +16678,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17058,7 +16704,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17085,7 +16730,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17112,7 +16756,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17139,7 +16782,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17166,7 +16808,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17193,7 +16834,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17220,7 +16860,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17247,7 +16886,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17274,7 +16912,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17301,7 +16938,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17328,7 +16964,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17355,7 +16990,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17382,7 +17016,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17409,7 +17042,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17436,7 +17068,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17463,7 +17094,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17490,7 +17120,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17517,7 +17146,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17544,7 +17172,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17571,7 +17198,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17598,7 +17224,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17625,7 +17250,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17652,7 +17276,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17679,7 +17302,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -17706,7 +17328,6 @@
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
-        "Embornado",
         "Embornado eléctrico"
       ],
       "propiedad": "propio",
@@ -18565,7 +18186,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18592,7 +18212,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18619,7 +18238,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18646,7 +18264,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18673,7 +18290,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18700,7 +18316,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18727,7 +18342,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18754,7 +18368,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18781,7 +18394,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18808,7 +18420,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18835,7 +18446,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18862,7 +18472,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18889,7 +18498,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18916,7 +18524,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18943,7 +18550,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18970,7 +18576,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -18997,7 +18602,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19024,7 +18628,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19051,7 +18654,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19078,7 +18680,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19105,7 +18706,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19132,7 +18732,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19159,7 +18758,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19186,7 +18784,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19213,7 +18810,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19240,7 +18836,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19267,7 +18862,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19294,7 +18888,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19321,7 +18914,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19348,7 +18940,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19375,7 +18966,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -19402,7 +18992,6 @@
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
-        "Derivacion individual",
         "Derivación individual"
       ],
       "propiedad": "propio",
@@ -20261,7 +19850,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20288,7 +19876,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20315,7 +19902,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20342,7 +19928,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20369,7 +19954,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20396,7 +19980,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20423,7 +20006,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20450,7 +20032,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20477,7 +20058,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20504,7 +20084,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20531,7 +20110,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20558,7 +20136,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20585,7 +20162,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20612,7 +20188,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20639,7 +20214,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20666,7 +20240,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20693,7 +20266,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20720,7 +20292,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20747,7 +20318,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20774,7 +20344,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20801,7 +20370,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20828,7 +20396,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20855,7 +20422,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20882,7 +20448,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20909,7 +20474,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20936,7 +20500,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20963,7 +20526,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -20990,7 +20552,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -21017,7 +20578,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -21044,7 +20604,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -21071,7 +20630,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -21098,7 +20656,6 @@
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "trabajos_originales": [
-        "Cuarto tecnico",
         "Cuarto técnico"
       ],
       "propiedad": "propio",
@@ -23621,7 +23178,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23648,7 +23204,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23675,7 +23230,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23702,7 +23256,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23729,7 +23282,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23756,7 +23308,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23783,7 +23334,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23810,7 +23360,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23837,7 +23386,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23864,7 +23412,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23891,7 +23438,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23918,7 +23464,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23945,7 +23490,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23972,7 +23516,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -23999,7 +23542,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24026,7 +23568,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24053,7 +23594,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24080,7 +23620,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24107,7 +23646,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24134,7 +23672,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24161,7 +23698,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24188,7 +23724,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24215,7 +23750,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24242,7 +23776,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24269,7 +23802,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24296,7 +23828,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24323,7 +23854,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24350,7 +23880,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24377,7 +23906,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24404,7 +23932,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24431,7 +23958,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24458,7 +23984,6 @@
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
-        "Pintura primera mano",
         "Pintura — primera mano"
       ],
       "propiedad": "externo",
@@ -24485,7 +24010,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24512,7 +24036,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24539,7 +24062,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24566,7 +24088,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24593,7 +24114,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24620,7 +24140,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24647,7 +24166,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24674,7 +24192,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24701,7 +24218,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24728,7 +24244,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24755,7 +24270,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24782,7 +24296,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24809,7 +24322,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24836,7 +24348,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24863,7 +24374,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24890,7 +24400,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24917,7 +24426,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24944,7 +24452,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24971,7 +24478,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -24998,7 +24504,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25025,7 +24530,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25052,7 +24556,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25079,7 +24582,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25106,7 +24608,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25133,7 +24634,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25160,7 +24660,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25187,7 +24686,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25214,7 +24712,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25241,7 +24738,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25268,7 +24764,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25295,7 +24790,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -25322,7 +24816,6 @@
       "tarea_id": "mecanizado",
       "trabajo": "Mecanizado eléctrico",
       "trabajos_originales": [
-        "Mecanizado",
         "Mecanizado eléctrico"
       ],
       "propiedad": "propio",
@@ -26181,7 +25674,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26208,7 +25700,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26235,7 +25726,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26262,7 +25752,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26289,7 +25778,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26316,7 +25804,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26343,7 +25830,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26370,7 +25856,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26397,7 +25882,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26424,7 +25908,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26451,7 +25934,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26478,7 +25960,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26505,7 +25986,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26532,7 +26012,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26559,7 +26038,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26586,7 +26064,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26613,7 +26090,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26640,7 +26116,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26667,7 +26142,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26694,7 +26168,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26721,7 +26194,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26748,7 +26220,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26775,7 +26246,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26802,7 +26272,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26829,7 +26298,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26856,7 +26324,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26883,7 +26350,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26910,7 +26376,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26937,7 +26402,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26964,7 +26428,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -26991,7 +26454,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -27018,7 +26480,6 @@
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
-        "Pintura segunda mano",
         "Pintura — segunda mano"
       ],
       "propiedad": "externo",
@@ -28901,7 +28362,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -28930,7 +28390,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -28959,7 +28418,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -28988,7 +28446,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29017,7 +28474,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29046,7 +28502,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29075,7 +28530,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29104,7 +28558,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29133,7 +28586,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29162,7 +28614,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29191,7 +28642,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29220,7 +28670,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29249,7 +28698,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29278,7 +28726,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29307,7 +28754,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29336,7 +28782,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29365,7 +28810,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29394,7 +28838,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29423,7 +28866,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29452,7 +28894,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29481,7 +28922,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29510,7 +28950,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29539,7 +28978,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29568,7 +29006,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29597,7 +29034,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29626,7 +29062,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29655,7 +29090,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29684,7 +29118,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29713,7 +29146,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29742,7 +29174,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29771,7 +29202,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29800,7 +29230,6 @@
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "trabajos_originales": [
-        "Apliques",
         "Apliques y enchufes de terraza"
       ],
       "propiedad": "propio",
@@ -29829,8 +29258,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -29856,8 +29284,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -29883,8 +29310,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -29910,8 +29336,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -29937,8 +29362,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -29964,8 +29388,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -29991,8 +29414,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30018,8 +29440,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30045,8 +29466,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30072,8 +29492,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30099,8 +29518,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30126,8 +29544,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30153,8 +29570,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30180,8 +29596,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30207,8 +29622,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30234,8 +29648,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30261,8 +29674,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30288,8 +29700,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30315,8 +29726,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30342,8 +29752,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30369,8 +29778,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30396,8 +29804,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30423,8 +29830,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30450,8 +29856,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30477,8 +29882,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30504,8 +29908,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30531,8 +29934,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30558,8 +29960,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30585,8 +29986,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30612,8 +30012,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30639,8 +30038,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -30666,8 +30064,7 @@
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC",
-        "Escaleras agujeros ilum"
+        "Agujeros de iluminación en ZZCC"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
@@ -31525,7 +30922,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31557,7 +30953,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31589,7 +30984,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31621,7 +31015,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31653,7 +31046,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31685,7 +31077,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31717,7 +31108,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31749,7 +31139,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31781,7 +31170,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31813,7 +31201,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31845,7 +31232,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31877,7 +31263,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31909,7 +31294,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31941,7 +31325,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -31973,7 +31356,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32005,7 +31387,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32037,7 +31418,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32069,7 +31449,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32101,7 +31480,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32133,7 +31511,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32165,7 +31542,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32197,7 +31573,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32229,7 +31604,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32261,7 +31635,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32293,7 +31666,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32325,7 +31697,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32357,7 +31728,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32389,7 +31759,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32421,7 +31790,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32453,7 +31821,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32485,7 +31852,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32517,7 +31883,6 @@
       "tarea_id": "casquillos_bombillas",
       "trabajo": "Casquillos y bombillas",
       "trabajos_originales": [
-        "Casquillos Bombilla",
         "Casquillos y bombillas"
       ],
       "propiedad": "propio",
@@ -32549,7 +31914,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32578,7 +31942,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32607,7 +31970,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32636,7 +31998,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32665,7 +32026,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32694,7 +32054,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32723,7 +32082,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32752,7 +32110,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32781,7 +32138,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32810,7 +32166,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32839,7 +32194,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32868,7 +32222,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32897,7 +32250,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32926,7 +32278,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32955,7 +32306,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -32984,7 +32334,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33013,7 +32362,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33042,7 +32390,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33071,7 +32418,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33100,7 +32446,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33129,7 +32474,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33158,7 +32502,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33187,7 +32530,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33216,7 +32558,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33245,7 +32586,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33274,7 +32614,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33303,7 +32642,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33332,7 +32670,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33361,7 +32698,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33390,7 +32726,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33419,7 +32754,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -33448,7 +32782,6 @@
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
-        "ILuminacion Rellanos",
         "Iluminación de rellanos / ZZCC"
       ],
       "propiedad": "propio",
@@ -42768,10 +42101,11 @@
     }
   ],
   "dudas_pendientes": [],
+  "preguntas_orden": [],
+  "prevision": [],
   "avisos": [
-    "El inventario incluye todos los tajos encontrados en el historial; los terminados aparecen al final.",
+    "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmación.",
-    "Una X histórica se conserva aunque el tajo desaparezca; nunca se rebaja sin verificación.",
     "El orden sigue la secuencia lógica definida en CATALOGO_TAJOS.json."
   ]
 }

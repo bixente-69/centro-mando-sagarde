@@ -3,23 +3,26 @@
   "catalogo_version": "1.3",
   "obra": "2026 OBRA PRUEBA",
   "revision": "05/08/2026",
-  "edad_revision_dias": 5,
+  "sin_base": false,
+  "edad_revision_dias": 7,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "10/08/2026 10:34",
+  "generado": "12/08/2026 01:07",
   "resumen": {
     "listos": 12,
     "verificar": 0,
-    "unidades_listas": 179,
+    "unidades_listas": 69,
     "unidades_verificar": 0,
     "bloqueados": 13,
     "otros_gremios": 12,
     "dudas": 0,
+    "sin_revisar": 0,
+    "unidades_sin_revisar": 0,
     "terminados": 0,
     "inventario_total": 37,
     "detalle_total": 988,
-    "preguntas_pendientes": 8,
+    "preguntas_pendientes": 0,
     "viviendas": 7,
     "zonas_comunes": 1,
     "edificio": 4
@@ -271,8 +274,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 26,
+      "n_celdas": 26,
       "n_ubicaciones": 26,
+      "n_unidades": 2,
       "estado_actual": "Pendiente: 26",
       "motivo": "Infraestructura vertical eléctrica.",
       "impacto_gremios": "Infraestructura vertical eléctrica.",
@@ -524,8 +528,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 26,
+      "n_celdas": 26,
       "n_ubicaciones": 26,
+      "n_unidades": 2,
       "estado_actual": "Pendiente: 26",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
       "impacto_gremios": "Infraestructura vertical de telecomunicaciones.",
@@ -777,8 +782,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 26,
+      "n_celdas": 26,
       "n_ubicaciones": 26,
+      "n_unidades": 2,
       "estado_actual": "Pendiente: 26",
       "motivo": "Infraestructura vertical de servicios comunes.",
       "impacto_gremios": "Infraestructura vertical de servicios comunes.",
@@ -1030,8 +1036,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 26,
+      "n_celdas": 26,
       "n_ubicaciones": 26,
+      "n_unidades": 7,
       "estado_actual": "Pendiente: 26",
       "motivo": "Abre el frente de zonas comunes.",
       "impacto_gremios": "Abre el frente de zonas comunes.",
@@ -1048,6 +1055,24 @@
       "orden_ejecucion": 120,
       "fase_nombre": "Instalación interior",
       "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "/"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1ª",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
         {
           "edificio": "PORTAL 2",
           "planta": "1ª",
@@ -1094,9 +1119,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 5,
-      "n_ubicaciones": 5,
-      "estado_actual": "Pendiente: 5",
+      "n_celdas": 7,
+      "n_ubicaciones": 7,
+      "n_unidades": 7,
+      "estado_actual": "/: 1 · Pendiente: 6",
       "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
       "impacto_gremios": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
       "orden": 5
@@ -1112,6 +1138,33 @@
       "orden_ejecucion": 130,
       "fase_nombre": "Instalación interior",
       "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1ª",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
         {
           "edificio": "PORTAL 2",
           "planta": "1ª",
@@ -1167,9 +1220,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 6,
-      "n_ubicaciones": 6,
-      "estado_actual": "M: 1 · Pendiente: 5",
+      "n_celdas": 9,
+      "n_ubicaciones": 9,
+      "n_unidades": 9,
+      "estado_actual": "M: 2 · Pendiente: 7",
       "motivo": "Prepara los recorridos de la instalación.",
       "impacto_gremios": "Prepara los recorridos de la instalación.",
       "orden": 6
@@ -1213,8 +1267,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 3,
+      "n_celdas": 3,
       "n_ubicaciones": 3,
+      "n_unidades": 3,
       "estado_actual": "Pendiente: 3",
       "motivo": "Cableado general; no incluye cableados especiales.",
       "impacto_gremios": "Cableado general; no incluye cableados especiales.",
@@ -1259,8 +1314,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 3,
+      "n_celdas": 3,
       "n_ubicaciones": 3,
+      "n_unidades": 3,
       "estado_actual": "Pendiente: 3",
       "motivo": "Cableado específico de telecomunicaciones.",
       "impacto_gremios": "Cableado específico de telecomunicaciones.",
@@ -1305,8 +1361,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 3,
+      "n_celdas": 3,
       "n_ubicaciones": 3,
+      "n_unidades": 3,
       "estado_actual": "Pendiente: 3",
       "motivo": "Cableado específico de portero.",
       "impacto_gremios": "Cableado específico de portero.",
@@ -1351,8 +1408,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 3,
+      "n_celdas": 3,
       "n_ubicaciones": 3,
+      "n_unidades": 3,
       "estado_actual": "Pendiente: 3",
       "motivo": "Cableado específico de termostatos.",
       "impacto_gremios": "Cableado específico de termostatos.",
@@ -1604,8 +1662,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 26,
+      "n_celdas": 26,
       "n_ubicaciones": 26,
+      "n_unidades": 26,
       "estado_actual": "Pendiente: 26",
       "motivo": "Completa la alimentación de la vivienda.",
       "impacto_gremios": "Completa la alimentación de la vivienda.",
@@ -1857,8 +1916,9 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_unidades": 26,
+      "n_celdas": 26,
       "n_ubicaciones": 26,
+      "n_unidades": 2,
       "estado_actual": "Pendiente: 26",
       "motivo": "Partida técnica general.",
       "impacto_gremios": "Partida técnica general.",
@@ -1881,10 +1941,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -1907,10 +1967,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -1933,10 +1993,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -2557,14 +2617,12 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado"
-      ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -2585,14 +2643,12 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado"
-      ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -2613,14 +2669,12 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado"
-      ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -6699,10 +6753,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de coordinación, no producción Sagarde.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -6725,10 +6779,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de coordinación, no producción Sagarde.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -6751,10 +6805,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de coordinación, no producción Sagarde.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -6777,32 +6831,6 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de coordinación, no producción Sagarde.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "05/08/2026"
-    },
-    {
-      "tarea_id": "suelo_radiante",
-      "trabajo": "Suelo radiante",
-      "trabajos_originales": [
-        "Suelo radiante"
-      ],
-      "propiedad": "coordinacion",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 80,
-      "fase_nombre": "Obra previa",
-      "display_group": "suelo_radiante",
-      "edificio": "PORTAL 1",
-      "planta": "2ª",
-      "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "OTROS_GREMIOS",
@@ -6828,9 +6856,35 @@
       "display_group": "suelo_radiante",
       "edificio": "PORTAL 1",
       "planta": "2ª",
+      "unidad": "A",
+      "estado": "/",
+      "estado_actual": "/",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Condición de coordinación, no producción Sagarde.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/08/2026"
+    },
+    {
+      "tarea_id": "suelo_radiante",
+      "trabajo": "Suelo radiante",
+      "trabajos_originales": [
+        "Suelo radiante"
+      ],
+      "propiedad": "coordinacion",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 80,
+      "fase_nombre": "Obra previa",
+      "display_group": "suelo_radiante",
+      "edificio": "PORTAL 1",
+      "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
@@ -7375,10 +7429,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -7401,10 +7455,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -7427,10 +7481,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -8051,10 +8105,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -8077,10 +8131,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -8103,10 +8157,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -8727,10 +8781,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Habilita trabajos interiores.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -8753,10 +8807,10 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Habilita trabajos interiores.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
@@ -8779,8 +8833,8 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Habilita trabajos interiores.",
       "dependencias_cumplidas": [],
@@ -9403,14 +9457,12 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado"
-      ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -9431,14 +9483,14 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "estado": "/",
+      "estado_actual": "/",
+      "categoria": "VIABLE",
+      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -9461,12 +9513,12 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -10123,14 +10175,14 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Prepara los recorridos de la instalación.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -10153,12 +10205,12 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Prepara los recorridos de la instalación.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -10181,12 +10233,12 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Prepara los recorridos de la instalación.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17296,10 +17348,11 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Cuadros presentados, Cableado eléctrico.",
-      "dependencias_cumplidas": [],
+      "motivo": "Dependencias pendientes: Cableado eléctrico.",
+      "dependencias_cumplidas": [
+        "Cuadros presentados"
+      ],
       "dependencias_bloqueantes": [
-        "Cuadros presentados",
         "Cableado eléctrico"
       ],
       "dependencias_sin_dato": [],
@@ -29573,22 +29626,22 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "/",
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
@@ -29758,11 +29811,11 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 26,
-      "estado_actual": "Pendiente: 22 · X: 4",
+      "estado_actual": "/: 1 · Pendiente: 20 · X: 5",
       "resumen_categorias": {
-        "BLOQUEADO": 17,
-        "TERMINADO": 4,
-        "VIABLE": 5
+        "TERMINADO": 5,
+        "VIABLE": 7,
+        "BLOQUEADO": 14
       },
       "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado. Dependencias pendientes: Tabicado. Terminado según la última confirmación válida.",
       "orden_inventario": 5
@@ -29778,22 +29831,22 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "M",
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
@@ -29963,11 +30016,11 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 26,
-      "estado_actual": "M: 1 · Pendiente: 22 · X: 3",
+      "estado_actual": "M: 2 · Pendiente: 21 · X: 3",
       "resumen_categorias": {
-        "BLOQUEADO": 17,
-        "TERMINADO": 3,
-        "VIABLE": 6
+        "VIABLE": 9,
+        "BLOQUEADO": 14,
+        "TERMINADO": 3
       },
       "motivo": "Dependencias pendientes: Tabicado. Prepara los recorridos de la instalación. Terminado según la última confirmación válida.",
       "orden_inventario": 6
@@ -31205,22 +31258,22 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -31390,10 +31443,10 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 26,
-      "estado_actual": "Pendiente: 17 · X: 9",
+      "estado_actual": "Pendiente: 14 · X: 12",
       "resumen_categorias": {
-        "BLOQUEADO": 17,
-        "TERMINADO": 9
+        "TERMINADO": 12,
+        "BLOQUEADO": 14
       },
       "motivo": "Dependencias pendientes: Tabicado. Terminado según la última confirmación válida.",
       "orden_inventario": 13
@@ -33845,22 +33898,22 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -34030,10 +34083,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 26,
-      "estado_actual": "Pendiente: 17 · X: 9",
+      "estado_actual": "Pendiente: 14 · X: 12",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 17,
-        "TERMINADO": 9
+        "TERMINADO": 12,
+        "OTROS_GREMIOS": 14
       },
       "motivo": "Sin separaciones de vivienda no se inicia la instalación interior. Terminado según la última confirmación válida.",
       "orden_inventario": 26
@@ -34049,22 +34102,22 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -34077,14 +34130,14 @@
           "edificio": "PORTAL 1",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -34234,10 +34287,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 26,
-      "estado_actual": "Pendiente: 17 · X: 9",
+      "estado_actual": "/: 2 · Pendiente: 12 · X: 12",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 17,
-        "TERMINADO": 9
+        "TERMINADO": 12,
+        "OTROS_GREMIOS": 14
       },
       "motivo": "Condición de coordinación, no producción Sagarde. Terminado según la última confirmación válida.",
       "orden_inventario": 27
@@ -34253,22 +34306,22 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -34438,10 +34491,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 26,
-      "estado_actual": "Pendiente: 17 · X: 9",
+      "estado_actual": "Pendiente: 14 · X: 12",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 17,
-        "TERMINADO": 9
+        "TERMINADO": 12,
+        "OTROS_GREMIOS": 14
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
       "orden_inventario": 28
@@ -34457,22 +34510,22 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -34642,10 +34695,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 26,
-      "estado_actual": "M: 3 · /: 1 · Pendiente: 17 · X: 5",
+      "estado_actual": "M: 3 · /: 1 · Pendiente: 14 · X: 8",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 21,
-        "TERMINADO": 5
+        "TERMINADO": 8,
+        "OTROS_GREMIOS": 18
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
       "orden_inventario": 29
@@ -34661,21 +34714,21 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -34846,10 +34899,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 26,
-      "estado_actual": "/: 1 · Pendiente: 21 · X: 4",
+      "estado_actual": "M: 1 · /: 1 · Pendiente: 18 · X: 6",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 22,
-        "TERMINADO": 4
+        "TERMINADO": 6,
+        "OTROS_GREMIOS": 20
       },
       "motivo": "Habilita trabajos interiores. Terminado según la última confirmación válida.",
       "orden_inventario": 30
@@ -36459,191 +36512,13 @@
       "orden_inventario": 37
     }
   ],
-  "dudas_pendientes": [
-    {
-      "codigo": "ESTADOS_DUPLICADOS",
-      "tarea_id": "cuadros_presentados",
-      "pregunta": "El tajo Cuadros presentados aparece dos veces con estados distintos en la revisión 05/08/2026. Confirmar el estado correcto.",
-      "n_ubicaciones": 2,
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "B"
-        }
-      ]
-    },
-    {
-      "codigo": "ESTADOS_DUPLICADOS",
-      "tarea_id": "perfilado_pladur",
-      "pregunta": "El tajo Perfilado de Pladur aparece dos veces con estados distintos en la revisión 05/08/2026. Confirmar el estado correcto.",
-      "n_ubicaciones": 3,
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "C"
-        }
-      ]
-    },
-    {
-      "codigo": "ESTADOS_DUPLICADOS",
-      "tarea_id": "primera_cara_pladur",
-      "pregunta": "El tajo Primeras caras de Pladur aparece dos veces con estados distintos en la revisión 05/08/2026. Confirmar el estado correcto.",
-      "n_ubicaciones": 3,
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "C"
-        }
-      ]
-    },
-    {
-      "codigo": "ESTADOS_DUPLICADOS",
-      "tarea_id": "rozas_timbres",
-      "pregunta": "El tajo Rozas de timbres aparece dos veces con estados distintos en la revisión 05/08/2026. Confirmar el estado correcto.",
-      "n_ubicaciones": 3,
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "C"
-        }
-      ]
-    },
-    {
-      "codigo": "ESTADOS_DUPLICADOS",
-      "tarea_id": "suelo_radiante",
-      "pregunta": "El tajo Suelo radiante aparece dos veces con estados distintos en la revisión 05/08/2026. Confirmar el estado correcto.",
-      "n_ubicaciones": 5,
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "C"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2ª",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2ª",
-          "unidad": "B"
-        }
-      ]
-    },
-    {
-      "codigo": "ESTADOS_DUPLICADOS",
-      "tarea_id": "suelo_recrecido",
-      "pregunta": "El tajo Suelo recrecido aparece dos veces con estados distintos en la revisión 05/08/2026. Confirmar el estado correcto.",
-      "n_ubicaciones": 3,
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "C"
-        }
-      ]
-    },
-    {
-      "codigo": "ESTADOS_DUPLICADOS",
-      "tarea_id": "tabicado",
-      "pregunta": "El tajo Tabicado aparece dos veces con estados distintos en la revisión 05/08/2026. Confirmar el estado correcto.",
-      "n_ubicaciones": 3,
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "C"
-        }
-      ]
-    },
-    {
-      "codigo": "ESTADOS_DUPLICADOS",
-      "tarea_id": "tubeado",
-      "pregunta": "El tajo Tubeado interior aparece dos veces con estados distintos en la revisión 05/08/2026. Confirmar el estado correcto.",
-      "n_ubicaciones": 1,
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A"
-        }
-      ]
-    }
-  ],
+  "dudas_pendientes": [],
+  "preguntas_orden": [],
+  "prevision": [],
   "avisos": [
-    "El inventario incluye todos los tajos encontrados en el historial; los terminados aparecen al final.",
+    "5 ubicaciones de la base se fusionan al priorizar porque producen la misma clave (31 ubicaciones declaradas, 26 distinguibles). Suele ser que dos plantas comparten nombre. Afectadas: PORTAL 1 planta 1ª unidad A <- 1ª/A, 1ª/A; PORTAL 1 planta 1ª unidad B <- 1ª/B, 1ª/B; PORTAL 1 planta 1ª unidad C <- 1ª/C, 1ª/C; PORTAL 1 planta 2ª unidad A <- 2ª/A, 2ª/A; PORTAL 1 planta 2ª unidad B <- 2ª/B, 2ª/B.",
+    "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmación.",
-    "Una X histórica se conserva aunque el tajo desaparezca; nunca se rebaja sin verificación.",
     "El orden sigue la secuencia lógica definida en CATALOGO_TAJOS.json."
   ]
 }
