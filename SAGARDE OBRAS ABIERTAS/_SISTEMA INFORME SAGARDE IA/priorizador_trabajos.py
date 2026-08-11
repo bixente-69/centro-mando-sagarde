@@ -552,7 +552,22 @@ def _estado_resumen(conteo):
     )
 
 
-def _agrupar_prioridades(detalle, limite=200):
+def _clave_unidad(item):
+    """Que cuenta como 'una unidad' segun el ambito del tajo.
+
+    La hoja repite cada tajo en TODAS las ubicaciones, tambien los que son
+    unicos del edificio. Contar celdas daba '92 cuartos tecnicos' en Bolueta
+    donde hay uno, y 370 de sus 851 unidades estaban infladas asi.
+    """
+    ambito = item["ambito"]
+    if ambito == "edificio":
+        return (item["edificio"],)
+    if ambito == "zona_comun":
+        return (item["edificio"], item["planta"])
+    return (item["edificio"], item["planta"], item["unidad"])
+
+
+def _agrupar_prioridades(detalle, limite=200, con_recorte=False):
     grupos = {}
     for item in detalle:
         if item["propiedad"] != "propio" or item["categoria"] not in ("VIABLE", "DUDAS"):
@@ -566,7 +581,8 @@ def _agrupar_prioridades(detalle, limite=200):
             "prioridad": {"vivienda": "P1", "zona_comun": "P2", "edificio": "P3"}[item["ambito"]],
             "orden_ejecucion": item["orden_ejecucion"],
             "fase_nombre": item["fase_nombre"], "ubicaciones": [],
-            "estado_conteo": Counter(), "motivos": set(), "n_unidades": 0,
+            "estado_conteo": Counter(), "motivos": set(),
+            "unidades_reales": set(), "n_celdas": 0,
         })
         g["ubicaciones"].append({
             "edificio": item["edificio"], "planta": item["planta"],
@@ -575,7 +591,8 @@ def _agrupar_prioridades(detalle, limite=200):
         })
         g["estado_conteo"][item["estado_actual"]] += 1
         g["motivos"].add(item["motivo"])
-        g["n_unidades"] += 1
+        g["unidades_reales"].add(_clave_unidad(item))
+        g["n_celdas"] += 1
 
     salida = []
     for g in grupos.values():
@@ -583,6 +600,7 @@ def _agrupar_prioridades(detalle, limite=200):
             _orden_natural(x["edificio"]), _orden_natural(x["planta"]), _orden_natural(x["unidades"][0])
         ))
         g["n_ubicaciones"] = len(g["ubicaciones"])
+        g["n_unidades"] = len(g.pop("unidades_reales"))
         g["estado_actual"] = _estado_resumen(g.pop("estado_conteo"))
         g["motivo"] = " ".join(sorted(g.pop("motivos")))
         g["impacto_gremios"] = g["motivo"]
@@ -591,9 +609,12 @@ def _agrupar_prioridades(detalle, limite=200):
         0 if x["situacion"] == "LISTO" else 1,
         x["orden_ejecucion"], AMBITO_ORDEN[x["ambito"]], x["trabajo"].casefold(),
     ))
+    recortados = max(0, len(salida) - limite)
     salida = salida[:limite]
     for i, item in enumerate(salida, 1):
         item["orden"] = i
+    if con_recorte:
+        return salida, recortados
     return salida
 
 

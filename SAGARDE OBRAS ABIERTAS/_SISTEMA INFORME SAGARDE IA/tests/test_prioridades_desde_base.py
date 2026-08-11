@@ -16,8 +16,24 @@ if _BASE not in sys.path:
 
 import fixtures
 from priorizador_trabajos import (Catalogo, _agrupar_inventario,
-                                  _clasificar_detalle, estado_desde_ficha,
-                                  verificar_rejilla)
+                                  _agrupar_prioridades, _clasificar_detalle,
+                                  estado_desde_ficha, verificar_rejilla)
+
+
+def _item(ambito, planta, unidad, tarea='cuarto_tecnico', edificio='P1',
+          categoria='VIABLE'):
+    """Una celda de detalle con la forma que produce _clasificar_detalle."""
+    return {
+        'tarea_id': tarea, 'trabajo': tarea.replace('_', ' ').capitalize(),
+        'trabajos_originales': [], 'propiedad': 'propio', 'ambito': ambito,
+        'ambito_nombre': 'x', 'orden_ejecucion': 235, 'fase_nombre': 'F',
+        'display_group': tarea, 'edificio': edificio, 'planta': planta,
+        'unidad': unidad, 'estado': '', 'estado_actual': 'Pendiente',
+        'categoria': categoria, 'motivo': 'Viable.',
+        'dependencias_cumplidas': [], 'dependencias_bloqueantes': [],
+        'dependencias_sin_dato': [], 'omitido_ultima': False,
+        'forzado_entregado': False, 'ultima_fecha': '28/07/2026',
+    }
 
 
 def _ficha_con_estados(pares, tajos_extra=()):
@@ -176,6 +192,46 @@ class TestDesconocidoYNoAplica(unittest.TestCase):
         }, tajos_extra=[TABICADO])
         inventario = _agrupar_inventario(detalle)
         self.assertNotEqual(inventario[0]['seccion'], 'SIN_REVISAR')
+
+
+class TestConteoPorAmbito(unittest.TestCase):
+    """Hay UN cuarto tecnico en Bolueta, no 92. La hoja repite cada tajo en
+    todas las ubicaciones, tambien los que son unicos del edificio."""
+
+    def _grupos(self, ambito, tarea):
+        detalle = [_item(ambito, p, u, tarea)
+                   for p in ('PB', '1', '2') for u in ('A', 'B')]
+        return _agrupar_prioridades(detalle)
+
+    def test_un_tajo_de_edificio_cuenta_una_sola_unidad(self):
+        grupos = self._grupos('edificio', 'cuarto_tecnico')
+        self.assertEqual(len(grupos), 1)
+        self.assertEqual(grupos[0]['n_unidades'], 1)
+        self.assertEqual(grupos[0]['n_celdas'], 6)
+
+    def test_un_tajo_de_zona_comun_cuenta_una_por_planta(self):
+        grupos = self._grupos('zona_comun', 'tubeado_zzcc')
+        self.assertEqual(grupos[0]['n_unidades'], 3)
+        self.assertEqual(grupos[0]['n_celdas'], 6)
+
+    def test_un_tajo_de_vivienda_cuenta_una_por_vivienda(self):
+        grupos = self._grupos('vivienda', 'tubeado')
+        self.assertEqual(grupos[0]['n_unidades'], 6)
+        self.assertEqual(grupos[0]['n_celdas'], 6)
+
+    def test_dos_portales_no_colapsan_en_uno(self):
+        detalle = [_item('zona_comun', 'PB', 'A', 'tubeado_zzcc', edificio=e)
+                   for e in ('PORTAL 1', 'PORTAL 2')]
+        grupos = _agrupar_prioridades(detalle)
+        self.assertEqual(grupos[0]['n_unidades'], 2)
+
+    def test_el_recorte_se_puede_pedir_aparte(self):
+        detalle = [_item('vivienda', 'PB', 'A', 'tajo_%d' % i)
+                   for i in range(260)]
+        grupos, recortados = _agrupar_prioridades(detalle, limite=200,
+                                                  con_recorte=True)
+        self.assertEqual(len(grupos), 200)
+        self.assertEqual(recortados, 60)
 
 
 class TestRejillaCompleta(unittest.TestCase):
