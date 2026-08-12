@@ -313,7 +313,8 @@ class TestSembrarReglas(unittest.TestCase):
         'pintura_habitaciones'. Comparar los ids en crudo daba 3 falsas
         alarmas de 4."""
         ficha = self._ficha([
-            {'id': 'tabicado_viejo', 'nombre': 'Tabicado', 'orden': 9999},
+            {'id': 'primeras_caras_viejo', 'nombre': '1as caras Pladur',
+             'orden': 9999},
             {'id': 'tubeado', 'nombre': 'Tubeado interior', 'orden': 9999},
         ])
         preguntas = sembrar_reglas(ficha, Catalogo())
@@ -358,7 +359,7 @@ class TestSembrarReglas(unittest.TestCase):
         por_tubeado = [p for p in preguntas
                        if p['codigo'] == 'DEPENDENCIA_AUSENTE_EN_LA_OBRA'
                        and p['tarea_id'] == 'tubeado']
-        self.assertEqual(por_tubeado[0]['parecidos'], ['tabicado'])
+        self.assertEqual(por_tubeado[0]['parecidos'], ['primera_cara_pladur'])
 
 
 class TestAntiguedadEsAviso(unittest.TestCase):

@@ -8,11 +8,11 @@
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "12/08/2026 09:32",
+  "generado": "12/08/2026 10:15",
   "resumen": {
     "listos": 19,
     "verificar": 0,
-    "unidades_listas": 440,
+    "unidades_listas": 429,
     "unidades_verificar": 0,
     "bloqueados": 6,
     "otros_gremios": 12,
@@ -634,48 +634,12 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 56,
-      "n_ubicaciones": 56,
+      "n_celdas": 52,
+      "n_ubicaciones": 52,
       "n_unidades": 1,
-      "estado_actual": "M: 24 · Pendiente: 32",
+      "estado_actual": "M: 24 · Pendiente: 28",
       "motivo": "Infraestructura vertical eléctrica.",
       "impacto_gremios": "Infraestructura vertical eléctrica.",
       "orden": 2
@@ -1086,48 +1050,12 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 48,
-      "n_ubicaciones": 48,
+      "n_celdas": 44,
+      "n_ubicaciones": 44,
       "n_unidades": 1,
-      "estado_actual": "M: 16 · Pendiente: 32",
+      "estado_actual": "M: 16 · Pendiente: 28",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
       "impacto_gremios": "Infraestructura vertical de telecomunicaciones.",
       "orden": 3
@@ -1574,48 +1502,12 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 52,
-      "n_ubicaciones": 52,
+      "n_celdas": 48,
+      "n_ubicaciones": 48,
       "n_unidades": 1,
-      "estado_actual": "M: 20 · Pendiente: 32",
+      "estado_actual": "M: 20 · Pendiente: 28",
       "motivo": "Infraestructura vertical de servicios comunes.",
       "impacto_gremios": "Infraestructura vertical de servicios comunes.",
       "orden": 4
@@ -1810,48 +1702,12 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 24,
-      "n_ubicaciones": 24,
-      "n_unidades": 6,
-      "estado_actual": "M: 12 · Pendiente: 12",
+      "n_celdas": 20,
+      "n_ubicaciones": 20,
+      "n_unidades": 5,
+      "estado_actual": "M: 12 · Pendiente: 8",
       "motivo": "Abre el frente de zonas comunes.",
       "impacto_gremios": "Abre el frente de zonas comunes.",
       "orden": 5
@@ -2278,60 +2134,6 @@
         },
         {
           "edificio": "BOLUETA",
-          "planta": "20",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "20",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "20",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "20",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
           "planta": "21",
           "unidades": [
             "C"
@@ -2342,42 +2144,6 @@
         {
           "edificio": "BOLUETA",
           "planta": "21",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
           "unidades": [
             "D"
           ],
@@ -2385,10 +2151,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 13,
-      "n_ubicaciones": 13,
-      "n_unidades": 13,
-      "estado_actual": "Pendiente: 13",
+      "n_celdas": 3,
+      "n_ubicaciones": 3,
+      "n_unidades": 3,
+      "estado_actual": "Pendiente: 3",
       "motivo": "Prepara los recorridos de la instalación.",
       "impacto_gremios": "Prepara los recorridos de la instalación.",
       "orden": 8
@@ -13639,9 +13405,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13666,9 +13442,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13693,9 +13479,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13720,9 +13516,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13747,9 +13553,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13774,9 +13590,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13801,9 +13627,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13828,9 +13664,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13855,9 +13701,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13882,9 +13738,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13909,9 +13775,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13936,9 +13812,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13963,9 +13849,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -13990,9 +13886,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14017,9 +13923,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14044,9 +13960,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14071,9 +13997,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14098,9 +14034,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14125,9 +14071,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14152,9 +14108,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14179,9 +14145,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14206,9 +14182,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14233,9 +14219,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14260,9 +14256,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14287,9 +14293,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14314,9 +14330,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14341,9 +14367,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14368,9 +14404,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14395,9 +14441,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14422,9 +14478,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14449,9 +14515,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14476,9 +14552,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14503,9 +14589,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14530,9 +14626,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14557,9 +14663,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14584,9 +14700,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14611,9 +14737,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14638,9 +14774,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14665,9 +14811,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14692,9 +14848,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14719,9 +14885,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14746,9 +14922,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14773,9 +14959,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14800,9 +14996,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14827,9 +15033,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14854,9 +15070,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14881,9 +15107,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14908,9 +15144,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14935,9 +15181,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14962,9 +15218,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -14989,9 +15255,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -15016,9 +15292,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -15041,11 +15327,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical eléctrica.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -15068,11 +15364,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical eléctrica.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -15095,11 +15401,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical eléctrica.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -15122,11 +15438,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical eléctrica.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16474,9 +16800,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16501,9 +16837,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16528,9 +16874,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16555,9 +16911,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16582,9 +16948,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16609,9 +16985,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16636,9 +17022,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16663,9 +17059,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16690,9 +17096,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16717,9 +17133,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16744,9 +17170,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16771,9 +17207,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16798,9 +17244,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16825,9 +17281,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16852,9 +17318,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16879,9 +17355,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16906,9 +17392,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16933,9 +17429,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16960,9 +17466,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -16987,9 +17503,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17014,9 +17540,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17041,9 +17577,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17068,9 +17614,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17095,9 +17651,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17122,9 +17688,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17149,9 +17725,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17176,9 +17762,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17203,9 +17799,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17230,9 +17836,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17257,9 +17873,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17284,9 +17910,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17311,9 +17947,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17338,9 +17984,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17365,9 +18021,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17392,9 +18058,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17419,9 +18095,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17446,9 +18132,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17473,9 +18169,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17500,9 +18206,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17527,9 +18243,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17554,9 +18280,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17581,9 +18317,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17608,9 +18354,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17635,9 +18391,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17660,11 +18426,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical de telecomunicaciones.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17687,11 +18463,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical de telecomunicaciones.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17714,11 +18500,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical de telecomunicaciones.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -17741,11 +18537,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical de telecomunicaciones.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -18769,9 +19575,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -18796,9 +19612,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -18823,9 +19649,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -18850,9 +19686,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19093,9 +19939,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19120,9 +19976,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19147,9 +20013,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19174,9 +20050,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19201,9 +20087,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19228,9 +20124,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19255,9 +20161,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19282,9 +20198,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19309,9 +20235,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19336,9 +20272,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19363,9 +20309,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19390,9 +20346,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19417,9 +20383,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19444,9 +20420,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19471,9 +20457,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19498,9 +20494,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19525,9 +20531,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19552,9 +20568,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19579,9 +20605,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19606,9 +20642,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19633,9 +20679,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19660,9 +20716,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19687,9 +20753,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19714,9 +20790,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19741,9 +20827,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19768,9 +20864,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19795,9 +20901,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19822,9 +20938,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19849,9 +20975,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19876,9 +21012,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19903,9 +21049,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19930,9 +21086,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19957,9 +21123,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -19984,9 +21160,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20011,9 +21197,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20038,9 +21234,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20065,9 +21271,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20092,9 +21308,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20119,9 +21345,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20146,9 +21382,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20173,9 +21419,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20200,9 +21456,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20227,9 +21493,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20254,9 +21530,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de servicios comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20279,11 +21565,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical de servicios comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20306,11 +21602,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical de servicios comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20333,11 +21639,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical de servicios comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -20360,11 +21676,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Infraestructura vertical de servicios comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -21712,9 +23038,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -21739,9 +23075,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -21766,9 +23112,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -21793,9 +23149,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -21820,9 +23186,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -21847,9 +23223,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -21874,9 +23260,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -21901,9 +23297,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -21928,9 +23334,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -21955,9 +23371,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -21982,9 +23408,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22009,9 +23445,19 @@
       "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22684,9 +24130,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22711,9 +24167,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22738,9 +24204,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22765,9 +24241,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22792,9 +24278,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22819,9 +24315,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22846,9 +24352,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22873,9 +24389,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Abre el frente de zonas comunes.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22898,11 +24424,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Abre el frente de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22925,11 +24461,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Abre el frente de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22952,11 +24498,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Abre el frente de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -22979,11 +24535,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Abre el frente de zonas comunes.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -39538,13 +41104,13 @@
       "categoria": "VIABLE",
       "motivo": "Prepara los recorridos de la instalación.",
       "dependencias_cumplidas": [
-        "Tabicado"
+        "Primeras caras de Pladur"
       ],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
           "estado": "X",
           "minimo": 1.0,
           "cumplida": true
@@ -41597,19 +43163,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Tabicado"
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Primeras caras de Pladur"
       ],
-      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
-          "cumplida": true
+          "cumplida": false
         }
       ],
       "dependencias_sin_dato": [],
@@ -41634,19 +43200,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Tabicado"
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Primeras caras de Pladur"
       ],
-      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
-          "cumplida": true
+          "cumplida": false
         }
       ],
       "dependencias_sin_dato": [],
@@ -41671,19 +43237,19 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Tabicado"
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Primeras caras de Pladur"
       ],
-      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
-          "cumplida": true
+          "cumplida": false
         }
       ],
       "dependencias_sin_dato": [],
@@ -41708,19 +43274,19 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Tabicado"
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Primeras caras de Pladur"
       ],
-      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
-          "cumplida": true
+          "cumplida": false
         }
       ],
       "dependencias_sin_dato": [],
@@ -41745,19 +43311,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Tabicado"
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Primeras caras de Pladur"
       ],
-      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "/",
           "minimo": 1.0,
-          "cumplida": true
+          "cumplida": false
         }
       ],
       "dependencias_sin_dato": [],
@@ -41782,19 +43348,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Tabicado"
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Primeras caras de Pladur"
       ],
-      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
-          "cumplida": true
+          "cumplida": false
         }
       ],
       "dependencias_sin_dato": [],
@@ -41822,13 +43388,13 @@
       "categoria": "VIABLE",
       "motivo": "Prepara los recorridos de la instalación.",
       "dependencias_cumplidas": [
-        "Tabicado"
+        "Primeras caras de Pladur"
       ],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
           "estado": "X",
           "minimo": 1.0,
           "cumplida": true
@@ -41859,13 +43425,13 @@
       "categoria": "VIABLE",
       "motivo": "Prepara los recorridos de la instalación.",
       "dependencias_cumplidas": [
-        "Tabicado"
+        "Primeras caras de Pladur"
       ],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
           "estado": "X",
           "minimo": 1.0,
           "cumplida": true
@@ -41893,19 +43459,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Tabicado"
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Primeras caras de Pladur"
       ],
-      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
-          "cumplida": true
+          "cumplida": false
         }
       ],
       "dependencias_sin_dato": [],
@@ -41930,19 +43496,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Tabicado"
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Primeras caras de Pladur"
       ],
-      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
-          "cumplida": true
+          "cumplida": false
         }
       ],
       "dependencias_sin_dato": [],
@@ -41967,19 +43533,19 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Tabicado"
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Primeras caras de Pladur"
       ],
-      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
-          "cumplida": true
+          "cumplida": false
         }
       ],
       "dependencias_sin_dato": [],
@@ -42004,19 +43570,19 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Tabicado"
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Primeras caras de Pladur"
       ],
-      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
-          "cumplida": true
+          "cumplida": false
         }
       ],
       "dependencias_sin_dato": [],
@@ -42042,16 +43608,16 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [
-        "Tabicado"
+        "Primeras caras de Pladur"
       ],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "/",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -42079,16 +43645,16 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [
-        "Tabicado"
+        "Primeras caras de Pladur"
       ],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "/",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -42116,16 +43682,16 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [
-        "Tabicado"
+        "Primeras caras de Pladur"
       ],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "/",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -42153,16 +43719,16 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [
-        "Tabicado"
+        "Primeras caras de Pladur"
       ],
       "dependencias_detalle": [
         {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "/",
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "Pendiente",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -125964,28 +127530,28 @@
           "planta": "23",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
@@ -126012,9 +127578,10 @@
       "resumen_categorias": {
         "TERMINADO": 36,
         "SIN_REVISAR": 5,
-        "VIABLE": 56
+        "VIABLE": 52,
+        "BLOQUEADO": 4
       },
-      "motivo": "Infraestructura vertical eléctrica. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
+      "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical eléctrica. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
       "orden_inventario": 2
     },
     {
@@ -126666,28 +128233,28 @@
           "planta": "23",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
@@ -126714,9 +128281,10 @@
       "resumen_categorias": {
         "TERMINADO": 44,
         "SIN_REVISAR": 5,
-        "VIABLE": 48
+        "VIABLE": 44,
+        "BLOQUEADO": 4
       },
-      "motivo": "Infraestructura vertical de telecomunicaciones. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
+      "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de telecomunicaciones. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
       "orden_inventario": 3
     },
     {
@@ -127368,28 +128936,28 @@
           "planta": "23",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
@@ -127416,9 +128984,10 @@
       "resumen_categorias": {
         "TERMINADO": 40,
         "SIN_REVISAR": 5,
-        "VIABLE": 52
+        "VIABLE": 48,
+        "BLOQUEADO": 4
       },
-      "motivo": "Infraestructura vertical de servicios comunes. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
+      "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de servicios comunes. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
       "orden_inventario": 4
     },
     {
@@ -128070,28 +129639,28 @@
           "planta": "23",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
@@ -128118,9 +129687,10 @@
       "resumen_categorias": {
         "TERMINADO": 68,
         "SIN_REVISAR": 5,
-        "VIABLE": 24
+        "VIABLE": 20,
+        "BLOQUEADO": 4
       },
-      "motivo": "Abre el frente de zonas comunes. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
+      "motivo": "Abre el frente de zonas comunes. Dependencias pendientes: Tabicado. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
       "orden_inventario": 5
     },
     {
@@ -130094,42 +131664,42 @@
           "planta": "20",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "20",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "20",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "20",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "21",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "21",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
@@ -130150,28 +131720,28 @@
           "planta": "22",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "22",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "22",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "22",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
@@ -130225,11 +131795,11 @@
       "estado_actual": "Pendiente: 22 · X: 75",
       "resumen_categorias": {
         "TERMINADO": 75,
-        "VIABLE": 13,
+        "VIABLE": 3,
         "SIN_REVISAR": 5,
-        "BLOQUEADO": 4
+        "BLOQUEADO": 14
       },
-      "motivo": "Dependencias pendientes: Tabicado. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Prepara los recorridos de la instalación. Terminado según la última confirmación válida.",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Prepara los recorridos de la instalación. Terminado según la última confirmación válida.",
       "orden_inventario": 8
     },
     {
@@ -151412,6 +152982,16 @@
       ]
     },
     {
+      "tarea_id": "primera_cara_pladur",
+      "trabajo": "Primeras caras de Pladur",
+      "estado_actual": "X",
+      "propiedad": "externo",
+      "desbloquea": 14,
+      "tajos_afectados": [
+        "Tubeado interior"
+      ]
+    },
+    {
       "tarea_id": "techos_zzcc",
       "trabajo": "Techos de zonas comunes",
       "estado_actual": "X",
@@ -151429,8 +153009,11 @@
       "desbloquea": 12,
       "tajos_afectados": [
         "Cuadros presentados",
+        "Montante de servicios comunes",
+        "Montante de telecomunicaciones",
+        "Montante eléctrica",
         "Rozas de timbres",
-        "Tubeado interior"
+        "Tubeado de zonas comunes"
       ]
     },
     {

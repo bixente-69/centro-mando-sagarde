@@ -3,7 +3,7 @@
   "id": "prueba",
   "modo": "nativa",
   "fecha_entrada_digital": "05/08/2026",
-  "actualizado": "12/08/2026 09:32",
+  "actualizado": "12/08/2026 10:15",
   "identidad": {
     "nombre": "OBRA PRUEBA",
     "carpeta": "2026 OBRA PRUEBA",
@@ -416,7 +416,12 @@
         "propiedad": "propio",
         "fase": "Infraestructura",
         "orden": 30,
-        "deps": []
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "montante_teleco",
@@ -425,7 +430,12 @@
         "propiedad": "propio",
         "fase": "Infraestructura",
         "orden": 40,
-        "deps": []
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "montante_sscc",
@@ -434,7 +444,12 @@
         "propiedad": "propio",
         "fase": "Infraestructura",
         "orden": 50,
-        "deps": []
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "tubeado_zzcc",
@@ -443,7 +458,12 @@
         "propiedad": "propio",
         "fase": "Infraestructura",
         "orden": 60,
-        "deps": []
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cableado_zzcc",
@@ -466,7 +486,12 @@
         "propiedad": "coordinacion",
         "fase": "Obra previa",
         "orden": 80,
-        "deps": []
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "suelo_recrecido",
@@ -475,7 +500,12 @@
         "propiedad": "externo",
         "fase": "Obra previa",
         "orden": 90,
-        "deps": []
+        "deps": [
+          {
+            "id": "suelo_radiante",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "perfilado_pladur",
@@ -484,7 +514,12 @@
         "propiedad": "externo",
         "fase": "Pladur",
         "orden": 100,
-        "deps": []
+        "deps": [
+          {
+            "id": "suelo_recrecido",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "primera_cara_pladur",
@@ -493,7 +528,12 @@
         "propiedad": "externo",
         "fase": "Pladur",
         "orden": 110,
-        "deps": []
+        "deps": [
+          {
+            "id": "perfilado_pladur",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cuadros_presentados",
@@ -518,7 +558,7 @@
         "orden": 130,
         "deps": [
           {
-            "id": "tabicado",
+            "id": "primera_cara_pladur",
             "minimo": 1
           }
         ]
@@ -586,7 +626,20 @@
         "propiedad": "externo",
         "fase": "Pladur",
         "orden": 180,
-        "deps": []
+        "deps": [
+          {
+            "id": "primera_cara_pladur",
+            "minimo": 1
+          },
+          {
+            "id": "cableado",
+            "minimo": 1
+          },
+          {
+            "id": "telecableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "doblar_cajas",

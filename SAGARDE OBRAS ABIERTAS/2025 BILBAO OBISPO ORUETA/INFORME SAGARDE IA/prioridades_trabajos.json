@@ -8,7 +8,7 @@
   "revision_caducada": false,
   "estado_obra": "Primera fase entregada; 2A FASE en curso en planta baja (viviendas A/B)",
   "historial_confirmado_terminado": false,
-  "generado": "12/08/2026 09:32",
+  "generado": "12/08/2026 10:15",
   "resumen": {
     "listos": 1,
     "verificar": 1,
@@ -22,7 +22,7 @@
     "terminados": 30,
     "inventario_total": 36,
     "detalle_total": 2326,
-    "preguntas_pendientes": 3,
+    "preguntas_pendientes": 4,
     "viviendas": 1,
     "zonas_comunes": 0,
     "edificio": 0
@@ -80135,6 +80135,14 @@
       "parecidos": [
         "placas_tapas",
         "placas_tps_cuadro"
+      ]
+    },
+    {
+      "codigo": "DEPENDENCIA_AUSENTE_EN_LA_OBRA",
+      "tarea_id": "perfilado_pladur",
+      "nombre": "Perfilado de Pladur",
+      "parecidos": [
+        "suelo_recrecido"
       ]
     },
     {

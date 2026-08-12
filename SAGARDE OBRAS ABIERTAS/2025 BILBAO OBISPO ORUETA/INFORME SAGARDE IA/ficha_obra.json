@@ -3,7 +3,7 @@
   "id": "obisporueta",
   "modo": "hibrida",
   "fecha_entrada_digital": "27/07/2026",
-  "actualizado": "12/08/2026 09:32",
+  "actualizado": "12/08/2026 10:15",
   "identidad": {
     "nombre": "2025 BILBAO OBISPO ORUETA",
     "carpeta": "2025 BILBAO OBISPO ORUETA",
@@ -1100,7 +1100,12 @@
         "propiedad": "propio",
         "fase": "Infraestructura",
         "orden": 25,
-        "deps": []
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "perfilado_pladur",
@@ -1109,7 +1114,12 @@
         "propiedad": "externo",
         "fase": "Pladur",
         "orden": 100,
-        "deps": []
+        "deps": [
+          {
+            "id": "suelo_recrecido",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "primera_cara_pladur",
@@ -1118,7 +1128,12 @@
         "propiedad": "externo",
         "fase": "Pladur",
         "orden": 110,
-        "deps": []
+        "deps": [
+          {
+            "id": "perfilado_pladur",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "tubeado",
@@ -1129,7 +1144,7 @@
         "orden": 130,
         "deps": [
           {
-            "id": "tabicado",
+            "id": "primera_cara_pladur",
             "minimo": 1
           }
         ]
@@ -1183,7 +1198,20 @@
         "propiedad": "externo",
         "fase": "Pladur",
         "orden": 180,
-        "deps": []
+        "deps": [
+          {
+            "id": "primera_cara_pladur",
+            "minimo": 1
+          },
+          {
+            "id": "cableado",
+            "minimo": 1
+          },
+          {
+            "id": "telecableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "doblar_cajas",
