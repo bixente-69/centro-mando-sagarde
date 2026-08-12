@@ -3,7 +3,7 @@
   "id": "prueba",
   "modo": "nativa",
   "fecha_entrada_digital": "05/08/2026",
-  "actualizado": "12/08/2026 09:11",
+  "actualizado": "12/08/2026 09:32",
   "identidad": {
     "nombre": "OBRA PRUEBA",
     "carpeta": "2026 OBRA PRUEBA",
@@ -17,7 +17,7 @@
     "bloques": [
       {
         "id": "b1",
-        "nombre": "BLOQUE 1",
+        "nombre": "B1",
         "portales": [
           {
             "id": "p1",
@@ -226,7 +226,7 @@
       },
       {
         "id": "b2",
-        "nombre": "BLOQUE 2",
+        "nombre": "B2",
         "portales": [
           {
             "id": "p3",

@@ -443,6 +443,43 @@ class TestPuntoDeEntrada(unittest.TestCase):
         self.assertGreater(resultado['resumen']['preguntas_pendientes'], 0)
 
 
+class TestDependenciaNoDefinida(unittest.TestCase):
+    """NORMA DE OBRA (12/08/2026): un tajo que no se definio en su momento no
+    puede bloquear. Si hay marca en un tajo de escalafon superior, los
+    anteriores estan hechos por fuerza."""
+
+    def test_una_dependencia_que_la_obra_no_tiene_no_bloquea(self):
+        """cableado depende de tubeado; si la obra no declara tubeado, el
+        cableado no se queda bloqueado para siempre."""
+        ficha = _ficha_con_estados({('pb', 'cableado', 'A'): 'P'})
+        ficha['tajos']['detalle'] = [
+            t for t in ficha['tajos']['detalle'] if t['id'] != 'tubeado']
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        cableado = [d for d in resultado['detalle_items']
+                    if d['tarea_id'] == 'cableado'][0]
+        self.assertEqual(cableado['categoria'], 'VIABLE')
+        self.assertEqual(cableado['dependencias_bloqueantes'], [])
+
+    def test_pero_sigue_saliendo_como_pregunta(self):
+        """No bloquear no es callar: hay que poder definirlo."""
+        ficha = _ficha_con_estados({('pb', 'cableado', 'A'): 'P'})
+        ficha['tajos']['detalle'] = [
+            t for t in ficha['tajos']['detalle'] if t['id'] != 'tubeado']
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        self.assertIn('DEPENDENCIA_AUSENTE_EN_LA_OBRA',
+                      {p['codigo'] for p in resultado['preguntas_orden']})
+
+    def test_una_dependencia_que_si_existe_sigue_bloqueando(self):
+        ficha = _ficha_con_estados({
+            ('pb', 'tubeado', 'A'): 'P',
+            ('pb', 'cableado', 'A'): 'P',
+        })
+        resultado = priorizar_ficha(ficha, hoy=date(2026, 8, 11))
+        cableado = [d for d in resultado['detalle_items']
+                    if d['tarea_id'] == 'cableado'][0]
+        self.assertEqual(cableado['categoria'], 'BLOQUEADO')
+
+
 class TestPrevision(unittest.TestCase):
     """Saber que acabar el suelo de tres plantas libera 40 viviendas de
     tubeado es lo que permite llevar el orden de una obra de meses."""
@@ -569,9 +606,8 @@ class TestRejillaCompleta(unittest.TestCase):
         self.assertEqual(verificar_rejilla(fixtures.ficha_minima()), [])
 
     def test_dos_plantas_con_el_mismo_nombre_se_avisan(self):
-        """OBRA PRUEBA tiene dos plantas llamadas '1a' con ids distintos: la
-        base las guarda separadas pero al priorizar se fusionan y el motor
-        veia 26 de sus 31 ubicaciones."""
+        """La base las guarda separadas —la clave lleva el id— pero al
+        priorizar se fusionan y una pisa a la otra."""
         ficha = self._ficha_completa()
         plantas = ficha['estructura']['bloques'][0]['portales'][0]['plantas']
         plantas[1]['nombre'] = plantas[0]['nombre']   # '1' pasa a llamarse 'PB'
@@ -583,6 +619,50 @@ class TestRejillaCompleta(unittest.TestCase):
 
     def test_plantas_con_nombres_distintos_no_avisan(self):
         self.assertEqual(verificar_rejilla(self._ficha_completa()), [])
+
+
+def _con_dos_bloques(ficha):
+    """Anade un BLOQUE 2 con un portal que tambien se llama 'P1'."""
+    import copy
+    b1 = ficha['estructura']['bloques'][0]
+    b2 = copy.deepcopy(b1)
+    b2['id'], b2['nombre'] = 'b2', 'B2'
+    b1['nombre'] = 'B1'
+    b2['portales'][0]['id'] = 'p2'
+    ficha['estructura']['bloques'].append(b2)
+    for clave, valor in list(ficha['estados'].items()):
+        ficha['estados']['p2' + clave[2:]] = dict(valor)
+    return ficha
+
+
+class TestBloqueEnLaUbicacion(unittest.TestCase):
+    """NORMA DE OBRA (12/08/2026): dos portales pueden llamarse igual si estan
+    en bloques distintos. Son el portal 1 de cada bloque y van a ritmos
+    diferentes. En OBRA PRUEBA se perdian 5 de sus 31 ubicaciones."""
+
+    def _ficha_dos_bloques(self):
+        """Rejilla completa: 2 plantas x 2 viviendas x 2 tajos por bloque."""
+        pares = {(p, t, u): 'P'
+                 for p in ('pb', '1') for u in ('A', 'B')
+                 for t in ('tubeado', 'cableado')}
+        return _con_dos_bloques(_ficha_con_estados(pares))
+
+    def test_dos_portales_homonimos_no_se_fusionan(self):
+        estados, _f = estado_desde_ficha(self._ficha_dos_bloques(), Catalogo())
+        edificios = {loc[0] for loc, _t in estados}
+        self.assertEqual(edificios, {'B1 P1', 'B2 P1'})
+
+    def test_no_se_pierde_ninguna_ubicacion(self):
+        ficha = self._ficha_dos_bloques()
+        self.assertEqual(verificar_rejilla(ficha), [])
+        estados, _f = estado_desde_ficha(ficha, Catalogo())
+        self.assertEqual(len({loc for loc, _t in estados}), 8)
+
+    def test_una_obra_de_un_solo_bloque_no_cambia_de_etiqueta(self):
+        """Las cuatro obras reales tienen un bloque: no se pueden mover."""
+        ficha = _ficha_con_estados({('pb', 'tubeado', 'A'): 'X'})
+        estados, _f = estado_desde_ficha(ficha, Catalogo())
+        self.assertEqual({loc[0] for loc, _t in estados}, {'P1'})
 
 
 if __name__ == '__main__':

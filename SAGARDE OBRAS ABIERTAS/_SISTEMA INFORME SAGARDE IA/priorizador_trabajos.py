@@ -161,6 +161,39 @@ def _pregunta(registro, codigo, texto, task_id=None, loc=None):
         item["ubicaciones"].add(loc)
 
 
+def _etiquetas_de_portal(estructura):
+    """Nombre con el que se identifica cada portal, ya desambiguado.
+
+    NORMA DE OBRA (Bixente, 12/08/2026): dos portales pueden llamarse igual si
+    estan en bloques distintos —son el portal 1 de cada bloque— y van a
+    ritmos diferentes. Como la ubicacion no llevaba el bloque, se fusionaban:
+    en OBRA PRUEBA se perdian 5 de sus 31 ubicaciones.
+
+    El bloque se antepone SOLO cuando hace falta para distinguirlos, para no
+    cambiar la etiqueta de las obras de un solo bloque. Como quede escrito el
+    nombre lo manda el proyecto, no el codigo.
+
+    Devuelve {portal_id: etiqueta}.
+    """
+    vistos = defaultdict(list)
+    for bloque in estructura.get("bloques") or []:
+        for portal in bloque.get("portales") or []:
+            nombre = (portal.get("referencia") or portal.get("nombre")
+                      or portal["id"])
+            vistos[nombre].append((bloque, portal))
+
+    etiquetas = {}
+    for nombre, pares in vistos.items():
+        for bloque, portal in pares:
+            if len(pares) > 1:
+                prefijo = (bloque.get("referencia") or bloque.get("nombre")
+                           or bloque["id"])
+                etiquetas[portal["id"]] = "%s %s" % (prefijo, nombre)
+            else:
+                etiquetas[portal["id"]] = nombre
+    return etiquetas
+
+
 def _ultima_revision_ficha(ficha):
     """La fecha mas reciente registrada en la base, o None si no hay ninguna."""
     fechas = [r.get("fecha") for r in (ficha.get("revisiones") or [])
@@ -186,11 +219,11 @@ def estado_desde_ficha(ficha, catalogo):
     tajos = (ficha.get("tajos") or {}).get("detalle") or []
     guardados = ficha.get("estados") or {}
 
+    etiquetas = _etiquetas_de_portal(estructura)
     estados = {}
     for bloque in estructura.get("bloques") or []:
         for portal in bloque.get("portales") or []:
-            edificio = (portal.get("referencia") or portal.get("nombre")
-                        or portal["id"])
+            edificio = etiquetas[portal["id"]]
             for planta in portal.get("plantas") or []:
                 planta_nom = planta.get("nombre") or planta["id"]
                 for ubi in planta.get("ubicaciones") or []:
@@ -346,12 +379,12 @@ def verificar_rejilla(ficha):
     tajos = (ficha.get("tajos") or {}).get("detalle") or []
     alias = estructura.get("alias_historico") or {}
 
+    etiquetas = _etiquetas_de_portal(estructura)
     ubicaciones = 0
     locs = {}
     for bloque in estructura.get("bloques") or []:
         for portal in bloque.get("portales") or []:
-            edificio = (portal.get("referencia") or portal.get("nombre")
-                        or portal["id"])
+            edificio = etiquetas[portal["id"]]
             for planta in portal.get("plantas") or []:
                 planta_nom = planta.get("nombre") or planta["id"]
                 for ubi in planta.get("ubicaciones") or []:
@@ -446,6 +479,10 @@ def _clasificar_detalle(estados, catalogo, ultima_fecha, preguntas, hoy=None):
     for item in estados.values():
         por_loc[item["loc"]][item["task_id"]] = item
 
+    # Que tajos existen de verdad en esta obra. Una dependencia que apunta
+    # fuera de esta lista no puede bloquear: ver la norma en el bucle de deps.
+    tajos_de_la_obra = {item["task_id"] for item in estados.values()}
+
     # DECISION (11/08/2026): la antiguedad es un AVISO, no un interruptor.
     # Volcar toda la obra a DUDAS a los 30 dias apagaba cuatro obras el mismo
     # dia, y calcular la edad con datetime.now() dentro del cálculo hacia que
@@ -522,6 +559,17 @@ def _clasificar_detalle(estados, catalogo, ultima_fecha, preguntas, hoy=None):
         else:
             for dep in meta.get("deps", []):
                 dep_id = dep["id"]
+                if dep_id not in tajos_de_la_obra:
+                    # NORMA DE OBRA (Bixente, 12/08/2026): un tajo que no se
+                    # definio en su momento no puede bloquear. Si hay marca en
+                    # un tajo de escalafon superior, los anteriores estan
+                    # hechos por fuerza: si no, habria sido imposible siquiera
+                    # empezar. Sin esto, una dependencia inexistente vale 0 y
+                    # bloquea para siempre en silencio.
+                    # No se inventa el estado: la celda no existe y no entra en
+                    # ningun porcentaje. Solo deja de bloquear, y sembrar_reglas
+                    # lo saca como pregunta para poder definirlo.
+                    continue
                 dep_estado = _buscar_dep(por_loc[loc], dep_id)
                 dep_meta = catalogo.meta(dep_id, {"nombre": dep_id})
                 nombre_dep = dep_meta.get("nombre", dep_id)
