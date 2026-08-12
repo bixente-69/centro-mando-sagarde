@@ -927,9 +927,14 @@ def main(hacer_pdf=True):
             print(f"  Memoria: {mem_resumen['total_tajos']} tajos "
                   f"({mem_resumen['activos']} activos, {mem_resumen['terminados']} terminados)")
 
-            prioridades = priorizador_trabajos.priorizar_historial(
-                historial, obra=obra['nombre']
-            )
+            # La base es el estado. Una obra sin base no calcula: lo dice.
+            if ficha_actual:
+                prioridades = priorizador_trabajos.priorizar_ficha(
+                    ficha_actual, obra=obra['nombre']
+                )
+                fichas.guardar(carpeta_abs, ficha_actual)
+            else:
+                prioridades = priorizador_trabajos.sin_base(obra['nombre'])
             priorizador_trabajos.escribir_json(prioridades, salida_prioridades)
             priorizador_trabajos.escribir_json({
                 'version': prioridades.get('version'),

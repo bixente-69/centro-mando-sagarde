@@ -2,9 +2,23 @@
 
 ## Auditoría documental y mapa mental del entorno SAGARDE
 
+> **LECTURA OBLIGATORIA AL EMPEZAR SESIÓN.** Este documento dice dónde vive
+> cada cosa del entorno: obras y sus bases de datos, skills, scripts,
+> aplicaciones, adaptadores, catálogo de tajos, generador de revisiones,
+> portal y BAT de publicación. Antes de buscar un fichero a ciegas o de
+> preguntar dónde está algo, mirarlo aquí.
+>
+> **Y se actualiza cuando cambia el entorno, no cuando alguien se acuerda.**
+> Si una sesión añade una obra, una skill, un script o un tipo de fichero
+> nuevo, esa misma sesión lo refleja aquí.
+
+**Última actualización: 12/08/2026** — Prioridades pasó a leer la base de cada
+obra; el catálogo de tajos declara la cadena de obra completa. Ver §2 y el
+ciclo del dato.
+
 | Campo | Valor |
 |---|---|
-| Fecha de análisis | 29/07/2026 |
+| Fecha de análisis | 29/07/2026 (auditoría original) · revisado 12/08/2026 |
 | Raíz analizada | `D:\Nueva carpeta\OneDrive\COPIA SEGURIDAD SAGARDE` |
 | Alcance | Árbol local completo actualizado: 2.199 directorios y 27.139 archivos fuera de `.git`; también se inspeccionaron configuración y hooks de `.git` sin alterar el repositorio. |
 | Carpetas raíz examinadas | 14 fuera de `.git`: `.agents`, `.claude`, `.gemini`, `.superpowers`, `APLICACIONES`, `docs`, `MANTENIMIENTOS`, `PARA SOBREESCRIBIR`, `POST-VENTAS`, `SAGARDE (OLD)`, `SAGARDE OBRAS ABIERTAS`, `scratch`, `VARIOS`, `_MOTOR_SAGARDE`. |
@@ -39,15 +53,78 @@ Las capas confirmadas son:
 
 1. **Fuentes documentales**: 21 carpetas de obras abiertas, 128 obras cerradas publicadas, 31 contratos de postventa y 4 contratos de mantenimiento en sus resúmenes actuales.
 2. **Normalización**: siete adaptadores Python y lectores genéricos PDF/HTML/XLSX. Solo cinco adaptadores están registrados; dos apuntan a obras ya cerradas y sus rutas bajo obras abiertas no existen.
-3. **Estado persistente**: tres `ficha_obra.json` (Gernika, Mungia y Bolueta), sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Obispo opera sin ficha; Gorliz está registrado pero sin revisión.
-4. **Cálculo y decisión**: `motor_informes.py`, `priorizador_trabajos.py`, un catálogo de 39 tajos comunes y reglas específicas de obra.
+3. **Estado persistente**: **cinco** `ficha_obra.json` —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Gorliz está registrado pero sin revisión ni base. *(Actualizado el 12/08/2026: antes decía tres y que Obispo operaba sin ficha; las dos cosas eran falsas.)*
+
+   | Obra | Ubicaciones | Tajos | Celdas |
+   |---|---|---|---|
+   | Gernika | 32 | 38 | 1216 |
+   | Mungia | 62 | 38 | 2356 |
+   | Bolueta | 97 | 38 | 3686 |
+   | Obispo Orueta | 102 | 40 | 4080 |
+   | OBRA PRUEBA | 31 | 38 | 1178 |
+
+   Cada base es una **rejilla densa** `ubicaciones × tajos`, y cada celda guarda `{v: estado, f: fecha, r: revisión}`. Los estados son `X` terminado, `M` mínimo 50 %, `/` empezado, `P` pendiente confirmado, `?` nadie lo ha mirado, `N` no aplica.
+4. **Cálculo y decisión**: `motor_informes.py`, `priorizador_trabajos.py`, un catálogo de 39 tajos comunes (+18 propios de Orueta) y reglas específicas de obra. **La base es el estado; el catálogo es la regla.** La base dice qué existe y cómo está; el catálogo dice en qué orden va cada tajo y qué exige qué.
+
+   **La cadena de obra está declarada** (12/08/2026): 47 dependencias, y solo
+   4 tajos sin ninguna, los cuatro a propósito —`Tabicado` porque es el
+   primero de la obra; `Techos de zonas comunes` y `Fachada terminada` porque
+   llegan cuando el plan de la constructora los programa; y `Cuarto técnico`
+   porque son los recintos de instalaciones (RITI, RITS, RITU, centralización
+   de contadores) y *"cuando proceda se realizan y punto"*. La secuencia
+   completa está dibujada en `reglas/CRITERIOS_PRIORIZACION_TRABAJOS.md`.
+
+   La evidencia de esa cadena es `2026 MUNGIA ACR NEINOR/COCOPLAN/`: los
+   planes **Last Planner System** de la constructora, con 71 actividades
+   fechadas y su gremio, más planes semanales, restricciones e indicadores.
+   Cocoplan cubre la obra entera y todos los gremios; nosotros solo modelamos
+   lo que nos condiciona la entrada, y agrupa varios tajos eléctricos en uno
+   solo, así que sus nombres **no mapean uno a uno** con los nuestros.
+
+   **Al añadir un tajo al catálogo hay que preguntar qué debe estar terminado
+   antes.** Un tajo sin dependencia sale siempre viable, que es tan falso como
+   salir siempre bloqueado.
 5. **Presentación**: cinco paneles, índices, portal de escritorio, un portal móvil estancado, generador de revisiones y siete accesos de aplicaciones.
 6. **Orquestación/publicación**: `generar_todos.py`, `sagarde_portal.py`, scripts especializados y cuatro BAT. `Actualizar_Sagarde.bat` termina en `git add -A`, commit y `push origin main`.
 7. **Gobierno**: dos `CLAUDE.md`, cuatro definiciones locales tipo skill/agente, planes, especificaciones, handoffs, memoria vigente y 114 casos de prueba definidos estáticamente.
 
-Flujo confirmado: una revisión DOCX/PDF/HTML/JSON se lee mediante un adaptador; se normaliza a `task/floor/building/unit/status`; si existe ficha, la revisión la actualiza y la ficha vuelve a producir el snapshot validado; el motor calcula KPI y bloqueos; el priorizador produce trabajos y dudas; se escriben memoria, panel e informe ejecutivo; después se agregan índices, el registro del generador y el portal.
+Flujo confirmado: una revisión DOCX/PDF/HTML/JSON se lee mediante un adaptador; se normaliza a `task/floor/building/unit/status`; si existe ficha, la revisión la actualiza y la ficha vuelve a producir el snapshot validado; el motor calcula KPI y bloqueos; **el priorizador lee la base de la obra** y produce trabajos, previsión y preguntas; se escriben memoria, panel e informe ejecutivo; después se agregan índices, el registro del generador y el portal.
 
-Lo más consolidado es el camino de cinco obras registradas, el contrato común de estados y las salidas JSON/HTML. Las dudas principales son: 16 carpetas abiertas sin automatización; dos adaptadores huérfanos; solo tres obras seleccionables en el generador; Obispo sin ficha; Gorliz sin revisión; documentación antigua; una skill de alta desactualizada; portal móvil no reescrito por código inalcanzable; índice de mantenimiento con dos generadores; dependencias sin manifiesto; y cientos de backups sin política ejecutable de vigencia.
+## Ciclo completo del dato (12/08/2026)
+
+```
+reglas/CATALOGO_TAJOS.json ──┐
+                             ├→ generar_todos.py → obras_revisiones.js
+<obra>/…/ficha_obra.json ────┘                            ↓
+        ↑                                    generador_revisiones.html
+        │                                                 ↓
+        │                                            hoja A4 PDF
+        │                                                 ↓ boli en obra
+        └──── leer_hoja_marcada.py ←──────────────── escaneo
+                      ↓
+              priorizador_trabajos.py → prioridades_trabajos.json → panel
+```
+
+Dos hechos que conviene tener presentes al tocar cualquier eslabón:
+
+- **El generador consume la salida del priorizador, no el catálogo directamente.** `crear_registro_revision(obra, prioridades)` construye la lista de tajos de la hoja desde `detalle_items`. Cambiar el priorizador cambia la hoja impresa.
+- **`reglas/CATALOGO_TAJOS.json` no está en git.** La línea 2 del `.gitignore` (`*`) lo atrapa y no se le hizo excepción. Es una decisión tomada el 11/08/2026: su única copia es el historial de versiones de OneDrive. **No mutarlo para una prueba: no hay `git checkout` que lo restaure.**
+
+Lo más consolidado es el camino de cinco obras registradas, el contrato común de estados y las salidas JSON/HTML. Las dudas principales son: 16 carpetas abiertas sin automatización; dos adaptadores huérfanos; Gorliz sin revisión ni base; documentación antigua; una skill de alta desactualizada; portal móvil no reescrito por código inalcanzable; índice de mantenimiento con dos generadores; dependencias sin manifiesto; y cientos de backups sin política ejecutable de vigencia.
+
+Pendientes concretos al cierre del 12/08/2026:
+
+- **Orueta se va a cerrar y pasar a obras cerradas.** Su duplicado
+  `placas_tapas` / `placas_tps_cuadro` eran el mismo tajo escrito de dos
+  formas; no se toca porque la obra se archiva. Su dependencia
+  `cuadro_mecanizado → cuadros_presentados` apunta a un tajo que la obra no
+  declaró, y desde el 12/08 eso ya no bloquea.
+- **La rama `prioridades-desde-la-base` no está fusionada en `main`.** Hasta
+  que se fusione, lo publicado sigue siendo el motor antiguo.
+- Sigue abierto de antes: 16 carpetas de obra sin automatización, dos
+  adaptadores huérfanos, Gorliz sin revisión ni base, una skill de alta
+  desactualizada, el portal móvil, el índice de mantenimiento con dos
+  generadores, y las dependencias sin manifiesto.
 
 # 3. Mapa mental principal
 
@@ -299,9 +376,9 @@ Hay 55 Markdown previos a esta auditoría. Se agrupan series repetitivas conserv
 | `VARIOS/TIERRAS/.claude/launch.json` | 8080/8081, rutas absolutas | Tierras | No portable |
 | 4 `settings.local.json` | Permisos e historial de comandos/WebFetch | Agentes | No prueba ejecución ni instalación |
 | `registro_obras.py` | 5 obras, aliases, adaptadores, materiales | Pipeline | Registro actual; contradice skill antigua |
-| `reglas/CATALOGO_TAJOS.json` | v1.3, 39 tajos comunes, alias/dependencias/reglas | Priorizador/ficha/generador | Override específico de `placas_tapas` |
+| `reglas/CATALOGO_TAJOS.json` | v1.3, 39 tajos comunes + 18 propios de Orueta; alias, orden, propiedad, ámbito, fase y dependencias | Priorizador/ficha/generador | **Es la base de tajos del entorno y es SIEMPRE AMPLIABLE.** Manda sobre orden y dependencias; se siembra en cada base en cada regeneración. Lo que no conoce sale como pregunta, nunca recibe orden inventado. **No está en git** (decisión del 11/08/2026): única copia, el historial de OneDrive |
 | `confirmaciones_*.json` | Estructuras confirmadas | Fichas | Evidencia publicada selectivamente |
-| `obras_revisiones.js` | 4 registros + error Gorliz | Generador | Solo 3 con ficha se muestran |
+| `obras_revisiones.js` | 5 registros con base + aviso de Gorliz | Generador | Lo escribe `generar_todos.py` desde la salida del priorizador, no desde el catálogo |
 
 No se localizaron `AGENTS.md`, `README`/`README.md`, `requirements.txt`, `pyproject.toml`, `package.json`, YAML/TOML de CI, Dockerfile, Makefile ni hooks Git activos. `.git/hooks` contiene solo 14 `*.sample`.
 
