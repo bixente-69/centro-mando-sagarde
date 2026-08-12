@@ -39,15 +39,52 @@ Las capas confirmadas son:
 
 1. **Fuentes documentales**: 21 carpetas de obras abiertas, 128 obras cerradas publicadas, 31 contratos de postventa y 4 contratos de mantenimiento en sus resúmenes actuales.
 2. **Normalización**: siete adaptadores Python y lectores genéricos PDF/HTML/XLSX. Solo cinco adaptadores están registrados; dos apuntan a obras ya cerradas y sus rutas bajo obras abiertas no existen.
-3. **Estado persistente**: tres `ficha_obra.json` (Gernika, Mungia y Bolueta), sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Obispo opera sin ficha; Gorliz está registrado pero sin revisión.
-4. **Cálculo y decisión**: `motor_informes.py`, `priorizador_trabajos.py`, un catálogo de 39 tajos comunes y reglas específicas de obra.
+3. **Estado persistente**: **cinco** `ficha_obra.json` —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Gorliz está registrado pero sin revisión ni base. *(Actualizado el 12/08/2026: antes decía tres y que Obispo operaba sin ficha; las dos cosas eran falsas.)*
+
+   | Obra | Ubicaciones | Tajos | Celdas |
+   |---|---|---|---|
+   | Gernika | 32 | 38 | 1216 |
+   | Mungia | 62 | 38 | 2356 |
+   | Bolueta | 97 | 38 | 3686 |
+   | Obispo Orueta | 102 | 40 | 4080 |
+   | OBRA PRUEBA | 31 | 38 | 1178 |
+
+   Cada base es una **rejilla densa** `ubicaciones × tajos`, y cada celda guarda `{v: estado, f: fecha, r: revisión}`. Los estados son `X` terminado, `M` mínimo 50 %, `/` empezado, `P` pendiente confirmado, `?` nadie lo ha mirado, `N` no aplica.
+4. **Cálculo y decisión**: `motor_informes.py`, `priorizador_trabajos.py`, un catálogo de 39 tajos comunes y reglas específicas de obra. **La base es el estado; el catálogo es la regla.** La base dice qué existe y cómo está; el catálogo dice en qué orden va cada tajo y qué exige qué.
 5. **Presentación**: cinco paneles, índices, portal de escritorio, un portal móvil estancado, generador de revisiones y siete accesos de aplicaciones.
 6. **Orquestación/publicación**: `generar_todos.py`, `sagarde_portal.py`, scripts especializados y cuatro BAT. `Actualizar_Sagarde.bat` termina en `git add -A`, commit y `push origin main`.
 7. **Gobierno**: dos `CLAUDE.md`, cuatro definiciones locales tipo skill/agente, planes, especificaciones, handoffs, memoria vigente y 114 casos de prueba definidos estáticamente.
 
-Flujo confirmado: una revisión DOCX/PDF/HTML/JSON se lee mediante un adaptador; se normaliza a `task/floor/building/unit/status`; si existe ficha, la revisión la actualiza y la ficha vuelve a producir el snapshot validado; el motor calcula KPI y bloqueos; el priorizador produce trabajos y dudas; se escriben memoria, panel e informe ejecutivo; después se agregan índices, el registro del generador y el portal.
+Flujo confirmado: una revisión DOCX/PDF/HTML/JSON se lee mediante un adaptador; se normaliza a `task/floor/building/unit/status`; si existe ficha, la revisión la actualiza y la ficha vuelve a producir el snapshot validado; el motor calcula KPI y bloqueos; **el priorizador lee la base de la obra** y produce trabajos, previsión y preguntas; se escriben memoria, panel e informe ejecutivo; después se agregan índices, el registro del generador y el portal.
 
-Lo más consolidado es el camino de cinco obras registradas, el contrato común de estados y las salidas JSON/HTML. Las dudas principales son: 16 carpetas abiertas sin automatización; dos adaptadores huérfanos; solo tres obras seleccionables en el generador; Obispo sin ficha; Gorliz sin revisión; documentación antigua; una skill de alta desactualizada; portal móvil no reescrito por código inalcanzable; índice de mantenimiento con dos generadores; dependencias sin manifiesto; y cientos de backups sin política ejecutable de vigencia.
+## Ciclo completo del dato (12/08/2026)
+
+```
+reglas/CATALOGO_TAJOS.json ──┐
+                             ├→ generar_todos.py → obras_revisiones.js
+<obra>/…/ficha_obra.json ────┘                            ↓
+        ↑                                    generador_revisiones.html
+        │                                                 ↓
+        │                                            hoja A4 PDF
+        │                                                 ↓ boli en obra
+        └──── leer_hoja_marcada.py ←──────────────── escaneo
+                      ↓
+              priorizador_trabajos.py → prioridades_trabajos.json → panel
+```
+
+Dos hechos que conviene tener presentes al tocar cualquier eslabón:
+
+- **El generador consume la salida del priorizador, no el catálogo directamente.** `crear_registro_revision(obra, prioridades)` construye la lista de tajos de la hoja desde `detalle_items`. Cambiar el priorizador cambia la hoja impresa.
+- **`reglas/CATALOGO_TAJOS.json` no está en git.** La línea 2 del `.gitignore` (`*`) lo atrapa y no se le hizo excepción. Es una decisión tomada el 11/08/2026: su única copia es el historial de versiones de OneDrive. **No mutarlo para una prueba: no hay `git checkout` que lo restaure.**
+
+Lo más consolidado es el camino de cinco obras registradas, el contrato común de estados y las salidas JSON/HTML. Las dudas principales son: 16 carpetas abiertas sin automatización; dos adaptadores huérfanos; Gorliz sin revisión ni base; documentación antigua; una skill de alta desactualizada; portal móvil no reescrito por código inalcanzable; índice de mantenimiento con dos generadores; dependencias sin manifiesto; y cientos de backups sin política ejecutable de vigencia.
+
+Pendientes concretos abiertos el 12/08/2026, ya visibles en el panel de cada obra:
+
+- **Orueta tiene un duplicado en su base**: `placas_tapas` y `placas_tps_cuadro` resuelven al mismo tajo del catálogo. Hay que decidir si se fusionan o si el segundo merece entrada propia.
+- **Orueta tiene 4 dependencias que apuntan a tajos que la obra no tiene** (`cuadro_mecanizado→cuadros_presentados`, `focos_pasillos→agujeros_focos_pasillo`, `placas_tapas→pintura_habitaciones`, `placas_tps_cuadro→pintura_habitaciones`). Bloquean para siempre hasta resolverlas.
+- **OBRA PRUEBA tiene dos plantas llamadas igual**, así que 5 de sus 31 ubicaciones se fusionan al priorizar. Es la obra ficticia, pero conviene que no mienta.
+- **19 de los 39 tajos del catálogo no declaran ninguna dependencia**, 12 de ellos de otros gremios. Sin esa cadena la previsión no puede encadenar más de un paso.
 
 # 3. Mapa mental principal
 
@@ -299,9 +336,9 @@ Hay 55 Markdown previos a esta auditoría. Se agrupan series repetitivas conserv
 | `VARIOS/TIERRAS/.claude/launch.json` | 8080/8081, rutas absolutas | Tierras | No portable |
 | 4 `settings.local.json` | Permisos e historial de comandos/WebFetch | Agentes | No prueba ejecución ni instalación |
 | `registro_obras.py` | 5 obras, aliases, adaptadores, materiales | Pipeline | Registro actual; contradice skill antigua |
-| `reglas/CATALOGO_TAJOS.json` | v1.3, 39 tajos comunes, alias/dependencias/reglas | Priorizador/ficha/generador | Override específico de `placas_tapas` |
+| `reglas/CATALOGO_TAJOS.json` | v1.3, 39 tajos comunes + 18 propios de Orueta; alias, orden, propiedad, ámbito, fase y dependencias | Priorizador/ficha/generador | **Es la base de tajos del entorno y es SIEMPRE AMPLIABLE.** Manda sobre orden y dependencias; se siembra en cada base en cada regeneración. Lo que no conoce sale como pregunta, nunca recibe orden inventado. **No está en git** (decisión del 11/08/2026): única copia, el historial de OneDrive |
 | `confirmaciones_*.json` | Estructuras confirmadas | Fichas | Evidencia publicada selectivamente |
-| `obras_revisiones.js` | 4 registros + error Gorliz | Generador | Solo 3 con ficha se muestran |
+| `obras_revisiones.js` | 5 registros con base + aviso de Gorliz | Generador | Lo escribe `generar_todos.py` desde la salida del priorizador, no desde el catálogo |
 
 No se localizaron `AGENTS.md`, `README`/`README.md`, `requirements.txt`, `pyproject.toml`, `package.json`, YAML/TOML de CI, Dockerfile, Makefile ni hooks Git activos. `.git/hooks` contiene solo 14 `*.sample`.
 
