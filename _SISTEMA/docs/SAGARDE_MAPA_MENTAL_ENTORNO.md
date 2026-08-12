@@ -2,9 +2,23 @@
 
 ## Auditoría documental y mapa mental del entorno SAGARDE
 
+> **LECTURA OBLIGATORIA AL EMPEZAR SESIÓN.** Este documento dice dónde vive
+> cada cosa del entorno: obras y sus bases de datos, skills, scripts,
+> aplicaciones, adaptadores, catálogo de tajos, generador de revisiones,
+> portal y BAT de publicación. Antes de buscar un fichero a ciegas o de
+> preguntar dónde está algo, mirarlo aquí.
+>
+> **Y se actualiza cuando cambia el entorno, no cuando alguien se acuerda.**
+> Si una sesión añade una obra, una skill, un script o un tipo de fichero
+> nuevo, esa misma sesión lo refleja aquí.
+
+**Última actualización: 12/08/2026** — Prioridades pasó a leer la base de cada
+obra; el catálogo de tajos declara la cadena de obra completa. Ver §2 y el
+ciclo del dato.
+
 | Campo | Valor |
 |---|---|
-| Fecha de análisis | 29/07/2026 |
+| Fecha de análisis | 29/07/2026 (auditoría original) · revisado 12/08/2026 |
 | Raíz analizada | `D:\Nueva carpeta\OneDrive\COPIA SEGURIDAD SAGARDE` |
 | Alcance | Árbol local completo actualizado: 2.199 directorios y 27.139 archivos fuera de `.git`; también se inspeccionaron configuración y hooks de `.git` sin alterar el repositorio. |
 | Carpetas raíz examinadas | 14 fuera de `.git`: `.agents`, `.claude`, `.gemini`, `.superpowers`, `APLICACIONES`, `docs`, `MANTENIMIENTOS`, `PARA SOBREESCRIBIR`, `POST-VENTAS`, `SAGARDE (OLD)`, `SAGARDE OBRAS ABIERTAS`, `scratch`, `VARIOS`, `_MOTOR_SAGARDE`. |
@@ -50,7 +64,25 @@ Las capas confirmadas son:
    | OBRA PRUEBA | 31 | 38 | 1178 |
 
    Cada base es una **rejilla densa** `ubicaciones × tajos`, y cada celda guarda `{v: estado, f: fecha, r: revisión}`. Los estados son `X` terminado, `M` mínimo 50 %, `/` empezado, `P` pendiente confirmado, `?` nadie lo ha mirado, `N` no aplica.
-4. **Cálculo y decisión**: `motor_informes.py`, `priorizador_trabajos.py`, un catálogo de 39 tajos comunes y reglas específicas de obra. **La base es el estado; el catálogo es la regla.** La base dice qué existe y cómo está; el catálogo dice en qué orden va cada tajo y qué exige qué.
+4. **Cálculo y decisión**: `motor_informes.py`, `priorizador_trabajos.py`, un catálogo de 39 tajos comunes (+18 propios de Orueta) y reglas específicas de obra. **La base es el estado; el catálogo es la regla.** La base dice qué existe y cómo está; el catálogo dice en qué orden va cada tajo y qué exige qué.
+
+   **La cadena de obra está declarada** (12/08/2026): 47 dependencias, y solo
+   4 tajos sin ninguna —`Tabicado` porque es el primero, `Techos de zonas
+   comunes` y `Fachada terminada` porque llegan cuando el plan de la
+   constructora los programa, y `Cuarto técnico` que queda pendiente de
+   definir. La secuencia completa está dibujada en
+   `reglas/CRITERIOS_PRIORIZACION_TRABAJOS.md`.
+
+   La evidencia de esa cadena es `2026 MUNGIA ACR NEINOR/COCOPLAN/`: los
+   planes **Last Planner System** de la constructora, con 71 actividades
+   fechadas y su gremio, más planes semanales, restricciones e indicadores.
+   Cocoplan cubre la obra entera y todos los gremios; nosotros solo modelamos
+   lo que nos condiciona la entrada, y agrupa varios tajos eléctricos en uno
+   solo, así que sus nombres **no mapean uno a uno** con los nuestros.
+
+   **Al añadir un tajo al catálogo hay que preguntar qué debe estar terminado
+   antes.** Un tajo sin dependencia sale siempre viable, que es tan falso como
+   salir siempre bloqueado.
 5. **Presentación**: cinco paneles, índices, portal de escritorio, un portal móvil estancado, generador de revisiones y siete accesos de aplicaciones.
 6. **Orquestación/publicación**: `generar_todos.py`, `sagarde_portal.py`, scripts especializados y cuatro BAT. `Actualizar_Sagarde.bat` termina en `git add -A`, commit y `push origin main`.
 7. **Gobierno**: dos `CLAUDE.md`, cuatro definiciones locales tipo skill/agente, planes, especificaciones, handoffs, memoria vigente y 114 casos de prueba definidos estáticamente.
@@ -79,12 +111,21 @@ Dos hechos que conviene tener presentes al tocar cualquier eslabón:
 
 Lo más consolidado es el camino de cinco obras registradas, el contrato común de estados y las salidas JSON/HTML. Las dudas principales son: 16 carpetas abiertas sin automatización; dos adaptadores huérfanos; Gorliz sin revisión ni base; documentación antigua; una skill de alta desactualizada; portal móvil no reescrito por código inalcanzable; índice de mantenimiento con dos generadores; dependencias sin manifiesto; y cientos de backups sin política ejecutable de vigencia.
 
-Pendientes concretos abiertos el 12/08/2026, ya visibles en el panel de cada obra:
+Pendientes concretos al cierre del 12/08/2026:
 
-- **Orueta tiene un duplicado en su base**: `placas_tapas` y `placas_tps_cuadro` resuelven al mismo tajo del catálogo. Hay que decidir si se fusionan o si el segundo merece entrada propia.
-- **Orueta tiene 4 dependencias que apuntan a tajos que la obra no tiene** (`cuadro_mecanizado→cuadros_presentados`, `focos_pasillos→agujeros_focos_pasillo`, `placas_tapas→pintura_habitaciones`, `placas_tps_cuadro→pintura_habitaciones`). Bloquean para siempre hasta resolverlas.
-- **OBRA PRUEBA tiene dos plantas llamadas igual**, así que 5 de sus 31 ubicaciones se fusionan al priorizar. Es la obra ficticia, pero conviene que no mienta.
-- **19 de los 39 tajos del catálogo no declaran ninguna dependencia**, 12 de ellos de otros gremios. Sin esa cadena la previsión no puede encadenar más de un paso.
+- **Orueta se va a cerrar y pasar a obras cerradas.** Su duplicado
+  `placas_tapas` / `placas_tps_cuadro` eran el mismo tajo escrito de dos
+  formas; no se toca porque la obra se archiva. Su dependencia
+  `cuadro_mecanizado → cuadros_presentados` apunta a un tajo que la obra no
+  declaró, y desde el 12/08 eso ya no bloquea.
+- **`Cuarto técnico` no declara dependencia** y no se ha definido cuál debería
+  ser. Sale viable en todas las ubicaciones desde el primer día.
+- **La rama `prioridades-desde-la-base` no está fusionada en `main`.** Hasta
+  que se fusione, lo publicado sigue siendo el motor antiguo.
+- Sigue abierto de antes: 16 carpetas de obra sin automatización, dos
+  adaptadores huérfanos, Gorliz sin revisión ni base, una skill de alta
+  desactualizada, el portal móvil, el índice de mantenimiento con dos
+  generadores, y las dependencias sin manifiesto.
 
 # 3. Mapa mental principal
 

@@ -91,8 +91,23 @@ genera pero nunca se publica.
 La skill debe responder a la necesidad concreta. Evitar tanto no usar las
 herramientas como usarlas de forma desproporcionada.
 
-**Al empezar sesión:** `superpowers:using-superpowers`. Consultar la memoria
-del proyecto antes de asumir que algo es nuevo.
+**Al empezar sesión, dos lecturas obligatorias:**
+
+1. La **memoria del proyecto**, antes de asumir que algo es nuevo.
+2. El **mapa mental del entorno**,
+   `_SISTEMA/docs/SAGARDE_MAPA_MENTAL_ENTORNO.md`. Ahí está dónde vive cada
+   cosa: las obras y sus bases de datos, las skills, los scripts, las
+   aplicaciones, los adaptadores, el catálogo de tajos, el generador de
+   revisiones, el portal y los BAT de publicación. No buscar un fichero a
+   ciegas ni preguntar dónde está algo sin haberlo mirado antes.
+
+Y después `superpowers:using-superpowers`.
+
+**El mapa mental se actualiza cuando cambia el entorno**, no cuando alguien
+se acuerda. Si una sesión añade una obra, una skill, un script o un tipo de
+fichero nuevo, esa misma sesión lo refleja ahí. Un mapa desfasado es peor que
+no tenerlo: el 12/08/2026 decía que había tres bases de obra cuando había
+cinco, y que Obispo operaba sin ficha cuando tenía la suya.
 
 **Tarea trivial** (un texto, una etiqueta, un campo): hacerla directamente.
 No montar estructura de planificación para un cambio de una línea.
