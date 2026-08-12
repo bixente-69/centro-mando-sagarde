@@ -12,18 +12,18 @@ echo  Centro de mando Sagarde - actualizacion completa
 echo ============================================
 echo.
 
-echo [0/4] Ejecutando Auditoria Pre-Vuelo de Salud de Datos...
+echo [0/5] Ejecutando Auditoria Pre-Vuelo de Salud de Datos...
 %PY% "_SISTEMA\MOTOR\scripts\auditor_sagarde.py"
 echo.
 
-echo [1/4] Actualizando Informe Sagarde IA (Obras abiertas)...
+echo [1/5] Actualizando Informe Sagarde IA (Obras abiertas)...
 %PY% "SAGARDE OBRAS ABIERTAS\_SISTEMA INFORME SAGARDE IA\generar_todos.py" --no-pdf
 if %errorlevel% neq 0 (
   echo   [AVISO] No se pudo actualizar Obras Abiertas. El portal usara los datos existentes.
 )
 echo.
 
-echo [2/4] Actualizando Post-ventas y Mantenimientos...
+echo [2/5] Actualizando Post-ventas y Mantenimientos...
 %PY% "POST-VENTAS\_SISTEMA\postventas_index.py"
 if %errorlevel% neq 0 (
   echo   [AVISO] No se pudo actualizar Post-ventas. El portal usara los datos existentes.
@@ -34,7 +34,7 @@ if %errorlevel% neq 0 (
 )
 echo.
 
-echo [3/4] Generando portal principal...
+echo [3/5] Generando portal principal...
 %PY% "_SISTEMA\MOTOR\sagarde_portal.py"
 if %errorlevel% neq 0 (
   echo.
@@ -42,9 +42,20 @@ if %errorlevel% neq 0 (
   pause
   exit /b 1
 )
+echo.
+
+echo [4/5] Actualizando el mapa mental del entorno...
+%PY% "_SISTEMA\MOTOR\scripts\actualizar_mapa_mental.py"
+if errorlevel 2 (
+  echo   [ERROR] No se pudo actualizar el mapa mental. Se publica sin tocarlo.
+) else if errorlevel 1 (
+  echo   [AVISO] El mapa mental declara rutas que ya no existen. Quedan escritas
+  echo           dentro del propio mapa. Se publica igual, pero corrigelas: es la
+  echo           lectura obligatoria al empezar sesion y manda a un sitio vacio.
+)
 
 echo.
-echo [4/4] Subiendo a la nube (GitHub Pages)...
+echo [5/5] Subiendo a la nube (GitHub Pages)...
 set "GITCMD="
 where git >nul 2>nul
 if %errorlevel%==0 set "GITCMD=git"

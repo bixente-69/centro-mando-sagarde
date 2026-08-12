@@ -972,6 +972,8 @@ def main(hacer_pdf=True):
             generar_informe_ejecutivo.generar_para_obra(
                 obra['nombre'],
                 historial=historial,
+                ficha=ficha_actual,
+                prioridades=prioridades,
             )
         except Exception as e_exec:
             print(f"  [AVISO INFORME EJECUTIVO] {e_exec}")

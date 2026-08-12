@@ -381,6 +381,33 @@ class TestFuenteInformeEjecutivo(unittest.TestCase):
             historial_validado,
         )
 
+    def test_modo_directo_sustituye_el_pdf_crudo_por_la_base(self):
+        nombre_obra = '2026 MUNGIA ACR NEINOR'
+        snapshot_crudo = [{
+            'task': 'Tabicado', 'floor': '1', 'building': 'ZR1.1',
+            'unit': 'A2', 'status': 'X',
+        }]
+        snapshot_base = [{
+            'task': 'Tubeado interior', 'floor': '1', 'building': 'ZR1.1',
+            'unit': 'A2', 'status': 'M',
+        }]
+        ficha = {'revisiones': [{'fecha': '28/07/2026'}]}
+
+        with patch.object(gie.fichas, 'cargar', return_value=ficha), \
+             patch.object(gie.fichas, 'snapshot_desde_ficha',
+                          return_value=snapshot_base), \
+             patch.object(gie.ADAPTADORES[nombre_obra], 'cargar_historial',
+                          return_value=[('28/07/2026', snapshot_crudo)]), \
+             patch.object(gie.priorizador_trabajos, 'priorizar_ficha',
+                          return_value={'detalle_items': []}), \
+             patch.object(gie, 'generar_pdf_ejecutivo') as generar_pdf:
+            gie.generar_para_obra(nombre_obra)
+
+        self.assertIs(generar_pdf.call_args.args[2], snapshot_base)
+        self.assertIs(generar_pdf.call_args.kwargs['ficha'], ficha)
+        self.assertIs(generar_pdf.call_args.kwargs['historial'][-1][1],
+                      snapshot_base)
+
 
 class TestObraSinRevisiones(unittest.TestCase):
     """Una obra sin medir no es una obra al 0 %.

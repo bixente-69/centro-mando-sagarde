@@ -172,7 +172,7 @@ Estado verificado tras regenerar:
 - `OMITIDO_SIN_X`: 0.
 - Obispo conserva solo su duda funcional real.
 
-## Fuente única para panel e informe ejecutivo
+## Fuente única para panel e informe ejecutivo eléctrico
 
 Cuando existe `ficha_obra.json`, el flujo vigente es:
 
@@ -187,8 +187,34 @@ Este cambio corrigió Mungia:
 - ahora muestra 79,8 %, igual que la ficha, el panel y el resumen;
 - desglose actual: 1801 `X`, 86 `M`, 0 `/`, 434 pendientes, total 2321.
 
-Los PDF ejecutivos son A4. Incluyen una página general y, si hay varios
-portales, una página adicional por portal:
+Actualización del 12/08/2026: el PDF pasa a ser un **informe ejecutivo
+eléctrico Sagarde**. Conserva el formato A4 y la identidad visual, pero su
+perímetro ya no es todo lo medido en obra:
+
+- KPI, gráficos, fases y desglose incluyen solo tajos con
+  `propiedad = propio` en la base viva de la obra;
+- los tajos `externo` y `coordinacion` no contaminan el porcentaje Sagarde;
+- un tajo ajeno solo aparece cuando una dependencia incumplida frena un tajo
+  propio, identificado entonces como condicionante de otro gremio;
+- la cabecera toma cliente y dirección de `ficha_obra.json` cuando son datos
+  utilizables;
+- la evolución usa revisiones reales y filtra en cada fecha el mismo alcance
+  Sagarde; con menos de cuatro puntos se sustituye por una composición del
+  estado actual para no mostrar una tendencia débil;
+- las fases, frentes disponibles y dependencias nacen de la ficha, el catálogo
+  y el priorizador, no de listas por nombre escritas dentro del informe.
+
+Cada página contiene resumen ejecutivo, KPI Sagarde, gráficos vectoriales de
+evolución/composición y avance por fase, tajos propios que requieren atención,
+próximos frentes y condicionantes. Hay una página general y, si existen varios
+portales, una página adicional por portal.
+
+El modo directo `generar_informe_ejecutivo.py --obra` también carga primero la
+ficha y sustituye el último snapshot crudo por el snapshot consolidado. El
+camino recomendado es `generar_todos.py` sin `--no-pdf`, que entrega al PDF la
+misma ficha, historial y prioridades usados por el panel.
+
+Paginación histórica de referencia previa al nuevo contenido:
 
 - Obispo: 1 página.
 - Bolueta: 1 página.
@@ -204,7 +230,7 @@ portales, una página adicional por portal:
 - `SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/adaptadores/adaptador_obisporueta.py`
 - `SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/priorizador_trabajos.py`
 - `SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/generar_todos.py`
-- `_MOTOR_SAGARDE/scripts/generar_informe_ejecutivo.py`
+- `_SISTEMA/MOTOR/scripts/generar_informe_ejecutivo.py`
 - pruebas de Bolueta, Obispo, catálogo y generación.
 
 ## Verificación realizada

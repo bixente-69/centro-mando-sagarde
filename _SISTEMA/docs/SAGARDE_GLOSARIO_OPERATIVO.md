@@ -526,18 +526,21 @@
 - Evidencia: inputs y funciones `FileReader`.
 - Observaciones: no se localizó importación funcional en el generador de revisiones.
 
-## Informe ejecutivo
+## Informe ejecutivo eléctrico
 
 - Categoría: informe / script.
-- Definición: PDF A4 de avance general y por portal.
-- Función dentro de SAGARDE: salida ejecutiva de cada obra con historial.
-- Ruta o ubicación: `_MOTOR_SAGARDE/scripts/generar_informe_ejecutivo.py`; salida `INFORME_EJECUTIVO_*.pdf`.
+- Definición: PDF A4 de producción eléctrica Sagarde, general y por portal.
+- Función dentro de SAGARDE: muestra KPI, evolución, fases, frentes y
+  condicionantes usando solo tajos `propio` de la base de obra.
+- Ruta o ubicación: `_SISTEMA/MOTOR/scripts/generar_informe_ejecutivo.py`; salida `INFORME_EJECUTIVO_*.pdf`.
 - Forma de uso: importado por orquestador o `--obra`.
 - Ejemplo real: botón `Informe Ejecutivo PDF` en panel.
 - Relacionado con: motor, registro, ReportLab.
 - Estado: CONFIRMADO POR CÓDIGO.
 - Evidencia: `generar_para_obra`, `generar_pdf_ejecutivo`.
-- Observaciones: recibe el mismo historial validado que el panel.
+- Observaciones: recibe la ficha, el historial validado y las prioridades del
+  mismo ciclo que el panel. Los tajos externos solo aparecen si bloquean
+  producción Sagarde.
 
 <a id="j"></a>
 
