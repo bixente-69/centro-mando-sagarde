@@ -67,11 +67,12 @@ Las capas confirmadas son:
 4. **Cálculo y decisión**: `motor_informes.py`, `priorizador_trabajos.py`, un catálogo de 39 tajos comunes (+18 propios de Orueta) y reglas específicas de obra. **La base es el estado; el catálogo es la regla.** La base dice qué existe y cómo está; el catálogo dice en qué orden va cada tajo y qué exige qué.
 
    **La cadena de obra está declarada** (12/08/2026): 47 dependencias, y solo
-   4 tajos sin ninguna —`Tabicado` porque es el primero, `Techos de zonas
-   comunes` y `Fachada terminada` porque llegan cuando el plan de la
-   constructora los programa, y `Cuarto técnico` que queda pendiente de
-   definir. La secuencia completa está dibujada en
-   `reglas/CRITERIOS_PRIORIZACION_TRABAJOS.md`.
+   4 tajos sin ninguna, los cuatro a propósito —`Tabicado` porque es el
+   primero de la obra; `Techos de zonas comunes` y `Fachada terminada` porque
+   llegan cuando el plan de la constructora los programa; y `Cuarto técnico`
+   porque son los recintos de instalaciones (RITI, RITS, RITU, centralización
+   de contadores) y *"cuando proceda se realizan y punto"*. La secuencia
+   completa está dibujada en `reglas/CRITERIOS_PRIORIZACION_TRABAJOS.md`.
 
    La evidencia de esa cadena es `2026 MUNGIA ACR NEINOR/COCOPLAN/`: los
    planes **Last Planner System** de la constructora, con 71 actividades
@@ -118,8 +119,6 @@ Pendientes concretos al cierre del 12/08/2026:
   formas; no se toca porque la obra se archiva. Su dependencia
   `cuadro_mecanizado → cuadros_presentados` apunta a un tajo que la obra no
   declaró, y desde el 12/08 eso ya no bloquea.
-- **`Cuarto técnico` no declara dependencia** y no se ha definido cuál debería
-  ser. Sale viable en todas las ubicaciones desde el primer día.
 - **La rama `prioridades-desde-la-base` no está fusionada en `main`.** Hasta
   que se fusione, lo publicado sigue siendo el motor antiguo.
 - Sigue abierto de antes: 16 carpetas de obra sin automatización, dos
