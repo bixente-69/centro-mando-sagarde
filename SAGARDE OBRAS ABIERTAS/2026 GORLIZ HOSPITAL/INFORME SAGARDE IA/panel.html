@@ -51,7 +51,7 @@ table.data tbody tr:hover{background:#f8f9fb;}
 </style></head><body><div class="wrap">
 <div class="header">
   <div><div class="brand">Informe Sagarde IA · Panel de obra</div><h1>2026 GORLIZ HOSPITAL</h1><div class="sub">Electricidad y telecomunicaciones · Hospital de Gorliz</div></div>
-  <div class="meta">Generado: 12/08/2026 01:07<br>
+  <div class="meta">Generado: 12/08/2026 08:56<br>
   Última revisión: —<br>
   <a class="volver" href="../../index.html">← Todas las obras</a>
   <a class="volver" href="INFORME_EJECUTIVO_2026_GORLIZ_HOSPITAL.pdf" target="_blank" style="background:var(--bad);border-color:var(--bad);margin-left:6px;">📄 Informe Ejecutivo PDF</a></div>
@@ -94,35 +94,7 @@ table.data tbody tr:hover{background:#f8f9fb;}
 
 <section id="v-personal" class="view"><div class="card"><h3>Personal asignado</h3><p class="empty">Sin datos en la ficha de obra.</p></div></section>
 
-<section id="v-prioridades" class="view">
-    <div class="kpi-row">
-      <div class="kpi"><div class="label">Bloques viables</div><div class="value">0</div><div class="hint">0 tajos/unidades agrupados</div></div>
-      <div class="kpi"><div class="label">Bloqueados</div><div class="value">0</div><div class="hint">Tajos propios con dependencias</div></div>
-      <div class="kpi"><div class="label">Otros gremios</div><div class="value">0</div><div class="hint">Control de interferencias</div></div>
-      <div class="kpi"><div class="label">Dudas</div><div class="value">0</div><div class="hint">Preguntar antes de decidir</div></div>
-      <div class="kpi"><div class="label">Terminados</div><div class="value">0</div><div class="hint">Conservados del histórico</div></div>
-      <div class="kpi"><div class="label">Inventario completo</div><div class="value">0</div><div class="hint">Tipos de tajo agrupados</div></div>
-      <div class="kpi"><div class="label">Revisión utilizada</div><div class="value" style="font-size:18px;">—</div><div class="hint">Motor v4.3 · catálogo v1.3</div></div>
-    </div>
-    
-    <div class="banner">✓ No hay preguntas pendientes en esta actualización.</div>
-    <div class="banner">⚠ Esta obra no tiene base de datos todavía. Sembrarla con sembrar_ficha_obra.py habilita las prioridades.</div>
-    <div class="card"><h3>Qué hacer ahora: orden lógico de ejecución</h3>
-      <p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Primero aparecen los tajos viables de viviendas, después zonas comunes y edificio. Los tajos iguales se agrupan. VERIFICAR nunca se considera ejecutable hasta confirmar la duda. <a href="prioridades_trabajos.json" target="_blank">Ver cálculo y detalle completo</a>.</p>
-      <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-        <span style="font-size:12px;color:var(--muted);">Filtrar:</span>
-        <select id="filtro-sit" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;">
-          <option value="">LISTO + VERIFICAR</option>
-          <option value="LISTO">Solo LISTO</option>
-          <option value="VERIFICAR">Solo VERIFICAR</option>
-        </select>
-        <span id="prio-count" style="font-size:12px;color:var(--muted);"></span>
-      </div>
-      <div class="table-scroll"><table id="tabla-prio" class="data"><thead><tr><th>#</th><th>Tajo</th><th>Alcance</th><th>Dónde</th><th>En obra</th><th>Motivo / Comprobar</th></tr></thead>
-      <tbody><tr><td colspan="6" class="empty">No se han identificado bloques ejecutables con las reglas y datos actuales.</td></tr></tbody></table></div>
-    </div>
-    <div style="margin:20px 0 10px;"><h2 style="font-size:18px;">Inventario completo de la obra</h2><p style="font-size:12.5px;color:var(--muted);">Incluye todos los tajos encontrados en todas las revisiones. Los terminados no desaparecen: se guardan al final.</p></div>
-    <div class='card'><h3>1. Tajos viables <span class='badge'>0</span></h3><p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>Se pueden ejecutar según los datos disponibles.</p><div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th><th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th></tr></thead><tbody><tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr></tbody></table></div></div><div class='card'><h3>2. Tajos bloqueados <span class='badge'>0</span></h3><p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>Son propios, pero falta una dependencia previa.</p><div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th><th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th></tr></thead><tbody><tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr></tbody></table></div></div><div class='card'><h3>3. Otros gremios e interferencias <span class='badge'>0</span></h3><p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>Se controlan solo para saber cuándo puede entrar electricidad.</p><div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th><th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th></tr></thead><tbody><tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr></tbody></table></div></div><div class='card'><h3>4. Sin clasificar o por verificar <span class='badge'>0</span></h3><p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>No se decide ni se fusiona hasta recibir confirmación.</p><div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th><th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th></tr></thead><tbody><tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr></tbody></table></div></div><details><summary style='cursor:pointer;font-weight:700;margin:14px 0;'>Mostrar 0 tajos terminados</summary><div class='card'><h3>5. Tajos terminados <span class='badge'>0</span></h3><p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>Histórico conservado; siempre se muestra al final.</p><div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th><th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th></tr></thead><tbody><tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr></tbody></table></div></div></details>
+<section id="v-prioridades" class="view"><div class='banner bad'>⚠ Esta obra no tiene base de datos todavía. Sembrarla con sembrar_ficha_obra.py habilita las prioridades.</div><p style='font-size:12.5px;color:var(--muted);'>Las prioridades salen de la base de datos de la obra. Sin ella no se calcula nada: un recuento vacío sería un dato falso.</p>
   <div class="card"><h3>Hitos manuales</h3><p class="empty">Sin datos en la ficha de obra.</p></div></section>
 
 <section id="v-riesgos" class="view"><div class="card"><h3>Riesgos (manuales + detectados automáticamente)</h3>
@@ -139,7 +111,7 @@ table.data tbody tr:hover{background:#f8f9fb;}
 
 <section id="v-actualizar" class="view"><div class="card">
   <h3>↻ Actualizar panel</h3>
-  <p style="font-size:13px;">Este panel es un fichero HTML estático. Se actualizó el <b>12/08/2026 01:07</b>.
+  <p style="font-size:13px;">Este panel es un fichero HTML estático. Se actualizó el <b>12/08/2026 08:56</b>.
   Para reflejarlo con los últimos archivos de revisión hay que regenerarlo.</p>
   <div style="margin-top:18px;background:#f0f4ff;border:1px solid #c0cfe8;border-radius:8px;padding:14px 18px;">
     <b style="font-size:13px;">Paso 1 &mdash; Haz doble clic en este archivo:</b><br>

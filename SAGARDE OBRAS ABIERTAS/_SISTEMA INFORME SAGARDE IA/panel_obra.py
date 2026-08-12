@@ -88,6 +88,297 @@ def _fmt_num(n):
         return str(n)
 
 
+def _e(valor):
+    return html_lib.escape(str(valor if valor not in (None, '') else '—'))
+
+
+def _ub_div(ubicacion):
+    unidades = ubicacion.get('unidades') or [ubicacion.get('unidad')]
+    unidades = [u for u in unidades if u not in (None, '')]
+    unidades_txt = ', '.join(str(x) for x in unidades[:10]) or '—'
+    if len(unidades) > 10:
+        unidades_txt += f" (+{len(unidades) - 10})"
+    return (f"<div style='margin-bottom:3px;'><b>{_e(ubicacion.get('edificio'))} · "
+            f"planta {_e(ubicacion.get('planta'))}</b>: {_e(unidades_txt)}</div>")
+
+
+def _ubicaciones_html(ubicaciones, limite=4):
+    visibles = ''.join(_ub_div(u) for u in ubicaciones[:limite])
+    extra = ''.join(_ub_div(u) for u in ubicaciones[limite:])
+    n_extra = max(0, len(ubicaciones) - limite)
+    if n_extra:
+        return (visibles + f"<div class='ub-extra' style='display:none;'>{extra}</div>"
+                + f"<a href='#' class='show-ub' data-n='{n_extra}' "
+                  "style='font-size:11.5px;color:var(--accent2);'>"
+                + f"+{n_extra} ubicaciones más</a>")
+    return visibles or '—'
+
+
+_DUDA_ETIQUETAS = {
+    "NO_QUITAR_X":          "Revisar en obra",
+    "TAJO_NUEVO":           "Tajo no reconocido",
+    "OMITIDO_SIN_X":        "Desapareció sin terminar",
+    "ALCANCE_POSTAPERTURA": "Alcance por confirmar",
+    "ESTADOS_DUPLICADOS":   "Estado duplicado en hoja",
+}
+
+_ORDEN_ETIQUETAS = {
+    "ORDEN_SIN_CONFIRMAR":          "Sin posición en la secuencia",
+    "TAJO_FUERA_DEL_CATALOGO":      "No está en el catálogo",
+    "TAJO_DUPLICADO_EN_LA_BASE":    "Dos filas para el mismo tajo",
+    "DEPENDENCIA_AUSENTE_EN_LA_OBRA": "Depende de un tajo que la obra no tiene",
+}
+
+_SECCIONES_INVENTARIO = [
+    ('VIABLE', '1. Tajos viables',
+     'Se pueden ejecutar según los datos disponibles.'),
+    ('BLOQUEADO', '2. Tajos bloqueados',
+     'Son propios, pero falta una dependencia previa.'),
+    ('OTROS_GREMIOS', '3. Otros gremios e interferencias',
+     'Se controlan solo para saber cuándo puede entrar electricidad.'),
+    ('DUDAS', '4. Sin clasificar o por verificar',
+     'No se decide ni se fusiona hasta recibir confirmación.'),
+    ('SIN_REVISAR', '5. Sin revisar nunca',
+     'Nadie los ha mirado todavía. No son trabajo pendiente: son trabajo '
+     'por comprobar.'),
+    ('TERMINADO', '6. Tajos terminados',
+     'Histórico conservado; siempre se muestra al final.'),
+]
+
+
+def _tabla_preguntas_orden(preguntas):
+    """Lo que el catalogo no sabe resolver solo. Es la puerta por la que el
+    catalogo crece: cada fila es una decision que hay que tomar."""
+    if not preguntas:
+        return ''
+    filas = ''
+    for p in preguntas:
+        etiqueta = _ORDEN_ETIQUETAS.get(p.get('codigo'), p.get('codigo', ''))
+        parecidos = p.get('parecidos') or []
+        pista = ''
+        if parecidos:
+            pista = (f"<div style='font-size:11.5px;color:var(--muted);"
+                     f"margin-top:3px;'>Candidatos: {_e(', '.join(parecidos))}</div>")
+        filas += (f"<tr><td style='white-space:nowrap;'><b>{_e(etiqueta)}</b></td>"
+                  f"<td><b>{_e(p.get('nombre'))}</b>"
+                  f"<div style='font-size:11px;color:var(--muted);'>"
+                  f"{_e(p.get('tarea_id'))}</div>{pista}</td></tr>")
+    return ("<div class='card' style='border-left:4px solid var(--warn);'>"
+            "<h3>Preguntas sobre el catálogo de tajos</h3>"
+            "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
+            "El catálogo manda sobre el orden y las dependencias, y es "
+            "siempre ampliable. Estas son las decisiones que faltan para que "
+            "estos tajos ocupen su sitio en la secuencia.</p>"
+            "<div class='table-scroll'><table class='data'><thead><tr>"
+            "<th>Qué pasa</th><th>Tajo</th></tr></thead><tbody>"
+            + filas + "</tbody></table></div></div>")
+
+
+def _tabla_prevision(prevision):
+    """Que se libera al terminar cada tajo, de mayor a menor."""
+    if not prevision:
+        return ''
+    filas = ''
+    for p in prevision[:25]:
+        propio = p.get('propiedad') == 'propio'
+        badge = ("<span class='badge ok'>Nuestro</span>" if propio
+                 else "<span class='badge'>Otro gremio</span>")
+        filas += (f"<tr><td><b>{_e(p.get('trabajo'))}</b> {badge}</td>"
+                  f"<td style='font-size:12px;'>{_e(p.get('estado_actual'))}</td>"
+                  f"<td style='text-align:right;'><b>{_e(p.get('desbloquea'))}</b></td>"
+                  f"<td style='font-size:12px;'>"
+                  f"{_e(', '.join(p.get('tajos_afectados') or []))}</td></tr>")
+    return ("<div class='card'><h3>Qué se desbloquea al terminar cada cosa</h3>"
+            "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
+            "Ordenado por lo que más libera. Una obra dura meses: saber qué "
+            "abre paso a qué es lo que permite llevar el orden hasta el "
+            "final.</p>"
+            "<div class='table-scroll'><table class='data'><thead><tr>"
+            "<th>Al terminar</th><th>Ahora está</th><th style='text-align:right;'>"
+            "Libera</th><th>Deja pasar a</th>"
+            "</tr></thead><tbody>" + filas + "</tbody></table></div></div>")
+
+
+def bloque_prioridades(prioridades):
+    """HTML de la pestana Prioridades.
+
+    Separado de generar_panel para poder probarlo sin montar una obra entera:
+    un dato que se calcula y no se pinta es lo mismo que no calcularlo.
+    """
+    prioridades = prioridades or {}
+    if prioridades.get('sin_base'):
+        avisos = prioridades.get('avisos') or [
+            'Esta obra no tiene base de datos todavía.']
+        return ("<div class='banner bad'>⚠ " + _e(avisos[0]) + "</div>"
+                "<p style='font-size:12.5px;color:var(--muted);'>Las "
+                "prioridades salen de la base de datos de la obra. Sin ella "
+                "no se calcula nada: un recuento vacío sería un dato falso."
+                "</p>")
+
+    e = _e
+    resumen_prio = prioridades.get('resumen', {})
+    items_prio = prioridades.get('items', [])
+    inventario_prio = prioridades.get('inventario', [])
+    dudas_prio = prioridades.get('dudas_pendientes', [])
+
+    filas_prio = ""
+    for item in items_prio:
+        sit_val = item.get('situacion', '')
+        clase_estado = 'ok' if sit_val == 'LISTO' else 'warn'
+        borde = 'var(--ok)' if sit_val == 'LISTO' else 'var(--warn)'
+        todas_ubs = item.get('ubicaciones', [])
+        n_ubicaciones = item.get('n_ubicaciones', len(todas_ubs))
+        ubicaciones_txt = _ubicaciones_html(todas_ubs)
+        motivo_html = e(item.get('motivo') or item.get('impacto_gremios', ''))
+        fase_val = e(item.get('fase_nombre', ''))
+        celdas = item.get('n_celdas')
+        detalle_celdas = ''
+        if celdas and celdas != item.get('n_unidades'):
+            detalle_celdas = (f"<br><span style='font-size:11px;color:var(--muted);'>"
+                              f"{e(celdas)} celdas en la hoja</span>")
+        filas_prio += (
+            f"<tr data-fase='{fase_val}' data-sit='{e(sit_val)}'>"
+            f"<td style='white-space:nowrap;border-left:3px solid {borde};'>"
+            f"<b>#{e(item.get('orden'))}</b>"
+            f"<div style='margin-top:4px;'><span class='badge {clase_estado}'>{e(sit_val)}</span></div></td>"
+            f"<td><b>{e(item.get('trabajo'))}</b>"
+            f"<div style='font-size:11px;color:var(--muted);margin-top:3px;'>"
+            f"Orden lógico {e(item.get('orden_ejecucion'))} · {e(item.get('fase_nombre'))} · {e(item.get('ambito_nombre'))}</div></td>"
+            f"<td style='white-space:nowrap;'><b>{e(item.get('n_unidades'))}</b> ud."
+            f"{detalle_celdas}</td>"
+            f"<td>{ubicaciones_txt}</td>"
+            f"<td style='font-size:12px;'>{e(item.get('estado_actual'))}</td>"
+            f"<td style='font-size:12px;'>{motivo_html}</td></tr>"
+        )
+    if not filas_prio:
+        filas_prio = '<tr><td colspan="6" class="empty">No se han identificado bloques ejecutables con las reglas y datos actuales.</td></tr>'
+
+    _bp = ("El inventario incluye", "Los nombres nuevos", "Una X histórica",
+           "El orden sigue")
+    avisos_prio = ''.join(
+        f'<div class="banner{" bad" if any(k in aviso.lower() for k in ("fusionan", "rejilla", "error")) else ""}">⚠ {e(aviso)}</div>'
+        for aviso in prioridades.get('avisos', [])
+        if not any(aviso.startswith(bp) for bp in _bp)
+    )
+
+    estado_obra_html = ''
+    if prioridades.get('estado_obra'):
+        estado_obra_html = f'<div class="banner">ℹ <b>Estado de la obra:</b> {e(prioridades.get("estado_obra"))}</div>'
+
+    if dudas_prio:
+        filas_dudas = ''
+        for duda in dudas_prio:
+            codigo = duda.get('codigo', '')
+            etiqueta = _DUDA_ETIQUETAS.get(codigo, codigo)
+            pregunta = duda.get('pregunta', '')
+            n_ub = duda.get('n_ubicaciones', 0)
+            por_planta = {}
+            for ub in duda.get('ubicaciones', []):
+                p = ub.get('planta', '?')
+                u = ub.get('unidad', '?')
+                por_planta.setdefault(p, []).append(u)
+
+            def _sort_key(p):
+                texto = str(p).strip()
+                if texto.isdigit():
+                    return (1, int(texto), '')
+                if texto.casefold() in {'pb', 'b', 'bajo', 'baja', 'planta baja'}:
+                    return (0, 0, '')
+                return (2, 0, texto)
+            ub_filas = ''.join(
+                f"<tr><td style='padding:2px 8px;'>Planta {e(p)}</td>"
+                f"<td style='padding:2px 8px;'>{e(', '.join(por_planta[p]))}</td></tr>"
+                for p in sorted(por_planta, key=_sort_key)
+            )
+            ub_detail = (
+                f"<details style='margin-top:6px;'>"
+                f"<summary style='cursor:pointer;font-size:12px;color:var(--accent);'>"
+                f"Ver {n_ub} ubicaciones afectadas</summary>"
+                f"<div style='margin-top:4px;overflow-x:auto;'>"
+                f"<table style='border-collapse:collapse;font-size:12px;'>"
+                f"<thead><tr><th style='padding:2px 8px;text-align:left;'>Planta</th>"
+                f"<th style='padding:2px 8px;text-align:left;'>Unidades</th></tr></thead>"
+                f"<tbody>{ub_filas}</tbody></table></div></details>"
+            ) if por_planta else ''
+            filas_dudas += (
+                f"<tr><td style='white-space:nowrap;'><b>{e(etiqueta)}</b></td>"
+                f"<td>{e(pregunta)}{ub_detail}</td>"
+                f"<td style='text-align:center;'>{n_ub}</td></tr>"
+            )
+        dudas_html = ("<div class='card' style='border-left:4px solid var(--warn);'>"
+                      "<h3>Preguntas pendientes antes de decidir</h3>"
+                      "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
+                      "Resolver estas dudas antes de planificar los tajos afectados. "
+                      "Pincha en cada fila para ver las plantas y unidades concretas.</p>"
+                      "<div class='table-scroll'><table class='data'><thead><tr>"
+                      "<th>Tipo</th><th>Qué hay que comprobar</th><th>Uds.</th>"
+                      "</tr></thead><tbody>"
+                      + filas_dudas + "</tbody></table></div></div>")
+    else:
+        dudas_html = '<div class="banner">✓ No hay preguntas pendientes en esta actualización.</div>'
+
+    orden_html = _tabla_preguntas_orden(prioridades.get('preguntas_orden'))
+    prevision_html = _tabla_prevision(prioridades.get('prevision'))
+
+    inventario_html = ''
+    for codigo, titulo, explicacion in _SECCIONES_INVENTARIO:
+        grupos = [g for g in inventario_prio if g.get('seccion') == codigo]
+        filas = ''
+        for g in grupos:
+            subtajos = g.get('subtajos', [])
+            sub_txt = ''
+            if len(subtajos) > 1:
+                sub_txt = f"<div style='font-size:11px;color:var(--muted);'>Incluye: {e(', '.join(subtajos))}</div>"
+            filas += (f"<tr><td><b>{e(g.get('trabajo'))}</b>{sub_txt}"
+                      f"<div style='font-size:11px;color:var(--muted);'>Orden {e(g.get('orden_ejecucion'))} · {e(g.get('fase_nombre'))}</div></td>"
+                      f"<td>{e(g.get('propiedad'))}</td><td><b>{e(g.get('n_ubicaciones'))}</b></td>"
+                      f"<td>{_ubicaciones_html(g.get('ubicaciones', []))}</td>"
+                      f"<td>{e(g.get('estado_actual'))}</td><td style='font-size:12px;'>{e(g.get('motivo'))}</td></tr>")
+        if not filas:
+            filas = '<tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr>'
+        tabla = (f"<div class='card'><h3>{titulo} <span class='badge'>{len(grupos)}</span></h3>"
+                 f"<p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>{explicacion}</p>"
+                 "<div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th>"
+                 "<th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th>"
+                 f"</tr></thead><tbody>{filas}</tbody></table></div></div>")
+        if codigo == 'TERMINADO':
+            tabla = f"<details><summary style='cursor:pointer;font-weight:700;margin:14px 0;'>Mostrar {len(grupos)} tajos terminados</summary>{tabla}</details>"
+        inventario_html += tabla
+
+    return f"""
+    <div class="kpi-row">
+      <div class="kpi"><div class="label">Bloques viables</div><div class="value">{resumen_prio.get('listos', 0)}</div><div class="hint">{resumen_prio.get('unidades_listas', 0)} unidades de trabajo</div></div>
+      <div class="kpi"><div class="label">Bloqueados</div><div class="value">{resumen_prio.get('bloqueados', 0)}</div><div class="hint">Tajos propios con dependencias</div></div>
+      <div class="kpi"><div class="label">Otros gremios</div><div class="value">{resumen_prio.get('otros_gremios', 0)}</div><div class="hint">Control de interferencias</div></div>
+      <div class="kpi"><div class="label">Sin revisar nunca</div><div class="value">{resumen_prio.get('sin_revisar', 0)}</div><div class="hint">{resumen_prio.get('unidades_sin_revisar', 0)} celdas que nadie ha mirado</div></div>
+      <div class="kpi"><div class="label">Preguntas</div><div class="value">{resumen_prio.get('preguntas_pendientes', 0)}</div><div class="hint">Resolver antes de decidir</div></div>
+      <div class="kpi"><div class="label">Terminados</div><div class="value">{resumen_prio.get('terminados', 0)}</div><div class="hint">Conservados del histórico</div></div>
+      <div class="kpi"><div class="label">Inventario completo</div><div class="value">{resumen_prio.get('inventario_total', 0)}</div><div class="hint">Tipos de tajo agrupados</div></div>
+      <div class="kpi"><div class="label">Revisión utilizada</div><div class="value" style="font-size:18px;">{e(prioridades.get('revision'))}</div><div class="hint">Motor v{e(prioridades.get('version'))} · catálogo v{e(prioridades.get('catalogo_version'))}</div></div>
+    </div>
+    {estado_obra_html}
+    {dudas_html}
+    {orden_html}
+    {avisos_prio}
+    <div class="card"><h3>Qué hacer ahora: orden lógico de ejecución</h3>
+      <p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Primero aparecen los tajos viables de viviendas, después zonas comunes y edificio. Los tajos iguales se agrupan. VERIFICAR nunca se considera ejecutable hasta confirmar la duda. <a href="prioridades_trabajos.json" target="_blank">Ver cálculo y detalle completo</a>.</p>
+      <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <span style="font-size:12px;color:var(--muted);">Filtrar:</span>
+        <select id="filtro-sit" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;">
+          <option value="">LISTO + VERIFICAR</option>
+          <option value="LISTO">Solo LISTO</option>
+          <option value="VERIFICAR">Solo VERIFICAR</option>
+        </select>
+        <span id="prio-count" style="font-size:12px;color:var(--muted);"></span>
+      </div>
+      <div class="table-scroll"><table id="tabla-prio" class="data"><thead><tr><th>#</th><th>Tajo</th><th>Alcance</th><th>Dónde</th><th>En obra</th><th>Motivo / Comprobar</th></tr></thead>
+      <tbody>{filas_prio}</tbody></table></div>
+    </div>
+    {prevision_html}
+    <div style="margin:20px 0 10px;"><h2 style="font-size:18px;">Inventario completo de la obra</h2><p style="font-size:12.5px;color:var(--muted);">Incluye todos los tajos de la base de la obra. Los terminados no desaparecen: se guardan al final.</p></div>
+    {inventario_html}"""
+
+
 def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   output_path, volver_href="../../index.html", prioridades=None,
                   tajos_memoria=None, mem_resumen=None, bat_path=None):
@@ -200,193 +491,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     hitos_html = tabla_ficha(ficha.get('hitos', []))
 
     # ---- PRIORIDADES E INVENTARIO COMPLETO DE TAJOS (motor v4) ----
-    prioridades = prioridades or {}
-    resumen_prio = prioridades.get('resumen', {})
-    items_prio = prioridades.get('items', [])
-    inventario_prio = prioridades.get('inventario', [])
-    dudas_prio = prioridades.get('dudas_pendientes', [])
-
-    def e(valor):
-        return html_lib.escape(str(valor if valor not in (None, '') else '—'))
-
-    def _ub_div(ubicacion):
-        unidades = ubicacion.get('unidades') or [ubicacion.get('unidad')]
-        unidades = [u for u in unidades if u not in (None, '')]
-        unidades_txt = ', '.join(str(x) for x in unidades[:10]) or '—'
-        if len(unidades) > 10:
-            unidades_txt += f" (+{len(unidades) - 10})"
-        return (f"<div style='margin-bottom:3px;'><b>{e(ubicacion.get('edificio'))} · "
-                f"planta {e(ubicacion.get('planta'))}</b>: {e(unidades_txt)}</div>")
-
-    def _ubicaciones_html(ubicaciones, limite=4):
-        visibles = ''.join(_ub_div(u) for u in ubicaciones[:limite])
-        extra = ''.join(_ub_div(u) for u in ubicaciones[limite:])
-        n_extra = max(0, len(ubicaciones) - limite)
-        if n_extra:
-            return (visibles + f"<div class='ub-extra' style='display:none;'>{extra}</div>"
-                    + f"<a href='#' class='show-ub' data-n='{n_extra}' "
-                      "style='font-size:11.5px;color:var(--accent2);'>"
-                    + f"+{n_extra} ubicaciones más</a>")
-        return visibles or '—'
-
-    filas_prio = ""
-    for item in items_prio:
-        sit_val = item.get('situacion', '')
-        clase_estado = 'ok' if sit_val == 'LISTO' else 'warn'
-        borde = 'var(--ok)' if sit_val == 'LISTO' else 'var(--warn)'
-        todas_ubs = item.get('ubicaciones', [])
-        n_ubicaciones = item.get('n_ubicaciones', len(todas_ubs))
-        ubicaciones_txt = _ubicaciones_html(todas_ubs)
-        motivo_html = e(item.get('motivo') or item.get('impacto_gremios', ''))
-        fase_val = e(item.get('fase_nombre', ''))
-        filas_prio += (
-            f"<tr data-fase='{fase_val}' data-sit='{e(sit_val)}'>"
-            f"<td style='white-space:nowrap;border-left:3px solid {borde};'>"
-            f"<b>#{e(item.get('orden'))}</b>"
-            f"<div style='margin-top:4px;'><span class='badge {clase_estado}'>{e(sit_val)}</span></div></td>"
-            f"<td><b>{e(item.get('trabajo'))}</b>"
-            f"<div style='font-size:11px;color:var(--muted);margin-top:3px;'>"
-            f"Orden lógico {e(item.get('orden_ejecucion'))} · {e(item.get('fase_nombre'))} · {e(item.get('ambito_nombre'))}</div></td>"
-            f"<td style='white-space:nowrap;'><b>{e(item.get('n_unidades'))}</b> ud.<br>"
-            f"<span style='font-size:11px;color:var(--muted);'>{e(n_ubicaciones)} ub.</span></td>"
-            f"<td>{ubicaciones_txt}</td>"
-            f"<td style='font-size:12px;'>{e(item.get('estado_actual'))}</td>"
-            f"<td style='font-size:12px;'>{motivo_html}</td></tr>"
-        )
-    if not filas_prio:
-        filas_prio = '<tr><td colspan="6" class="empty">No se han identificado bloques ejecutables con las reglas y datos actuales.</td></tr>'
-
-    _bp = ("El inventario incluye", "Los nombres nuevos", "Una X histórica", "El orden sigue")
-    avisos_prio = ''.join(
-        f'<div class="banner{" bad" if any(k in aviso.lower() for k in ("caducada", "error")) else ""}">⚠ {e(aviso)}</div>'
-        for aviso in prioridades.get('avisos', [])
-        if not any(aviso.startswith(bp) for bp in _bp)
-    )
-
-    estado_obra_html = ''
-    if prioridades.get('estado_obra'):
-        estado_obra_html = f'<div class="banner">ℹ <b>Estado de la obra:</b> {e(prioridades.get("estado_obra"))}</div>'
-
-    _DUDA_ETIQUETAS = {
-        "NO_QUITAR_X":          "Revisar en obra",
-        "TAJO_NUEVO":           "Tajo no reconocido",
-        "OMITIDO_SIN_X":        "Desapareció sin terminar",
-        "ALCANCE_POSTAPERTURA": "Alcance por confirmar",
-        "ESTADOS_DUPLICADOS":   "Estado duplicado en hoja",
-    }
-    if dudas_prio:
-        filas_dudas = ''
-        for duda in dudas_prio:
-            codigo   = duda.get('codigo', '')
-            etiqueta = _DUDA_ETIQUETAS.get(codigo, codigo)
-            pregunta = duda.get('pregunta', '')
-            n_ub     = duda.get('n_ubicaciones', 0)
-            # Agrupar ubicaciones por planta
-            por_planta = {}
-            for ub in duda.get('ubicaciones', []):
-                p = ub.get('planta', '?')
-                u = ub.get('unidad', '?')
-                por_planta.setdefault(p, []).append(u)
-            def _sort_key(p):
-                texto = str(p).strip()
-                if texto.isdigit():
-                    return (1, int(texto), '')
-                if texto.casefold() in {'pb', 'b', 'bajo', 'baja', 'planta baja'}:
-                    return (0, 0, '')
-                return (2, 0, texto)
-            ub_filas = ''.join(
-                f"<tr><td style='padding:2px 8px;'>Planta {e(p)}</td>"
-                f"<td style='padding:2px 8px;'>{e(', '.join(por_planta[p]))}</td></tr>"
-                for p in sorted(por_planta, key=_sort_key)
-            )
-            ub_detail = (
-                f"<details style='margin-top:6px;'>"
-                f"<summary style='cursor:pointer;font-size:12px;color:var(--accent);'>"
-                f"Ver {n_ub} ubicaciones afectadas</summary>"
-                f"<div style='margin-top:4px;overflow-x:auto;'>"
-                f"<table style='border-collapse:collapse;font-size:12px;'>"
-                f"<thead><tr><th style='padding:2px 8px;text-align:left;'>Planta</th>"
-                f"<th style='padding:2px 8px;text-align:left;'>Unidades</th></tr></thead>"
-                f"<tbody>{ub_filas}</tbody></table></div></details>"
-            ) if por_planta else ''
-            filas_dudas += (
-                f"<tr><td style='white-space:nowrap;'><b>{e(etiqueta)}</b></td>"
-                f"<td>{e(pregunta)}{ub_detail}</td>"
-                f"<td style='text-align:center;'>{n_ub}</td></tr>"
-            )
-        dudas_html = ("<div class='card' style='border-left:4px solid var(--warn);'>"
-                      "<h3>Preguntas pendientes antes de decidir</h3>"
-                      "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
-                      "Resolver estas dudas antes de planificar los tajos afectados. "
-                      "Pincha en cada fila para ver las plantas y unidades concretas.</p>"
-                      "<div class='table-scroll'><table class='data'><thead><tr>"
-                      "<th>Tipo</th><th>Qué hay que comprobar</th><th>Uds.</th>"
-                      "</tr></thead><tbody>"
-                      + filas_dudas + "</tbody></table></div></div>")
-    else:
-        dudas_html = '<div class="banner">✓ No hay preguntas pendientes en esta actualización.</div>'
-
-    secciones = [
-        ('VIABLE', '1. Tajos viables', 'Se pueden ejecutar según los datos disponibles.'),
-        ('BLOQUEADO', '2. Tajos bloqueados', 'Son propios, pero falta una dependencia previa.'),
-        ('OTROS_GREMIOS', '3. Otros gremios e interferencias', 'Se controlan solo para saber cuándo puede entrar electricidad.'),
-        ('DUDAS', '4. Sin clasificar o por verificar', 'No se decide ni se fusiona hasta recibir confirmación.'),
-        ('TERMINADO', '5. Tajos terminados', 'Histórico conservado; siempre se muestra al final.'),
-    ]
-    inventario_html = ''
-    for codigo, titulo, explicacion in secciones:
-        grupos = [g for g in inventario_prio if g.get('seccion') == codigo]
-        filas = ''
-        for g in grupos:
-            subtajos = g.get('subtajos', [])
-            sub_txt = ''
-            if len(subtajos) > 1:
-                sub_txt = f"<div style='font-size:11px;color:var(--muted);'>Incluye: {e(', '.join(subtajos))}</div>"
-            filas += (f"<tr><td><b>{e(g.get('trabajo'))}</b>{sub_txt}"
-                      f"<div style='font-size:11px;color:var(--muted);'>Orden {e(g.get('orden_ejecucion'))} · {e(g.get('fase_nombre'))}</div></td>"
-                      f"<td>{e(g.get('propiedad'))}</td><td><b>{e(g.get('n_ubicaciones'))}</b></td>"
-                      f"<td>{_ubicaciones_html(g.get('ubicaciones', []))}</td>"
-                      f"<td>{e(g.get('estado_actual'))}</td><td style='font-size:12px;'>{e(g.get('motivo'))}</td></tr>")
-        if not filas:
-            filas = '<tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr>'
-        tabla = (f"<div class='card'><h3>{titulo} <span class='badge'>{len(grupos)}</span></h3>"
-                 f"<p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>{explicacion}</p>"
-                 "<div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th>"
-                 "<th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th>"
-                 f"</tr></thead><tbody>{filas}</tbody></table></div></div>")
-        if codigo == 'TERMINADO':
-            tabla = f"<details><summary style='cursor:pointer;font-weight:700;margin:14px 0;'>Mostrar {len(grupos)} tajos terminados</summary>{tabla}</details>"
-        inventario_html += tabla
-
-    prioridades_html = f"""
-    <div class="kpi-row">
-      <div class="kpi"><div class="label">Bloques viables</div><div class="value">{resumen_prio.get('listos', 0)}</div><div class="hint">{resumen_prio.get('unidades_listas', 0)} tajos/unidades agrupados</div></div>
-      <div class="kpi"><div class="label">Bloqueados</div><div class="value">{resumen_prio.get('bloqueados', 0)}</div><div class="hint">Tajos propios con dependencias</div></div>
-      <div class="kpi"><div class="label">Otros gremios</div><div class="value">{resumen_prio.get('otros_gremios', 0)}</div><div class="hint">Control de interferencias</div></div>
-      <div class="kpi"><div class="label">Dudas</div><div class="value">{resumen_prio.get('preguntas_pendientes', 0)}</div><div class="hint">Preguntar antes de decidir</div></div>
-      <div class="kpi"><div class="label">Terminados</div><div class="value">{resumen_prio.get('terminados', 0)}</div><div class="hint">Conservados del histórico</div></div>
-      <div class="kpi"><div class="label">Inventario completo</div><div class="value">{resumen_prio.get('inventario_total', 0)}</div><div class="hint">Tipos de tajo agrupados</div></div>
-      <div class="kpi"><div class="label">Revisión utilizada</div><div class="value" style="font-size:18px;">{e(prioridades.get('revision'))}</div><div class="hint">Motor v{e(prioridades.get('version'))} · catálogo v{e(prioridades.get('catalogo_version'))}</div></div>
-    </div>
-    {estado_obra_html}
-    {dudas_html}
-    {avisos_prio}
-    <div class="card"><h3>Qué hacer ahora: orden lógico de ejecución</h3>
-      <p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Primero aparecen los tajos viables de viviendas, después zonas comunes y edificio. Los tajos iguales se agrupan. VERIFICAR nunca se considera ejecutable hasta confirmar la duda. <a href="prioridades_trabajos.json" target="_blank">Ver cálculo y detalle completo</a>.</p>
-      <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-        <span style="font-size:12px;color:var(--muted);">Filtrar:</span>
-        <select id="filtro-sit" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;">
-          <option value="">LISTO + VERIFICAR</option>
-          <option value="LISTO">Solo LISTO</option>
-          <option value="VERIFICAR">Solo VERIFICAR</option>
-        </select>
-        <span id="prio-count" style="font-size:12px;color:var(--muted);"></span>
-      </div>
-      <div class="table-scroll"><table id="tabla-prio" class="data"><thead><tr><th>#</th><th>Tajo</th><th>Alcance</th><th>Dónde</th><th>En obra</th><th>Motivo / Comprobar</th></tr></thead>
-      <tbody>{filas_prio}</tbody></table></div>
-    </div>
-    <div style="margin:20px 0 10px;"><h2 style="font-size:18px;">Inventario completo de la obra</h2><p style="font-size:12.5px;color:var(--muted);">Incluye todos los tajos encontrados en todas las revisiones. Los terminados no desaparecen: se guardan al final.</p></div>
-    {inventario_html}"""
+    prioridades_html = bloque_prioridades(prioridades)
 
     # Riesgos = manuales (ficha) + automáticos (bloqueos detectados)
     riesgos_auto = ""
