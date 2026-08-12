@@ -8,7 +8,7 @@
   "revision_caducada": false,
   "estado_obra": "Primera fase entregada; 2A FASE en curso en planta baja (viviendas A/B)",
   "historial_confirmado_terminado": false,
-  "generado": "12/08/2026 08:56",
+  "generado": "12/08/2026 09:11",
   "resumen": {
     "listos": 1,
     "verificar": 1,
@@ -22,7 +22,7 @@
     "terminados": 30,
     "inventario_total": 36,
     "detalle_total": 2326,
-    "preguntas_pendientes": 6,
+    "preguntas_pendientes": 3,
     "viviendas": 1,
     "zonas_comunes": 0,
     "edificio": 0
@@ -80143,30 +80143,6 @@
       "nombre": "Cuadro mecanizado",
       "parecidos": [
         "cuadros_presentados"
-      ]
-    },
-    {
-      "codigo": "DEPENDENCIA_AUSENTE_EN_LA_OBRA",
-      "tarea_id": "focos_pasillos",
-      "nombre": "Focos Pasillos",
-      "parecidos": [
-        "agujeros_focos_pasillo"
-      ]
-    },
-    {
-      "codigo": "DEPENDENCIA_AUSENTE_EN_LA_OBRA",
-      "tarea_id": "placas_tapas",
-      "nombre": "Placas y tapas",
-      "parecidos": [
-        "pintura_habitaciones"
-      ]
-    },
-    {
-      "codigo": "DEPENDENCIA_AUSENTE_EN_LA_OBRA",
-      "tarea_id": "placas_tps_cuadro",
-      "nombre": "Placas + Tps. Cuadro",
-      "parecidos": [
-        "pintura_habitaciones"
       ]
     }
   ],
