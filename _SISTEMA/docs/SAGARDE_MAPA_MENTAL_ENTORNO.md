@@ -25,7 +25,9 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 12/08/2026 12:43. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 12/08/2026 13:23. No editar a mano.*
+
+**22** carpetas de obra abiertas · **6** en el registro único · **6** con panel · **5** con ficha. En todo el árbol, **68** `.py` y **4** `.bat`.
 
 | Obra | Ubic. | Tajos | Celdas | X | M | / | P | ? | N | % |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -47,7 +49,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 12/08/2026 12:43).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 12/08/2026 13:23).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
@@ -85,17 +87,15 @@ SAGARDE es actualmente un repositorio local, monousuario y basado en archivos pa
 
 Las capas confirmadas son:
 
-1. **Fuentes documentales**: 21 carpetas de obras abiertas, 128 obras cerradas publicadas, 31 contratos de postventa y 4 contratos de mantenimiento en sus resúmenes actuales.
+1. **Fuentes documentales**: las carpetas de obras abiertas (cuenta viva en «Estado de hoy»), 128 obras cerradas publicadas, 31 contratos de postventa y 4 contratos de mantenimiento en sus resúmenes actuales.
 2. **Normalización**: siete adaptadores Python y lectores genéricos PDF/HTML/XLSX. Solo cinco adaptadores están registrados; dos apuntan a obras ya cerradas y sus rutas bajo obras abiertas no existen.
-3. **Estado persistente**: **cinco** `ficha_obra.json` —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Gorliz está registrado pero sin revisión ni base. *(Actualizado el 12/08/2026: antes decía tres y que Obispo operaba sin ficha; las dos cosas eran falsas.)*
+3. **Estado persistente**: un `ficha_obra.json` por obra registrada —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Gorliz está registrado pero sin revisión ni base.
 
-   | Obra | Ubicaciones | Tajos | Celdas |
-   |---|---|---|---|
-   | Gernika | 32 | 38 | 1216 |
-   | Mungia | 62 | 38 | 2356 |
-   | Bolueta | 97 | 38 | 3686 |
-   | Obispo Orueta | 102 | 40 | 4080 |
-   | OBRA PRUEBA | 31 | 38 | 1178 |
+   **Las cifras de cada base están en «Estado de hoy»**, al principio de este
+   documento, con su desglose de estados. Aquí había una segunda copia de esa
+   tabla escrita a mano; se retiró el 12/08/2026 porque dos tablas con los
+   mismos datos acaban divergiendo, y la de aquí ya había llegado a decir tres
+   fichas cuando eran cinco.
 
    Cada base es una **rejilla densa** `ubicaciones × tajos`, y cada celda guarda `{v: estado, f: fecha, r: revisión}`. Los estados son `X` terminado, `M` mínimo 50 %, `/` empezado, `P` pendiente confirmado, `?` nadie lo ha mirado, `N` no aplica.
 4. **Cálculo y decisión**: `motor_informes.py`, `priorizador_trabajos.py`, un catálogo de 39 tajos comunes (+18 propios de Orueta) y reglas específicas de obra. **La base es el estado; el catálogo es la regla.** La base dice qué existe y cómo está; el catálogo dice en qué orden va cada tajo y qué exige qué.
@@ -118,7 +118,7 @@ Las capas confirmadas son:
    **Al añadir un tajo al catálogo hay que preguntar qué debe estar terminado
    antes.** Un tajo sin dependencia sale siempre viable, que es tan falso como
    salir siempre bloqueado.
-5. **Presentación**: cinco paneles, índices, portal de escritorio, un portal móvil estancado, generador de revisiones y siete accesos de aplicaciones.
+5. **Presentación**: un panel por obra registrada (cuenta viva en «Estado de hoy»), índices, portal de escritorio, un portal móvil estancado, generador de revisiones y siete accesos de aplicaciones.
 6. **Orquestación/publicación**: `generar_todos.py`, `sagarde_portal.py`, scripts especializados y cuatro BAT. `Actualizar_Sagarde.bat` termina en `git add -A`, commit y `push origin main`.
 7. **Gobierno**: dos `CLAUDE.md`, cuatro definiciones locales tipo skill/agente, planes, especificaciones, handoffs, memoria vigente y 114 casos de prueba definidos estáticamente.
 
@@ -166,10 +166,10 @@ Pendientes concretos al cierre del 12/08/2026:
 mindmap
   root((SAGARDE))
     Obras
-      21 carpetas abiertas
-      5 obras registradas
-      3 fichas vivas
-      5 paneles
+      carpetas abiertas
+      obras registradas
+      fichas vivas
+      paneles
       128 cerradas publicadas
     Ingesta
       DOCX por adaptador
@@ -270,7 +270,7 @@ flowchart TD
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
 | A01 | Gobierno | Instrucciones | Instrucciones raíz | configuración | `CLAUDE.md` | Reglas globales, estados y continuidad | Sesión | Criterios | Árbol | Agentes | Operativo documental | `CLAUDE.md:1`, `:73-85`, `:195` |
 | A02 | Gobierno | Motor | Instrucciones motor | configuración | `_SISTEMA/MOTOR/CLAUDE.md` | Pipeline, comandos, rutas y skills | Tarea | Protocolo | Código | Agentes | Operativo documental | `_SISTEMA/MOTOR/CLAUDE.md:8-41` |
-| A03 | Entrada | Obras | Documentación de obra | almacenamiento | `SAGARDE OBRAS ABIERTAS/*` | Revisión, ficha, materiales y planos | Archivos | Datos brutos | OneDrive | Adaptadores | 21 carpetas; 5 automatizadas | `registro_obras.py:10-72`, `resumen_obras.json` |
+| A03 | Entrada | Obras | Documentación de obra | almacenamiento | `SAGARDE OBRAS ABIERTAS/*` | Revisión, ficha, materiales y planos | Archivos | Datos brutos | OneDrive | Adaptadores | carpetas y automatizadas: ver «Estado de hoy» | `registro_obras.py:10-72`, `resumen_obras.json` |
 | A04 | Entrada | Postventa | Contratos/incidencias | almacenamiento | `POST-VENTAS/INCIDENCIAS*` | PDF, Word, fotos e histórico | Documentos | Índice/resumen | python-docx | `postventas_index.py` | Operativo | `postventas_index.py:90-126` |
 | A05 | Entrada | Mantenimiento | Contratos | almacenamiento | `MANTENIMIENTOS/MANTENIMIENTO *` | Archivo por contrato | Documentos | Índice/mapas/resumen | filesystem | Dos generadores | Con duplicidad | `mantenimientos_index.py:82-143`; `sagarde_portal.py:147-183` |
 | A06 | Normalización | Registro | `OBRAS` | configuración | `registro_obras.py` | Registro único de 5 obras | Nombre/alias | Config resuelta | — | Generadores | Operativo | `registro_obras.py:2-5`, `:10-72` |
@@ -318,11 +318,12 @@ confundirse con la nueva skill.
 
 Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py`, más 4 `.bat`). Se añaden dos JS clasificados aparte: dato generado y dependencia vendor.
 
-> **Este inventario está incompleto y la cifra no vale (12/08/2026).** Contando
-> hoy el árbol hay **67 `.py`**, no 45. Faltan por listar al menos los scripts
-> del lector de hojas marcadas (paso 4 del ciclo, agosto) y las copias de la
-> skill CARDIVA. Se añaden abajo los dos ficheros creados hoy, pero la tabla
-> pide una pasada completa que no se ha hecho.
+> **Este inventario está incompleto y la cifra de arriba no vale (12/08/2026).**
+> La cuenta real de `.py` y `.bat` del árbol está en «Estado de hoy», al
+> principio del documento, y se recalcula en cada publicación. Faltan por
+> listar aquí al menos los scripts del lector de hojas marcadas (paso 4 del
+> ciclo, agosto) y las copias de la skill CARDIVA: la tabla pide una pasada
+> completa que no se ha hecho.
 
 | Script | Ruta | Lenguaje | Función | Ejecución | Llamado desde | Lee | Escribe / genera | Dependencias | Estado |
 |---|---|---|---|---|---|---|---|---|---|
@@ -432,7 +433,7 @@ Criterio: **135 vistas/estados navegables**: 126 pestañas/pasos/filtros (5 móv
 |---|---|---|---|---|---|---|---|
 | Centro de mando | página raíz | `index.html` / portal Python | KPI/alertas/áreas/búsqueda | resúmenes/árbol | buscar/abrir | todo | Operativo |
 | Inicio, Obras, Post-ventas, Mantenimientos, Cerradas | `tab0`…`tab4` | `PORTAL SAGARDE.html` | Móvil | resúmenes | cambiar/buscar | portal | Obsoleto aparente |
-| Índice obras | página | `SAGARDE OBRAS ABIERTAS/index.html` | 21 obras/5 paneles | resumen | abrir panel/PDF | generar_todos | Operativo |
+| Índice obras | página | `SAGARDE OBRAS ABIERTAS/index.html` | todas las obras; panel solo las registradas | resumen | abrir panel/PDF | generar_todos | Operativo |
 | Panel | `v-panel` | `panel_obra.py` | KPI/resumen | snapshot/ficha | ver | motor | Operativo |
 | Trabajos | `v-trabajos` | idem | bloqueos/avance | motor | tabla | motor | Operativo |
 | Materiales | `v-materiales` | idem | materiales XLSX | lector | ver | lectores | Condicional |
@@ -601,7 +602,7 @@ marcado: sigue ahí, sólo no se ve en el explorador.)
 │   └── _SISTEMA/                    2 scripts, .bat, resumen, .memory, 88 previews
 ├── SAGARDE (OLD)/OBRAS CERRADAS/    [histórico] 128 obras publicadas
 ├── SAGARDE OBRAS ABIERTAS/
-│   ├── 21 carpetas de obra/         [activo] 5 con ficha
+│   ├── carpetas de obra/            [activo] cuentas en «Estado de hoy»
 │   │   ├── INFORME SAGARDE IA/      [generado/estado] alias histórico
 │   │   └── REVISIONES*/_SISTEMA/    sidecars del lector y .recortes
 │   ├── index.html                   [generado]
@@ -639,12 +640,12 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 
 | Convención | Evidencia/alcance |
 |---|---|
-| Obra `AAAA LOCALIDAD ...` | 21 carpetas; sufijos no uniformes |
+| Obra `AAAA LOCALIDAD ...` | todas las carpetas de obra; sufijos no uniformes |
 | ID corto minúsculo | 5 IDs en `registro_obras.py` |
 | Revisión `REVISION ... DDMMAAAA` | Adaptadores/skill; hay excepciones históricas |
 | ID `rev_DDMMAAAA` | `ficha_obra.py` |
 | Clave `portal__planta__tajo__unidad` | Sidecars/generador |
-| Salida `INFORME SAGARDE IA` | 5 paneles/estados |
+| Salida `INFORME SAGARDE IA` | un panel y sus estados por obra registrada |
 | Ficha `X M / P ? N` | `ficha_obra.py:33-44` |
 | Snapshot `X M / vacío` | `motor_informes.py:18,37` |
 | Categorías derivadas | `VIABLE`, `BLOQUEADO`, `OTROS_GREMIOS`, `DUDAS`, `TERMINADO` |
@@ -660,8 +661,8 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | Bloque | Clasificación | Evidencia |
 |---|---|---|
 | Registro de 5 obras | Operativo | imports y test de registro |
-| Gernika/Mungia/Bolueta | Operativo con ficha | 3 fichas/3 seleccionables |
-| Obispo | Operativo parcial | panel/historial; sin ficha |
+| Gernika/Mungia/Bolueta/Orueta/PRUEBA | Operativo con ficha | 5 fichas; ver «Estado de hoy» |
+| Obispo Orueta | Operativo con ficha desde el 08/08/2026 | 102 ubicaciones y 16 tajos propios de obra |
 | Gorliz | En desarrollo | registro/panel 0%; sin revisión |
 | Otras 16 abiertas | Sin uso confirmado | resumen sin panel |
 | Motor/priorizador | Operativo | salidas/tests/memoria |
@@ -684,7 +685,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 1. **Portal móvil no regenerable:** `generar_portal_movil` acaba en línea 605; desde 645 el cuerpo quedó tras retornos de `_render_variacion_badge`, por tanto inalcanzable. HTML 25/07 frente a portal 29/07. CONFIRMADO.
 2. **Skill nueva obra antigua:** edita `generar_todos.py.OBRAS`, pero el registro está en `registro_obras.py`; JSON propuestos no son v4.3. CONFIRMADO.
 3. **Solo 3 obras en generador:** JS contiene 4, interfaz filtra fichas; Gorliz da error. CONFIRMADO.
-4. **16 obras abiertas sin automatizar:** 21 carpetas menos 5 registradas. CONFIRMADO.
+4. **16 obras abiertas sin automatizar:** 22 carpetas menos 6 registradas (12/08/2026; las dos cifras salen de «Estado de hoy»). CONFIRMADO.
 5. **2 adaptadores huérfanos:** Egurrola/Zorrozaure no registrados y sus rutas abiertas no existen; obras en OLD. CONFIRMADO/SIN USO.
 6. **Doble generador de mantenimiento:** el segundo sobrescribe `index.html`. CONFIRMADO.
 7. **Áreas genéricas sin índice/publicación:** Docs/Para/Scratch pueden dar 404 en Pages. INFERIDO CON EVIDENCIA.

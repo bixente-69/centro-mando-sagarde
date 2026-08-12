@@ -959,7 +959,8 @@ def main(hacer_pdf=True):
             continue
 
         print(f"  KPIs: {res['kpis']}")
-        print(f"  Bloqueos: {len(res['bloqueos'])} · Docs: {res['n_docs']} · Sin cambios: {res['sin_cambios']}")
+        print(f"  Desviaciones de avance: {len(res['bloqueos'])} · "
+              f"Docs: {res['n_docs']} · Sin cambios: {res['sin_cambios']}")
         print(f"  Prioridades: {prioridades['resumen']['listos']} listas · "
               f"{prioridades['resumen']['verificar']} a verificar · "
               f"{prioridades['resumen']['bloqueados']} bloqueadas")
@@ -1003,7 +1004,10 @@ def main(hacer_pdf=True):
             'pct_ponderado': res['kpis'].get('pct_ponderado', 0) if res['kpis'] else 0,
             'ultima': historial[-1][0] if historial else '—',
             'n_rev': len(historial), 'n_docs': res['n_docs'],
-            'sin_cambios': res['sin_cambios'], 'n_bloqueos': len(res['bloqueos']),
+            # El índice y el portal deben mostrar bloqueos reales de la base,
+            # no la antigua heurística estadística de plantas rezagadas.
+            'sin_cambios': res['sin_cambios'],
+            'n_bloqueos': prioridades['resumen']['bloqueados'],
             'n_prioridades': prioridades['resumen']['listos'],
             'n_prioridades_verificar': prioridades['resumen']['verificar'],
             'historico_pct': historico_pct,

@@ -199,6 +199,218 @@ def _tabla_prevision(prevision):
             "</tr></thead><tbody>" + filas + "</tbody></table></div></div>")
 
 
+def _campo_riesgo(registro, *nombres):
+    """Lee una columna manual aunque la plantilla use su nombre corto."""
+    por_nombre = {
+        str(k).strip().casefold(): v
+        for k, v in (registro or {}).items()
+    }
+    for nombre in nombres:
+        valor = por_nombre.get(nombre.casefold())
+        if valor not in (None, ''):
+            return valor
+    return ''
+
+
+def _tabla_riesgos_manuales(riesgos):
+    if not riesgos:
+        return ''
+    filas = ''
+    for riesgo in riesgos:
+        valores = [
+            _campo_riesgo(riesgo, 'Riesgo'),
+            _campo_riesgo(riesgo, 'Tipo'),
+            _campo_riesgo(riesgo, 'Probabilidad', 'Prob.'),
+            _campo_riesgo(riesgo, 'Impacto'),
+            _campo_riesgo(riesgo, 'Acción preventiva', 'Acción'),
+            _campo_riesgo(riesgo, 'Fecha límite'),
+            _campo_riesgo(riesgo, 'Estado'),
+        ]
+        filas += '<tr>' + ''.join(f'<td>{_e(v)}</td>' for v in valores) + '</tr>'
+    return (
+        "<div class='card'><h3>Registro manual</h3>"
+        "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
+        "Riesgos declarados en <b>FICHA DE OBRA.xlsx</b>. Probabilidad, "
+        "impacto y fecha solo se muestran cuando alguien los ha registrado; "
+        "el sistema no los inventa.</p>"
+        "<div class='table-scroll'><table class='data'><thead><tr>"
+        "<th>Riesgo</th><th>Tipo</th><th>Probabilidad declarada</th>"
+        "<th>Impacto declarado</th><th>Acción</th><th>Fecha límite</th>"
+        "<th>Estado</th></tr></thead><tbody>" + filas
+        + "</tbody></table></div></div>"
+    )
+
+
+def _tabla_bloqueos_riesgo(prevision):
+    if not prevision:
+        return (
+            "<div class='card'><h3>Bloqueos activos que frenan trabajo Sagarde</h3>"
+            "<p class='empty'>La base y el catálogo no producen dependencias "
+            "bloqueantes en esta actualización.</p></div>"
+        )
+
+    etiquetas = {
+        'propio': ('Sagarde', 'ok'),
+        'externo': ('Otro gremio', 'warn'),
+        'coordinacion': ('Coordinación', 'warn'),
+    }
+    acciones = {
+        'propio': 'Priorizar dentro de Sagarde por su efecto desbloqueante.',
+        'externo': 'Coordinar su cierre y confirmarlo en la siguiente revisión.',
+        'coordinacion': 'Cerrar la decisión o coordinación antes de liberar el frente.',
+    }
+    filas = ''
+    for item in prevision[:25]:
+        propiedad = item.get('propiedad') or 'desconocido'
+        etiqueta, clase = etiquetas.get(propiedad, ('Por confirmar', 'bad'))
+        afectados = ', '.join(item.get('tajos_afectados') or []) or '—'
+        accion = acciones.get(
+            propiedad, 'Confirmar responsable y condición de desbloqueo.')
+        filas += (
+            '<tr>'
+            f"<td><b>{_e(item.get('trabajo'))}</b></td>"
+            f"<td><span class='badge {clase}'>{_e(etiqueta)}</span></td>"
+            f"<td>{_e(item.get('estado_actual'))}</td>"
+            f"<td style='text-align:right;'><b>{_e(item.get('desbloquea'))}</b></td>"
+            f"<td>{_e(afectados)}</td><td>{_e(accion)}</td>"
+            '</tr>'
+        )
+    return (
+        "<div class='card'><h3>Bloqueos activos que frenan trabajo Sagarde</h3>"
+        "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
+        "Ordenados por lo que más liberan. La magnitud cuenta unidades "
+        "reales según el ámbito del tajo, no simples celdas.</p>"
+        "<div class='table-scroll'><table class='data'><thead><tr>"
+        "<th>Condicionante</th><th>Origen</th><th>Estado actual</th>"
+        "<th style='text-align:right;'>Libera</th><th>Tajos Sagarde afectados</th>"
+        "<th>Acción operativa</th></tr></thead><tbody>" + filas
+        + "</tbody></table></div></div>"
+    )
+
+
+def _tabla_controles_riesgo(prioridades, bloqueos, sin_cambios):
+    resumen = prioridades.get('resumen') or {}
+    revision = prioridades.get('revision') or '—'
+    sin_revisar = resumen.get('unidades_sin_revisar', 0)
+    preguntas = resumen.get('preguntas_pendientes', 0)
+    controles = []
+
+    if prioridades.get('revision_caducada'):
+        edad = prioridades.get('edad_revision_dias')
+        evidencia = f"Revisión {revision}"
+        if edad is not None:
+            evidencia += f" · {edad} días"
+        controles.append((
+            'Revisión desactualizada', evidencia,
+            'Actualizar la revisión de campo antes de decidir nuevos frentes.',
+            'Verificar'))
+    if sin_revisar:
+        controles.append((
+            'Cobertura pendiente', f'{sin_revisar} unidades sin revisar nunca',
+            'Comprobarlas en campo; desconocido no equivale a pendiente.',
+            'Verificar'))
+    if preguntas:
+        controles.append((
+            'Decisiones sin resolver', f'{preguntas} decisiones pendientes',
+            'Resolver alcance, duplicados o dependencias en la base/catálogo.',
+            'Verificar'))
+    if sin_cambios:
+        controles.append((
+            'Dos revisiones idénticas',
+            'Las dos últimas revisiones no cambian ninguna celda',
+            'Confirmar que la hoja de campo fue realmente actualizada.',
+            'Verificar'))
+    for bloqueo in bloqueos[:20]:
+        controles.append((
+            'Desviación de avance', bloqueo.get('motivo') or '—',
+            'Verificar en obra la causa de la diferencia respecto a su entorno.',
+            'Seguimiento'))
+
+    if not controles:
+        return (
+            "<div class='card'><h3>Calidad del dato y desviaciones de avance</h3>"
+            "<p class='empty'>Sin señales automáticas de control en esta actualización.</p>"
+            "</div>"
+        )
+
+    filas = ''.join(
+        '<tr>'
+        f'<td><b>{_e(senal)}</b></td><td>{_e(evidencia)}</td>'
+        f'<td>{_e(accion)}</td><td><span class="badge warn">{_e(estado)}</span></td>'
+        '</tr>'
+        for senal, evidencia, accion, estado in controles
+    )
+    return (
+        "<div class='card'><h3>Calidad del dato y desviaciones de avance</h3>"
+        "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
+        "Estas señales no demuestran por sí solas un bloqueo de producción; "
+        "indican qué conviene verificar.</p>"
+        "<div class='table-scroll'><table class='data'><thead><tr>"
+        "<th>Señal</th><th>Evidencia</th><th>Acción</th><th>Estado</th>"
+        "</tr></thead><tbody>" + filas + "</tbody></table></div></div>"
+    )
+
+
+def bloque_riesgos(prioridades, bloqueos=None, riesgos_manual=None,
+                    sin_cambios=False):
+    """Reconstruye Riesgos con los datos calculados en el ciclo actual.
+
+    Las prioridades ya proceden de ficha_obra.json y del catálogo. Los
+    bloqueos de dependencias son hechos materializados, no riesgos
+    probabilísticos, y se muestran con la magnitud real que desbloquean.
+    """
+    prioridades = prioridades or {}
+    bloqueos = bloqueos or []
+    riesgos_manual = riesgos_manual or []
+    manual_html = _tabla_riesgos_manuales(riesgos_manual)
+
+    if prioridades.get('sin_base'):
+        avisos = prioridades.get('avisos') or [
+            'Esta obra no tiene base de datos todavía.']
+        return (
+            "<div class='banner bad'><b>Riesgos no evaluables:</b> "
+            + _e(avisos[0])
+            + " El panel no publica un cero ni afirma que no haya riesgos."
+              "</div>" + manual_html
+        )
+
+    resumen = prioridades.get('resumen') or {}
+    prevision = prioridades.get('prevision') or []
+    revision = prioridades.get('revision') or '—'
+    bloqueados = resumen.get('bloqueados', 0)
+    sin_revisar = resumen.get('unidades_sin_revisar', 0)
+    preguntas = resumen.get('preguntas_pendientes', 0)
+
+    cabecera = (
+        "<div class='card'><h3>Riesgos de producción Sagarde</h3>"
+        "<p style='font-size:12.5px;color:var(--muted);margin-bottom:12px;'>"
+        "Se recalculan al actualizar SAGARDE desde la base viva de la obra, "
+        "el catálogo de dependencias y la revisión <b>" + _e(revision)
+        + "</b>. Un bloqueo activo se presenta como hecho; no se le asigna "
+          "una probabilidad ficticia.</p>"
+        "<div class='kpi-row' style='margin-bottom:0;'>"
+        "<div class='kpi'><div class='label'>Tajos bloqueados</div>"
+        f"<div class='value'>{_e(bloqueados)}</div>"
+        "<div class='hint'>Familias de trabajo Sagarde</div></div>"
+        "<div class='kpi'><div class='label'>Condicionantes activos</div>"
+        f"<div class='value'>{_e(len(prevision))}</div>"
+        "<div class='hint'>Dependencias que frenan producción</div></div>"
+        "<div class='kpi'><div class='label'>Sin revisar</div>"
+        f"<div class='value'>{_e(sin_revisar)}</div>"
+        "<div class='hint'>Unidades de dato por comprobar</div></div>"
+        "<div class='kpi'><div class='label'>Decisiones pendientes</div>"
+        f"<div class='value'>{_e(preguntas)}</div>"
+        "<div class='hint'>Alcance, catálogo u orden</div></div>"
+        "</div></div>"
+    )
+    return (
+        cabecera
+        + _tabla_bloqueos_riesgo(prevision)
+        + _tabla_controles_riesgo(prioridades, bloqueos, sin_cambios)
+        + manual_html
+    )
+
+
 def bloque_prioridades(prioridades):
     """HTML de la pestana Prioridades.
 
@@ -393,6 +605,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     kpis = motor.kpis_snapshot(snapshot) if snapshot else {}
     bloqueos = [] if historial_confirmado else (motor.detectar_bloqueos(snapshot) if snapshot else [])
     sin_cambios = False if historial_confirmado else motor.sin_cambios_entre_ultimas(historial)
+    n_bloqueos_base = (prioridades.get('resumen') or {}).get(
+        'bloqueados', len(bloqueos))
 
     payload = {
         'serie': motor.serie_tiempo(historial_panel) if historial_panel else [],
@@ -431,12 +645,12 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         <div class="kpi"><div class="label">Avance estricto (X)</div><div class="value">{kpis['pct_estricto']}%</div><div class="hint">Solo tareas 100% terminadas</div></div>
         <div class="kpi"><div class="label">Avance estimado</div><div class="value">{kpis['pct_ponderado']}%</div><div class="hint">Incluye parciales (estimación)</div></div>
         <div class="kpi"><div class="label">Revisiones</div><div class="value">{len(historial)}</div><div class="hint">Desde {historial[0][0]}</div></div>
-        <div class="kpi"><div class="label">Bloqueos</div><div class="value">{len(bloqueos)}</div><div class="hint">Detectados automáticamente</div></div>
+        <div class="kpi"><div class="label">Tajos bloqueados</div><div class="value">{n_bloqueos_base}</div><div class="hint">Sagarde · dependencias de la base</div></div>
         """
     else:
         kpi_html = '<div class="kpi"><div class="label">Avance</div><div class="value">—</div><div class="hint">Sin datos de revisión</div></div>'
 
-    # ---- TRABAJOS: bloqueos + ranking + detalle (charts via JS) ----
+    # ---- TRABAJOS: desviaciones + ranking + detalle (charts via JS) ----
     filas_bloq = ""
     if bloqueos:
         for b in bloqueos:
@@ -445,7 +659,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                            f"<td>{b['unidad']}</td><td><span class='badge {badge}'>{b['avance']}%</span></td>"
                            f"<td>{b['motivo']}</td></tr>")
     else:
-        filas_bloq = '<tr><td colspan="6" class="empty">No se detectan bloqueos con la heurística actual.</td></tr>'
+        filas_bloq = '<tr><td colspan="6" class="empty">No se detectan desviaciones de avance con la heurística actual.</td></tr>'
 
     detalle = motor.tabla_detalle(snapshot) if snapshot else []
     filas_det = "".join(
@@ -493,20 +707,11 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     # ---- PRIORIDADES E INVENTARIO COMPLETO DE TAJOS (motor v4) ----
     prioridades_html = bloque_prioridades(prioridades)
 
-    # Riesgos = manuales (ficha) + automáticos (bloqueos detectados)
-    riesgos_auto = ""
-    for b in bloqueos:
-        riesgos_auto += (f"<tr><td>{b['motivo']}</td><td>Coordinación/Plazo</td><td>—</td><td>Alto</td>"
-                         f"<td>Verificar causa en obra</td><td>—</td><td><span class='badge warn'>Automático</span></td></tr>")
-    riesgos_manual = ficha.get('riesgos', [])
-    filas_riesgo_man = ""
-    for r in riesgos_manual:
-        vals = list(r.values())
-        filas_riesgo_man += "<tr>" + "".join(f"<td>{v}</td>" for v in vals) + "</tr>"
-    if not riesgos_auto and not filas_riesgo_man:
-        riesgos_body = '<tr><td colspan="7" class="empty">Sin riesgos registrados.</td></tr>'
-    else:
-        riesgos_body = filas_riesgo_man + riesgos_auto
+    # Se reconstruye desde la base/priorizador del mismo ciclo. La ficha XLSX
+    # solo aporta el registro manual complementario.
+    riesgos_html = bloque_riesgos(
+        prioridades, bloqueos=bloqueos,
+        riesgos_manual=ficha.get('riesgos', []), sin_cambios=sin_cambios)
 
     # ---- DOCUMENTOS ----
     docs_html = ""
@@ -603,7 +808,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 
 <section id="v-trabajos" class="view">
   <div class="card"><h3>Avance por tarea — cuellos de botella</h3><canvas id="chartTareas" style="max-height:520px;"></canvas></div>
-  <div class="card"><h3>Bloqueos detectados</h3>
+  <div class="card"><h3>Desviaciones de avance</h3>
     <table class="data"><thead><tr><th>Tipo</th><th>Edificio</th><th>Planta</th><th>Unidad</th><th>Avance</th><th>Motivo</th></tr></thead>
     <tbody>{filas_bloq}</tbody></table></div>
   <div class="card"><h3>Detalle por planta / edificio</h3>
@@ -618,9 +823,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 <section id="v-prioridades" class="view">{prioridades_html}
   <div class="card"><h3>Hitos manuales</h3>{hitos_html}</div></section>
 
-<section id="v-riesgos" class="view"><div class="card"><h3>Riesgos (manuales + detectados automáticamente)</h3>
-  <table class="data"><thead><tr><th>Riesgo</th><th>Tipo</th><th>Prob.</th><th>Impacto</th><th>Acción</th><th>Fecha límite</th><th>Estado</th></tr></thead>
-  <tbody>{riesgos_body}</tbody></table></div></section>
+<section id="v-riesgos" class="view">{riesgos_html}</section>
 
 <section id="v-normativa" class="view"><div class="card"><h3>Normativa y criterios técnicos aplicables</h3>
   <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px;">Lista de referencia. No sustituye la comprobación de la versión vigente ni las instrucciones de la Dirección Facultativa.</p>

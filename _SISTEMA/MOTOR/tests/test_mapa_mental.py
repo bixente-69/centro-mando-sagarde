@@ -227,6 +227,48 @@ class TestEstadoDeObras(unittest.TestCase):
         self.assertEqual({"X": 11, "P": 1}, obra["desglose"])
 
 
+class TestRecuentosDelEntorno(unittest.TestCase):
+    """Las cifras narradas envejecen igual que las rutas.
+
+    El 12/08/2026 el mapa decía 21 carpetas (eran 22), 5 obras registradas
+    (6), 3 fichas vivas (5) y 5 paneles (6), y se contradecía a sí mismo:
+    §2 ya decía "cinco fichas" mientras el mapa mental de al lado decía tres.
+    """
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.raiz = Path(self._tmp.name)
+        base = self.raiz / "SAGARDE OBRAS ABIERTAS"
+        for nombre in ("2026 UNA", "2026 OTRA", "2026 TERCERA"):
+            (base / nombre / "INFORME SAGARDE IA").mkdir(parents=True)
+        # La carpeta tecnica del motor de obras no es una obra.
+        (base / "_SISTEMA INFORME SAGARDE IA").mkdir(parents=True)
+        for nombre in ("2026 UNA", "2026 OTRA"):
+            (base / nombre / "INFORME SAGARDE IA" / "panel.html").write_text("x", encoding="utf-8")
+        (base / "2026 UNA" / "INFORME SAGARDE IA" / "ficha_obra.json").write_text(
+            json.dumps({"tajos": {"aplicables": []}, "estados": {}}), encoding="utf-8")
+        self.addCleanup(self._tmp.cleanup)
+
+    def test_cuenta_carpetas_paneles_y_fichas(self):
+        r = amm.recuentos(self.raiz)
+        self.assertEqual(3, r["carpetas"])
+        self.assertEqual(2, r["paneles"])
+        self.assertEqual(1, r["fichas"])
+
+    def test_la_carpeta_tecnica_no_cuenta_como_obra(self):
+        self.assertEqual(3, amm.recuentos(self.raiz)["carpetas"])
+
+    def test_si_no_se_puede_leer_el_registro_no_se_inventa_un_numero(self):
+        # CLAUDE.md: no sustituir valores desconocidos por cero.
+        self.assertIsNone(amm.recuentos(self.raiz)["registradas"])
+
+    def test_el_bloque_generado_publica_esas_cifras(self):
+        texto = amm.render_estado([], amm.recuentos(self.raiz), "01/01/2026 00:00")
+        self.assertIn("3", texto)
+        self.assertIn("carpetas de obra", texto)
+        self.assertIn("—", texto)   # el registro ilegible sale como raya
+
+
 class TestNoEscribirPorEscribir(unittest.TestCase):
     """Una pasada que no cambia nada no puede ensuciar el repositorio.
 

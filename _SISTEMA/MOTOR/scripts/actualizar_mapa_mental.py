@@ -261,15 +261,66 @@ def estado_obras(raiz: Path) -> list[dict]:
     return filas
 
 
+def recuentos(raiz: Path) -> dict:
+    """Las cifras del entorno que el mapa narraba a mano y se desfasaban.
+
+    `registradas` sale del registro único; si no se puede leer se devuelve
+    None y se imprime una raya. No se sustituye un desconocido por cero.
+    """
+    raiz = Path(raiz)
+    base = raiz / "SAGARDE OBRAS ABIERTAS"
+    carpetas = [
+        d for d in (os.listdir(base) if base.is_dir() else [])
+        if (base / d).is_dir() and not d.startswith("_")
+    ]
+    salida = os.path.join(str(base), "*", "INFORME SAGARDE IA")
+    ficheros = _indice(raiz)
+    return {
+        "carpetas": len(carpetas),
+        "paneles": len(glob.glob(os.path.join(salida, "panel.html"))),
+        "fichas": len(glob.glob(os.path.join(salida, "ficha_obra.json"))),
+        "registradas": _obras_registradas(base),
+        "py": sum(1 for p in ficheros if p.endswith(".py")),
+        "bat": sum(1 for p in ficheros if p.endswith(".bat")),
+    }
+
+
+def _obras_registradas(base: Path) -> int | None:
+    """Cuenta `registro_obras.OBRAS` sin importar el módulo.
+
+    Se lee el fichero en vez de importarlo: importar el motor de obras desde
+    el motor de la raíz arrastraría sus dependencias, y un fallo ahí tumbaría
+    el paso del mapa en mitad de una publicación.
+    """
+    fuente = base / "_SISTEMA INFORME SAGARDE IA" / "registro_obras.py"
+    try:
+        texto = fuente.read_text(encoding="utf-8")
+    except OSError:
+        return None
+    cuenta = len(re.findall(r"^\s*['\"]adaptador['\"]\s*:", texto, re.MULTILINE))
+    return cuenta or None
+
+
 _ORDEN_ESTADOS = ("X", "M", "/", "P", "?", "N")
 
 
-def render_estado(filas: list[dict], momento: str) -> str:
+def _cifra(valor) -> str:
+    return "—" if valor is None else f"**{valor}**"
+
+
+def render_estado(filas: list[dict], cuentas: dict, momento: str) -> str:
     """Tabla del bloque AUTO:estado. Desglose completo, no solo el porcentaje."""
     lineas = [
         f"*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en "
         f"cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que "
         f"alguna cifra cambió: {momento}. No editar a mano.*",
+        "",
+        f"{_cifra(cuentas.get('carpetas'))} carpetas de obra abiertas · "
+        f"{_cifra(cuentas.get('registradas'))} en el registro único · "
+        f"{_cifra(cuentas.get('paneles'))} con panel · "
+        f"{_cifra(cuentas.get('fichas'))} con ficha. "
+        f"En todo el árbol, {_cifra(cuentas.get('py'))} `.py` y "
+        f"{_cifra(cuentas.get('bat'))} `.bat`.",
         "",
         "| Obra | Ubic. | Tajos | Celdas | " + " | ".join(_ORDEN_ESTADOS) + " | % |",
         "|---|---|---|---|" + "---|" * len(_ORDEN_ESTADOS) + "---|",
@@ -315,8 +366,9 @@ def actualizar_mapa(ruta_mapa: Path = MAPA, raiz: Path = RAIZ,
     momento = datetime.now().strftime("%d/%m/%Y %H:%M")
 
     muertas = rutas_muertas(texto, raiz)
-    nuevo = reemplazar_bloque(texto, "estado",
-                              render_estado(estado_obras(raiz), momento))
+    nuevo = reemplazar_bloque(
+        texto, "estado",
+        render_estado(estado_obras(raiz), recuentos(raiz), momento))
     nuevo = reemplazar_bloque(nuevo, "rutas_muertas",
                               render_rutas_muertas(muertas, momento))
 
