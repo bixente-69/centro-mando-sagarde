@@ -8,11 +8,11 @@
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "12/08/2026 10:15",
+  "generado": "12/08/2026 10:26",
   "resumen": {
     "listos": 19,
     "verificar": 0,
-    "unidades_listas": 429,
+    "unidades_listas": 373,
     "unidades_verificar": 0,
     "bloqueados": 6,
     "otros_gremios": 12,
@@ -4465,516 +4465,12 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "10",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "10",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "10",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "10",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "11",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "11",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "11",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "11",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "12",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "13",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "14",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "14",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "14",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "14",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "15",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "15",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "15",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "15",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "16",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "17",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "17",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "17",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "17",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "18",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "18",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "18",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "18",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "19",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "20",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "20",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "20",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "20",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "21",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "22",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "BOLUETA",
-          "planta": "23",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 92,
-      "n_ubicaciones": 92,
-      "n_unidades": 92,
-      "estado_actual": "Pendiente: 92",
+      "n_celdas": 36,
+      "n_ubicaciones": 36,
+      "n_unidades": 36,
+      "estado_actual": "Pendiente: 36",
       "motivo": "Completa la alimentación de la vivienda.",
       "impacto_gremios": "Completa la alimentación de la vivienda.",
       "orden": 14
@@ -68123,9 +67619,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68150,9 +67656,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68177,9 +67693,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68204,9 +67730,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68312,9 +67848,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68339,9 +67885,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68366,9 +67922,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68393,9 +67959,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68420,9 +67996,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68447,9 +68033,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68474,9 +68070,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68501,9 +68107,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68528,9 +68144,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68555,9 +68181,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68582,9 +68218,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68609,9 +68255,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68636,9 +68292,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68663,9 +68329,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68690,9 +68366,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68717,9 +68403,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68744,9 +68440,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68771,9 +68477,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68798,9 +68514,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68825,9 +68551,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68852,9 +68588,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68879,9 +68625,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68906,9 +68662,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68933,9 +68699,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68960,9 +68736,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -68987,9 +68773,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69014,9 +68810,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69041,9 +68847,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69068,9 +68884,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69095,9 +68921,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69122,9 +68958,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69149,9 +68995,19 @@
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Completa la alimentación de la vivienda.",
-      "dependencias_cumplidas": [],
+      "dependencias_cumplidas": [
+        "Montante eléctrica"
+      ],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69174,11 +69030,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69201,11 +69067,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69228,11 +69104,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69255,11 +69141,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69282,11 +69178,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69309,11 +69215,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69336,11 +69252,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69363,11 +69289,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69390,11 +69326,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69417,11 +69363,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69444,11 +69400,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69471,11 +69437,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69498,11 +69474,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69525,11 +69511,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69552,11 +69548,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69579,11 +69585,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69606,11 +69622,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69633,11 +69659,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69660,11 +69696,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69687,11 +69733,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69714,11 +69770,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69741,11 +69807,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69768,11 +69844,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69795,11 +69881,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69822,11 +69918,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69849,11 +69955,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69876,11 +69992,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69903,11 +70029,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69930,11 +70066,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69957,11 +70103,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -69984,11 +70140,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70011,11 +70177,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70038,11 +70214,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70065,11 +70251,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70092,11 +70288,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70119,11 +70325,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70146,11 +70362,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70173,11 +70399,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70200,11 +70436,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70227,11 +70473,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70254,11 +70510,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70281,11 +70547,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70308,11 +70584,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70335,11 +70621,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70362,11 +70658,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70389,11 +70695,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70416,11 +70732,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70443,11 +70769,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70470,11 +70806,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70497,11 +70843,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70524,11 +70880,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70551,11 +70917,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70578,11 +70954,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70605,11 +70991,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70632,11 +71028,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -70659,11 +71065,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -135601,392 +136017,392 @@
           "planta": "10",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "10",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "10",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "10",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "11",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "11",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "11",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "11",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "12",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "12",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "12",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "12",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "13",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "13",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "13",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "13",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "14",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "14",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "14",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "14",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "15",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "15",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "15",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "15",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "16",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "16",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "16",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "16",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "17",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "17",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "17",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "17",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "18",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "18",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "18",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "18",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "19",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "19",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "19",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "19",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "20",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "20",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "20",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "20",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "21",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "21",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "21",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "21",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "22",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "22",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "22",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "22",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
           "planta": "23",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "categoria": "BLOQUEADO"
         },
         {
           "edificio": "BOLUETA",
@@ -136011,10 +136427,11 @@
       "n_ubicaciones": 97,
       "estado_actual": "Pendiente: 97",
       "resumen_categorias": {
-        "VIABLE": 92,
-        "SIN_REVISAR": 5
+        "VIABLE": 36,
+        "SIN_REVISAR": 5,
+        "BLOQUEADO": 56
       },
-      "motivo": "Completa la alimentación de la vivienda. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Completa la alimentación de la vivienda. Dependencias pendientes: Montante eléctrica. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 14
     },
     {
@@ -152937,6 +153354,16 @@
         "Portero / videoportero",
         "Telecableado",
         "Termostatos"
+      ]
+    },
+    {
+      "tarea_id": "montante_electrica",
+      "trabajo": "Montante eléctrica",
+      "estado_actual": "X",
+      "propiedad": "propio",
+      "desbloquea": 56,
+      "tajos_afectados": [
+        "Derivación individual"
       ]
     },
     {

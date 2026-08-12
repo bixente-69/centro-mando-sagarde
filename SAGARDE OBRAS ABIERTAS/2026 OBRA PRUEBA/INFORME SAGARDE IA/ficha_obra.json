@@ -3,7 +3,7 @@
   "id": "prueba",
   "modo": "nativa",
   "fecha_entrada_digital": "05/08/2026",
-  "actualizado": "12/08/2026 10:15",
+  "actualizado": "12/08/2026 10:26",
   "identidad": {
     "nombre": "OBRA PRUEBA",
     "carpeta": "2026 OBRA PRUEBA",
@@ -690,7 +690,12 @@
         "propiedad": "propio",
         "fase": "Cierre técnico",
         "orden": 220,
-        "deps": []
+        "deps": [
+          {
+            "id": "montante_electrica",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cuadro_mecanizado",
@@ -735,7 +740,12 @@
         "propiedad": "externo",
         "fase": "Acabados previos",
         "orden": 240,
-        "deps": []
+        "deps": [
+          {
+            "id": "segunda_cara_pladur",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "enchapado",
@@ -744,7 +754,12 @@
         "propiedad": "externo",
         "fase": "Acabados previos",
         "orden": 250,
-        "deps": []
+        "deps": [
+          {
+            "id": "segunda_cara_pladur",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "pintura_primera",
@@ -753,7 +768,16 @@
         "propiedad": "externo",
         "fase": "Pintura",
         "orden": 260,
-        "deps": []
+        "deps": [
+          {
+            "id": "techos",
+            "minimo": 1
+          },
+          {
+            "id": "enchapado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "mecanizado",
@@ -802,7 +826,12 @@
         "propiedad": "externo",
         "fase": "Pintura final",
         "orden": 290,
-        "deps": []
+        "deps": [
+          {
+            "id": "pintura_primera",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "placas_tapas",

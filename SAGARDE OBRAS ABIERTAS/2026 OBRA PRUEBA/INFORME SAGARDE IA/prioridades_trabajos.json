@@ -8,13 +8,13 @@
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "12/08/2026 10:15",
+  "generado": "12/08/2026 10:26",
   "resumen": {
-    "listos": 12,
+    "listos": 11,
     "verificar": 0,
-    "unidades_listas": 66,
+    "unidades_listas": 35,
     "unidades_verificar": 0,
-    "bloqueados": 13,
+    "bloqueados": 14,
     "otros_gremios": 12,
     "dudas": 0,
     "sin_revisar": 0,
@@ -23,7 +23,7 @@
     "inventario_total": 37,
     "detalle_total": 1178,
     "preguntas_pendientes": 0,
-    "viviendas": 7,
+    "viviendas": 6,
     "zonas_comunes": 1,
     "edificio": 4
   },
@@ -859,305 +859,6 @@
       "orden": 10
     },
     {
-      "tarea_id": "derivacion_individual",
-      "trabajo": "Derivación individual",
-      "situacion": "LISTO",
-      "categoria": "VIABLE",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "prioridad": "P1",
-      "orden_ejecucion": 220,
-      "fase_nombre": "Cierre técnico",
-      "ubicaciones": [
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "1ª",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "1ª",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "1ª",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "1ª",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "2ª",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "2ª",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "2ª",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "2ª",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "PB",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "1ª",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "1ª",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "1ª",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "2ª",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "2ª",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "3ª",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "3ª",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "3ª",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "3ª",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "PB",
-          "unidades": [
-            "LOCALES"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        }
-      ],
-      "n_celdas": 31,
-      "n_ubicaciones": 31,
-      "n_unidades": 31,
-      "estado_actual": "Pendiente: 31",
-      "motivo": "Completa la alimentación de la vivienda.",
-      "impacto_gremios": "Completa la alimentación de la vivienda.",
-      "orden": 11
-    },
-    {
       "tarea_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "situacion": "LISTO",
@@ -1454,7 +1155,7 @@
       "estado_actual": "Pendiente: 31",
       "motivo": "Partida técnica general.",
       "impacto_gremios": "Partida técnica general.",
-      "orden": 12
+      "orden": 11
     }
   ],
   "detalle_items": [
@@ -23502,11 +23203,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23529,11 +23240,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23556,11 +23277,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23583,11 +23314,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23610,11 +23351,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23637,11 +23388,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23664,11 +23425,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23691,11 +23462,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23718,11 +23499,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23745,11 +23536,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23772,11 +23573,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23799,11 +23610,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23826,11 +23647,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23853,11 +23684,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23880,11 +23721,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23907,11 +23758,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23934,11 +23795,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23961,11 +23832,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -23988,11 +23869,21 @@
       "unidad": "LOCALES",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24015,11 +23906,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24042,11 +23943,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24069,11 +23980,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24096,11 +24017,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24123,11 +24054,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24150,11 +24091,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24177,11 +24128,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24204,11 +24165,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24231,11 +24202,21 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24258,11 +24239,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24285,11 +24276,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -24312,11 +24313,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Completa la alimentación de la vivienda.",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
+      "dependencias_bloqueantes": [
+        "Montante eléctrica"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "montante_electrica",
+          "nombre": "Montante eléctrica",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -44826,244 +44837,6 @@
       "orden_inventario": 10
     },
     {
-      "grupo_id": "derivacion_individual",
-      "trabajo": "Derivación individual",
-      "propiedad": "propio",
-      "orden_ejecucion": 220,
-      "fase_nombre": "Cierre técnico",
-      "ubicaciones": [
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "1ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "1ª",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "1ª",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "2ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "2ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "2ª",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "2ª",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B1 PORTAL 1",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "1ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "1ª",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "2ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "2ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "3ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "3ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "3ª",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "3ª",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "B2 PORTAL 1",
-          "planta": "PB",
-          "unidad": "LOCALES",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        }
-      ],
-      "subtajos": [
-        "Derivación individual"
-      ],
-      "seccion": "VIABLE",
-      "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 31,
-      "estado_actual": "Pendiente: 31",
-      "resumen_categorias": {
-        "VIABLE": 31
-      },
-      "motivo": "Completa la alimentación de la vivienda.",
-      "orden_inventario": 11
-    },
-    {
       "grupo_id": "cuarto_tecnico",
       "trabajo": "Cuarto técnico",
       "propiedad": "propio",
@@ -45299,7 +45072,7 @@
         "VIABLE": 31
       },
       "motivo": "Partida técnica general.",
-      "orden_inventario": 12
+      "orden_inventario": 11
     },
     {
       "grupo_id": "rozas_timbres",
@@ -45538,7 +45311,7 @@
         "TERMINADO": 12
       },
       "motivo": "Dependencias pendientes: Tabicado. Terminado según la última confirmación válida.",
-      "orden_inventario": 13
+      "orden_inventario": 12
     },
     {
       "grupo_id": "cableado_zzcc",
@@ -45776,7 +45549,7 @@
         "BLOQUEADO": 31
       },
       "motivo": "Dependencias pendientes: Tubeado de zonas comunes.",
-      "orden_inventario": 14
+      "orden_inventario": 13
     },
     {
       "grupo_id": "doblar_cajas",
@@ -46014,7 +45787,7 @@
         "BLOQUEADO": 31
       },
       "motivo": "Dependencias pendientes: Segundas caras de Pladur.",
-      "orden_inventario": 15
+      "orden_inventario": 14
     },
     {
       "grupo_id": "embornado",
@@ -46252,7 +46025,7 @@
         "BLOQUEADO": 31
       },
       "motivo": "Dependencias pendientes: Cableado eléctrico.",
-      "orden_inventario": 16
+      "orden_inventario": 15
     },
     {
       "grupo_id": "telembornado",
@@ -46490,6 +46263,244 @@
         "BLOQUEADO": 31
       },
       "motivo": "Dependencias pendientes: Telecableado.",
+      "orden_inventario": 16
+    },
+    {
+      "grupo_id": "derivacion_individual",
+      "trabajo": "Derivación individual",
+      "propiedad": "propio",
+      "orden_ejecucion": 220,
+      "fase_nombre": "Cierre técnico",
+      "ubicaciones": [
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "3ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "3ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "3ª",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "3ª",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "PB",
+          "unidad": "LOCALES",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1ª",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1ª",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2ª",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2ª",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        }
+      ],
+      "subtajos": [
+        "Derivación individual"
+      ],
+      "seccion": "BLOQUEADO",
+      "seccion_nombre": "Tajos bloqueados",
+      "n_ubicaciones": 31,
+      "estado_actual": "Pendiente: 31",
+      "resumen_categorias": {
+        "BLOQUEADO": 31
+      },
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "orden_inventario": 17
     },
     {
@@ -51601,6 +51612,16 @@
       "desbloquea": 31,
       "tajos_afectados": [
         "Placas y tapas"
+      ]
+    },
+    {
+      "tarea_id": "montante_electrica",
+      "trabajo": "Montante eléctrica",
+      "estado_actual": "Pendiente",
+      "propiedad": "propio",
+      "desbloquea": 31,
+      "tajos_afectados": [
+        "Derivación individual"
       ]
     },
     {
