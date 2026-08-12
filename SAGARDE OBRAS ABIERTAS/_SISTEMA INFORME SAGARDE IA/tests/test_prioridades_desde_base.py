@@ -308,6 +308,20 @@ class TestSembrarReglas(unittest.TestCase):
         self.assertEqual(dup[0]['parecidos'],
                          ['placas_tapas', 'placas_tps_cuadro'])
 
+    def test_una_dependencia_que_existe_con_otro_id_no_se_avisa(self):
+        """Orueta guarda 'pintura_hab' y el catalogo dice
+        'pintura_habitaciones'. Comparar los ids en crudo daba 3 falsas
+        alarmas de 4."""
+        ficha = self._ficha([
+            {'id': 'tabicado_viejo', 'nombre': 'Tabicado', 'orden': 9999},
+            {'id': 'tubeado', 'nombre': 'Tubeado interior', 'orden': 9999},
+        ])
+        preguntas = sembrar_reglas(ficha, Catalogo())
+        por_tubeado = [p for p in preguntas
+                       if p['codigo'] == 'DEPENDENCIA_AUSENTE_EN_LA_OBRA'
+                       and p['tarea_id'] == 'tubeado']
+        self.assertEqual(por_tubeado, [])
+
     def test_sin_duplicados_no_hay_aviso(self):
         ficha = self._ficha([
             {'id': 'tubeado', 'nombre': 'Tubeado interior', 'orden': 9999},

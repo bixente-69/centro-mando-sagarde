@@ -310,7 +310,11 @@ def sembrar_reglas(ficha, catalogo):
     # Una dependencia que apunta a un tajo que esta obra no tiene vale 0 y
     # bloquea para siempre en silencio: "Dependencias pendientes: Tabicado"
     # sin que Tabicado exista en la obra. Se avisa en vez de callar.
-    presentes = {t["id"] for t in detalle}
+    #
+    # OJO: se compara contra los ids RESUELTOS, no contra los de la base.
+    # Orueta guarda 'pintura_hab' y el catalogo dice 'pintura_habitaciones':
+    # comparar en crudo daba 3 falsas alarmas de 4.
+    presentes = set(por_catalogo) | {t["id"] for t in detalle}
     for tajo in detalle:
         ausentes = sorted(d["id"] for d in (tajo.get("deps") or [])
                           if d["id"] not in presentes)
