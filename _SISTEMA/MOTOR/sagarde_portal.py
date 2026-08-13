@@ -44,8 +44,45 @@ AREA_META = {
     "POST-VENTAS": ("Post-ventas", "Incidencias, partes resueltos y matrices por obra", "#0b6bcb"),
     "MANTENIMIENTOS": ("Mantenimientos", "Contratos, revisiones e incidencias de mantenimiento", "#16794b"),
     "APLICACIONES": ("Aplicaciones", "Accesos directos a todas las herramientas del entorno Sagarde", "#0a6b5e"),
-    "VARIOS": ("Herramientas", "Catalogos, manuales, planilla y utilidades varias", "#6f42a1"),
-    "SAGARDE (OLD)": ("Archivo historico", "Obras cerradas y documentacion anterior", "#5f6875"),
+    "VARIOS": ("Herramientas", "Catálogos, manuales, plantillas y utilidades técnicas", "#6f42a1"),
+    "SAGARDE (OLD)": ("Archivo histórico", "Obras cerradas y documentación anterior", "#5f6875"),
+}
+
+# Las dos ultimas areas de la portada tienen una landing generada por este
+# mismo modulo. La ruta se declara de forma explicita para que una primera
+# ejecucion limpia ya publique el enlace correcto; depender de que el HTML
+# existiera antes obligaba a ejecutar el generador dos veces.
+AREA_ENTRYPOINTS = {
+    "VARIOS": "index.html",
+    "SAGARDE (OLD)": "index.html",
+}
+
+# `VARIOS/APPS SAGARDE` contiene datos personales y esta excluido de Git. Un
+# HTML generado si se publica, de modo que tampoco puede incorporar nombres o
+# rutas procedentes de esa carpeta.
+HERRAMIENTAS_PRIVADAS = {"APPS SAGARDE"}
+HERRAMIENTAS_EXTS = DOC_EXTS | {
+    ".html", ".htm", ".dwg", ".jpg", ".jpeg", ".png", ".gif", ".txt",
+}
+HERRAMIENTAS_RUIDO_EXTS = {".bak", ".dwl", ".dwl2", ".log", ".tmp"}
+HERRAMIENTAS_RUIDO_NOMBRES = {"index.html", "videosag.mp4", "plot.log"}
+HERRAMIENTAS_DESCRIPCIONES = {
+    "BATERIAS DE CONDENSADORES": "Calculo, informes y documentacion de baterias",
+    "CATALOGOS": "Catalogos tecnicos y referencias de fabricantes",
+    "CENTRALIZACIONES": "Documentacion de centralizaciones y cajas",
+    "COTAS VIVIENDAS": "Planos y criterios de montaje en viviendas",
+    "DUDAS RBTE": "Consultas y documentacion de apoyo reglamentario",
+    "HERRAMIENTAS": "Referencias visuales y utiles de trabajo",
+    "LOGOTIPOS CLIENTES": "Recursos graficos de clientes y colaboradores",
+    "MANUALES": "Manuales tecnicos y documentacion de equipos",
+    "PEGATINAS VIVIENDA": "Plantillas y modelos de identificacion",
+    "PLANILLA": "Documentos de planilla y seguimiento interno",
+    "RECUENTO MECANISMOS": "Modelos de calculo y recuento de mecanismos",
+    "REVISIONES": "Plantillas y archivos auxiliares de revision",
+    "TELECOMUNICACIONES": "Esquemas y referencias de telecomunicaciones",
+    "TIERRAS": "Mediciones, informes y recursos de puesta a tierra",
+    "UNIFILARES": "Planos y bases de esquemas unifilares",
+    "VIDEOPORTEROS": "Referencias de equipos de videoportero",
 }
 
 # Contratos de solo lectura publicados por los subsistemas ya existentes.
@@ -73,6 +110,19 @@ def es_carpeta_visible(p: Path) -> bool:
     return p.is_dir() and p.name not in IGNORE_DIRS and not p.name.startswith(".")
 
 
+def es_ruta_privada_herramientas(path: Path) -> bool:
+    """Indica si una ruta pertenece al archivo personal no publicable."""
+    try:
+        partes = path.relative_to(ROOT).parts
+    except ValueError:
+        return False
+    return (
+        len(partes) >= 2
+        and partes[0] == "VARIOS"
+        and partes[1] in HERRAMIENTAS_PRIVADAS
+    )
+
+
 def load_json_safe(path: Path) -> dict | None:
     try:
         if path.is_file():
@@ -93,16 +143,18 @@ def dias_desde(ts: float | None) -> int | None:
 def scan_area(folder: Path) -> dict:
     dirs, files = [], []
     for path in folder.rglob("*"):
-        if not visible(path):
+        if not visible(path) or es_ruta_privada_herramientas(path):
             continue
         (dirs if path.is_dir() else files).append(path)
     docs = [p for p in files if p.suffix.lower() in DOC_EXTS]
     latest = max((p.stat().st_mtime for p in files), default=folder.stat().st_mtime)
     title, description, color = AREA_META.get(folder.name, (folder.name.title(), "Carpeta de trabajo", "#475467"))
-    entry = folder / "index.html"
+    entry_rel = AREA_ENTRYPOINTS.get(folder.name, "index.html")
+    entry = folder / entry_rel
+    tiene_landing = folder.name in AREA_ENTRYPOINTS or entry.exists()
     return {
         "name": folder.name, "title": title, "description": description, "color": color,
-        "url": url(entry if entry.exists() else folder) + ("" if entry.exists() else "/"),
+        "url": url(entry if tiene_landing else folder) + ("" if tiene_landing else "/"),
         "folders": len(dirs), "files": len(files), "docs": len(docs), "latest": latest,
     }
 
@@ -230,6 +282,88 @@ def escanear_obras_cerradas() -> list[dict]:
     return obras
 
 
+def _es_archivo_herramienta(path: Path) -> bool:
+    """Filtra copias tecnicas y formatos que no son recursos consultables."""
+    nombre = path.name.lower()
+    if not path.is_file() or not visible(path) or es_ruta_privada_herramientas(path):
+        return False
+    if nombre in HERRAMIENTAS_RUIDO_NOMBRES or path.suffix.lower() in HERRAMIENTAS_RUIDO_EXTS:
+        return False
+    if "backup" in nombre or "copia" in nombre or nombre.startswith("antes_"):
+        return False
+    return path.suffix.lower() in HERRAMIENTAS_EXTS
+
+
+def _archivo_herramienta(base: Path, path: Path) -> dict:
+    rel = path.relative_to(base)
+    ext = path.suffix.lower()
+    return {
+        "nombre": path.name,
+        "ruta": rel.as_posix(),
+        "url": quote(rel.as_posix(), safe=_RUTA_SAFE),
+        "extension": ext[1:].upper() if ext else "ARCHIVO",
+        "es_documento": ext in DOC_EXTS,
+        "mtime": path.stat().st_mtime,
+    }
+
+
+def escanear_herramientas() -> dict:
+    """Inventaria la biblioteca tecnica publica de VARIOS.
+
+    La zona personal se excluye antes de construir el resultado: el HTML de
+    esta portada se publica y no debe actuar como indice lateral de datos que
+    Git ignora deliberadamente.
+    """
+    base = ROOT / "VARIOS"
+    resultado = {
+        "categorias": [], "generales": [], "n_archivos": 0,
+        "n_documentos": 0, "ultima_ts": None,
+    }
+    if not base.is_dir():
+        return resultado
+
+    generales = [
+        _archivo_herramienta(base, p)
+        for p in sorted(base.iterdir(), key=lambda x: x.name.lower())
+        if _es_archivo_herramienta(p)
+    ]
+    categorias = []
+    for carpeta in sorted(base.iterdir(), key=lambda x: x.name.lower()):
+        if (
+            not carpeta.is_dir()
+            or carpeta.name in HERRAMIENTAS_PRIVADAS
+            or not es_carpeta_visible(carpeta)
+        ):
+            continue
+        archivos = [
+            _archivo_herramienta(base, p)
+            for p in sorted(carpeta.rglob("*"), key=lambda x: x.as_posix().lower())
+            if _es_archivo_herramienta(p)
+        ]
+        if not archivos:
+            continue
+        categorias.append({
+            "nombre": carpeta.name,
+            "descripcion": HERRAMIENTAS_DESCRIPCIONES.get(
+                carpeta.name, f"Recursos tecnicos de {carpeta.name.lower()}"
+            ),
+            "archivos": archivos,
+            "n_archivos": len(archivos),
+            "n_documentos": sum(1 for a in archivos if a["es_documento"]),
+            "ultima_ts": max(a["mtime"] for a in archivos),
+        })
+
+    todos = generales + [a for c in categorias for a in c["archivos"]]
+    resultado.update({
+        "categorias": categorias,
+        "generales": generales,
+        "n_archivos": len(todos),
+        "n_documentos": sum(1 for a in todos if a["es_documento"]),
+        "ultima_ts": max((a["mtime"] for a in todos), default=base.stat().st_mtime),
+    })
+    return resultado
+
+
 _SHARED_CSS = (
     ":root{--bg:#eef1f4;--ink:#182230;--muted:#647184;--line:#d0d5dd;--brand:#b42318;"
     "--nav:#0b1f3a;--nav2:#123a63;--accent:#f5a524;--ok:#2e9e5b;--radius:9px}"
@@ -261,6 +395,76 @@ _SHARED_CSS = (
     ".footer{font-size:11px;color:var(--muted);text-align:right;margin-top:16px}"
     "@media(max-width:900px){.logo{width:190px}.intro{flex-direction:column;align-items:stretch}.search-wrap{width:100%}}"
     "@media(max-width:600px){.top-inner,.shell{padding-left:14px;padding-right:14px}.logo{width:160px}.top-actions{display:none}}"
+)
+
+
+_LANDING_CSS = (
+    ".breadcrumb{display:inline-flex;align-items:center;gap:7px;margin:0 0 14px;color:var(--muted);"
+    "font-size:12px;font-weight:650;text-decoration:none}.breadcrumb:hover{color:var(--nav)}"
+    ".metric-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 24px}"
+    ".metric{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:15px 16px;"
+    "box-shadow:0 1px 2px rgba(16,24,40,.03)}"
+    ".metric strong{display:block;font-size:22px;line-height:1.1;color:var(--nav)}"
+    ".metric span{display:block;margin-top:5px;font-size:11.5px;color:var(--muted)}"
+    ".toolbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap}"
+    ".filter-select{height:42px;min-width:160px;padding:0 34px 0 12px;border:1px solid #98a2b3;"
+    "border-radius:6px;background:#fff;color:var(--ink);font:inherit}"
+    ".result-count{font-size:12px;color:var(--muted);margin-left:auto}"
+    ".empty-panel{display:none;background:#fff;border:1px dashed #98a2b3;border-radius:var(--radius);"
+    "padding:34px 18px;text-align:center;color:var(--muted)}"
+    "a:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(11,107,203,.28);outline-offset:2px}"
+    "@media(max-width:900px){.metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}"
+    "@media(max-width:600px){.metric-grid{gap:8px}.metric{padding:13px}.metric strong{font-size:20px}"
+    ".toolbar>*{width:100%}.result-count{margin-left:0}.filter-select{min-width:0}}"
+)
+
+
+_HERRAMIENTAS_CSS = _LANDING_CSS + (
+    ".quick-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-bottom:8px}"
+    ".quick-card{position:relative;overflow:hidden;background:#fff;border:1px solid var(--line);border-top:4px solid #6f42a1;"
+    "border-radius:var(--radius);padding:17px 18px;text-decoration:none;transition:transform .12s,box-shadow .12s}"
+    ".quick-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(16,24,40,.1)}"
+    ".quick-kicker{display:block;color:#6f42a1;font-size:10.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}"
+    ".quick-card strong{display:block;margin:8px 0 5px;font-size:16px}.quick-card small{display:block;color:var(--muted);line-height:1.4}"
+    ".quick-go{position:absolute;right:17px;top:17px;color:#6f42a1;font-weight:800}"
+    ".tool-catalog{display:grid;gap:9px}.tool-category{background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}"
+    ".tool-category[open]{box-shadow:0 4px 14px rgba(16,24,40,.07)}"
+    ".tool-category>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:42px minmax(0,1fr) auto 18px;"
+    "align-items:center;gap:12px;padding:14px 16px}.tool-category>summary::-webkit-details-marker{display:none}"
+    ".tool-category>summary:hover{background:#faf9fc}.folder-mark{width:38px;height:38px;border-radius:8px;"
+    "display:grid;place-items:center;background:#f0eafb;color:#6f42a1;font-size:11px;font-weight:850;letter-spacing:.04em}"
+    ".category-main{min-width:0}.category-main strong{display:block;font-size:14px}.category-main small{display:block;"
+    "margin-top:3px;color:var(--muted);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
+    ".category-count{text-align:right;color:var(--muted);font-size:11px;white-space:nowrap}.chevron{color:#6f42a1;transition:transform .15s}"
+    ".tool-category[open] .chevron{transform:rotate(90deg)}"
+    ".asset-list{border-top:1px solid var(--line);background:#fbfcfd;padding:6px 12px 10px}"
+    ".asset-row{display:grid;grid-template-columns:43px minmax(0,1fr) auto 18px;align-items:center;gap:10px;"
+    "padding:9px 8px;border-bottom:1px solid #eaecf0;text-decoration:none;border-radius:5px}"
+    ".asset-row:last-child{border-bottom:0}.asset-row:hover{background:#f1f4f8}"
+    ".file-type{display:inline-grid;place-items:center;min-width:38px;height:24px;border-radius:4px;background:#e9f2fc;"
+    "color:#0b6bcb;font-size:9px;font-weight:850;letter-spacing:.04em}.asset-main{min-width:0}"
+    ".asset-main strong,.asset-main small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}"
+    ".asset-main strong{font-size:12.5px}.asset-main small{font-size:10.5px;color:var(--muted);margin-top:2px}"
+    ".asset-date{font-size:10.5px;color:var(--muted);white-space:nowrap}.asset-go{color:#667085}"
+    "@media(max-width:600px){.tool-category>summary{grid-template-columns:36px minmax(0,1fr) 16px;padding:12px}"
+    ".folder-mark{width:34px;height:34px}.category-count{display:none}.asset-row{grid-template-columns:39px minmax(0,1fr) 16px;padding:9px 4px}"
+    ".asset-date{display:none}.quick-grid{grid-template-columns:1fr}}"
+)
+
+
+_ARCHIVO_CSS = _LANDING_CSS + (
+    ".archive-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}"
+    ".archive-row{display:grid;grid-template-columns:43px minmax(0,1fr) auto 18px;align-items:center;gap:11px;"
+    "background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:12px 14px;text-decoration:none;"
+    "transition:transform .12s,box-shadow .12s,border-color .12s}"
+    ".archive-row:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(16,24,40,.08);border-color:#98a2b3}"
+    ".archive-mark{width:40px;height:40px;display:grid;place-items:center;border-radius:8px;background:#eef0f3;"
+    "color:#5f6875;font-size:10px;font-weight:850;letter-spacing:.05em}.archive-main{min-width:0}"
+    ".archive-main strong{display:block;font-size:13px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}"
+    ".archive-main small{display:block;margin-top:4px;color:var(--muted);font-size:10.5px}"
+    ".archive-date{font-size:10.5px;color:var(--muted);white-space:nowrap}.archive-go{color:#667085}"
+    "@media(max-width:900px){.archive-grid{grid-template-columns:1fr}}"
+    "@media(max-width:600px){.archive-row{grid-template-columns:39px minmax(0,1fr) 16px;padding:11px}.archive-date{display:none}}"
 )
 
 
@@ -432,9 +636,21 @@ def generar_pagina_mantenimiento(m: dict) -> None:
     )
 
 
-def _page_html(title: str, subtitle: str, logo: str, nav: list[tuple[str, str]], content: str, extra_css: str = "") -> str:
+def _page_html(
+    title: str,
+    subtitle: str,
+    logo: str,
+    nav: list[tuple[str, str]],
+    content: str,
+    extra_css: str = "",
+    actualizado_ts: float | None = None,
+) -> str:
     nav_html = "".join(f'<a href="{u}">{escape(l)}</a>' for l, u in nav)
-    gen = datetime.now().strftime("%d/%m/%Y %H:%M")
+    gen = (
+        fmt_date(actualizado_ts)
+        if actualizado_ts is not None
+        else datetime.now().strftime("%d/%m/%Y %H:%M")
+    )
     return (
         f'<!doctype html><html lang="es"><head><meta charset="utf-8">'
         f'<meta name="viewport" content="width=device-width,initial-scale=1">'
@@ -451,7 +667,107 @@ def _page_html(title: str, subtitle: str, logo: str, nav: list[tuple[str, str]],
     )
 
 
+def _escribir_html_si_cambia(output: Path, contenido: str) -> bool:
+    """Escribe una salida solo cuando su contenido real ha cambiado."""
+    try:
+        if output.is_file() and output.read_text(encoding="utf-8") == contenido:
+            return False
+    except OSError:
+        pass
+    output.write_text(contenido, encoding="utf-8")
+    return True
+
+
+def _anio_obra_cerrada(nombre: str) -> str:
+    primero = nombre.strip().split(maxsplit=1)[0] if nombre.strip() else ""
+    if len(primero) == 4 and primero.isdigit() and 1900 <= int(primero) <= 2100:
+        return primero
+    return "Sin año"
+
+
+def _contenido_archivo_historico(
+    obras_cerradas: list[dict],
+    portal_href: str,
+    prefijo_obras: str,
+) -> str:
+    anios = sorted(
+        {_anio_obra_cerrada(o["nombre"]) for o in obras_cerradas} - {"Sin año"},
+        reverse=True,
+    )
+    opciones = "".join(f'<option value="{a}">{a}</option>' for a in anios)
+    if any(_anio_obra_cerrada(o["nombre"]) == "Sin año" for o in obras_cerradas):
+        opciones += '<option value="Sin año">Sin año en el nombre</option>'
+
+    ultima = max((o["ultima_ts"] for o in obras_cerradas), default=None)
+    con_anio = sum(_anio_obra_cerrada(o["nombre"]) != "Sin año" for o in obras_cerradas)
+    stats = (
+        f'<div class="metric"><strong>{len(obras_cerradas)}</strong><span>obras archivadas</span></div>'
+        f'<div class="metric"><strong>{len(anios)}</strong><span>años identificados</span></div>'
+        f'<div class="metric"><strong>{con_anio}</strong><span>obras clasificadas por año</span></div>'
+        f'<div class="metric"><strong>{fmt_date(ultima) if ultima else "—"}</strong><span>última actividad del archivo</span></div>'
+    )
+    rows = "".join(
+        f'<a class="archive-row" href="{escape(prefijo_obras + o["sub_url"], quote=True)}" '
+        f'data-search="{escape(o["nombre"].lower(), quote=True)}" data-year="{_anio_obra_cerrada(o["nombre"])}">'
+        f'<span class="archive-mark">OBRA</span><span class="archive-main">'
+        f'<strong>{escape(o["nombre"])}</strong><small>{escape(_anio_obra_cerrada(o["nombre"]))} · expediente histórico</small></span>'
+        f'<span class="archive-date">{fmt_date(o["ultima_ts"])}</span><span class="archive-go" aria-hidden="true">&#8594;</span></a>'
+        for o in obras_cerradas
+    )
+    script = (
+        "const s=document.getElementById('s'),y=document.getElementById('yearFilter'),"
+        "rows=[...document.querySelectorAll('.archive-row')],empty=document.getElementById('empty'),"
+        "count=document.getElementById('resultCount');"
+        "function filtrar(){const q=s.value.trim().toLowerCase(),year=y.value;let n=0;"
+        "rows.forEach(r=>{const ok=(!q||(r.dataset.search||'').includes(q))&&(!year||r.dataset.year===year);"
+        "r.hidden=!ok;if(ok)n++;});count.textContent=n+(n===1?' obra visible':' obras visibles');"
+        "empty.style.display=n?'none':'block';}s.addEventListener('input',filtrar);y.addEventListener('change',filtrar);"
+    )
+    return (
+        f'<a class="breadcrumb" href="{portal_href}">&larr; Centro de mando</a>'
+        f'<div class="intro"><div><h1>Archivo histórico</h1>'
+        f'<p class="sub">Consulta ordenada de obras cerradas y documentación anterior de Sagarde.</p></div></div>'
+        f'<section class="metric-grid">{stats}</section>'
+        f'<div class="section-head"><div><h2>Obras cerradas</h2></div>'
+        f'<span>Ordenadas por actividad reciente</span></div>'
+        f'<div class="toolbar"><label class="search-wrap"><input id="s" class="search" type="search" '
+        f'placeholder="Buscar obra, localidad o cliente..." aria-label="Buscar en el archivo histórico">'
+        f'<span class="search-symbol">&#9906;</span></label>'
+        f'<select id="yearFilter" class="filter-select" aria-label="Filtrar por año">'
+        f'<option value="">Todos los años</option>{opciones}</select>'
+        f'<span id="resultCount" class="result-count" aria-live="polite">{len(obras_cerradas)} obras visibles</span></div>'
+        f'<section class="archive-grid" style="margin-top:12px">{rows}</section>'
+        f'<div class="empty-panel" id="empty">No hay obras que coincidan con la búsqueda.</div>'
+        f'<script>{script}</script>'
+    )
+
+
+def generar_index_archivo_historico(obras_cerradas: list[dict]) -> None:
+    output = ROOT / "SAGARDE (OLD)" / "index.html"
+    if not output.parent.is_dir():
+        return
+    nav = [
+        ("⌂ Portal", "../index.html"),
+        ("Obras abiertas", "../SAGARDE%20OBRAS%20ABIERTAS/index.html"),
+        ("Post-ventas", "../POST-VENTAS/index.html"),
+        ("Mantenimientos", "../MANTENIMIENTOS/index.html"),
+        ("Archivo histórico", "./"),
+    ]
+    content = _contenido_archivo_historico(
+        obras_cerradas, "../index.html", "OBRAS%20CERRADAS/"
+    )
+    output.write_text(
+        _page_html(
+            "Archivo histórico", "Obras cerradas y documentación anterior",
+            "../POST-VENTAS/logo_sagarde.jpg", nav, content, _ARCHIVO_CSS,
+        ),
+        encoding="utf-8",
+    )
+    print(f"  Archivo historico index: {output}")
+
+
 def generar_index_obras_cerradas(obras_cerradas: list[dict]) -> None:
+    """Conserva la URL historica con la misma experiencia que la nueva area."""
     output = ROOT / "SAGARDE (OLD)" / "OBRAS CERRADAS" / "index.html"
     if not output.parent.is_dir():
         return
@@ -460,35 +776,136 @@ def generar_index_obras_cerradas(obras_cerradas: list[dict]) -> None:
         ("Obras abiertas", "../../SAGARDE%20OBRAS%20ABIERTAS/index.html"),
         ("Post-ventas", "../../POST-VENTAS/index.html"),
         ("Mantenimientos", "../../MANTENIMIENTOS/index.html"),
-        ("Obras cerradas", "./"),
+        ("Archivo histórico", "../index.html"),
     ]
-    rows = "".join(
-        f'<a class="pv-row" href="{o["sub_url"]}" data-search="{escape(o["nombre"].lower())}">'
-        f'<span class="pv-main"><strong>{escape(o["nombre"])}</strong></span>'
-        f'<span class="pv-badge">{fmt_date(o["ultima_ts"])}</span></a>'
-        for o in obras_cerradas
+    content = _contenido_archivo_historico(obras_cerradas, "../../index.html", "")
+    output.write_text(
+        _page_html(
+            "Obras cerradas", "Archivo histórico Sagarde",
+            "../../POST-VENTAS/logo_sagarde.jpg", nav, content, _ARCHIVO_CSS,
+        ),
+        encoding="utf-8",
     )
-    search_js = (
-        "const s=document.getElementById('s'),rows=[...document.querySelectorAll('.pv-row')],"
-        "empty=document.getElementById('empty');"
-        "s.addEventListener('input',()=>{const q=s.value.trim().toLowerCase();let n=0;"
-        "rows.forEach(r=>{const ok=!q||(r.dataset.search||'').includes(q);"
-        "r.style.display=ok?'':'none';if(ok)n++;});"
-        "empty.style.display=n?'none':'block';});"
+    print(f"  Obras cerradas index: {output}")
+
+
+def _etiqueta_app_herramienta(app: dict) -> tuple[str, str]:
+    nombre_archivo = Path(app["path"]).name.lower()
+    if nombre_archivo == "app_informe_tierras.html":
+        return "Informe de tierras", "Mediciones, cálculo y preparación de informes"
+    if nombre_archivo == "app_informes.html":
+        return "Baterías de condensadores", "Revisiones, perfiles e historial de informes"
+    return app["name"].title(), "Aplicación disponible en la biblioteca técnica"
+
+
+def generar_index_herramientas(catalogo: dict, apps: list[dict]) -> None:
+    output = ROOT / "VARIOS" / "index.html"
+    if not output.parent.is_dir():
+        return
+    nav = [
+        ("⌂ Portal", "../index.html"),
+        ("Obras abiertas", "../SAGARDE%20OBRAS%20ABIERTAS/index.html"),
+        ("Post-ventas", "../POST-VENTAS/index.html"),
+        ("Mantenimientos", "../MANTENIMIENTOS/index.html"),
+        ("Herramientas", "./"),
+    ]
+    apps_publicas = [
+        a for a in apps
+        if a.get("area") == "VARIOS"
+        and "APPS SAGARDE" not in Path(a.get("path", "")).parts
+    ]
+    quick_cards = ""
+    for app in apps_publicas:
+        titulo, descripcion = _etiqueta_app_herramienta(app)
+        partes = Path(app["path"]).parts
+        rel = Path(*partes[1:]).as_posix() if len(partes) > 1 else partes[0]
+        quick_cards += (
+            f'<a class="quick-card" href="{quote(rel, safe=_RUTA_SAFE)}" '
+            f'data-search="{escape((titulo + " " + app["path"]).lower(), quote=True)}">'
+            f'<span class="quick-kicker">Aplicación</span><strong>{escape(titulo)}</strong>'
+            f'<small>{escape(descripcion)}</small><span class="quick-go" aria-hidden="true">&#8594;</span></a>'
+        )
+
+    categorias = list(catalogo.get("categorias", []))
+    if catalogo.get("generales"):
+        generales = catalogo["generales"]
+        categorias.insert(0, {
+            "nombre": "DOCUMENTACIÓN GENERAL",
+            "descripcion": "Documentos de referencia disponibles en la raíz de Herramientas",
+            "archivos": generales,
+            "n_archivos": len(generales),
+            "n_documentos": sum(1 for a in generales if a["es_documento"]),
+            "ultima_ts": max(a["mtime"] for a in generales),
+        })
+
+    bloques = ""
+    for categoria in categorias:
+        filas = "".join(
+            f'<a class="asset-row" href="{escape(a["url"], quote=True)}" target="_blank" rel="noopener" '
+            f'data-search="{escape((a["nombre"] + " " + a["ruta"] + " " + a["extension"]).lower(), quote=True)}">'
+            f'<span class="file-type">{escape(a["extension"][:5])}</span><span class="asset-main">'
+            f'<strong>{escape(a["nombre"])}</strong><small>{escape(a["ruta"])}</small></span>'
+            f'<span class="asset-date">{fmt_date(a["mtime"])}</span><span class="asset-go" aria-hidden="true">&#8594;</span></a>'
+            for a in categoria["archivos"]
+        )
+        texto_busqueda = (
+            categoria["nombre"] + " " + categoria["descripcion"] + " "
+            + " ".join(a["nombre"] for a in categoria["archivos"])
+        ).lower()
+        bloques += (
+            f'<details class="tool-category" data-name="{escape((categoria["nombre"] + " " + categoria["descripcion"]).lower(), quote=True)}" '
+            f'data-search="{escape(texto_busqueda, quote=True)}"><summary>'
+            f'<span class="folder-mark">SGD</span><span class="category-main">'
+            f'<strong>{escape(categoria["nombre"].title())}</strong><small>{escape(categoria["descripcion"])}</small></span>'
+            f'<span class="category-count">{categoria["n_archivos"]} archivos · {categoria["n_documentos"]} documentos</span>'
+            f'<span class="chevron" aria-hidden="true">&#9656;</span></summary><div class="asset-list">{filas}</div></details>'
+        )
+
+    ultima = catalogo.get("ultima_ts")
+    stats = (
+        f'<div class="metric"><strong>{len(catalogo.get("categorias", []))}</strong><span>categorías técnicas</span></div>'
+        f'<div class="metric"><strong>{catalogo.get("n_archivos", 0)}</strong><span>recursos consultables</span></div>'
+        f'<div class="metric"><strong>{catalogo.get("n_documentos", 0)}</strong><span>documentos de trabajo</span></div>'
+        f'<div class="metric"><strong>{fmt_date(ultima) if ultima else "—"}</strong><span>última actividad pública</span></div>'
+    )
+    script = (
+        "const s=document.getElementById('s'),cats=[...document.querySelectorAll('.tool-category')],"
+        "quick=[...document.querySelectorAll('.quick-card')],empty=document.getElementById('empty'),"
+        "count=document.getElementById('resultCount');function filtrar(){const q=s.value.trim().toLowerCase();let n=0;"
+        "quick.forEach(x=>{const ok=!q||(x.dataset.search||'').includes(q);x.hidden=!ok;if(ok)n++;});"
+        "cats.forEach(c=>{const rows=[...c.querySelectorAll('.asset-row')],catOk=!q||(c.dataset.name||'').includes(q);let nr=0;"
+        "rows.forEach(r=>{const ok=!q||catOk||(r.dataset.search||'').includes(q);r.hidden=!ok;if(ok)nr++;});"
+        "const ok=!q||catOk||nr>0;c.hidden=!ok;if(q&&ok)c.open=true;if(ok)n++;});"
+        "count.textContent=n+(n===1?' bloque visible':' bloques visibles');empty.style.display=n?'none':'block';}"
+        "s.addEventListener('input',filtrar);"
+    )
+    quick_section = (
+        f'<div class="section-head"><h2>Accesos rápidos</h2><span>{len(apps_publicas)} aplicaciones operativas</span></div>'
+        f'<section class="quick-grid">{quick_cards}</section>'
+        if quick_cards else ""
     )
     content = (
-        f'<div class="intro"><div><h1>Obras cerradas</h1>'
-        f'<p class="sub">Archivo historico · {len(obras_cerradas)} obras finalizadas</p></div>'
-        f'<label class="search-wrap"><input id="s" class="search" type="search" placeholder="Buscar obra...">'
-        f'<span class="search-symbol">&#9906;</span></label></div>'
-        f'<div class="section-head"><h2>Todas las obras</h2>'
-        f'<span>{len(obras_cerradas)} obras · por actividad reciente</span></div>'
-        f'<section class="pv-list">{rows}'
-        f'<div class="empty" id="empty">No hay coincidencias.</div></section>'
-        f'<script>{search_js}</script>'
+        f'<a class="breadcrumb" href="../index.html">&larr; Centro de mando</a>'
+        f'<div class="intro"><div><h1>Herramientas</h1>'
+        f'<p class="sub">Biblioteca técnica, plantillas y utilidades del entorno Sagarde.</p></div></div>'
+        f'<section class="metric-grid">{stats}</section>{quick_section}'
+        f'<div class="section-head"><h2>Biblioteca técnica</h2><span>Recursos agrupados por especialidad</span></div>'
+        f'<div class="toolbar"><label class="search-wrap"><input id="s" class="search" type="search" '
+        f'placeholder="Buscar herramienta, documento o categoría..." aria-label="Buscar en Herramientas">'
+        f'<span class="search-symbol">&#9906;</span></label>'
+        f'<span id="resultCount" class="result-count" aria-live="polite">{len(categorias) + len(apps_publicas)} bloques visibles</span></div>'
+        f'<section class="tool-catalog" style="margin-top:12px">{bloques}</section>'
+        f'<div class="empty-panel" id="empty">No hay herramientas que coincidan con la búsqueda.</div>'
+        f'<script>{script}</script>'
     )
-    output.write_text(_page_html("Obras cerradas", "Archivo historico", "../../POST-VENTAS/logo_sagarde.jpg", nav, content), encoding="utf-8")
-    print(f"  Obras cerradas index: {output}")
+    output.write_text(
+        _page_html(
+            "Herramientas", "Biblioteca técnica y utilidades Sagarde",
+            "../POST-VENTAS/logo_sagarde.jpg", nav, content, _HERRAMIENTAS_CSS,
+        ),
+        encoding="utf-8",
+    )
+    print(f"  Herramientas index: {output}")
 
 
 def generar_index_aplicaciones(apps: list[dict]) -> None:
@@ -1001,6 +1418,8 @@ def discover_apps() -> list[dict]:
         if not any(h in low for h in APP_HINTS):
             continue
         rel = path.relative_to(ROOT)
+        if es_ruta_privada_herramientas(path):
+            continue
         if rel.parts[0] == "APLICACIONES":
             continue
         area = rel.parts[0]
@@ -1180,7 +1599,7 @@ def build_html(areas: list[dict], apps: list[dict], ro: dict | None, rp: dict | 
 @media(max-width:900px){{.areas{{grid-template-columns:repeat(2,1fr)}}.workspace{{grid-template-columns:1fr}}.intro{{align-items:stretch;flex-direction:column}}.search-wrap{{width:100%}}.logo{{width:190px}}}}
 @media(max-width:600px){{.top-inner,.shell{{padding-left:14px;padding-right:14px}}.logo{{width:160px}}.top-actions{{display:none}}.areas{{grid-template-columns:1fr}}.kpis{{grid-template-columns:repeat(2,1fr)}}.kpi:nth-child(2){{border-right:0}}.kpi:nth-child(-n+2){{border-bottom:1px solid var(--line)}}.app-row{{grid-template-columns:28px minmax(0,1fr) 20px}}.app-area{{display:none}}h1{{font-size:23px}}}}
 </style></head><body>
-<header class="top"><div class="top-inner"><video id="intro-vid" class="logo" src="VARIOS/VIDEOSAG.mp4" autoplay muted playsinline></video><img id="logo-img" class="logo" src="POST-VENTAS/logo_sagarde.jpg" alt="Sagarde" style="display:none;opacity:0"><div class="identity"><strong>Centro de mando Sagarde</strong><span>Control integral de obras, post-ventas, mantenimientos y herramientas</span></div><nav class="top-actions"><a href="SAGARDE%20OBRAS%20ABIERTAS/index.html">Obras abiertas</a><a href="POST-VENTAS/index.html">Post-ventas</a><a href="MANTENIMIENTOS/index.html">Mantenimientos</a><a href="SAGARDE%20(OLD)/OBRAS%20CERRADAS/index.html">Obras cerradas</a></nav></div></header>
+<header class="top"><div class="top-inner"><video id="intro-vid" class="logo" src="VARIOS/VIDEOSAG.mp4" autoplay muted playsinline></video><img id="logo-img" class="logo" src="POST-VENTAS/logo_sagarde.jpg" alt="Sagarde" style="display:none;opacity:0"><div class="identity"><strong>Centro de mando Sagarde</strong><span>Control integral de obras, post-ventas, mantenimientos y herramientas</span></div><nav class="top-actions"><a href="SAGARDE%20OBRAS%20ABIERTAS/index.html">Obras abiertas</a><a href="POST-VENTAS/index.html">Post-ventas</a><a href="MANTENIMIENTOS/index.html">Mantenimientos</a><a href="SAGARDE%20(OLD)/index.html">Archivo histórico</a></nav></div></header>
 <main class="shell"><div class="intro"><div><h1>Inicio</h1><p>Todo el entorno de trabajo, con datos reales de los sistemas ya construidos, desde un unico punto.</p></div><label class="search-wrap"><input id="search" class="search" type="search" placeholder="Buscar obra, area, aplicacion o ruta"><span class="search-symbol">&#9906;</span></label></div>
 <div class="alertas">{alertas_html}</div>
 <section class="kpis">{kpi_html}</section>
@@ -1207,6 +1626,7 @@ def main() -> None:
     mant = escanear_mantenimientos()
     planilla = escanear_planilla()
     obras_cerradas = escanear_obras_cerradas()
+    herramientas = escanear_herramientas()
     # MANTENIMIENTOS/index.html lo escribe su propio generador,
     # MANTENIMIENTOS/_SISTEMA/mantenimientos_index.py, igual que
     # POST-VENTAS. Hasta el 08/08/2026 el portal lo sobreescribia aqui
@@ -1216,7 +1636,9 @@ def main() -> None:
     # contrato si las sigue generando el portal, justo debajo.
     for m in mant:
         generar_pagina_mantenimiento(m)
+    generar_index_archivo_historico(obras_cerradas)
     generar_index_obras_cerradas(obras_cerradas)
+    generar_index_herramientas(herramientas, apps)
     generar_index_aplicaciones(apps)
     generar_portal_movil(ro, rp, mant, obras_cerradas)
     OUTPUT.write_text(build_html(areas, apps, ro, rp, mant, planilla, obras_cerradas), encoding="utf-8")

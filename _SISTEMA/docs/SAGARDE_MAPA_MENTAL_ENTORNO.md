@@ -25,13 +25,12 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 12/08/2026 13:23. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 13/08/2026 11:08. No editar a mano.*
 
-**22** carpetas de obra abiertas · **6** en el registro único · **6** con panel · **5** con ficha. En todo el árbol, **68** `.py` y **4** `.bat`.
+**21** carpetas de obra abiertas · **5** en el registro único · **5** con panel · **4** con ficha. En todo el árbol, **71** `.py` y **4** `.bat`.
 
 | Obra | Ubic. | Tajos | Celdas | X | M | / | P | ? | N | % |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2025 BILBAO OBISPO ORUETA | 102 | 40 | 4080 | 2314 | – | – | 8 | – | 1758 | 99.7 |
 | 2025 GERNIKA 32V | 32 | 38 | 1216 | 928 | – | – | 288 | – | – | 76.3 |
 | 2026 BOLUETA ACR | 97 | 38 | 3686 | 1453 | 103 | 19 | 1921 | 190 | – | 43.5 |
 | 2026 MUNGIA ACR NEINOR | 62 | 38 | 2356 | 1810 | 82 | – | 429 | 35 | – | 80.1 |
@@ -49,7 +48,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 12/08/2026 13:23).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 13/08/2026 11:08).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
@@ -310,6 +309,7 @@ confundirse con la nueva skill.
 | `sagarde-revision` | `_SISTEMA/MOTOR/.claude/agents/sagarde-revision.md` | PDF de campo → sidecar → revisión oficial → memoria/generador | `/sagarde-revision`; también `sagarde-revision` en `CLAUDE.md:195` | Obra, fecha, PDF | PDF/sidecar/estado regenerado | validador, regenerador, orquestador | ambos `CLAUDE.md` | 2 formas nominales | Propia; coherente con código |
 | `sagarde-nueva-obra` | `_SISTEMA/MOTOR/.claude/agents/sagarde-nueva-obra.md` | Crear entorno de obra | `/sagarde-nueva-obra` | Nombre, ID, estructura, materiales | Adaptador, JSON, panel | `generar_todos.py`, portal | motor `CLAUDE.md` | 1 llamada nominal | Propia; APARENTEMENTE OBSOLETA: registro/esquemas antiguos |
 | `sagarde-parte-incidencia` | `.claude/agents/sagarde-parte-incidencia.md` | PDF postventa/preventivo/correctivo | No se halló sintaxis real | Datos/ruta | PDF | `generar_parte_incidencia.py` | memorias postventa | Ninguna llamada | Propia; SIN USO CONFIRMADO |
+| `sagarde-cerrar-obra` | `.claude/skills/sagarde-cerrar-obra/SKILL.md` | Cerrar una obra y archivarla dejando el entorno limpio | `/sagarde-cerrar-obra`, o al decir que una obra ha terminado | id de la obra y confirmación de Bixente | obra fuera del registro y archivada con su `cierre.json` | `cerrar_obra.py` | esta especificación y su plan | Creada el 13/08/2026 | Activa; 21 pruebas |
 | `generate-cardiva-report` | `MANTENIMIENTOS/MANTENIMIENTO CARDIVA/APP_CARDIVA/skills/generate-cardiva-report` | Extraer puntos 01–06, derivar 07–09 y generar el preventivo CARDIVA | Codex: `$generate-cardiva-report`; Claude: `/generate-cardiva-report`; Gemini: activación por descripción y control con `/skills` | Plantilla y partes expresamente autorizados o JSON normalizado | DOCX/PDF A4 y anexos fotográficos | `generate_cardiva_report.ps1`, `render_docx_pages.ps1`, `sync_cardiva_skill_agents.ps1` | `APP_CARDIVA/README.md`, `docs/SAGARDE_ENTORNO_IA_Y_SKILLS.md` | Fuente maestra y seis copias verificables | Activa; Agent Skill multi-IA |
 | `superpowers:*` | Menciones en `CLAUDE.md`, planes y `.superpowers/sdd` | Flujos generales de agente | `using-superpowers`, `brainstorming`, `writing-plans`, `subagent-driven-development`, `systematic-debugging`, `verification-before-completion`, `requesting-code-review`, `dispatching-parallel-agents`, `executing-plans` | Tareas de desarrollo | Planes/revisiones | Ninguno demostrado | docs/ledgers | Menciones | Referencias externas; no instaladas en repo |
 | `artifact-design` | `.claude/settings.local.json` | Capacidad general | `Skill(artifact-design)` | NO CONFIRMADO | NO CONFIRMADO | — | settings | 1 permiso | Referencia; instalación NO CONFIRMADA |
@@ -330,6 +330,8 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 | `avisos.py` | `_SISTEMA/MOTOR/avisos.py` | Python | Antigüedad/caducidad 400 días | import | portal/auditor/mantenimiento/tests | timestamps | — | stdlib | Activo |
 | `sagarde_portal.py` | `_SISTEMA/MOTOR/sagarde_portal.py` | Python | Portal, apps, cerradas, mapas | directo/BAT | BAT global | resúmenes/árbol | índices y mapas HTML | stdlib, avisos | Activo; móvil roto |
 | `auditor_sagarde.py` | `_SISTEMA/MOTOR/scripts/auditor_sagarde.py` | Python | Auditoría pre-vuelo | directo/import | BAT/test | obras/mantenimiento | `auditoria_diagnostico.json` | stdlib | Activo; falsos duplicados |
+| `cerrar_obra.py` | `_SISTEMA.../cerrar_obra.py` | Python | Cierra una obra: la saca del registro por AST, archiva su adaptador dentro de ella, mueve la carpeta a Obras cerradas y escribe `cierre.json` | `<id>` informa; `--ejecutar` lo hace | skill `sagarde-cerrar-obra` | registro, ficha, resumen | registro, carpeta movida, `cierre.json` | stdlib | Activo desde 13/08/2026 |
+| `test_cerrar_obra.py` | `_SISTEMA.../tests/test_cerrar_obra.py` | Python | 21 casos sobre árbol temporal; 3 guardas comprobadas por mutación | unittest | manual | cerrar_obra | resultado | unittest | En verde el 13/08/2026 |
 | `actualizar_mapa_mental.py` | `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` | Python | Reescribe los bloques `AUTO:` de este mapa y audita las rutas que declara | directo o BAT; `--comprobar` no escribe | BAT global, paso 4/5 | este mapa, fichas, `resumen_obras.json` | este mapa | stdlib | Activo desde 12/08/2026 |
 | `generar_informe_ejecutivo.py` | `_SISTEMA/MOTOR/scripts/generar_informe_ejecutivo.py` | Python | PDF A4 eléctrico | `--obra`/import | orquestador | ficha/historial/prioridades | PDF por obra y portal | ReportLab/catálogo | Activo; solo tajos propios Sagarde |
 | `generar_parte_incidencia.py` | `_SISTEMA/MOTOR/scripts/generar_parte_incidencia.py` | Python | Partes PDF | `--data --output`/import | skill parte | JSON/logo | PDF | ReportLab | Sin llamada real |

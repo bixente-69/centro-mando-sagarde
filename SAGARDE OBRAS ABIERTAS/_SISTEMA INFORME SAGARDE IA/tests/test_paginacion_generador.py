@@ -25,6 +25,23 @@ REVISIONES_JS = os.path.join(RAIZ, 'obras_revisiones.js')
 
 NODE = shutil.which('node')
 
+if RAIZ not in sys.path:
+    sys.path.insert(0, RAIZ)
+import registro_obras
+
+#: Las obras que el generador conoce. Una obra cerrada sale del registro y de
+#: `obras_revisiones.js`, y entonces `hoja_de()` devuelve una hoja vacia. Sin
+#: esta guarda, las pruebas que cuentan tablas comparaban 0 con 0 y pasaban
+#: sin verificar nada: un verde falso. Descubierto al cerrar Orueta el
+#: 13/08/2026.
+OBRAS_REGISTRADAS = {o['id'] for o in registro_obras.OBRAS}
+
+
+def requiere_obra(obra):
+    return unittest.skipUnless(
+        obra in OBRAS_REGISTRADAS,
+        "la obra '%s' ya no esta registrada, seguramente cerrada" % obra)
+
 # Un DOM de mentira con lo justo para que el script del generador cargue
 # fuera del navegador. No se simula nada de la paginacion: eso se ejecuta de
 # verdad.
@@ -129,12 +146,16 @@ class AritmeticaDePaginacion(unittest.TestCase):
 class HtmlEmitido(unittest.TestCase):
     """Los invariantes del contrato con la lectura, sin necesidad de imprimir."""
 
+    @requiere_obra('bolueta')
     def test_cada_tabla_lleva_su_fila_de_identificacion(self):
-        html = hoja_de('obisporueta')
+        html = hoja_de('bolueta')
+        self.assertGreater(html.count('<table class="rev-table">'), 0,
+                           'la hoja salio vacia: la prueba no verificaba nada')
         self.assertEqual(html.count('<table class="rev-table">'),
                          html.count('class="th-ident"'),
                          'hay tablas sin fila de identificacion')
 
+    @requiere_obra('obisporueta')
     def test_orueta_parte_cada_tabla_en_dos_hojas(self):
         html = hoja_de('obisporueta')
         self.assertEqual(html.count('<table class="rev-table">'), 16)
@@ -150,6 +171,8 @@ class HtmlEmitido(unittest.TestCase):
         for obra, esperadas in [('mungia', 2356), ('gernika', 1216),
                                 ('bolueta', 3686), ('obisporueta', 5610),
                                 ('prueba', 1178)]:
+            if obra not in OBRAS_REGISTRADAS:
+                continue          # obra cerrada: ya no tiene hoja que emitir
             with self.subTest(obra=obra):
                 claves = re.findall(r'<td class="td-st[^"]*"[^>]*data-k="([^"]+)"',
                                     hoja_de(obra))

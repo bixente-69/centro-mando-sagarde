@@ -43,20 +43,6 @@ OBRAS = [
             'REVISIONES', 'hoja de entrega de materiales BOLUETA.xlsx'),
     },
     {
-        'id': 'obisporueta',
-        'nombre': '2025 BILBAO OBISPO ORUETA',
-        'aliases': ['OBISPO ORUETA'],
-        'subtitulo': 'Electricidad y telecomunicaciones · Obispo Orueta, 2 - Bilbao',
-        'adaptador': 'adaptador_obisporueta',
-        'carpeta_obra': '2025 BILBAO OBISPO ORUETA',
-        'bloque_revision': 'Obispo Orueta 2',
-        'alias_portales_revision': {'Obispo Orueta 2': 'Portal único'},
-        'materiales_rel': os.path.join(
-            'REVISIONES SAGARDE',
-            'hoja de entrega de materiales OBISPO ORUETA.xlsx',
-        ),
-    },
-    {
         'id': 'gorliz',
         'nombre': '2026 GORLIZ HOSPITAL',
         'aliases': ['GORLIZ'],
