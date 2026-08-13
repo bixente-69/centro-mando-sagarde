@@ -3,7 +3,7 @@
   "id": "bolueta",
   "modo": "hibrida",
   "fecha_entrada_digital": "26/07/2026",
-  "actualizado": "12/08/2026 16:24",
+  "actualizado": "13/08/2026 09:31",
   "identidad": {
     "nombre": "2026 BOLUETA ACR",
     "carpeta": "2026 BOLUETA ACR",
@@ -20074,7 +20074,7 @@
   "materiales": {
     "ultimo_mes": "Julio26",
     "ultima_fecha": "13/07/2026",
-    "dias_desde": 30,
+    "dias_desde": 31,
     "meses": [
       "Marzo26",
       "Abril26",
@@ -20083,9 +20083,9 @@
       "Julio26"
     ],
     "n_items": 35,
-    "aviso": null,
+    "aviso": "La hoja de materiales no se actualiza desde 13/07/2026 (31 días). Los datos de consumo/stock pueden estar desfasados.",
     "_meta": {
-      "actualizado": "12/08/2026 01:00"
+      "actualizado": "13/08/2026 09:31"
     }
   },
   "documentos": {

@@ -1014,15 +1014,26 @@
 ## Riesgos
 
 - Categoría: pestaña / dato.
-- Definición: riesgos manuales más bloqueos detectados.
-- Función dentro de SAGARDE: mostrar probabilidad, impacto, acción y estado.
+- Definición: vista regenerada desde la base viva, el catálogo de
+  dependencias, el priorizador y el historial del mismo ciclo, más el
+  registro manual de FICHA DE OBRA.xlsx.
+- Función dentro de SAGARDE: separar bloqueos reales de producción, señales
+  de calidad/desviación y riesgos declarados manualmente.
 - Ruta o ubicación: `panel_obra.py`, `v-riesgos`.
-- Forma de uso: consulta en tabla.
-- Ejemplo real: encabezado `Riesgos (manuales + detectados automáticamente)`.
-- Relacionado con: bloqueos, ficha XLSX.
+- Forma de uso: se reconstruye al ejecutar `generar_todos.py` o
+  `Actualizar_Sagarde.bat`; no se mantiene una copia manual de los riesgos
+  derivados.
+- Ejemplo real: `Bloqueos activos que frenan trabajo Sagarde`, ordenados por
+  las unidades reales que libera cada dependencia.
+- Relacionado con: `ficha_obra.json`, `CATALOGO_TAJOS.json`,
+  `prioridades_trabajos.json`, historial validado y ficha XLSX.
 - Estado: CONFIRMADO POR CÓDIGO.
-- Evidencia: `panel_obra.py:516-519`.
-- Observaciones: no hay workflow de edición en el panel.
+- Evidencia: `panel_obra.py`, funciones `bloque_riesgos`,
+  `_tabla_bloqueos_riesgo` y `_tabla_controles_riesgo`.
+- Observaciones: un bloqueo activo es un hecho, no una probabilidad. El motor
+  no inventa probabilidad, impacto, responsable ni fecha límite; esos campos
+  solo aparecen cuando están declarados en la ficha manual. El panel es de
+  consulta y no incluye un flujo de edición.
 
 ## Rozas de timbres
 

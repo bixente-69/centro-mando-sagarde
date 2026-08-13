@@ -209,6 +209,28 @@ evolución/composición y avance por fase, tajos propios que requieren atención
 próximos frentes y condicionantes. Hay una página general y, si existen varios
 portales, una página adicional por portal.
 
+## Riesgos regenerados desde las bases
+
+Actualización del 12/08/2026: la pestaña `Riesgos` del panel deja de depender
+principalmente de la heurística antigua de plantas rezagadas. En cada ejecución
+de `generar_todos.py` se reconstruye desde las fuentes del mismo ciclo:
+
+- `ficha_obra.json` aporta estado, estructura y cobertura;
+- `CATALOGO_TAJOS.json` aporta propiedad, secuencia y dependencias;
+- `prioridades_trabajos.json` aporta tajos propios bloqueados y la previsión
+  de cuántas unidades libera cada condicionante;
+- el historial validado aporta antigüedad, revisiones idénticas y desviaciones
+  de avance;
+- `FICHA DE OBRA.xlsx` conserva el registro manual complementario.
+
+La pantalla separa bloqueos activos, señales que requieren verificación y
+riesgos manuales. Una dependencia incumplida se muestra como hecho, sin
+probabilidad inventada. Probabilidad, impacto y fecha límite solo se enseñan
+si alguien los declaró manualmente. Una obra sin base aparece como
+`Riesgos no evaluables`, nunca como cero riesgos. El índice y el portal agregan
+el número de familias Sagarde bloqueadas del priorizador; la heurística de
+plantas rezagadas queda nombrada como `Desviación de avance`.
+
 El modo directo `generar_informe_ejecutivo.py --obra` también carga primero la
 ficha y sustituye el último snapshot crudo por el snapshot consolidado. El
 camino recomendado es `generar_todos.py` sin `--no-pdf`, que entrega al PDF la

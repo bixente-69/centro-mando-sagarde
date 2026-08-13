@@ -439,7 +439,7 @@ Criterio: **135 vistas/estados navegables**: 126 pestañas/pasos/filtros (5 móv
 | Materiales | `v-materiales` | idem | materiales XLSX | lector | ver | lectores | Condicional |
 | Personal | `v-personal` | idem | personal XLSX | lector | ver | lectores | Condicional |
 | Prioridades | `v-prioridades` | idem | listas/dudas/inventario | prioridades | filtrar/abrir JSON | priorizador | Operativo |
-| Riesgos | `v-riesgos` | idem | riesgos manuales/auto | ficha/motor | ver | panel | Operativo |
+| Riesgos | `v-riesgos` | idem | bloqueos, calidad del dato y registro manual | base/catálogo/prioridades/historial/XLSX | ver | panel/portal | Operativo; se regenera al actualizar |
 | Normativa | `v-normativa` | idem | referencias estáticas | código | ver | panel | No valida vigencia |
 | Documentos | `v-docs` | idem | inventario | árbol | abrir | lectores | Operativo |
 | Actualizar | `v-actualizar` | idem | BAT | ruta | abrir/copiar | BAT obras | Operativo |
@@ -704,7 +704,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 20. **590 nombres de backup/copia y 451 `.bak`:** sin política global. CONFIRMADO.
 21. **Claves JSON solo distintas por mayúsculas:** memorias como `telemecanizado`/`Telemecanizado`. Riesgo case-insensitive. CONFIRMADO.
 22. **Normativa estática:** el panel exige comprobar vigencia; no hay integración oficial. CONFIRMADO.
-23. **Docstring del panel dice 8 pestañas; código tiene 9.** CONFIRMADO.
+23. **Docstring del panel:** corregido a 9 pestañas al rehacer Riesgos el 12/08/2026. CERRADO.
 24. **Sin propietario formal:** no CODEOWNERS; Bixente figura como usuario único. SIN EVIDENCIA SUFICIENTE.
 
 # 12. Preguntas pendientes

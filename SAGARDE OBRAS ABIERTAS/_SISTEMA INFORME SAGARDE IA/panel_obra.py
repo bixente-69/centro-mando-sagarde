@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-PANEL DE OBRA — 8 secciones (capa 3)
+PANEL DE OBRA — 9 secciones (capa 3)
 -------------------------------------
 Genera un panel HTML por obra con navegacion de pestanas:
-  Panel · Trabajos · Materiales · Personal · Prioridades · Riesgos · Normativa · Documentos
+  Panel · Trabajos · Materiales · Personal · Prioridades · Riesgos · Normativa · Documentos · Actualizar
 
 Consume datos ya normalizados:
   historial   -> de motor_informes (avance/bloqueos)
