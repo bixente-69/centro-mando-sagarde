@@ -32,6 +32,8 @@ from reportlab.platypus import (
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
 from reportlab.graphics.shapes import Drawing, Rect, String, Line, PolyLine, Circle
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
 
 # _SISTEMA/MOTOR/scripts/generar_informe_ejecutivo.py -> cuatro niveles.
 ROOT = Path(__file__).resolve().parent.parent.parent.parent
@@ -39,7 +41,37 @@ OBRAS_DIR = ROOT / "SAGARDE OBRAS ABIERTAS"
 MOTOR_IA_DIR = OBRAS_DIR / "_SISTEMA INFORME SAGARDE IA"
 ASSETS_DIR = ROOT / "_SISTEMA" / "MOTOR" / "assets"
 LOGO_PATH = ASSETS_DIR / "logo_sagarde.jpg"
+FONTS_DIR = ASSETS_DIR / "fonts"
+FUENTE = 'IBMPlexSans'
+FUENTE_BOLD = 'IBMPlexSans-Bold'
 CATALOGO_PATH = MOTOR_IA_DIR / "reglas" / "CATALOGO_TAJOS.json"
+
+
+def _registrar_fuentes() -> None:
+    '''Registra IBM Plex Sans para el informe.
+
+    Falla a gritos si falta la tipografia. Volver a Helvetica en silencio
+    produciria un informe con el aspecto de siempre y nadie se enteraria: es
+    exactamente el fallo que este trabajo viene a quitar.
+    '''
+    if FUENTE in pdfmetrics.getRegisteredFontNames():
+        return
+    ficheros = {
+        FUENTE: FONTS_DIR / 'IBMPlexSans-Regular.ttf',
+        FUENTE_BOLD: FONTS_DIR / 'IBMPlexSans-Bold.ttf',
+    }
+    faltan = [str(ruta) for ruta in ficheros.values() if not ruta.is_file()]
+    if faltan:
+        raise RuntimeError(
+            'Falta la tipografia del informe ejecutivo: ' + ', '.join(faltan) +
+            '. Se descarga segun la Tarea 1 de _SISTEMA/docs/superpowers/'
+            'plans/2026-08-13-informe-ejecutivo-caracter.md')
+    for nombre, ruta in ficheros.items():
+        pdfmetrics.registerFont(TTFont(nombre, str(ruta)))
+    # Sin esta linea los <b> del informe dejan de tener efecto SIN dar error.
+    pdfmetrics.registerFontFamily(
+        FUENTE, normal=FUENTE, bold=FUENTE_BOLD,
+        italic=FUENTE, boldItalic=FUENTE_BOLD)
 
 if str(MOTOR_IA_DIR) not in sys.path:
     sys.path.append(str(MOTOR_IA_DIR))
@@ -964,6 +996,7 @@ def generar_pdf_ejecutivo(
     ficha: dict | None = None,
     prioridades: dict | None = None,
 ) -> Path:
+    _registrar_fuentes()
     doc = SimpleDocTemplate(
         str(output_pdf),
         pagesize=A4,

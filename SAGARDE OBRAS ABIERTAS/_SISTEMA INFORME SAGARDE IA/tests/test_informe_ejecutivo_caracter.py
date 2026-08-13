@@ -2,13 +2,19 @@
 '''Caracter visual del informe ejecutivo: tipografia, color y logo.'''
 import os
 import sys
+import tempfile
 import unittest
+from pathlib import Path
 
 
 SISTEMA_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ROOT_DIR = os.path.dirname(os.path.dirname(SISTEMA_DIR))
 sys.path.insert(0, SISTEMA_DIR)
 sys.path.insert(0, os.path.join(ROOT_DIR, '_SISTEMA', 'MOTOR', 'scripts'))
+
+from reportlab.pdfbase import pdfmetrics
+
+import generar_informe_ejecutivo as gie
 
 FONTS_DIR = os.path.join(ROOT_DIR, '_SISTEMA', 'MOTOR', 'assets', 'fonts')
 GITIGNORE = os.path.join(ROOT_DIR, '.gitignore')
@@ -47,6 +53,39 @@ class TestActivosDelInforme(unittest.TestCase):
                       '!_SISTEMA/MOTOR/assets/logo_sagarde.jpg'):
             self.assertIn(regla, lineas,
                           'sin esta linea el fichero no llega a git: ' + regla)
+
+
+class TestRegistroDeFuente(unittest.TestCase):
+
+    def setUp(self):
+        gie._registrar_fuentes()
+
+    def test_registra_las_dos_variantes(self):
+        registradas = pdfmetrics.getRegisteredFontNames()
+        self.assertIn(gie.FUENTE, registradas)
+        self.assertIn(gie.FUENTE_BOLD, registradas)
+
+    def test_la_familia_resuelve_la_negrita(self):
+        '''Sin registerFontFamily los <b> del informe dejan de funcionar y
+        NO da error. Mutacion: quitar la llamada a registerFontFamily y este
+        test tiene que ponerse en rojo.'''
+        from reportlab.lib.fonts import tt2ps
+        self.assertEqual(tt2ps(gie.FUENTE, 1, 0), gie.FUENTE_BOLD)
+
+    def test_si_falta_la_fuente_falla_con_mensaje_legible(self):
+        '''Un informe en Helvetica sin avisar es peor que un informe que no
+        sale. Mutacion: sustituir el raise por un return y esto se pone rojo.'''
+        original = gie.FONTS_DIR
+        try:
+            gie.FONTS_DIR = Path(tempfile.gettempdir()) / 'no_existe_sagarde'
+            pdfmetrics._fonts.pop(gie.FUENTE, None)
+            pdfmetrics._fonts.pop(gie.FUENTE_BOLD, None)
+            with self.assertRaises(RuntimeError) as ctx:
+                gie._registrar_fuentes()
+            self.assertIn('IBMPlexSans-Regular.ttf', str(ctx.exception))
+        finally:
+            gie.FONTS_DIR = original
+            gie._registrar_fuentes()
 
 
 if __name__ == '__main__':
