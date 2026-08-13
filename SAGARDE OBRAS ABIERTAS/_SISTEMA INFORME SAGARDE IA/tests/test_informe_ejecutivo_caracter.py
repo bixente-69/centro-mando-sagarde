@@ -199,5 +199,48 @@ class TestColorDescriptivo(unittest.TestCase):
                          '_color_pct debe desaparecer, no convivir')
 
 
+class TestLogo(unittest.TestCase):
+
+    def test_respeta_la_proporcion_nativa(self):
+        '''Iba aplastado, y distinto en cada pagina: 3.429 en la 1 y 3.467 en
+        la 2, sobre un nativo de 3.638.'''
+        from reportlab.lib.utils import ImageReader
+        ancho_px, alto_px = ImageReader(str(gie.LOGO_PATH)).getSize()
+        nativo = ancho_px / alto_px
+        for ancho_mm in (48, 52):
+            img = gie._logo_flowable(ancho_mm)
+            self.assertAlmostEqual(img.drawWidth / img.drawHeight, nativo,
+                                   places=2)
+
+    def test_todas_las_paginas_usan_la_misma_proporcion(self):
+        a, b = gie._logo_flowable(48), gie._logo_flowable(52)
+        self.assertAlmostEqual(a.drawWidth / a.drawHeight,
+                               b.drawWidth / b.drawHeight, places=3)
+
+    def test_si_falta_el_logo_falla_con_mensaje_legible(self):
+        '''Hoy caia a la palabra "SAGARDE" en texto sin avisar. Mutacion:
+        devolver un Paragraph en vez de lanzar y esto se pone rojo.'''
+        original = gie.LOGO_PATH
+        try:
+            gie.LOGO_PATH = Path(tempfile.gettempdir()) / 'no_hay_logo.jpg'
+            with self.assertRaises(RuntimeError) as ctx:
+                gie._logo_flowable(48)
+            self.assertIn('logo', str(ctx.exception).lower())
+        finally:
+            gie.LOGO_PATH = original
+
+    def test_el_fondo_del_logo_es_blanco(self):
+        '''Tenia fondo azul palido -- (232,245,253) y (194,230,246) en las
+        esquinas -- y por eso parecia un recuadro pegado sobre la hoja.'''
+        from PIL import Image as PILImage
+        im = PILImage.open(str(gie.LOGO_PATH)).convert('RGB')
+        w, h = im.size
+        for punto in ((2, 2), (w - 3, 2), (2, h - 3), (w - 3, h - 3)):
+            r, g, b = im.getpixel(punto)
+            self.assertTrue(min(r, g, b) >= 250,
+                            'la esquina %s no es blanca: %s'
+                            % (punto, (r, g, b)))
+
+
 if __name__ == '__main__':
     unittest.main()

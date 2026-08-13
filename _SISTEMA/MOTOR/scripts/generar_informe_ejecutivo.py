@@ -32,6 +32,7 @@ from reportlab.platypus import (
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.enums import TA_LEFT, TA_CENTER, TA_RIGHT
 from reportlab.graphics.shapes import Drawing, Rect, String, Line, PolyLine, Circle
+from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 
@@ -342,6 +343,25 @@ def _style(name: str, size: float, bold: bool = False, align: int = TA_LEFT, col
     )
 
 
+def _logo_flowable(ancho_mm: float) -> Image:
+    '''El logo a un ancho dado, con su proporcion real.
+
+    La altura se calcula, no se escribe: estaba a 48x14 mm en una cabecera y a
+    52x15 en la otra, sobre un nativo de 2732x751, asi que salia aplastado y
+    ademas distinto en cada pagina. Leyendo el tamaño real, el arreglo
+    sobrevive a que algun dia se cambie el logo.
+
+    Si falta el fichero se lanza un error. Antes caia a la palabra "SAGARDE"
+    escrita en texto y el informe salia sin logo sin que nadie se enterase.
+    '''
+    if not LOGO_PATH.is_file():
+        raise RuntimeError(
+            'Falta el logo del informe ejecutivo: ' + str(LOGO_PATH))
+    ancho_px, alto_px = ImageReader(str(LOGO_PATH)).getSize()
+    ancho = ancho_mm * mm
+    return Image(str(LOGO_PATH), width=ancho, height=ancho * alto_px / ancho_px)
+
+
 def _make_mini_bar(pct: float, w_mm: float = 34) -> Table:
     fill_w = max(1, min(w_mm, (pct / 100.0) * w_mm))
     rem_w = max(0, w_mm - fill_w)
@@ -474,9 +494,7 @@ def _cabecera_electrica(
     ficha: dict | None,
     content_w: float,
 ) -> Table:
-    logo = (Image(str(LOGO_PATH), width=48 * mm, height=14 * mm)
-            if LOGO_PATH.is_file()
-            else Paragraph('<b>SAGARDE</b>', _style('logo', 16, True, color=COL_BRAND)))
+    logo = _logo_flowable(48)
     titulo = [
         Paragraph('<b>INFORME EJECUTIVO ELÉCTRICO</b>',
                   _style('titulo_electrico', 14.5, True, color=COL_NAVY)),
@@ -811,7 +829,7 @@ def _construir_bloque_ejecutivo(story: list, nombre_obra: str, sub_titulo: str, 
     bloqueos = motor_informes.detectar_bloqueos(snapshot)
 
     # 1. Cabecera Corporativa
-    logo_cell = Image(str(LOGO_PATH), width=52 * mm, height=15 * mm) if LOGO_PATH.is_file() else Paragraph("<b>SAGARDE</b>", _style("l", 16, True, color=COL_BRAND))
+    logo_cell = _logo_flowable(52)
     sub_txt = f" &nbsp;|&nbsp; <b>{sub_titulo}</b>" if sub_titulo else ""
     title_cell = [
         Paragraph(f"<b>INFORME EJECUTIVO DE AVANCE DE OBRA</b>", _style("t1", 14, True, color=COL_NAVY)),
