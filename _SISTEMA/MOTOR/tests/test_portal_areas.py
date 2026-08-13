@@ -29,6 +29,10 @@ class TestPortadasAreas(unittest.TestCase):
         (self.raiz / "VARIOS" / "TIERRAS" / "app_informe_tierras.html").write_text(
             "<html></html>", encoding="utf-8"
         )
+        (self.raiz / "VARIOS" / "BATERIAS DE CONDENSADORES").mkdir()
+        (self.raiz / "VARIOS" / "BATERIAS DE CONDENSADORES" / "app_informes.html").write_text(
+            "<html></html>", encoding="utf-8"
+        )
         (self.raiz / "VARIOS" / "CATALOGOS").mkdir()
         (self.raiz / "VARIOS" / "CATALOGOS" / "catalogo.pdf").write_bytes(b"pdf")
         (self.raiz / "VARIOS" / "APPS SAGARDE").mkdir()
@@ -86,6 +90,16 @@ class TestPortadasAreas(unittest.TestCase):
             self.assertIn("class=\"search\"", html)
             self.assertIn("Centro de mando", html)
         self.assertIn("Biblioteca técnica", herramientas)
+        self.assertIn(
+            'href="BATERIAS%20DE%20CONDENSADORES/app_informes.html"',
+            herramientas,
+        )
+        self.assertIn(
+            'href="TIERRAS/app_informe_tierras.html"',
+            herramientas,
+        )
+        self.assertNotIn("%2Fapp_informes.html", herramientas)
+        self.assertNotIn("%2Fapp_informe_tierras.html", herramientas)
         self.assertIn("app_informe_tierras.html", herramientas)
         self.assertNotIn("APPS SAGARDE", herramientas)
         self.assertNotIn("informe_nominas_sagarde", herramientas)

@@ -501,7 +501,10 @@ def _icono_archivo(nombre: str) -> str:
     return MAPA_EXT_ICON.get(Path(nombre).suffix.lower(), "\U0001F4C4")
 
 
-_RUTA_SAFE = "()[]!$&'*+,;=:@-._~"
+# Las barras deben seguir siendo separadores de carpeta en los href. Si se
+# codifican como ``%2F``, los navegadores no abren las aplicaciones ni los
+# documentos que viven dentro de una subcarpeta de la landing actual.
+_RUTA_SAFE = "/()[]!$&'*+,;=:@-._~"
 
 
 def construir_mapa_carpeta(path: Path, depth: int = 0, rel_prefix: str = "") -> dict:
