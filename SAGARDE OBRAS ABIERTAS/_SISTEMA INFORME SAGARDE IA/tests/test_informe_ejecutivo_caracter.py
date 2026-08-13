@@ -159,5 +159,45 @@ class TestTipografiaEnElPDF(unittest.TestCase):
                         'se ha perdido la cursiva del informe: ' + str(fuentes))
 
 
+class TestColorDescriptivo(unittest.TestCase):
+    '''El color describe el estado, no lo juzga.
+
+    Con el semaforo viejo, la pagina 1 de Mungia enseñaba tres lineas rojas
+    -- "Remates finales 0 %" entre ellas -- en una obra al 80 %. Esas fases
+    no van mal: es que todavia no tocan.
+    '''
+
+    def test_terminado_es_verde(self):
+        self.assertEqual(gie._color_estado(100), gie.COL_OK)
+
+    def test_sin_empezar_es_gris_no_rojo(self):
+        self.assertEqual(gie._color_estado(0), gie.COL_GRIS)
+        self.assertNotEqual(gie._color_estado(0), gie.COL_WARN)
+
+    def test_en_marcha_es_azul_sea_alto_o_bajo(self):
+        for pct in (1, 22, 59, 92, 99):
+            self.assertEqual(gie._color_estado(pct), gie.COL_ACCENT,
+                             'el %d %% deberia ser azul' % pct)
+
+    def test_la_barra_mini_no_tiene_su_propia_regla(self):
+        '''La regla estaba escrita dos veces: en _color_pct y copiada a mano
+        en un ternario dentro de _make_mini_bar. Mutacion: volver a poner ahi
+        un color literal y este test tiene que enterarse.'''
+        import inspect
+        fuente = inspect.getsource(gie._make_mini_bar)
+        self.assertIn('_color_estado(pct)', fuente)
+        for literal in ('#2E9E5B', '#E07B1A', '#D9483C'):
+            self.assertNotIn(literal, fuente,
+                             'vuelve a haber una regla de color propia aqui')
+
+    def test_la_barra_mini_se_construye_sin_reventar(self):
+        for pct in (0, 50, 100):
+            self.assertIsNotNone(gie._make_mini_bar(pct))
+
+    def test_ya_no_existe_la_funcion_vieja(self):
+        self.assertFalse(hasattr(gie, '_color_pct'),
+                         '_color_pct debe desaparecer, no convivir')
+
+
 if __name__ == '__main__':
     unittest.main()

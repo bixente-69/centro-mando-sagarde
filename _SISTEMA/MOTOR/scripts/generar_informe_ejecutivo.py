@@ -330,6 +330,7 @@ COL_LINE   = colors.HexColor('#D0D5DD')
 COL_WARN   = colors.HexColor('#D9483C')
 COL_OK     = colors.HexColor('#2E9E5B')
 COL_MUTED  = colors.HexColor('#475467')
+COL_GRIS   = colors.HexColor('#98A2B3')
 
 
 def _style(name: str, size: float, bold: bool = False, align: int = TA_LEFT, color: colors.Color = colors.black, leading: float | None = None) -> ParagraphStyle:
@@ -344,7 +345,7 @@ def _style(name: str, size: float, bold: bool = False, align: int = TA_LEFT, col
 def _make_mini_bar(pct: float, w_mm: float = 34) -> Table:
     fill_w = max(1, min(w_mm, (pct / 100.0) * w_mm))
     rem_w = max(0, w_mm - fill_w)
-    col = colors.HexColor('#2E9E5B') if pct >= 70 else colors.HexColor('#E07B1A') if pct >= 40 else colors.HexColor('#D9483C')
+    col = _color_estado(pct)
     t = Table([['', '']], colWidths=[fill_w * mm, rem_w * mm], rowHeights=[3.5 * mm])
     t.setStyle(TableStyle([
         ('BACKGROUND', (0,0), (0,0), col),
@@ -356,12 +357,23 @@ def _make_mini_bar(pct: float, w_mm: float = 34) -> Table:
     return t
 
 
-def _color_pct(pct: float):
-    if pct >= 70:
+def _color_estado(pct: float):
+    '''El color describe el estado; no lo juzga.
+
+    Verde terminado, azul en marcha, gris todavia sin empezar. El rojo se
+    reserva para la tabla de condicionantes, que es donde hay un problema de
+    verdad: un tajo al 0 % que es del final de obra no va mal, es que aun no
+    toca, y pintarlo de rojo afirmaba algo falso sobre la obra.
+
+    Esta funcion es la UNICA regla de color por porcentaje del informe. Habia
+    una copia a mano dentro de _make_mini_bar, y cambiar solo una de las dos
+    dejaba media pagina con el criterio viejo.
+    '''
+    if pct >= 100:
         return COL_OK
-    if pct >= 40:
-        return colors.HexColor('#E07B1A')
-    return COL_WARN
+    if pct <= 0:
+        return COL_GRIS
+    return COL_ACCENT
 
 
 def _grafico_tendencia(serie: list[dict], ancho: float) -> Drawing:
@@ -450,7 +462,7 @@ def _grafico_fases(fases: list[dict], ancho: float) -> Drawing:
         etiqueta = '{:.0f}%  {}/{}'.format(pct, fase['x'], fase['total'])
         dibujo.add(String(x0 + barra_w + 3 * mm, y - 1, etiqueta,
                           fontName=FUENTE_BOLD, fontSize=6.8,
-                          fillColor=_color_pct(pct)))
+                          fillColor=_color_estado(pct)))
         y -= 9
     return dibujo
 
@@ -502,9 +514,9 @@ def _tabla_kpis_electricos(
         objetivos_bloqueados.update(bloqueo['tajos_sagarde'])
     tarjetas = [
         ('{:.1f}%'.format(kpis['pct_ponderado']), 'Avance eléctrico estimado',
-         _color_pct(kpis['pct_ponderado']), True),
+         _color_estado(kpis['pct_ponderado']), True),
         ('{:.1f}%'.format(kpis['pct_estricto']), 'Terminado estricto (X)',
-         _color_pct(kpis['pct_estricto']), True),
+         _color_estado(kpis['pct_estricto']), True),
         (str(len(frentes)), 'Tajos Sagarde listos', COL_ACCENT, False),
         (str(len(objetivos_bloqueados)), 'Tajos condicionados',
          COL_WARN if objetivos_bloqueados else COL_OK, False),
@@ -594,7 +606,7 @@ def _tabla_tajos_atencion(tajos: list[dict], content_w: float) -> Table | Paragr
             Paragraph('<b>{}</b>'.format(_texto(tajo['nombre'])), _style('td_tajo', 7)),
             Paragraph(_texto(tajo['fase']), _style('td_fase', 6.6, color=COL_MUTED)),
             Paragraph('<font color={}><b>{:.0f}%</b></font>'.format(
-                _color_pct(tajo['pct']).hexval(), tajo['pct']),
+                _color_estado(tajo['pct']).hexval(), tajo['pct']),
                 _style('td_avance', 7, align=TA_CENTER)),
             Paragraph('{}/{}'.format(tajo['x'], tajo['total']),
                       _style('td_hecho', 7, align=TA_CENTER)),
