@@ -145,15 +145,19 @@ Dos hechos que conviene tener presentes al tocar cualquier eslabón:
 
 Lo más consolidado es el camino de cinco obras registradas, el contrato común de estados y las salidas JSON/HTML. Las dudas principales son: 16 carpetas abiertas sin automatización; dos adaptadores huérfanos; Gorliz sin revisión ni base; documentación antigua; una skill de alta desactualizada; portal móvil no reescrito por código inalcanzable; índice de mantenimiento con dos generadores; dependencias sin manifiesto; y cientos de backups sin política ejecutable de vigencia.
 
-Pendientes concretos al cierre del 12/08/2026:
+Pendientes concretos al cierre del 13/08/2026:
 
-- **Orueta se va a cerrar y pasar a obras cerradas.** Su duplicado
-  `placas_tapas` / `placas_tps_cuadro` eran el mismo tajo escrito de dos
-  formas; no se toca porque la obra se archiva. Su dependencia
-  `cuadro_mecanizado → cuadros_presentados` apunta a un tajo que la obra no
-  declaró, y desde el 12/08 eso ya no bloquea.
-- **La rama `prioridades-desde-la-base` no está fusionada en `main`.** Hasta
-  que se fusione, lo publicado sigue siendo el motor antiguo.
+- **Orueta está cerrada** (13/08/2026). Se archivó con `cerrar_obra.py`:
+  su carpeta está en `SAGARDE (OLD)/OBRAS CERRADAS`, con su adaptador y la
+  prueba del adaptador dentro de su `_SISTEMA`, y un `cierre.json` que guarda
+  cómo terminó (99.7 %, 102 ubicaciones, 4080 celdas, `X=2314 P=8 N=1758`).
+  Sus 18 tajos propios **siguen en el catálogo**: no se tocan. Su duplicado
+  `placas_tapas` / `placas_tps_cuadro` era el mismo tajo escrito de dos formas
+  y se quedó así.
+- **Cerrarla dejó 4 pruebas sin ejecutarse**: 3 de
+  `test_tajos_propios_de_obra.py` y una de paginación. Se saltan con motivo
+  visible, pero los tajos propios de obra se quedan sin ninguna obra que los
+  ejercite. Habría que apoyarlos en OBRA PRUEBA o en un fixture.
 - Sigue abierto de antes: 16 carpetas de obra sin automatización, dos
   adaptadores huérfanos, Gorliz sin revisión ni base, una skill de alta
   desactualizada, el portal móvil, el índice de mantenimiento con dos
@@ -360,11 +364,11 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 | `adaptador_gernika.py` | idem | Python | JSON + HTML | import | registro | IA/REVISIONES | historial | lector HTML | Activo |
 | `adaptador_gorliz.py` | idem | Python | JSON estricto/vacío | import/directo | registro | IA JSON | historial/plantilla | stdlib | Activo sin revisión |
 | `adaptador_mungia.py` | idem | Python | DOCX + PDF | import | registro | REVISIONES | historial | docx/lector PDF | Activo |
-| `adaptador_obisporueta.py` | idem | Python | DOCX + PDF especial | import | registro | REVISIONES SAGARDE | historial | docx/lector PDF | Activo sin ficha |
+| `adaptador_obisporueta.py` | `SAGARDE (OLD)/OBRAS CERRADAS/2025 BILBAO OBISPO ORUETA/_SISTEMA/` | Python | DOCX + PDF especial | ya no se importa | — | REVISIONES SAGARDE | historial | docx/lector PDF | **Archivado con su obra el 13/08/2026**; no es un huérfano |
 | `adaptador_zorrozaure.py` | idem | Python | 1 DOCX | directo/import potencial | ninguna referencia | ruta abierta inexistente | historial | docx | Huérfano; obra en OLD |
 | `fixtures.py` | `_SISTEMA.../tests/fixtures.py` | Python | Fixtures | import | tests | parámetros | dicts | stdlib | Prueba |
 | `test_adaptador_bolueta.py` | `_SISTEMA.../tests` | Python | 9 casos | unittest | manual | adaptador | resultado test | unittest | No ejecutado |
-| `test_adaptador_obisporueta.py` | idem | Python | 3 casos | unittest | manual | adaptador | resultado | unittest | No ejecutado |
+| `test_adaptador_obisporueta.py` | `SAGARDE (OLD)/OBRAS CERRADAS/2025 BILBAO OBISPO ORUETA/_SISTEMA/` | Python | 3 casos | unittest | — | adaptador | resultado | unittest | **Archivado con su adaptador el 13/08/2026**: se quedó atrás importando un módulo movido y tumbó la suite |
 | `test_catalogo_tajos.py` | idem | Python | 9 casos | unittest | manual | catálogo/priorizador | resultado | unittest | No ejecutado |
 | `test_ficha_obra.py` | idem | Python | 48 casos | unittest | manual | ficha/fixtures | resultado | unittest | No ejecutado |
 | `test_generar_todos.py` | idem | Python | 17 casos | unittest | manual | generador/informe | temporales | unittest | No ejecutado |
@@ -663,8 +667,8 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | Bloque | Clasificación | Evidencia |
 |---|---|---|
 | Registro de 5 obras | Operativo | imports y test de registro |
-| Gernika/Mungia/Bolueta/Orueta/PRUEBA | Operativo con ficha | 5 fichas; ver «Estado de hoy» |
-| Obispo Orueta | Operativo con ficha desde el 08/08/2026 | 102 ubicaciones y 16 tajos propios de obra |
+| Gernika/Mungia/Bolueta/PRUEBA | Operativo con ficha | ver «Estado de hoy» |
+| Obispo Orueta | **Cerrada el 13/08/2026** | archivada con su `cierre.json`; sus 18 tajos propios siguen en el catálogo |
 | Gorliz | En desarrollo | registro/panel 0%; sin revisión |
 | Otras 16 abiertas | Sin uso confirmado | resumen sin panel |
 | Motor/priorizador | Operativo | salidas/tests/memoria |

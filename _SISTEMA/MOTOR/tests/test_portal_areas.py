@@ -89,6 +89,8 @@ class TestPortadasAreas(unittest.TestCase):
             self.assertIn("class=\"top\"", html)
             self.assertIn("class=\"search\"", html)
             self.assertIn("Centro de mando", html)
+            self.assertIn("[hidden]{display:none!important}", html)
+            self.assertIn(".normalize('NFD')", html)
         self.assertIn("Biblioteca técnica", herramientas)
         self.assertIn(
             'href="BATERIAS%20DE%20CONDENSADORES/app_informes.html"',

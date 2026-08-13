@@ -367,7 +367,8 @@ def escanear_herramientas() -> dict:
 _SHARED_CSS = (
     ":root{--bg:#eef1f4;--ink:#182230;--muted:#647184;--line:#d0d5dd;--brand:#b42318;"
     "--nav:#0b1f3a;--nav2:#123a63;--accent:#f5a524;--ok:#2e9e5b;--radius:9px}"
-    "*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);"
+    "*{box-sizing:border-box}[hidden]{display:none!important}"
+    "body{margin:0;background:var(--bg);color:var(--ink);"
     "font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif}a{color:inherit}button,input{font:inherit}"
     ".top{background:linear-gradient(120deg,var(--nav),var(--nav2));color:#fff;border-bottom:4px solid var(--brand)}"
     ".top-inner{max-width:1440px;margin:auto;padding:18px 28px;display:flex;align-items:center;gap:20px}"
@@ -395,6 +396,13 @@ _SHARED_CSS = (
     ".footer{font-size:11px;color:var(--muted);text-align:right;margin-top:16px}"
     "@media(max-width:900px){.logo{width:190px}.intro{flex-direction:column;align-items:stretch}.search-wrap{width:100%}}"
     "@media(max-width:600px){.top-inner,.shell{padding-left:14px;padding-right:14px}.logo{width:160px}.top-actions{display:none}}"
+)
+
+# Los dos buscadores comparan texto normalizado para que escribir sin tildes
+# encuentre tambien nombres que si las llevan (y al reves).
+_NORMALIZAR_BUSQUEDA_JS = (
+    "const normalizar=v=>(v||'').normalize('NFD')"
+    ".replace(/[\\u0300-\\u036f]/g,'').toLowerCase();"
 )
 
 
@@ -717,12 +725,12 @@ def _contenido_archivo_historico(
         f'<span class="archive-date">{fmt_date(o["ultima_ts"])}</span><span class="archive-go" aria-hidden="true">&#8594;</span></a>'
         for o in obras_cerradas
     )
-    script = (
+    script = _NORMALIZAR_BUSQUEDA_JS + (
         "const s=document.getElementById('s'),y=document.getElementById('yearFilter'),"
         "rows=[...document.querySelectorAll('.archive-row')],empty=document.getElementById('empty'),"
         "count=document.getElementById('resultCount');"
-        "function filtrar(){const q=s.value.trim().toLowerCase(),year=y.value;let n=0;"
-        "rows.forEach(r=>{const ok=(!q||(r.dataset.search||'').includes(q))&&(!year||r.dataset.year===year);"
+        "function filtrar(){const q=normalizar(s.value.trim()),year=y.value;let n=0;"
+        "rows.forEach(r=>{const ok=(!q||normalizar(r.dataset.search).includes(q))&&(!year||r.dataset.year===year);"
         "r.hidden=!ok;if(ok)n++;});count.textContent=n+(n===1?' obra visible':' obras visibles');"
         "empty.style.display=n?'none':'block';}s.addEventListener('input',filtrar);y.addEventListener('change',filtrar);"
     )
@@ -871,13 +879,13 @@ def generar_index_herramientas(catalogo: dict, apps: list[dict]) -> None:
         f'<div class="metric"><strong>{catalogo.get("n_documentos", 0)}</strong><span>documentos de trabajo</span></div>'
         f'<div class="metric"><strong>{fmt_date(ultima) if ultima else "—"}</strong><span>última actividad pública</span></div>'
     )
-    script = (
+    script = _NORMALIZAR_BUSQUEDA_JS + (
         "const s=document.getElementById('s'),cats=[...document.querySelectorAll('.tool-category')],"
         "quick=[...document.querySelectorAll('.quick-card')],empty=document.getElementById('empty'),"
-        "count=document.getElementById('resultCount');function filtrar(){const q=s.value.trim().toLowerCase();let n=0;"
-        "quick.forEach(x=>{const ok=!q||(x.dataset.search||'').includes(q);x.hidden=!ok;if(ok)n++;});"
-        "cats.forEach(c=>{const rows=[...c.querySelectorAll('.asset-row')],catOk=!q||(c.dataset.name||'').includes(q);let nr=0;"
-        "rows.forEach(r=>{const ok=!q||catOk||(r.dataset.search||'').includes(q);r.hidden=!ok;if(ok)nr++;});"
+        "count=document.getElementById('resultCount');function filtrar(){const q=normalizar(s.value.trim());let n=0;"
+        "quick.forEach(x=>{const ok=!q||normalizar(x.dataset.search).includes(q);x.hidden=!ok;if(ok)n++;});"
+        "cats.forEach(c=>{const rows=[...c.querySelectorAll('.asset-row')],catOk=!q||normalizar(c.dataset.name).includes(q);let nr=0;"
+        "rows.forEach(r=>{const ok=!q||catOk||normalizar(r.dataset.search).includes(q);r.hidden=!ok;if(ok)nr++;});"
         "const ok=!q||catOk||nr>0;c.hidden=!ok;if(q&&ok)c.open=true;if(ok)n++;});"
         "count.textContent=n+(n===1?' bloque visible':' bloques visibles');empty.style.display=n?'none':'block';}"
         "s.addEventListener('input',filtrar);"
