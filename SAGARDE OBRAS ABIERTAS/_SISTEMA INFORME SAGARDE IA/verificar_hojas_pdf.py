@@ -31,9 +31,23 @@ sys.path.insert(0, os.path.join(AQUI, 'tests'))
 import rejilla_hoja
 from test_paginacion_generador import NODE, hoja_de
 
-# Rejilla completa de cada obra con ficha: ubicaciones x tajos.
+# Rejilla completa de cada obra con ficha: ubicaciones x tajos. Se conservan
+# tambien los valores historicos para poder contrastar un PDF antiguo si se
+# pide expresamente, pero la ejecucion sin argumentos solo usa obras abiertas.
 ESPERADAS = {'gernika': 1216, 'mungia': 2356, 'bolueta': 3686,
              'obisporueta': 5610, 'prueba': 1178}
+
+
+def obras_por_defecto():
+    """Obras abiertas que tienen una rejilla esperada configurada.
+
+    Una obra cerrada desaparece de ``registro_obras.py``. Derivar de ese
+    registro la lista predeterminada evita seguir verificando datos archivados
+    con una hoja vacia, que fue lo que produjo el falso fallo de Orueta.
+    """
+    from registro_obras import OBRAS
+    abiertas = {obra['id'] for obra in OBRAS}
+    return [obra for obra in ESPERADAS if obra in abiertas]
 
 
 def _tabla_de(obra):
@@ -163,4 +177,4 @@ def main(obras):
 
 
 if __name__ == '__main__':
-    sys.exit(main(sys.argv[1:] or list(ESPERADAS)))
+    sys.exit(main(sys.argv[1:] or obras_por_defecto()))
