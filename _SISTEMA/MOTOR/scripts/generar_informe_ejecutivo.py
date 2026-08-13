@@ -44,11 +44,18 @@ LOGO_PATH = ASSETS_DIR / "logo_sagarde.jpg"
 FONTS_DIR = ASSETS_DIR / "fonts"
 FUENTE = 'IBMPlexSans'
 FUENTE_BOLD = 'IBMPlexSans-Bold'
+FUENTE_ITALIC = 'IBMPlexSans-Italic'
+FUENTE_BOLD_ITALIC = 'IBMPlexSans-BoldItalic'
 CATALOGO_PATH = MOTOR_IA_DIR / "reglas" / "CATALOGO_TAJOS.json"
 
 
 def _registrar_fuentes() -> None:
     '''Registra IBM Plex Sans para el informe.
+
+    Las cuatro variantes, no dos: el informe usa <i> en los mensajes de "no
+    hay nada que enseñar" (tajos todos terminados, sin frentes, sin
+    dependencias) y en un enfasis del pie. Mapear la cursiva a la redonda las
+    habria borrado sin que saltara nada.
 
     Falla a gritos si falta la tipografia. Volver a Helvetica en silencio
     produciria un informe con el aspecto de siempre y nadie se enteraria: es
@@ -59,6 +66,8 @@ def _registrar_fuentes() -> None:
     ficheros = {
         FUENTE: FONTS_DIR / 'IBMPlexSans-Regular.ttf',
         FUENTE_BOLD: FONTS_DIR / 'IBMPlexSans-Bold.ttf',
+        FUENTE_ITALIC: FONTS_DIR / 'IBMPlexSans-Italic.ttf',
+        FUENTE_BOLD_ITALIC: FONTS_DIR / 'IBMPlexSans-BoldItalic.ttf',
     }
     faltan = [str(ruta) for ruta in ficheros.values() if not ruta.is_file()]
     if faltan:
@@ -68,10 +77,11 @@ def _registrar_fuentes() -> None:
             'plans/2026-08-13-informe-ejecutivo-caracter.md')
     for nombre, ruta in ficheros.items():
         pdfmetrics.registerFont(TTFont(nombre, str(ruta)))
-    # Sin esta linea los <b> del informe dejan de tener efecto SIN dar error.
+    # Sin esta linea los <b> y los <i> del informe dejan de tener efecto SIN
+    # dar error: el PDF sale plano y no se queja nadie.
     pdfmetrics.registerFontFamily(
         FUENTE, normal=FUENTE, bold=FUENTE_BOLD,
-        italic=FUENTE, boldItalic=FUENTE_BOLD)
+        italic=FUENTE_ITALIC, boldItalic=FUENTE_BOLD_ITALIC)
 
 if str(MOTOR_IA_DIR) not in sys.path:
     sys.path.append(str(MOTOR_IA_DIR))
@@ -326,7 +336,7 @@ def _style(name: str, size: float, bold: bool = False, align: int = TA_LEFT, col
     lead = leading if leading is not None else size * 1.25
     return ParagraphStyle(
         name, fontSize=size, leading=lead,
-        fontName='Helvetica-Bold' if bold else 'Helvetica',
+        fontName=FUENTE_BOLD if bold else FUENTE,
         alignment=align, textColor=color
     )
 
@@ -365,7 +375,7 @@ def _grafico_tendencia(serie: list[dict], ancho: float) -> Drawing:
     for valor in (0, 25, 50, 75, 100):
         y = y0 + plot_h * valor / 100
         dibujo.add(Line(x0, y, x0 + plot_w, y, strokeColor=COL_LINE, strokeWidth=.45))
-        dibujo.add(String(x0 - 3 * mm, y - 1.5, f'{valor}%', fontName='Helvetica',
+        dibujo.add(String(x0 - 3 * mm, y - 1.5, f'{valor}%', fontName=FUENTE,
                           fontSize=6.5, textAnchor='end', fillColor=COL_MUTED))
 
     if len(datos) == 1:
@@ -383,13 +393,13 @@ def _grafico_tendencia(serie: list[dict], ancho: float) -> Drawing:
     indices = sorted({0, len(datos) // 2, len(datos) - 1})
     for i in indices:
         x, _ = puntos[i]
-        dibujo.add(String(x, 2.3 * mm, str(datos[i]['fecha'])[:5], fontName='Helvetica',
+        dibujo.add(String(x, 2.3 * mm, str(datos[i]['fecha'])[:5], fontName=FUENTE,
                           fontSize=6.5, textAnchor='middle', fillColor=COL_MUTED))
     if datos:
         x, y = puntos[-1]
         etiqueta = '{:.1f}%'.format(datos[-1]['pct'])
         dibujo.add(String(min(x, x0 + plot_w - 2 * mm), min(y + 4, y0 + plot_h + 4),
-                          etiqueta, fontName='Helvetica-Bold', fontSize=8,
+                          etiqueta, fontName=FUENTE_BOLD, fontSize=8,
                           textAnchor='end', fillColor=COL_ACCENT))
     return dibujo
 
@@ -417,7 +427,7 @@ def _grafico_distribucion(snapshot: list[dict], ancho: float) -> Drawing:
     for etiqueta, n, color in segmentos:
         dibujo.add(Rect(leyenda_x, 3 * mm, 3 * mm, 3 * mm, fillColor=color, strokeColor=color))
         dibujo.add(String(leyenda_x + 4 * mm, 3.2 * mm, f'{etiqueta}: {n}',
-                          fontName='Helvetica', fontSize=6.5, fillColor=COL_MUTED))
+                          fontName=FUENTE, fontSize=6.5, fillColor=COL_MUTED))
         leyenda_x += 43 * mm
     return dibujo
 
@@ -431,7 +441,7 @@ def _grafico_fases(fases: list[dict], ancho: float) -> Drawing:
     y = alto - 8
     for fase in fases:
         pct = fase['pct']
-        dibujo.add(String(x0 - 3 * mm, y - 1, str(fase['fase']), fontName='Helvetica',
+        dibujo.add(String(x0 - 3 * mm, y - 1, str(fase['fase']), fontName=FUENTE,
                           fontSize=6.8, textAnchor='end', fillColor=COL_NAVY))
         dibujo.add(Rect(x0, y - 3, barra_w, 6, fillColor=colors.HexColor('#E8EDF3'),
                         strokeColor=None))
@@ -439,7 +449,7 @@ def _grafico_fases(fases: list[dict], ancho: float) -> Drawing:
                         strokeColor=None))
         etiqueta = '{:.0f}%  {}/{}'.format(pct, fase['x'], fase['total'])
         dibujo.add(String(x0 + barra_w + 3 * mm, y - 1, etiqueta,
-                          fontName='Helvetica-Bold', fontSize=6.8,
+                          fontName=FUENTE_BOLD, fontSize=6.8,
                           fillColor=_color_pct(pct)))
         y -= 9
     return dibujo
