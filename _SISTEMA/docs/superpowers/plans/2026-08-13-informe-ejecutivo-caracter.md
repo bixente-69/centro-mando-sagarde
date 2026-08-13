@@ -162,11 +162,15 @@ Esperado: los tres tests PASAN.
 - [ ] **Paso 6: Comprobar con git que de verdad entran**
 
 ```bash
-git check-ignore -v "_SISTEMA/MOTOR/assets/fonts/IBMPlexSans-Regular.ttf" "_SISTEMA/MOTOR/assets/logo_sagarde.jpg"
+git status --porcelain "_SISTEMA/MOTOR/assets"
 ```
 
-Esperado: **sin salida y código de salida 1** — ninguna regla los ignora. Si
-imprime una regla, la lista blanca no está surtiendo efecto.
+Esperado: `?? _SISTEMA/MOTOR/assets/` — git los ve como nuevos, o sea **no
+ignorados**. Si no aparece nada, la lista blanca no surte efecto.
+
+**No usar `git check-ignore -v` para esto:** con `-v` git imprime también las
+reglas de negación y devuelve 0, así que parece que los está ignorando cuando
+en realidad los está admitiendo. Confunde más que ayuda.
 
 - [ ] **Paso 7: Commit**
 
