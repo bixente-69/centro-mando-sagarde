@@ -827,8 +827,11 @@ Guardar la salida.
 - [ ] **Paso 2: Regenerar Mungia**
 
 ```bash
-python "_SISTEMA/MOTOR/scripts/regenerar_obra.py" "2026 MUNGIA ACR NEINOR"
+python "_SISTEMA/MOTOR/scripts/regenerar_obra.py" mungia
 ```
+
+**Usa el id corto, no el nombre de la obra.** Con `"2026 MUNGIA ACR NEINOR"`
+aborta: los ids válidos son `gernika`, `mungia`, `bolueta`, `gorliz`, `prueba`.
 
 **No usar `--finalizar`** y **no lanzar `Actualizar_Sagarde.bat`**: aquí no se
 publica nada.
