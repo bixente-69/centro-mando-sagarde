@@ -145,6 +145,13 @@ Dos hechos que conviene tener presentes al tocar cualquier eslabón:
 
 Lo más consolidado es el camino de cinco obras registradas, el contrato común de estados y las salidas JSON/HTML. Las dudas principales son: 16 carpetas abiertas sin automatización; dos adaptadores huérfanos; Gorliz sin revisión ni base; documentación antigua; una skill de alta desactualizada; portal móvil no reescrito por código inalcanzable; índice de mantenimiento con dos generadores; dependencias sin manifiesto; y cientos de backups sin política ejecutable de vigencia.
 
+Añadido el 15/08/2026: tajo común `fotovoltaica` (sin dependencia, igual
+que Cuarto técnico) y un cierre de expediente por obra
+(`cierre_expediente.json`: ensayos, OCA, CIE/Boletín, Libro del Edificio),
+deliberadamente fuera de la rejilla ubicaciones×tajos y de la hoja de
+revisión semanal. Ver
+`_SISTEMA/docs/superpowers/specs/2026-08-15-tesis-prioridades-instalacion-electrica-design.md`.
+
 Pendientes concretos al cierre del 13/08/2026:
 
 - **Orueta está cerrada** (13/08/2026). Se archivó con `cerrar_obra.py`:
@@ -355,6 +362,7 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 | `lector_hoja_tajos_html.py` | `_SISTEMA.../lector_hoja_tajos_html.py` | Python | HTML `data-k/st` | import | Gernika | HTML | historial | stdlib | Activo |
 | `lector_hoja_tajos_pdf.py` | `_SISTEMA.../lector_hoja_tajos_pdf.py` | Python | Tabla PDF/sidecar | import | 3 adaptadores/validador/tests | PDF/JSON | celdas/dudas | pdfplumber | Activo |
 | `memoria_obra.py` | `_SISTEMA.../memoria_obra.py` | Python | Memoria histórica | import | orquestador | historial | `memoria_obra.json` | stdlib | Activo |
+| `cierre_expediente.py` | `_SISTEMA.../cierre_expediente.py` | Python | Ensayos/OCA/CIE/Libro del Edificio, aparte de la rejilla | import/CLI | orquestador/panel/informe | `cierre_expediente.json` | mismo fichero | stdlib | Activo desde 15/08/2026 |
 | `motor_informes.py` | `_SISTEMA.../motor_informes.py` | Python | KPI/bloqueos/series | import | panel/informe/tests | historial | métricas | stdlib | Activo |
 | `panel_obra.py` | `_SISTEMA.../panel_obra.py` | Python | Panel 9 vistas | import | orquestador | métricas/ficha/docs | `panel.html` | Chart.js local | Activo |
 | `priorizador_trabajos.py` | `_SISTEMA.../priorizador_trabajos.py` | Python | Prioridades v4.3 | import | orquestador/tests | historial/catálogo | prioridades/dudas | stdlib | Activo |
