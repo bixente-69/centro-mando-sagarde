@@ -111,6 +111,16 @@ class TestCatalogoTajosConfirmado(unittest.TestCase):
         self.assertNotIn('ORDEN_SIN_CONFIRMAR', codigos)
         self.assertEqual(ficha['tajos']['detalle'][0]['orden'], 310)
 
+    def test_fotovoltaica_existe_como_tajo_propio_sin_dependencia(self):
+        tajo = self.tajos.get('fotovoltaica')
+        self.assertIsNotNone(
+            tajo, "falta el tajo 'fotovoltaica' en el catálogo común")
+        self.assertEqual(tajo['propiedad'], 'propio')
+        self.assertEqual(tajo['ambito'], 'edificio')
+        self.assertEqual(tajo['orden'], 306)
+        self.assertEqual(tajo['deps'], [])
+        self.assertIn('Fotovoltaica', tajo['aliases'])
+
 
 if __name__ == '__main__':
     unittest.main()

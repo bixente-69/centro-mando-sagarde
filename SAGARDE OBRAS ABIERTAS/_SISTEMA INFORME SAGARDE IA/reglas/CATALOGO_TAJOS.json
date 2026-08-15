@@ -1,0 +1,1258 @@
+{
+  "version": "1.3",
+  "descripcion": "Catálogo central de tajos Sagarde. Las equivalencias son exactas y confirmadas; los nombres nuevos quedan SIN CLASIFICAR.",
+  "estados": {
+    "": "Pendiente",
+    "/": "Iniciado",
+    "M": "Más del 50 % del alcance del tajo",
+    "X": "Terminado según el alcance del tajo"
+  },
+  "orden_inventario": [
+    "VIABLE",
+    "BLOQUEADO",
+    "OTROS_GREMIOS",
+    "DUDAS",
+    "TERMINADO"
+  ],
+  "tajos": [
+    {
+      "id": "tabicado",
+      "nombre": "Tabicado",
+      "aliases": [
+        "Tabicado"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "orden": 10,
+      "fase": "Inicio de obra",
+      "deps": [],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tabicado terminado",
+      "impacto": "Sin separaciones de vivienda no se inicia la instalación interior."
+    },
+    {
+      "id": "rozas_timbres",
+      "nombre": "Rozas de timbres",
+      "aliases": [
+        "Rozas timbres"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 20,
+      "fase": "Inicio de obra",
+      "deps": [
+        {
+          "id": "tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Rozas terminadas",
+      "impacto": "Abre el frente inicial de instalaciones."
+    },
+    {
+      "id": "montante_electrica",
+      "nombre": "Montante eléctrica",
+      "aliases": [
+        "Montante eléctrica"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 30,
+      "fase": "Infraestructura",
+      "deps": [
+        {
+          "id": "tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Montante terminada",
+      "impacto": "Infraestructura vertical eléctrica."
+    },
+    {
+      "id": "montante_teleco",
+      "nombre": "Montante de telecomunicaciones",
+      "aliases": [
+        "Montante teleco"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 40,
+      "fase": "Infraestructura",
+      "deps": [
+        {
+          "id": "tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Montante terminada",
+      "impacto": "Infraestructura vertical de telecomunicaciones."
+    },
+    {
+      "id": "montante_sscc",
+      "nombre": "Montante de servicios comunes",
+      "aliases": [
+        "Montante sscc"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 50,
+      "fase": "Infraestructura",
+      "deps": [
+        {
+          "id": "tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Montante terminada",
+      "impacto": "Infraestructura vertical de servicios comunes."
+    },
+    {
+      "id": "montante_general",
+      "nombre": "Montantes",
+      "aliases": [
+        "Montantes"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 25,
+      "fase": "Infraestructura",
+      "deps": [
+        {
+          "id": "tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Montantes terminadas",
+      "impacto": "Infraestructura vertical general."
+    },
+    {
+      "id": "tubeado_zzcc",
+      "nombre": "Tubeado de zonas comunes",
+      "aliases": [
+        "Tubeado zzcc"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 60,
+      "fase": "Infraestructura",
+      "deps": [
+        {
+          "id": "tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tubeado terminado",
+      "impacto": "Abre el frente de zonas comunes."
+    },
+    {
+      "id": "cableado_zzcc",
+      "nombre": "Cableado de zonas comunes",
+      "aliases": [
+        "Cableado zzcc"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 70,
+      "fase": "Infraestructura",
+      "deps": [
+        {
+          "id": "tubeado_zzcc",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cableado terminado",
+      "impacto": "Completa el frente inicial de zonas comunes."
+    },
+    {
+      "id": "suelo_radiante",
+      "nombre": "Suelo radiante",
+      "aliases": [
+        "Suelo radiante"
+      ],
+      "propiedad": "coordinacion",
+      "ambito": "vivienda",
+      "orden": 80,
+      "fase": "Obra previa",
+      "deps": [
+        {
+          "id": "tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Terminado",
+      "impacto": "Condición de coordinación, no producción Sagarde."
+    },
+    {
+      "id": "suelo_recrecido",
+      "nombre": "Suelo recrecido",
+      "aliases": [
+        "Suelo recrecido"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "orden": 90,
+      "fase": "Obra previa",
+      "deps": [
+        {
+          "id": "suelo_radiante",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Terminado",
+      "impacto": "Condición de otro gremio."
+    },
+    {
+      "id": "perfilado_pladur",
+      "nombre": "Perfilado de Pladur",
+      "aliases": [
+        "Perfilado de Pladur",
+        "Perfiles pladur"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "orden": 100,
+      "fase": "Pladur",
+      "deps": [
+        {
+          "id": "suelo_recrecido",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Perfilado terminado",
+      "impacto": "Condición de otro gremio."
+    },
+    {
+      "id": "primera_cara_pladur",
+      "nombre": "Primeras caras de Pladur",
+      "aliases": [
+        "1as caras Pladur"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "orden": 110,
+      "fase": "Pladur",
+      "deps": [
+        {
+          "id": "perfilado_pladur",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Primeras caras terminadas",
+      "impacto": "Habilita trabajos interiores."
+    },
+    {
+      "id": "cuadros_presentados",
+      "nombre": "Cuadros presentados",
+      "aliases": [
+        "Cuadros presentados"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 120,
+      "fase": "Instalación interior",
+      "deps": [
+        {
+          "id": "tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cajas físicas presentadas",
+      "impacto": "Caja o envolvente colocada; no equivale a cuadro mecanizado."
+    },
+    {
+      "id": "tubeado",
+      "nombre": "Tubeado interior",
+      "aliases": [
+        "Tubeado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 130,
+      "fase": "Instalación interior",
+      "deps": [
+        {
+          "id": "primera_cara_pladur",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tubeado terminado",
+      "impacto": "Prepara los recorridos de la instalación."
+    },
+    {
+      "id": "cableado",
+      "nombre": "Cableado eléctrico",
+      "aliases": [
+        "Cableado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 140,
+      "fase": "Instalación interior",
+      "deps": [
+        {
+          "id": "tubeado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cableado terminado",
+      "impacto": "Cableado general; no incluye cableados especiales."
+    },
+    {
+      "id": "telecableado",
+      "nombre": "Telecableado",
+      "aliases": [
+        "Telecableado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 150,
+      "fase": "Instalación interior",
+      "deps": [
+        {
+          "id": "tubeado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Telecableado terminado",
+      "impacto": "Cableado específico de telecomunicaciones."
+    },
+    {
+      "id": "portero",
+      "nombre": "Portero / videoportero",
+      "aliases": [
+        "Portero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 160,
+      "fase": "Instalación interior",
+      "deps": [
+        {
+          "id": "tubeado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cableado terminado",
+      "impacto": "Cableado específico de portero."
+    },
+    {
+      "id": "termostatos",
+      "nombre": "Termostatos",
+      "aliases": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 170,
+      "fase": "Instalación interior",
+      "deps": [
+        {
+          "id": "tubeado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cableado terminado",
+      "impacto": "Cableado específico de termostatos."
+    },
+    {
+      "id": "segunda_cara_pladur",
+      "nombre": "Segundas caras de Pladur",
+      "aliases": [
+        "2as caras Pladur"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "orden": 180,
+      "fase": "Pladur",
+      "deps": [
+        {
+          "id": "primera_cara_pladur",
+          "minimo": 1
+        },
+        {
+          "id": "cableado",
+          "minimo": 1
+        },
+        {
+          "id": "telecableado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Segundas caras terminadas",
+      "impacto": "Trabajo externo. Es recomendable completar cableados antes, pero no es una dependencia obligatoria para Pladur."
+    },
+    {
+      "id": "doblar_cajas",
+      "nombre": "Doblar cajas",
+      "aliases": [
+        "Doblar cajas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 190,
+      "fase": "Recuperación tras Pladur",
+      "deps": [
+        {
+          "id": "segunda_cara_pladur",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %: agujeros realizados y colocación de cajas iniciada",
+      "estado_x": "Cajas colocadas y cables fuera",
+      "impacto": "Libera el frente para pintura."
+    },
+    {
+      "id": "embornado",
+      "nombre": "Embornado eléctrico",
+      "aliases": [
+        "Embornado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 200,
+      "fase": "Conexiones",
+      "deps": [
+        {
+          "id": "cableado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Embornado terminado",
+      "impacto": "Cierra conexiones eléctricas."
+    },
+    {
+      "id": "telembornado",
+      "nombre": "Telembornado",
+      "aliases": [
+        "Telembornado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 210,
+      "fase": "Conexiones",
+      "deps": [
+        {
+          "id": "telecableado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Telembornado terminado",
+      "impacto": "Cierra conexiones de telecomunicaciones."
+    },
+    {
+      "id": "derivacion_individual",
+      "nombre": "Derivación individual",
+      "aliases": [
+        "Derivación individual"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 220,
+      "fase": "Cierre técnico",
+      "deps": [
+        {
+          "id": "montante_electrica",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Derivación terminada",
+      "impacto": "Completa la alimentación de la vivienda."
+    },
+    {
+      "id": "cuadro_mecanizado",
+      "nombre": "Cuadro mecanizado",
+      "aliases": [
+        "Cuadro mecanizado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 230,
+      "fase": "Cierre técnico",
+      "deps": [
+        {
+          "id": "cuadros_presentados",
+          "minimo": 1
+        },
+        {
+          "id": "cableado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Aparamenta colocada",
+      "estado_x": "Líneas conectadas y cuadro terminado",
+      "impacto": "No equivale a cuadros presentados ni a placas y tapas."
+    },
+    {
+      "id": "cuarto_tecnico",
+      "nombre": "Cuarto técnico",
+      "aliases": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 235,
+      "fase": "Cierre técnico",
+      "deps": [],
+      "estado_m": "Más del 50 % de los cuartos técnicos ejecutados",
+      "estado_x": "Cuartos técnicos terminados",
+      "impacto": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos."
+    },
+    {
+      "id": "techos_zzcc",
+      "nombre": "Techos de zonas comunes",
+      "aliases": [
+        "Techos zzcc"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "orden": 237,
+      "fase": "Acabados previos",
+      "deps": [],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Techos de ZZCC terminados",
+      "impacto": "Condición de otro gremio. Habilita los agujeros de iluminación en ZZCC."
+    },
+    {
+      "id": "techos",
+      "nombre": "Techos",
+      "aliases": [
+        "Techos"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "display_group": "techos",
+      "orden": 240,
+      "fase": "Acabados previos",
+      "deps": [
+        {
+          "id": "segunda_cara_pladur",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Techos terminados",
+      "impacto": "Condición de otro gremio."
+    },
+    {
+      "id": "enchapado",
+      "nombre": "Enchapado",
+      "aliases": [
+        "Enchapado"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "orden": 250,
+      "fase": "Acabados previos",
+      "deps": [
+        {
+          "id": "segunda_cara_pladur",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Enchapado terminado",
+      "impacto": "Condición de otro gremio."
+    },
+    {
+      "id": "pintura_primera",
+      "nombre": "Pintura — primera mano",
+      "aliases": [
+        "Pintado",
+        "Pintura primera mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "dinamico",
+      "display_group": "pintura",
+      "orden": 260,
+      "fase": "Pintura",
+      "deps": [
+        {
+          "id": "techos",
+          "minimo": 1
+        },
+        {
+          "id": "enchapado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 % de la primera mano",
+      "estado_x": "Primera mano terminada",
+      "impacto": "Permite iniciar mecanizado y telemecanizado."
+    },
+    {
+      "id": "mecanizado",
+      "nombre": "Mecanizado eléctrico",
+      "aliases": [
+        "Mecanizado"
+      ],
+      "propiedad": "propio",
+      "ambito": "dinamico",
+      "orden": 270,
+      "fase": "Mecanismos",
+      "deps": [
+        {
+          "id": "doblar_cajas",
+          "minimo": 1
+        },
+        {
+          "id": "pintura_primera",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Mecanismos colocados sin placas",
+      "impacto": "Remate previo a segunda mano y placas."
+    },
+    {
+      "id": "telemecanizado",
+      "nombre": "Telemecanizado",
+      "aliases": [
+        "Telemecanizado",
+        "telemecanizado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 280,
+      "fase": "Mecanismos",
+      "deps": [
+        {
+          "id": "doblar_cajas",
+          "minimo": 1
+        },
+        {
+          "id": "telecableado",
+          "minimo": 1
+        },
+        {
+          "id": "pintura_primera",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Mecanismos de telecomunicaciones colocados",
+      "impacto": "Remate previo a placas."
+    },
+    {
+      "id": "pintura_segunda",
+      "nombre": "Pintura — segunda mano",
+      "aliases": [
+        "Pintura segunda mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "dinamico",
+      "display_group": "pintura",
+      "orden": 290,
+      "fase": "Pintura final",
+      "deps": [
+        {
+          "id": "pintura_primera",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 % de la segunda mano",
+      "estado_x": "Segunda mano terminada",
+      "impacto": "Condición obligatoria para placas, tapas y luminarias finales."
+    },
+    {
+      "id": "placas_tapas",
+      "nombre": "Placas y tapas",
+      "aliases": [
+        "Placas y tapas",
+        "Embellecedores"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 300,
+      "fase": "Remates finales",
+      "deps": [
+        {
+          "id": "pintura_segunda",
+          "minimo": 1
+        },
+        {
+          "id": "mecanizado",
+          "minimo": 1
+        },
+        {
+          "id": "telemecanizado",
+          "minimo": 1
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más de la mitad de placas y tapas colocadas",
+      "estado_x": "Todas las placas, tapas de cuadros y registros colocadas",
+      "impacto": "Tajo final; no equivale a cuadro mecanizado."
+    },
+    {
+      "id": "apliques",
+      "nombre": "Apliques y enchufes de terraza",
+      "aliases": [
+        "Apliques",
+        "Aplique + Enchufe"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 310,
+      "fase": "Remates exteriores",
+      "deps": [
+        {
+          "id": "fachada_terminada",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Apliques y enchufes exteriores terminados",
+      "impacto": "Rama independiente; requiere fachada terminada."
+    },
+    {
+      "id": "fachada_terminada",
+      "nombre": "Fachada terminada",
+      "aliases": [
+        "Fachada terminada"
+      ],
+      "propiedad": "externo",
+      "ambito": "edificio",
+      "orden": 305,
+      "fase": "Fachada",
+      "deps": [],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Fachada terminada",
+      "impacto": "Condición para remates exteriores."
+    },
+    {
+      "id": "fotovoltaica",
+      "nombre": "Fotovoltaica",
+      "aliases": [
+        "Fotovoltaica",
+        "FV",
+        "Placas solares"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 306,
+      "fase": "Cubierta",
+      "deps": [],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Instalación fotovoltaica terminada",
+      "impacto": "Se ejecuta cuando procede la cubierta; no espera a ningún otro tajo y nada espera a él, igual que Cuarto técnico."
+    },
+    {
+      "id": "agujeros_iluminacion_zzcc",
+      "nombre": "Agujeros de iluminación en ZZCC",
+      "aliases": [
+        "Escaleras agujeros ilum"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 315,
+      "fase": "Iluminación final",
+      "deps": [
+        {
+          "id": "techos_zzcc",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Agujeros terminados",
+      "impacto": "Partida común solo para zonas comunes."
+    },
+    {
+      "id": "pintura_zzcc",
+      "nombre": "Pintura de zonas comunes",
+      "aliases": [
+        "Pintura zzcc"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "orden": 318,
+      "fase": "Pintura ZZCC",
+      "deps": [
+        {
+          "id": "agujeros_iluminacion_zzcc",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Pintura de ZZCC terminada",
+      "impacto": "Condición de otro gremio. Habilita la colocación de luminarias en ZZCC."
+    },
+    {
+      "id": "casquillos_bombillas",
+      "nombre": "Casquillos y bombillas",
+      "aliases": [
+        "Casquillos Bombilla"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "orden": 320,
+      "fase": "Entrega",
+      "deps": [
+        {
+          "id": "pintura_segunda",
+          "minimo": 1
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "minimo": 1
+        },
+        {
+          "id": "derivacion_individual",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más de la mitad de puntos previstos colocados",
+      "estado_x": "Un punto de luz funcional por hueco instalado",
+      "impacto": "Se coloca al final para evitar robos; la tensión no es requisito de colocación."
+    },
+    {
+      "id": "iluminacion_rellanos",
+      "nombre": "Iluminación de rellanos / ZZCC",
+      "aliases": [
+        "ILuminación Rellanos"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 330,
+      "fase": "Entrega",
+      "deps": [
+        {
+          "id": "pintura_zzcc",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 % de los equipos colocados",
+      "estado_x": "Todos los equipos colocados",
+      "impacto": "Tajo independiente de los agujeros. Mide únicamente la colocación de equipos en los huecos ya preparados."
+    }
+  ],
+  "obras": {
+    "2025 BILBAO OBISPO ORUETA": {
+      "estado_obra": "Primera fase entregada; 2A FASE en curso en planta baja (viviendas A/B)",
+      "forzar_historial_terminado": false,
+      "forzar_historial_terminado_hasta": "24/09/2025",
+      "excepciones": [
+        {
+          "tipo": "pendiente_especial",
+          "planta": "PB",
+          "unidades": [
+            "Apartamento 1",
+            "Apartamento 2"
+          ],
+          "bloqueo": "tabique_separador_cocinas",
+          "tajo": "trabajos_electricos_tabique_cocina"
+        }
+      ],
+      "tajos": [
+        {
+          "id": "ventilacion",
+          "nombre": "Cableado de ventilación",
+          "aliases": [
+            "Ventilación"
+          ],
+          "propiedad": "propio",
+          "ambito": "vivienda",
+          "orden": 145,
+          "fase": "Instalación interior",
+          "deps": [
+            {
+              "id": "tubeado",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Cableado terminado",
+          "impacto": "Partida eléctrica específica de Obispo Orueta."
+        },
+        {
+          "id": "cableado_extractor",
+          "nombre": "Cableado de extractor",
+          "aliases": [
+            "Cableado Extractor"
+          ],
+          "propiedad": "propio",
+          "ambito": "vivienda",
+          "orden": 146,
+          "fase": "Instalación interior",
+          "deps": [
+            {
+              "id": "tubeado",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Cableado terminado",
+          "impacto": "Partida eléctrica específica distinta de ventilación."
+        },
+        {
+          "id": "lucido_paredes",
+          "nombre": "Lucido de paredes",
+          "aliases": [
+            "Lucido Paredes",
+            "Lucido paredes"
+          ],
+          "propiedad": "externo",
+          "ambito": "vivienda",
+          "orden": 255,
+          "fase": "Acabados previos",
+          "deps": [],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Paredes lucidas",
+          "impacto": "Debe estar terminado antes de pintar y mecanizar paredes no realizadas en Pladur."
+        },
+        {
+          "id": "techos_wc",
+          "nombre": "Techos de WC",
+          "aliases": [
+            "Techos WC"
+          ],
+          "propiedad": "externo",
+          "ambito": "vivienda",
+          "display_group": "techos",
+          "orden": 240,
+          "fase": "Acabados previos",
+          "deps": [],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Techos terminados",
+          "impacto": "Partida externa específica de Obispo Orueta."
+        },
+        {
+          "id": "pintura_habitaciones",
+          "nombre": "Pintura de habitaciones",
+          "aliases": [
+            "Pintura Hab"
+          ],
+          "propiedad": "externo",
+          "ambito": "vivienda",
+          "display_group": "pintura",
+          "orden": 290,
+          "fase": "Pintura final",
+          "deps": [],
+          "estado_m": "Más del 50 % del tajo (valor histórico 2)",
+          "estado_x": "Pintura terminada",
+          "impacto": "Escala histórica confirmada: 1 = primera mano, 2 = segunda mano y X = tajo terminado."
+        },
+        {
+          "id": "pintura_wc",
+          "nombre": "Pintura de WC",
+          "aliases": [
+            "Pintura WC"
+          ],
+          "propiedad": "externo",
+          "ambito": "vivienda",
+          "display_group": "pintura",
+          "orden": 290,
+          "fase": "Pintura final",
+          "deps": [],
+          "estado_m": "Primera mano o pintura parcial",
+          "estado_x": "Segunda mano terminada",
+          "impacto": "En la fase final de Obispo, X representa segunda mano terminada."
+        },
+        {
+          "id": "pintura_pasillos",
+          "nombre": "Pintura de pasillos",
+          "aliases": [
+            "Pintura Pasillos"
+          ],
+          "propiedad": "externo",
+          "ambito": "zona_comun",
+          "display_group": "pintura",
+          "orden": 290,
+          "fase": "Pintura final",
+          "deps": [],
+          "estado_m": "Más del 50 % del tajo (valor histórico 2)",
+          "estado_x": "Pintura terminada",
+          "impacto": "Escala histórica confirmada: 1 = primera mano, 2 = segunda mano y X = tajo terminado."
+        },
+        {
+          "id": "agujeros_focos_wc",
+          "nombre": "Agujeros para focos de WC",
+          "aliases": [
+            "Agujeros focos WC"
+          ],
+          "propiedad": "propio",
+          "ambito": "vivienda",
+          "orden": 282,
+          "fase": "Iluminación específica",
+          "deps": [
+            {
+              "id": "techos",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Agujeros terminados",
+          "impacto": "Partida específica de Obispo Orueta."
+        },
+        {
+          "id": "agujeros_focos_pasillo",
+          "nombre": "Agujeros para focos de pasillo",
+          "aliases": [
+            "Agujero Focos Pasillo"
+          ],
+          "propiedad": "propio",
+          "ambito": "zona_comun",
+          "orden": 283,
+          "fase": "Iluminación específica",
+          "deps": [
+            {
+              "id": "techos",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Agujeros terminados",
+          "impacto": "Partida específica de Obispo Orueta."
+        },
+        {
+          "id": "cajas_techo_pasillo",
+          "nombre": "Cajas de techo en pasillo",
+          "aliases": [
+            "Cajas TECHO pasillo"
+          ],
+          "propiedad": "propio",
+          "ambito": "zona_comun",
+          "orden": 284,
+          "fase": "Iluminación específica",
+          "deps": [
+            {
+              "id": "techos",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Cajas terminadas",
+          "impacto": "Partida específica distinta de los agujeros de focos."
+        },
+        {
+          "id": "focos_habitaciones",
+          "nombre": "Focos de habitaciones",
+          "aliases": [
+            "Focos Hab"
+          ],
+          "propiedad": "propio",
+          "ambito": "vivienda",
+          "orden": 340,
+          "fase": "Iluminación definitiva",
+          "deps": [
+            {
+              "id": "pintura_segunda",
+              "minimo": 1
+            },
+            {
+              "id": "cuadro_mecanizado",
+              "minimo": 1
+            },
+            {
+              "id": "derivacion_individual",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Iluminación definitiva colocada",
+          "impacto": "Partida específica de Obispo; no equivale a casquillos."
+        },
+        {
+          "id": "focos_wc",
+          "nombre": "Focos de WC",
+          "aliases": [
+            "Focos WC"
+          ],
+          "propiedad": "propio",
+          "ambito": "vivienda",
+          "orden": 341,
+          "fase": "Iluminación definitiva",
+          "deps": [
+            {
+              "id": "agujeros_focos_wc",
+              "minimo": 1
+            },
+            {
+              "id": "pintura_wc",
+              "minimo": 1
+            },
+            {
+              "id": "cuadro_mecanizado",
+              "minimo": 1
+            },
+            {
+              "id": "derivacion_individual",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Iluminación definitiva colocada",
+          "impacto": "Partida específica de Obispo."
+        },
+        {
+          "id": "focos_pasillos",
+          "nombre": "Focos de pasillos",
+          "aliases": [
+            "Focos Pasillos"
+          ],
+          "propiedad": "propio",
+          "ambito": "zona_comun",
+          "orden": 342,
+          "fase": "Iluminación definitiva",
+          "deps": [
+            {
+              "id": "agujeros_focos_pasillo",
+              "minimo": 1
+            },
+            {
+              "id": "pintura_pasillos",
+              "minimo": 1
+            },
+            {
+              "id": "cuadro_mecanizado",
+              "minimo": 1
+            },
+            {
+              "id": "derivacion_individual",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Iluminación definitiva colocada",
+          "impacto": "Partida específica de Obispo."
+        },
+        {
+          "id": "mecanismos_wc",
+          "nombre": "Mecanismos de WC",
+          "aliases": [
+            "Mecanismos WC"
+          ],
+          "propiedad": "propio",
+          "ambito": "vivienda",
+          "orden": 271,
+          "fase": "Mecanismos",
+          "deps": [
+            {
+              "id": "pintura_primera",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Mecanismos colocados",
+          "impacto": "Partida específica de Obispo."
+        },
+        {
+          "id": "mecanismos_pasillo",
+          "nombre": "Mecanismos de pasillo",
+          "aliases": [
+            "Mecanismos pasillo"
+          ],
+          "propiedad": "propio",
+          "ambito": "zona_comun",
+          "orden": 272,
+          "fase": "Mecanismos",
+          "deps": [
+            {
+              "id": "pintura_primera",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Mecanismos colocados",
+          "impacto": "Partida específica de Obispo."
+        },
+        {
+          "id": "placas_tapas",
+          "nombre": "Placas y tapas",
+          "aliases": [
+            "Placas + Tps. Cuadro",
+            "Placas y tapas",
+            "Embellecedores"
+          ],
+          "propiedad": "propio",
+          "ambito": "vivienda",
+          "orden": 300,
+          "fase": "Remates finales",
+          "deps": [
+            {
+              "id": "pintura_habitaciones",
+              "minimo": 1
+            },
+            {
+              "id": "pintura_wc",
+              "minimo": 1
+            },
+            {
+              "id": "pintura_pasillos",
+              "minimo": 1
+            },
+            {
+              "id": "mecanizado",
+              "minimo": 1
+            },
+            {
+              "id": "telemecanizado",
+              "minimo": 1
+            },
+            {
+              "id": "cuadro_mecanizado",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Más de la mitad de placas y tapas colocadas",
+          "estado_x": "Todas las placas, tapas de cuadros y registros colocadas",
+          "impacto": "Tajo final; no equivale a cuadro mecanizado."
+        },
+        {
+          "id": "tabique_separador_cocinas",
+          "nombre": "Tabique separador de cocinas",
+          "aliases": [],
+          "propiedad": "externo",
+          "ambito": "vivienda",
+          "orden": 10,
+          "fase": "Pendiente postapertura",
+          "deps": [],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Tabique terminado",
+          "impacto": "Bloquea la revisión eléctrica de los apartamentos PB 1 y 2."
+        },
+        {
+          "id": "trabajos_electricos_tabique_cocina",
+          "nombre": "Trabajos eléctricos afectados por tabique de cocina",
+          "aliases": [],
+          "propiedad": "propio",
+          "ambito": "vivienda",
+          "orden": 135,
+          "fase": "Pendiente postapertura",
+          "deps": [
+            {
+              "id": "tabique_separador_cocinas",
+              "minimo": 1
+            }
+          ],
+          "estado_m": "Alcance por revisar",
+          "estado_x": "Trabajos definidos y terminados",
+          "impacto": "No decidir tubeado, cableado o mecanismos hasta una nueva revisión."
+        }
+      ]
+    }
+  }
+}
