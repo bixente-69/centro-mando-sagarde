@@ -31,6 +31,7 @@ sys.path.insert(0, os.path.join(ROOT_DIR, "_SISTEMA", "MOTOR", "scripts"))
 import panel_obra  # noqa: E402
 import lectores    # noqa: E402
 import priorizador_trabajos  # noqa: E402
+import cierre_expediente  # noqa: E402
 import memoria_obra as mem  # noqa: E402
 import motor_informes       # noqa: E402
 import ficha_obra as fichas    # noqa: E402
@@ -858,6 +859,7 @@ def main(hacer_pdf=True):
         salida_prioridades = os.path.join(salida_dir, 'prioridades_trabajos.json')
         salida_dudas = os.path.join(salida_dir, 'dudas_pendientes.json')
         salida_memoria = os.path.join(salida_dir, 'memoria_obra.json')
+        salida_cierre = os.path.join(salida_dir, 'cierre_expediente.json')
 
         try:
             # Se leen antes de tocar la ficha porque volcar_apartados() los
@@ -947,11 +949,16 @@ def main(hacer_pdf=True):
 
             bat_abs = os.path.abspath(os.path.join(BASE_DIR, 'Actualizar_Obras.bat'))
             volver = os.path.relpath(os.path.join(OBRAS_ABIERTAS_DIR, 'index.html'), salida_dir).replace('\\', '/')
+            cierre_datos, cierre_avisos = cierre_expediente.cargar(
+                salida_cierre, obra=obra['nombre'])
+            if not os.path.isfile(salida_cierre):
+                cierre_expediente.guardar(salida_cierre, cierre_datos)
             res = panel_obra.generar_panel(
                 obra=obra['nombre'], subtitulo=obra['subtitulo'], historial=historial,
                 materiales=materiales, ficha=ficha, documentos=documentos,
                 prioridades=prioridades, output_path=salida_html, volver_href=volver,
                 tajos_memoria=tajos_memoria, mem_resumen=mem_resumen, bat_path=bat_abs,
+                cierre=cierre_datos, cierre_avisos=cierre_avisos,
             )
         except Exception as e:
             print(f"  [ERROR] Fallo al generar el panel: {e}")
@@ -975,6 +982,8 @@ def main(hacer_pdf=True):
                 historial=historial,
                 ficha=ficha_actual,
                 prioridades=prioridades,
+                cierre=cierre_datos,
+                avisos_cierre=cierre_avisos,
             )
         except Exception as e_exec:
             print(f"  [AVISO INFORME EJECUTIVO] {e_exec}")

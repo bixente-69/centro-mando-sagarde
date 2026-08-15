@@ -30,6 +30,7 @@ VARIOS/APPS SAGARDE/
 # Datos calculados enlazados desde los paneles de obras
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/prioridades_trabajos.json
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/dudas_pendientes.json
+!SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/cierre_expediente.json
 
 # El generador de revisiones lo carga con <script src="obras_revisiones.js">.
 # Sin esta linea da 404 en GitHub Pages y el generador no reconoce ninguna obra.
