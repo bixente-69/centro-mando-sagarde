@@ -90,6 +90,7 @@ if str(MOTOR_IA_DIR) not in sys.path:
 import motor_informes
 import ficha_obra as fichas
 import priorizador_trabajos
+import cierre_expediente
 from registro_obras import OBRAS, resolver_obra
 
 
@@ -743,6 +744,60 @@ def _pie_electrico(fecha_rev: str, content_w: float) -> Table:
     return tabla
 
 
+COLOR_ESTADO_HITO = {
+    'hecho': COL_OK, 'favorable': COL_OK,
+    'condicionada': COL_WARN, 'negativa': COL_WARN,
+    'no_aplica': COL_GRIS, 'pendiente': COL_GRIS,
+}
+
+
+def _tabla_cierre_expediente(cierre: dict | None, avisos: list[str] | None,
+                              content_w: float):
+    _registrar_fuentes()
+    cierre = cierre or {}
+    hitos = cierre.get('hitos') or {}
+    avisos = avisos or []
+    if not hitos:
+        return Paragraph(
+            'Sin datos de cierre de expediente todavía.',
+            _style('cierre_vacio', 8, color=COL_MUTED))
+
+    filas = [[
+        Paragraph('<b>HITO</b>', _style('cierre_h', 7.5, True, color=colors.white)),
+        Paragraph('<b>ESTADO</b>', _style('cierre_h', 7.5, True, color=colors.white)),
+        Paragraph('<b>FECHA</b>', _style('cierre_h', 7.5, True, color=colors.white)),
+        Paragraph('<b>NOTA</b>', _style('cierre_h', 7.5, True, color=colors.white)),
+    ]]
+    for hito_id in cierre_expediente.HITOS_ORDEN:
+        datos_hito = hitos.get(hito_id) or {'estado': 'pendiente', 'fecha': None, 'nota': ''}
+        estado = datos_hito.get('estado') or 'pendiente'
+        color_estado = COLOR_ESTADO_HITO.get(estado, COL_GRIS)
+        nombre = cierre_expediente.HITOS_NOMBRE.get(hito_id, hito_id)
+        filas.append([
+            Paragraph(_texto(nombre), _style('cierre_c', 7.5)),
+            Paragraph(f'<b>{_texto(estado).upper()}</b>',
+                      _style('cierre_c_estado', 7.5, True, color=color_estado)),
+            Paragraph(_texto(datos_hito.get('fecha') or '—'), _style('cierre_c', 7.5)),
+            Paragraph(_texto(datos_hito.get('nota') or '—'), _style('cierre_c', 7.5)),
+        ])
+    tabla = Table(
+        filas,
+        colWidths=[content_w * 0.28, content_w * 0.18, content_w * 0.16, content_w * 0.38])
+    tabla.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), COL_NAVY),
+        ('LINEBELOW', (0, 0), (-1, -1), .4, COL_LINE),
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('TOPPADDING', (0, 0), (-1, -1), 3),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 3),
+    ]))
+    if not avisos:
+        return tabla
+    bloques = [tabla, Spacer(1, 2 * mm)]
+    for aviso in avisos:
+        bloques.append(Paragraph(f'⚠ {_texto(aviso)}', _style('cierre_aviso', 7, color=COL_WARN)))
+    return KeepTogether(bloques)
+
+
 def _construir_bloque_electrico(
     story: list,
     nombre_obra: str,
@@ -1035,6 +1090,8 @@ def generar_pdf_ejecutivo(
     historial: list | None = None,
     ficha: dict | None = None,
     prioridades: dict | None = None,
+    cierre: dict | None = None,
+    avisos_cierre: list[str] | None = None,
 ) -> Path:
     _registrar_fuentes()
     doc = SimpleDocTemplate(
@@ -1092,6 +1149,14 @@ def generar_pdf_ejecutivo(
                     content_w, referencias={ref, p_nom},
                 )
 
+    # 3. Cierre de expediente: una vez, al final, sea cual sea el numero
+    #    de portales/bloques de la obra.
+    story.append(PageBreak())
+    story.append(Paragraph(
+        'CIERRE DE EXPEDIENTE', _style('cierre_titulo', 13, True, color=COL_NAVY)))
+    story.append(Spacer(1, 3 * mm))
+    story.append(_tabla_cierre_expediente(cierre, avisos_cierre, content_w))
+
     doc.build(story)
     return output_pdf
 
@@ -1102,6 +1167,8 @@ def generar_para_obra(
     historial: list | None = None,
     ficha: dict | None = None,
     prioridades: dict | None = None,
+    cierre: dict | None = None,
+    avisos_cierre: list[str] | None = None,
 ) -> Path | None:
     obra = resolver_obra(nombre_obra)
     if obra is None:
@@ -1149,6 +1216,11 @@ def generar_para_obra(
     output_pdf = carpeta_obra / (
         f"INFORME_EJECUTIVO_{nombre_oficial.replace(' ', '_')}.pdf")
 
+    if cierre is None:
+        ruta_cierre = carpeta_obra / "cierre_expediente.json"
+        cierre, avisos_cierre = cierre_expediente.cargar(str(ruta_cierre), obra=nombre_oficial)
+    avisos_cierre = avisos_cierre or []
+
     print(f"[2/2] Generando PDF Ejecutivo A4 en: {output_pdf}...")
     generar_pdf_ejecutivo(
         nombre_oficial,
@@ -1158,6 +1230,8 @@ def generar_para_obra(
         historial=historial,
         ficha=ficha,
         prioridades=prioridades,
+        cierre=cierre,
+        avisos_cierre=avisos_cierre,
     )
     print(f"[OK] Informe ejecutivo creado con exito: {output_pdf}")
     return output_pdf
