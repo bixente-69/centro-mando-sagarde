@@ -1,0 +1,26 @@
+{
+  "obra": "2026 GORLIZ HOSPITAL",
+  "actualizado": null,
+  "hitos": {
+    "ensayos_instrumentales": {
+      "estado": "pendiente",
+      "fecha": null,
+      "nota": ""
+    },
+    "inspeccion_oca": {
+      "estado": "pendiente",
+      "fecha": null,
+      "nota": ""
+    },
+    "cie_boletin": {
+      "estado": "pendiente",
+      "fecha": null,
+      "nota": ""
+    },
+    "libro_edificio": {
+      "estado": "pendiente",
+      "fecha": null,
+      "nota": ""
+    }
+  }
+}
