@@ -411,6 +411,52 @@ def bloque_riesgos(prioridades, bloqueos=None, riesgos_manual=None,
     )
 
 
+def bloque_cierre(cierre, avisos=None):
+    """HTML de la pestana Cierre de expediente.
+
+    `cierre` es la forma que devuelve cierre_expediente.cargar()/vacio():
+    {"obra":..., "actualizado":..., "hitos": {id: {"estado","fecha","nota"}}}.
+    Dato de obra editado a mano, al margen de la rejilla de revisiones.
+    """
+    import cierre_expediente as ce
+    cierre = cierre or ce.vacio()
+    avisos = avisos or []
+
+    avisos_html = ""
+    if avisos:
+        avisos_html = "".join(
+            f"<div class='banner bad'>⚠ {_e(a)}</div>" for a in avisos)
+
+    filas = ""
+    for hito_id in ce.HITOS_ORDEN:
+        datos_hito = (cierre.get('hitos') or {}).get(hito_id) or {
+            'estado': 'pendiente', 'fecha': None, 'nota': ''}
+        nombre = ce.HITOS_NOMBRE.get(hito_id, hito_id)
+        estado = datos_hito.get('estado') or 'pendiente'
+        badge = 'ok' if estado in ('hecho', 'favorable') else (
+            'bad' if estado in ('condicionada', 'negativa') else 'warn')
+        fecha = datos_hito.get('fecha') or '—'
+        nota = datos_hito.get('nota') or '—'
+        filas += (
+            f"<tr><td>{_e(nombre)}</td>"
+            f"<td><span class='badge {badge}'>{_e(estado)}</span></td>"
+            f"<td>{_e(fecha)}</td><td>{_e(nota)}</td></tr>"
+        )
+
+    actualizado = cierre.get('actualizado') or 'sin actualizar todavía'
+    return (
+        avisos_html
+        + "<div class='card'><h3>Cierre de expediente</h3>"
+        "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
+        "Ensayos, inspección OCA, CIE/Boletín y Libro del Edificio. Dato de "
+        "obra editado a mano, no calculado desde las revisiones de campo. "
+        f"Última actualización: {_e(actualizado)}.</p>"
+        "<table class='data'><thead><tr><th>Hito</th><th>Estado</th>"
+        "<th>Fecha</th><th>Nota</th></tr></thead>"
+        f"<tbody>{filas}</tbody></table></div>"
+    )
+
+
 def bloque_prioridades(prioridades):
     """HTML de la pestana Prioridades.
 
@@ -593,7 +639,8 @@ def bloque_prioridades(prioridades):
 
 def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   output_path, volver_href="../../index.html", prioridades=None,
-                  tajos_memoria=None, mem_resumen=None, bat_path=None):
+                  tajos_memoria=None, mem_resumen=None, bat_path=None,
+                  cierre=None, cierre_avisos=None):
     prioridades = prioridades or {}
     snapshot = historial[-1][1] if historial else []
     historial_panel = list(historial)
@@ -712,6 +759,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     riesgos_html = bloque_riesgos(
         prioridades, bloqueos=bloqueos,
         riesgos_manual=ficha.get('riesgos', []), sin_cambios=sin_cambios)
+    cierre_html = bloque_cierre(cierre, avisos=cierre_avisos)
 
     # ---- DOCUMENTOS ----
     docs_html = ""
@@ -792,6 +840,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
   <button data-view="v-riesgos">⚠ Riesgos</button>
   <button data-view="v-normativa">📘 Normativa</button>
   <button data-view="v-docs">📎 Documentos</button>
+  <button data-view="v-cierre">📋 Cierre</button>
   <button data-view="v-actualizar" style="margin-left:auto;background:var(--header2);color:#fff;">↻ Actualizar</button>
 </div>
 
@@ -832,6 +881,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 <section id="v-docs" class="view"><div class="card"><h3>Documentos de la obra</h3>
   <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px;">Todos los archivos de la carpeta. Clic para abrir (los enlaces funcionan en el PC; en el móvil abre los archivos desde la app de OneDrive).</p>
   {docs_html}</div></section>
+
+<section id="v-cierre" class="view">{cierre_html}</section>
 
 <section id="v-actualizar" class="view">{actualizar_html}</section>
 
