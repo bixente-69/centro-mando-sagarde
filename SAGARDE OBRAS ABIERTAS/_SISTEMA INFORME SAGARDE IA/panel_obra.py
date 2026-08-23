@@ -92,6 +92,11 @@ def _e(valor):
     return html_lib.escape(str(valor if valor not in (None, '') else '—'))
 
 
+def _e_atributo(valor):
+    """Escapa un atributo sin sustituir por un guiÃ³n los valores vacÃ­os."""
+    return html_lib.escape(str('' if valor is None else valor), quote=True)
+
+
 def _ub_div(ubicacion):
     unidades = ubicacion.get('unidades') or [ubicacion.get('unidad')]
     unidades = [u for u in unidades if u not in (None, '')]
@@ -457,7 +462,76 @@ def bloque_cierre(cierre, avisos=None):
     )
 
 
-def _tabla_tareas_manuales(tareas, documentos):
+_SCRIPT_MARCAR_TAREA = """<script>
+document.querySelectorAll('.marcar-tarea-hecha').forEach(casilla => {
+  casilla.addEventListener('change', async () => {
+    if (!casilla.checked) return;
+    casilla.disabled = true;
+    const fila = casilla.closest('tr');
+    const tarjeta = casilla.closest('.card');
+    const mensaje = tarjeta.querySelector('.tarea-resultado');
+    const contador = tarjeta.querySelector('.tareas-pendientes-contador');
+    const controlador = new AbortController();
+    const timeout = setTimeout(() => controlador.abort(), 3000);
+    const restaurar = () => {
+      casilla.checked = false;
+      casilla.disabled = false;
+    };
+    const avisar = (texto, error) => {
+      mensaje.textContent = texto;
+      mensaje.style.color = error ? 'var(--bad)' : 'var(--ok)';
+      mensaje.style.display = 'block';
+    };
+    try {
+      const respuesta = await fetch('/api/marcar_hecho', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          obra_carpeta: casilla.dataset.obra,
+          tarea: casilla.dataset.tarea,
+          origen: casilla.dataset.origen,
+          fecha: casilla.dataset.fecha,
+          archivo: casilla.dataset.archivo
+        }),
+        signal: controlador.signal
+      });
+      if (respuesta.ok) {
+        fila.style.color = 'var(--muted)';
+        fila.style.textDecoration = 'line-through';
+        const estado = fila.querySelector('.badge');
+        estado.textContent = 'Hecho';
+        estado.classList.remove('warn');
+        estado.classList.add('f3');
+        const restantes = Math.max(
+          0, parseInt(contador.dataset.pendientes, 10) - 1);
+        contador.dataset.pendientes = restantes;
+        contador.textContent = restantes + ' '
+          + (restantes === 1 ? 'pendiente' : 'pendientes');
+        avisar('Marcada como hecha. Recuerda ejecutar Actualizar_Sagarde.bat para publicar este cambio.', false);
+      } else if (respuesta.status === 404) {
+        restaurar();
+        avisar('No se encontrÃ³ esa tarea en el Excel; puede que el panel '
+          + 'estÃ© desactualizado. Regenera antes de reintentar.', true);
+      } else {
+        restaurar();
+        avisar('No se pudo guardar: esto solo funciona abriendo el panel en '
+          + 'local con Abrir_Panel_Local.bat. No se ha guardado ningÃºn cambio.',
+          true);
+      }
+    } catch (error) {
+      restaurar();
+      avisar('No se pudo guardar: esto solo funciona abriendo el panel en '
+        + 'local con Abrir_Panel_Local.bat. No se ha guardado ningÃºn cambio.',
+        true);
+    } finally {
+      clearTimeout(timeout);
+    }
+  });
+});
+</script>"""
+
+
+def _tabla_tareas_manuales(tareas, documentos, obra=''):
     """Pinta las tareas de la ficha y enlaza su documento cuando existe."""
     tareas = tareas or []
     if not tareas:
@@ -472,6 +546,10 @@ def _tabla_tareas_manuales(tareas, documentos):
 
     def esta_hecha(tarea):
         return str(tarea.get('Estado') or '').strip().casefold() == 'hecho'
+
+    def esta_pendiente(tarea):
+        return (str(tarea.get('Estado') or '').strip().casefold()
+                == 'pendiente')
 
     def clave_fecha(tarea):
         texto = str(tarea.get('Fecha') or '').strip()
@@ -500,12 +578,24 @@ def _tabla_tareas_manuales(tareas, documentos):
         estilo = (" style='color:var(--muted);text-decoration:line-through;'"
                   if hecha else '')
         clase = 'f3' if hecha else 'warn'
+        casilla = '<td></td>' if not hecha else ''
+        if not hecha and esta_pendiente(tarea):
+            casilla = (
+                "<td><label style='white-space:nowrap;cursor:pointer;'>"
+                "<input type='checkbox' class='marcar-tarea-hecha'"
+                f" data-obra='{_e_atributo(obra)}'"
+                f" data-tarea='{_e_atributo(tarea.get('Tarea'))}'"
+                f" data-origen='{_e_atributo(tarea.get('Origen'))}'"
+                f" data-fecha='{_e_atributo(tarea.get('Fecha'))}'"
+                f" data-archivo='{_e_atributo(tarea.get('Archivo'))}'> Hecho"
+                "</label></td>"
+            )
         return (
             f"<tr{estilo}><td><span class='badge {clase}'>{_e(estado)}</span></td>"
             f"<td><b>{_e(tarea.get('Tarea'))}</b></td>"
             f"<td>{_e(tarea.get('Origen'))}</td>"
             f"<td style='white-space:nowrap;'>{_e(tarea.get('Fecha'))}</td>"
-            f"<td>{archivo_html(tarea)}</td></tr>"
+            f"<td>{archivo_html(tarea)}</td>{casilla}</tr>"
         )
 
     filas_pendientes = ''.join(fila(tarea) for tarea in pendientes)
@@ -513,7 +603,8 @@ def _tabla_tareas_manuales(tareas, documentos):
         bloque_pendientes = (
             "<div class='tareas-pendientes'><div class='table-scroll'>"
             "<table class='data'><thead><tr><th>Estado</th><th>Tarea</th>"
-            "<th>Origen</th><th>Fecha</th><th>Archivo</th></tr></thead>"
+            "<th>Origen</th><th>Fecha</th><th>Archivo</th><th>AcciÃ³n</th>"
+            "</tr></thead>"
             f"<tbody>{filas_pendientes}</tbody></table></div></div>"
         )
     else:
@@ -532,18 +623,26 @@ def _tabla_tareas_manuales(tareas, documentos):
 
     n_pendientes = len(pendientes)
     etiqueta = 'pendiente' if n_pendientes == 1 else 'pendientes'
-    return (
+    tarjeta = (
         "<div class='card' style='border-left:4px solid var(--accent2);'>"
-        f"<h3>Tareas manuales <span class='badge'>{n_pendientes} {etiqueta}</span></h3>"
+        "<h3>Tareas manuales "
+        f"<span class='badge tareas-pendientes-contador' "
+        f"data-pendientes='{n_pendientes}'>{n_pendientes} {etiqueta}</span>"
+        "</h3>"
         "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
         "Acciones declaradas en la hoja <b>Tareas</b> de "
         "<b>FICHA DE OBRA.xlsx</b>. Se muestran aparte: no modifican los "
         "KPI ni el orden calculado de los tajos.</p>"
-        f"{bloque_pendientes}{bloque_hechas}</div>"
+        f"{bloque_pendientes}{bloque_hechas}"
+        "<p class='tarea-resultado' role='status' "
+        "style='display:none;font-size:12.5px;margin-top:10px;'></p></div>"
     )
+    hay_casillas = any(esta_pendiente(tarea) for tarea in pendientes)
+    return tarjeta + (_SCRIPT_MARCAR_TAREA if hay_casillas else '')
 
 
-def bloque_prioridades(prioridades, tareas_manual=None, documentos=None):
+def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
+                       obra=''):
     """HTML de la pestana Prioridades.
 
     Separado de generar_panel para poder probarlo sin montar una obra entera:
@@ -560,7 +659,8 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None):
                 "</p>")
 
     e = _e
-    tareas_manual_html = _tabla_tareas_manuales(tareas_manual, documentos)
+    tareas_manual_html = _tabla_tareas_manuales(
+        tareas_manual, documentos, obra=obra)
     resumen_prio = prioridades.get('resumen', {})
     items_prio = prioridades.get('items', [])
     inventario_prio = prioridades.get('inventario', [])
@@ -842,7 +942,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     # ---- PRIORIDADES E INVENTARIO COMPLETO DE TAJOS (motor v4) ----
     prioridades_html = bloque_prioridades(
         prioridades, tareas_manual=ficha.get('tareas', []),
-        documentos=documentos)
+        documentos=documentos, obra=obra)
 
     # Se reconstruye desde la base/priorizador del mismo ciclo. La ficha XLSX
     # solo aporta el registro manual complementario.

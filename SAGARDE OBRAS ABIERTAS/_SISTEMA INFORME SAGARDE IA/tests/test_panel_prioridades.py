@@ -82,7 +82,9 @@ class TestTareasManuales(unittest.TestCase):
         self.assertIn('text-decoration:line-through', html[inicio_hechas:])
 
     def test_lista_vacia_no_anade_tarjeta(self):
-        self.assertEqual(panel_obra._tabla_tareas_manuales([], []), '')
+        tabla = panel_obra._tabla_tareas_manuales([], [])
+        self.assertEqual(tabla, '')
+        self.assertNotIn('<script>', tabla)
 
         html = panel_obra.bloque_prioridades(
             _prioridades(), tareas_manual=[], documentos=[])
@@ -136,6 +138,7 @@ class TestTareasManuales(unittest.TestCase):
         self.assertIn(
             '<a href="../DOCUMENTOS/pedido-20-08.pdf">pedido-20-08.pdf</a>',
             html)
+        self.assertIn("data-obra='Obra de prueba'", html)
 
     def test_escapa_el_contenido_de_la_ficha(self):
         html = panel_obra._tabla_tareas_manuales([{
@@ -143,8 +146,49 @@ class TestTareasManuales(unittest.TestCase):
             'Estado': 'Pendiente',
         }], [])
 
-        self.assertNotIn('<script>', html)
+        self.assertNotIn('<script>alert(1)</script>', html)
         self.assertIn('&lt;script&gt;', html)
+
+    def test_casilla_pendiente_lleva_los_datos_exactos_escapados(self):
+        html = panel_obra._tabla_tareas_manuales([{
+            'Tarea': 'Revisar "A&B" <cuadro>',
+            'Origen': "Correo de O'Reilly",
+            'Fecha': '24/08/2026',
+            'Archivo': 'nota "final" & plano.txt',
+            'Estado': 'Pendiente',
+        }], [], obra='2026 OBRA "PRUEBA" & <NORTE>')
+
+        self.assertIn("class='marcar-tarea-hecha'", html)
+        self.assertIn(
+            "data-obra='2026 OBRA &quot;PRUEBA&quot; &amp; &lt;NORTE&gt;'",
+            html)
+        self.assertIn(
+            "data-tarea='Revisar &quot;A&amp;B&quot; &lt;cuadro&gt;'",
+            html)
+        self.assertIn("data-origen='Correo de O&#x27;Reilly'", html)
+        self.assertIn("data-fecha='24/08/2026'", html)
+        self.assertIn(
+            "data-archivo='nota &quot;final&quot; &amp; plano.txt'", html)
+
+    def test_script_local_aparece_si_hay_alguna_pendiente(self):
+        html = panel_obra._tabla_tareas_manuales(
+            [self.TAREAS[0]], [], obra='2026 OBRA PRUEBA')
+
+        self.assertIn('<script>', html)
+        self.assertIn("fetch('/api/marcar_hecho'", html)
+        self.assertIn('AbortController', html)
+        self.assertIn('Marcada como hecha. Recuerda ejecutar '
+                      'Actualizar_Sagarde.bat para publicar este cambio.', html)
+        self.assertIn('No se ha guardado ningÃºn cambio.', html)
+        self.assertIn('No se encontrÃ³ esa tarea en el Excel', html)
+
+    def test_fila_hecha_no_tiene_casilla(self):
+        html = panel_obra._tabla_tareas_manuales(
+            [self.TAREAS[1]], [], obra='2026 OBRA PRUEBA')
+
+        self.assertNotIn("class='marcar-tarea-hecha'", html)
+        self.assertNotIn('data-tarea=', html)
+        self.assertNotIn('<script>', html)
 
 
 class TestSinRevisar(unittest.TestCase):
