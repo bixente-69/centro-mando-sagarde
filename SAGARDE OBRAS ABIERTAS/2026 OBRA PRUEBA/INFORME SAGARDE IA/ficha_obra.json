@@ -3,7 +3,7 @@
   "id": "prueba",
   "modo": "nativa",
   "fecha_entrada_digital": "05/08/2026",
-  "actualizado": "24/08/2026 00:19",
+  "actualizado": "24/08/2026 00:30",
   "identidad": {
     "nombre": "OBRA PRUEBA",
     "carpeta": "2026 OBRA PRUEBA",
@@ -8034,14 +8034,15 @@
   "dudas": [],
   "materiales": {},
   "documentos": {
-    "total": 87,
+    "total": 88,
     "por_categoria": {
+      "Excel": 1,
       "Imágenes": 82,
       "Otros": 3,
       "PDF": 2
     },
     "_meta": {
-      "actualizado": "24/08/2026 00:19"
+      "actualizado": "24/08/2026 00:30"
     }
   },
   "contactos": []
