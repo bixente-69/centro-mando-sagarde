@@ -24,6 +24,39 @@ def anadir_tarea_pendiente(ruta_xlsx, tarea, origen, fecha, archivo):
         wb.close()
 
 
+def marcar_tarea_hecha(ruta_xlsx, tarea, origen, fecha, archivo):
+    """Marca la primera tarea pendiente que coincide exactamente."""
+    wb = load_workbook(ruta_xlsx, data_only=False)
+    try:
+        if 'Tareas' not in wb.sheetnames:
+            return False
+
+        ws = wb['Tareas']
+        columnas = {
+            celda.value: celda.column
+            for celda in ws[1]
+            if celda.value in CABECERA_TAREAS
+        }
+        if any(cabecera not in columnas for cabecera in CABECERA_TAREAS):
+            return False
+
+        valores_buscados = (tarea, origen, fecha, archivo)
+        for numero_fila in range(2, ws.max_row + 1):
+            valores_fila = tuple(
+                ws.cell(numero_fila, columnas[cabecera]).value
+                for cabecera in CABECERA_TAREAS[:4]
+            )
+            estado = ws.cell(numero_fila, columnas['Estado']).value
+            if (valores_fila == valores_buscados
+                    and str(estado).casefold() == 'pendiente'):
+                ws.cell(numero_fila, columnas['Estado']).value = 'Hecho'
+                wb.save(ruta_xlsx)
+                return True
+        return False
+    finally:
+        wb.close()
+
+
 def main():
     parser = argparse.ArgumentParser(
         description='Añade una tarea pendiente a FICHA DE OBRA.xlsx.')
