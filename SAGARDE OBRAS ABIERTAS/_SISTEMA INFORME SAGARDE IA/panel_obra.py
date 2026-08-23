@@ -457,71 +457,110 @@ def bloque_cierre(cierre, avisos=None):
     )
 
 
-def _bloque_tareas_manuales(tareas):
-    """Pinta el registro manual sin mezclarlo con el cálculo de tajos."""
+def _tabla_tareas_manuales(tareas, documentos):
+    """Pinta las tareas de la ficha y enlaza su documento cuando existe."""
     tareas = tareas or []
     if not tareas:
         return ''
 
-    estados_hechos = {
-        'hecho', 'hecha', 'terminado', 'terminada', 'completado',
-        'completada', 'cerrado', 'cerrada', 'resuelto', 'resuelta',
-    }
+    href_por_nombre = {}
+    for documento in documentos or []:
+        nombre = str(documento.get('nombre') or '').strip()
+        href = documento.get('href')
+        if nombre and href not in (None, ''):
+            href_por_nombre.setdefault(nombre.casefold(), str(href))
 
     def esta_hecha(tarea):
-        return str(tarea.get('Estado') or '').strip().casefold() in estados_hechos
+        return str(tarea.get('Estado') or '').strip().casefold() == 'hecho'
 
-    # Las acciones abiertas van primero. Dentro de cada grupo se conserva el
-    # orden escrito en la ficha: no se inventa una prioridad que nadie haya
-    # declarado.
-    ordenadas = sorted(enumerate(tareas), key=lambda par: (esta_hecha(par[1]), par[0]))
-    filas = ''
-    for _, tarea in ordenadas:
-        hecha = esta_hecha(tarea)
+    def clave_fecha(tarea):
+        texto = str(tarea.get('Fecha') or '').strip()
+        try:
+            return (0, datetime.strptime(texto, '%d/%m/%Y'))
+        except ValueError:
+            # Una fecha vacía o no normalizada no debe romper el panel. Se
+            # conserva al final de las pendientes, ordenada por su texto.
+            return (1, texto.casefold())
+
+    pendientes = sorted(
+        (tarea for tarea in tareas if not esta_hecha(tarea)), key=clave_fecha)
+    hechas = [tarea for tarea in tareas if esta_hecha(tarea)]
+
+    def archivo_html(tarea):
+        archivo = str(tarea.get('Archivo') or '').strip()
+        if not archivo:
+            return _e(None)
+        href = href_por_nombre.get(archivo.casefold())
+        if href is None:
+            return _e(archivo)
+        return f'<a href="{_e(href)}">{_e(archivo)}</a>'
+
+    def fila(tarea, hecha=False):
         estado = tarea.get('Estado') or 'Sin estado'
-        clase = 'ok' if hecha else 'warn'
-        filas += (
-            f"<tr><td><span class='badge {clase}'>{_e(estado)}</span></td>"
+        estilo = (" style='color:var(--muted);text-decoration:line-through;'"
+                  if hecha else '')
+        clase = 'f3' if hecha else 'warn'
+        return (
+            f"<tr{estilo}><td><span class='badge {clase}'>{_e(estado)}</span></td>"
             f"<td><b>{_e(tarea.get('Tarea'))}</b></td>"
             f"<td>{_e(tarea.get('Origen'))}</td>"
             f"<td style='white-space:nowrap;'>{_e(tarea.get('Fecha'))}</td>"
-            f"<td>{_e(tarea.get('Archivo'))}</td></tr>"
+            f"<td>{archivo_html(tarea)}</td></tr>"
         )
 
-    pendientes = sum(not esta_hecha(tarea) for tarea in tareas)
-    etiqueta = 'pendiente' if pendientes == 1 else 'pendientes'
+    filas_pendientes = ''.join(fila(tarea) for tarea in pendientes)
+    if filas_pendientes:
+        bloque_pendientes = (
+            "<div class='tareas-pendientes'><div class='table-scroll'>"
+            "<table class='data'><thead><tr><th>Estado</th><th>Tarea</th>"
+            "<th>Origen</th><th>Fecha</th><th>Archivo</th></tr></thead>"
+            f"<tbody>{filas_pendientes}</tbody></table></div></div>"
+        )
+    else:
+        bloque_pendientes = '<p class="empty">Sin tareas pendientes.</p>'
+
+    bloque_hechas = ''
+    if hechas:
+        filas_hechas = ''.join(fila(tarea, hecha=True) for tarea in hechas)
+        bloque_hechas = (
+            "<div class='tareas-hechas' "
+            "style='margin-top:16px;color:var(--muted);'>"
+            "<h4 style='font-size:12px;margin-bottom:6px;'>Hechas</h4>"
+            "<div class='table-scroll'><table class='data'><tbody>"
+            f"{filas_hechas}</tbody></table></div></div>"
+        )
+
+    n_pendientes = len(pendientes)
+    etiqueta = 'pendiente' if n_pendientes == 1 else 'pendientes'
     return (
         "<div class='card' style='border-left:4px solid var(--accent2);'>"
-        f"<h3>Tareas manuales <span class='badge'>{pendientes} {etiqueta}</span></h3>"
+        f"<h3>Tareas manuales <span class='badge'>{n_pendientes} {etiqueta}</span></h3>"
         "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
         "Acciones declaradas en la hoja <b>Tareas</b> de "
         "<b>FICHA DE OBRA.xlsx</b>. Se muestran aparte: no modifican los "
         "KPI ni el orden calculado de los tajos.</p>"
-        "<div class='table-scroll'><table class='data'><thead><tr>"
-        "<th>Estado</th><th>Tarea</th><th>Origen</th><th>Fecha</th>"
-        f"<th>Archivo</th></tr></thead><tbody>{filas}</tbody></table></div></div>"
+        f"{bloque_pendientes}{bloque_hechas}</div>"
     )
 
 
-def bloque_prioridades(prioridades, tareas_manuales=None):
+def bloque_prioridades(prioridades, tareas_manual=None, documentos=None):
     """HTML de la pestana Prioridades.
 
     Separado de generar_panel para poder probarlo sin montar una obra entera:
     un dato que se calcula y no se pinta es lo mismo que no calcularlo.
     """
     prioridades = prioridades or {}
-    tareas_manuales_html = _bloque_tareas_manuales(tareas_manuales)
     if prioridades.get('sin_base'):
         avisos = prioridades.get('avisos') or [
             'Esta obra no tiene base de datos todavía.']
-        return (tareas_manuales_html
-                + "<div class='banner bad'>⚠ " + _e(avisos[0]) + "</div>"
+        return ("<div class='banner bad'>⚠ " + _e(avisos[0]) + "</div>"
                 "<p style='font-size:12.5px;color:var(--muted);'>Las "
                 "prioridades salen de la base de datos de la obra. Sin ella "
                 "no se calcula nada: un recuento vacío sería un dato falso."
                 "</p>")
 
     e = _e
+    tareas_manual_html = _tabla_tareas_manuales(tareas_manual, documentos)
     resumen_prio = prioridades.get('resumen', {})
     items_prio = prioridades.get('items', [])
     inventario_prio = prioridades.get('inventario', [])
@@ -652,7 +691,6 @@ def bloque_prioridades(prioridades, tareas_manuales=None):
         inventario_html += tabla
 
     return f"""
-    {tareas_manuales_html}
     <div class="kpi-row">
       <div class="kpi"><div class="label">Bloques viables</div><div class="value">{resumen_prio.get('listos', 0)}</div><div class="hint">{resumen_prio.get('unidades_listas', 0)} unidades de trabajo</div></div>
       <div class="kpi"><div class="label">Bloqueados</div><div class="value">{resumen_prio.get('bloqueados', 0)}</div><div class="hint">Tajos propios con dependencias</div></div>
@@ -664,6 +702,7 @@ def bloque_prioridades(prioridades, tareas_manuales=None):
       <div class="kpi"><div class="label">Revisión utilizada</div><div class="value" style="font-size:18px;">{e(prioridades.get('revision'))}</div><div class="hint">Motor v{e(prioridades.get('version'))} · catálogo v{e(prioridades.get('catalogo_version'))}</div></div>
     </div>
     {estado_obra_html}
+    {tareas_manual_html}
     {dudas_html}
     {orden_html}
     {avisos_prio}
@@ -802,7 +841,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 
     # ---- PRIORIDADES E INVENTARIO COMPLETO DE TAJOS (motor v4) ----
     prioridades_html = bloque_prioridades(
-        prioridades, tareas_manuales=ficha.get('tareas', []))
+        prioridades, tareas_manual=ficha.get('tareas', []),
+        documentos=documentos)
 
     # Se reconstruye desde la base/priorizador del mismo ciclo. La ficha XLSX
     # solo aporta el registro manual complementario.

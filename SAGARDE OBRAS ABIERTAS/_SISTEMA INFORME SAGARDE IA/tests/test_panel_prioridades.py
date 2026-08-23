@@ -48,67 +48,103 @@ class TestTareasManuales(unittest.TestCase):
 
     TAREAS = [
         {'Tarea': 'Revisar cuadro', 'Origen': 'Parte de obra',
-         'Fecha': '21/08/2026', 'Archivo': 'parte-21-08.pdf',
+         'Fecha': '22/08/2026', 'Archivo': 'parte-22-08.pdf',
          'Estado': 'Pendiente'},
         {'Tarea': 'Cerrar incidencia', 'Origen': 'Correo',
-         'Fecha': '22/08/2026', 'Archivo': 'correo-22-08.msg',
-         'Estado': 'Hecho'},
+         'Fecha': '19/08/2026', 'Archivo': 'correo-19-08.msg',
+         'Estado': 'hEcHo'},
+        {'Tarea': 'Pedir material', 'Origen': 'Encargado',
+         'Fecha': '20/08/2026', 'Archivo': 'pedido-20-08.pdf',
+         'Estado': 'Pendiente'},
     ]
 
-    def test_aparecen_separadas_del_calculo_automatico(self):
-        html = panel_obra.bloque_prioridades(
-            _prioridades(resumen={'listos': 7}),
-            tareas_manuales=self.TAREAS)
+    def test_pendientes_ordenadas_por_fecha_y_archivo_enlazado(self):
+        html = panel_obra._tabla_tareas_manuales(self.TAREAS, [{
+            'nombre': 'PEDIDO-20-08.PDF',
+            'href': '../DOCUMENTOS/pedido-20-08.pdf',
+        }])
 
-        self.assertIn('Tareas manuales', html)
-        self.assertIn('Revisar cuadro', html)
-        self.assertIn('Cerrar incidencia', html)
-        self.assertIn('1 pendiente', html)
+        self.assertLess(html.index('Pedir material'),
+                        html.index('Revisar cuadro'))
         self.assertLess(html.index('Revisar cuadro'),
                         html.index('Cerrar incidencia'))
-        self.assertIn('Bloques viables', html)
-        self.assertIn('>7<', html)
+        self.assertIn(
+            '<a href="../DOCUMENTOS/pedido-20-08.pdf">pedido-20-08.pdf</a>',
+            html)
 
-    def test_siguen_visibles_aunque_la_obra_no_tenga_base(self):
+    def test_hecha_va_en_bloque_separado_gris_y_tachado_al_final(self):
+        html = panel_obra._tabla_tareas_manuales(self.TAREAS, [])
+
+        inicio_hechas = html.index('tareas-hechas')
+        self.assertLess(html.index('Revisar cuadro'), inicio_hechas)
+        self.assertLess(inicio_hechas, html.index('Cerrar incidencia'))
+        self.assertIn('color:var(--muted)', html[inicio_hechas:])
+        self.assertIn('text-decoration:line-through', html[inicio_hechas:])
+
+    def test_lista_vacia_no_anade_tarjeta(self):
+        self.assertEqual(panel_obra._tabla_tareas_manuales([], []), '')
+
         html = panel_obra.bloque_prioridades(
-            _prioridades(sin_base=True), tareas_manuales=self.TAREAS)
-
-        self.assertIn('Tareas manuales', html)
-        self.assertIn('Revisar cuadro', html)
-        self.assertIn('no tiene base de datos', html)
-
-    def test_sin_tareas_no_pinta_una_seccion_vacia(self):
-        html = panel_obra.bloque_prioridades(
-            _prioridades(), tareas_manuales=[])
-
+            _prioridades(), tareas_manual=[], documentos=[])
         self.assertNotIn('Tareas manuales', html)
 
-    def test_escapa_el_contenido_de_la_ficha(self):
+    def test_archivo_sin_coincidencia_se_muestra_sin_enlace(self):
+        html = panel_obra._tabla_tareas_manuales([{
+            'Tarea': 'Comprobar acta', 'Origen': 'Correo',
+            'Fecha': '23/08/2026', 'Archivo': 'acta-inexistente.pdf',
+            'Estado': 'Pendiente',
+        }], [{'nombre': 'otro.pdf', 'href': '../otro.pdf'}])
+
+        self.assertIn('acta-inexistente.pdf', html)
+        self.assertNotIn('<a ', html)
+
+    def test_tarjeta_esta_entre_estado_de_obra_y_dudas(self):
         html = panel_obra.bloque_prioridades(
-            _prioridades(), tareas_manuales=[{
-                'Tarea': '<script>alert(1)</script>',
-                'Estado': 'Pendiente',
-            }])
+            _prioridades(
+                estado_obra='En ejecución',
+                dudas_pendientes=[{
+                    'codigo': 'ALCANCE', 'pregunta': '¿Qué alcance tiene?',
+                    'n_ubicaciones': 0, 'ubicaciones': [],
+                }]),
+            tareas_manual=self.TAREAS, documentos=[])
 
-        self.assertNotIn('<script>', html)
-        self.assertIn('&lt;script&gt;', html)
+        self.assertLess(html.index('Estado de la obra'),
+                        html.index('Tareas manuales'))
+        self.assertLess(html.index('Tareas manuales'),
+                        html.index('Preguntas pendientes antes de decidir'))
 
-    def test_generar_panel_conecta_las_tareas_leidas(self):
+    def test_generar_panel_pasa_tareas_y_documentos(self):
         ficha = {
             '_disponible': True, 'datos': {}, 'personal': [], 'hitos': [],
             'riesgos': [], 'plan': [], 'tareas': self.TAREAS,
         }
+        documentos = [{
+            'nombre': 'pedido-20-08.pdf',
+            'href': '../DOCUMENTOS/pedido-20-08.pdf',
+            'categoria': 'PDF', 'subcarpeta': 'DOCUMENTOS', 'kb': 10,
+        }]
         with tempfile.TemporaryDirectory() as carpeta:
             salida = os.path.join(carpeta, 'panel.html')
             panel_obra.generar_panel(
                 obra='Obra de prueba', subtitulo='', historial=[],
-                materiales={}, ficha=ficha, documentos=[],
+                materiales={}, ficha=ficha, documentos=documentos,
                 prioridades=_prioridades(), output_path=salida)
             with open(salida, encoding='utf-8') as f:
                 html = f.read()
 
         self.assertIn('Tareas manuales', html)
-        self.assertIn('Revisar cuadro', html)
+        self.assertIn(
+            '<a href="../DOCUMENTOS/pedido-20-08.pdf">pedido-20-08.pdf</a>',
+            html)
+
+    def test_escapa_el_contenido_de_la_ficha(self):
+        html = panel_obra._tabla_tareas_manuales([{
+            'Tarea': '<script>alert(1)</script>',
+            'Estado': 'Pendiente',
+        }], [])
+
+        self.assertNotIn('<script>', html)
+        self.assertIn('&lt;script&gt;', html)
 
 
 class TestSinRevisar(unittest.TestCase):
