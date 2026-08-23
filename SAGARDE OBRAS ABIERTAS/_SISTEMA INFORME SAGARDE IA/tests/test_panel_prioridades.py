@@ -7,6 +7,7 @@ pantalla.
 """
 import os
 import sys
+import tempfile
 import unittest
 
 _BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -41,6 +42,73 @@ class TestObraSinBase(unittest.TestCase):
     def test_una_salida_vacia_no_revienta(self):
         self.assertIsInstance(panel_obra.bloque_prioridades({}), str)
         self.assertIsInstance(panel_obra.bloque_prioridades(None), str)
+
+
+class TestTareasManuales(unittest.TestCase):
+
+    TAREAS = [
+        {'Tarea': 'Revisar cuadro', 'Origen': 'Parte de obra',
+         'Fecha': '21/08/2026', 'Archivo': 'parte-21-08.pdf',
+         'Estado': 'Pendiente'},
+        {'Tarea': 'Cerrar incidencia', 'Origen': 'Correo',
+         'Fecha': '22/08/2026', 'Archivo': 'correo-22-08.msg',
+         'Estado': 'Hecho'},
+    ]
+
+    def test_aparecen_separadas_del_calculo_automatico(self):
+        html = panel_obra.bloque_prioridades(
+            _prioridades(resumen={'listos': 7}),
+            tareas_manuales=self.TAREAS)
+
+        self.assertIn('Tareas manuales', html)
+        self.assertIn('Revisar cuadro', html)
+        self.assertIn('Cerrar incidencia', html)
+        self.assertIn('1 pendiente', html)
+        self.assertLess(html.index('Revisar cuadro'),
+                        html.index('Cerrar incidencia'))
+        self.assertIn('Bloques viables', html)
+        self.assertIn('>7<', html)
+
+    def test_siguen_visibles_aunque_la_obra_no_tenga_base(self):
+        html = panel_obra.bloque_prioridades(
+            _prioridades(sin_base=True), tareas_manuales=self.TAREAS)
+
+        self.assertIn('Tareas manuales', html)
+        self.assertIn('Revisar cuadro', html)
+        self.assertIn('no tiene base de datos', html)
+
+    def test_sin_tareas_no_pinta_una_seccion_vacia(self):
+        html = panel_obra.bloque_prioridades(
+            _prioridades(), tareas_manuales=[])
+
+        self.assertNotIn('Tareas manuales', html)
+
+    def test_escapa_el_contenido_de_la_ficha(self):
+        html = panel_obra.bloque_prioridades(
+            _prioridades(), tareas_manuales=[{
+                'Tarea': '<script>alert(1)</script>',
+                'Estado': 'Pendiente',
+            }])
+
+        self.assertNotIn('<script>', html)
+        self.assertIn('&lt;script&gt;', html)
+
+    def test_generar_panel_conecta_las_tareas_leidas(self):
+        ficha = {
+            '_disponible': True, 'datos': {}, 'personal': [], 'hitos': [],
+            'riesgos': [], 'plan': [], 'tareas': self.TAREAS,
+        }
+        with tempfile.TemporaryDirectory() as carpeta:
+            salida = os.path.join(carpeta, 'panel.html')
+            panel_obra.generar_panel(
+                obra='Obra de prueba', subtitulo='', historial=[],
+                materiales={}, ficha=ficha, documentos=[],
+                prioridades=_prioridades(), output_path=salida)
+            with open(salida, encoding='utf-8') as f:
+                html = f.read()
+
+        self.assertIn('Tareas manuales', html)
+        self.assertIn('Revisar cuadro', html)
 
 
 class TestSinRevisar(unittest.TestCase):

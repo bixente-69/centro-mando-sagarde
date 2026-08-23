@@ -3,7 +3,7 @@
 LECTORES AUXILIARES (capa 1, genericos)
 ----------------------------------------
 - leer_ficha(ruta_xlsx): lee la FICHA DE OBRA.xlsx (Datos/Personal/Hitos/
-  Riesgos/Plan semanal) a un dict. Tolera hojas ausentes.
+  Riesgos/Plan semanal/Tareas) a un dict. Tolera hojas ausentes.
 - leer_materiales(ruta_xlsx): lee la hoja de entrega de materiales de forma
   DEFENSIVA. El formato real es desordenado (categorias como filas
   cabecera, items repetidos, columnas de fecha variables, columna TOTAL al
@@ -26,7 +26,8 @@ except ImportError:
 
 
 def leer_ficha(ruta_xlsx):
-    ficha = {'datos': {}, 'personal': [], 'hitos': [], 'riesgos': [], 'plan': []}
+    ficha = {'datos': {}, 'personal': [], 'hitos': [], 'riesgos': [],
+             'plan': [], 'tareas': []}
     if not openpyxl or not os.path.isfile(ruta_xlsx):
         ficha['_disponible'] = False
         return ficha
@@ -71,6 +72,7 @@ def leer_ficha(ruta_xlsx):
     _tabla('Hitos', ficha['hitos'])
     _tabla('Riesgos', ficha['riesgos'])
     _tabla('Plan semanal', ficha['plan'])
+    _tabla('Tareas', ficha['tareas'])
     return ficha
 
 

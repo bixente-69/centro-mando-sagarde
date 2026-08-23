@@ -457,17 +457,65 @@ def bloque_cierre(cierre, avisos=None):
     )
 
 
-def bloque_prioridades(prioridades):
+def _bloque_tareas_manuales(tareas):
+    """Pinta el registro manual sin mezclarlo con el cálculo de tajos."""
+    tareas = tareas or []
+    if not tareas:
+        return ''
+
+    estados_hechos = {
+        'hecho', 'hecha', 'terminado', 'terminada', 'completado',
+        'completada', 'cerrado', 'cerrada', 'resuelto', 'resuelta',
+    }
+
+    def esta_hecha(tarea):
+        return str(tarea.get('Estado') or '').strip().casefold() in estados_hechos
+
+    # Las acciones abiertas van primero. Dentro de cada grupo se conserva el
+    # orden escrito en la ficha: no se inventa una prioridad que nadie haya
+    # declarado.
+    ordenadas = sorted(enumerate(tareas), key=lambda par: (esta_hecha(par[1]), par[0]))
+    filas = ''
+    for _, tarea in ordenadas:
+        hecha = esta_hecha(tarea)
+        estado = tarea.get('Estado') or 'Sin estado'
+        clase = 'ok' if hecha else 'warn'
+        filas += (
+            f"<tr><td><span class='badge {clase}'>{_e(estado)}</span></td>"
+            f"<td><b>{_e(tarea.get('Tarea'))}</b></td>"
+            f"<td>{_e(tarea.get('Origen'))}</td>"
+            f"<td style='white-space:nowrap;'>{_e(tarea.get('Fecha'))}</td>"
+            f"<td>{_e(tarea.get('Archivo'))}</td></tr>"
+        )
+
+    pendientes = sum(not esta_hecha(tarea) for tarea in tareas)
+    etiqueta = 'pendiente' if pendientes == 1 else 'pendientes'
+    return (
+        "<div class='card' style='border-left:4px solid var(--accent2);'>"
+        f"<h3>Tareas manuales <span class='badge'>{pendientes} {etiqueta}</span></h3>"
+        "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
+        "Acciones declaradas en la hoja <b>Tareas</b> de "
+        "<b>FICHA DE OBRA.xlsx</b>. Se muestran aparte: no modifican los "
+        "KPI ni el orden calculado de los tajos.</p>"
+        "<div class='table-scroll'><table class='data'><thead><tr>"
+        "<th>Estado</th><th>Tarea</th><th>Origen</th><th>Fecha</th>"
+        f"<th>Archivo</th></tr></thead><tbody>{filas}</tbody></table></div></div>"
+    )
+
+
+def bloque_prioridades(prioridades, tareas_manuales=None):
     """HTML de la pestana Prioridades.
 
     Separado de generar_panel para poder probarlo sin montar una obra entera:
     un dato que se calcula y no se pinta es lo mismo que no calcularlo.
     """
     prioridades = prioridades or {}
+    tareas_manuales_html = _bloque_tareas_manuales(tareas_manuales)
     if prioridades.get('sin_base'):
         avisos = prioridades.get('avisos') or [
             'Esta obra no tiene base de datos todavía.']
-        return ("<div class='banner bad'>⚠ " + _e(avisos[0]) + "</div>"
+        return (tareas_manuales_html
+                + "<div class='banner bad'>⚠ " + _e(avisos[0]) + "</div>"
                 "<p style='font-size:12.5px;color:var(--muted);'>Las "
                 "prioridades salen de la base de datos de la obra. Sin ella "
                 "no se calcula nada: un recuento vacío sería un dato falso."
@@ -604,6 +652,7 @@ def bloque_prioridades(prioridades):
         inventario_html += tabla
 
     return f"""
+    {tareas_manuales_html}
     <div class="kpi-row">
       <div class="kpi"><div class="label">Bloques viables</div><div class="value">{resumen_prio.get('listos', 0)}</div><div class="hint">{resumen_prio.get('unidades_listas', 0)} unidades de trabajo</div></div>
       <div class="kpi"><div class="label">Bloqueados</div><div class="value">{resumen_prio.get('bloqueados', 0)}</div><div class="hint">Tajos propios con dependencias</div></div>
@@ -752,7 +801,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     hitos_html = tabla_ficha(ficha.get('hitos', []))
 
     # ---- PRIORIDADES E INVENTARIO COMPLETO DE TAJOS (motor v4) ----
-    prioridades_html = bloque_prioridades(prioridades)
+    prioridades_html = bloque_prioridades(
+        prioridades, tareas_manuales=ficha.get('tareas', []))
 
     # Se reconstruye desde la base/priorizador del mismo ciclo. La ficha XLSX
     # solo aporta el registro manual complementario.
