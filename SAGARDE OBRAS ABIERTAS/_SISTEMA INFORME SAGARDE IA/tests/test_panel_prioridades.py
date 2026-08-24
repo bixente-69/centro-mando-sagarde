@@ -243,8 +243,21 @@ class TestSinRevisar(unittest.TestCase):
                 'ubicaciones': [], 'estado_actual': '—', 'motivo': 'x',
                 'subtajos': [],
             }]))
-        self.assertIn('5. Sin revisar nunca', html)
+        self.assertIn('Sin revisar nunca', html)
         self.assertIn('Tubeado interior', html)
+
+    def test_la_seccion_es_un_details_plegable_sin_numero(self):
+        html = panel_obra.bloque_prioridades(_prioridades(inventario=[{
+            'seccion': 'SIN_REVISAR', 'trabajo': 'Tubeado interior',
+            'propiedad': 'propio', 'orden_ejecucion': 130,
+            'fase_nombre': 'Instalación interior', 'n_ubicaciones': 5,
+            'ubicaciones': [], 'estado_actual': '—', 'motivo': 'x',
+            'subtajos': [],
+        }]))
+        self.assertIn(
+            "<details class='card seccion-plegable' id='sec-inv-sin_revisar'",
+            html)
+        self.assertNotIn('5. Sin revisar nunca', html)
 
 
 class TestPreguntasDelCatalogo(unittest.TestCase):

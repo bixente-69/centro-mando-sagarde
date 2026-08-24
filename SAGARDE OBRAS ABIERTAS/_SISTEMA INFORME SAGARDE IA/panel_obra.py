@@ -207,18 +207,18 @@ _ID_SEC_PREVISION = 'sec-prevision'
 _ID_SEC_DUDAS = 'sec-dudas'
 
 _SECCIONES_INVENTARIO = [
-    ('VIABLE', '1. Tajos viables',
+    ('VIABLE', 'Tajos viables',
      'Se pueden ejecutar según los datos disponibles.'),
-    ('BLOQUEADO', '2. Tajos bloqueados',
+    ('BLOQUEADO', 'Tajos bloqueados',
      'Son propios, pero falta una dependencia previa.'),
-    ('OTROS_GREMIOS', '3. Otros gremios e interferencias',
+    ('OTROS_GREMIOS', 'Otros gremios e interferencias',
      'Se controlan solo para saber cuándo puede entrar electricidad.'),
-    ('DUDAS', '4. Sin clasificar o por verificar',
+    ('DUDAS', 'Sin clasificar o por verificar',
      'No se decide ni se fusiona hasta recibir confirmación.'),
-    ('SIN_REVISAR', '5. Sin revisar nunca',
+    ('SIN_REVISAR', 'Sin revisar nunca',
      'Nadie los ha mirado todavía. No son trabajo pendiente: son trabajo '
      'por comprobar.'),
-    ('TERMINADO', '6. Tajos terminados',
+    ('TERMINADO', 'Tajos terminados',
      'Histórico conservado; siempre se muestra al final.'),
 ]
 
@@ -875,7 +875,7 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
     orden_html = _tabla_preguntas_orden(prioridades.get('preguntas_orden'))
     prevision_html = _tabla_prevision(prioridades.get('prevision'))
 
-    inventario_html = ''
+    inventario_por_codigo = {}
     for codigo, titulo, explicacion in _SECCIONES_INVENTARIO:
         grupos = [g for g in inventario_prio if g.get('seccion') == codigo]
         filas = ''
@@ -891,14 +891,20 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
                       f"<td>{e(g.get('estado_actual'))}</td><td style='font-size:12px;'>{e(g.get('motivo'))}</td></tr>")
         if not filas:
             filas = '<tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr>'
-        tabla = (f"<div class='card'><h3>{titulo} <span class='badge'>{len(grupos)}</span></h3>"
-                 f"<p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>{explicacion}</p>"
-                 "<div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th>"
-                 "<th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th>"
-                 f"</tr></thead><tbody>{filas}</tbody></table></div></div>")
-        if codigo == 'TERMINADO':
-            tabla = f"<details><summary style='cursor:pointer;font-weight:700;margin:14px 0;'>Mostrar {len(grupos)} tajos terminados</summary>{tabla}</details>"
-        inventario_html += tabla
+        titulo_seccion = f"{titulo} <span class='badge'>{len(grupos)}</span>"
+        contenido = (
+            f"<p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>{explicacion}</p>"
+            "<div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th>"
+            "<th>Responsable</th><th>Ubicaciones</th><th>Dónde</th><th>Estado</th><th>Motivo</th>"
+            f"</tr></thead><tbody>{filas}</tbody></table></div>")
+        id_ancla = f'sec-inv-{codigo.lower()}'
+        inventario_por_codigo[codigo] = {
+            'id': id_ancla,
+            'html': _envolver_plegable(id_ancla, titulo_seccion, contenido),
+            'n': len(grupos),
+        }
+
+    inventario_html = ''.join(v['html'] for v in inventario_por_codigo.values())
 
     return f"""
     <div class="kpi-row">
