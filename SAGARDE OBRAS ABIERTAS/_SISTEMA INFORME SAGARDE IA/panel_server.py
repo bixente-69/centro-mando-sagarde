@@ -18,11 +18,30 @@ DIRECTORIO_OBRAS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RUTA_MARCAR_HECHO = '/api/marcar_hecho'
 
 
-def _obra_carpeta_valida(obra_carpeta):
-    return (isinstance(obra_carpeta, str)
-            and bool(obra_carpeta)
-            and '..' not in obra_carpeta
-            and not os.path.isabs(obra_carpeta))
+def _ruta_ficha_contenida(directorio_base, obra_carpeta):
+    """Resuelve FICHA DE OBRA.xlsx para obra_carpeta y exige que quede
+    dentro de directorio_base.
+
+    No basta con rechazar '..' o rutas absolutas: en Windows una ruta
+    "relativa a unidad" como 'C:evil' no es absoluta según os.path.isabs
+    ni contiene '..', pero os.path.join('base', 'C:evil', 'x') descarta
+    'base' por completo (comportamiento documentado de ntpath.join) y
+    devuelve 'C:evil\\x'. Por eso aquí se valida el resultado FINAL ya
+    resuelto, no el texto de entrada.
+    """
+    if not isinstance(obra_carpeta, str) or not obra_carpeta:
+        return None
+    base = os.path.realpath(directorio_base)
+    candidato = os.path.realpath(
+        os.path.join(base, obra_carpeta, 'FICHA DE OBRA.xlsx'))
+    try:
+        comun = os.path.commonpath(
+            [os.path.normcase(base), os.path.normcase(candidato)])
+    except ValueError:
+        return None
+    if comun != os.path.normcase(base):
+        return None
+    return candidato
 
 
 class ManejadorPanel(SimpleHTTPRequestHandler):
@@ -54,12 +73,10 @@ class ManejadorPanel(SimpleHTTPRequestHandler):
             return
 
         obra_carpeta = datos.get('obra_carpeta')
-        if not _obra_carpeta_valida(obra_carpeta):
+        ruta_xlsx = _ruta_ficha_contenida(self.directory, obra_carpeta)
+        if ruta_xlsx is None:
             self._responder_json(400, False, 'La carpeta de obra no es válida.')
             return
-
-        ruta_xlsx = os.path.join(
-            self.directory, obra_carpeta, 'FICHA DE OBRA.xlsx')
         try:
             encontrada = marcar_tarea_hecha(
                 ruta_xlsx,

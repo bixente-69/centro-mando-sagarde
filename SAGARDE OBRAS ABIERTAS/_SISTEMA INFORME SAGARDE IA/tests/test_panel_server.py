@@ -107,6 +107,21 @@ class TestPanelServer(unittest.TestCase):
         self.assertEqual(estado_http, 400)
         self.assertFalse(cuerpo['ok'])
 
+    def test_rechaza_ruta_relativa_a_unidad_de_windows(self):
+        """Una ruta "relativa a unidad" (p.ej. 'Z:evil') no es absoluta ni
+        contiene '..', pero en Windows os.path.join descarta el directorio
+        base cuando la letra de unidad no coincide (ntpath.join). Se elige
+        una unidad distinta a la del propio directorio temporal para que la
+        fuga se reproduzca sin depender de en qué disco viva %TEMP%."""
+        unidad_base, _ = os.path.splitdrive(self.temporal.name)
+        otra_unidad = 'Z' if unidad_base[:1].upper() != 'Z' else 'Y'
+
+        estado_http, cuerpo = self._post(
+            obra_carpeta=f'{otra_unidad}:evil')
+
+        self.assertEqual(estado_http, 400)
+        self.assertFalse(cuerpo['ok'])
+
 
 if __name__ == '__main__':
     unittest.main()
