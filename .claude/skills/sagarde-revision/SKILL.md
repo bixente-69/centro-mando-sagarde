@@ -177,6 +177,15 @@ hay que añadir la obra a `registro_obras.py` y darle un adaptador.
   cualquier carpeta `_SISTEMA`, no solo `INFORME SAGARDE IA`). Si el
   recuento de Documentos de una obra parece disparatado, sospechar de esto
   antes de nada.
+- **Agrupar columnas solo por la letra de vivienda ('A','B','C','D') las
+  fundía entre plantas.** La hoja imprime dos plantas por página con las
+  mismas letras repetidas; agrupar sin la planta hacía que la planta de la
+  derecha de cada página perdiera sus marcas en silencio (166 de 411
+  cambios, 40%, en Bolueta 24/08/2026 — encontrado DESPUÉS de dar la
+  revisión por terminada, porque Bixente comparó la hoja contra el panel a
+  ojo). Ya corregido: `_agrupar_por_columna()` agrupa por `(planta, viv)`.
+  Si algo parecido reaparece, sospechar de cualquier agrupación que use
+  solo una etiqueta que se repite entre plantas/portales.
 - **Limpiar los restos de un `--preparar` que no se llega a aplicar.** Si se
   arranca por el Flujo A y a mitad de camino se descubre que en realidad es
   Flujo B (0 tinta real), borrar el `.candidatas.json` y el `.recortes/` que
@@ -224,6 +233,17 @@ Y comprobar que las obras NO implicadas no se mueven ni un decimal
 (`git diff --stat` sobre sus `ficha_obra.json` debería ser solo la línea
 `actualizado`, nada de `estados` ni `estructura`).
 
+**Si Bixente señala UN dato concreto que no cuadra con la hoja, no lo
+arregles solo a él.** Eso fue exactamente lo que pasó en Bolueta 24/08/2026:
+señaló una celda, la causa real era sistemática (columnas agrupadas sin la
+planta) y afectaba al 40% de los cambios de la hoja entera. Cuando el
+síntoma apunte a un patrón que se repite, verificar el DOCUMENTO COMPLETO
+con un método de lectura independiente del que falló — no la misma función,
+un camino distinto que no pueda compartir el mismo sesgo (por ejemplo:
+asignar cada glifo a la celda más cercana en 2D sobre todas las celdas a la
+vez, en lugar de agrupar por columna primero). Si los dos métodos coinciden
+al cien por cien, hay confianza real de que no queda nada suelto.
+
 ## Verificado contra verdad conocida
 
 - **Bolueta 26/07/2026**: el lector reproduce exactamente las 7 celdas del
@@ -232,7 +252,10 @@ Y comprobar que las obras NO implicadas no se mueven ni un decimal
   Corrigió 2 marcas que estaban en la vivienda equivocada y 3 que el sidecar
   guardaba con la clave `PORT AL` partida.
 - **OBRA PRUEBA**: obra ficticia para probar sin tocar datos reales.
-- **Bolueta 24/08/2026 (Flujo B, primera vez usado)**: 245 celdas avanzaron
-  de verdad (140 `P→X`, 34 `P→M`, 32 `P→/`, 18 `M→X`, 11 `/→X`, 9 `?→X`, 1
-  `/→M`). Gernika, Mungia y OBRA PRUEBA comprobadas sin moverse. Detalle
-  completo en la memoria `project_sagarde_hoja_generador_digital`.
+- **Bolueta 24/08/2026 (Flujo B, primera vez usado)**: 411 celdas avanzaron
+  de verdad en total (245 en la primera pasada, 166 más recuperadas del bug
+  de columnas fundidas). `pct_ponderado` 41.7→53.6. Gernika, Mungia y
+  OBRA PRUEBA comprobadas sin moverse, dos veces. Verificado también con un
+  segundo método de lectura independiente sobre el documento completo:
+  1963 glifos, 1963 celdas, 0 discrepancias. Detalle completo en la memoria
+  `project_sagarde_hoja_generador_digital`.

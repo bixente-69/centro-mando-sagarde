@@ -376,6 +376,25 @@ def _fila_mas_cercana(centro_y, celdas_col):
                key=lambda c: abs((c['bbox'][1] + c['bbox'][3]) / 2 - centro_y))
 
 
+def _agrupar_por_columna(celdas):
+    """{(planta, viv): [celda, ...]} -- una entrada por COLUMNA fisica de la
+    pagina, ordenada de arriba a abajo por tajo.
+
+    La clave tiene que llevar la planta: el rotulo de vivienda ('A', 'B'...)
+    se repite igual en cada planta de la pagina (la hoja imprime dos plantas
+    por pagina desde el 07/08/2026). Agrupar solo por `viv` fundia la
+    columna A de la planta de la izquierda con la A de la derecha en una
+    sola entrada, y el resto del codigo se queda con la banda x de la
+    PRIMERA celda de esa entrada: la planta de la derecha perdia sus
+    glifos en silencio, buscados en la banda x de la de la izquierda.
+    Bolueta 24/08/2026, planta 17: 'Rozas de timbres' seguia en 'P' con la
+    hoja imprimiendo 'X' delante."""
+    por_columna = defaultdict(list)
+    for c in celdas:
+        por_columna[(c['planta'], c['viv'])].append(c)
+    return por_columna
+
+
 def estados_impresos(ruta, obra, ficha):
     """El estado que IMPRIME cada celda de una hoja generada: X/M// o vacio.
 
@@ -407,10 +426,7 @@ def estados_impresos(ruta, obra, ficha):
                                         aviso=f'pagina {npag}: ')
             chars = [c for c in page.chars
                      if ord(c.get('text', 'x')) < 0x10000]
-            por_columna = defaultdict(list)
-            for c in tabla['celdas']:
-                por_columna[c['viv']].append(c)
-            for celdas_col in por_columna.values():
+            for celdas_col in _agrupar_por_columna(tabla['celdas']).values():
                 x0 = celdas_col[0]['bbox'][0]
                 x1 = celdas_col[0]['bbox'][2]
                 top = min(c['bbox'][1] for c in celdas_col)

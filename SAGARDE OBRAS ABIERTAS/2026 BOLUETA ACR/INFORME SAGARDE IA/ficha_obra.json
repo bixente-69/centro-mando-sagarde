@@ -3,7 +3,7 @@
   "id": "bolueta",
   "modo": "hibrida",
   "fecha_entrada_digital": "26/07/2026",
-  "actualizado": "24/08/2026 18:48",
+  "actualizado": "24/08/2026 21:46",
   "identidad": {
     "nombre": "2026 BOLUETA ACR",
     "carpeta": "2026 BOLUETA ACR",
@@ -7300,9 +7300,10 @@
       "r": "rev_28072026"
     },
     "p1__7__pintura_primera__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__7__mecanizado__A": {
       "v": "P",
@@ -7335,9 +7336,10 @@
       "r": "rev_26072026"
     },
     "p1__7__agujeros_iluminacion_zzcc__A": {
-      "v": "/",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "M",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__7__pintura_zzcc__A": {
       "v": "M",
@@ -7490,9 +7492,10 @@
       "r": "rev_28072026"
     },
     "p1__7__pintura_primera__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__7__mecanizado__B": {
       "v": "P",
@@ -7525,9 +7528,10 @@
       "r": "rev_26072026"
     },
     "p1__7__agujeros_iluminacion_zzcc__B": {
-      "v": "/",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "M",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__7__pintura_zzcc__B": {
       "v": "M",
@@ -7665,9 +7669,10 @@
       "r": "rev_26072026"
     },
     "p1__7__techos_zzcc__C": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__7__techos__C": {
       "v": "X",
@@ -7680,9 +7685,10 @@
       "r": "rev_28072026"
     },
     "p1__7__pintura_primera__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__7__mecanizado__C": {
       "v": "P",
@@ -7715,9 +7721,10 @@
       "r": "rev_26072026"
     },
     "p1__7__agujeros_iluminacion_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__7__pintura_zzcc__C": {
       "v": "M",
@@ -7855,9 +7862,10 @@
       "r": "rev_26072026"
     },
     "p1__7__techos_zzcc__D": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__7__techos__D": {
       "v": "X",
@@ -7870,9 +7878,10 @@
       "r": "rev_28072026"
     },
     "p1__7__pintura_primera__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__7__mecanizado__D": {
       "v": "P",
@@ -7905,9 +7914,10 @@
       "r": "rev_26072026"
     },
     "p1__7__agujeros_iluminacion_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__7__pintura_zzcc__D": {
       "v": "M",
@@ -8794,9 +8804,10 @@
       "r": "rev_24082026"
     },
     "p1__9__embornado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__telembornado__A": {
       "v": "P",
@@ -8809,9 +8820,10 @@
       "r": "rev_26072026"
     },
     "p1__9__cuadro_mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__cuarto_tecnico__A": {
       "v": "P",
@@ -8834,9 +8846,10 @@
       "r": "rev_28072026"
     },
     "p1__9__pintura_primera__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__mecanizado__A": {
       "v": "P",
@@ -8869,9 +8882,10 @@
       "r": "rev_26072026"
     },
     "p1__9__agujeros_iluminacion_zzcc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__pintura_zzcc__A": {
       "v": "X",
@@ -8984,9 +8998,10 @@
       "r": "rev_24082026"
     },
     "p1__9__embornado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__telembornado__B": {
       "v": "P",
@@ -8999,9 +9014,10 @@
       "r": "rev_26072026"
     },
     "p1__9__cuadro_mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__cuarto_tecnico__B": {
       "v": "P",
@@ -9024,9 +9040,10 @@
       "r": "rev_28072026"
     },
     "p1__9__pintura_primera__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__mecanizado__B": {
       "v": "P",
@@ -9059,9 +9076,10 @@
       "r": "rev_26072026"
     },
     "p1__9__agujeros_iluminacion_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__pintura_zzcc__B": {
       "v": "X",
@@ -9174,9 +9192,10 @@
       "r": "rev_24082026"
     },
     "p1__9__embornado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__telembornado__C": {
       "v": "P",
@@ -9189,9 +9208,10 @@
       "r": "rev_26072026"
     },
     "p1__9__cuadro_mecanizado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__cuarto_tecnico__C": {
       "v": "P",
@@ -9214,9 +9234,10 @@
       "r": "rev_28072026"
     },
     "p1__9__pintura_primera__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__mecanizado__C": {
       "v": "P",
@@ -9249,9 +9270,10 @@
       "r": "rev_26072026"
     },
     "p1__9__agujeros_iluminacion_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__pintura_zzcc__C": {
       "v": "X",
@@ -9364,9 +9386,10 @@
       "r": "rev_24082026"
     },
     "p1__9__embornado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__telembornado__D": {
       "v": "P",
@@ -9379,9 +9402,10 @@
       "r": "rev_26072026"
     },
     "p1__9__cuadro_mecanizado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__cuarto_tecnico__D": {
       "v": "P",
@@ -9404,9 +9428,10 @@
       "r": "rev_28072026"
     },
     "p1__9__pintura_primera__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__mecanizado__D": {
       "v": "P",
@@ -9439,9 +9464,10 @@
       "r": "rev_26072026"
     },
     "p1__9__agujeros_iluminacion_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__pintura_zzcc__D": {
       "v": "X",
@@ -10356,9 +10382,10 @@
       "r": "rev_26072026"
     },
     "p1__11__cuadro_mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__cuarto_tecnico__A": {
       "v": "P",
@@ -10376,14 +10403,16 @@
       "r": "rev_28072026"
     },
     "p1__11__enchapado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__pintura_primera__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__mecanizado__A": {
       "v": "P",
@@ -10416,9 +10445,10 @@
       "r": "rev_26072026"
     },
     "p1__11__agujeros_iluminacion_zzcc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__pintura_zzcc__A": {
       "v": "P",
@@ -10546,9 +10576,10 @@
       "r": "rev_26072026"
     },
     "p1__11__cuadro_mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__cuarto_tecnico__B": {
       "v": "P",
@@ -10566,14 +10597,16 @@
       "r": "rev_28072026"
     },
     "p1__11__enchapado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__pintura_primera__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__mecanizado__B": {
       "v": "P",
@@ -10606,9 +10639,10 @@
       "r": "rev_26072026"
     },
     "p1__11__agujeros_iluminacion_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__pintura_zzcc__B": {
       "v": "P",
@@ -10756,14 +10790,16 @@
       "r": "rev_28072026"
     },
     "p1__11__enchapado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__pintura_primera__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__mecanizado__C": {
       "v": "P",
@@ -10796,9 +10832,10 @@
       "r": "rev_26072026"
     },
     "p1__11__agujeros_iluminacion_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__pintura_zzcc__C": {
       "v": "P",
@@ -10946,14 +10983,16 @@
       "r": "rev_28072026"
     },
     "p1__11__enchapado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__pintura_primera__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__mecanizado__D": {
       "v": "P",
@@ -10986,9 +11025,10 @@
       "r": "rev_26072026"
     },
     "p1__11__agujeros_iluminacion_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__pintura_zzcc__D": {
       "v": "P",
@@ -11811,9 +11851,10 @@
       "r": "rev_24082026"
     },
     "p1__13__montante_teleco__A": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__montante_sscc__A": {
       "v": "M",
@@ -11821,9 +11862,10 @@
       "r": "rev_28072026"
     },
     "p1__13__tubeado_zzcc__A": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__cableado_zzcc__A": {
       "v": "P",
@@ -11871,9 +11913,10 @@
       "r": "rev_28072026"
     },
     "p1__13__portero__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__termostatos__A": {
       "v": "P",
@@ -11931,9 +11974,10 @@
       "r": "rev_28072026"
     },
     "p1__13__pintura_primera__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__mecanizado__A": {
       "v": "P",
@@ -11966,9 +12010,10 @@
       "r": "rev_26072026"
     },
     "p1__13__agujeros_iluminacion_zzcc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__pintura_zzcc__A": {
       "v": "X",
@@ -12001,9 +12046,10 @@
       "r": "rev_24082026"
     },
     "p1__13__montante_teleco__B": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__montante_sscc__B": {
       "v": "M",
@@ -12011,9 +12057,10 @@
       "r": "rev_28072026"
     },
     "p1__13__tubeado_zzcc__B": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__cableado_zzcc__B": {
       "v": "P",
@@ -12061,9 +12108,10 @@
       "r": "rev_28072026"
     },
     "p1__13__portero__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__termostatos__B": {
       "v": "P",
@@ -12121,9 +12169,10 @@
       "r": "rev_28072026"
     },
     "p1__13__pintura_primera__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__mecanizado__B": {
       "v": "P",
@@ -12156,9 +12205,10 @@
       "r": "rev_26072026"
     },
     "p1__13__agujeros_iluminacion_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__pintura_zzcc__B": {
       "v": "X",
@@ -12191,9 +12241,10 @@
       "r": "rev_24082026"
     },
     "p1__13__montante_teleco__C": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__montante_sscc__C": {
       "v": "M",
@@ -12201,9 +12252,10 @@
       "r": "rev_28072026"
     },
     "p1__13__tubeado_zzcc__C": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__cableado_zzcc__C": {
       "v": "P",
@@ -12251,9 +12303,10 @@
       "r": "rev_28072026"
     },
     "p1__13__portero__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__termostatos__C": {
       "v": "P",
@@ -12311,9 +12364,10 @@
       "r": "rev_28072026"
     },
     "p1__13__pintura_primera__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__mecanizado__C": {
       "v": "P",
@@ -12346,9 +12400,10 @@
       "r": "rev_26072026"
     },
     "p1__13__agujeros_iluminacion_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__pintura_zzcc__C": {
       "v": "X",
@@ -12381,9 +12436,10 @@
       "r": "rev_24082026"
     },
     "p1__13__montante_teleco__D": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__montante_sscc__D": {
       "v": "M",
@@ -12391,9 +12447,10 @@
       "r": "rev_28072026"
     },
     "p1__13__tubeado_zzcc__D": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__cableado_zzcc__D": {
       "v": "P",
@@ -12441,9 +12498,10 @@
       "r": "rev_28072026"
     },
     "p1__13__portero__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__termostatos__D": {
       "v": "P",
@@ -12501,9 +12559,10 @@
       "r": "rev_28072026"
     },
     "p1__13__pintura_primera__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__mecanizado__D": {
       "v": "P",
@@ -12536,9 +12595,10 @@
       "r": "rev_26072026"
     },
     "p1__13__agujeros_iluminacion_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__13__pintura_zzcc__D": {
       "v": "X",
@@ -13360,9 +13420,10 @@
       "r": "rev_24082026"
     },
     "p1__15__montante_teleco__A": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__montante_sscc__A": {
       "v": "M",
@@ -13420,9 +13481,10 @@
       "r": "rev_28072026"
     },
     "p1__15__portero__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__termostatos__A": {
       "v": "P",
@@ -13475,9 +13537,10 @@
       "r": "rev_28072026"
     },
     "p1__15__enchapado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__pintura_primera__A": {
       "v": "P",
@@ -13515,9 +13578,10 @@
       "r": "rev_26072026"
     },
     "p1__15__agujeros_iluminacion_zzcc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__pintura_zzcc__A": {
       "v": "P",
@@ -13550,9 +13614,10 @@
       "r": "rev_24082026"
     },
     "p1__15__montante_teleco__B": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__montante_sscc__B": {
       "v": "M",
@@ -13610,9 +13675,10 @@
       "r": "rev_28072026"
     },
     "p1__15__portero__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__termostatos__B": {
       "v": "P",
@@ -13665,9 +13731,10 @@
       "r": "rev_28072026"
     },
     "p1__15__enchapado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__pintura_primera__B": {
       "v": "P",
@@ -13705,9 +13772,10 @@
       "r": "rev_26072026"
     },
     "p1__15__agujeros_iluminacion_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__pintura_zzcc__B": {
       "v": "P",
@@ -13740,9 +13808,10 @@
       "r": "rev_24082026"
     },
     "p1__15__montante_teleco__C": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__montante_sscc__C": {
       "v": "M",
@@ -13855,9 +13924,10 @@
       "r": "rev_28072026"
     },
     "p1__15__enchapado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__pintura_primera__C": {
       "v": "P",
@@ -13895,9 +13965,10 @@
       "r": "rev_26072026"
     },
     "p1__15__agujeros_iluminacion_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__pintura_zzcc__C": {
       "v": "P",
@@ -13930,9 +14001,10 @@
       "r": "rev_24082026"
     },
     "p1__15__montante_teleco__D": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__montante_sscc__D": {
       "v": "M",
@@ -14045,9 +14117,10 @@
       "r": "rev_28072026"
     },
     "p1__15__enchapado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__pintura_primera__D": {
       "v": "P",
@@ -14085,9 +14158,10 @@
       "r": "rev_26072026"
     },
     "p1__15__agujeros_iluminacion_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__15__pintura_zzcc__D": {
       "v": "P",
@@ -14900,9 +14974,10 @@
       "r": "rev_28072026"
     },
     "p1__17__rozas_timbres__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__montante_electrica__A": {
       "v": "P",
@@ -14910,14 +14985,16 @@
       "r": "rev_26072026"
     },
     "p1__17__montante_teleco__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__montante_sscc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__tubeado_zzcc__A": {
       "v": "X",
@@ -14970,9 +15047,10 @@
       "r": "rev_28072026"
     },
     "p1__17__portero__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__termostatos__A": {
       "v": "P",
@@ -15025,9 +15103,10 @@
       "r": "rev_28072026"
     },
     "p1__17__enchapado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__pintura_primera__A": {
       "v": "P",
@@ -15090,9 +15169,10 @@
       "r": "rev_28072026"
     },
     "p1__17__rozas_timbres__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__montante_electrica__B": {
       "v": "P",
@@ -15100,14 +15180,16 @@
       "r": "rev_26072026"
     },
     "p1__17__montante_teleco__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__montante_sscc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__tubeado_zzcc__B": {
       "v": "X",
@@ -15160,9 +15242,10 @@
       "r": "rev_28072026"
     },
     "p1__17__portero__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__termostatos__B": {
       "v": "P",
@@ -15215,9 +15298,10 @@
       "r": "rev_28072026"
     },
     "p1__17__enchapado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__pintura_primera__B": {
       "v": "P",
@@ -15280,9 +15364,10 @@
       "r": "rev_28072026"
     },
     "p1__17__rozas_timbres__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__montante_electrica__C": {
       "v": "P",
@@ -15290,14 +15375,16 @@
       "r": "rev_26072026"
     },
     "p1__17__montante_teleco__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__montante_sscc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__tubeado_zzcc__C": {
       "v": "X",
@@ -15350,9 +15437,10 @@
       "r": "rev_28072026"
     },
     "p1__17__portero__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__termostatos__C": {
       "v": "P",
@@ -15405,9 +15493,10 @@
       "r": "rev_28072026"
     },
     "p1__17__enchapado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__pintura_primera__C": {
       "v": "P",
@@ -15470,9 +15559,10 @@
       "r": "rev_28072026"
     },
     "p1__17__rozas_timbres__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__montante_electrica__D": {
       "v": "P",
@@ -15480,14 +15570,16 @@
       "r": "rev_26072026"
     },
     "p1__17__montante_teleco__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__montante_sscc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__tubeado_zzcc__D": {
       "v": "X",
@@ -15540,9 +15632,10 @@
       "r": "rev_28072026"
     },
     "p1__17__portero__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__termostatos__D": {
       "v": "P",
@@ -15595,9 +15688,10 @@
       "r": "rev_28072026"
     },
     "p1__17__enchapado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__17__pintura_primera__D": {
       "v": "P",
@@ -16445,14 +16539,16 @@
       "r": "rev_26072026"
     },
     "p1__19__montante_teleco__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__montante_sscc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__tubeado_zzcc__A": {
       "v": "X",
@@ -16515,9 +16611,10 @@
       "r": "rev_28072026"
     },
     "p1__19__segunda_cara_pladur__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__doblar_cajas__A": {
       "v": "P",
@@ -16635,14 +16732,16 @@
       "r": "rev_26072026"
     },
     "p1__19__montante_teleco__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__montante_sscc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__tubeado_zzcc__B": {
       "v": "X",
@@ -16705,9 +16804,10 @@
       "r": "rev_28072026"
     },
     "p1__19__segunda_cara_pladur__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__doblar_cajas__B": {
       "v": "P",
@@ -16825,14 +16925,16 @@
       "r": "rev_26072026"
     },
     "p1__19__montante_teleco__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__montante_sscc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__tubeado_zzcc__C": {
       "v": "X",
@@ -16895,9 +16997,10 @@
       "r": "rev_28072026"
     },
     "p1__19__segunda_cara_pladur__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__doblar_cajas__C": {
       "v": "P",
@@ -17015,14 +17118,16 @@
       "r": "rev_26072026"
     },
     "p1__19__montante_teleco__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__montante_sscc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__tubeado_zzcc__D": {
       "v": "X",
@@ -17085,9 +17190,10 @@
       "r": "rev_28072026"
     },
     "p1__19__segunda_cara_pladur__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__doblar_cajas__D": {
       "v": "P",
@@ -17987,9 +18093,10 @@
       "r": "rev_28072026"
     },
     "p1__21__rozas_timbres__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__montante_electrica__A": {
       "v": "P",
@@ -17997,19 +18104,22 @@
       "r": "rev_26072026"
     },
     "p1__21__montante_teleco__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__montante_sscc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__tubeado_zzcc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__cableado_zzcc__A": {
       "v": "P",
@@ -18032,9 +18142,10 @@
       "r": "rev_24082026"
     },
     "p1__21__primera_cara_pladur__A": {
-      "v": "/",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__cuadros_presentados__A": {
       "v": "X",
@@ -18042,24 +18153,28 @@
       "r": "rev_28072026"
     },
     "p1__21__tubeado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__cableado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__telecableado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__portero__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__termostatos__A": {
       "v": "P",
@@ -18067,9 +18182,10 @@
       "r": "rev_26072026"
     },
     "p1__21__segunda_cara_pladur__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__doblar_cajas__A": {
       "v": "P",
@@ -18177,9 +18293,10 @@
       "r": "rev_28072026"
     },
     "p1__21__rozas_timbres__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__montante_electrica__B": {
       "v": "P",
@@ -18187,19 +18304,22 @@
       "r": "rev_26072026"
     },
     "p1__21__montante_teleco__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__montante_sscc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__tubeado_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__cableado_zzcc__B": {
       "v": "P",
@@ -18222,9 +18342,10 @@
       "r": "rev_24082026"
     },
     "p1__21__primera_cara_pladur__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__cuadros_presentados__B": {
       "v": "X",
@@ -18232,24 +18353,28 @@
       "r": "rev_28072026"
     },
     "p1__21__tubeado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__cableado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__telecableado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__portero__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__termostatos__B": {
       "v": "P",
@@ -18257,9 +18382,10 @@
       "r": "rev_26072026"
     },
     "p1__21__segunda_cara_pladur__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__doblar_cajas__B": {
       "v": "P",
@@ -18367,9 +18493,10 @@
       "r": "rev_28072026"
     },
     "p1__21__rozas_timbres__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__montante_electrica__C": {
       "v": "P",
@@ -18377,19 +18504,22 @@
       "r": "rev_26072026"
     },
     "p1__21__montante_teleco__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__montante_sscc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__tubeado_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__cableado_zzcc__C": {
       "v": "P",
@@ -18422,24 +18552,28 @@
       "r": "rev_28072026"
     },
     "p1__21__tubeado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__cableado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__telecableado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__portero__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__termostatos__C": {
       "v": "P",
@@ -18557,9 +18691,10 @@
       "r": "rev_28072026"
     },
     "p1__21__rozas_timbres__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__montante_electrica__D": {
       "v": "P",
@@ -18567,19 +18702,22 @@
       "r": "rev_26072026"
     },
     "p1__21__montante_teleco__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__montante_sscc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__tubeado_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__cableado_zzcc__D": {
       "v": "P",
@@ -18612,24 +18750,28 @@
       "r": "rev_28072026"
     },
     "p1__21__tubeado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__cableado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__telecableado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__portero__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__termostatos__D": {
       "v": "P",
@@ -19540,14 +19682,16 @@
       "r": "rev_26072026"
     },
     "p1__23__tabicado__A": {
-      "v": "/",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__rozas_timbres__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__montante_electrica__A": {
       "v": "P",
@@ -19560,9 +19704,10 @@
       "r": "rev_26072026"
     },
     "p1__23__montante_sscc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__tubeado_zzcc__A": {
       "v": "P",
@@ -19575,14 +19720,16 @@
       "r": "rev_26072026"
     },
     "p1__23__suelo_radiante__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__suelo_recrecido__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__perfilado_pladur__A": {
       "v": "X",
@@ -19590,9 +19737,10 @@
       "r": "rev_24082026"
     },
     "p1__23__primera_cara_pladur__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__cuadros_presentados__A": {
       "v": "P",
@@ -19730,14 +19878,16 @@
       "r": "rev_26072026"
     },
     "p1__23__tabicado__B": {
-      "v": "/",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__rozas_timbres__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__montante_electrica__B": {
       "v": "P",
@@ -19750,9 +19900,10 @@
       "r": "rev_26072026"
     },
     "p1__23__montante_sscc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__tubeado_zzcc__B": {
       "v": "P",
@@ -19765,14 +19916,16 @@
       "r": "rev_26072026"
     },
     "p1__23__suelo_radiante__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__suelo_recrecido__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__perfilado_pladur__B": {
       "v": "X",
@@ -19780,9 +19933,10 @@
       "r": "rev_24082026"
     },
     "p1__23__primera_cara_pladur__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__cuadros_presentados__B": {
       "v": "P",
@@ -19920,14 +20074,16 @@
       "r": "rev_26072026"
     },
     "p1__23__tabicado__C": {
-      "v": "/",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__rozas_timbres__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__montante_electrica__C": {
       "v": "P",
@@ -19940,9 +20096,10 @@
       "r": "rev_26072026"
     },
     "p1__23__montante_sscc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__tubeado_zzcc__C": {
       "v": "P",
@@ -19955,14 +20112,16 @@
       "r": "rev_26072026"
     },
     "p1__23__suelo_radiante__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__suelo_recrecido__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__perfilado_pladur__C": {
       "v": "X",
@@ -19970,9 +20129,10 @@
       "r": "rev_24082026"
     },
     "p1__23__primera_cara_pladur__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__cuadros_presentados__C": {
       "v": "P",
@@ -20110,14 +20270,16 @@
       "r": "rev_26072026"
     },
     "p1__23__tabicado__D": {
-      "v": "/",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__rozas_timbres__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__montante_electrica__D": {
       "v": "P",
@@ -20130,9 +20292,10 @@
       "r": "rev_26072026"
     },
     "p1__23__montante_sscc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__tubeado_zzcc__D": {
       "v": "P",
@@ -20145,14 +20308,16 @@
       "r": "rev_26072026"
     },
     "p1__23__suelo_radiante__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__suelo_recrecido__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__perfilado_pladur__D": {
       "v": "X",
@@ -20160,9 +20325,10 @@
       "r": "rev_24082026"
     },
     "p1__23__primera_cara_pladur__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "24/08/2026",
+      "r": "rev_24082026",
+      "origen": "hoja generada rellenada digitalmente"
     },
     "p1__23__cuadros_presentados__D": {
       "v": "P",
@@ -20318,8 +20484,8 @@
       "id": "rev_24082026",
       "fecha": "24/08/2026",
       "origen": "hoja generada rellenada digitalmente, leida por la IA",
-      "celdas_medidas": 1061,
-      "celdas_cambiadas": 245
+      "celdas_medidas": 1963,
+      "celdas_cambiadas": 166
     }
   ],
   "dudas": [],

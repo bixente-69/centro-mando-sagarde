@@ -216,6 +216,30 @@ class TestRepartoDeLaTinta(unittest.TestCase):
         self.assertEqual(fuera, 1)
 
 
+class TestAgruparPorColumnaParaHojaDigital(unittest.TestCase):
+    """Bolueta 24/08/2026, planta 17: la hoja imprime dos plantas por
+    pagina desde el 07/08/2026, y las dos repiten los mismos rotulos de
+    vivienda ('A','B','C','D'). Agrupar solo por 'viv' fundia la columna A
+    de la planta de la izquierda con la A de la derecha; 'Rozas de
+    timbres' de la planta 17 se quedo en 'P' con la hoja en 'X' delante
+    porque sus glifos se buscaban en la banda x de la planta 16."""
+
+    def _celda(self, planta, viv, x0, tajo='rozas_timbres'):
+        return {'planta': planta, 'viv': viv, 'tajo': tajo,
+                'bbox': (x0, 83.2, x0 + 37.7, 95.9)}
+
+    def test_la_misma_letra_en_dos_plantas_no_se_funde(self):
+        celdas = [self._celda('16', 'A', 265.8), self._celda('17', 'A', 416.1)]
+        columnas = lector._agrupar_por_columna(celdas)
+        self.assertEqual(set(columnas.keys()), {('16', 'A'), ('17', 'A')})
+
+    def test_cada_columna_conserva_su_propia_banda_x(self):
+        celdas = [self._celda('16', 'A', 265.8), self._celda('17', 'A', 416.1)]
+        columnas = lector._agrupar_por_columna(celdas)
+        self.assertEqual(columnas[('16', 'A')][0]['bbox'][0], 265.8)
+        self.assertEqual(columnas[('17', 'A')][0]['bbox'][0], 416.1)
+
+
 class TestFilaMasCercanaParaHojaDigital(unittest.TestCase):
     """La hoja de Bolueta del 24/08/2026 (rellenada en el generador y
     exportada sin tinta) imprime el glifo 'X' hasta 1.4pt por encima del
