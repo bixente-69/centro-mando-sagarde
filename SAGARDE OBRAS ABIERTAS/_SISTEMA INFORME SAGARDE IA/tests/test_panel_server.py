@@ -107,6 +107,31 @@ class TestPanelServer(unittest.TestCase):
         self.assertEqual(estado_http, 400)
         self.assertFalse(cuerpo['ok'])
 
+    def test_objetivo_pendiente_revierte_una_tarea_ya_hecha(self):
+        self._post()  # la deja en Hecho
+
+        estado_http, cuerpo = self._post(objetivo='Pendiente')
+
+        wb = load_workbook(self.ruta_xlsx, data_only=False)
+        estado = wb['Tareas']['E2'].value
+        wb.close()
+
+        self.assertEqual(estado_http, 200)
+        self.assertTrue(cuerpo['ok'])
+        self.assertEqual(estado, 'Pendiente')
+
+    def test_objetivo_pendiente_sobre_fila_ya_pendiente_da_404(self):
+        estado_http, cuerpo = self._post(objetivo='Pendiente')
+
+        self.assertEqual(estado_http, 404)
+        self.assertFalse(cuerpo['ok'])
+
+    def test_objetivo_invalido_responde_400(self):
+        estado_http, cuerpo = self._post(objetivo='Cancelado')
+
+        self.assertEqual(estado_http, 400)
+        self.assertFalse(cuerpo['ok'])
+
     def test_rechaza_ruta_relativa_a_unidad_de_windows(self):
         """Una ruta "relativa a unidad" (p.ej. 'Z:evil') no es absoluta ni
         contiene '..', pero en Windows os.path.join descarta el directorio

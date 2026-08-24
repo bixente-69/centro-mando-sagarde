@@ -24,8 +24,15 @@ def anadir_tarea_pendiente(ruta_xlsx, tarea, origen, fecha, archivo):
         wb.close()
 
 
-def marcar_tarea_hecha(ruta_xlsx, tarea, origen, fecha, archivo):
-    """Marca la primera tarea pendiente que coincide exactamente."""
+def _cambiar_estado_tarea(ruta_xlsx, tarea, origen, fecha, archivo,
+                          estado_actual, estado_nuevo):
+    """Cambia Estado de estado_actual a estado_nuevo en la primera fila que
+    coincide exactamente en Tarea/Origen/Fecha/Archivo.
+
+    Comparte la lectura de columnas y el criterio de coincidencia entre
+    marcar_tarea_hecha y desmarcar_tarea_hecha para no duplicar (y
+    desincronizar con el tiempo) la misma lógica de busqueda.
+    """
     wb = load_workbook(ruta_xlsx, data_only=False)
     try:
         if 'Tareas' not in wb.sheetnames:
@@ -48,13 +55,31 @@ def marcar_tarea_hecha(ruta_xlsx, tarea, origen, fecha, archivo):
             )
             estado = ws.cell(numero_fila, columnas['Estado']).value
             if (valores_fila == valores_buscados
-                    and str(estado).casefold() == 'pendiente'):
-                ws.cell(numero_fila, columnas['Estado']).value = 'Hecho'
+                    and str(estado).casefold() == estado_actual):
+                ws.cell(numero_fila, columnas['Estado']).value = estado_nuevo
                 wb.save(ruta_xlsx)
                 return True
         return False
     finally:
         wb.close()
+
+
+def marcar_tarea_hecha(ruta_xlsx, tarea, origen, fecha, archivo):
+    """Marca como Hecho la primera tarea Pendiente que coincide exactamente."""
+    return _cambiar_estado_tarea(
+        ruta_xlsx, tarea, origen, fecha, archivo,
+        estado_actual='pendiente', estado_nuevo='Hecho')
+
+
+def desmarcar_tarea_hecha(ruta_xlsx, tarea, origen, fecha, archivo):
+    """Revierte a Pendiente la primera tarea Hecha que coincide exactamente.
+
+    Simetrico a marcar_tarea_hecha: permite deshacer un marcado por error
+    sin tener que abrir el Excel a mano.
+    """
+    return _cambiar_estado_tarea(
+        ruta_xlsx, tarea, origen, fecha, archivo,
+        estado_actual='hecho', estado_nuevo='Pendiente')
 
 
 def main():

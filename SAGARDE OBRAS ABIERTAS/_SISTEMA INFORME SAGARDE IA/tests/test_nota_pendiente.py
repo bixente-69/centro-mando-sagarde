@@ -14,6 +14,7 @@ if _BASE not in sys.path:
 from nota_pendiente import (
     CABECERA_TAREAS,
     anadir_tarea_pendiente,
+    desmarcar_tarea_hecha,
     marcar_tarea_hecha,
 )
 
@@ -209,6 +210,84 @@ class TestNotaPendiente(unittest.TestCase):
 
         self.assertTrue(resultado)
         self.assertEqual(estados, ['Hecho', 'HECHO'])
+
+    def test_desmarca_la_fila_hecha_exacta_sin_tocar_las_demas(self):
+        def preparar(wb):
+            ws = wb.create_sheet('Tareas')
+            ws.append(CABECERA_TAREAS)
+            ws.append([
+                'Revisar cuadro', 'Parte de obra', '22/08/2026',
+                'parte-22-08.pdf', 'Hecho',
+            ])
+            ws.append([
+                'Revisar cuadro distinto', 'Parte de obra', '22/08/2026',
+                'parte-22-08.pdf', 'Hecho',
+            ])
+
+        with tempfile.TemporaryDirectory() as carpeta:
+            ruta = self._crear_ficha(carpeta, preparar)
+            resultado = desmarcar_tarea_hecha(
+                ruta, tarea='Revisar cuadro', origen='Parte de obra',
+                fecha='22/08/2026', archivo='parte-22-08.pdf')
+            wb = load_workbook(ruta, data_only=False)
+            filas = list(wb['Tareas'].iter_rows(values_only=True))
+            wb.close()
+
+        self.assertTrue(resultado)
+        self.assertEqual(filas, [
+            tuple(CABECERA_TAREAS),
+            ('Revisar cuadro', 'Parte de obra', '22/08/2026',
+             'parte-22-08.pdf', 'Pendiente'),
+            ('Revisar cuadro distinto', 'Parte de obra', '22/08/2026',
+             'parte-22-08.pdf', 'Hecho'),
+        ])
+
+    def test_desmarcar_una_fila_pendiente_no_hace_nada(self):
+        def preparar(wb):
+            ws = wb.create_sheet('Tareas')
+            ws.append(CABECERA_TAREAS)
+            ws.append([
+                'Revisar cuadro', 'Parte de obra', '22/08/2026',
+                'parte-22-08.pdf', 'Pendiente',
+            ])
+
+        with tempfile.TemporaryDirectory() as carpeta:
+            ruta = self._crear_ficha(carpeta, preparar)
+            with open(ruta, 'rb') as fichero:
+                contenido_antes = fichero.read()
+
+            resultado = desmarcar_tarea_hecha(
+                ruta, tarea='Revisar cuadro', origen='Parte de obra',
+                fecha='22/08/2026', archivo='parte-22-08.pdf')
+
+            with open(ruta, 'rb') as fichero:
+                contenido_despues = fichero.read()
+
+        self.assertFalse(resultado)
+        self.assertEqual(contenido_despues, contenido_antes)
+
+    def test_marcar_y_desmarcar_es_un_ciclo_completo(self):
+        def preparar(wb):
+            ws = wb.create_sheet('Tareas')
+            ws.append(CABECERA_TAREAS)
+            ws.append([
+                'Revisar cuadro', 'Parte de obra', '22/08/2026',
+                'parte-22-08.pdf', 'Pendiente',
+            ])
+
+        with tempfile.TemporaryDirectory() as carpeta:
+            ruta = self._crear_ficha(carpeta, preparar)
+            marcar_tarea_hecha(
+                ruta, tarea='Revisar cuadro', origen='Parte de obra',
+                fecha='22/08/2026', archivo='parte-22-08.pdf')
+            desmarcar_tarea_hecha(
+                ruta, tarea='Revisar cuadro', origen='Parte de obra',
+                fecha='22/08/2026', archivo='parte-22-08.pdf')
+            wb = load_workbook(ruta, data_only=False)
+            estado = wb['Tareas']['E2'].value
+            wb.close()
+
+        self.assertEqual(estado, 'Pendiente')
 
 
 if __name__ == '__main__':

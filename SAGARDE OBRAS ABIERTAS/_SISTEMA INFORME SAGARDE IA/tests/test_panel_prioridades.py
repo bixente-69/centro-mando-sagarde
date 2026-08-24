@@ -182,12 +182,25 @@ class TestTareasManuales(unittest.TestCase):
         self.assertIn('No se ha guardado ningún cambio.', html)
         self.assertIn('No se encontró esa tarea en el Excel', html)
 
-    def test_fila_hecha_no_tiene_casilla(self):
+    def test_fila_hecha_tiene_casilla_marcada_para_poder_desmarcar(self):
         html = panel_obra._tabla_tareas_manuales(
             [self.TAREAS[1]], [], obra='2026 OBRA PRUEBA')
 
+        self.assertIn("class='marcar-tarea-hecha' checked", html)
+        self.assertIn('data-tarea=', html)
+        self.assertIn('<script>', html)
+        self.assertIn(
+            'Marcada de nuevo como pendiente. Recuerda ejecutar '
+            'Actualizar_Sagarde.bat para publicar este cambio.', html)
+
+    def test_fila_sin_estado_reconocido_no_tiene_casilla(self):
+        html = panel_obra._tabla_tareas_manuales([{
+            'Tarea': 'Tarea con estado raro',
+            'Origen': 'Origen', 'Fecha': '24/08/2026', 'Archivo': '',
+            'Estado': 'En duda',
+        }], [], obra='2026 OBRA PRUEBA')
+
         self.assertNotIn("class='marcar-tarea-hecha'", html)
-        self.assertNotIn('data-tarea=', html)
         self.assertNotIn('<script>', html)
 
 

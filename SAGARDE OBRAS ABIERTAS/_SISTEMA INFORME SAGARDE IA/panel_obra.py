@@ -465,7 +465,7 @@ def bloque_cierre(cierre, avisos=None):
 _SCRIPT_MARCAR_TAREA = """<script>
 document.querySelectorAll('.marcar-tarea-hecha').forEach(casilla => {
   casilla.addEventListener('change', async () => {
-    if (!casilla.checked) return;
+    const objetivo = casilla.checked ? 'Hecho' : 'Pendiente';
     casilla.disabled = true;
     const fila = casilla.closest('tr');
     const tarjeta = casilla.closest('.card');
@@ -474,7 +474,7 @@ document.querySelectorAll('.marcar-tarea-hecha').forEach(casilla => {
     const controlador = new AbortController();
     const timeout = setTimeout(() => controlador.abort(), 3000);
     const restaurar = () => {
-      casilla.checked = false;
+      casilla.checked = !casilla.checked;
       casilla.disabled = false;
     };
     const avisar = (texto, error) => {
@@ -491,23 +491,29 @@ document.querySelectorAll('.marcar-tarea-hecha').forEach(casilla => {
           tarea: casilla.dataset.tarea,
           origen: casilla.dataset.origen,
           fecha: casilla.dataset.fecha,
-          archivo: casilla.dataset.archivo
+          archivo: casilla.dataset.archivo,
+          objetivo: objetivo
         }),
         signal: controlador.signal
       });
       if (respuesta.ok) {
-        fila.style.color = 'var(--muted)';
-        fila.style.textDecoration = 'line-through';
+        const marcandoHecha = objetivo === 'Hecho';
+        fila.style.color = marcandoHecha ? 'var(--muted)' : '';
+        fila.style.textDecoration = marcandoHecha ? 'line-through' : '';
         const estado = fila.querySelector('.badge');
-        estado.textContent = 'Hecho';
-        estado.classList.remove('warn');
-        estado.classList.add('f3');
+        estado.textContent = objetivo;
+        estado.classList.toggle('f3', marcandoHecha);
+        estado.classList.toggle('warn', !marcandoHecha);
+        const delta = marcandoHecha ? -1 : 1;
         const restantes = Math.max(
-          0, parseInt(contador.dataset.pendientes, 10) - 1);
+          0, parseInt(contador.dataset.pendientes, 10) + delta);
         contador.dataset.pendientes = restantes;
         contador.textContent = restantes + ' '
           + (restantes === 1 ? 'pendiente' : 'pendientes');
-        avisar('Marcada como hecha. Recuerda ejecutar Actualizar_Sagarde.bat para publicar este cambio.', false);
+        avisar(marcandoHecha
+          ? 'Marcada como hecha. Recuerda ejecutar Actualizar_Sagarde.bat para publicar este cambio.'
+          : 'Marcada de nuevo como pendiente. Recuerda ejecutar Actualizar_Sagarde.bat para publicar este cambio.',
+          false);
       } else if (respuesta.status === 404) {
         restaurar();
         avisar('No se encontró esa tarea en el Excel; puede que el panel '
@@ -578,18 +584,23 @@ def _tabla_tareas_manuales(tareas, documentos, obra=''):
         estilo = (" style='color:var(--muted);text-decoration:line-through;'"
                   if hecha else '')
         clase = 'f3' if hecha else 'warn'
-        casilla = '<td></td>' if not hecha else ''
-        if not hecha and esta_pendiente(tarea):
+        # Solo se ofrece la casilla cuando el estado actual es exactamente
+        # Pendiente o Hecho: un valor ambiguo no dice en qué sentido cambiar,
+        # y no se adivina.
+        if hecha or esta_pendiente(tarea):
             casilla = (
                 "<td><label style='white-space:nowrap;cursor:pointer;'>"
                 "<input type='checkbox' class='marcar-tarea-hecha'"
-                f" data-obra='{_e_atributo(obra)}'"
+                + (' checked' if hecha else '')
+                + f" data-obra='{_e_atributo(obra)}'"
                 f" data-tarea='{_e_atributo(tarea.get('Tarea'))}'"
                 f" data-origen='{_e_atributo(tarea.get('Origen'))}'"
                 f" data-fecha='{_e_atributo(tarea.get('Fecha'))}'"
                 f" data-archivo='{_e_atributo(tarea.get('Archivo'))}'> Hecho"
                 "</label></td>"
             )
+        else:
+            casilla = '<td></td>'
         return (
             f"<tr{estilo}><td><span class='badge {clase}'>{_e(estado)}</span></td>"
             f"<td><b>{_e(tarea.get('Tarea'))}</b></td>"
@@ -637,7 +648,8 @@ def _tabla_tareas_manuales(tareas, documentos, obra=''):
         "<p class='tarea-resultado' role='status' "
         "style='display:none;font-size:12.5px;margin-top:10px;'></p></div>"
     )
-    hay_casillas = any(esta_pendiente(tarea) for tarea in pendientes)
+    hay_casillas = bool(hechas) or any(
+        esta_pendiente(tarea) for tarea in pendientes)
     return tarjeta + (_SCRIPT_MARCAR_TAREA if hay_casillas else '')
 
 

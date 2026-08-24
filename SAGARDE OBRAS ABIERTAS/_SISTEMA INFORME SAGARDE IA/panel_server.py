@@ -9,13 +9,17 @@ import webbrowser
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlsplit
 
-from nota_pendiente import marcar_tarea_hecha
+from nota_pendiente import desmarcar_tarea_hecha, marcar_tarea_hecha
 
 
 HOST_LOCAL = '127.0.0.1'
 PUERTO_PREDETERMINADO = 8765
 DIRECTORIO_OBRAS = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RUTA_MARCAR_HECHO = '/api/marcar_hecho'
+ACCIONES = {
+    'Hecho': marcar_tarea_hecha,
+    'Pendiente': desmarcar_tarea_hecha,
+}
 
 
 def _ruta_ficha_contenida(directorio_base, obra_carpeta):
@@ -77,8 +81,16 @@ class ManejadorPanel(SimpleHTTPRequestHandler):
         if ruta_xlsx is None:
             self._responder_json(400, False, 'La carpeta de obra no es válida.')
             return
+
+        objetivo = datos.get('objetivo', 'Hecho')
+        accion = ACCIONES.get(objetivo)
+        if accion is None:
+            self._responder_json(
+                400, False, "El objetivo debe ser 'Hecho' o 'Pendiente'.")
+            return
+
         try:
-            encontrada = marcar_tarea_hecha(
+            encontrada = accion(
                 ruta_xlsx,
                 tarea=datos.get('tarea'),
                 origen=datos.get('origen'),
@@ -87,14 +99,16 @@ class ManejadorPanel(SimpleHTTPRequestHandler):
             )
         except Exception as error:
             self._responder_json(
-                500, False, f'No se pudo marcar la tarea: {error}')
+                500, False, f'No se pudo cambiar la tarea: {error}')
             return
 
         if encontrada:
-            self._responder_json(200, True, 'Tarea marcada como Hecho.')
+            self._responder_json(200, True, f'Tarea marcada como {objetivo}.')
         else:
+            origen_esperado = 'Pendiente' if objetivo == 'Hecho' else 'Hecho'
             self._responder_json(
-                404, False, 'No se encontró la tarea pendiente.')
+                404, False,
+                f'No se encontró la tarea en estado {origen_esperado}.')
 
 
 def crear_servidor(puerto=PUERTO_PREDETERMINADO,
