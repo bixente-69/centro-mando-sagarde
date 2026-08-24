@@ -213,6 +213,18 @@ class TestTareasManuales(unittest.TestCase):
         self.assertNotIn("class='marcar-tarea-hecha'", html)
         self.assertNotIn('<script>', html)
 
+    def test_tareas_pendientes_es_la_misma_lista_que_pinta_la_tarjeta(self):
+        pendientes = panel_obra._tareas_pendientes(self.TAREAS)
+        self.assertEqual(len(pendientes), 2)  # dos 'Pendiente' en self.TAREAS
+        nombres = [t['Tarea'] for t in pendientes]
+        self.assertEqual(nombres, ['Pedir material', 'Revisar cuadro'])
+
+    def test_la_tarjeta_es_un_details_plegable(self):
+        html = panel_obra._tabla_tareas_manuales(self.TAREAS, [])
+        self.assertIn(
+            "<details class='card seccion-plegable' id='sec-tareas'", html)
+        self.assertIn('<summary>Tareas manuales', html)
+
 
 class TestSinRevisar(unittest.TestCase):
 

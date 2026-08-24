@@ -530,6 +530,36 @@ def bloque_cierre(cierre, avisos=None):
     )
 
 
+_ID_SEC_TAREAS = 'sec-tareas'
+
+
+def _tarea_hecha(tarea):
+    return str(tarea.get('Estado') or '').strip().casefold() == 'hecho'
+
+
+def _tarea_pendiente(tarea):
+    return str(tarea.get('Estado') or '').strip().casefold() == 'pendiente'
+
+
+def _tarea_clave_fecha(tarea):
+    texto = str(tarea.get('Fecha') or '').strip()
+    try:
+        return (0, datetime.strptime(texto, '%d/%m/%Y'))
+    except ValueError:
+        # Una fecha vacía o no normalizada no debe romper el panel. Se
+        # conserva al final de las pendientes, ordenada por su texto.
+        return (1, texto.casefold())
+
+
+def _tareas_pendientes(tareas):
+    """Las tareas no hechas, ordenadas por fecha. La usan tanto la tarjeta
+    de Tareas manuales como el indice, para que el numero de una y otro
+    salgan siempre del mismo calculo — nunca de dos formulas parecidas."""
+    return sorted(
+        (tarea for tarea in (tareas or []) if not _tarea_hecha(tarea)),
+        key=_tarea_clave_fecha)
+
+
 _SCRIPT_MARCAR_TAREA = """<script>
 document.querySelectorAll('.marcar-tarea-hecha').forEach(casilla => {
   casilla.addEventListener('change', async () => {
@@ -619,25 +649,8 @@ def _tabla_tareas_manuales(tareas, documentos, obra=''):
         if nombre and href not in (None, ''):
             href_por_nombre.setdefault(nombre.casefold(), str(href))
 
-    def esta_hecha(tarea):
-        return str(tarea.get('Estado') or '').strip().casefold() == 'hecho'
-
-    def esta_pendiente(tarea):
-        return (str(tarea.get('Estado') or '').strip().casefold()
-                == 'pendiente')
-
-    def clave_fecha(tarea):
-        texto = str(tarea.get('Fecha') or '').strip()
-        try:
-            return (0, datetime.strptime(texto, '%d/%m/%Y'))
-        except ValueError:
-            # Una fecha vacía o no normalizada no debe romper el panel. Se
-            # conserva al final de las pendientes, ordenada por su texto.
-            return (1, texto.casefold())
-
-    pendientes = sorted(
-        (tarea for tarea in tareas if not esta_hecha(tarea)), key=clave_fecha)
-    hechas = [tarea for tarea in tareas if esta_hecha(tarea)]
+    pendientes = _tareas_pendientes(tareas)
+    hechas = [tarea for tarea in tareas if _tarea_hecha(tarea)]
 
     def archivo_html(tarea):
         archivo = str(tarea.get('Archivo') or '').strip()
@@ -656,7 +669,7 @@ def _tabla_tareas_manuales(tareas, documentos, obra=''):
         # Solo se ofrece la casilla cuando el estado actual es exactamente
         # Pendiente o Hecho: un valor ambiguo no dice en qué sentido cambiar,
         # y no se adivina.
-        if hecha or esta_pendiente(tarea):
+        if hecha or _tarea_pendiente(tarea):
             casilla = (
                 "<td><label style='white-space:nowrap;cursor:pointer;'>"
                 "<input type='checkbox' class='marcar-tarea-hecha'"
@@ -703,22 +716,24 @@ def _tabla_tareas_manuales(tareas, documentos, obra=''):
 
     n_pendientes = len(pendientes)
     etiqueta = 'pendiente' if n_pendientes == 1 else 'pendientes'
-    tarjeta = (
-        "<div class='card' style='border-left:4px solid var(--accent2);'>"
-        "<h3>Tareas manuales "
+    titulo = (
+        "Tareas manuales "
         f"<span class='badge tareas-pendientes-contador' "
         f"data-pendientes='{n_pendientes}'>{n_pendientes} {etiqueta}</span>"
-        "</h3>"
+    )
+    contenido = (
         "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
         "Acciones declaradas en la hoja <b>Tareas</b> de "
         "<b>FICHA DE OBRA.xlsx</b>. Se muestran aparte: no modifican los "
         "KPI ni el orden calculado de los tajos.</p>"
         f"{bloque_pendientes}{bloque_hechas}"
         "<p class='tarea-resultado' role='status' "
-        "style='display:none;font-size:12.5px;margin-top:10px;'></p></div>"
+        "style='display:none;font-size:12.5px;margin-top:10px;'></p>"
     )
+    tarjeta = _envolver_plegable(
+        _ID_SEC_TAREAS, titulo, contenido, color_borde='var(--accent2)')
     hay_casillas = bool(hechas) or any(
-        esta_pendiente(tarea) for tarea in pendientes)
+        _tarea_pendiente(tarea) for tarea in pendientes)
     return tarjeta + (_SCRIPT_MARCAR_TAREA if hay_casillas else '')
 
 
