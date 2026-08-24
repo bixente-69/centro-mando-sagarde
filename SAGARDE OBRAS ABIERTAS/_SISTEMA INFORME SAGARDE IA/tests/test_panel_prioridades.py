@@ -359,5 +359,38 @@ class TestEnvolverPlegable(unittest.TestCase):
         self.assertIn('id=\'sec &quot;x&quot;\'', html)
 
 
+class TestIndicePrioridades(unittest.TestCase):
+
+    def test_agrupa_en_actuar_y_consulta_respetando_el_orden(self):
+        html = panel_obra._indice_prioridades([
+            {'id': 'sec-a', 'etiqueta': 'Primero', 'grupo': 'actuar'},
+            {'id': 'sec-b', 'etiqueta': 'Segundo', 'grupo': 'actuar'},
+            {'id': 'sec-c', 'etiqueta': 'Tercero', 'grupo': 'consulta'},
+        ])
+        self.assertLess(html.index('Para actuar hoy'), html.index('Primero'))
+        self.assertLess(html.index('Primero'), html.index('Segundo'))
+        self.assertLess(
+            html.index('Segundo'), html.index('Consulta y referencia'))
+        self.assertLess(
+            html.index('Consulta y referencia'), html.index('Tercero'))
+
+    def test_enlace_apunta_al_id_de_la_seccion_y_permite_abrirla(self):
+        html = panel_obra._indice_prioridades([{
+            'id': 'sec-bloqueados', 'etiqueta': 'Bloqueados', 'grupo': 'actuar',
+        }])
+        self.assertIn("href='#sec-bloqueados'", html)
+        self.assertIn("data-abre='sec-bloqueados'", html)
+        self.assertIn('<script>', html)
+
+    def test_lista_vacia_no_pinta_nada(self):
+        self.assertEqual(panel_obra._indice_prioridades([]), '')
+        self.assertEqual(panel_obra._indice_prioridades(None), '')
+
+    def test_grupo_sin_secciones_no_deja_cabecera_suelta(self):
+        html = panel_obra._indice_prioridades(
+            [{'id': 'sec-a', 'etiqueta': 'Solo esta', 'grupo': 'actuar'}])
+        self.assertNotIn('Consulta y referencia', html)
+
+
 if __name__ == '__main__':
     unittest.main()

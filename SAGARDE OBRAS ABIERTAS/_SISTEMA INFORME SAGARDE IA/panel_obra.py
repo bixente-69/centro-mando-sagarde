@@ -146,6 +146,47 @@ def _envolver_plegable(id_ancla, titulo_html, contenido_html, color_borde=None):
     )
 
 
+_SCRIPT_INDICE_PRIORIDADES = """
+<script>
+document.querySelectorAll('.indice-item').forEach(function(enlace) {
+  enlace.addEventListener('click', function() {
+    var destino = document.getElementById(enlace.getAttribute('data-abre'));
+    if (destino) { destino.open = true; }
+  });
+});
+</script>
+"""
+
+
+def _indice_prioridades(secciones):
+    """secciones: lista de dicts {id, etiqueta, grupo, color opcional}, en
+    el orden en que deben salir dentro de su grupo. 'grupo' es 'actuar' o
+    'consulta'. Un apartado que no se pasa aqui simplemente no aparece: el
+    indice nunca declara algo que la pagina no vaya a pintar."""
+    if not secciones:
+        return ''
+
+    def _bloque_grupo(etiqueta_grupo, codigo_grupo):
+        items = [s for s in secciones if s['grupo'] == codigo_grupo]
+        if not items:
+            return ''
+        enlaces = ''.join(
+            f"<a class='indice-item' href='#{_e_atributo(s['id'])}' "
+            f"data-abre='{_e_atributo(s['id'])}' "
+            f"style='border-left:3px solid {s.get('color') or 'var(--muted)'};'>"
+            f"<span>{_e(s['etiqueta'])}</span>"
+            "<span class='indice-flecha'>▸</span></a>"
+            for s in items
+        )
+        return (f"<div class='indice-grupo-label'>{_e(etiqueta_grupo)}</div>"
+                f"<div class='indice-grupo'>{enlaces}</div>")
+
+    return ("<div class='indice-prioridades'>"
+            + _bloque_grupo('Para actuar hoy', 'actuar')
+            + _bloque_grupo('Consulta y referencia', 'consulta')
+            + "</div>" + _SCRIPT_INDICE_PRIORIDADES)
+
+
 _DUDA_ETIQUETAS = {
     "NO_QUITAR_X":          "Revisar en obra",
     "TAJO_NUEVO":           "Tajo no reconocido",
