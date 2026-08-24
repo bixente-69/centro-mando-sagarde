@@ -66,6 +66,18 @@ table.data tbody tr:hover{background:#f8f9fb;}
 .doc a{color:var(--accent2);text-decoration:none;}.doc a:hover{text-decoration:underline;}
 .norm li{margin:6px 0 6px 18px;font-size:13.5px;}
 .footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 0;}
+.seccion-plegable{cursor:default;}
+.seccion-plegable>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;font-weight:700;padding:2px 0;}
+.seccion-plegable>summary::-webkit-details-marker{display:none;}
+.seccion-plegable>summary::after{content:'▸';color:var(--muted);font-size:12px;flex-shrink:0;}
+.seccion-plegable[open]>summary::after{content:'▾';}
+.seccion-plegable>.seccion-contenido{margin-top:12px;}
+.indice-prioridades{margin-bottom:var(--gap);}
+.indice-grupo-label{font-size:10.5px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin:10px 0 6px;}
+.indice-grupo{display:flex;flex-direction:column;gap:6px;margin-bottom:6px;}
+.indice-item{background:var(--card);border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.07);text-decoration:none;color:var(--text);font-size:12.5px;font-weight:700;}
+.indice-item .indice-flecha{color:var(--muted);font-weight:400;}
+@media(max-width:768px){.indice-item{padding:12px 14px;}}
 @media(max-width:768px){.header{flex-direction:column;}.kpi-row{grid-template-columns:repeat(2,1fr);}.chart-row{grid-template-columns:1fr;}}
 """
 
@@ -117,6 +129,21 @@ def _ubicaciones_html(ubicaciones, limite=4):
                   "style='font-size:11.5px;color:var(--accent2);'>"
                 + f"+{n_extra} ubicaciones más</a>")
     return visibles or '—'
+
+
+def _envolver_plegable(id_ancla, titulo_html, contenido_html, color_borde=None):
+    """Envuelve una seccion de Prioridades en un <details> plegable.
+
+    Mismo widget nativo que el panel ya usa para 'Mostrar tajos terminados'
+    y 'Ver ubicaciones afectadas'. Sin librerias de acordeon.
+    """
+    estilo = f" style='border-left:4px solid {color_borde};'" if color_borde else ''
+    return (
+        f"<details class='card seccion-plegable' id='{_e_atributo(id_ancla)}'{estilo}>"
+        f"<summary>{titulo_html}</summary>"
+        f"<div class='seccion-contenido'>{contenido_html}</div>"
+        "</details>"
+    )
 
 
 _DUDA_ETIQUETAS = {

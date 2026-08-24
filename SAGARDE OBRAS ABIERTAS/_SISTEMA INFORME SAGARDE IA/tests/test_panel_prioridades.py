@@ -333,5 +333,31 @@ class TestConteoPorAmbito(unittest.TestCase):
         self.assertIn('92 celdas en la hoja', html)
 
 
+class TestEnvolverPlegable(unittest.TestCase):
+
+    def test_produce_details_con_id_titulo_y_contenido(self):
+        html = panel_obra._envolver_plegable(
+            'sec-prueba', 'Título de prueba', '<p>contenido</p>')
+        self.assertIn(
+            "<details class='card seccion-plegable' id='sec-prueba'>", html)
+        self.assertIn('<summary>Título de prueba</summary>', html)
+        self.assertIn(
+            "<div class='seccion-contenido'><p>contenido</p></div>", html)
+        self.assertTrue(html.rstrip().endswith('</details>'))
+
+    def test_aplica_color_de_borde_cuando_se_indica(self):
+        html = panel_obra._envolver_plegable(
+            'sec-x', 'Título', 'contenido', color_borde='var(--warn)')
+        self.assertIn("style='border-left:4px solid var(--warn);'", html)
+
+    def test_sin_color_no_anade_atributo_style(self):
+        html = panel_obra._envolver_plegable('sec-x', 'Título', 'contenido')
+        self.assertNotIn('style=', html)
+
+    def test_escapa_el_identificador_del_ancla(self):
+        html = panel_obra._envolver_plegable('sec "x"', 'Título', 'contenido')
+        self.assertIn('id=\'sec &quot;x&quot;\'', html)
+
+
 if __name__ == '__main__':
     unittest.main()
