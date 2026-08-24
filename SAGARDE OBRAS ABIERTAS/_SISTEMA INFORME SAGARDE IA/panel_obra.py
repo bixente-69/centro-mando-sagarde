@@ -202,6 +202,10 @@ _ORDEN_ETIQUETAS = {
     "DEPENDENCIA_AUSENTE_EN_LA_OBRA": "Depende de un tajo que la obra no tiene",
 }
 
+_ID_SEC_PREGUNTAS_CATALOGO = 'sec-preguntas-catalogo'
+_ID_SEC_PREVISION = 'sec-prevision'
+_ID_SEC_DUDAS = 'sec-dudas'
+
 _SECCIONES_INVENTARIO = [
     ('VIABLE', '1. Tajos viables',
      'Se pueden ejecutar según los datos disponibles.'),
@@ -236,15 +240,17 @@ def _tabla_preguntas_orden(preguntas):
                   f"<td><b>{_e(p.get('nombre'))}</b>"
                   f"<div style='font-size:11px;color:var(--muted);'>"
                   f"{_e(p.get('tarea_id'))}</div>{pista}</td></tr>")
-    return ("<div class='card' style='border-left:4px solid var(--warn);'>"
-            "<h3>Preguntas sobre el catálogo de tajos</h3>"
-            "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
-            "El catálogo manda sobre el orden y las dependencias, y es "
-            "siempre ampliable. Estas son las decisiones que faltan para que "
-            "estos tajos ocupen su sitio en la secuencia.</p>"
-            "<div class='table-scroll'><table class='data'><thead><tr>"
-            "<th>Qué pasa</th><th>Tajo</th></tr></thead><tbody>"
-            + filas + "</tbody></table></div></div>")
+    contenido = (
+        "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
+        "El catálogo manda sobre el orden y las dependencias, y es "
+        "siempre ampliable. Estas son las decisiones que faltan para que "
+        "estos tajos ocupen su sitio en la secuencia.</p>"
+        "<div class='table-scroll'><table class='data'><thead><tr>"
+        "<th>Qué pasa</th><th>Tajo</th></tr></thead><tbody>"
+        + filas + "</tbody></table></div>")
+    return _envolver_plegable(
+        _ID_SEC_PREGUNTAS_CATALOGO, 'Preguntas sobre el catálogo de tajos',
+        contenido, color_borde='var(--warn)')
 
 
 def _tabla_prevision(prevision):
@@ -261,15 +267,17 @@ def _tabla_prevision(prevision):
                   f"<td style='text-align:right;'><b>{_e(p.get('desbloquea'))}</b></td>"
                   f"<td style='font-size:12px;'>"
                   f"{_e(', '.join(p.get('tajos_afectados') or []))}</td></tr>")
-    return ("<div class='card'><h3>Qué se desbloquea al terminar cada cosa</h3>"
-            "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
-            "Ordenado por lo que más libera. Una obra dura meses: saber qué "
-            "abre paso a qué es lo que permite llevar el orden hasta el "
-            "final.</p>"
-            "<div class='table-scroll'><table class='data'><thead><tr>"
-            "<th>Al terminar</th><th>Ahora está</th><th style='text-align:right;'>"
-            "Libera</th><th>Deja pasar a</th>"
-            "</tr></thead><tbody>" + filas + "</tbody></table></div></div>")
+    contenido = (
+        "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
+        "Ordenado por lo que más libera. Una obra dura meses: saber qué "
+        "abre paso a qué es lo que permite llevar el orden hasta el "
+        "final.</p>"
+        "<div class='table-scroll'><table class='data'><thead><tr>"
+        "<th>Al terminar</th><th>Ahora está</th><th style='text-align:right;'>"
+        "Libera</th><th>Deja pasar a</th>"
+        "</tr></thead><tbody>" + filas + "</tbody></table></div>")
+    return _envolver_plegable(
+        _ID_SEC_PREVISION, 'Qué se desbloquea al terminar cada cosa', contenido)
 
 
 def _campo_riesgo(registro, *nombres):
@@ -846,17 +854,23 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
                 f"<td>{e(pregunta)}{ub_detail}</td>"
                 f"<td style='text-align:center;'>{n_ub}</td></tr>"
             )
-        dudas_html = ("<div class='card' style='border-left:4px solid var(--warn);'>"
-                      "<h3>Preguntas pendientes antes de decidir</h3>"
-                      "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
-                      "Resolver estas dudas antes de planificar los tajos afectados. "
-                      "Pincha en cada fila para ver las plantas y unidades concretas.</p>"
-                      "<div class='table-scroll'><table class='data'><thead><tr>"
-                      "<th>Tipo</th><th>Qué hay que comprobar</th><th>Uds.</th>"
-                      "</tr></thead><tbody>"
-                      + filas_dudas + "</tbody></table></div></div>")
+        contenido_dudas = (
+            "<p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>"
+            "Resolver estas dudas antes de planificar los tajos afectados. "
+            "Pincha en cada fila para ver las plantas y unidades concretas.</p>"
+            "<div class='table-scroll'><table class='data'><thead><tr>"
+            "<th>Tipo</th><th>Qué hay que comprobar</th><th>Uds.</th>"
+            "</tr></thead><tbody>"
+            + filas_dudas + "</tbody></table></div>")
+        dudas_html = _envolver_plegable(
+            _ID_SEC_DUDAS, 'Preguntas pendientes antes de decidir',
+            contenido_dudas, color_borde='var(--warn)')
     else:
-        dudas_html = '<div class="banner">✓ No hay preguntas pendientes en esta actualización.</div>'
+        contenido_dudas = (
+            '<p style="color:var(--ok);font-size:13px;">✓ No hay preguntas '
+            'pendientes en esta actualización.</p>')
+        dudas_html = _envolver_plegable(
+            _ID_SEC_DUDAS, 'Preguntas pendientes antes de decidir', contenido_dudas)
 
     orden_html = _tabla_preguntas_orden(prioridades.get('preguntas_orden'))
     prevision_html = _tabla_prevision(prioridades.get('prevision'))

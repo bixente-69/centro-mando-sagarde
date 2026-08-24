@@ -260,6 +260,17 @@ class TestPreguntasDelCatalogo(unittest.TestCase):
         self.assertIn('placas_tps_cuadro', html)
         self.assertIn('placas_tapas', html)
 
+    def test_la_tarjeta_es_un_details_plegable(self):
+        html = panel_obra.bloque_prioridades(_prioridades(
+            preguntas_orden=[{
+                'codigo': 'TAJO_FUERA_DEL_CATALOGO',
+                'tarea_id': 'placas_tps_cuadro', 'nombre': 'Placas tapas',
+                'parecidos': ['placas_tapas'],
+            }]))
+        self.assertIn(
+            "<details class='card seccion-plegable' "
+            "id='sec-preguntas-catalogo'", html)
+
     def test_un_duplicado_en_la_base_sale_nombrado(self):
         html = panel_obra.bloque_prioridades(_prioridades(
             preguntas_orden=[{
@@ -312,6 +323,16 @@ class TestPrevision(unittest.TestCase):
         html = panel_obra.bloque_prioridades(_prioridades())
         self.assertNotIn('Qué se desbloquea', html)
 
+    def test_la_tarjeta_es_un_details_plegable(self):
+        html = panel_obra.bloque_prioridades(_prioridades(
+            prevision=[{
+                'tarea_id': 'pintura_segunda', 'trabajo': 'Pintura',
+                'estado_actual': 'Pendiente', 'propiedad': 'externo',
+                'desbloquea': 5, 'tajos_afectados': [],
+            }]))
+        self.assertIn(
+            "<details class='card seccion-plegable' id='sec-prevision'", html)
+
 
 class TestAvisos(unittest.TestCase):
 
@@ -327,6 +348,24 @@ class TestAvisos(unittest.TestCase):
             avisos=['El inventario incluye todos los tajos de la base.',
                     'El orden sigue la secuencia lógica definida.']))
         self.assertNotIn('El inventario incluye', html)
+
+
+class TestDudasPendientes(unittest.TestCase):
+
+    def test_con_dudas_es_un_details_con_borde_de_aviso(self):
+        html = panel_obra.bloque_prioridades(_prioridades(dudas_pendientes=[{
+            'codigo': 'ALCANCE', 'pregunta': '¿Qué alcance tiene?',
+            'n_ubicaciones': 0, 'ubicaciones': [],
+        }]))
+        self.assertIn(
+            "<details class='card seccion-plegable' id='sec-dudas' "
+            "style='border-left:4px solid var(--warn);'>", html)
+
+    def test_sin_dudas_tambien_es_un_details_plegable_pero_sin_aviso(self):
+        html = panel_obra.bloque_prioridades(_prioridades(dudas_pendientes=[]))
+        self.assertIn(
+            "<details class='card seccion-plegable' id='sec-dudas'>", html)
+        self.assertIn('No hay preguntas pendientes en esta actualización', html)
 
 
 class TestConteoPorAmbito(unittest.TestCase):
