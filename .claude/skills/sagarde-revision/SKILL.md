@@ -1,12 +1,30 @@
 ---
 name: sagarde-revision
-description: Pasar una hoja de revisión de tajos marcada en obra a la base de datos de esa obra (paso 4 del ciclo Sagarde), y dar de alta una obra nueva desde su hoja en blanco. Usar cuando Bixente entregue un PDF de revisión marcado a boli o con pen digital y diga "pásame los datos al entorno SAGARDE", "sube esta revisión", "actualiza la obra con esta hoja", o cuando haya que registrar una obra nueva a partir de la hoja que genera el generador.
+description: Pasar una hoja de revisión de tajos (marcada en obra a boli, O rellenada en la app web del generador y exportada sin tinta) a la base de datos de esa obra (paso 4 del ciclo Sagarde), y dar de alta una obra nueva desde su hoja en blanco. Usar cuando Bixente entregue un PDF de revisión marcado a boli, con pen digital, o generado/rellenado desde la propia app del generador, y diga "pásame los datos al entorno SAGARDE", "sube esta revisión", "actualiza la obra con esta hoja", "he añadido/actualizado la revisión de <obra>", o cuando haya que registrar una obra nueva a partir de la hoja que genera el generador.
 ---
 
 # Leer una hoja de revisión y meterla en la base
 
 Cierra el paso 4 del ciclo: la hoja sale de la base, se marca en obra, se
 escanea, **la IA la traduce**, y eso vuelve a la base.
+
+## Antes de nada: ¿a boli o en el generador?
+
+**Preguntarlo si no está claro, ANTES de tocar ninguna herramienta.** Hay dos
+caminos completamente distintos y elegir el equivocado cuesta caro en tiempo
+(el 24/08/2026, no preguntarlo costó media sesión entera para "algo tan
+sencillo como actualizar una revisión"):
+
+| Señal | Camino |
+|---|---|
+| Bixente dice "la marqué en obra", "hoja a boli/pen digital", o el PDF tiene trazos visibles al abrirlo | **Flujo A: tinta**, más abajo |
+| Bixente dice "la rellené en el generador", "la actualicé desde la app", o el PDF viene **acompañado de un `.html` con el mismo nombre y la misma hora de creación** | **Flujo B: digital**, más abajo |
+
+`--preparar` (Flujo A) dice "celdas con tinta: 0" en los dos casos de una
+hoja sin usar Y en una hoja rellenada digitalmente — **no asumir "hoja sin
+usar" solo por el recuento en 0**: mirar antes si hay un `.html` gemelo (ver
+Flujo B) y si el propio PDF trae texto de estado ya impreso (X/M// más allá
+de lo que ya había en la base).
 
 ## La regla que gobierna todo esto
 
@@ -25,11 +43,11 @@ Todas en `SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/`:
 |---|---|
 | `rejilla_hoja.py` | resuelve qué celda es cada posición. Común. **No reescribirla** |
 | `alta_obra_desde_hoja.py` | da de alta una obra desde su hoja **en blanco** |
-| `leer_hoja_marcada.py` | lee la tinta de una hoja **marcada** y actualiza la ficha |
+| `leer_hoja_marcada.py` | lee la tinta (`--preparar`/`--aplicar`) **o** el texto ya impreso de una hoja rellenada en el generador (`--digital`) y actualiza la ficha |
 
 Sin dependencias nuevas: `pdfplumber`, `PyMuPDF`, `PIL`.
 
-## Flujo: hoja marcada → base
+## Flujo A: hoja marcada a boli → base
 
 ```bash
 cd "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA"
@@ -52,7 +70,33 @@ python generar_todos.py --no-pdf
 **Son dos fases a propósito.** Juntarlas borraría la frontera entre lo que
 resuelve el código y lo que resuelve la vista.
 
-## Qué mirar en cada recorte
+## Flujo B: hoja rellenada en el generador (sin tinta) → base
+
+Bixente marca los estados directamente en la app web del generador y
+exporta PDF+HTML a la vez (mismo nombre, mismo minuto). No hay tinta que
+buscar: el estado ya está impreso como texto. Un solo paso, sin fase visual:
+
+```bash
+cd "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA"
+
+# Simular primero (sin --escribir no toca nada)
+python leer_hoja_marcada.py "<ruta/hoja.pdf>" <id_obra> --digital --fecha DD/MM/AAAA
+
+# Revisar el antes/después del resumen y aplicar
+python leer_hoja_marcada.py "<ruta/hoja.pdf>" <id_obra> --digital --fecha DD/MM/AAAA --escribir
+
+# Regenerar y comprobar que las demás obras no se mueven
+python generar_todos.py --no-pdf
+```
+
+**Decisión de Bixente (24/08/2026): una celda que sale en blanco en esta
+lectura NO se toca.** A diferencia de la hoja de papel (donde Bixente ha
+tenido la hoja entera delante y un blanco es "no ha empezado" → `P`), una
+exportación digital no garantiza que él haya mirado esa celda. Solo se
+aplican las que imprimen marca explícita (`X`/`M`//). No hay
+`--sin-marca` en este flujo por eso mismo.
+
+## Qué mirar en cada recorte (solo Flujo A)
 
 | lo que se ve | qué es | valor |
 |---|---|---|
@@ -84,8 +128,9 @@ has leído; usarlo para decidir es adivinar.
   empezado), nunca a `?`. Solo asciende `?`→`P`: un blanco **jamás** baja una
   `X`, `M` o `/`. Con `--sin-marca desconocido` se desactiva, para una hoja
   que no cubra la obra entera.
-- **Una hoja con 0 anotaciones y sin sidecar no es una revisión**: es una hoja
-  impresa y no usada. Comprobarlo antes de nada.
+- **Una hoja con 0 anotaciones y sin sidecar no es SIEMPRE "sin usar"**:
+  puede ser eso, o puede ser una hoja del Flujo B (rellenada en el
+  generador). Mirar si trae un `.html` gemelo antes de descartarla.
 - **Reportar siempre el antes/después** y que las obras no implicadas no se
   mueven.
 
@@ -114,6 +159,30 @@ hay que añadir la obra a `registro_obras.py` y darle un adaptador.
 - **Un trazo no es una celda.** El de OBRA PRUEBA medía 300×253 px con 724
   puntos y cruzaba 51 celdas. La anotación dice dónde mirar; deciden los
   puntos.
+- **El nombre del tajo puede imprimirse por encima del bbox de su fila**
+  (Bolueta 24/08/2026: hasta 1pt). Ya corregido — `rejilla_hoja.py` usa
+  `TOLERANCIA_VERTICAL_TEXTO = 1.2`, verificado sin diferencias contra las 7
+  hojas ya leídas del sistema. Si una hoja NUEVA vuelve a fallar con "el
+  tajo '' no está en el catálogo", es el mismo síntoma con un desbordamiento
+  aún mayor: medirlo con `page.chars` antes de tocar la constante otra vez.
+- **Una unidad con espacio en el nombre se duplicaba al regenerar** (Bolueta:
+  "Local 1"/"Local 2", las únicas con espacio de toda la obra → aparecía
+  "Local1" fantasma, 76 celdas de más). Ya corregido en `ficha_obra.py`
+  (`_fold_unidad`). Si aparece "UBICACION NUEVA sin confirmar" para algo que
+  Bixente jura que ya estaba confirmado, sospechar primero de un espacio o
+  carácter especial en el nombre antes de aceptar el alta.
+- **"Documentos" contaba los sidecars técnicos de `REVISIONES/_SISTEMA/`**
+  como si Bixente pudiera abrirlos (JSON de candidatas/correcciones,
+  `.recortes/`). Ya corregido en `lectores.listar_documentos` (ignora
+  cualquier carpeta `_SISTEMA`, no solo `INFORME SAGARDE IA`). Si el
+  recuento de Documentos de una obra parece disparatado, sospechar de esto
+  antes de nada.
+- **Limpiar los restos de un `--preparar` que no se llega a aplicar.** Si se
+  arranca por el Flujo A y a mitad de camino se descubre que en realidad es
+  Flujo B (0 tinta real), borrar el `.candidatas.json` y el `.recortes/` que
+  haya dejado el intento fallido — si no, quedan como ruido en
+  `REVISIONES/_SISTEMA/` y cuentan de más en Documentos hasta el próximo
+  fix.
 
 ## Cómo viene paginada la hoja (desde el 07/08/2026)
 
@@ -136,6 +205,25 @@ hay que añadir la obra a `registro_obras.py` y darle un adaptador.
   `marcar_no_empezados` sólo recorre las celdas impresas— pero conviene no
   alarmarse al ver menos tajos de los del catálogo.
 
+## Tras cualquier --escribir: comprobar TODOS los consumidores, no solo la ficha
+
+`generar_todos.py --no-pdf` y luego revisar que **ficha, prioridades,
+dudas_pendientes, panel.html y el portal (`index.html`/`resumen_obras.json`)
+llevan todos la misma fecha de revisión y el mismo desglose x/m/slash/vacío**
+— no basta con que la ficha se haya escrito. Esto no es paranoia de más: el
+24/08/2026 fue precisamente regenerar y mirar TODAS las obras (no solo
+Bolueta) lo que destapó el duplicado de "Local1" y el ruido de Documentos,
+ninguno de los dos visible si solo se hubiera mirado la ficha de Bolueta.
+
+Comando rápido para el desglose de una obra:
+```bash
+python -c "import json; d=json.load(open('<obra>/INFORME SAGARDE IA/ficha_obra.json',encoding='utf-8')); from collections import Counter; print(Counter(v.get('v') for v in d['estados'].values()))"
+```
+
+Y comprobar que las obras NO implicadas no se mueven ni un decimal
+(`git diff --stat` sobre sus `ficha_obra.json` debería ser solo la línea
+`actualizado`, nada de `estados` ni `estructura`).
+
 ## Verificado contra verdad conocida
 
 - **Bolueta 26/07/2026**: el lector reproduce exactamente las 7 celdas del
@@ -144,3 +232,7 @@ hay que añadir la obra a `registro_obras.py` y darle un adaptador.
   Corrigió 2 marcas que estaban en la vivienda equivocada y 3 que el sidecar
   guardaba con la clave `PORT AL` partida.
 - **OBRA PRUEBA**: obra ficticia para probar sin tocar datos reales.
+- **Bolueta 24/08/2026 (Flujo B, primera vez usado)**: 245 celdas avanzaron
+  de verdad (140 `P→X`, 34 `P→M`, 32 `P→/`, 18 `M→X`, 11 `/→X`, 9 `?→X`, 1
+  `/→M`). Gernika, Mungia y OBRA PRUEBA comprobadas sin moverse. Detalle
+  completo en la memoria `project_sagarde_hoja_generador_digital`.

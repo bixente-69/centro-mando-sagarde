@@ -174,13 +174,19 @@ def listar_documentos(carpeta_obra, base_href_desde):
     """
     Recorre la carpeta de la obra y devuelve lista de documentos con ruta
     relativa (href) desde la ubicacion del panel HTML.
-    Ignora la propia carpeta de informes generados.
+    Ignora la propia carpeta de informes generados y cualquier carpeta
+    tecnica `_SISTEMA` (norma _SISTEMA, 07/08/2026): sus sidecars
+    (`.candidatas.json`, `.correcciones.json`, `.recortes/`...) no son algo
+    que abriria una persona. Sin este filtro, leer una hoja de revision
+    inflaba "Documentos" con JSON internos de la propia lectura -9 ficheros
+    de sobra en Bolueta el 24/08/2026- y Bixente veia la pestaña como si no
+    se hubiera actualizado.
     """
     docs = []
     if not os.path.isdir(carpeta_obra):
         return docs
     for root, dirs, files in os.walk(carpeta_obra):
-        dirs[:] = [d for d in dirs if d != 'INFORME SAGARDE IA']
+        dirs[:] = [d for d in dirs if d != 'INFORME SAGARDE IA' and d != '_SISTEMA']
         for fn in files:
             if fn.startswith('~$') or fn.lower() in ('plot.log',):
                 continue

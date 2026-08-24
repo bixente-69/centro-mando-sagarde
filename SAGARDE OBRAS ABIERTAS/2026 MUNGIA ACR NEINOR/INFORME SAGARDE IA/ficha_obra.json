@@ -3,7 +3,7 @@
   "id": "mungia",
   "modo": "hibrida",
   "fecha_entrada_digital": "27/07/2026",
-  "actualizado": "24/08/2026 15:56",
+  "actualizado": "24/08/2026 18:38",
   "identidad": {
     "nombre": "2026 MUNGIA ACR NEINOR",
     "carpeta": "2026 MUNGIA ACR NEINOR",
@@ -13194,18 +13194,17 @@
     }
   },
   "documentos": {
-    "total": 326,
+    "total": 97,
     "por_categoria": {
       "Comprimidos": 1,
       "Excel": 4,
-      "Imágenes": 229,
-      "Otros": 4,
+      "Imágenes": 4,
       "PDF": 57,
       "Planos y gráfica": 4,
       "Word": 27
     },
     "_meta": {
-      "actualizado": "06/08/2026 11:24"
+      "actualizado": "24/08/2026 16:24"
     }
   },
   "contactos": []

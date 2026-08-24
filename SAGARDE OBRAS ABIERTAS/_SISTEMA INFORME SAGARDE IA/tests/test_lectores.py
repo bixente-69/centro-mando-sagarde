@@ -9,7 +9,42 @@ from openpyxl import Workbook
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from lectores import leer_ficha
+from lectores import leer_ficha, listar_documentos
+
+
+class TestListarDocumentosIgnoraLoTecnico(unittest.TestCase):
+    """Bolueta 24/08/2026: leer una hoja de revision escribe sidecars JSON en
+    REVISIONES/_SISTEMA/ (candidatas, correcciones, recortes). Sin excluir
+    esa carpeta, 'Documentos' los contaba como si Bixente pudiera abrirlos:
+    9 ficheros de sobra, y la pestaña parecia no haberse actualizado nunca
+    porque el ruido tapaba el cambio real."""
+
+    def _obra(self, carpeta):
+        os.makedirs(os.path.join(carpeta, 'REVISIONES', '_SISTEMA'))
+        os.makedirs(os.path.join(carpeta, 'INFORME SAGARDE IA'))
+        with open(os.path.join(carpeta, 'REVISIONES', 'hoja.pdf'), 'w') as f:
+            f.write('x')
+        with open(os.path.join(carpeta, 'REVISIONES', '_SISTEMA',
+                               'hoja.pdf.correcciones.json'), 'w') as f:
+            f.write('{}')
+        with open(os.path.join(carpeta, 'INFORME SAGARDE IA', 'panel.html'),
+                 'w') as f:
+            f.write('<html></html>')
+
+    def test_lo_tecnico_de_sistema_no_cuenta_como_documento(self):
+        with tempfile.TemporaryDirectory() as carpeta:
+            self._obra(carpeta)
+            docs = listar_documentos(carpeta, carpeta)
+        nombres = [d['nombre'] for d in docs]
+        self.assertIn('hoja.pdf', nombres)
+        self.assertNotIn('hoja.pdf.correcciones.json', nombres)
+
+    def test_informe_sagarde_ia_sigue_sin_contar_como_antes(self):
+        with tempfile.TemporaryDirectory() as carpeta:
+            self._obra(carpeta)
+            docs = listar_documentos(carpeta, carpeta)
+        nombres = [d['nombre'] for d in docs]
+        self.assertNotIn('panel.html', nombres)
 
 
 class TestTareasDeFicha(unittest.TestCase):
