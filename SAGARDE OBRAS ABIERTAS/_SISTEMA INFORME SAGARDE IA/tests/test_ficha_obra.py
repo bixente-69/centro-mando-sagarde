@@ -388,6 +388,41 @@ class TestExclusionesConfirmadas(unittest.TestCase):
         self.assertEqual([u['id'] for u in pb['ubicaciones']], ['A', 'B'])
 
 
+class TestUnidadConEspacioNoSeDuplica(unittest.TestCase):
+    """Bolueta del 24/08/2026: 'Local 1' y 'Local 2' son las UNICAS unidades
+    confirmadas con espacio en el nombre. El extractor de PDF normaliza la
+    unidad quitando espacios ('Local1'), pero el indice de busqueda de la
+    ficha solo colapsaba espacios repetidos, no los quitaba: 'Local 1' y
+    'Local1' caian en claves distintas y cada regeneracion daba de alta un
+    fantasma nuevo -76 celdas duplicadas- sin que nadie lo pidiera."""
+
+    def _ficha_con_local(self):
+        ficha = fixtures.ficha_minima()
+        pb = ficha['estructura']['bloques'][0]['portales'][0]['plantas'][0]
+        pb['ubicaciones'].append(
+            {'id': 'Local 1', 'tipo': 'zona_comun', 'origen': 'confirmado_usuario'})
+        return ficha
+
+    def test_la_unidad_extraida_sin_espacio_encuentra_la_confirmada_con_espacio(self):
+        ficha = self._ficha_con_local()
+        prio = fixtures.prioridades([fixtures.item(unidad='Local1', estado='X')])
+        ficha, cambios = ficha_obra.actualizar(ficha, prio)
+        pb = ficha['estructura']['bloques'][0]['portales'][0]['plantas'][0]
+        self.assertEqual([u['id'] for u in pb['ubicaciones']], ['A', 'B', 'Local 1'])
+        self.assertEqual(cambios['ubicaciones_nuevas'], [])
+        self.assertEqual(ficha['estados']['p1__pb__tubeado__Local 1']['v'], 'X')
+
+    def test_manda_tambien_en_el_camino_del_snapshot_crudo(self):
+        ficha = self._ficha_con_local()
+        snapshot = [{'building': 'P1', 'floor': 'PB', 'unit': 'Local1',
+                     'task': 'Tubeado', 'status': 'X'}]
+        ficha, cambios = ficha_obra.actualizar_desde_snapshot(
+            ficha, snapshot, '24/08/2026')
+        pb = ficha['estructura']['bloques'][0]['portales'][0]['plantas'][0]
+        self.assertEqual([u['id'] for u in pb['ubicaciones']], ['A', 'B', 'Local 1'])
+        self.assertEqual(cambios['ubicaciones_nuevas'], [])
+
+
 class TestCorrecciones(unittest.TestCase):
 
     def test_traduce_el_codigo_corto_de_tajo_al_largo(self):

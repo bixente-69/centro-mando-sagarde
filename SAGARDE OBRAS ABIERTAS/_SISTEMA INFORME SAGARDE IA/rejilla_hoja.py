@@ -273,12 +273,23 @@ def leer_tabla(filas, texto, indice_tajos, aviso=''):
 
 # ------------------------------------------------------------ envoltura PDF
 
+# Tolerancia vertical del recorte de texto. El nombre de tajo (fuente mas
+# grande que el distintivo SGD/EXT/COO) puede imprimirse por encima del bbox
+# de fila que da find_tables(): en la hoja de Bolueta del 24/08/2026 el top
+# de 'Tabicado' quedaba a 0.99pt del top de su fila. 0.5 lo descartaba y el
+# tajo llegaba vacio a leer_tabla. 1.2pt da margen sin fila. Verificado contra
+# las 7 hojas ya leidas del sistema (Gernika, Bolueta, Mungia, OBRA PRUEBA):
+# mismas celdas, cero diferencias.
+TOLERANCIA_VERTICAL_TEXTO = 1.2
+
+
 def _texto_de(page):
     def texto(bbox):
         x0, top, x1, bottom = bbox
+        tol = TOLERANCIA_VERTICAL_TEXTO
         chars = [c for c in page.chars
                  if c['x0'] >= x0 - 0.5 and c['x1'] <= x1 + 0.5
-                 and c['top'] >= top - 0.5 and c['bottom'] <= bottom + 0.5
+                 and c['top'] >= top - tol and c['bottom'] <= bottom + tol
                  # fuera del plano basico revientan la consola de Windows
                  and ord(c.get('text', 'x')) < 0x10000]
         chars.sort(key=lambda c: (round(c['top'], 1), c['x0']))

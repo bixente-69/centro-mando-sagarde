@@ -77,6 +77,11 @@ PUNTOS_DUDOSA = 4
 VALIDOS = {'X', 'M', '/', 'P'}
 DESCARTADA = 'descartada'
 
+# Glifos que imprime el generador para un estado ya conocido. 'P' y '?' no se
+# pre-imprimen: por eso una celda en blanco en esta lectura es ambigua (ver
+# aplicar_digital) y no se toca.
+VALIDOS_IMPRESOS = ('X', 'M', '/')
+
 
 class LecturaImposible(Exception):
     pass
@@ -359,6 +364,106 @@ def preparar(ruta, obra, ficha, carpeta_recortes=None, zoom=6):
     }
 
 
+# --------------------------------------------- hoja rellenada digitalmente
+
+def _fila_mas_cercana(centro_y, celdas_col):
+    """La celda de `celdas_col` cuyo centro vertical esta mas cerca de
+    `centro_y`. Nucleo puro de `estados_impresos`, sin PDF, para poder
+    probarlo: un glifo puede caer fuera del bbox de su propia fila (ver
+    docstring de `estados_impresos`) y aun asi tiene que ganar la fila
+    correcta, no la de al lado."""
+    return min(celdas_col,
+               key=lambda c: abs((c['bbox'][1] + c['bbox'][3]) / 2 - centro_y))
+
+
+def estados_impresos(ruta, obra, ficha):
+    """El estado que IMPRIME cada celda de una hoja generada: X/M// o vacio.
+
+    Sirve para una hoja que Bixente ha rellenado en la propia app web del
+    generador y exportado a PDF, sin pasar por papel ni tinta -la de Bolueta
+    del 24/08/2026-. `preparar()` no la puede leer: busca anotaciones de
+    tinta, y esta hoja no lleva ninguna porque el estado esta impreso como
+    texto, no dibujado encima.
+
+    Cada glifo de marca se asigna a la fila cuyo CENTRO vertical tiene mas
+    cerca, no a la fila que lo contiene por bbox: en esta hoja el glifo 'X'
+    se imprime hasta 1.4pt por encima del bbox nominal de su fila (mas que el
+    nombre del tajo, que ya obligo a ampliar la tolerancia de
+    `rejilla._texto_de` a 1.2pt). Exigir contencion estricta perdia la marca
+    en silencio. Las filas de una tabla de revision son contiguas sin hueco
+    entre si, asi que el centro mas cercano no cruza de fila por error: hace
+    falta desplazarse mas de media fila para que cambie el ganador.
+    """
+    import pdfplumber
+
+    indice_tajos = rejilla.tabla_con_tajos_de_obra(ficha)
+    indice = indice_de_ficha(ficha)
+    resultado = {}
+    conflictos = set()
+    with pdfplumber.open(ruta) as pdf:
+        for npag, tabla in rejilla.leer_pdf(ruta, indice_tajos):
+            page = pdf.pages[npag - 1]
+            portal_id = resolver_portal(ficha, tabla['etiquetas'],
+                                        aviso=f'pagina {npag}: ')
+            chars = [c for c in page.chars
+                     if ord(c.get('text', 'x')) < 0x10000]
+            por_columna = defaultdict(list)
+            for c in tabla['celdas']:
+                por_columna[c['viv']].append(c)
+            for celdas_col in por_columna.values():
+                x0 = celdas_col[0]['bbox'][0]
+                x1 = celdas_col[0]['bbox'][2]
+                top = min(c['bbox'][1] for c in celdas_col)
+                bottom = max(c['bbox'][3] for c in celdas_col)
+                glifos = [ch for ch in chars
+                          if ch['x0'] >= x0 - 1 and ch['x1'] <= x1 + 1
+                          and ch['top'] >= top - 5 and ch['bottom'] <= bottom + 5
+                          and ch['text'] in VALIDOS_IMPRESOS]
+                for g in glifos:
+                    centro = (g['top'] + g['bottom']) / 2
+                    fila = _fila_mas_cercana(centro, celdas_col)
+                    clave_ficha = indice.get(
+                        (portal_id, fila['planta'], fila['viv']))
+                    if clave_ficha is None:
+                        continue
+                    plid, uid = clave_ficha
+                    clave = f'{portal_id}__{plid}__{fila["tajo"]}__{uid}'
+                    if clave in resultado and resultado[clave] != g['text']:
+                        conflictos.add(clave)
+                        continue
+                    resultado[clave] = g['text']
+    if conflictos:
+        raise LecturaImposible(
+            f'{len(conflictos)} celda(s) reciben dos glifos distintos al '
+            'asignarlos por fila mas cercana: '
+            f'{", ".join(sorted(conflictos)[:5])}. Antes que quedarse con '
+            'uno al azar, se para.')
+    return resultado
+
+
+def aplicar_digital(ficha, impresos, fecha, rev_id):
+    """Cambios de una hoja rellenada digitalmente: SOLO lo impreso explicito.
+
+    Al contrario que `aplicar()` (hoja marcada a boli), aqui no hay "casilla
+    en blanco de una hoja que se llevo a obra": una exportacion del generador
+    no dice si una celda vacia es "la mire y sigue sin empezar" o "no la
+    toque". Decision de Bixente el 24/08/2026: no tocar ninguna celda que
+    salga en blanco. Solo se aplican las que imprimen X, M o /.
+    """
+    estados = dict(ficha.get('estados') or {})
+    cambios = []
+    for clave, valor in impresos.items():
+        if clave not in estados:
+            raise LecturaImposible(f'{clave}: la ficha no tiene esa celda.')
+        antes = (estados[clave] or {}).get('v')
+        if antes == valor:
+            continue
+        estados[clave] = {'v': valor, 'f': fecha, 'r': rev_id,
+                          'origen': 'hoja generada rellenada digitalmente'}
+        cambios.append((clave, antes, valor))
+    return estados, cambios
+
+
 # ------------------------------------------------------------------ aplicar
 
 def marcar_no_empezados(estados, celdas_hoja, marcadas, fecha, rev_id):
@@ -446,6 +551,12 @@ def main():
     p.add_argument('obra_id')
     p.add_argument('--preparar', action='store_true')
     p.add_argument('--aplicar', metavar='CLASIFICACION.json')
+    p.add_argument('--digital', action='store_true',
+                   help='la hoja se relleno en la propia app del generador y '
+                        'se exporto sin pasar por papel ni tinta: lee el '
+                        'texto ya impreso en vez de anotaciones. Solo aplica '
+                        'las celdas con marca explicita; una celda en '
+                        'blanco no se toca.')
     p.add_argument('--fecha', help='DD/MM/AAAA de la revision')
     p.add_argument('--sin-marca', choices=['pendiente', 'desconocido'],
                    default='pendiente',
@@ -472,6 +583,58 @@ def main():
     # sin mezclarse con ella. La hoja PDF no se mueve: es el documento.
     base = _ruta_sistema(os.path.splitext(args.hoja)[0])
     ruta_candidatas = base + '.candidatas.json'
+
+    if args.digital:
+        if not args.fecha:
+            raise SystemExit(
+                'Falta --fecha. La fecha de la revision no se deduce de la '
+                'hoja: la de la cabecera es la de generacion.')
+        impresos = estados_impresos(args.hoja, obra, ficha)
+        rev_id = 'rev_' + args.fecha.replace('/', '')
+        estados, cambios = aplicar_digital(ficha, impresos, args.fecha, rev_id)
+
+        conteo = Counter(nuevo for _k, _a, nuevo in cambios)
+        print(f'HOJA: {os.path.basename(args.hoja)}   obra: {obra["nombre"]}   '
+              f'fecha: {args.fecha}   (rellenada en el generador, sin tinta)')
+        print(f'  celdas impresas con marca: {len(impresos)}   '
+              f'cambios: {len(cambios)}')
+        print(f'  por valor: {dict(conteo)}')
+        de_a = Counter((a, n) for _k, a, n in cambios)
+        for (antes, nuevo), n in sorted(de_a.items(), key=lambda x: -x[1]):
+            print(f'    {antes!r} -> {nuevo!r}: {n}')
+        if not args.escribir:
+            print('\n[SIMULACION] no se ha escrito nada.')
+            return
+
+        sidecar = _ruta_sistema(args.hoja) + '.correcciones.json'
+        if os.path.isfile(sidecar) and not args.reemplazar:
+            anterior = (json.load(open(sidecar, encoding='utf-8'))
+                        .get('estados') or {})
+            raise SystemExit(
+                f'\nYa existe {os.path.basename(sidecar)} con {len(anterior)} '
+                f'celdas. No se pisa sin decirlo: usa --reemplazar si de '
+                f'verdad quieres sustituirlo.')
+        with open(sidecar, 'w', encoding='utf-8') as f:
+            json.dump({
+                'version': 1, 'hoja': os.path.basename(args.hoja),
+                'obra': obra['id'], 'fecha': args.fecha, 'revision': rev_id,
+                'origen': 'hoja generada rellenada digitalmente (paso 4, '
+                          'sin tinta)',
+                'estados': {k: n for k, _a, n in cambios},
+            }, f, ensure_ascii=False, indent=2)
+
+        ficha['estados'] = estados
+        revisiones = [r for r in (ficha.get('revisiones') or [])
+                      if r.get('id') != rev_id]
+        revisiones.append({
+            'id': rev_id, 'fecha': args.fecha,
+            'origen': 'hoja generada rellenada digitalmente, leida por la IA',
+            'celdas_medidas': len(impresos), 'celdas_cambiadas': len(cambios)})
+        ficha['revisiones'] = revisiones
+        fichas.guardar(carpeta, ficha)
+        print(f'\n  sidecar: {sidecar}')
+        print(f'  ficha actualizada: {fichas.ruta_ficha(carpeta)}')
+        return
 
     if args.preparar:
         recortes = base + '.recortes'

@@ -153,6 +153,63 @@ class TestOrdenDeEjecucion(unittest.TestCase):
         self.assertGreater(segundas['orden'], cuadros['orden'])
 
 
+class TestTextoDeToleranciaVertical(unittest.TestCase):
+    """La hoja de Bolueta del 24/08/2026 tenia el nombre de cada tajo impreso
+    un pelin (menos de 1pt) por encima del bbox de fila que da find_tables():
+    'Tabicado' con top=85.78 en una fila que empieza en top=86.77. Con
+    tolerancia 0.5 el caracter se descartaba y el tajo llegaba vacio a
+    leer_tabla, que se paraba con razon (nunca inventa un id). Los numeros de
+    este test son los medidos en el PDF real, no inventados."""
+
+    FILA = (47.45, 86.77, 566.67, 99.42)          # bbox de la fila 'Tabicado'
+    FILA_ANTERIOR = (47.45, 77.80, 566.67, 86.77)  # cabecera de grupo encima
+    FILA_SIGUIENTE = (47.45, 99.42, 566.67, 112.09)  # 'Rozas de timbres' debajo
+
+    @staticmethod
+    def _char(texto, x0, x1, top, bottom):
+        return {'text': texto, 'x0': x0, 'x1': x1, 'top': top, 'bottom': bottom}
+
+    def _pagina(self):
+        chars = []
+        for i, t in enumerate('INICIO DE OBRA'):
+            chars.append(self._char(t, 47.45 + i * 5, 47.45 + i * 5 + 5, 79.0, 85.5))
+        for i, t in enumerate('Tabicado'):
+            chars.append(self._char(t, 67.78 + i * 4.35, 67.78 + i * 4.35 + 4.35,
+                                     85.78, 95.66))
+        for i, t in enumerate('EXT'):
+            chars.append(self._char(t, 52.8 + i * 3.9, 52.8 + i * 3.9 + 3.9,
+                                     89.21, 94.95))
+        for i, t in enumerate('Rozas de timbres'):
+            chars.append(self._char(t, 60.0 + i * 4.0, 60.0 + i * 4.0 + 4.0,
+                                     98.48, 108.36))
+        for i, t in enumerate('SGD'):
+            chars.append(self._char(t, 52.8 + i * 3.9, 52.8 + i * 3.9 + 3.9,
+                                     102.0, 107.5))
+
+        class Pagina:
+            pass
+        p = Pagina()
+        p.chars = chars
+        return p
+
+    def test_el_nombre_que_desborda_la_fila_por_menos_de_1pt_se_lee(self):
+        texto = rejilla._texto_de(self._pagina())
+        x0, top, x1, bottom = self.FILA
+        crudo = texto((0, top, x1, bottom))
+        self.assertIn('Tabicado', crudo)
+
+    def test_no_se_cuela_texto_de_la_fila_de_arriba_ni_de_abajo(self):
+        texto = rejilla._texto_de(self._pagina())
+        x0, top, x1, bottom = self.FILA
+        crudo = texto((0, top, x1, bottom))
+        self.assertNotIn('INICIO', crudo)
+        self.assertNotIn('Rozas', crudo)
+
+        crudo_siguiente = texto((0, self.FILA_SIGUIENTE[1], x1, self.FILA_SIGUIENTE[3]))
+        self.assertIn('Rozas', crudo_siguiente)
+        self.assertNotIn('Tabicado', crudo_siguiente)
+
+
 class TestTraduccionDeTajos(unittest.TestCase):
     """La hoja imprime nombres cortos y el catalogo guarda los largos."""
 

@@ -216,5 +216,68 @@ class TestRepartoDeLaTinta(unittest.TestCase):
         self.assertEqual(fuera, 1)
 
 
+class TestFilaMasCercanaParaHojaDigital(unittest.TestCase):
+    """La hoja de Bolueta del 24/08/2026 (rellenada en el generador y
+    exportada sin tinta) imprime el glifo 'X' hasta 1.4pt por encima del
+    bbox de su propia fila. Los numeros son los medidos en el PDF real."""
+
+    FILAS = [
+        {'bbox': (0, 77.80, 400, 86.77), 'tajo': 'grupo'},
+        {'bbox': (0, 86.77, 400, 99.42), 'tajo': 'tabicado'},
+        {'bbox': (0, 99.42, 400, 112.09), 'tajo': 'rozas_timbres'},
+    ]
+
+    def test_un_glifo_que_desborda_su_fila_por_arriba_gana_su_propia_fila(self):
+        centro_glifo = (85.4 + 91.4) / 2  # top/bottom reales de la 'X' medida
+        fila = lector._fila_mas_cercana(centro_glifo, self.FILAS)
+        self.assertEqual(fila['tajo'], 'tabicado')
+
+    def test_no_se_cuela_en_la_fila_de_arriba_ni_la_de_abajo(self):
+        centro_arriba = (77.80 + 86.77) / 2
+        centro_abajo = (99.42 + 112.09) / 2
+        self.assertEqual(
+            lector._fila_mas_cercana(centro_arriba, self.FILAS)['tajo'], 'grupo')
+        self.assertEqual(
+            lector._fila_mas_cercana(centro_abajo, self.FILAS)['tajo'],
+            'rozas_timbres')
+
+
+class TestAplicarDigital(unittest.TestCase):
+    """Hoja rellenada en el generador y exportada sin tinta: solo se aplica
+    lo impreso explicito. Decision de Bixente el 24/08/2026: una celda en
+    blanco no se toca (a diferencia de una hoja marcada a boli, que si lleva
+    sus blancos a 'P')."""
+
+    def test_una_celda_marcada_avanza(self):
+        ficha = _ficha({'p1__pb__tubeado__A': 'P'})
+        estados, cambios = lector.aplicar_digital(
+            ficha, {'p1__pb__tubeado__A': 'X'}, '24/08/2026', 'rev_24082026')
+        self.assertEqual(cambios, [('p1__pb__tubeado__A', 'P', 'X')])
+        self.assertEqual(estados['p1__pb__tubeado__A']['v'], 'X')
+        self.assertEqual(estados['p1__pb__tubeado__A']['origen'],
+                         'hoja generada rellenada digitalmente')
+
+    def test_lo_que_no_imprime_marca_no_se_toca(self):
+        """Solo se pasan las celdas de VALIDOS_IMPRESOS: una celda que en el
+        PDF sale en blanco ni siquiera llega a esta funcion."""
+        ficha = _ficha({'p1__pb__tubeado__A': 'P', 'p1__pb__tubeado__B': '?'})
+        estados, cambios = lector.aplicar_digital(
+            ficha, {'p1__pb__tubeado__A': 'X'}, '24/08/2026', 'rev_24082026')
+        self.assertEqual(cambios, [('p1__pb__tubeado__A', 'P', 'X')])
+        self.assertEqual(estados['p1__pb__tubeado__B']['v'], '?')
+
+    def test_remarcar_lo_mismo_no_es_un_cambio(self):
+        ficha = _ficha({'p1__pb__tubeado__A': 'X'})
+        _estados, cambios = lector.aplicar_digital(
+            ficha, {'p1__pb__tubeado__A': 'X'}, '24/08/2026', 'rev_24082026')
+        self.assertEqual(cambios, [])
+
+    def test_una_celda_que_la_ficha_no_tiene_para_la_lectura(self):
+        ficha = _ficha({})
+        with self.assertRaises(lector.LecturaImposible):
+            lector.aplicar_digital(
+                ficha, {'p1__pb__tubeado__A': 'X'}, '24/08/2026', 'rev_24082026')
+
+
 if __name__ == '__main__':
     unittest.main()

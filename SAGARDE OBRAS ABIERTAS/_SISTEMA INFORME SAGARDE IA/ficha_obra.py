@@ -283,6 +283,20 @@ def snapshot_desde_ficha(ficha):
     return filas
 
 
+def _fold_unidad(valor):
+    """`_fold` colapsa espacios pero no los quita: 'Local 1' se queda en
+    'local 1' y no casa con el 'Local1' que emite el extractor (via
+    `normalizar_unidad`, que SI los quita). Bolueta tiene la unica unidad
+    confirmada con espacio en su nombre ('Local 1' / 'Local 2') y esa
+    inconsistencia le daba de alta un fantasma cada vez que se regeneraba:
+    76 celdas duplicadas bajo 'Local1' sin espacio. Aplicar la misma
+    normalizacion a los dos lados de la comparacion (aqui) es la unica
+    guarda: cambiar `normalizar_unidad` sin mas se llevaria por delante
+    todas las obras que lo usan para el motivo contrario, limpiar un espacio
+    que el extractor mete por error."""
+    return _fold(normalizar_unidad(valor))
+
+
 def _indice_ubicaciones(ficha):
     """(portal_id, planta_id, ubicacion_id) -> dict de la ubicacion, mas los
     indices por nombre para poder cruzar con lo que dice la revision, que
@@ -300,17 +314,17 @@ def _indice_ubicaciones(ficha):
                     por_id[trio] = ubi
                     ref = portal.get('referencia') or portal.get('nombre')
                     por_nombre[(_fold(ref), _fold(planta.get('nombre')),
-                                _fold(ubi['id']))] = trio
+                                _fold_unidad(ubi['id']))] = trio
                     clave_alias = f"{portal['id']}__{planta['id']}__{ubi['id']}"
                     historico = alias.get(clave_alias)
                     if historico:
                         por_nombre[(_fold(ref), _fold(planta.get('nombre')),
-                                    _fold(historico))] = trio
+                                    _fold_unidad(historico))] = trio
     return por_id, por_nombre
 
 
 def _localizar(por_nombre, edificio, planta, unidad):
-    return por_nombre.get((_fold(edificio), _fold(planta), _fold(unidad)))
+    return por_nombre.get((_fold(edificio), _fold(planta), _fold_unidad(unidad)))
 
 
 def _indice_tajo_por_nombre(ruta_catalogo=None, avisar=True):
@@ -659,7 +673,7 @@ def _alta_ubicacion(ficha, item, revision, cambios, por_id, por_nombre):
     trio = (portal['id'], planta['id'], unidad)
     por_id[trio] = nueva
     ref = portal.get('referencia') or portal.get('nombre')
-    por_nombre[(_fold(ref), _fold(planta_nom), _fold(unidad))] = trio
+    por_nombre[(_fold(ref), _fold(planta_nom), _fold_unidad(unidad))] = trio
     ficha['estructura'].setdefault('_meta', {})['actualizado'] = revision
     return trio
 
