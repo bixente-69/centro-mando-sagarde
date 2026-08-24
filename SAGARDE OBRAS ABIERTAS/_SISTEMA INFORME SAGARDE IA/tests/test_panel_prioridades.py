@@ -182,6 +182,16 @@ class TestTareasManuales(unittest.TestCase):
         self.assertIn('No se ha guardado ningún cambio.', html)
         self.assertIn('No se encontró esa tarea en el Excel', html)
 
+    def test_la_casilla_se_reactiva_tras_un_cambio_con_exito(self):
+        """Bug real detectado en revisión manual: la casilla se deshabilita
+        al iniciar la petición y solo se reactivaba en las ramas de fallo
+        (restaurar()); si la petición tenía éxito quedaba deshabilitada para
+        siempre y un segundo clic no volvía a disparar el evento 'change'."""
+        html = panel_obra._tabla_tareas_manuales(
+            [self.TAREAS[0]], [], obra='2026 OBRA PRUEBA')
+
+        self.assertEqual(html.count('casilla.disabled = false;'), 2)
+
     def test_fila_hecha_tiene_casilla_marcada_para_poder_desmarcar(self):
         html = panel_obra._tabla_tareas_manuales(
             [self.TAREAS[1]], [], obra='2026 OBRA PRUEBA')

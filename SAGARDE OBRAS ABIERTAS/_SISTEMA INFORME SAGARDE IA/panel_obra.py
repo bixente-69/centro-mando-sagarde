@@ -514,6 +514,7 @@ document.querySelectorAll('.marcar-tarea-hecha').forEach(casilla => {
           ? 'Marcada como hecha. Recuerda ejecutar Actualizar_Sagarde.bat para publicar este cambio.'
           : 'Marcada de nuevo como pendiente. Recuerda ejecutar Actualizar_Sagarde.bat para publicar este cambio.',
           false);
+        casilla.disabled = false;
       } else if (respuesta.status === 404) {
         restaurar();
         avisar('No se encontró esa tarea en el Excel; puede que el panel '

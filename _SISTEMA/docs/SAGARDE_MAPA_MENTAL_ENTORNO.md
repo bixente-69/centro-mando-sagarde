@@ -12,9 +12,9 @@
 > Si una sesión añade una obra, una skill, un script o un tipo de fichero
 > nuevo, esa misma sesión lo refleja aquí.
 
-**Última actualización: 24/08/2026** — Los paneles de obra pueden marcar una
-tarea manual como hecha mediante un servidor ligado exclusivamente a
-`127.0.0.1`. Ver §5.2.
+**Última actualización: 24/08/2026** — Los paneles de obra pueden marcar y
+desmarcar una tarea manual (Pendiente ⇄ Hecho) mediante un servidor ligado
+exclusivamente a `127.0.0.1`. Ver §5.2.
 
 ## Estado de hoy
 
@@ -343,8 +343,8 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 | `sagarde_portal.py` | `_SISTEMA/MOTOR/sagarde_portal.py` | Python | Portal, apps, cerradas, mapas | directo/BAT | BAT global | resúmenes/árbol | índices y mapas HTML | stdlib, avisos | Activo; móvil roto |
 | `auditor_sagarde.py` | `_SISTEMA/MOTOR/scripts/auditor_sagarde.py` | Python | Auditoría pre-vuelo | directo/import | BAT/test | obras/mantenimiento | `auditoria_diagnostico.json` | stdlib | Activo; falsos duplicados |
 | `cerrar_obra.py` | `_SISTEMA.../cerrar_obra.py` | Python | Cierra una obra: la saca del registro por AST, archiva su adaptador dentro de ella, mueve la carpeta a Obras cerradas y escribe `cierre.json` | `<id>` informa; `--ejecutar` lo hace | skill `sagarde-cerrar-obra` | registro, ficha, resumen | registro, carpeta movida, `cierre.json` | stdlib | Activo desde 13/08/2026 |
-| `nota_pendiente.py` | `_SISTEMA.../nota_pendiente.py` | Python | Añade una tarea manual trazable y `marcar_tarea_hecha` cambia a `Hecho` la primera fila `Pendiente` cuyos cuatro campos coinciden exactamente, sin alterar otras hojas o filas | `<xlsx> --tarea --origen --fecha --archivo` para añadir; import para marcar | skill `sagarde-nota-pendiente`, `panel_server.py` | libro XLSX existente | hoja `Tareas` del mismo libro | openpyxl | Activo desde 23/08/2026; marcado local desde 24/08/2026; 7 pruebas |
-| `panel_server.py` | `_SISTEMA.../panel_server.py` | Python | Sirve `SAGARDE OBRAS ABIERTAS/` y expone `POST /api/marcar_hecho` sin admitir acceso de red | `[--puerto N]` (8765 por defecto) | `Abrir_Panel_Local.bat`, usuario, pruebas HTTP | paneles estáticos y `FICHA DE OBRA.xlsx` de la obra indicada | `Estado` de una fila de `Tareas` mediante `marcar_tarea_hecha` | stdlib + `nota_pendiente`/openpyxl | Activo desde 24/08/2026; ligado solo a `127.0.0.1`; 3 pruebas HTTP reales |
+| `nota_pendiente.py` | `_SISTEMA.../nota_pendiente.py` | Python | Añade una tarea manual trazable; `marcar_tarea_hecha`/`desmarcar_tarea_hecha` cambian Estado en ambos sentidos (Pendiente⇄Hecho) sobre la primera fila cuyos cuatro campos coinciden exactamente, compartiendo la búsqueda vía `_cambiar_estado_tarea`, sin alterar otras hojas o filas | `<xlsx> --tarea --origen --fecha --archivo` para añadir; import para marcar/desmarcar | skill `sagarde-nota-pendiente`, `panel_server.py` | libro XLSX existente | hoja `Tareas` del mismo libro | openpyxl | Activo desde 23/08/2026; toggle bidireccional desde 24/08/2026; 10 pruebas |
+| `panel_server.py` | `_SISTEMA.../panel_server.py` | Python | Sirve `SAGARDE OBRAS ABIERTAS/` y expone `POST /api/marcar_hecho` (campo `objetivo`: `Hecho` o `Pendiente`) sin admitir acceso de red | `[--puerto N]` (8765 por defecto) | `Abrir_Panel_Local.bat`, usuario, pruebas HTTP | paneles estáticos y `FICHA DE OBRA.xlsx` de la obra indicada | `Estado` de una fila de `Tareas` mediante `marcar_tarea_hecha`/`desmarcar_tarea_hecha` | stdlib + `nota_pendiente`/openpyxl | Activo desde 24/08/2026; ligado solo a `127.0.0.1`; toggle bidireccional; 6 pruebas HTTP reales |
 | `test_cerrar_obra.py` | `_SISTEMA.../tests/test_cerrar_obra.py` | Python | 21 casos sobre árbol temporal; 3 guardas comprobadas por mutación | unittest | manual | cerrar_obra | resultado | unittest | En verde el 13/08/2026 |
 | `actualizar_mapa_mental.py` | `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` | Python | Reescribe los bloques `AUTO:` de este mapa y audita las rutas que declara | directo o BAT; `--comprobar` no escribe | BAT global, paso 4/5 | este mapa, fichas, `resumen_obras.json` | este mapa | stdlib | Activo desde 12/08/2026 |
 | `generar_informe_ejecutivo.py` | `_SISTEMA/MOTOR/scripts/generar_informe_ejecutivo.py` | Python | PDF A4 eléctrico | `--obra`/import | orquestador | ficha/historial/prioridades + `assets/fonts/*.ttf` | PDF por obra y portal | ReportLab/catálogo | Activo; solo tajos propios Sagarde. Desde 14/08/2026 usa IBM Plex Sans y **falla si falta la fuente o el logo**, en vez de degradarse en silencio |
