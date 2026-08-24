@@ -179,8 +179,8 @@ class TestTareasManuales(unittest.TestCase):
         self.assertIn('AbortController', html)
         self.assertIn('Marcada como hecha. Recuerda ejecutar '
                       'Actualizar_Sagarde.bat para publicar este cambio.', html)
-        self.assertIn('No se ha guardado ningÃºn cambio.', html)
-        self.assertIn('No se encontrÃ³ esa tarea en el Excel', html)
+        self.assertIn('No se ha guardado ningún cambio.', html)
+        self.assertIn('No se encontró esa tarea en el Excel', html)
 
     def test_fila_hecha_no_tiene_casilla(self):
         html = panel_obra._tabla_tareas_manuales(

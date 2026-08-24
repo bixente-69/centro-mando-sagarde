@@ -93,7 +93,7 @@ def _e(valor):
 
 
 def _e_atributo(valor):
-    """Escapa un atributo sin sustituir por un guiÃ³n los valores vacÃ­os."""
+    """Escapa un atributo sin sustituir por un guión los valores vacíos."""
     return html_lib.escape(str('' if valor is None else valor), quote=True)
 
 
@@ -510,18 +510,18 @@ document.querySelectorAll('.marcar-tarea-hecha').forEach(casilla => {
         avisar('Marcada como hecha. Recuerda ejecutar Actualizar_Sagarde.bat para publicar este cambio.', false);
       } else if (respuesta.status === 404) {
         restaurar();
-        avisar('No se encontrÃ³ esa tarea en el Excel; puede que el panel '
-          + 'estÃ© desactualizado. Regenera antes de reintentar.', true);
+        avisar('No se encontró esa tarea en el Excel; puede que el panel '
+          + 'esté desactualizado. Regenera antes de reintentar.', true);
       } else {
         restaurar();
         avisar('No se pudo guardar: esto solo funciona abriendo el panel en '
-          + 'local con Abrir_Panel_Local.bat. No se ha guardado ningÃºn cambio.',
+          + 'local con Abrir_Panel_Local.bat. No se ha guardado ningún cambio.',
           true);
       }
     } catch (error) {
       restaurar();
       avisar('No se pudo guardar: esto solo funciona abriendo el panel en '
-        + 'local con Abrir_Panel_Local.bat. No se ha guardado ningÃºn cambio.',
+        + 'local con Abrir_Panel_Local.bat. No se ha guardado ningún cambio.',
         true);
     } finally {
       clearTimeout(timeout);
@@ -603,7 +603,7 @@ def _tabla_tareas_manuales(tareas, documentos, obra=''):
         bloque_pendientes = (
             "<div class='tareas-pendientes'><div class='table-scroll'>"
             "<table class='data'><thead><tr><th>Estado</th><th>Tarea</th>"
-            "<th>Origen</th><th>Fecha</th><th>Archivo</th><th>AcciÃ³n</th>"
+            "<th>Origen</th><th>Fecha</th><th>Archivo</th><th>Acción</th>"
             "</tr></thead>"
             f"<tbody>{filas_pendientes}</tbody></table></div></div>"
         )
