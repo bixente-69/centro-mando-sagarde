@@ -51,7 +51,7 @@ table.data tbody tr:hover{background:#f8f9fb;}
 </style></head><body><div class="wrap">
 <div class="header">
   <div><div class="brand">Informe Sagarde IA · Panel de obra</div><h1>2026 OBRA PRUEBA</h1><div class="sub">Obra de pruebas · No es una obra real · 2 bloques, 3 portales, 31 ubicaciones</div></div>
-  <div class="meta">Generado: 24/08/2026 00:30<br>
+  <div class="meta">Generado: 24/08/2026 08:40<br>
   Última revisión: 05/08/2026<br>
   <a class="volver" href="../../index.html">← Todas las obras</a>
   <a class="volver" href="INFORME_EJECUTIVO_2026_OBRA_PRUEBA.pdf" target="_blank" style="background:var(--bad);border-color:var(--bad);margin-left:6px;">📄 Informe Ejecutivo PDF</a></div>
@@ -112,7 +112,73 @@ table.data tbody tr:hover{background:#f8f9fb;}
       <div class="kpi"><div class="label">Revisión utilizada</div><div class="value" style="font-size:18px;">05/08/2026</div><div class="hint">Motor v4.3 · catálogo v1.3</div></div>
     </div>
     
-    <div class='card' style='border-left:4px solid var(--accent2);'><h3>Tareas manuales <span class='badge'>1 pendiente</span></h3><p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>Acciones declaradas en la hoja <b>Tareas</b> de <b>FICHA DE OBRA.xlsx</b>. Se muestran aparte: no modifican los KPI ni el orden calculado de los tajos.</p><div class='tareas-pendientes'><div class='table-scroll'><table class='data'><thead><tr><th>Estado</th><th>Tarea</th><th>Origen</th><th>Fecha</th><th>Archivo</th></tr></thead><tbody><tr><td><span class='badge warn'>Pendiente</span></td><td><b>Comprobar integración de nota pendiente</b></td><td>Prueba manual solicitada por Bixente</td><td style='white-space:nowrap;'>24/08/2026</td><td>TEMAS PENDIENTES PRUEBA 23-08-2026.txt</td></tr></tbody></table></div></div></div>
+    <div class='card' style='border-left:4px solid var(--accent2);'><h3>Tareas manuales <span class='badge tareas-pendientes-contador' data-pendientes='1'>1 pendiente</span></h3><p style='font-size:12.5px;color:var(--muted);margin-bottom:10px;'>Acciones declaradas en la hoja <b>Tareas</b> de <b>FICHA DE OBRA.xlsx</b>. Se muestran aparte: no modifican los KPI ni el orden calculado de los tajos.</p><div class='tareas-pendientes'><div class='table-scroll'><table class='data'><thead><tr><th>Estado</th><th>Tarea</th><th>Origen</th><th>Fecha</th><th>Archivo</th><th>Acción</th></tr></thead><tbody><tr><td><span class='badge warn'>Pendiente</span></td><td><b>Comprobar integración de nota pendiente</b></td><td>Prueba manual solicitada por Bixente</td><td style='white-space:nowrap;'>24/08/2026</td><td>TEMAS PENDIENTES PRUEBA 23-08-2026.txt</td><td><label style='white-space:nowrap;cursor:pointer;'><input type='checkbox' class='marcar-tarea-hecha' data-obra='2026 OBRA PRUEBA' data-tarea='Comprobar integración de nota pendiente' data-origen='Prueba manual solicitada por Bixente' data-fecha='24/08/2026' data-archivo='TEMAS PENDIENTES PRUEBA 23-08-2026.txt'> Hecho</label></td></tr></tbody></table></div></div><p class='tarea-resultado' role='status' style='display:none;font-size:12.5px;margin-top:10px;'></p></div><script>
+document.querySelectorAll('.marcar-tarea-hecha').forEach(casilla => {
+  casilla.addEventListener('change', async () => {
+    if (!casilla.checked) return;
+    casilla.disabled = true;
+    const fila = casilla.closest('tr');
+    const tarjeta = casilla.closest('.card');
+    const mensaje = tarjeta.querySelector('.tarea-resultado');
+    const contador = tarjeta.querySelector('.tareas-pendientes-contador');
+    const controlador = new AbortController();
+    const timeout = setTimeout(() => controlador.abort(), 3000);
+    const restaurar = () => {
+      casilla.checked = false;
+      casilla.disabled = false;
+    };
+    const avisar = (texto, error) => {
+      mensaje.textContent = texto;
+      mensaje.style.color = error ? 'var(--bad)' : 'var(--ok)';
+      mensaje.style.display = 'block';
+    };
+    try {
+      const respuesta = await fetch('/api/marcar_hecho', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          obra_carpeta: casilla.dataset.obra,
+          tarea: casilla.dataset.tarea,
+          origen: casilla.dataset.origen,
+          fecha: casilla.dataset.fecha,
+          archivo: casilla.dataset.archivo
+        }),
+        signal: controlador.signal
+      });
+      if (respuesta.ok) {
+        fila.style.color = 'var(--muted)';
+        fila.style.textDecoration = 'line-through';
+        const estado = fila.querySelector('.badge');
+        estado.textContent = 'Hecho';
+        estado.classList.remove('warn');
+        estado.classList.add('f3');
+        const restantes = Math.max(
+          0, parseInt(contador.dataset.pendientes, 10) - 1);
+        contador.dataset.pendientes = restantes;
+        contador.textContent = restantes + ' '
+          + (restantes === 1 ? 'pendiente' : 'pendientes');
+        avisar('Marcada como hecha. Recuerda ejecutar Actualizar_Sagarde.bat para publicar este cambio.', false);
+      } else if (respuesta.status === 404) {
+        restaurar();
+        avisar('No se encontró esa tarea en el Excel; puede que el panel '
+          + 'esté desactualizado. Regenera antes de reintentar.', true);
+      } else {
+        restaurar();
+        avisar('No se pudo guardar: esto solo funciona abriendo el panel en '
+          + 'local con Abrir_Panel_Local.bat. No se ha guardado ningún cambio.',
+          true);
+      }
+    } catch (error) {
+      restaurar();
+      avisar('No se pudo guardar: esto solo funciona abriendo el panel en '
+        + 'local con Abrir_Panel_Local.bat. No se ha guardado ningún cambio.',
+        true);
+    } finally {
+      clearTimeout(timeout);
+    }
+  });
+});
+</script>
     <div class="banner">✓ No hay preguntas pendientes en esta actualización.</div>
     
     
@@ -149,7 +215,7 @@ table.data tbody tr:hover{background:#f8f9fb;}
 
 <section id="v-actualizar" class="view"><div class="card">
   <h3>↻ Actualizar panel</h3>
-  <p style="font-size:13px;">Este panel es un fichero HTML estático. Se actualizó el <b>24/08/2026 00:30</b>.
+  <p style="font-size:13px;">Este panel es un fichero HTML estático. Se actualizó el <b>24/08/2026 08:40</b>.
   Para reflejarlo con los últimos archivos de revisión hay que regenerarlo.</p>
   <div style="margin-top:18px;background:#f0f4ff;border:1px solid #c0cfe8;border-radius:8px;padding:14px 18px;">
     <b style="font-size:13px;">Paso 1 &mdash; Haz doble clic en este archivo:</b><br>
