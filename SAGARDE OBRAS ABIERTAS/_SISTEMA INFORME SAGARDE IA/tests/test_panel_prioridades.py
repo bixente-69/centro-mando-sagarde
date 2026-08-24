@@ -456,5 +456,81 @@ class TestIndicePrioridades(unittest.TestCase):
         self.assertNotIn('Consulta y referencia', html)
 
 
+class TestIndiceConectado(unittest.TestCase):
+
+    def _html_obra_completa(self):
+        return panel_obra.bloque_prioridades(_prioridades(
+            resumen={'listos': 2, 'bloqueados': 1, 'sin_revisar': 1},
+            items=[
+                {'orden': 1, 'situacion': 'LISTO', 'trabajo': 'A',
+                 'n_unidades': 1, 'n_celdas': 1, 'n_ubicaciones': 1,
+                 'ubicaciones': [], 'estado_actual': 'Pendiente',
+                 'motivo': 'x', 'fase_nombre': 'f', 'orden_ejecucion': 1,
+                 'ambito_nombre': 'Viviendas'},
+            ],
+            inventario=[
+                {'seccion': 'BLOQUEADO', 'trabajo': 'B', 'propiedad': 'propio',
+                 'orden_ejecucion': 2, 'fase_nombre': 'f', 'n_ubicaciones': 3,
+                 'ubicaciones': [], 'estado_actual': '—', 'motivo': 'x',
+                 'subtajos': []},
+                {'seccion': 'SIN_REVISAR', 'trabajo': 'C', 'propiedad': 'propio',
+                 'orden_ejecucion': 3, 'fase_nombre': 'f', 'n_ubicaciones': 4,
+                 'ubicaciones': [], 'estado_actual': '—', 'motivo': 'x',
+                 'subtajos': []},
+            ],
+        ), tareas_manual=[{
+            'Tarea': 'Revisar cuadro', 'Origen': 'Parte de obra',
+            'Fecha': '22/08/2026', 'Archivo': '', 'Estado': 'Pendiente',
+        }], documentos=[])
+
+    def test_el_indice_aparece_una_sola_vez(self):
+        html = self._html_obra_completa()
+        self.assertEqual(html.count("class='indice-prioridades'"), 1)
+
+    def test_el_indice_va_antes_que_todas_las_secciones_plegables(self):
+        html = self._html_obra_completa()
+        posicion_indice = html.index("class='indice-prioridades'")
+        for id_seccion in ('sec-tareas', 'sec-dudas', 'sec-ejecucion',
+                            'sec-inv-bloqueado', 'sec-inv-sin_revisar'):
+            self.assertLess(
+                posicion_indice, html.index(f"id='{id_seccion}'"),
+                f"el indice deberia ir antes que {id_seccion}")
+
+    def test_bloqueados_y_sin_revisar_estan_en_el_grupo_actuar(self):
+        html = self._html_obra_completa()
+        inicio_actuar = html.index('Para actuar hoy')
+        inicio_consulta = html.index('Consulta y referencia')
+        pos_bloqueados = html.index("data-abre='sec-inv-bloqueado'")
+        pos_sin_revisar = html.index("data-abre='sec-inv-sin_revisar'")
+        self.assertTrue(inicio_actuar < pos_bloqueados < inicio_consulta)
+        self.assertTrue(inicio_actuar < pos_sin_revisar < inicio_consulta)
+
+    def test_el_numero_del_indice_coincide_con_las_filas_reales_de_la_seccion(self):
+        html = self._html_obra_completa()
+        # "Tajos bloqueados" tiene 1 grupo en el inventario de esta obra de
+        # prueba (seccion BLOQUEADO): el indice debe decir "1", no otra cosa.
+        indice_bloqueados = html[
+            html.index("data-abre='sec-inv-bloqueado'"):
+            html.index("data-abre='sec-inv-bloqueado'") + 200]
+        self.assertIn('1', indice_bloqueados)
+        # Y la propia seccion debe traer el mismo "1" en su badge.
+        seccion_bloqueados = html[
+            html.index("id='sec-inv-bloqueado'"):
+            html.index("id='sec-inv-bloqueado'") + 400]
+        self.assertIn("<span class='badge'>1</span>", seccion_bloqueados)
+
+    def test_una_seccion_vacia_no_aparece_en_el_indice(self):
+        # Sin preguntas_orden ni prevision: _tabla_preguntas_orden y
+        # _tabla_prevision devuelven '' y no deben dejar entrada en el indice.
+        html = self._html_obra_completa()
+        self.assertNotIn('sec-preguntas-catalogo', html)
+        self.assertNotIn('sec-prevision', html)
+
+    def test_tareas_manuales_vacio_no_deja_entrada_en_el_indice(self):
+        html = panel_obra.bloque_prioridades(
+            _prioridades(), tareas_manual=[], documentos=[])
+        self.assertNotIn('sec-tareas', html)
+
+
 if __name__ == '__main__':
     unittest.main()

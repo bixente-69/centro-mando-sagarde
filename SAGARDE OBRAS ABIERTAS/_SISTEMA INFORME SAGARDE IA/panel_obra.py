@@ -745,6 +745,9 @@ def _tabla_tareas_manuales(tareas, documentos, obra=''):
     return tarjeta + (_SCRIPT_MARCAR_TAREA if hay_casillas else '')
 
 
+_ID_SEC_EJECUCION = 'sec-ejecucion'
+
+
 def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
                        obra=''):
     """HTML de la pestana Prioridades.
@@ -904,7 +907,102 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
             'n': len(grupos),
         }
 
-    inventario_html = ''.join(v['html'] for v in inventario_por_codigo.values())
+    titulo_ejecucion = (
+        "Qué hacer ahora: orden lógico de ejecución "
+        f"<span class='badge'>{resumen_prio.get('listos', 0)}</span>")
+    contenido_ejecucion = f"""<p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Primero aparecen los tajos viables de viviendas, después zonas comunes y edificio. Los tajos iguales se agrupan. VERIFICAR nunca se considera ejecutable hasta confirmar la duda. <a href="prioridades_trabajos.json" target="_blank">Ver cálculo y detalle completo</a>.</p>
+      <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <span style="font-size:12px;color:var(--muted);">Filtrar:</span>
+        <select id="filtro-sit" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;">
+          <option value="">LISTO + VERIFICAR</option>
+          <option value="LISTO">Solo LISTO</option>
+          <option value="VERIFICAR">Solo VERIFICAR</option>
+        </select>
+        <span id="prio-count" style="font-size:12px;color:var(--muted);"></span>
+      </div>
+      <div class="table-scroll"><table id="tabla-prio" class="data"><thead><tr><th>#</th><th>Tajo</th><th>Alcance</th><th>Dónde</th><th>En obra</th><th>Motivo / Comprobar</th></tr></thead>
+      <tbody>{filas_prio}</tbody></table></div>"""
+    ejecucion_html = _envolver_plegable(
+        _ID_SEC_EJECUCION, titulo_ejecucion, contenido_ejecucion,
+        color_borde='var(--ok)')
+
+    secciones_indice = []
+    if tareas_manual_html:
+        secciones_indice.append({
+            'id': _ID_SEC_TAREAS,
+            'etiqueta': (f"Tareas manuales — "
+                        f"{len(_tareas_pendientes(tareas_manual))} pendientes"),
+            'grupo': 'actuar', 'color': 'var(--accent2)',
+        })
+    secciones_indice.append({
+        'id': _ID_SEC_DUDAS,
+        'etiqueta': f"Preguntas pendientes antes de decidir — {len(dudas_prio)}",
+        'grupo': 'actuar',
+        'color': 'var(--warn)' if dudas_prio else 'var(--ok)',
+    })
+    secciones_indice.append({
+        'id': _ID_SEC_EJECUCION,
+        'etiqueta': f"Qué hacer ahora — {resumen_prio.get('listos', 0)} tajos listos",
+        'grupo': 'actuar', 'color': 'var(--ok)',
+    })
+    secciones_indice.append({
+        'id': inventario_por_codigo['BLOQUEADO']['id'],
+        'etiqueta': f"Tajos bloqueados — {inventario_por_codigo['BLOQUEADO']['n']}",
+        'grupo': 'actuar', 'color': 'var(--warn)',
+    })
+    secciones_indice.append({
+        'id': inventario_por_codigo['SIN_REVISAR']['id'],
+        'etiqueta': f"Sin revisar nunca — {inventario_por_codigo['SIN_REVISAR']['n']}",
+        'grupo': 'actuar', 'color': 'var(--bad)',
+    })
+    if orden_html:
+        secciones_indice.append({
+            'id': _ID_SEC_PREGUNTAS_CATALOGO,
+            'etiqueta': (f"Preguntas sobre el catálogo — "
+                        f"{len(prioridades.get('preguntas_orden') or [])}"),
+            'grupo': 'consulta', 'color': 'var(--warn)',
+        })
+    if prevision_html:
+        secciones_indice.append({
+            'id': _ID_SEC_PREVISION,
+            'etiqueta': 'Qué se desbloquea al terminar cada cosa',
+            'grupo': 'consulta',
+        })
+    secciones_indice.append({
+        'id': inventario_por_codigo['VIABLE']['id'],
+        'etiqueta': f"Tajos viables (inventario) — {inventario_por_codigo['VIABLE']['n']}",
+        'grupo': 'consulta',
+    })
+    secciones_indice.append({
+        'id': inventario_por_codigo['OTROS_GREMIOS']['id'],
+        'etiqueta': (f"Otros gremios e interferencias — "
+                    f"{inventario_por_codigo['OTROS_GREMIOS']['n']}"),
+        'grupo': 'consulta',
+    })
+    secciones_indice.append({
+        'id': inventario_por_codigo['DUDAS']['id'],
+        'etiqueta': f"Sin clasificar o por verificar — {inventario_por_codigo['DUDAS']['n']}",
+        'grupo': 'consulta',
+    })
+    secciones_indice.append({
+        'id': inventario_por_codigo['TERMINADO']['id'],
+        'etiqueta': f"Tajos terminados — {inventario_por_codigo['TERMINADO']['n']}",
+        'grupo': 'consulta',
+    })
+    indice_html = _indice_prioridades(secciones_indice)
+
+    grupo_actuar_html = (
+        tareas_manual_html + dudas_html + ejecucion_html
+        + inventario_por_codigo['BLOQUEADO']['html']
+        + inventario_por_codigo['SIN_REVISAR']['html']
+    )
+    grupo_consulta_html = (
+        orden_html + prevision_html
+        + inventario_por_codigo['VIABLE']['html']
+        + inventario_por_codigo['OTROS_GREMIOS']['html']
+        + inventario_por_codigo['DUDAS']['html']
+        + inventario_por_codigo['TERMINADO']['html']
+    )
 
     return f"""
     <div class="kpi-row">
@@ -918,27 +1016,10 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
       <div class="kpi"><div class="label">Revisión utilizada</div><div class="value" style="font-size:18px;">{e(prioridades.get('revision'))}</div><div class="hint">Motor v{e(prioridades.get('version'))} · catálogo v{e(prioridades.get('catalogo_version'))}</div></div>
     </div>
     {estado_obra_html}
-    {tareas_manual_html}
-    {dudas_html}
-    {orden_html}
     {avisos_prio}
-    <div class="card"><h3>Qué hacer ahora: orden lógico de ejecución</h3>
-      <p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Primero aparecen los tajos viables de viviendas, después zonas comunes y edificio. Los tajos iguales se agrupan. VERIFICAR nunca se considera ejecutable hasta confirmar la duda. <a href="prioridades_trabajos.json" target="_blank">Ver cálculo y detalle completo</a>.</p>
-      <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
-        <span style="font-size:12px;color:var(--muted);">Filtrar:</span>
-        <select id="filtro-sit" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;">
-          <option value="">LISTO + VERIFICAR</option>
-          <option value="LISTO">Solo LISTO</option>
-          <option value="VERIFICAR">Solo VERIFICAR</option>
-        </select>
-        <span id="prio-count" style="font-size:12px;color:var(--muted);"></span>
-      </div>
-      <div class="table-scroll"><table id="tabla-prio" class="data"><thead><tr><th>#</th><th>Tajo</th><th>Alcance</th><th>Dónde</th><th>En obra</th><th>Motivo / Comprobar</th></tr></thead>
-      <tbody>{filas_prio}</tbody></table></div>
-    </div>
-    {prevision_html}
-    <div style="margin:20px 0 10px;"><h2 style="font-size:18px;">Inventario completo de la obra</h2><p style="font-size:12.5px;color:var(--muted);">Incluye todos los tajos de la base de la obra. Los terminados no desaparecen: se guardan al final.</p></div>
-    {inventario_html}"""
+    {indice_html}
+    {grupo_actuar_html}
+    {grupo_consulta_html}"""
 
 
 def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
