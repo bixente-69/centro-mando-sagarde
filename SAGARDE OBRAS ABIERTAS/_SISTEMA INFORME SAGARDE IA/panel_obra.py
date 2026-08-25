@@ -72,12 +72,18 @@ table.data tbody tr:hover{background:#f8f9fb;}
 .seccion-plegable>summary::after{content:'▸';color:var(--muted);font-size:12px;flex-shrink:0;}
 .seccion-plegable[open]>summary::after{content:'▾';}
 .seccion-plegable>.seccion-contenido{margin-top:12px;}
-.indice-prioridades{margin-bottom:var(--gap);}
-.indice-grupo-label{font-size:10.5px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin:10px 0 6px;}
-.indice-grupo{display:flex;flex-direction:column;gap:6px;margin-bottom:6px;}
-.indice-item{background:var(--card);border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 3px rgba(0,0,0,.07);text-decoration:none;color:var(--text);font-size:12.5px;font-weight:700;}
-.indice-item .indice-flecha{color:var(--muted);font-weight:400;}
-@media(max-width:768px){.indice-item{padding:12px 14px;}}
+.indice-nav{background:linear-gradient(120deg,var(--header),var(--header2));border-radius:var(--radius);padding:9px 14px;margin-bottom:var(--gap);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.indice-nav-label{color:var(--accent);font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
+.indice-nav-grupo{position:relative;}
+.indice-nav-grupo>summary{list-style:none;cursor:pointer;background:rgba(255,255,255,.14);color:#fff;padding:8px 14px;border-radius:7px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:6px;}
+.indice-nav-grupo>summary::-webkit-details-marker{display:none;}
+.indice-nav-grupo>summary::after{content:'▾';font-size:10px;}
+.indice-nav-grupo[open]>summary{background:rgba(255,255,255,.26);}
+.indice-nav-panel{position:absolute;top:calc(100% + 8px);left:0;background:var(--card);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.2);padding:8px;min-width:260px;z-index:20;display:flex;flex-direction:column;gap:2px;}
+.indice-nav-link{display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:6px;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;}
+.indice-nav-link:hover{background:var(--bg);}
+.grupo-etiqueta{font-size:10.5px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin:18px 2px 8px;}
+@media(max-width:768px){.indice-nav-panel{left:0;right:0;min-width:0;}}
 @media(max-width:768px){.header{flex-direction:column;}.kpi-row{grid-template-columns:repeat(2,1fr);}.chart-row{grid-template-columns:1fr;}}
 """
 
@@ -148,10 +154,12 @@ def _envolver_plegable(id_ancla, titulo_html, contenido_html, color_borde=None):
 
 _SCRIPT_INDICE_PRIORIDADES = """
 <script>
-document.querySelectorAll('.indice-item').forEach(function(enlace) {
+document.querySelectorAll('.indice-nav-link').forEach(function(enlace) {
   enlace.addEventListener('click', function() {
     var destino = document.getElementById(enlace.getAttribute('data-abre'));
     if (destino) { destino.open = true; }
+    var menu = enlace.closest('details.indice-nav-grupo');
+    if (menu) { menu.open = false; }
   });
 });
 </script>
@@ -162,29 +170,37 @@ def _indice_prioridades(secciones):
     """secciones: lista de dicts {id, etiqueta, grupo, color opcional}, en
     el orden en que deben salir dentro de su grupo. 'grupo' es 'actuar' o
     'consulta'. Un apartado que no se pasa aqui simplemente no aparece: el
-    indice nunca declara algo que la pagina no vaya a pintar."""
+    indice nunca declara algo que la pagina no vaya a pintar.
+
+    Se pinta como una barra de navegacion (mismo azul de la cabecera del
+    panel) con un desplegable por grupo, en vez de una lista larga de
+    tarjetas: mezclada con las secciones reales (tambien tarjetas), la
+    lista se leia como "mas contenido" en vez de como un menu."""
     if not secciones:
         return ''
 
-    def _bloque_grupo(etiqueta_grupo, codigo_grupo):
+    def _desplegable(etiqueta_boton, codigo_grupo):
         items = [s for s in secciones if s['grupo'] == codigo_grupo]
         if not items:
             return ''
         enlaces = ''.join(
-            f"<a class='indice-item' href='#{_e_atributo(s['id'])}' "
+            f"<a class='indice-nav-link' href='#{_e_atributo(s['id'])}' "
             f"data-abre='{_e_atributo(s['id'])}' "
             f"style='border-left:3px solid {s.get('color') or 'var(--muted)'};'>"
-            f"<span>{_e(s['etiqueta'])}</span>"
-            "<span class='indice-flecha'>▸</span></a>"
+            f"<span>{_e(s['etiqueta'])}</span></a>"
             for s in items
         )
-        return (f"<div class='indice-grupo-label'>{_e(etiqueta_grupo)}</div>"
-                f"<div class='indice-grupo'>{enlaces}</div>")
+        return (
+            "<details class='indice-nav-grupo' name='indice-nav-grupo'>"
+            f"<summary>{_e(etiqueta_boton)}</summary>"
+            f"<div class='indice-nav-panel'>{enlaces}</div></details>"
+        )
 
-    return ("<div class='indice-prioridades'>"
-            + _bloque_grupo('Para actuar hoy', 'actuar')
-            + _bloque_grupo('Consulta y referencia', 'consulta')
-            + "</div>" + _SCRIPT_INDICE_PRIORIDADES)
+    return ("<nav class='indice-nav'>"
+            "<span class='indice-nav-label'>Ir a</span>"
+            + _desplegable('Para actuar hoy', 'actuar')
+            + _desplegable('Consulta y referencia', 'consulta')
+            + "</nav>" + _SCRIPT_INDICE_PRIORIDADES)
 
 
 _DUDA_ETIQUETAS = {
@@ -1018,7 +1034,9 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
     {estado_obra_html}
     {avisos_prio}
     {indice_html}
+    <div class="grupo-etiqueta">Para actuar hoy</div>
     {grupo_actuar_html}
+    <div class="grupo-etiqueta">Consulta y referencia</div>
     {grupo_consulta_html}"""
 
 

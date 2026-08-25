@@ -485,6 +485,17 @@ class TestIndicePrioridades(unittest.TestCase):
             [{'id': 'sec-a', 'etiqueta': 'Solo esta', 'grupo': 'actuar'}])
         self.assertNotIn('Consulta y referencia', html)
 
+    def test_cada_grupo_es_un_desplegable_exclusivo(self):
+        """Los dos botones comparten name='indice-nav-grupo': abrir uno
+        pliega el otro solo, sin JavaScript (soporte nativo del navegador)."""
+        html = panel_obra._indice_prioridades([
+            {'id': 'sec-a', 'etiqueta': 'Uno', 'grupo': 'actuar'},
+            {'id': 'sec-b', 'etiqueta': 'Dos', 'grupo': 'consulta'},
+        ])
+        self.assertEqual(
+            html.count("<details class='indice-nav-grupo' "
+                       "name='indice-nav-grupo'>"), 2)
+
 
 class TestIndiceConectado(unittest.TestCase):
 
@@ -515,11 +526,18 @@ class TestIndiceConectado(unittest.TestCase):
 
     def test_el_indice_aparece_una_sola_vez(self):
         html = self._html_obra_completa()
-        self.assertEqual(html.count("class='indice-prioridades'"), 1)
+        self.assertEqual(html.count("class='indice-nav'"), 1)
+
+    def test_el_indice_es_un_desplegable_por_grupo_no_una_lista_de_tarjetas(self):
+        html = self._html_obra_completa()
+        self.assertEqual(
+            html.count("class='indice-nav-grupo' name='indice-nav-grupo'"), 2)
+        self.assertNotIn('indice-item', html)
+        self.assertNotIn('indice-grupo-label', html)
 
     def test_el_indice_va_antes_que_todas_las_secciones_plegables(self):
         html = self._html_obra_completa()
-        posicion_indice = html.index("class='indice-prioridades'")
+        posicion_indice = html.index("class='indice-nav'")
         for id_seccion in ('sec-tareas', 'sec-dudas', 'sec-ejecucion',
                             'sec-inv-bloqueado', 'sec-inv-sin_revisar'):
             self.assertLess(
@@ -574,6 +592,29 @@ class TestIndiceConectado(unittest.TestCase):
             self.assertEqual(
                 html.count(f"data-abre='sec-inv-{codigo.lower()}'"), 1,
                 f'{codigo} no tiene exactamente una entrada de indice')
+
+    def test_el_contenido_real_repite_las_etiquetas_de_grupo(self):
+        """El indice es solo la barra de arriba; el contenido de verdad
+        tambien lleva su propio rotulo de grupo, para que al bajar no se
+        pierda en que zona estas."""
+        html = self._html_obra_completa()
+        pos_etiqueta_actuar = html.index(
+            'class="grupo-etiqueta">Para actuar hoy')
+        pos_etiqueta_consulta = html.index(
+            'class="grupo-etiqueta">Consulta y referencia')
+        pos_tareas = html.index("id='sec-tareas'")
+        pos_viable = html.index("id='sec-inv-viable'")
+        self.assertLess(pos_etiqueta_actuar, pos_tareas)
+        self.assertLess(pos_tareas, pos_etiqueta_consulta)
+        self.assertLess(pos_etiqueta_consulta, pos_viable)
+
+    def test_pinchar_un_enlace_del_indice_cierra_el_desplegable(self):
+        """El script del indice no solo abre la seccion destino: cierra el
+        desplegable desde el que se pincho, para no dejarlo tapando el
+        contenido."""
+        html = self._html_obra_completa()
+        self.assertIn("closest('details.indice-nav-grupo')", html)
+        self.assertIn('menu.open = false', html)
 
 
 if __name__ == '__main__':
