@@ -17,6 +17,11 @@ sys.path.insert(0, str(MOTOR_DIR / "scripts"))
 
 import comprobar_enlaces as ce
 
+OBRA_MOTOR_DIR = ROOT / "SAGARDE OBRAS ABIERTAS" / "_SISTEMA INFORME SAGARDE IA"
+sys.path.insert(0, str(OBRA_MOTOR_DIR))
+
+import registro_obras
+
 
 class TestExtraerEnlaces(unittest.TestCase):
     def test_extrae_href_y_src_con_comillas_dobles_y_simples(self):
@@ -128,6 +133,33 @@ class TestEnlacesRotosDePagina(unittest.TestCase):
             rotos = ce.enlaces_rotos_de_pagina(html, raiz)
             self.assertEqual(1, len(rotos))
             self.assertEqual("../fuera.html", rotos[0]["destino"])
+
+
+class TestPaginasAComprobar(unittest.TestCase):
+    def test_incluye_las_seis_paginas_fijas(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            paginas = ce.paginas_a_comprobar(raiz)
+            relativas = {str(p.relative_to(raiz)).replace("\\", "/") for p in paginas}
+            for fija in ce.PAGINAS_FIJAS:
+                self.assertIn(fija, relativas)
+
+    def test_incluye_el_panel_de_cada_obra_del_registro(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            paginas = ce.paginas_a_comprobar(raiz)
+            relativas = {str(p.relative_to(raiz)).replace("\\", "/") for p in paginas}
+            for obra in registro_obras.OBRAS:
+                esperada = (
+                    f"SAGARDE OBRAS ABIERTAS/{obra['carpeta_obra']}"
+                    f"/INFORME SAGARDE IA/panel.html")
+                self.assertIn(esperada, relativas)
+
+    def test_no_hay_paginas_duplicadas(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            paginas = ce.paginas_a_comprobar(raiz)
+            self.assertEqual(len(paginas), len(set(paginas)))
 
 
 if __name__ == "__main__":

@@ -21,6 +21,12 @@ import sys
 # _SISTEMA/MOTOR/scripts/comprobar_enlaces.py -> cuatro niveles hasta la raiz.
 ROOT = Path(__file__).resolve().parent.parent.parent.parent
 
+OBRA_MOTOR_DIR = ROOT / "SAGARDE OBRAS ABIERTAS" / "_SISTEMA INFORME SAGARDE IA"
+if str(OBRA_MOTOR_DIR) not in sys.path:
+    sys.path.insert(0, str(OBRA_MOTOR_DIR))
+
+from registro_obras import OBRAS
+
 ESQUEMAS_EXTERNOS = ("http:", "https:", "mailto:", "tel:", "javascript:")
 
 PAGINAS_FIJAS = [
@@ -79,6 +85,17 @@ def enlaces_rotos_de_pagina(archivo_html: Path, raiz: Path) -> list[dict]:
         if not ruta.exists() or not dentro_de_raiz:
             rotos.append({"destino": valor, "linea": linea})
     return rotos
+
+
+def paginas_a_comprobar(raiz: Path) -> list[Path]:
+    """Paginas fijas de nivel superior + panel.html de cada obra registrada."""
+    paginas = [raiz / rel for rel in PAGINAS_FIJAS]
+    for obra in OBRAS:
+        paginas.append(
+            raiz / "SAGARDE OBRAS ABIERTAS" / obra["carpeta_obra"]
+            / "INFORME SAGARDE IA" / "panel.html"
+        )
+    return paginas
 
 
 if __name__ == "__main__":
