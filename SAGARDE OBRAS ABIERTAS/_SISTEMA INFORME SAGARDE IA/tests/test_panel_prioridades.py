@@ -396,6 +396,36 @@ class TestConteoPorAmbito(unittest.TestCase):
         self.assertIn('Cuarto técnico', html)
         self.assertIn('92 celdas en la hoja', html)
 
+    def test_el_badge_de_que_hacer_ahora_cuenta_listo_y_verificar(self):
+        """El badge de la tarjeta 'Qué hacer ahora' tiene que coincidir con
+        las filas reales de su propia tabla, que muestra LISTO y VERIFICAR
+        (el filtro por defecto es 'LISTO + VERIFICAR'). Si el badge solo
+        contara 'listos' del resumen, divergiría en cuanto hubiera algún
+        VERIFICAR — bug real detectado en revisión, invisible hasta hoy
+        porque verificar siempre había sido 0 en obras reales."""
+        html = panel_obra.bloque_prioridades(_prioridades(
+            resumen={'listos': 1},
+            items=[
+                {'orden': 1, 'situacion': 'LISTO', 'trabajo': 'A',
+                 'n_unidades': 1, 'n_celdas': 1, 'n_ubicaciones': 1,
+                 'ubicaciones': [], 'estado_actual': 'Pendiente',
+                 'motivo': 'x', 'fase_nombre': 'f', 'orden_ejecucion': 1,
+                 'ambito_nombre': 'Viviendas'},
+                {'orden': 2, 'situacion': 'VERIFICAR', 'trabajo': 'B',
+                 'n_unidades': 1, 'n_celdas': 1, 'n_ubicaciones': 1,
+                 'ubicaciones': [], 'estado_actual': 'Pendiente',
+                 'motivo': 'x', 'fase_nombre': 'f', 'orden_ejecucion': 2,
+                 'ambito_nombre': 'Viviendas'},
+            ]))
+
+        tabla = html[html.index('id="tabla-prio"'):]
+        filas_tabla = tabla.count("<tr data-fase=")
+        self.assertEqual(filas_tabla, 2)
+
+        seccion = html[html.index("id='sec-ejecucion'"):
+                        html.index("id='sec-ejecucion'") + 300]
+        self.assertIn(f"<span class='badge'>{filas_tabla}</span>", seccion)
+
 
 class TestEnvolverPlegable(unittest.TestCase):
 
@@ -530,6 +560,20 @@ class TestIndiceConectado(unittest.TestCase):
         html = panel_obra.bloque_prioridades(
             _prioridades(), tareas_manual=[], documentos=[])
         self.assertNotIn('sec-tareas', html)
+
+    def test_las_seis_secciones_del_inventario_salen_en_el_indice_una_sola_vez(self):
+        """Guarda contra la familia de fallo de este proyecto: un codigo que
+        el bucle de mas arriba construye en `inventario_por_codigo` pero que
+        el montaje final (hardcodeado por nombre) no coloca en ningun grupo
+        ni en el indice se quedaria construido y nunca mostrado, en
+        silencio. Esta prueba pasa hoy porque los seis codigos actuales
+        estan bien conectados; su valor es fallar el dia que se añada un
+        septimo codigo a _SECCIONES_INVENTARIO sin conectarlo."""
+        html = self._html_obra_completa()
+        for codigo, _, _ in panel_obra._SECCIONES_INVENTARIO:
+            self.assertEqual(
+                html.count(f"data-abre='sec-inv-{codigo.lower()}'"), 1,
+                f'{codigo} no tiene exactamente una entrada de indice')
 
 
 if __name__ == '__main__':

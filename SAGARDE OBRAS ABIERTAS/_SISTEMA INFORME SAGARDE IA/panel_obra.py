@@ -909,7 +909,7 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
 
     titulo_ejecucion = (
         "Qué hacer ahora: orden lógico de ejecución "
-        f"<span class='badge'>{resumen_prio.get('listos', 0)}</span>")
+        f"<span class='badge'>{len(items_prio)}</span>")
     contenido_ejecucion = f"""<p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Primero aparecen los tajos viables de viviendas, después zonas comunes y edificio. Los tajos iguales se agrupan. VERIFICAR nunca se considera ejecutable hasta confirmar la duda. <a href="prioridades_trabajos.json" target="_blank">Ver cálculo y detalle completo</a>.</p>
       <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
         <span style="font-size:12px;color:var(--muted);">Filtrar:</span>
