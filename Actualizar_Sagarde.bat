@@ -44,13 +44,13 @@ if %errorlevel% neq 0 (
 )
 echo.
 
-echo [4/6] Comprobando enlaces del portal publicado...
+echo [4/6] Comprobando enlaces del portal generado...
 %PY% "_SISTEMA\MOTOR\scripts\comprobar_enlaces.py"
 if errorlevel 2 (
-  echo   [ERROR] Faltan paginas que deberian existir tras publicar. Revisa el
-  echo           paso anterior.
+  echo   [ERROR] Faltan paginas que deberian existir. Revisa los pasos
+  echo           anteriores. Se publica igual, pero conviene arreglarlo antes.
 ) else if errorlevel 1 (
-  echo   [AVISO] Hay enlaces internos rotos en el portal publicado. Quedan
+  echo   [AVISO] Hay enlaces internos rotos en el portal generado. Quedan
   echo           listados arriba. Se publica igual, pero conviene corregirlos.
 )
 

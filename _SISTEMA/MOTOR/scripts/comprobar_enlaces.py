@@ -5,8 +5,9 @@ comprobar_enlaces.py — Enlaces internos rotos en el portal publicado de Sagard
 
 Recorre un conjunto fijo de paginas de nivel superior (portal raiz, indices
 de area, paneles de obra) y comprueba que cada enlace interno relativo
-(href/src) apunte a un archivo que existe. No comprueba enlaces externos
-(http/https/mailto/tel/javascript:) ni anclas (#id).
+(href/src) apunte a un archivo o carpeta que existe dentro del sitio. No
+comprueba enlaces externos (http/https/mailto/tel/javascript:/data:) ni
+anclas (#id).
 
 Uso:
   python _SISTEMA/MOTOR/scripts/comprobar_enlaces.py
@@ -27,7 +28,7 @@ if str(OBRA_MOTOR_DIR) not in sys.path:
 
 from registro_obras import OBRAS
 
-ESQUEMAS_EXTERNOS = ("http:", "https:", "mailto:", "tel:", "javascript:")
+ESQUEMAS_EXTERNOS = ("http:", "https:", "mailto:", "tel:", "javascript:", "data:")
 
 PAGINAS_FIJAS = [
     "index.html",
@@ -61,7 +62,7 @@ def extraer_enlaces(html_texto: str) -> list[tuple[str, int]]:
 
 def es_enlace_interno(valor: str) -> bool:
     """True si el enlace es una ruta relativa que hay que comprobar en disco."""
-    if valor.startswith("#"):
+    if valor.startswith("#") or valor.startswith("//"):
         return False
     return not valor.strip().lower().startswith(ESQUEMAS_EXTERNOS)
 
@@ -98,8 +99,9 @@ def paginas_a_comprobar(raiz: Path) -> list[Path]:
     return paginas
 
 
-def comprobar_enlaces(raiz: Path = ROOT) -> dict:
+def comprobar_enlaces(raiz: Path | None = None) -> dict:
     """{'ausentes': [Path,...], 'rotos': {Path: [dict,...]}}"""
+    raiz = raiz if raiz is not None else ROOT
     ausentes = []
     rotos = {}
     for pagina in paginas_a_comprobar(raiz):
@@ -112,10 +114,17 @@ def comprobar_enlaces(raiz: Path = ROOT) -> dict:
     return {"ausentes": ausentes, "rotos": rotos}
 
 
-def main(argv=None) -> int:
+def main() -> int:
     resultado = comprobar_enlaces(ROOT)
     ausentes = resultado["ausentes"]
     rotos = resultado["rotos"]
+
+    if rotos:
+        total = sum(len(v) for v in rotos.values())
+        print(f"  [AVISO] {total} enlace(s) roto(s) en el portal publicado:")
+        for pagina, items in rotos.items():
+            for item in items:
+                print(f"    - {pagina.name} -> {item['destino']} (linea {item['linea']})")
 
     if ausentes:
         print("  [ERROR] Faltan paginas que deberian existir tras publicar el portal:")
@@ -124,11 +133,6 @@ def main(argv=None) -> int:
         return 2
 
     if rotos:
-        total = sum(len(v) for v in rotos.values())
-        print(f"  [AVISO] {total} enlace(s) roto(s) en el portal publicado:")
-        for pagina, items in rotos.items():
-            for item in items:
-                print(f"    - {pagina.name} -> {item['destino']} (linea {item['linea']})")
         return 1
 
     print("  Todos los enlaces del portal publicado resuelven.")

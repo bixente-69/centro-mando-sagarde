@@ -346,7 +346,8 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 | `nota_pendiente.py` | `_SISTEMA.../nota_pendiente.py` | Python | Añade una tarea manual trazable; `marcar_tarea_hecha`/`desmarcar_tarea_hecha` cambian Estado en ambos sentidos (Pendiente⇄Hecho) sobre la primera fila cuyos cuatro campos coinciden exactamente, compartiendo la búsqueda vía `_cambiar_estado_tarea`, sin alterar otras hojas o filas | `<xlsx> --tarea --origen --fecha --archivo` para añadir; import para marcar/desmarcar | skill `sagarde-nota-pendiente`, `panel_server.py` | libro XLSX existente | hoja `Tareas` del mismo libro | openpyxl | Activo desde 23/08/2026; toggle bidireccional desde 24/08/2026; 10 pruebas |
 | `panel_server.py` | `_SISTEMA.../panel_server.py` | Python | Sirve `SAGARDE OBRAS ABIERTAS/` y expone `POST /api/marcar_hecho` (campo `objetivo`: `Hecho` o `Pendiente`) sin admitir acceso de red | `[--puerto N]` (8765 por defecto) | `Abrir_Panel_Local.bat`, usuario, pruebas HTTP | paneles estáticos y `FICHA DE OBRA.xlsx` de la obra indicada | `Estado` de una fila de `Tareas` mediante `marcar_tarea_hecha`/`desmarcar_tarea_hecha` | stdlib + `nota_pendiente`/openpyxl | Activo desde 24/08/2026; ligado solo a `127.0.0.1`; toggle bidireccional; 6 pruebas HTTP reales |
 | `test_cerrar_obra.py` | `_SISTEMA.../tests/test_cerrar_obra.py` | Python | 21 casos sobre árbol temporal; 3 guardas comprobadas por mutación | unittest | manual | cerrar_obra | resultado | unittest | En verde el 13/08/2026 |
-| `actualizar_mapa_mental.py` | `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` | Python | Reescribe los bloques `AUTO:` de este mapa y audita las rutas que declara | directo o BAT; `--comprobar` no escribe | BAT global, paso 4/5 | este mapa, fichas, `resumen_obras.json` | este mapa | stdlib | Activo desde 12/08/2026 |
+| `actualizar_mapa_mental.py` | `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` | Python | Reescribe los bloques `AUTO:` de este mapa y audita las rutas que declara | directo o BAT; `--comprobar` no escribe | BAT global, paso 5/6 | este mapa, fichas, `resumen_obras.json` | este mapa | stdlib | Activo desde 12/08/2026 |
+| `comprobar_enlaces.py` | `_SISTEMA/MOTOR/scripts/comprobar_enlaces.py` | Python | Enlaces internos rotos del portal publicado | directo o BAT | BAT global, paso 4/6 | páginas fijas + panel.html de cada obra registrada | consola (aviso/error) | stdlib, `registro_obras` | Activo desde 25/08/2026 |
 | `generar_informe_ejecutivo.py` | `_SISTEMA/MOTOR/scripts/generar_informe_ejecutivo.py` | Python | PDF A4 eléctrico | `--obra`/import | orquestador | ficha/historial/prioridades + `assets/fonts/*.ttf` | PDF por obra y portal | ReportLab/catálogo | Activo; solo tajos propios Sagarde. Desde 14/08/2026 usa IBM Plex Sans y **falla si falta la fuente o el logo**, en vez de degradarse en silencio |
 | `test_informe_ejecutivo_caracter.py` | `_SISTEMA.../tests` | Python | 21 casos: activos publicados, registro de fuente, tipografía dentro del PDF, regla de color y logo | unittest | manual | informe/`.gitignore`/logo | resultado | unittest, pdfplumber, PIL | En verde el 14/08/2026 |
 | `generar_parte_incidencia.py` | `_SISTEMA/MOTOR/scripts/generar_parte_incidencia.py` | Python | Partes PDF | `--data --output`/import | skill parte | JSON/logo | PDF | ReportLab | Sin llamada real |
@@ -537,8 +538,8 @@ flowchart LR
 1. **Disparador:** `Actualizar_Sagarde.bat`.
 2. **Entrada:** árbol local.
 3. **Validación:** auditor pre-vuelo; los generadores capturan ciertos errores y conservan salida anterior.
-4. **Procesamiento:** auditor → obras `--no-pdf` → postventa → mantenimiento → portal → **mapa mental**. El último paso reescribe los bloques `AUTO:` de este documento y comprueba sus rutas; si alguna ya no existe, el BAT avisa y las deja escritas aquí, pero no aborta la publicación.
-5. **Componentes:** BAT, seis Python y Git.
+4. **Procesamiento:** auditor → obras `--no-pdf` → postventa → mantenimiento → portal → **comprobar enlaces** → **mapa mental**. El paso de enlaces comprueba que el HTML publicado resuelva de verdad; el último paso reescribe los bloques `AUTO:` de este documento y comprueba sus rutas; si alguna ya no existe, el BAT avisa y las deja escritas aquí, pero no aborta la publicación.
+5. **Componentes:** BAT, siete Python y Git.
 6. **Salida:** JSON/HTML/PDF ejecutivo/JS y, si hay cambios, commit/push.
 7. **Almacenamiento:** repositorio local y `origin main`.
 8. **Errores:** Python/Git/dependencias ausentes, salida parcial; `git add -A` incluye cambios ajenos. El BAT de obras instala paquetes, el global no.
@@ -551,6 +552,7 @@ sequenceDiagram
   participant O as Obras
   participant P as Postventa/Mantenimiento
   participant R as Portal
+  participant C as Comprobador de enlaces
   participant M as Mapa mental
   participant G as Git
   U->>B: Ejecutar
@@ -562,6 +564,8 @@ sequenceDiagram
   P-->>B: índices y resúmenes
   B->>R: sagarde_portal.py
   R-->>B: index y subíndices
+  B->>C: comprobar_enlaces.py
+  C-->>B: enlaces internos rotos (aviso)
   B->>M: actualizar_mapa_mental.py
   M-->>B: mapa al día + rutas muertas
   B->>G: add -A / commit / push main

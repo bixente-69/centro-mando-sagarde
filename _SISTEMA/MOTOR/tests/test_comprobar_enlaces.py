@@ -6,9 +6,11 @@ comprueba la prosa del mapa mental, este comprueba el HTML publicado de
 verdad. Misma familia de fallo que el resto del proyecto: algo declarado
 (un href) que nadie vuelve a mirar tras regenerarse.
 """
+import io
 import sys
 import tempfile
 import unittest
+from contextlib import redirect_stdout
 from pathlib import Path
 
 MOTOR_DIR = Path(__file__).resolve().parent.parent
@@ -52,6 +54,12 @@ class TestEsEnlaceInterno(unittest.TestCase):
 
     def test_ancla_no_es_interna(self):
         self.assertFalse(ce.es_enlace_interno("#kpis"))
+
+    def test_data_no_es_interno(self):
+        self.assertFalse(ce.es_enlace_interno("data:image/png;base64,iVBORw0KGgo="))
+
+    def test_protocolo_relativo_no_es_interno(self):
+        self.assertFalse(ce.es_enlace_interno("//cdn.jsdelivr.net/chart.js"))
 
 
 class TestResolverRuta(unittest.TestCase):
@@ -167,7 +175,9 @@ class TestComprobarEnlaces(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             raiz = Path(tmp)
             resultado = ce.comprobar_enlaces(raiz)
-            self.assertGreaterEqual(len(resultado["ausentes"]), 1)
+            # 6 paginas fijas + 1 panel.html por cada obra del registro real
+            # (hoy 5: gernika, mungia, bolueta, gorliz, prueba).
+            self.assertEqual(11, len(resultado["ausentes"]))
 
     def test_devuelve_vacio_cuando_todo_resuelve(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -210,7 +220,7 @@ class TestMain(unittest.TestCase):
             raiz = Path(tmp)
             self._preparar_arbol_completo(raiz)
             ce.ROOT = raiz
-            self.assertEqual(0, ce.main([]))
+            self.assertEqual(0, ce.main())
 
     def test_codigo_1_cuando_hay_enlaces_rotos(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -219,13 +229,29 @@ class TestMain(unittest.TestCase):
             (raiz / "index.html").write_text(
                 '<a href="no_existe.html">x</a>', encoding="utf-8")
             ce.ROOT = raiz
-            self.assertEqual(1, ce.main([]))
+            self.assertEqual(1, ce.main())
 
     def test_codigo_2_cuando_falta_una_pagina_fija(self):
         with tempfile.TemporaryDirectory() as tmp:
             raiz = Path(tmp)
             ce.ROOT = raiz
-            self.assertEqual(2, ce.main([]))
+            self.assertEqual(2, ce.main())
+
+    def test_avisa_de_enlaces_rotos_aunque_falten_paginas_fijas(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            # Solo se crea el index.html raiz, con un enlace roto; el resto
+            # de paginas fijas y paneles de obra faltan.
+            raiz_index = raiz / "index.html"
+            raiz_index.write_text('<a href="no_existe.html">x</a>', encoding="utf-8")
+            ce.ROOT = raiz
+            buffer = io.StringIO()
+            with redirect_stdout(buffer):
+                codigo = ce.main()
+            salida = buffer.getvalue()
+            self.assertEqual(2, codigo)
+            self.assertIn("enlace(s) roto(s)", salida)
+            self.assertIn("no_existe.html", salida)
 
 
 if __name__ == "__main__":
