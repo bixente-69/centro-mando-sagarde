@@ -60,7 +60,7 @@ def es_enlace_interno(valor: str) -> bool:
     return not valor.strip().lower().startswith(ESQUEMAS_EXTERNOS)
 
 
-def resolver_ruta(valor: str, archivo_html: Path, raiz: Path) -> Path:
+def resolver_ruta(valor: str, archivo_html: Path) -> Path:
     """Resuelve un enlace interno relativo a la carpeta del HTML que lo contiene."""
     destino = unquote(valor.split("#", 1)[0].split("?", 1)[0])
     return (archivo_html.parent / destino).resolve()

@@ -56,7 +56,7 @@ class TestResolverRuta(unittest.TestCase):
             html = raiz / "index.html"
             html.write_text("<html></html>", encoding="utf-8")
             ruta = ce.resolver_ruta(
-                "SAGARDE%20OBRAS%20ABIERTAS/index.html", html, raiz)
+                "SAGARDE%20OBRAS%20ABIERTAS/index.html", html)
             self.assertEqual(
                 raiz / "SAGARDE OBRAS ABIERTAS" / "index.html", ruta)
 
@@ -66,7 +66,7 @@ class TestResolverRuta(unittest.TestCase):
             (raiz / "POST-VENTAS").mkdir()
             html = raiz / "POST-VENTAS" / "index.html"
             html.write_text("<html></html>", encoding="utf-8")
-            ruta = ce.resolver_ruta("../APLICACIONES/index.html", html, raiz)
+            ruta = ce.resolver_ruta("../APLICACIONES/index.html", html)
             self.assertEqual(raiz / "APLICACIONES" / "index.html", ruta)
 
 
