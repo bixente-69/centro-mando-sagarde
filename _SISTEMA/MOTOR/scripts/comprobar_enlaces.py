@@ -66,5 +66,18 @@ def resolver_ruta(valor: str, archivo_html: Path) -> Path:
     return (archivo_html.parent / destino).resolve()
 
 
+def enlaces_rotos_de_pagina(archivo_html: Path, raiz: Path) -> list[dict]:
+    """[{'destino': str, 'linea': int}, ...] de los enlaces internos rotos."""
+    texto = archivo_html.read_text(encoding="utf-8")
+    rotos = []
+    for valor, linea in extraer_enlaces(texto):
+        if not es_enlace_interno(valor):
+            continue
+        ruta = resolver_ruta(valor, archivo_html)
+        if not ruta.exists():
+            rotos.append({"destino": valor, "linea": linea})
+    return rotos
+
+
 if __name__ == "__main__":
     sys.exit(0)

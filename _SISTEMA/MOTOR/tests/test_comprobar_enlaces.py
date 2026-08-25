@@ -70,5 +70,50 @@ class TestResolverRuta(unittest.TestCase):
             self.assertEqual(raiz / "APLICACIONES" / "index.html", ruta)
 
 
+def _crear_html(raiz, ruta_rel, contenido):
+    archivo = raiz / ruta_rel
+    archivo.parent.mkdir(parents=True, exist_ok=True)
+    archivo.write_text(contenido, encoding="utf-8")
+    return archivo
+
+
+class TestEnlacesRotosDePagina(unittest.TestCase):
+    def test_detecta_un_enlace_roto(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            html = _crear_html(
+                raiz, "index.html", '<a href="POST-VENTAS/index.html">x</a>')
+            rotos = ce.enlaces_rotos_de_pagina(html, raiz)
+            self.assertEqual(1, len(rotos))
+            self.assertEqual("POST-VENTAS/index.html", rotos[0]["destino"])
+            self.assertEqual(1, rotos[0]["linea"])
+
+    def test_no_marca_un_enlace_correcto(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            _crear_html(raiz, "POST-VENTAS/index.html", "<html></html>")
+            html = _crear_html(
+                raiz, "index.html", '<a href="POST-VENTAS/index.html">x</a>')
+            self.assertEqual([], ce.enlaces_rotos_de_pagina(html, raiz))
+
+    def test_enlace_correcto_con_espacios_codificados_no_se_marca(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            _crear_html(raiz, "SAGARDE OBRAS ABIERTAS/index.html", "<html></html>")
+            html = _crear_html(
+                raiz, "index.html",
+                '<a href="SAGARDE%20OBRAS%20ABIERTAS/index.html">x</a>')
+            self.assertEqual([], ce.enlaces_rotos_de_pagina(html, raiz))
+
+    def test_ignora_enlaces_externos_y_anclas(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            html = _crear_html(
+                raiz, "index.html",
+                '<a href="https://cdn.jsdelivr.net/chart.js">x</a>'
+                '<a href="#kpis">y</a>')
+            self.assertEqual([], ce.enlaces_rotos_de_pagina(html, raiz))
+
+
 if __name__ == "__main__":
     unittest.main()
