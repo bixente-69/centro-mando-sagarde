@@ -12,18 +12,18 @@ echo  Centro de mando Sagarde - actualizacion completa
 echo ============================================
 echo.
 
-echo [0/5] Ejecutando Auditoria Pre-Vuelo de Salud de Datos...
+echo [0/6] Ejecutando Auditoria Pre-Vuelo de Salud de Datos...
 %PY% "_SISTEMA\MOTOR\scripts\auditor_sagarde.py"
 echo.
 
-echo [1/5] Actualizando Informe Sagarde IA (Obras abiertas)...
+echo [1/6] Actualizando Informe Sagarde IA (Obras abiertas)...
 %PY% "SAGARDE OBRAS ABIERTAS\_SISTEMA INFORME SAGARDE IA\generar_todos.py" --no-pdf
 if %errorlevel% neq 0 (
   echo   [AVISO] No se pudo actualizar Obras Abiertas. El portal usara los datos existentes.
 )
 echo.
 
-echo [2/5] Actualizando Post-ventas y Mantenimientos...
+echo [2/6] Actualizando Post-ventas y Mantenimientos...
 %PY% "POST-VENTAS\_SISTEMA\postventas_index.py"
 if %errorlevel% neq 0 (
   echo   [AVISO] No se pudo actualizar Post-ventas. El portal usara los datos existentes.
@@ -34,7 +34,7 @@ if %errorlevel% neq 0 (
 )
 echo.
 
-echo [3/5] Generando portal principal...
+echo [3/6] Generando portal principal...
 %PY% "_SISTEMA\MOTOR\sagarde_portal.py"
 if %errorlevel% neq 0 (
   echo.
@@ -44,7 +44,18 @@ if %errorlevel% neq 0 (
 )
 echo.
 
-echo [4/5] Actualizando el mapa mental del entorno...
+echo [4/6] Comprobando enlaces del portal publicado...
+%PY% "_SISTEMA\MOTOR\scripts\comprobar_enlaces.py"
+if errorlevel 2 (
+  echo   [ERROR] Faltan paginas que deberian existir tras publicar. Revisa el
+  echo           paso anterior.
+) else if errorlevel 1 (
+  echo   [AVISO] Hay enlaces internos rotos en el portal publicado. Quedan
+  echo           listados arriba. Se publica igual, pero conviene corregirlos.
+)
+
+echo.
+echo [5/6] Actualizando el mapa mental del entorno...
 %PY% "_SISTEMA\MOTOR\scripts\actualizar_mapa_mental.py"
 if errorlevel 2 (
   echo   [ERROR] No se pudo actualizar el mapa mental. Se publica sin tocarlo.
@@ -55,7 +66,7 @@ if errorlevel 2 (
 )
 
 echo.
-echo [5/5] Subiendo a la nube (GitHub Pages)...
+echo [6/6] Subiendo a la nube (GitHub Pages)...
 set "GITCMD="
 where git >nul 2>nul
 if %errorlevel%==0 set "GITCMD=git"
