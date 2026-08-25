@@ -738,7 +738,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | ¿Mantener portal móvil? | launch/código vs salida vieja | launch/portal/HTML | intención | interfaz estancada |
 | ¿Publicar Docs/Para/Scratch? | portal vs whitelist | portal/gitignore | política | 404/exposición |
 | ¿Versiones admitidas? | sin manifiesto | imports/BAT/skills | versiones probadas | reproducibilidad |
-| ¿Otras skills externas instaladas? | CARDIVA ya está confirmada; `superpowers:*` y `artifact-design` siguen siendo solo referencias | CLAUDE/planes/settings y registro multi-IA | inventario del host para las restantes | repetibilidad |
+| ¿Otras skills externas instaladas? | CARDIVA ya está confirmada; `superpowers:*` y `artifact-design` siguen siendo solo referencias. Auditoría del 25/08/2026: confirmadas además `postventas-sagarde`, `sagarde-parte-postventa` y `sagarde-revision-obra` operando sobre Sagarde sin `SKILL.md` ni mención en ningún archivo del repositorio — viven instaladas a nivel de host, no versionadas | CLAUDE/planes/settings, registro multi-IA y sesión del 25/08 | decidir si sustituyen a `sagarde-parte-incidencia`/`sagarde-revision` del repo o son un camino paralelo, y dejarlo escrito | repetibilidad; quien retome el proyecto sin esta sesión no sabe que existen |
 | ¿Vigencia de backups? | sin selector | árbol/gitignore | retención | confusión/tamaño |
 
 # 13. Fuentes y evidencias
