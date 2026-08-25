@@ -30,7 +30,7 @@ PAGINAS_FIJAS: list[str]                    # 6 rutas relativas, con '/' como se
 
 def extraer_enlaces(html_texto: str) -> list[tuple[str, int]]
 def es_enlace_interno(valor: str) -> bool
-def resolver_ruta(valor: str, archivo_html: Path, raiz: Path) -> Path
+def resolver_ruta(valor: str, archivo_html: Path) -> Path
 def enlaces_rotos_de_pagina(archivo_html: Path, raiz: Path) -> list[dict]   # [{'destino': str, 'linea': int}, ...]
 def paginas_a_comprobar(raiz: Path) -> list[Path]
 def comprobar_enlaces(raiz: Path = ROOT) -> dict                            # {'ausentes': list[Path], 'rotos': dict[Path, list[dict]]}
@@ -46,7 +46,7 @@ def main(argv=None) -> int                                                  # 0 
 - Create: `_SISTEMA/MOTOR/tests/test_comprobar_enlaces.py`
 
 **Interfaces:**
-- Produces: `extraer_enlaces(html_texto: str) -> list[tuple[str, int]]`, `es_enlace_interno(valor: str) -> bool`, `resolver_ruta(valor: str, archivo_html: Path, raiz: Path) -> Path`
+- Produces: `extraer_enlaces(html_texto: str) -> list[tuple[str, int]]`, `es_enlace_interno(valor: str) -> bool`, `resolver_ruta(valor: str, archivo_html: Path) -> Path`
 
 - [ ] **Step 1: Escribir los tests que fallan**
 
@@ -111,7 +111,7 @@ class TestResolverRuta(unittest.TestCase):
             html = raiz / "index.html"
             html.write_text("<html></html>", encoding="utf-8")
             ruta = ce.resolver_ruta(
-                "SAGARDE%20OBRAS%20ABIERTAS/index.html", html, raiz)
+                "SAGARDE%20OBRAS%20ABIERTAS/index.html", html)
             self.assertEqual(
                 raiz / "SAGARDE OBRAS ABIERTAS" / "index.html", ruta)
 
@@ -121,7 +121,7 @@ class TestResolverRuta(unittest.TestCase):
             (raiz / "POST-VENTAS").mkdir()
             html = raiz / "POST-VENTAS" / "index.html"
             html.write_text("<html></html>", encoding="utf-8")
-            ruta = ce.resolver_ruta("../APLICACIONES/index.html", html, raiz)
+            ruta = ce.resolver_ruta("../APLICACIONES/index.html", html)
             self.assertEqual(raiz / "APLICACIONES" / "index.html", ruta)
 
 
@@ -201,7 +201,7 @@ def es_enlace_interno(valor: str) -> bool:
     return not valor.strip().lower().startswith(ESQUEMAS_EXTERNOS)
 
 
-def resolver_ruta(valor: str, archivo_html: Path, raiz: Path) -> Path:
+def resolver_ruta(valor: str, archivo_html: Path) -> Path:
     """Resuelve un enlace interno relativo a la carpeta del HTML que lo contiene."""
     destino = unquote(valor.split("#", 1)[0].split("?", 1)[0])
     return (archivo_html.parent / destino).resolve()
@@ -283,6 +283,21 @@ class TestEnlacesRotosDePagina(unittest.TestCase):
                 '<a href="https://cdn.jsdelivr.net/chart.js">x</a>'
                 '<a href="#kpis">y</a>')
             self.assertEqual([], ce.enlaces_rotos_de_pagina(html, raiz))
+
+    def test_enlace_que_escapa_de_raiz_se_marca_como_roto(self):
+        # Un enlace con suficientes '../' puede resolver a un archivo real
+        # que existe fuera del sitio (el repo vive dentro de OneDrive, con
+        # miles de archivos alrededor). Que exista en disco no basta: si
+        # queda fuera de raiz, en el portal publicado no lleva a nada.
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            raiz = base / "repo"
+            raiz.mkdir()
+            (base / "fuera.html").write_text("<html></html>", encoding="utf-8")
+            html = _crear_html(raiz, "index.html", '<a href="../fuera.html">x</a>')
+            rotos = ce.enlaces_rotos_de_pagina(html, raiz)
+            self.assertEqual(1, len(rotos))
+            self.assertEqual("../fuera.html", rotos[0]["destino"])
 ```
 
 - [ ] **Step 2: Comprobar que falla**
@@ -298,12 +313,14 @@ Añadir a `_SISTEMA/MOTOR/scripts/comprobar_enlaces.py`, después de `resolver_r
 def enlaces_rotos_de_pagina(archivo_html: Path, raiz: Path) -> list[dict]:
     """[{'destino': str, 'linea': int}, ...] de los enlaces internos rotos."""
     texto = archivo_html.read_text(encoding="utf-8")
+    raiz = raiz.resolve()
     rotos = []
     for valor, linea in extraer_enlaces(texto):
         if not es_enlace_interno(valor):
             continue
-        ruta = resolver_ruta(valor, archivo_html, raiz)
-        if not ruta.exists():
+        ruta = resolver_ruta(valor, archivo_html)
+        dentro_de_raiz = ruta == raiz or raiz in ruta.parents
+        if not ruta.exists() or not dentro_de_raiz:
             rotos.append({"destino": valor, "linea": linea})
     return rotos
 ```
@@ -311,7 +328,7 @@ def enlaces_rotos_de_pagina(archivo_html: Path, raiz: Path) -> list[dict]:
 - [ ] **Step 4: Comprobar que pasa**
 
 Run: `cd "_SISTEMA/MOTOR" && python -m unittest tests.test_comprobar_enlaces -v`
-Expected: 13 tests, todos `ok`.
+Expected: 14 tests, todos `ok`.
 
 - [ ] **Step 5: Commit**
 
@@ -407,7 +424,7 @@ def paginas_a_comprobar(raiz: Path) -> list[Path]:
 - [ ] **Step 4: Comprobar que pasa**
 
 Run: `cd "_SISTEMA/MOTOR" && python -m unittest tests.test_comprobar_enlaces -v`
-Expected: 16 tests, todos `ok`.
+Expected: 17 tests, todos `ok`.
 
 - [ ] **Step 5: Commit**
 
@@ -555,11 +572,17 @@ Nota: `main()` llama a `comprobar_enlaces(ROOT)` leyendo el global `ROOT` en el 
 - [ ] **Step 4: Comprobar que pasa**
 
 Run: `cd "_SISTEMA/MOTOR" && python -m unittest tests.test_comprobar_enlaces -v`
-Expected: 22 tests, todos `ok`.
+Expected: 23 tests, todos `ok`.
 
-Run también, sobre el árbol real, para ver el comportamiento de verdad:
-Run: `python "_SISTEMA/MOTOR/scripts/comprobar_enlaces.py"; echo "codigo: $?"`
-Expected: `Todos los enlaces del portal publicado resuelven.` y `codigo: 0` (según lo comprobado a mano en la auditoría del 25/08/2026 — si aparece algo distinto, es una regresión real a investigar antes de seguir, no un fallo del test).
+Comprobar también, sobre el árbol real, para ver el comportamiento de verdad.
+**Importante — no ejecutar `python comprobar_enlaces.py` directamente desde el worktree de este plan.** El `raiz` por defecto del script es la carpeta del propio fichero (`ROOT`), y el worktree de este plan solo contiene los archivos versionados por git: reportará cientos de "rotos" que en realidad son carpetas/archivos legítimamente fuera de git (fotos y PDF de postventa, obras cerradas), no una regresión. Para comprobar contra el árbol real, invocar `comprobar_enlaces(raiz)` con `raiz` apuntando al checkout principal (no al worktree), por ejemplo:
+```python
+import sys; sys.path.insert(0, '.')
+import comprobar_enlaces as ce
+from pathlib import Path
+print(ce.comprobar_enlaces(Path(r'D:\Nueva carpeta\OneDrive\COPIA SEGURIDAD SAGARDE')))
+```
+Expected sobre el árbol real: **1 enlace roto** — `panel.html` de Gorliz enlaza a `INFORME_EJECUTIVO_2026_GORLIZ_HOSPITAL.pdf`, que nunca se generó (Gorliz sigue sin revisión). No es una regresión de este cambio: es un hallazgo real que el comprobador destapa correctamente — la auditoría a mano del 25/08/2026 solo revisó los enlaces del `index.html` raíz, no los internos de cada panel. Si aparece cualquier otro enlace roto en el árbol real (no en el worktree), sí investigar antes de seguir.
 
 - [ ] **Step 5: Commit**
 
@@ -668,8 +691,7 @@ echo [6/6] Subiendo a la nube (GitHub Pages)...
 
 `Actualizar_Sagarde.bat` termina en `git add -A` + commit + `push origin main`: no se ejecuta de punta a punta en una tarea de este plan. En su lugar:
 
-Run: `python "_SISTEMA/MOTOR/scripts/comprobar_enlaces.py"; echo "codigo: $?"`
-Expected: mismo resultado que en la Task 4 (`Todos los enlaces del portal publicado resuelven.`, código `0`).
+Comprobar contra el árbol real, no contra el worktree (ver la nota de la Task 4, Step 4). Expected: mismo resultado que en la Task 4 — 1 enlace roto real (el PDF ejecutivo de Gorliz, aún sin generar), no una lista de cientos como daría el worktree.
 
 Revisar a mano el diff completo de `Actualizar_Sagarde.bat` (`git diff Actualizar_Sagarde.bat`) y confirmar:
 - Los pasos `[0/6]` a `[3/6]` y `[5/6]`-`[6/6]` conservan exactamente el mismo contenido que antes, solo cambia el numerador.
@@ -678,7 +700,7 @@ Revisar a mano el diff completo de `Actualizar_Sagarde.bat` (`git diff Actualiza
 - [ ] **Step 4: Confirmar que la suite completa del motor sigue en verde**
 
 Run: `cd "_SISTEMA/MOTOR" && python -m unittest discover -s tests`
-Expected: `OK` (48 + 22 = 70 tests; el `.bat` no tiene pruebas propias, pero no debe haber roto nada de `_SISTEMA/MOTOR`).
+Expected: `OK` (48 + 23 = 71 tests; el `.bat` no tiene pruebas propias, pero no debe haber roto nada de `_SISTEMA/MOTOR`).
 
 - [ ] **Step 5: Commit**
 
@@ -693,9 +715,9 @@ git commit -m "Enganchar el comprobador de enlaces en Actualizar_Sagarde.bat, pa
 
 ## Verificación final del plan completo
 
-1. `cd "_SISTEMA/MOTOR" && python -m unittest discover -s tests` → `OK`, 70 casos.
+1. `cd "_SISTEMA/MOTOR" && python -m unittest discover -s tests` → `OK`, 71 casos.
 2. `cd "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA" && python -m unittest discover -s tests` → sigue en `OK` (445 casos) — este plan no toca ese árbol, pero se confirma que nada se rompió por proximidad.
-3. `python "_SISTEMA/MOTOR/scripts/comprobar_enlaces.py"` sobre el árbol real → código `0`, coincide con la auditoría del 25/08/2026.
+3. `comprobar_enlaces()` contra el árbol real (no el worktree, ver nota de Task 4) → 1 enlace roto: el PDF ejecutivo de Gorliz, aún sin generar — hallazgo real que la auditoría a mano del 25/08/2026 no había cubierto (solo miró los enlaces del `index.html` raíz), no una regresión de este plan.
 4. Prueba por mutación manual: copiar `index.html` a un scratch temporal, romper un `href` a propósito, ejecutar el script contra esa copia y confirmar que devuelve `1` con el enlace roto señalado — no basta con que el código "parezca" correcto (regla del proyecto).
-5. `git log --oneline -6` muestra los 5 commits de este plan, ninguno pusheado.
-6. Reportar a Bixente: 6 commits locales listos, nada publicado, y que la próxima vez que él ejecute `Actualizar_Sagarde.bat` verá el nuevo paso `[4/6]` en la ventana.
+5. `git log --oneline` muestra todos los commits de este plan (más de 5: cada ronda de correccion añadió alguno), ninguno pusheado.
+6. Reportar a Bixente: commits locales listos, nada publicado, el hallazgo real de Gorliz, y que la próxima vez que él ejecute `Actualizar_Sagarde.bat` verá el nuevo paso `[4/6]` en la ventana.
