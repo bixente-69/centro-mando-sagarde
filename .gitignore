@@ -36,6 +36,12 @@ VARIOS/APPS SAGARDE/
 # Sin esta linea da 404 en GitHub Pages y el generador no reconoce ninguna obra.
 !SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/obras_revisiones.js
 
+# Chart.js local: cada panel.html lo carga con <script src="static/chart.min.js">.
+# Misma trampa que obras_revisiones.js arriba. Confirmado con la web publicada
+# de verdad el 25/08/2026: daba 404, asi que los graficos del panel no se
+# dibujaban en la version publicada aunque funcionasen en local.
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/static/chart.min.js
+
 # Ficha de obra: fuente de verdad de estructura y estados (una por obra)
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/ficha_obra.json
 
