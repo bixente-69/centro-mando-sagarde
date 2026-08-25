@@ -162,5 +162,71 @@ class TestPaginasAComprobar(unittest.TestCase):
             self.assertEqual(len(paginas), len(set(paginas)))
 
 
+class TestComprobarEnlaces(unittest.TestCase):
+    def test_devuelve_pagina_ausente_si_falta_una_pagina_fija(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            resultado = ce.comprobar_enlaces(raiz)
+            self.assertGreaterEqual(len(resultado["ausentes"]), 1)
+
+    def test_devuelve_vacio_cuando_todo_resuelve(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            for pagina in ce.paginas_a_comprobar(raiz):
+                pagina.parent.mkdir(parents=True, exist_ok=True)
+                pagina.write_text("<html></html>", encoding="utf-8")
+            resultado = ce.comprobar_enlaces(raiz)
+            self.assertEqual([], resultado["ausentes"])
+            self.assertEqual({}, resultado["rotos"])
+
+    def test_devuelve_rotos_si_una_pagina_existente_enlaza_a_la_nada(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            for pagina in ce.paginas_a_comprobar(raiz):
+                pagina.parent.mkdir(parents=True, exist_ok=True)
+                pagina.write_text("<html></html>", encoding="utf-8")
+            raiz_index = raiz / "index.html"
+            raiz_index.write_text('<a href="no_existe.html">x</a>', encoding="utf-8")
+            resultado = ce.comprobar_enlaces(raiz)
+            self.assertEqual([], resultado["ausentes"])
+            self.assertIn(raiz_index, resultado["rotos"])
+
+
+class TestMain(unittest.TestCase):
+    def setUp(self):
+        self._root_original = ce.ROOT
+        self.addCleanup(self._restaurar)
+
+    def _restaurar(self):
+        ce.ROOT = self._root_original
+
+    def _preparar_arbol_completo(self, raiz):
+        for pagina in ce.paginas_a_comprobar(raiz):
+            pagina.parent.mkdir(parents=True, exist_ok=True)
+            pagina.write_text("<html></html>", encoding="utf-8")
+
+    def test_codigo_0_cuando_todo_resuelve(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            self._preparar_arbol_completo(raiz)
+            ce.ROOT = raiz
+            self.assertEqual(0, ce.main([]))
+
+    def test_codigo_1_cuando_hay_enlaces_rotos(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            self._preparar_arbol_completo(raiz)
+            (raiz / "index.html").write_text(
+                '<a href="no_existe.html">x</a>', encoding="utf-8")
+            ce.ROOT = raiz
+            self.assertEqual(1, ce.main([]))
+
+    def test_codigo_2_cuando_falta_una_pagina_fija(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            raiz = Path(tmp)
+            ce.ROOT = raiz
+            self.assertEqual(2, ce.main([]))
+
+
 if __name__ == "__main__":
     unittest.main()

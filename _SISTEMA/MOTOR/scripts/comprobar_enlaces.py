@@ -98,5 +98,42 @@ def paginas_a_comprobar(raiz: Path) -> list[Path]:
     return paginas
 
 
+def comprobar_enlaces(raiz: Path = ROOT) -> dict:
+    """{'ausentes': [Path,...], 'rotos': {Path: [dict,...]}}"""
+    ausentes = []
+    rotos = {}
+    for pagina in paginas_a_comprobar(raiz):
+        if not pagina.is_file():
+            ausentes.append(pagina)
+            continue
+        encontrados = enlaces_rotos_de_pagina(pagina, raiz)
+        if encontrados:
+            rotos[pagina] = encontrados
+    return {"ausentes": ausentes, "rotos": rotos}
+
+
+def main(argv=None) -> int:
+    resultado = comprobar_enlaces(ROOT)
+    ausentes = resultado["ausentes"]
+    rotos = resultado["rotos"]
+
+    if ausentes:
+        print("  [ERROR] Faltan paginas que deberian existir tras publicar el portal:")
+        for pagina in ausentes:
+            print(f"    - {pagina}")
+        return 2
+
+    if rotos:
+        total = sum(len(v) for v in rotos.values())
+        print(f"  [AVISO] {total} enlace(s) roto(s) en el portal publicado:")
+        for pagina, items in rotos.items():
+            for item in items:
+                print(f"    - {pagina.name} -> {item['destino']} (linea {item['linea']})")
+        return 1
+
+    print("  Todos los enlaces del portal publicado resuelven.")
+    return 0
+
+
 if __name__ == "__main__":
-    sys.exit(0)
+    sys.exit(main())
