@@ -114,6 +114,21 @@ class TestEnlacesRotosDePagina(unittest.TestCase):
                 '<a href="#kpis">y</a>')
             self.assertEqual([], ce.enlaces_rotos_de_pagina(html, raiz))
 
+    def test_enlace_que_escapa_de_raiz_se_marca_como_roto(self):
+        # Un enlace con suficientes '../' puede resolver a un archivo real
+        # que existe fuera del sitio (el repo vive dentro de OneDrive, con
+        # miles de archivos alrededor). Que exista en disco no basta: si
+        # queda fuera de raiz, en el portal publicado no lleva a nada.
+        with tempfile.TemporaryDirectory() as tmp:
+            base = Path(tmp)
+            raiz = base / "repo"
+            raiz.mkdir()
+            (base / "fuera.html").write_text("<html></html>", encoding="utf-8")
+            html = _crear_html(raiz, "index.html", '<a href="../fuera.html">x</a>')
+            rotos = ce.enlaces_rotos_de_pagina(html, raiz)
+            self.assertEqual(1, len(rotos))
+            self.assertEqual("../fuera.html", rotos[0]["destino"])
+
 
 if __name__ == "__main__":
     unittest.main()
