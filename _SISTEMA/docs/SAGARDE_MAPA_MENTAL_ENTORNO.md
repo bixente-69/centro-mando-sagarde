@@ -12,9 +12,10 @@
 > Si una sesión añade una obra, una skill, un script o un tipo de fichero
 > nuevo, esa misma sesión lo refleja aquí.
 
-**Última actualización: 24/08/2026** — Los paneles de obra pueden marcar y
-desmarcar una tarea manual (Pendiente ⇄ Hecho) mediante un servidor ligado
-exclusivamente a `127.0.0.1`. Ver §5.2.
+**Última actualización: 26/08/2026** — Los tres orígenes de revisión (tinta,
+PDF digital y HTML digital) convergen ya en un motor común con validación,
+aplicación pura en memoria, salvaguarda de doble cálculo y trazabilidad JSONL.
+Ver §4, §5.2 y §7.2.
 
 ## Estado de hoy
 
@@ -25,9 +26,9 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 25/08/2026 19:14. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 26/08/2026 14:50. No editar a mano.*
 
-**21** carpetas de obra abiertas · **5** en el registro único · **5** con panel · **4** con ficha. En todo el árbol, **85** `.py` y **5** `.bat`.
+**21** carpetas de obra abiertas · **5** en el registro único · **5** con panel · **4** con ficha. En todo el árbol, **99** `.py` y **5** `.bat`.
 
 | Obra | Ubic. | Tajos | Celdas | X | M | / | P | ? | N | % |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -48,7 +49,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 25/08/2026 19:14).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 26/08/2026 14:50).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
@@ -87,8 +88,8 @@ SAGARDE es actualmente un repositorio local, monousuario y basado en archivos pa
 Las capas confirmadas son:
 
 1. **Fuentes documentales**: las carpetas de obras abiertas (cuenta viva en «Estado de hoy»), 128 obras cerradas publicadas, 31 contratos de postventa y 4 contratos de mantenimiento en sus resúmenes actuales.
-2. **Normalización**: siete adaptadores Python y lectores genéricos PDF/HTML/XLSX. Solo cinco adaptadores están registrados; dos apuntan a obras ya cerradas y sus rutas bajo obras abiertas no existen.
-3. **Estado persistente**: un `ficha_obra.json` por obra registrada —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Gorliz está registrado pero sin revisión ni base.
+2. **Normalización**: siete adaptadores de obra y lectores genéricos PDF/HTML/XLSX. Solo cinco adaptadores de obra están registrados; dos apuntan a obras ya cerradas y sus rutas bajo obras abiertas no existen. Desde el 26/08/2026 hay además tres adaptadores de revisión —tinta, PDF digital y HTML digital— que producen el mismo contrato `REVISION_NORMALIZADA`; el HTML sirve para cualquier obra y es la vía digital preferente cuando existe el gemelo del PDF.
+3. **Estado persistente**: un `ficha_obra.json` por obra registrada —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Tras cada aplicación real que supera la salvaguarda se intenta añadir además una entrada no bloqueante a `revisiones_aplicadas.jsonl`. Gorliz está registrado pero sin revisión ni base.
 
    **Las cifras de cada base están en «Estado de hoy»**, al principio de este
    documento, con su desglose de estados. Aquí había una segunda copia de esa
@@ -121,21 +122,31 @@ Las capas confirmadas son:
 6. **Orquestación/publicación**: `generar_todos.py`, `sagarde_portal.py`, scripts especializados y cuatro BAT. `Actualizar_Sagarde.bat` termina en `git add -A`, commit y `push origin main`.
 7. **Gobierno**: dos `CLAUDE.md`, cuatro definiciones locales tipo skill/agente, planes, especificaciones, handoffs, memoria vigente y 114 casos de prueba definidos estáticamente.
 
-Flujo confirmado: una revisión DOCX/PDF/HTML/JSON se lee mediante un adaptador; se normaliza a `task/floor/building/unit/status`; si existe ficha, la revisión la actualiza y la ficha vuelve a producir el snapshot validado; el motor calcula KPI y bloqueos; **el priorizador lee la base de la obra** y produce trabajos, previsión y preguntas; se escriben memoria, panel e informe ejecutivo; después se agregan índices, el registro del generador y el portal.
+Flujo confirmado: los historiales DOCX/PDF/HTML/JSON de los adaptadores de obra y las revisiones individuales de tinta/PDF digital/HTML digital se traducen a `REVISION_NORMALIZADA`; `validar_revision.py` decide reglas comunes y `aplicar_revision.py` calcula una copia de la ficha en memoria. Antes de persistir, el llamador compara ese resultado con el camino histórico: solo con paridad guarda la ficha y añade trazabilidad. La ficha vuelve a producir el snapshot validado; el motor calcula KPI y bloqueos; **el priorizador lee la base de la obra** y produce trabajos, previsión y preguntas; se escriben memoria, panel e informe ejecutivo; después se agregan índices, el registro del generador y el portal.
 
-## Ciclo completo del dato (12/08/2026)
+## Ciclo completo del dato (26/08/2026)
 
 ```
 reglas/CATALOGO_TAJOS.json ──┐
                              ├→ generar_todos.py → obras_revisiones.js
 <obra>/…/ficha_obra.json ────┘                            ↓
         ↑                                    generador_revisiones.html
-        │                                                 ↓
-        │                                            hoja A4 PDF
-        │                                                 ↓ boli en obra
-        └──── leer_hoja_marcada.py ←──────────────── escaneo
-                      ↓
-              priorizador_trabajos.py → prioridades_trabajos.json → panel
+        │                                      ┌──────────┴──────────┐
+        │                                      ↓                     ↓
+        │                               PDF digital              HTML digital
+        │                                      │ fallback            │ preferente
+        │                         ┌────────────┴────────────┐        │
+        │                         ↓                         ↓        │
+        │                 boli → escaneo             adaptador PDF  adaptador HTML
+        │                         ↓                         │        │
+        │                  adaptador tinta                  └───┬────┘
+        │                         └─────────────────────────────┘
+        │                                      ↓
+        │                         REVISION_NORMALIZADA
+        │                                      ↓
+        └──── ficha_obra.json ← guardar tras salvaguarda ← validar ← aplicar en memoria
+                    ├→ revisiones_aplicadas.jsonl
+                    └→ priorizador_trabajos.py → prioridades_trabajos.json → panel
 ```
 
 Dos hechos que conviene tener presentes al tocar cualquier eslabón:
@@ -187,10 +198,14 @@ mindmap
       HTML con data-k y data-st
       JSON estructurado
       XLSX de ficha y materiales
+      REVISION_NORMALIZADA común
     Núcleo Python
       registro_obras
       adaptadores
       ficha_obra
+      validar_revision
+      aplicar_revision
+      trazabilidad_revisiones
       motor_informes
       priorizador_trabajos
       generar_todos
@@ -249,11 +264,18 @@ mindmap
 
 ```mermaid
 flowchart TD
-  A[Documento de revisión<br/>DOCX PDF HTML JSON] -->|lectura| B[Adaptador de obra]
-  B --> C[Historial normalizado]
-  C --> D{¿Existe ficha_obra.json?}
-  D -->|sí| E[Actualizar ficha con snapshot y sidecar]
-  E --> F[Snapshot validado desde ficha]
+  A[Revisión individual<br/>tinta PDF digital HTML digital] --> B[Adaptador por origen]
+  A0[Historial de obra<br/>DOCX PDF HTML JSON] --> B0[Adaptador de obra]
+  B --> C[REVISION_NORMALIZADA]
+  B0 --> C0[Historial consolidado]
+  C0 --> D{¿Existe ficha_obra.json?}
+  D -->|sí| C
+  C --> V[validar_revision.py]
+  V --> E[aplicar_revision.py<br/>copia en memoria]
+  E --> SAFE{¿Coincide el doble cálculo?}
+  SAFE -->|sí| W[Guardar ficha + trazabilidad JSONL]
+  SAFE -->|no| X[Bloquear escritura de ficha]
+  W --> F[Snapshot validado desde ficha]
   D -->|no| F0[Usar historial del adaptador]
   F --> G[Motor de informes]
   F0 --> G
@@ -270,8 +292,8 @@ flowchart TD
   P[Postventa] --> N
   Q[Mantenimientos] --> N
   R[Archivo y aplicaciones] --> N
-  N -->|BAT autorizado| S[Git add commit push]
-  S --> T[GitHub Pages]
+  N -->|BAT autorizado| PUB[Git add commit push]
+  PUB --> T[GitHub Pages]
 ```
 
 # 4. Arquitectura por capas
@@ -284,14 +306,14 @@ flowchart TD
 | A04 | Entrada | Postventa | Contratos/incidencias | almacenamiento | `POST-VENTAS/INCIDENCIAS*` | PDF, Word, fotos e histórico | Documentos | Índice/resumen | python-docx | `postventas_index.py` | Operativo | `postventas_index.py:90-126` |
 | A05 | Entrada | Mantenimiento | Contratos | almacenamiento | `MANTENIMIENTOS/MANTENIMIENTO *` | Archivo por contrato | Documentos | Índice/mapas/resumen | filesystem | Dos generadores | Con duplicidad | `mantenimientos_index.py:82-143`; `sagarde_portal.py:147-183` |
 | A06 | Normalización | Registro | `OBRAS` | configuración | `registro_obras.py` | Registro único de 5 obras | Nombre/alias | Config resuelta | — | Generadores | Operativo | `registro_obras.py:2-5`, `:10-72` |
-| A07 | Normalización | Adaptadores | 7 adaptadores | módulo | `_SISTEMA.../adaptadores/*.py` | Traducción a esquema común | DOCX/PDF/HTML/JSON | Historial | lectores | Orquestador | 5 activos; 2 sin uso | `generar_todos.py:820-835`; registro |
-| A08 | Normalización | Lectores | Lectores genéricos | módulo | `lectores.py`, `lector_hoja_tajos_pdf.py`, `lector_hoja_tajos_html.py` | Leer XLSX/PDF/HTML | Archivos | Registros | openpyxl/pdfplumber | Adaptadores | Operativo | funciones `leer_*`, `parsear_*` |
+| A07 | Normalización | Adaptadores de obra | 7 adaptadores de obra | módulo | `_SISTEMA.../adaptadores/*.py` | Traducción a historial común | DOCX/PDF/HTML/JSON | Historial | lectores | Orquestador | 5 activos; 2 sin uso (Egurrola y Zorrozaure) | `generar_todos.py:1097-1103`; `registro_obras.py:10-72` |
+| A08 | Normalización | Lectores | Lectores genéricos | módulo | `lectores.py`, `lector_hoja_tajos_pdf.py`, `lector_hoja_tajos_html.py` | Leer XLSX/PDF/HTML | Archivos | Registros/pares | openpyxl/pdfplumber | Adaptadores de obra y revisión | Operativo | funciones `leer_*`, `parsear_*`; `adaptar_revision_html.py:295-296` |
 | A09 | Persistencia | Ficha viva | `ficha_obra.py` | módulo | `_SISTEMA.../ficha_obra.py` | Estructura/estados acumulativos | Snapshot/sidecar | ficha y snapshot | catálogo | orquestador | Operativo en 3 obras | `ficha_obra.py:33-44`, `:368-416` |
 | A10 | Persistencia | Corrección | Sidecar PDF | almacenamiento | `*.pdf.correcciones.json` | Fijar marcas, incluido blanco | Clave/estado | Corrección | lector PDF | adaptador/ficha | Operativo | `lector_hoja_tajos_pdf.py:46-66` |
 | A11 | Cálculo | KPI | Motor común | módulo | `motor_informes.py` | KPI, cobertura, bloqueos, series | Historial | Métricas | esquema común | Panel/informe | Operativo | `motor_informes.py:37-220` |
 | A12 | Decisión | Catálogo | Catálogo tajos | configuración | `reglas/CATALOGO_TAJOS.json` | IDs, alias, fases y dependencias | Tajo/obra | Metadatos | JSON | Priorizador/ficha | Operativo v1.3 | `priorizador_trabajos.py:76-134` |
 | A13 | Decisión | Prioridades | Priorizador v4.3 | módulo | `priorizador_trabajos.py` | Clasificar y agrupar | Historial + catálogo | JSON | catálogo | Panel | Operativo | `priorizador_trabajos.py:14-36`, `:560-633` |
-| A14 | Orquestación | Obras | Generador total | script | `generar_todos.py` | Coordinar 5 obras y agregados | Registro/fuentes | JSON/HTML/PDF/JS | A06-A13 | BAT | Operativo | `generar_todos.py:800-978` |
+| A14 | Orquestación | Obras | Generador total | script | `generar_todos.py` | Coordinar 5 obras y agregados; convertir el último historial a revisión normalizada y aplicar el cutover con salvaguarda aislada por obra | Registro/fuentes | Ficha/JSON/HTML/PDF/JS/JSONL | A06-A13, A26-A31 | BAT | Operativo sobre motor común; una divergencia bloquea solo la ficha afectada | `generar_todos.py:990-1076`, `:1148-1195` |
 | A15 | Presentación | Obra | Panel de obra | interfaz | `panel_obra.py` → `*/panel.html` | Nueve vistas | Snapshot/ficha | HTML | Chart.js local | Portal | 5 instancias | `panel_obra.py:476-538` |
 | A16 | Presentación | Revisión | Generador | interfaz | `generador_revisiones.html` | Hojas desde fichas | JS/usuario | HTML/localStorage | navegador | Campo | Solo 3 fichas | `worksWithDatabase`, `sc-home`, `sc-wizard` |
 | A17 | Presentación | Portal | Portal escritorio | interfaz | `sagarde_portal.py` → `index.html` | Centro de mando | Resúmenes/árbol | HTML | otras capas | Usuario | Operativo | `sagarde_portal.py:936-1085` |
@@ -303,6 +325,12 @@ flowchart TD
 | A23 | Automatización | Global | Actualizador | automatización | `Actualizar_Sagarde.bat` | Regenerar y publicar | Árbol | Archivos/commit | Python/Git | Usuario | Riesgoso | BAT completo |
 | A24 | Calidad | Pruebas | unittest | prueba | dos carpetas `tests` | 114 casos | Código/fixtures | Resultado | dependencias | Desarrollo | No ejecutado aquí | clases `Test*` |
 | A25 | Histórico | Archivo | OLD/backups/scratch | almacenamiento | `SAGARDE (OLD)`, `*.bak`, `scratch` | Conservación/restos | Archivos | Consulta | — | Humano/portal | Histórico/duplicado | 128 cerradas; 590 nombres backup |
+| A26 | Normalización | Revisión común | Motor de validación | módulo | `_SISTEMA.../validar_revision.py` | Define `REVISION_NORMALIZADA`, genera su ID y centraliza forma, ubicación, catálogo, alfabetos y reglas antes/después | Revisión + ficha + catálogo | Aceptadas/rechazadas/avisos/resumen/aplicable | `ficha_obra.MAPA_ESTADO`, catálogo | Aplicador, tres adaptadores, CLI y orquestador | Operativo; puro respecto a ficha y disco | `validar_revision.py:18-40`, `:43-55`, `:261-427` |
+| A27 | Actualización | Revisión común | Motor de aplicación | módulo | `_SISTEMA.../aplicar_revision.py` | Valida y aplica solo acciones `actualizar` sobre una copia profunda; no hace I/O | Revisión + ficha + catálogo + `dry_run` | Resultado y, si procede, `ficha_actualizada` en memoria | A26 | CLI y orquestador | Operativo; puro, `dry_run=True` por defecto | `aplicar_revision.py:2-6`, `:13-46` |
+| A28 | Normalización | Adaptador de revisión | Tinta → normalizada | módulo | `_SISTEMA.../adaptar_revision_tinta.py` | Convierte candidatas y clasificación ya resuelta; reutiliza las guardas históricas y respeta `sin_marca` | PDF + `.candidatas.json` + `.clasificacion.json` + ficha + fecha | `REVISION_NORMALIZADA` de origen `tinta` | lector marcado, A26 | `leer_hoja_marcada.py` | Operativo mediante CLI; sin reconocimiento visual ni escritura | `adaptar_revision_tinta.py:2-13`, `:91-198`; `leer_hoja_marcada.py:875-882` |
+| A29 | Normalización | Adaptador de revisión | PDF digital → normalizada | módulo | `_SISTEMA.../adaptar_revision_pdf_digital.py` | Envuelve las marcas explícitas recuperadas por geometría; queda como fallback digital | PDF + ficha + obra + fecha | `REVISION_NORMALIZADA` de origen `pdf_digital` | lector marcado, A26 | `leer_hoja_marcada.py` | Operativo mediante CLI cuando falta HTML o se usa `--forzar-pdf` | `adaptar_revision_pdf_digital.py:2-7`, `:23-74`; `leer_hoja_marcada.py:570-595` |
+| A30 | Normalización | Adaptador de revisión | HTML digital → normalizada | módulo | `_SISTEMA.../adaptar_revision_html.py` | Lee `data-k/data-st`, resuelve IDs/alias y ambigüedades de forma conservadora para cualquier obra | HTML + ficha + catálogo + mapas opcionales | `REVISION_NORMALIZADA` de origen `html_digital` + avisos | lector HTML, helpers del orquestador, A26 | `leer_hoja_marcada.py` | Operativo y generalizado; vía digital preferente si existe gemelo | `adaptar_revision_html.py:2-16`, `:180-211`, `:261-364`; `leer_hoja_marcada.py:580-584` |
+| A31 | Persistencia | Trazabilidad | Log común de revisiones | módulo | `_SISTEMA.../trazabilidad_revisiones.py` | Añade un evento JSONL después de guardar una ficha autorizada; un fallo de traza avisa sin revertirla | Revisión + resultado aplicado + datos de salvaguarda | `revisiones_aplicadas.jsonl` | stdlib | CLI y orquestador | Operativo; aditivo y no bloqueante | `trazabilidad_revisiones.py:13-20`, `:22-83`; `generar_todos.py:1064-1071` |
 
 # 5. Inventario completo de componentes
 
@@ -317,7 +345,7 @@ confundirse con la nueva skill.
 | Skill | Ruta | Finalidad | Cómo se invoca | Entradas | Salidas | Scripts relacionados | Documentos relacionados | Referencias encontradas | Estado |
 |---|---|---|---|---|---|---|---|---|---|
 | `sagarde-actualizar` | `_SISTEMA/MOTOR/.claude/agents/sagarde-actualizar.md` | Actualización en 4 niveles | `/sagarde-actualizar` en `_SISTEMA/MOTOR/CLAUDE.md:12`; comandos Python en el archivo | Obra/alcance/autorización | Ficha, agregados o publicación | `regenerar_obra.py`, `generar_todos.py`, BAT global | `CLAUDE.md` | 1 llamada nominal | Propia; CONFIRMADO POR DOCUMENTACIÓN |
-| `sagarde-revision` | `_SISTEMA/MOTOR/.claude/agents/sagarde-revision.md` | PDF de campo → sidecar → revisión oficial → memoria/generador | `/sagarde-revision`; también `sagarde-revision` en `CLAUDE.md:195` | Obra, fecha, PDF | PDF/sidecar/estado regenerado | validador, regenerador, orquestador | ambos `CLAUDE.md` | 2 formas nominales | Propia; coherente con código |
+| `sagarde-revision` | `.claude/skills/sagarde-revision/SKILL.md` | Hoja de tinta o exportación PDF+HTML del generador → revisión normalizada → ficha con salvaguarda y trazabilidad | Activación por petición de actualizar una obra; comandos y decisiones dentro de la skill | Obra, fecha, PDF y, según flujo, HTML/candidatas/clasificación | Sidecar, ficha, JSONL y estado regenerado | `leer_hoja_marcada.py`, motor común, `generar_todos.py` | diseño de unificación y guía rápida | Actualizada el 26/08/2026 | Activa; cubre tinta, preferencia HTML y fallback PDF |
 | `sagarde-nueva-obra` | `_SISTEMA/MOTOR/.claude/agents/sagarde-nueva-obra.md` | Crear entorno de obra | `/sagarde-nueva-obra` | Nombre, ID, estructura, materiales | Adaptador, JSON, panel | `generar_todos.py`, portal | motor `CLAUDE.md` | 1 llamada nominal | Propia; APARENTEMENTE OBSOLETA: registro/esquemas antiguos |
 | `sagarde-parte-incidencia` | `.claude/agents/sagarde-parte-incidencia.md` | PDF postventa/preventivo/correctivo | No se halló sintaxis real | Datos/ruta | PDF | `generar_parte_incidencia.py` | memorias postventa | Ninguna llamada | Propia; SIN USO CONFIRMADO |
 | `sagarde-cerrar-obra` | `.claude/skills/sagarde-cerrar-obra/SKILL.md` | Cerrar una obra y archivarla dejando el entorno limpio | `/sagarde-cerrar-obra`, o al decir que una obra ha terminado | id de la obra y confirmación de Bixente | obra fuera del registro y archivada con su `cierre.json` | `cerrar_obra.py` | esta especificación y su plan | Creada el 13/08/2026 | Activa; 21 pruebas |
@@ -354,16 +382,23 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 | `regenerar_obra.py` | `_SISTEMA/MOTOR/scripts/regenerar_obra.py` | Python | Obra aislada/agregados | `<id> [--finalizar]` | skills/planes | fuentes/caché | salidas/caché | motor | Activo; sin finalizar no publica JS |
 | `validar_revision_pdf.py` | `_SISTEMA/MOTOR/scripts/validar_revision_pdf.py` | Python | Diagnóstico PDF | `<id> <pdf>` | skill revisión | PDF/adaptador | consola | lector PDF | Activo |
 | `test_avisos.py` | `_SISTEMA/MOTOR/tests/test_avisos.py` | Python | 8 tests | unittest | manual | módulos | temporales de test | unittest | No ejecutado |
-| `test_mapa_mental.py` | `_SISTEMA/MOTOR/tests/test_mapa_mental.py` | Python | 32 casos: extracción de rutas, bloques generados, estado de obras y trinquete sobre este mapa | unittest | manual | este mapa, actualizador | resultado | unittest | En verde el 12/08/2026 |
+| `test_mapa_mental.py` | `_SISTEMA/MOTOR/tests/test_mapa_mental.py` | Python | 36 casos: extracción de rutas, bloques generados, estado de obras y trinquete sobre este mapa | unittest | manual | este mapa, actualizador | resultado | unittest | Mecanismo activo; ejecutado en verde el 26/08/2026 |
 | `__init__.py` | `_SISTEMA/MOTOR/tests/__init__.py` | Python | Paquete tests | import | unittest | — | — | — | Estructural |
 | `mantenimientos_index.py` | `MANTENIMIENTOS/_SISTEMA/mantenimientos_index.py` | Python | Índice/resumen | directo/BAT | BAT global | contratos | JSON + índice | avisos | Activo; índice sobrescrito después |
 | `postventas_index.py` | `POST-VENTAS/_SISTEMA/postventas_index.py` | Python | Índice/previews/garantía | directo/BAT | 2 BAT | DOCX/PDF/fotos | índice/resumen/previews | python-docx | Activo |
 | `postventas_sync.py` | `POST-VENTAS/_SISTEMA/postventas_sync.py` | Python | PDF→filas Word | CLI/dry-run | manual | PDF/DOCX | DOCX + backup | pdfplumber, python-docx | Manual y mutador |
 | `claves_correcciones.py` | `_SISTEMA.../claves_correcciones.py` | Python | Normalizar claves | import | ficha/lector/tests | cadenas | — | stdlib | Activo |
 | `ficha_obra.py` | `_SISTEMA.../ficha_obra.py` | Python | Ficha viva/snapshot | import | orquestador/tests | ficha/snapshot/catálogo | ficha/cambios | stdlib | Activo |
-| `generar_todos.py` | `_SISTEMA.../generar_todos.py` | Python | Orquestador | `--no-pdf`, `--solo-revisiones` | BAT/skills | registro/fuentes | JSON/HTML/PDF/JS | internas, Playwright opcional | Activo |
+| `leer_hoja_marcada.py` | `_SISTEMA.../leer_hoja_marcada.py` | Python | CLI de tinta y revisión digital; elige HTML gemelo antes que PDF, ejecuta motor común y compara el resultado histórico antes de guardar | `--preparar`; `--aplicar`; `--digital`; escritura solo con `--escribir` | skill/usuario | PDF, HTML gemelo, ficha, candidatas y clasificación | sidecar, ficha y JSONL tras paridad | rejilla, tres adaptadores, validador, aplicador y trazabilidad | Activo; salvaguarda obligatoria en escritura; `[ABORTADO]` deja 0 escrituras |
+| `validar_revision.py` | `_SISTEMA.../validar_revision.py` | Python | Contrato `REVISION_NORMALIZADA`, ID y reglas comunes por origen | import | adaptadores, aplicador, CLI, orquestador | revisión, ficha y catálogo | resultado de validación en memoria | `ficha_obra.MAPA_ESTADO`, stdlib | Activo; no muta ni escribe |
+| `aplicar_revision.py` | `_SISTEMA.../aplicar_revision.py` | Python | Aplica una revisión validada sobre copia profunda | import; `dry_run=True` por defecto | CLI, orquestador, tests | revisión, ficha y catálogo | `ficha_actualizada` en memoria | `validar_revision`, stdlib | Activo; puro, sin I/O |
+| `adaptar_revision_tinta.py` | `_SISTEMA.../adaptar_revision_tinta.py` | Python | Candidatas + clasificación → revisión normalizada | import | `leer_hoja_marcada.py` | PDF y sidecars de tinta | revisión en memoria | lector marcado, validador | Activo; no reconoce visión ni escribe |
+| `adaptar_revision_pdf_digital.py` | `_SISTEMA.../adaptar_revision_pdf_digital.py` | Python | Marcas de PDF por geometría → revisión normalizada | import | `leer_hoja_marcada.py` | PDF, ficha, fecha | revisión en memoria | lector marcado, validador | Activo como fallback o con `--forzar-pdf` |
+| `adaptar_revision_html.py` | `_SISTEMA.../adaptar_revision_html.py` | Python | `data-k/data-st` → revisión normalizada con resolución segura de IDs para cualquier obra | import | `leer_hoja_marcada.py`, tests | HTML, ficha, catálogo, mapas opcionales | revisión y avisos en memoria | lector HTML, helpers de orquestador, validador | Activo; vía digital preferente |
+| `trazabilidad_revisiones.py` | `_SISTEMA.../trazabilidad_revisiones.py` | Python | Log común aditivo de aplicaciones autorizadas | import | CLI y orquestador | revisión, resultado y salvaguarda | `<obra>/INFORME SAGARDE IA/revisiones_aplicadas.jsonl` | stdlib | Activo; se llama después de guardar y nunca bloquea la ficha |
+| `generar_todos.py` | `_SISTEMA.../generar_todos.py` | Python | Orquestador; traduce el historial consolidado y aplica el motor común con salvaguarda aislada por obra | `--no-pdf`, `--solo-revisiones` | BAT/skills | registro/fuentes/fichas | ficha/JSONL/JSON/HTML/PDF/JS | internas, motor común, Playwright opcional | Activo; divergencia bloquea solo la ficha de esa obra y también su guardado posterior |
 | `lectores.py` | `_SISTEMA.../lectores.py` | Python | XLSX/documentos | import | orquestador | XLSX/árbol | dict/listas | openpyxl opcional | Activo |
-| `lector_hoja_tajos_html.py` | `_SISTEMA.../lector_hoja_tajos_html.py` | Python | HTML `data-k/st` | import | Gernika | HTML | historial | stdlib | Activo |
+| `lector_hoja_tajos_html.py` | `_SISTEMA.../lector_hoja_tajos_html.py` | Python | HTML `data-k/st` | import | Gernika y `adaptar_revision_html.py` | HTML | historial o pares | stdlib | Activo; la vía normalizada ya no está limitada a Gernika |
 | `lector_hoja_tajos_pdf.py` | `_SISTEMA.../lector_hoja_tajos_pdf.py` | Python | Tabla PDF/sidecar | import | 3 adaptadores/validador/tests | PDF/JSON | celdas/dudas | pdfplumber | Activo |
 | `memoria_obra.py` | `_SISTEMA.../memoria_obra.py` | Python | Memoria histórica | import | orquestador | historial | `memoria_obra.json` | stdlib | Activo |
 | `cierre_expediente.py` | `_SISTEMA.../cierre_expediente.py` | Python | Ensayos/OCA/CIE/Libro del Edificio, aparte de la rejilla | import/CLI | orquestador/panel/informe | `cierre_expediente.json` | mismo fichero | stdlib | Activo desde 15/08/2026 |
@@ -418,6 +453,8 @@ Hay 55 Markdown previos a esta auditoría. Se agrupan series repetitivas conserv
 | Plan fase A | `docs/superpowers/plans/2026-07-27-fase-A-inversion-del-flujo.md` | plan | Ficha→motor | Implementado según código/reportes | ledger | Plan no es prueba única |
 | Plan ficha viva | `docs/superpowers/plans/2026-07-27-ficha-obra-base-viva.md` | plan | Introducir ficha | Implementado en 3 obras | ledger | Comandos históricos |
 | Plan generador | `docs/superpowers/plans/2026-07-28-generador-revisiones-desde-la-base.md` | plan | Generador desde ficha | Implementación hallada | spec | Checklist del plan persiste |
+| Diseño unificación de revisiones | `_SISTEMA/docs/superpowers/specs/2026-08-25-unificacion-revisiones-design.md` | especificación y bitácora | Arquitectura objetivo y resultado verificado de las Fases 0–11 | Vigente | skill y guía rápida | Fuente completa de decisiones, paridad, cutovers y trazabilidad |
+| Guía rápida del motor de revisiones | `_SISTEMA/docs/SAGARDE_MOTOR_REVISIONES_GUIA_RAPIDA.md` | guía | Explicar en 3–5 minutos el flujo común, piezas, operación y respuesta ante salvaguardas | Vigente desde 26/08/2026 | mapa mental e informe de Fase 12 | Remite a la skill para los comandos y al diseño para el detalle |
 | Trabajo restante | `docs/superpowers/plans/2026-07-28-trabajo-restante-y-reparto.md` | plan | Bloques A-F | Histórico/parcialmente superado | handoff/memoria | Cifras anteriores |
 | Handoff B | `docs/superpowers/plans/2026-07-28-bloque-b-handoff.md` | handoff | Continuidad | APARENTEMENTE OBSOLETO | memoria posterior | Cabecera declara que dejó de estar vigente |
 | 3 diseños | `docs/superpowers/specs/*.md` | especificación | Base/ficha/generador | Diseño | planes | No confirma ejecución |
@@ -432,7 +469,7 @@ Hay 55 Markdown previos a esta auditoría. Se agrupan series repetitivas conserv
 
 | Archivo | Finalidad/opciones | Afecta a | Precedencia o riesgo |
 |---|---|---|---|
-| `.gitignore` | Whitelist de HTML, Python y JSON/documentos seleccionados; excluye personal, `.superpowers`, `.claude`, pyc/backups | Git/Pages | Árbol local mucho mayor que lo publicable; áreas genéricas pueden dar 404 |
+| `.gitignore` | Whitelist de HTML, Python y JSON/documentos seleccionados; excepción estrecha para el log `revisiones_aplicadas.jsonl` de cada obra; excluye personal, `.superpowers`, `.claude`, pyc/backups | Git/Pages/trazabilidad | El log común sí queda versionable sin abrir la publicación a otros JSONL; árbol local mucho mayor que lo publicable | `.gitignore:45-50` |
 | `.claudeignore` | Oculta paneles, OLD, previews, apps/históricos/backups | Herramienta Claude | No desactiva componentes |
 | `.claude/launch.json` | 4 servidores: portal/generador 8765; personal 8743 | Interfaces | Dos procesos comparten 8765 |
 | `[zona personal, excluida del repositorio]` | servidor 8743 | Personal | Duplica raíz |
@@ -485,11 +522,16 @@ Criterio: **135 vistas/estados navegables**: 126 pestañas/pasos/filtros (5 móv
 | BAT global | llamada | auditor, obras, postventa, mantenimiento, portal | Python secuencial | BAT líneas 13-50 | Confirmado |
 | BAT global | publicación | GitHub Pages | add/commit/push | BAT 55-83 | Confirmado |
 | `generar_todos` | importa | `registro_obras.OBRAS` | import | línea 37 | Confirmado |
-| `generar_todos` | importa dinámicamente | adaptador | importlib | bloque 820-835 | Confirmado |
+| `generar_todos` | importa dinámicamente | adaptador | importlib | `generar_todos.py:1097-1103` | Confirmado |
 | Adaptadores Mungia/Bolueta/Obispo | llama | lector PDF | funciones | imports | Confirmado |
 | Gernika | llama | lector HTML | función | adaptador | Confirmado |
+| `leer_hoja_marcada` | elige y llama | adaptador tinta/PDF/HTML | clasificación o preferencia automática por HTML gemelo | `leer_hoja_marcada.py:570-617`, `:875-882` | Confirmado |
+| Tres adaptadores de revisión | producen | `REVISION_NORMALIZADA` | constructores comunes | `adaptar_revision_tinta.py:190-198`; `adaptar_revision_pdf_digital.py:66-74`; `adaptar_revision_html.py:356-364` | Confirmado |
+| CLI y `generar_todos` | llaman | validador + aplicador común | cálculo en memoria | `leer_hoja_marcada.py:598-617`; `generar_todos.py:990-1027` | Confirmado |
 | Orquestador | lee | XLSX/documentos | lectores | bloque principal | Confirmado |
-| Orquestador | actualiza/escribe | ficha | funciones | bloque principal | Confirmado |
+| CLI | compara y escribe | ficha | salvaguarda global del comando; guarda solo el resultado común | `leer_hoja_marcada.py:642-671`, `:772-809`, `:905-954` | Confirmado |
+| Orquestador | compara y escribe | ficha | salvaguarda aislada por obra y doble bloqueo de guardado | `generar_todos.py:1031-1076`, `:1162-1195` | Confirmado |
+| CLI y orquestador | añaden | trazabilidad JSONL | append posterior al guardado de ficha | `leer_hoja_marcada.py:802-809`, `:947-954`; `generar_todos.py:1064-1071` | Confirmado |
 | Ficha | transforma | snapshot | `snapshot_desde_ficha` | `ficha_obra.py:238-278` | Confirmado |
 | Historial | llama | memoria/motor/priorizador | funciones | `generar_todos.py:886-912` | Confirmado |
 | Métricas/prioridades | escribe | panel/PDF | generadores | `:907-934` | Confirmado |
@@ -515,15 +557,28 @@ flowchart LR
   GT -->|importa| REG[registro_obras.py]
   REG -->|configura| AD[adaptadores]
   AD -->|lee| RAW[DOCX PDF HTML JSON]
+  AD -->|historial| GT
+  GT -->|historial_consolidado| RN[REVISION_NORMALIZADA]
   GT -->|lee| XLS[XLSX y documentos]
-  AD -->|historial| FICHA[ficha_obra.py]
+  GEN[generador_revisiones.html] -->|exporta| PDF[PDF digital]
+  GEN -->|exporta| HTML[HTML digital]
+  PDF -->|directo o tinta escaneada| CLI[leer_hoja_marcada.py]
+  HTML -->|gemelo preferente| CLI
+  CLI -->|adaptador por origen| RN
+  RN --> VAL[validar_revision.py]
+  VAL --> APP[aplicar_revision.py<br/>en memoria]
+  APP --> SAFE{salvaguarda coincide}
+  SAFE -->|sí| SAVE[llamador guarda]
+  SAFE -->|no| BLOCK[bloquear ficha]
+  SAVE --> FICHA[ficha_obra.py]
+  SAVE --> TRACE[revisiones_aplicadas.jsonl]
   FICHA -->|escribe| FJSON[ficha_obra.json]
   FICHA -->|snapshot| MOTOR[motor_informes.py]
   FICHA -->|snapshot| PRIO[priorizador_trabajos.py]
   MOTOR --> PANEL[panel_obra.py]
   PRIO --> PANEL
   GT -->|escribe| JS[obras_revisiones.js]
-  JS -->|script src| GEN[generador_revisiones.html]
+  JS -->|script src| GEN
   PV -->|escribe| PVR[postventas_resumen.json]
   MI -->|escribe| MIR[mantenimientos_resumen.json]
   MIR -->|lee| PORT
@@ -573,13 +628,13 @@ sequenceDiagram
 
 ## 7.2 Revisión de campo a memoria
 
-1. **Disparador:** PDF corregido o revisión nueva.
-2. **Entrada:** obra, fecha, PDF y marcas.
-3. **Validación:** `validar_revision_pdf.py`, inspección visual descrita en skill, sidecar.
-4. **Procesamiento:** lector + adaptador → snapshot → ficha si existe → memoria/prioridad/KPI.
-5. **Salida:** PDF oficial, sidecar, ficha, memoria, prioridades, panel e informe.
-6. **Almacenamiento:** carpeta de obra, `INFORME SAGARDE IA`, caché.
-7. **Errores:** marca sin sidecar, clave/fecha discordante, ámbito parcial, olvidar `--finalizar` o `--solo-revisiones`.
+1. **Disparador:** hoja marcada con tinta, exportación PDF+HTML del generador o publicación del historial consolidado por `generar_todos.py`.
+2. **Entrada:** obra y fecha explícita; para tinta, PDF + candidatas + clasificación; para digital, PDF y preferentemente su HTML gemelo.
+3. **Normalización:** `adaptar_revision_tinta.py`, `adaptar_revision_pdf_digital.py` o `adaptar_revision_html.py` producen el mismo `REVISION_NORMALIZADA`. `generar_todos.py` hace lo propio con el último snapshot del adaptador usando el origen honesto `historial_consolidado`.
+4. **Motor común:** `validar_revision.py` aplica las reglas compartidas y `aplicar_revision.py` calcula el resultado sobre una copia, con simulación por defecto en el CLI.
+5. **Salvaguarda:** al escribir, se calcula también el camino histórico y se comparan todas las claves y su valor `v`. El CLI aborta con `[ABORTADO]` ante una diferencia; el orquestador bloquea solo la ficha de esa obra y evita su segundo guardado, mientras las demás continúan.
+6. **Persistencia autorizada:** con paridad se guarda exclusivamente la ficha del motor común; después se conservan los sidecars/registro anteriores y se añade `<obra>/INFORME SAGARDE IA/revisiones_aplicadas.jsonl`. Un fallo del JSONL avisa pero no revierte la ficha ya guardada.
+7. **Operación y errores:** seguir `.claude/skills/sagarde-revision/SKILL.md`; no forzar una discrepancia. Revisar claves `antiguo=…; nuevo=…`, fecha, origen, HTML gemelo y avisos del adaptador antes de reintentar.
 
 ## 7.3 Generación de hoja
 
@@ -635,6 +690,11 @@ marcado: sigue ahí, sólo no se ve en el explorador.)
 │       ├── static/                  [vendor]
 │       ├── tests/                   [200 casos]
 │       ├── generar_todos.py         [núcleo]
+│       ├── leer_hoja_marcada.py     [CLI tinta/PDF/HTML + salvaguarda]
+│       ├── adaptar_revision_*.py    [normalización] 3 orígenes
+│       ├── validar_revision.py      [reglas comunes]
+│       ├── aplicar_revision.py      [aplicación pura en memoria]
+│       ├── trazabilidad_revisiones.py [log común JSONL]
 │       ├── ficha_obra.py            [persistencia]
 │       ├── motor_informes.py        [cálculo]
 │       ├── priorizador_trabajos.py  [decisión]
@@ -667,8 +727,10 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | ID corto minúsculo | 5 IDs en `registro_obras.py` |
 | Revisión `REVISION ... DDMMAAAA` | Adaptadores/skill; hay excepciones históricas |
 | ID `rev_DDMMAAAA` | `ficha_obra.py` |
+| ID normalizado `{obra}__{fecha}__{origen}__{hash8}` | motor común; determinista sobre la fuente efectiva |
 | Clave `portal__planta__tajo__unidad` | Sidecars/generador |
 | Salida `INFORME SAGARDE IA` | un panel y sus estados por obra registrada |
+| Trazabilidad `revisiones_aplicadas.jsonl` | una línea UTF-8 por aplicación que guardó ficha tras paridad |
 | Ficha `X M / P ? N` | `ficha_obra.py:33-44` |
 | Snapshot `X M / vacío` | `motor_informes.py:18,37` |
 | Categorías derivadas | `VIABLE`, `BLOQUEADO`, `OTROS_GREMIOS`, `DUDAS`, `TERMINADO` |
@@ -689,6 +751,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | Gorliz | En desarrollo | registro/panel 0%; sin revisión |
 | Otras 16 abiertas | Sin uso confirmado | resumen sin panel |
 | Motor/priorizador | Operativo | salidas/tests/memoria |
+| Motor común de revisiones | Operativo con salvaguarda | tinta/PDF/HTML e historial consolidado convergen en validación/aplicación; 0 discrepancias en los casos reales verificados el 26/08/2026 |
 | Generador | Operativo parcial | solo fichas |
 | Portal escritorio | Operativo | salida 29/07 |
 | Portal móvil | Obsoleto aparente | salida 25/07/código roto |
@@ -729,6 +792,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 22. **Normativa estática:** el panel exige comprobar vigencia; no hay integración oficial. CONFIRMADO.
 23. **Docstring del panel:** corregido a 9 pestañas al rehacer Riesgos el 12/08/2026. CERRADO.
 24. **Sin propietario formal:** no CODEOWNERS; Bixente figura como usuario único. SIN EVIDENCIA SUFICIENTE.
+25. **Tres métodos de revisión y dos escritores de ficha:** tinta, PDF digital y HTML tenían validación/trazabilidad dispersas; el HTML general solo se consumía en Gernika y una misma ficha podía recibir cálculos independientes. **RESUELTO el 26/08/2026:** los tres orígenes y el historial consolidado pasan por `REVISION_NORMALIZADA` → validador → aplicador común, con HTML gemelo preferente, salvaguarda de doble cálculo antes de guardar y log JSONL posterior. La lógica histórica se conserva únicamente como cálculo independiente de seguridad durante el cutover, no como resultado persistido. Detalle completo en `_SISTEMA/docs/superpowers/specs/2026-08-25-unificacion-revisiones-design.md`.
 
 # 12. Preguntas pendientes
 
@@ -752,12 +816,13 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 - `docs/SAGARDE_ENTORNO_IA_Y_SKILLS.md`; `APP_CARDIVA/skills/generate-cardiva-report`; copias bajo `.agents/skills`, `.claude/skills` y `.gemini/skills`.
 - Los 4 BAT; `_SISTEMA/MOTOR/avisos.py`; `_SISTEMA/MOTOR/sagarde_portal.py`; `_SISTEMA/MOTOR/scripts/*.py`; ambos árboles `tests`.
 - `_SISTEMA/MOTOR/auditoria_diagnostico.json`; resúmenes de obras, postventa y mantenimiento.
-- `_SISTEMA.../registro_obras.py`; `_SISTEMA.../generar_todos.py`; `_SISTEMA.../ficha_obra.py`; `_SISTEMA.../motor_informes.py`; `_SISTEMA.../priorizador_trabajos.py`; `_SISTEMA.../panel_obra.py`; `_SISTEMA.../lectores.py`; `_SISTEMA.../lector_hoja_tajos_pdf.py`; `_SISTEMA.../lector_hoja_tajos_html.py`; `_SISTEMA.../memoria_obra.py`.
+- `_SISTEMA.../registro_obras.py`; `_SISTEMA.../generar_todos.py`; `_SISTEMA.../ficha_obra.py`; `_SISTEMA.../validar_revision.py`; `_SISTEMA.../aplicar_revision.py`; `_SISTEMA.../adaptar_revision_tinta.py`; `_SISTEMA.../adaptar_revision_pdf_digital.py`; `_SISTEMA.../adaptar_revision_html.py`; `_SISTEMA.../trazabilidad_revisiones.py`; `_SISTEMA.../leer_hoja_marcada.py`; `_SISTEMA.../motor_informes.py`; `_SISTEMA.../priorizador_trabajos.py`; `_SISTEMA.../panel_obra.py`; `_SISTEMA.../lectores.py`; `_SISTEMA.../lector_hoja_tajos_pdf.py`; `_SISTEMA.../lector_hoja_tajos_html.py`; `_SISTEMA.../memoria_obra.py`.
 - `_SISTEMA.../adaptadores/*.py`; `reglas/CATALOGO_TAJOS.json`; `generador_revisiones.html`; `obras_revisiones.js`.
 - Las tres fichas y los conjuntos actuales de `memoria_obra.json`, `prioridades_trabajos.json`, `dudas_pendientes.json`, confirmaciones y sidecars.
 - `POST-VENTAS/_SISTEMA/postventas_index.py`; `POST-VENTAS/_SISTEMA/postventas_sync.py`; `MANTENIMIENTOS/_SISTEMA/mantenimientos_index.py`.
 - `index.html`; `PORTAL SAGARDE.html`; `APLICACIONES/index.html`; índices/paneles/previews generados.
 - `docs/2026-07-28-memoria-diccionario-tajos-alertas-informes.md`; `docs/superpowers/{plans,specs}/*.md`; `.superpowers/sdd/**/*.md`.
+- `_SISTEMA/docs/superpowers/specs/2026-08-25-unificacion-revisiones-design.md`; informes de Fases 0 y 2–9; `_SISTEMA/docs/SAGARDE_MOTOR_REVISIONES_GUIA_RAPIDA.md`; `.claude/skills/sagarde-revision/SKILL.md`.
 - `_SISTEMA/MOTOR/GUIA_CAMPO_MOBIL.md`; `_SISTEMA/MOTOR/HOJA_DE_RUTA.md`; `_SISTEMA.../LEEME.md`; `_SISTEMA.../PROCEDIMIENTO.md`.
 - `VARIOS/TIERRAS/app_informe_tierras.html`; `VARIOS/BATERIAS DE CONDENSADORES/app_informes.html`; proyecto personal Python/HTML 2019-2026.
 

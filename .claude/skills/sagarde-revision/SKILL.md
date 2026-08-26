@@ -26,6 +26,38 @@ usar" solo por el recuento en 0**: mirar antes si hay un `.html` gemelo (ver
 Flujo B) y si el propio PDF trae texto de estado ya impreso (X/M// más allá
 de lo que ya había en la base).
 
+## Por dentro: motor común y salvaguarda (desde el 26/08/2026)
+
+Los comandos de abajo no han cambiado, pero por dentro `--aplicar --escribir`
+y `--digital --escribir` ya no escriben la ficha directamente: construyen una
+`REVISION_NORMALIZADA`, la validan (`validar_revision.py`) y la aplican
+(`aplicar_revision.py`) — un único motor común para tinta, PDF digital e
+HTML digital. Detalle completo del diseño y de cada fase verificada:
+`_SISTEMA/docs/superpowers/specs/2026-08-25-unificacion-revisiones-design.md`.
+
+Dos cosas que sí cambian lo que se ve en pantalla:
+
+- **Antes de escribir, el CLI calcula el resultado dos veces** — por el
+  camino antiguo y por el motor nuevo, de forma independiente — y compara
+  celda a celda. Si coinciden, guarda y avisa `[SALVAGUARDA] ... coinciden
+  exactamente en N celdas`. **Si no coinciden, no escribe nada** y aborta
+  con `[ABORTADO]` listando cada clave con `antiguo=...; nuevo=...`. Esto
+  no es un error a ignorar ni a reintentar sin más: es la red de seguridad
+  del primer cutover real. Si aparece, es un caso para revisar con Claude o
+  Codex, no para forzar.
+- **En `--digital`, si junto al PDF hay un `.html` gemelo (mismo nombre,
+  mismo minuto), el CLI lo prefiere automáticamente** y avisa `usando el
+  HTML gemelo: <ruta>` — es más fiable que releer texto por geometría
+  (verificado empíricamente: recupera sin fallos cambios que el PDF llegó a
+  perder antes de corregir sus bugs). Si por lo que sea hace falta forzar la
+  lectura del PDF aunque exista el HTML, usa `--forzar-pdf`.
+
+Cada revisión aplicada de verdad queda además en
+`{obra}/INFORME SAGARDE IA/revisiones_aplicadas.jsonl` (una línea por
+revisión, con origen, fecha, celdas cambiadas/conservadas/descartadas y si
+la salvaguarda coincidió) — es un añadido, no sustituye al sidecar
+`.correcciones.json` ni a `ficha['revisiones']`, que siguen igual.
+
 ## La regla que gobierna todo esto
 
 **El código pone la clave de la celda; la vista pone la letra.**
@@ -43,7 +75,9 @@ Todas en `SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/`:
 |---|---|
 | `rejilla_hoja.py` | resuelve qué celda es cada posición. Común. **No reescribirla** |
 | `alta_obra_desde_hoja.py` | da de alta una obra desde su hoja **en blanco** |
-| `leer_hoja_marcada.py` | lee la tinta (`--preparar`/`--aplicar`) **o** el texto ya impreso de una hoja rellenada en el generador (`--digital`) y actualiza la ficha |
+| `leer_hoja_marcada.py` | lee la tinta (`--preparar`/`--aplicar`) **o** el texto ya impreso de una hoja rellenada en el generador (`--digital`, con preferencia automática por el `.html` gemelo) y actualiza la ficha |
+| `validar_revision.py` / `aplicar_revision.py` | motor común de validación y escritura, usado por dentro por los tres caminos. No hace falta llamarlos directamente |
+| `adaptar_revision_tinta.py` / `adaptar_revision_pdf_digital.py` / `adaptar_revision_html.py` | traducen cada origen al formato común. Tampoco hace falta llamarlos directamente — los usa `leer_hoja_marcada.py` por dentro |
 
 Sin dependencias nuevas: `pdfplumber`, `PyMuPDF`, `PIL`.
 
@@ -259,3 +293,11 @@ al cien por cien, hay confianza real de que no queda nada suelto.
   segundo método de lectura independiente sobre el documento completo:
   1963 glifos, 1963 celdas, 0 discrepancias. Detalle completo en la memoria
   `project_sagarde_hoja_generador_digital`.
+- **26/08/2026, unificación del motor**: el mismo caso de Bolueta 24/08 se
+  releyó por el camino HTML (antes nunca usado — el `.html` gemelo de esa
+  revisión estaba huérfano) y coincidió con el PDF corregido en las 443
+  celdas, sin ninguna discrepancia. Los tres caminos (tinta, PDF digital,
+  HTML digital) y el camino de `generar_todos.py` se verificaron contra
+  Bolueta, Mungia, Gernika y OBRA PRUEBA con 0 discrepancias en total.
+  Detalle fase por fase en
+  `_SISTEMA/docs/superpowers/specs/2026-08-25-unificacion-revisiones-design.md`.

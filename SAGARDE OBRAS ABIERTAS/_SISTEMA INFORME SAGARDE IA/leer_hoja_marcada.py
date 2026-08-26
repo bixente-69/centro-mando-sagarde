@@ -67,6 +67,7 @@ sys.path.insert(0, AQUI)
 
 import ficha_obra as fichas          # noqa: E402
 import rejilla_hoja as rejilla       # noqa: E402
+import trazabilidad_revisiones       # noqa: E402
 from registro_obras import OBRAS     # noqa: E402
 
 # Por debajo de esto la tinta de una celda no se da por marca: casi siempre es
@@ -89,18 +90,19 @@ class LecturaImposible(Exception):
 
 # ------------------------------------------------------- donde se escribe
 
-def _ruta_sistema(ruta):
+def _ruta_sistema(ruta, crear=True):
     """Devuelve la misma ruta pero dentro del _SISTEMA de su carpeta.
 
     Norma _SISTEMA (07/08/2026): la hoja PDF es el documento y se queda en
     REVISIONES*/; lo que genera el lector -candidatas, recortes y sidecar de
-    correcciones- baja a REVISIONES*/_SISTEMA/. Crea la carpeta si no existe,
-    porque el sidecar son marcas escritas a boli y no puede fallar al
-    guardarlas por una carpeta que falta.
+    correcciones- baja a REVISIONES*/_SISTEMA/. Cuando ``crear`` es verdadero
+    crea la carpeta si no existe. El cutover usa ``crear=False`` durante el
+    calculo para no escribir nada antes de comprobar la paridad.
     """
     carpeta, nombre = os.path.split(ruta)
     destino = os.path.join(carpeta, '_SISTEMA')
-    os.makedirs(destino, exist_ok=True)
+    if crear:
+        os.makedirs(destino, exist_ok=True)
     return os.path.join(destino, nombre)
 
 
@@ -550,6 +552,125 @@ def aplicar(ficha, candidatas, clasificacion, fecha, rev_id):
 
 # -------------------------------------------------------------------- salida
 
+def _configurar_stdout_utf8():
+    """Configura la consola real sin sustituirla ni cerrar su buffer.
+
+    ``main()`` tambien se invoca directamente en los tests del cutover. Una
+    captura en memoria no expone ``buffer`` ni necesita reconfiguracion.
+    """
+    reconfigurar = getattr(sys.stdout, 'reconfigure', None)
+    if reconfigurar is None:
+        return
+    try:
+        reconfigurar(encoding='utf-8', errors='replace')
+    except (AttributeError, io.UnsupportedOperation):
+        pass
+
+
+def _ruta_html_gemelo(ruta_pdf):
+    return os.path.splitext(os.path.abspath(ruta_pdf))[0] + '.html'
+
+
+def _construir_revision_digital(ruta_pdf, obra_id, ficha, fecha, catalogo,
+                                forzar_pdf=False):
+    """Elige HTML gemelo o PDF y devuelve la revision normalizada."""
+    import adaptar_revision_html
+    import adaptar_revision_pdf_digital
+
+    ruta_html = _ruta_html_gemelo(ruta_pdf)
+    if os.path.isfile(ruta_html) and not forzar_pdf:
+        print(f'usando el HTML gemelo: {ruta_html}')
+        return adaptar_revision_html.construir_revision_normalizada_html(
+            ruta_html, obra_id, ficha, catalogo, fecha=fecha)
+
+    if os.path.isfile(ruta_html) and forzar_pdf:
+        print('HTML gemelo ignorado por --forzar-pdf; '
+              'usando lectura del PDF')
+    else:
+        print('sin HTML gemelo, usando lectura del PDF')
+    return (
+        adaptar_revision_pdf_digital
+        .construir_revision_normalizada_pdf_digital(
+            ruta_pdf, obra_id, ficha, fecha)
+    )
+
+
+def _ejecutar_motor_comun(revision, ficha, catalogo, escribir):
+    """Valida de forma explicita y aplica solo en memoria."""
+    import aplicar_revision
+    import validar_revision
+
+    validacion = validar_revision.validar(revision, ficha, catalogo)
+    if not validacion['aplicable']:
+        print('\n[ABORTADO] La REVISION_NORMALIZADA no es aplicable.')
+        for error in validacion['errores']:
+            print(f'  error: {error}')
+        for celda in validacion['rechazadas']:
+            print(f'  rechazada {celda.get("clave")!r}: {celda["motivo"]}')
+        raise SystemExit(2)
+
+    aplicacion = aplicar_revision.apply_revision(
+        revision, ficha, catalogo, dry_run=not escribir)
+    if escribir and not aplicacion.get('escrito'):
+        print('\n[ABORTADO] El motor comun no produjo una ficha aplicable.')
+        raise SystemExit(2)
+    return validacion, aplicacion
+
+
+def _cambios_de_validacion(validacion):
+    return [
+        (celda['clave'], celda['antes'], celda['despues'])
+        for celda in validacion['aceptadas']
+        if celda['accion'] == 'actualizar'
+    ]
+
+
+_AUSENTE = object()
+
+
+def _valor_estado(estados, clave):
+    if clave not in estados:
+        return _AUSENTE
+    registro = estados[clave]
+    return registro.get('v') if isinstance(registro, dict) else None
+
+
+def _formatear_valor_paridad(valor):
+    return '<ausente>' if valor is _AUSENTE else repr(valor)
+
+
+def _comprobar_paridad_estados(estados_antiguos, estados_nuevos):
+    """Compara la verdad funcional de ``estados`` y aborta si difiere.
+
+    Se comparan todas las claves y su valor ``v``. Los campos de trazabilidad
+    del registro no pueden formar parte de esta igualdad: el camino historico
+    usa ``rev_DDMMYYYY`` y ``origen``, mientras el motor comun usa el
+    ``revision_id`` normalizado. Precisamente esos metadatos cambian con el
+    cutover; el estado funcional propuesto no puede cambiar.
+    """
+    claves = sorted(set(estados_antiguos) | set(estados_nuevos))
+    diferencias = []
+    for clave in claves:
+        antiguo = _valor_estado(estados_antiguos, clave)
+        nuevo = _valor_estado(estados_nuevos, clave)
+        if antiguo is _AUSENTE or nuevo is _AUSENTE or antiguo != nuevo:
+            diferencias.append((clave, antiguo, nuevo))
+
+    if diferencias:
+        print(f'\n[ABORTADO] La salvaguarda encontro {len(diferencias)} '
+              'discrepancia(s) entre el camino antiguo y el motor comun. '
+              'No se ha escrito nada.')
+        for clave, antiguo, nuevo in diferencias:
+            print(f'  {clave}: antiguo={_formatear_valor_paridad(antiguo)}; '
+                  f'nuevo={_formatear_valor_paridad(nuevo)}')
+        raise SystemExit(2)
+
+    sustantivo = 'celda' if len(claves) == 1 else 'celdas'
+    print(f'\n[SALVAGUARDA] camino antiguo y motor comun coinciden '
+          f'exactamente en {len(claves)} {sustantivo}.')
+    return len(claves)
+
+
 def _obra_de(obra_id):
     obra = next((o for o in OBRAS if o['id'] == obra_id), None)
     if obra is None:
@@ -560,8 +681,7 @@ def _obra_de(obra_id):
 
 
 def main():
-    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8',
-                                  errors='replace')
+    _configurar_stdout_utf8()
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('hoja')
     p.add_argument('obra_id')
@@ -573,6 +693,9 @@ def main():
                         'texto ya impreso en vez de anotaciones. Solo aplica '
                         'las celdas con marca explicita; una celda en '
                         'blanco no se toca.')
+    p.add_argument('--forzar-pdf', action='store_true',
+                   help='en --digital, ignora el HTML gemelo aunque exista y '
+                        'fuerza la lectura geometrica del PDF')
     p.add_argument('--fecha', help='DD/MM/AAAA de la revision')
     p.add_argument('--sin-marca', choices=['pendiente', 'desconocido'],
                    default='pendiente',
@@ -597,7 +720,12 @@ def main():
     # Norma _SISTEMA (07/08/2026): lo que genera el lector -candidatas,
     # recortes y sidecar- vive en REVISIONES*/_SISTEMA/, junto a la hoja pero
     # sin mezclarse con ella. La hoja PDF no se mueve: es el documento.
-    base = _ruta_sistema(os.path.splitext(args.hoja)[0])
+    # En --aplicar/--digital no se crea siquiera una carpeta antes de que la
+    # salvaguarda de paridad autorice la escritura. --preparar conserva su
+    # comportamiento historico y crea _SISTEMA para sus propios artefactos.
+    base = _ruta_sistema(
+        os.path.splitext(args.hoja)[0],
+        crear=bool(args.preparar and not args.digital))
     ruta_candidatas = base + '.candidatas.json'
 
     if args.digital:
@@ -605,9 +733,28 @@ def main():
             raise SystemExit(
                 'Falta --fecha. La fecha de la revision no se deduce de la '
                 'hoja: la de la cabecera es la de generacion.')
-        impresos = estados_impresos(args.hoja, obra, ficha)
-        rev_id = 'rev_' + args.fecha.replace('/', '')
-        estados, cambios = aplicar_digital(ficha, impresos, args.fecha, rev_id)
+        rev_id_antiguo = 'rev_' + args.fecha.replace('/', '')
+        estados_antiguos = None
+        if args.escribir:
+            # Salvaguarda del primer cutover: reproduce primero, integramente
+            # y solo en memoria, el camino anterior basado en el PDF.
+            impresos_antiguos = estados_impresos(args.hoja, obra, ficha)
+            estados_antiguos, _cambios_antiguos = aplicar_digital(
+                ficha, impresos_antiguos, args.fecha, rev_id_antiguo)
+
+        import validar_revision
+        catalogo = validar_revision.cargar_catalogo_tajos()
+        revision = _construir_revision_digital(
+            args.hoja, obra['id'], ficha, args.fecha, catalogo,
+            forzar_pdf=args.forzar_pdf)
+        validacion, aplicacion = _ejecutar_motor_comun(
+            revision, ficha, catalogo, args.escribir)
+        cambios = _cambios_de_validacion(validacion)
+        impresos = {
+            celda['clave']: celda['estado_leido']
+            for celda in revision['celdas']
+            if celda['estado_leido'] in VALIDOS_IMPRESOS
+        }
 
         conteo = Counter(nuevo for _k, _a, nuevo in cambios)
         print(f'HOJA: {os.path.basename(args.hoja)}   obra: {obra["nombre"]}   '
@@ -622,7 +769,11 @@ def main():
             print('\n[SIMULACION] no se ha escrito nada.')
             return
 
-        sidecar = _ruta_sistema(args.hoja) + '.correcciones.json'
+        ficha_nueva = aplicacion['ficha_actualizada']
+        celdas_comparadas = _comprobar_paridad_estados(
+            estados_antiguos, ficha_nueva.get('estados') or {})
+
+        sidecar = _ruta_sistema(args.hoja, crear=True) + '.correcciones.json'
         if os.path.isfile(sidecar) and not args.reemplazar:
             anterior = (json.load(open(sidecar, encoding='utf-8'))
                         .get('estados') or {})
@@ -633,21 +784,29 @@ def main():
         with open(sidecar, 'w', encoding='utf-8') as f:
             json.dump({
                 'version': 1, 'hoja': os.path.basename(args.hoja),
-                'obra': obra['id'], 'fecha': args.fecha, 'revision': rev_id,
+                'obra': obra['id'], 'fecha': args.fecha,
+                'revision': revision['revision_id'],
                 'origen': 'hoja generada rellenada digitalmente (paso 4, '
                           'sin tinta)',
                 'estados': {k: n for k, _a, n in cambios},
             }, f, ensure_ascii=False, indent=2)
 
-        ficha['estados'] = estados
-        revisiones = [r for r in (ficha.get('revisiones') or [])
-                      if r.get('id') != rev_id]
+        revisiones = [r for r in (ficha_nueva.get('revisiones') or [])
+                      if r.get('id') not in {
+                          revision['revision_id'], rev_id_antiguo}]
         revisiones.append({
-            'id': rev_id, 'fecha': args.fecha,
+            'id': revision['revision_id'], 'fecha': args.fecha,
             'origen': 'hoja generada rellenada digitalmente, leida por la IA',
             'celdas_medidas': len(impresos), 'celdas_cambiadas': len(cambios)})
-        ficha['revisiones'] = revisiones
-        fichas.guardar(carpeta, ficha)
+        ficha_nueva['revisiones'] = revisiones
+        fichas.guardar(carpeta, ficha_nueva)
+        trazabilidad_revisiones.registrar_trazabilidad(
+            aplicacion,
+            trazabilidad_revisiones.ruta_log_obra(carpeta),
+            revision=revision,
+            salvaguarda_coincidio=True,
+            celdas_comparadas=celdas_comparadas,
+        )
         print(f'\n  sidecar: {sidecar}')
         print(f'  ficha actualizada: {fichas.ruta_ficha(carpeta)}')
         return
@@ -695,27 +854,45 @@ def main():
         clasificacion = json.load(f)
     clasificacion = clasificacion.get('celdas', clasificacion)
 
-    rev_id = 'rev_' + args.fecha.replace('/', '')
-    estados, cambios, dudas = aplicar(
-        ficha, datos['candidatas'], clasificacion, args.fecha, rev_id)
+    rev_id_antiguo = 'rev_' + args.fecha.replace('/', '')
+    estados_antiguos = None
+    dudas = []
+    if args.escribir:
+        # Camino anterior completo, en memoria y sin persistencia.
+        estados_antiguos, cambios_antiguos, dudas = aplicar(
+            ficha, datos['candidatas'], clasificacion, args.fecha,
+            rev_id_antiguo)
+        if args.sin_marca == 'pendiente':
+            # Una candidata DESCARTADA no lleva marca: su tinta era el rabo
+            # del trazo de al lado y participa en el barrido de blancos.
+            con_marca = {c['clave'] for c in datos['candidatas']
+                         if clasificacion.get(c['clave']) != DESCARTADA}
+            en_blanco_antiguo = marcar_no_empezados(
+                estados_antiguos, datos.get('celdas_hoja') or [], con_marca,
+                args.fecha, rev_id_antiguo)
+            cambios_antiguos = cambios_antiguos + en_blanco_antiguo
 
-    en_blanco = []
-    if args.sin_marca == 'pendiente':
-        # Una candidata DESCARTADA no lleva marca: su tinta era el rabo del
-        # trazo de al lado. Asi que es una casilla en blanco como cualquier
-        # otra y le toca el mismo trato, no quedarse en '?'.
-        con_marca = {c['clave'] for c in datos['candidatas']
-                     if clasificacion.get(c['clave']) != DESCARTADA}
-        en_blanco = marcar_no_empezados(
-            estados, datos.get('celdas_hoja') or [], con_marca,
-            args.fecha, rev_id)
-        cambios = cambios + en_blanco
+    import adaptar_revision_tinta
+    import validar_revision
+    catalogo = validar_revision.cargar_catalogo_tajos()
+    revision = adaptar_revision_tinta.construir_revision_normalizada_tinta(
+        args.hoja, args.aplicar, obra['id'], ficha, args.fecha,
+        sin_marca=args.sin_marca)
+    validacion, aplicacion = _ejecutar_motor_comun(
+        revision, ficha, catalogo, args.escribir)
+    cambios = _cambios_de_validacion(validacion)
+    en_blanco = [
+        celda for celda in validacion['aceptadas']
+        if celda['accion'] == 'actualizar' and celda['estado_leido'] == ''
+    ]
+    descartadas = sum(
+        1 for valor in clasificacion.values() if valor == DESCARTADA)
 
     conteo = Counter(nuevo for _k, _a, nuevo in cambios)
     print(f'HOJA: {datos["hoja"]}   obra: {obra["nombre"]}   '
           f'fecha: {args.fecha}')
     print(f'  candidatas: {len(datos["candidatas"])}   '
-          f'cambios: {len(cambios)}   descartadas: {len(dudas)}')
+          f'cambios: {len(cambios)}   descartadas: {descartadas}')
     print(f'  de ellos, casillas en blanco -> tajo no empezado: {len(en_blanco)}')
     print(f'  por valor: {dict(conteo)}')
     de_a = Counter((a, n) for _k, a, n in cambios)
@@ -725,12 +902,16 @@ def main():
         print('\n[SIMULACION] no se ha escrito nada.')
         return
 
+    ficha_nueva = aplicacion['ficha_actualizada']
+    celdas_comparadas = _comprobar_paridad_estados(
+        estados_antiguos, ficha_nueva.get('estados') or {})
+
     # Mismo nombre que usa el resto del sistema: "<hoja.pdf>.correcciones.json".
     # generar_todos elige el sidecar mas reciente por la FECHA del nombre, asi
     # que dos ficheros de la misma revision compiten y gana uno cualquiera.
     # Desde el 07/08/2026 se escribe en REVISIONES*/_SISTEMA/ (norma _SISTEMA);
     # el glob de generar_todos mira las dos ubicaciones.
-    sidecar = _ruta_sistema(args.hoja) + '.correcciones.json'
+    sidecar = _ruta_sistema(args.hoja, crear=True) + '.correcciones.json'
     if os.path.isfile(sidecar) and not args.reemplazar:
         anterior = (json.load(open(sidecar, encoding='utf-8')).get('estados')
                     or {})
@@ -742,27 +923,35 @@ def main():
     with open(sidecar, 'w', encoding='utf-8') as f:
         json.dump({
             'version': 1, 'hoja': datos['hoja'], 'obra': obra['id'],
-            'fecha': args.fecha, 'revision': rev_id,
+            'fecha': args.fecha, 'revision': revision['revision_id'],
             'origen': 'lectura de hoja marcada (paso 4)',
             'estados': {k: n for k, _a, n in cambios},
             'descartadas': [{'clave': d['clave'], 'puntos': d['puntos'],
                              'motivo': d['motivo']} for d in dudas],
         }, f, ensure_ascii=False, indent=2)
 
-    ficha['estados'] = estados
-    revisiones = [r for r in (ficha.get('revisiones') or [])
-                  if r.get('id') != rev_id]
+    revisiones = [r for r in (ficha_nueva.get('revisiones') or [])
+                  if r.get('id') not in {
+                      revision['revision_id'], rev_id_antiguo}]
     # Lo que MIDIO la revision, no lo que cambio en esta pasada: si se vuelve
     # a aplicar la misma hoja no hay cambios y quedaria registrada como una
     # revision que no midio nada.
     medidas = sum(1 for k in (datos.get('celdas_hoja') or [])
-                  if (estados.get(k) or {}).get('v') in VALIDOS)
-    revisiones.append({'id': rev_id, 'fecha': args.fecha,
+                  if ((ficha_nueva.get('estados') or {}).get(k) or {}).get('v')
+                  in VALIDOS)
+    revisiones.append({'id': revision['revision_id'], 'fecha': args.fecha,
                        'origen': 'hoja marcada leida por la IA',
                        'celdas_medidas': medidas,
                        'celdas_cambiadas': len(cambios)})
-    ficha['revisiones'] = revisiones
-    fichas.guardar(carpeta, ficha)
+    ficha_nueva['revisiones'] = revisiones
+    fichas.guardar(carpeta, ficha_nueva)
+    trazabilidad_revisiones.registrar_trazabilidad(
+        aplicacion,
+        trazabilidad_revisiones.ruta_log_obra(carpeta),
+        revision=revision,
+        salvaguarda_coincidio=True,
+        celdas_comparadas=celdas_comparadas,
+    )
     print(f'\n  sidecar: {sidecar}')
     print(f'  ficha actualizada: {fichas.ruta_ficha(carpeta)}')
 

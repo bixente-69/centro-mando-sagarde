@@ -14,6 +14,8 @@ o doble clic en Actualizar_Sagarde.bat
 import os
 import sys
 import html
+import copy
+import hashlib
 import json
 import re
 import unicodedata
@@ -35,6 +37,9 @@ import cierre_expediente  # noqa: E402
 import memoria_obra as mem  # noqa: E402
 import motor_informes       # noqa: E402
 import ficha_obra as fichas    # noqa: E402
+import aplicar_revision        # noqa: E402
+import trazabilidad_revisiones  # noqa: E402
+import validar_revision        # noqa: E402
 from registro_obras import OBRAS  # noqa: E402
 
 
@@ -820,6 +825,262 @@ def escribir_resumen_json(resultados):
     print(f"Resumen JSON: {RESUMEN_JSON}")
 
 
+ORIGEN_HISTORIAL_CONSOLIDADO = 'historial_consolidado'
+_AUSENTE = object()
+
+
+def _estado_normalizado_para_revision(valor, blanco_como_p=False):
+    """Traduce con el mismo alfabeto base de ficha_obra, sin inventar reglas.
+
+    El blanco del snapshot es ausencia de dato nuevo. El blanco de un sidecar
+    de correcciones, en cambio, era historicamente una P explicita.
+    """
+    normalizado = fichas._normalizar_estado(valor)
+    if not normalizado and not blanco_como_p:
+        return ''
+    return fichas.MAPA_ESTADO.get(normalizado)
+
+
+def _huella_historial(snapshot_crudo, correcciones):
+    contenido = json.dumps(
+        {'snapshot': snapshot_crudo or [], 'correcciones': correcciones or {}},
+        ensure_ascii=False, sort_keys=True, separators=(',', ':'), default=str,
+    ).encode('utf-8')
+    return hashlib.sha256(contenido).hexdigest()[:8]
+
+
+def construir_revision_normalizada_desde_snapshot(
+        obra, ficha_actual, snapshot_crudo, fecha, catalogo,
+        correcciones=None, mapa_tajos_cortos=None,
+        origen=ORIGEN_HISTORIAL_CONSOLIDADO):
+    """Convierte la fotografia final del adaptador en REVISION_NORMALIZADA.
+
+    Reutiliza los indices de ``ficha_obra`` que empleaba el camino antiguo.
+    Las ubicaciones o tajos que el motor comun aun no puede representar no se
+    fuerzan: quedan en avisos y la comparacion con el resultado antiguo decide
+    si la obra puede cruzar el cutover.
+    """
+    correcciones = correcciones or {}
+    mapa_tajos_cortos = mapa_tajos_cortos or {}
+    avisos = []
+    celdas = []
+
+    id_por_nombre = {
+        fichas._fold(tajo.get('nombre') or ''): tajo['id']
+        for tajo in (ficha_actual.get('tajos') or {}).get('detalle') or []
+    }
+    ids_tajo_de_ficha = set(id_por_nombre.values())
+    id_por_alias_catalogo = fichas._indice_tajo_por_nombre()
+    ids_tajo_validos = validar_revision._ids_tajos(catalogo, obra['id'])
+    _por_id, por_nombre = fichas._indice_ubicaciones(ficha_actual)
+
+    for indice, registro in enumerate(snapshot_crudo or []):
+        nombre_tajo = str(registro.get('task') or '').strip()
+        if not nombre_tajo:
+            avisos.append(f'snapshot[{indice}]: registro sin tajo; omitido')
+            continue
+        nombre_fold = fichas._fold(nombre_tajo)
+        tajo_id = (id_por_nombre.get(nombre_fold)
+                   or id_por_alias_catalogo.get(nombre_fold)
+                   or nombre_tajo)
+        if (tajo_id not in ids_tajo_validos
+                or tajo_id not in ids_tajo_de_ficha):
+            avisos.append(
+                f'snapshot[{indice}]: tajo {nombre_tajo!r} no representable '
+                'por el motor comun; la salvaguarda comprobara la paridad')
+            continue
+
+        trio = fichas._localizar(
+            por_nombre, registro.get('building'), registro.get('floor'),
+            registro.get('unit'))
+        if trio is None:
+            avisos.append(
+                f"snapshot[{indice}]: ubicacion "
+                f"{registro.get('building')!r}/{registro.get('floor')!r}/"
+                f"{registro.get('unit')!r} no resuelta; la salvaguarda "
+                'comprobara la paridad')
+            continue
+        portal_id, planta_id, ubicacion_id = trio
+
+        estado_leido = _estado_normalizado_para_revision(
+            registro.get('status', ''))
+        if estado_leido is None:
+            avisos.append(
+                f"snapshot[{indice}]: estado {registro.get('status')!r} no "
+                'reconocido; la salvaguarda comprobara la paridad')
+            continue
+        celdas.append(validar_revision.crear_revision_celda(
+            f'{portal_id}__{planta_id}__{tajo_id}__{ubicacion_id}',
+            estado_leido,
+        ))
+
+    estados_actuales = ficha_actual.get('estados') or {}
+    for clave_corta, valor in correcciones.items():
+        partes = fichas.partir_clave(clave_corta)
+        if partes is None:
+            avisos.append(f'correccion {clave_corta!r}: clave invalida; omitida')
+            continue
+        portal_id, planta_id, tajo_corto, unidad = partes
+        tajo_id = mapa_tajos_cortos.get(tajo_corto, tajo_corto)
+        destino = f'{portal_id}__{planta_id}__{tajo_id}__{unidad}'
+        if destino not in estados_actuales:
+            destino = fichas._con_alias(
+                ficha_actual, portal_id, planta_id, tajo_id, unidad,
+                estados_actuales)
+        if destino is None:
+            avisos.append(
+                f'correccion {clave_corta!r}: destino no resuelto; omitida')
+            continue
+        estado_leido = _estado_normalizado_para_revision(
+            valor, blanco_como_p=True)
+        if estado_leido is None:
+            avisos.append(
+                f'correccion {clave_corta!r}: estado {valor!r} no reconocido; '
+                'omitida')
+            continue
+        # El camino historico reclama las correcciones despues del snapshot:
+        # para una misma clave la correccion es el valor final, no dos cambios.
+        celdas = [celda for celda in celdas if celda['clave'] != destino]
+        celdas.append(validar_revision.crear_revision_celda(
+            destino, estado_leido))
+
+    fuente = f"{obra.get('adaptador') or 'adaptador'}.cargar_historial()[-1]"
+    revision_id = (
+        f"{obra['id']}__{fecha}__{origen}__"
+        f'{_huella_historial(snapshot_crudo, correcciones)}')
+    return validar_revision.crear_revision_normalizada(
+        revision_id=revision_id,
+        obra=obra['id'],
+        fecha=fecha,
+        origen=origen,
+        fuente=fuente,
+        celdas=celdas,
+        metadata={
+            'generado_por':
+                'generar_todos.construir_revision_normalizada_desde_snapshot',
+            'generado_en': datetime.now().isoformat(timespec='seconds'),
+            'avisos': avisos,
+            'hoja_usada': True,
+        },
+    )
+
+
+def _valor_estado(estados, clave):
+    if clave not in estados:
+        return _AUSENTE
+    registro = estados[clave]
+    return registro.get('v') if isinstance(registro, dict) else None
+
+
+def _formatear_valor_paridad(valor):
+    return '<ausente>' if valor is _AUSENTE else repr(valor)
+
+
+def _diferencias_estados(estados_antiguos, estados_nuevos):
+    diferencias = []
+    claves = sorted(set(estados_antiguos) | set(estados_nuevos))
+    for clave in claves:
+        antiguo = _valor_estado(estados_antiguos, clave)
+        nuevo = _valor_estado(estados_nuevos, clave)
+        if antiguo is _AUSENTE or nuevo is _AUSENTE or antiguo != nuevo:
+            diferencias.append((clave, antiguo, nuevo))
+    return claves, diferencias
+
+
+def calcular_actualizacion_ficha_con_salvaguarda(
+        obra, ficha_actual, snapshot_crudo, fecha, correcciones=None,
+        mapa_tajos_cortos=None, catalogo=None):
+    """Calcula en memoria los caminos antiguo y comun, y compara sus ``v``."""
+    correcciones = correcciones or {}
+    mapa_tajos_cortos = mapa_tajos_cortos or {}
+    catalogo = catalogo or validar_revision.cargar_catalogo_tajos()
+
+    ficha_antigua, cambios_antiguos = fichas.actualizar_desde_snapshot(
+        copy.deepcopy(ficha_actual), snapshot_crudo, fecha,
+        correcciones=correcciones,
+        mapa_tajos_cortos=mapa_tajos_cortos,
+    )
+    revision = construir_revision_normalizada_desde_snapshot(
+        obra, ficha_actual, snapshot_crudo, fecha, catalogo,
+        correcciones=correcciones,
+        mapa_tajos_cortos=mapa_tajos_cortos,
+    )
+    validacion = validar_revision.validar(revision, ficha_actual, catalogo)
+    aplicacion = aplicar_revision.apply_revision(
+        revision, ficha_actual, catalogo, dry_run=False)
+    ficha_nueva = aplicacion.get('ficha_actualizada')
+    estados_nuevos = ((ficha_nueva or ficha_actual).get('estados') or {})
+    claves, diferencias = _diferencias_estados(
+        ficha_antigua.get('estados') or {}, estados_nuevos)
+    coincide = bool(
+        validacion['aplicable'] and aplicacion.get('escrito')
+        and ficha_nueva is not None and not diferencias)
+    return {
+        'coincide': coincide,
+        'claves_comparadas': len(claves),
+        'diferencias': diferencias,
+        'ficha_antigua': ficha_antigua,
+        'cambios_antiguos': cambios_antiguos,
+        'ficha_nueva': ficha_nueva,
+        'revision': revision,
+        'validacion': validacion,
+        'aplicacion': aplicacion,
+    }
+
+
+def actualizar_ficha_con_salvaguarda(
+        obra, carpeta_abs, ficha_actual, snapshot_crudo, fecha,
+        ficha_xlsx=None, materiales=None, documentos=None):
+    """Hace el cutover de una obra; una divergencia no lanza ni guarda ficha."""
+    correcciones = _correcciones_mas_recientes(carpeta_abs)
+    mapa_tajos_cortos = _mapa_tajos_cortos(obra['id'])
+    resultado = calcular_actualizacion_ficha_con_salvaguarda(
+        obra, ficha_actual, snapshot_crudo, fecha,
+        correcciones=correcciones,
+        mapa_tajos_cortos=mapa_tajos_cortos,
+    )
+
+    if not resultado['coincide']:
+        diferencias = resultado['diferencias']
+        print(f"  [AVISO CUTOVER FICHA] {obra['nombre']}: el camino antiguo "
+              f"y el motor comun difieren en {len(diferencias)} clave(s). "
+              "La ficha de esta obra no se actualiza; el resto del proceso "
+              "y las demas obras continuan.")
+        for clave, antiguo, nuevo in diferencias:
+            print(f'    {clave}: antiguo={_formatear_valor_paridad(antiguo)}; '
+                  f'nuevo={_formatear_valor_paridad(nuevo)}')
+        if not resultado['validacion']['aplicable']:
+            for error in resultado['validacion']['errores']:
+                print(f'    error del motor comun: {error}')
+            for celda in resultado['validacion']['rechazadas']:
+                print(f"    rechazada {celda.get('clave')!r}: "
+                      f"{celda['motivo']}")
+        return ficha_actual, False
+
+    ficha_nueva = resultado['ficha_nueva']
+    tocados = fichas.volcar_apartados(
+        ficha_nueva, ficha_xlsx=ficha_xlsx, materiales=materiales,
+        documentos=documentos)
+    fichas.guardar(carpeta_abs, ficha_nueva)
+    trazabilidad_revisiones.registrar_trazabilidad(
+        resultado['aplicacion'],
+        trazabilidad_revisiones.ruta_log_obra(carpeta_abs),
+        revision=resultado['revision'],
+        salvaguarda_coincidio=resultado['coincide'],
+        celdas_comparadas=resultado['claves_comparadas'],
+    )
+    cambios = resultado['validacion']['resumen']['cambios']
+    print(f"  [SALVAGUARDA FICHA] {obra['nombre']}: camino antiguo y "
+          f"motor comun coinciden exactamente en "
+          f"{resultado['claves_comparadas']} celdas; se guarda el resultado "
+          "del motor comun.")
+    if cambios:
+        print(f'  [FICHA] celdas que cambian de estado: {cambios}')
+    if tocados:
+        print(f"  [FICHA] apartados actualizados: {', '.join(tocados)}")
+    return ficha_nueva, True
+
+
 def intentar_pdf(html_path, pdf_path):
     """Genera PDF del panel si hay motor disponible. No es crítico: si falla, se avisa."""
     try:
@@ -885,6 +1146,7 @@ def main(hacer_pdf=True):
             motivo_cobertura = motor_informes.cobertura_encogida(historial)
 
             ficha_actual = fichas.cargar(carpeta_abs)
+            bloquear_guardado_ficha = False
 
             if motivo_cobertura:
                 if ficha_actual:
@@ -899,19 +1161,14 @@ def main(hacer_pdf=True):
 
             if ficha_actual and historial:
                 fecha_ultima, snapshot_crudo = historial[-1]
-                ficha_actual, cambios_ficha = fichas.actualizar_desde_snapshot(
-                    ficha_actual, snapshot_crudo, fecha_ultima,
-                    correcciones=_correcciones_mas_recientes(carpeta_abs),
-                    mapa_tajos_cortos=_mapa_tajos_cortos(obra['id']),
+                ficha_actual, ficha_cutover_aplicada = (
+                    actualizar_ficha_con_salvaguarda(
+                        obra, carpeta_abs, ficha_actual, snapshot_crudo,
+                        fecha_ultima, ficha_xlsx=ficha,
+                        materiales=materiales, documentos=documentos,
+                    )
                 )
-                tocados = fichas.volcar_apartados(
-                    ficha_actual, ficha_xlsx=ficha, materiales=materiales,
-                    documentos=documentos)
-                fichas.guardar(carpeta_abs, ficha_actual)
-                for linea in fichas.resumen_cambios(cambios_ficha):
-                    print(f"  [FICHA] {linea}")
-                if tocados:
-                    print(f"  [FICHA] apartados actualizados: {', '.join(tocados)}")
+                bloquear_guardado_ficha = not ficha_cutover_aplicada
 
                 snapshot_ficha = fichas.snapshot_desde_ficha(ficha_actual)
                 if snapshot_ficha:
@@ -934,7 +1191,8 @@ def main(hacer_pdf=True):
                 prioridades = priorizador_trabajos.priorizar_ficha(
                     ficha_actual, obra=obra['nombre']
                 )
-                fichas.guardar(carpeta_abs, ficha_actual)
+                if not bloquear_guardado_ficha:
+                    fichas.guardar(carpeta_abs, ficha_actual)
             else:
                 prioridades = priorizador_trabajos.sin_base(obra['nombre'])
             priorizador_trabajos.escribir_json(prioridades, salida_prioridades)

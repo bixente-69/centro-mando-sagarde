@@ -45,6 +45,10 @@ VARIOS/APPS SAGARDE/
 # Ficha de obra: fuente de verdad de estructura y estados (una por obra)
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/ficha_obra.json
 
+# Traza comun de cada aplicacion que supera la salvaguarda de doble calculo.
+# Es evidencia auditable de la ficha, igual que los sidecars permitidos abajo.
+!SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/revisiones_aplicadas.jsonl
+
 # Confirmaciones de estructura: las respuestas de Bixente a los huecos que
 # detecta el sembrador. Son la razon POR LA QUE cada ficha es como es, y sin
 # ellas no hay forma de auditar ni de volver a sembrar una obra. Estaban
