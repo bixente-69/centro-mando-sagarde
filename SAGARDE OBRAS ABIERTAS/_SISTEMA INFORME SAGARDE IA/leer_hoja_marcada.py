@@ -625,6 +625,47 @@ def _cambios_de_validacion(validacion):
     ]
 
 
+def _cambios_registrados(entrada):
+    """Cuenta de cambios de una entrada de ``revisiones``, compatible con
+    los dos esquemas de campo que se han usado (``celdas_cambiadas`` este
+    modulo, ``cambios`` el ``ficha_obra.actualizar`` anterior)."""
+    if 'celdas_cambiadas' in entrada:
+        return entrada.get('celdas_cambiadas')
+    return entrada.get('cambios')
+
+
+def _revisiones_sin_duplicado_legado(
+        revisiones_previas, rev_id_nuevo, rev_id_antiguo, cambios_antiguos):
+    """Retira la entrada con el id heredado ``rev_DDMMYYYY`` SOLO si es la
+    misma revision que se acaba de recalcular por el camino antiguo (sus
+    cambios registrados coinciden). Un id compartido por coincidencia de
+    fecha con una revision real y distinta no se descarta nunca: perderia
+    su trazabilidad (cuando, de que origen) aunque el valor de las celdas
+    siguiera siendo correcto.
+
+    Bug encontrado el 27/08/2026 en Mungia: 'rev_25082026' tenia 69 cambios
+    de otra fuente (procesada horas antes de que existiera la hoja de hoy)
+    y una relectura de la hoja del generador (123 cambios) lo borro sin
+    avisar, dejando 472 celdas apuntando a un id que ya no existia en
+    'revisiones'.
+    """
+    resultado = []
+    for entrada in revisiones_previas:
+        id_actual = entrada.get('id')
+        if id_actual == rev_id_nuevo:
+            continue
+        if id_actual == rev_id_antiguo:
+            if _cambios_registrados(entrada) == len(cambios_antiguos):
+                continue
+            print(f"  [AVISO] ya existia una revision '{rev_id_antiguo}' "
+                  f"con {_cambios_registrados(entrada)} cambios registrados "
+                  f"(no {len(cambios_antiguos)}, los de esta relectura): "
+                  "parece de otra fuente o fecha de proceso. Se conserva "
+                  "sin tocar.")
+        resultado.append(entrada)
+    return resultado
+
+
 _AUSENTE = object()
 
 
@@ -735,11 +776,12 @@ def main():
                 'hoja: la de la cabecera es la de generacion.')
         rev_id_antiguo = 'rev_' + args.fecha.replace('/', '')
         estados_antiguos = None
+        cambios_antiguos = None
         if args.escribir:
             # Salvaguarda del primer cutover: reproduce primero, integramente
             # y solo en memoria, el camino anterior basado en el PDF.
             impresos_antiguos = estados_impresos(args.hoja, obra, ficha)
-            estados_antiguos, _cambios_antiguos = aplicar_digital(
+            estados_antiguos, cambios_antiguos = aplicar_digital(
                 ficha, impresos_antiguos, args.fecha, rev_id_antiguo)
 
         import validar_revision
@@ -791,9 +833,9 @@ def main():
                 'estados': {k: n for k, _a, n in cambios},
             }, f, ensure_ascii=False, indent=2)
 
-        revisiones = [r for r in (ficha_nueva.get('revisiones') or [])
-                      if r.get('id') not in {
-                          revision['revision_id'], rev_id_antiguo}]
+        revisiones = _revisiones_sin_duplicado_legado(
+            ficha_nueva.get('revisiones') or [],
+            revision['revision_id'], rev_id_antiguo, cambios_antiguos)
         revisiones.append({
             'id': revision['revision_id'], 'fecha': args.fecha,
             'origen': 'hoja generada rellenada digitalmente, leida por la IA',
@@ -856,6 +898,7 @@ def main():
 
     rev_id_antiguo = 'rev_' + args.fecha.replace('/', '')
     estados_antiguos = None
+    cambios_antiguos = None
     dudas = []
     if args.escribir:
         # Camino anterior completo, en memoria y sin persistencia.
@@ -930,9 +973,9 @@ def main():
                              'motivo': d['motivo']} for d in dudas],
         }, f, ensure_ascii=False, indent=2)
 
-    revisiones = [r for r in (ficha_nueva.get('revisiones') or [])
-                  if r.get('id') not in {
-                      revision['revision_id'], rev_id_antiguo}]
+    revisiones = _revisiones_sin_duplicado_legado(
+        ficha_nueva.get('revisiones') or [],
+        revision['revision_id'], rev_id_antiguo, cambios_antiguos)
     # Lo que MIDIO la revision, no lo que cambio en esta pasada: si se vuelve
     # a aplicar la misma hoja no hay cambios y quedaria registrada como una
     # revision que no midio nada.

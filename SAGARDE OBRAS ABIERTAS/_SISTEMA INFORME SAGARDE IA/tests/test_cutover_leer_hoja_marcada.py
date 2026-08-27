@@ -33,6 +33,21 @@ def _ficha(estado='?'):
     return ficha
 
 
+def _ficha_con_revision_previa_no_relacionada(estado='?'):
+    """Una revision REAL, de otra fuente, que por casualidad de fecha
+    comparte el id heredado ``rev_DDMMYYYY`` que esta relectura recalcula
+    para su propia salvaguarda en memoria."""
+    ficha = _ficha(estado)
+    ficha['revisiones'] = [{
+        'id': 'rev_' + FECHA.replace('/', ''),
+        'fecha': FECHA,
+        'procesada': '01/09/2026 08:00',
+        'celdas': 999,
+        'cambios': 999,
+    }]
+    return ficha
+
+
 def _candidata():
     return {
         'clave': CLAVE,
@@ -216,6 +231,53 @@ class TestCutoverLeerHojaMarcada(unittest.TestCase):
         adaptar_html.assert_not_called()
         adaptar_pdf.assert_called_once()
         guardar.assert_called_once()
+
+    def test_digital_no_borra_revision_previa_no_relacionada(self):
+        """rev_25082026 real (569 cambios, de otra fuente) no debe
+        desaparecer solo porque el nombre heredado de HOY coincide por
+        fecha. Bug encontrado el 27/08/2026 en Mungia: 472 celdas se
+        quedaron apuntando a un id ya retirado de 'revisiones'."""
+        html = self._crear_html_gemelo()
+        impresos = {CLAVE: 'X'}
+        with (
+                mock.patch.object(
+                    lector, 'estados_impresos', return_value=impresos)):
+            salida, guardar = self._ejecutar([
+                self.pdf, 'pruebas', '--digital', '--fecha', FECHA,
+                '--escribir'],
+                _ficha_con_revision_previa_no_relacionada('P'))
+
+        del html
+        ficha_guardada = guardar.call_args.args[1]
+        ids = {r['id'] for r in ficha_guardada['revisiones']}
+        self.assertIn('rev_' + FECHA.replace('/', ''), ids,
+                       'se ha borrado una revision real de otra fuente '
+                       'por coincidir el nombre heredado con el de hoy')
+        self.assertIn('[AVISO]', salida)
+
+    def test_digital_retira_revision_previa_si_es_el_mismo_calculo(self):
+        """Si la entrada heredada SI coincide con lo que recalcula el
+        camino antiguo de esta misma pasada, es un duplicado legitimo del
+        cutover y se retira para no dejar dos entradas de la misma cosa."""
+        html = self._crear_html_gemelo()
+        impresos = {CLAVE: 'X'}
+        ficha = _ficha('P')
+        ficha['revisiones'] = [{
+            'id': 'rev_' + FECHA.replace('/', ''),
+            'fecha': FECHA, 'celdas': 1, 'cambios': 1,
+        }]
+        with (
+                mock.patch.object(
+                    lector, 'estados_impresos', return_value=impresos)):
+            salida, guardar = self._ejecutar([
+                self.pdf, 'pruebas', '--digital', '--fecha', FECHA,
+                '--escribir'], ficha)
+
+        del html, salida
+        ficha_guardada = guardar.call_args.args[1]
+        ids = [r['id'] for r in ficha_guardada['revisiones']]
+        self.assertEqual(ids.count('rev_' + FECHA.replace('/', '')), 0)
+        self.assertEqual(len(ficha_guardada['revisiones']), 1)
 
     def test_discrepancia_aborta_sin_sidecar_ni_ficha(self):
         clasificacion = self._preparar_tinta()

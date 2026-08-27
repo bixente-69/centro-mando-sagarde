@@ -13122,6 +13122,13 @@
       "origen": "hoja generada rellenada digitalmente, leida por la IA",
       "celdas_medidas": 2028,
       "celdas_cambiadas": 123
+    },
+    {
+      "id": "rev_25082026",
+      "fecha": "25/08/2026",
+      "procesada": "25/08/2026 10:42",
+      "celdas": 568,
+      "cambios": 69
     }
   ],
   "dudas": [
