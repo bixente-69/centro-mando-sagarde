@@ -85,6 +85,9 @@ for /f %%d in ('powershell -NoProfile -Command "Get-Date -Format yyyy-MM-dd_HHmm
 if defined GITCMD (
   echo   Usando Git: %GITCMD%
   "%GITCMD%" add -A
+  rem El PDF ejecutivo usa un nombre canonico y se sobrescribe en cada ciclo:
+  rem se fuerza solo ese informe vigente por obra, nunca las revisiones PDF.
+  "%GITCMD%" add -f -- "SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/INFORME_EJECUTIVO_*.pdf"
   "%GITCMD%" diff --cached --quiet
   if errorlevel 1 (
     "%GITCMD%" commit -m "Actualizacion %FECHA%"

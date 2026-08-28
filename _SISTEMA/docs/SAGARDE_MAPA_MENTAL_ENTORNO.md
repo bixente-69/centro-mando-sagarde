@@ -12,10 +12,12 @@
 > Si una sesión añade una obra, una skill, un script o un tipo de fichero
 > nuevo, esa misma sesión lo refleja aquí.
 
-**Última actualización: 26/08/2026** — Los tres orígenes de revisión (tinta,
-PDF digital y HTML digital) convergen ya en un motor común con validación,
-aplicación pura en memoria, salvaguarda de doble cálculo y trazabilidad JSONL.
-Ver §4, §5.2 y §7.2.
+**Última actualización: 28/08/2026** — El PDF ejecutivo vigente de cada obra
+se publica con su nombre canónico y se sobrescribe en cada actualización; las
+revisiones PDF históricas permanecen solo en OneDrive. Los tres orígenes de
+revisión (tinta, PDF digital y HTML digital) convergen en un motor común con
+validación, aplicación pura en memoria, salvaguarda de doble cálculo y
+trazabilidad JSONL. Ver §4, §5.2, §5.4 y §7.
 
 ## Estado de hoy
 
@@ -469,7 +471,7 @@ Hay 55 Markdown previos a esta auditoría. Se agrupan series repetitivas conserv
 
 | Archivo | Finalidad/opciones | Afecta a | Precedencia o riesgo |
 |---|---|---|---|
-| `.gitignore` | Whitelist de HTML, Python y JSON/documentos seleccionados; excepción estrecha para el log `revisiones_aplicadas.jsonl` de cada obra; excluye personal, `.superpowers`, `.claude`, pyc/backups | Git/Pages/trazabilidad | El log común sí queda versionable sin abrir la publicación a otros JSONL; árbol local mucho mayor que lo publicable | `.gitignore:45-50` |
+| `.gitignore` | Whitelist de HTML, Python, JSON/documentos seleccionados y el PDF ejecutivo canónico vigente de cada obra; excepción estrecha para el log `revisiones_aplicadas.jsonl`; excluye revisiones PDF históricas, personal, `.superpowers`, `.claude`, pyc/backups | Git/Pages/trazabilidad | El nombre `INFORME_EJECUTIVO_*.pdf` se sobrescribe al regenerar y publica solo el último informe; el árbol local sigue siendo mucho mayor que lo publicable | `.gitignore` |
 | `.claudeignore` | Oculta paneles, OLD, previews, apps/históricos/backups | Herramienta Claude | No desactiva componentes |
 | `.claude/launch.json` | 4 servidores: portal/generador 8765; personal 8743 | Interfaces | Dos procesos comparten 8765 |
 | `[zona personal, excluida del repositorio]` | servidor 8743 | Personal | Duplica raíz |
@@ -595,7 +597,7 @@ flowchart LR
 3. **Validación:** auditor pre-vuelo; los generadores capturan ciertos errores y conservan salida anterior.
 4. **Procesamiento:** auditor → obras `--no-pdf` → postventa → mantenimiento → portal → **comprobar enlaces** → **mapa mental**. El paso de enlaces comprueba que el HTML publicado resuelva de verdad; el último paso reescribe los bloques `AUTO:` de este documento y comprueba sus rutas; si alguna ya no existe, el BAT avisa y las deja escritas aquí, pero no aborta la publicación.
 5. **Componentes:** BAT, siete Python y Git.
-6. **Salida:** JSON/HTML/PDF ejecutivo/JS y, si hay cambios, commit/push.
+6. **Salida:** JSON/HTML/JS, un PDF ejecutivo canónico vigente por obra con datos y commit/push si hay cambios. Las revisiones PDF históricas no se publican.
 7. **Almacenamiento:** repositorio local y `origin main`.
 8. **Errores:** Python/Git/dependencias ausentes, salida parcial; `git add -A` incluye cambios ajenos. El BAT de obras instala paquetes, el global no.
 

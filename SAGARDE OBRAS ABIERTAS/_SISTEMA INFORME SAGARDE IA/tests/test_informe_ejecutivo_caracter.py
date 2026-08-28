@@ -18,6 +18,7 @@ import generar_informe_ejecutivo as gie
 
 FONTS_DIR = os.path.join(ROOT_DIR, '_SISTEMA', 'MOTOR', 'assets', 'fonts')
 GITIGNORE = os.path.join(ROOT_DIR, '.gitignore')
+ACTUALIZADOR = os.path.join(ROOT_DIR, 'Actualizar_Sagarde.bat')
 
 
 class TestActivosDelInforme(unittest.TestCase):
@@ -57,6 +58,21 @@ class TestActivosDelInforme(unittest.TestCase):
                       '!_SISTEMA/MOTOR/assets/logo_sagarde.jpg'):
             self.assertIn(regla, lineas,
                           'sin esta linea el fichero no llega a git: ' + regla)
+
+    def test_el_ultimo_pdf_ejecutivo_se_publica(self):
+        regla = ('!SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/'
+                 'INFORME_EJECUTIVO_*.pdf')
+        with open(GITIGNORE, encoding='utf-8') as f:
+            lineas = {l.strip() for l in f}
+        self.assertIn(regla, lineas,
+                      'el PDF se genera localmente pero no llega a GitHub Pages')
+
+        with open(ACTUALIZADOR, encoding='utf-8') as f:
+            bat = f.read()
+        self.assertIn(
+            'add -f -- "SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/'
+            'INFORME_EJECUTIVO_*.pdf"', bat,
+            'el actualizador debe incorporar expresamente el PDF vigente')
 
 
 class TestRegistroDeFuente(unittest.TestCase):

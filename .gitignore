@@ -27,6 +27,10 @@ VARIOS/APPS SAGARDE/
 !_SISTEMA/MOTOR/assets/fonts/*.ttf
 !_SISTEMA/MOTOR/assets/fonts/OFL.txt
 
+# Informe ejecutivo vigente de cada obra. El nombre es canonico y se
+# sobrescribe al regenerar: se publica solo el ultimo, no el historial PDF.
+!SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/INFORME_EJECUTIVO_*.pdf
+
 # Datos calculados enlazados desde los paneles de obras
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/prioridades_trabajos.json
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/dudas_pendientes.json
