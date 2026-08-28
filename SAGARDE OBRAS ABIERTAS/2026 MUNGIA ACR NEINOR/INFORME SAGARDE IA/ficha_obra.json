@@ -13203,18 +13203,18 @@
     }
   },
   "documentos": {
-    "total": 100,
+    "total": 98,
     "por_categoria": {
       "Comprimidos": 1,
       "Excel": 4,
       "Imágenes": 4,
       "Otros": 1,
-      "PDF": 59,
+      "PDF": 58,
       "Planos y gráfica": 4,
-      "Word": 27
+      "Word": 26
     },
     "_meta": {
-      "actualizado": "27/08/2026 01:01"
+      "actualizado": "28/08/2026 09:54"
     }
   },
   "contactos": []
