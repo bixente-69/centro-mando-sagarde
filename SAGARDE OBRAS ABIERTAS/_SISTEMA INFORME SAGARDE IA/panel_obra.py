@@ -73,6 +73,9 @@ table.data tbody tr:hover{background:#f8f9fb;}
 .seccion-plegable>summary::after{content:'▸';color:var(--muted);font-size:12px;flex-shrink:0;}
 .seccion-plegable[open]>summary::after{content:'▾';}
 .seccion-plegable>.seccion-contenido{margin-top:12px;}
+#sec-tareas,#sec-dudas,#sec-ejecucion,#sec-inv-bloqueado,#sec-inv-sin_revisar,
+#sec-inv-viable,#sec-inv-otros_gremios,#sec-inv-dudas,#sec-inv-terminado,
+#sec-preguntas-catalogo,#sec-prevision{display:none;}
 .indice-nav{background:linear-gradient(120deg,var(--header),var(--header2));border-radius:var(--radius);padding:9px 14px;margin-bottom:var(--gap);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
 .indice-nav-label{color:var(--accent);font-size:10.5px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;}
 .indice-nav-grupo{position:relative;}
@@ -83,6 +86,35 @@ table.data tbody tr:hover{background:#f8f9fb;}
 .indice-nav-panel{position:absolute;top:calc(100% + 8px);left:0;background:var(--card);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.2);padding:8px;min-width:260px;z-index:20;display:flex;flex-direction:column;gap:2px;}
 .indice-nav-link{display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:6px;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;}
 .indice-nav-link:hover{background:var(--bg);}
+.bento-command{margin-bottom:var(--gap);}
+.bento-health{background:var(--card);border:1px solid color-mix(in srgb,var(--muted) 24%,transparent);border-radius:var(--radius);padding:19px 21px;box-shadow:0 1px 3px color-mix(in srgb,var(--header) 8%,transparent);margin-bottom:var(--gap);}
+.bento-health-top{display:flex;align-items:flex-start;justify-content:space-between;gap:22px;margin-bottom:16px;}
+.bento-eyebrow{display:block;color:var(--accent2);font-size:10.5px;font-weight:800;letter-spacing:1.25px;text-transform:uppercase;margin-bottom:4px;}
+.bento-health h2{font-size:18px;line-height:1.25;}.bento-health-meta{color:var(--muted);font-size:11.5px;margin-top:4px;}
+.bento-health-side{display:flex;align-items:stretch;gap:12px;flex:0 0 auto;}
+.bento-stat{min-width:126px;text-align:right;padding-left:13px;border-left:1px solid color-mix(in srgb,var(--muted) 24%,transparent);}
+.bento-stat strong{display:block;color:var(--header);font-size:28px;line-height:1.05;}.bento-stat span{display:block;color:var(--muted);font-size:10.5px;margin-top:4px;}
+.bento-attention{display:flex;flex-direction:column;justify-content:center;max-width:355px;padding:9px 12px;border-radius:8px;border:1px solid color-mix(in srgb,var(--warn) 34%,transparent);background:color-mix(in srgb,var(--warn) 8%,var(--card));color:var(--warn);}
+.bento-attention.is-ok{border-color:color-mix(in srgb,var(--ok) 34%,transparent);background:color-mix(in srgb,var(--ok) 8%,var(--card));color:var(--ok);}
+.bento-attention strong{font-size:11.5px;text-transform:uppercase;letter-spacing:.55px;}.bento-attention span{font-size:10.5px;line-height:1.35;margin-top:2px;color:var(--text);}
+.bento-segments{display:flex;min-height:12px;border-radius:20px;overflow:hidden;background:color-mix(in srgb,var(--muted) 12%,var(--card));}
+.bento-segment{display:block;min-width:0;}.bento-segment+.bento-segment{box-shadow:-2px 0 0 var(--card);}
+.bento-legend{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;margin-top:11px;}
+.bento-legend-item{text-align:center;min-width:0;}.bento-legend-label{display:flex;align-items:center;justify-content:center;gap:6px;color:var(--muted);font-size:10.5px;line-height:1.2;}
+.bento-dot{display:inline-block;width:8px;height:8px;border-radius:50%;flex:0 0 auto;background:var(--bento-color);}.bento-legend-item strong{display:block;color:var(--bento-color);font-size:17px;margin-top:3px;}
+.bento-grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));grid-auto-rows:minmax(126px,auto);gap:var(--gap);}
+.bento-link{color:inherit;text-decoration:none;}.bento-card{--bento-color:var(--muted);display:flex;flex-direction:column;min-width:0;background:var(--card);border:1px solid color-mix(in srgb,var(--muted) 24%,transparent);border-left:4px solid var(--bento-color);border-radius:var(--radius);padding:18px 20px;box-shadow:0 1px 3px color-mix(in srgb,var(--header) 8%,transparent);transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;}
+.bento-card:hover,.bento-chip:hover{transform:translateY(-1px);box-shadow:0 7px 20px color-mix(in srgb,var(--header) 11%,transparent);border-color:var(--bento-color);}
+.bento-card:focus-visible,.bento-chip:focus-visible{outline:3px solid color-mix(in srgb,var(--accent2) 35%,transparent);outline-offset:2px;}
+.bento-hero{grid-column:span 8;grid-row:span 2;--bento-color:var(--ok);padding:22px 24px;}
+.bento-small{grid-column:span 4;}.bento-half{grid-column:span 6;}
+.bento-card-kicker{display:flex;align-items:center;gap:7px;color:var(--bento-color);font-size:10.5px;font-weight:800;letter-spacing:.75px;text-transform:uppercase;}
+.bento-card h3{font-size:15px;margin-top:8px;}.bento-hero h3{font-size:23px;margin-top:7px;}.bento-card-copy{color:var(--muted);font-size:11.5px;margin-top:3px;}
+.bento-number{color:var(--bento-color);font-size:38px;font-weight:800;line-height:1;margin-top:auto;padding-top:12px;}.bento-number-label{color:var(--muted);font-size:10.5px;margin-top:4px;}
+.bento-hero-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;}.bento-hero-total{text-align:right;flex:0 0 auto;}.bento-hero-total strong{display:block;color:var(--ok);font-size:44px;line-height:1;}.bento-hero-total span{display:block;color:var(--muted);font-size:10.5px;margin-top:4px;}
+.bento-breakdown{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:auto;padding-top:20px;}.bento-breakdown-item{--bento-color:var(--muted);padding:13px 14px;border:1px solid color-mix(in srgb,var(--bento-color) 24%,transparent);border-radius:8px;background:color-mix(in srgb,var(--bento-color) 6%,var(--card));}.bento-breakdown-item span{display:block;color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.45px;}.bento-breakdown-item strong{display:block;color:var(--bento-color);font-size:26px;line-height:1.1;margin-top:4px;}
+.bento-reference{margin-top:var(--gap);padding:16px 18px;border:1px solid color-mix(in srgb,var(--muted) 24%,transparent);border-radius:var(--radius);background:color-mix(in srgb,var(--muted) 5%,var(--card));}.bento-reference-title{color:var(--muted);font-size:10.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}.bento-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.bento-chip{--bento-color:var(--muted);display:inline-flex;align-items:center;gap:8px;padding:8px 12px;background:var(--card);border:1px solid color-mix(in srgb,var(--muted) 25%,transparent);border-left:3px solid var(--bento-color);border-radius:8px;color:var(--text);font-size:12px;font-weight:650;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease;}
 .grupo-etiqueta{font-size:10.5px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin:18px 2px 8px;}
 .timeline-prio{position:relative;}
 .timeline-item{position:relative;display:grid;grid-template-columns:50px minmax(0,1fr);gap:15px;padding-bottom:16px;}
@@ -140,7 +172,9 @@ table.data tbody tr:hover{background:#f8f9fb;}
   .task-meta{white-space:normal;}.location-summary{white-space:normal;}.task-detail{padding:13px;}.stat{padding:10px 5px;}.stat strong{font-size:20px;}
   .detail-heading{align-items:flex-start;flex-direction:column;gap:5px;}
 }
-@media(prefers-reduced-motion:reduce){.task-card,.chevron{transition:none;}}
+@media(max-width:980px){.bento-legend{grid-template-columns:repeat(3,minmax(0,1fr));}.bento-hero{grid-column:span 12;grid-row:auto;}.bento-small,.bento-half{grid-column:span 6;}}
+@media(max-width:640px){.bento-health-top,.bento-hero-head{flex-direction:column;}.bento-health-side{width:100%;flex-direction:column;}.bento-stat{text-align:left;border-left:0;border-top:1px solid color-mix(in srgb,var(--muted) 24%,transparent);padding:9px 0 0;}.bento-attention{max-width:none;}.bento-legend{grid-template-columns:repeat(2,minmax(0,1fr));}.bento-small,.bento-half{grid-column:span 12;}.bento-breakdown{grid-template-columns:1fr;}.bento-hero-total{text-align:left;}}
+@media(prefers-reduced-motion:reduce){.task-card,.chevron,.bento-card,.bento-chip{transition:none;}}
 """
 
 NORMATIVA_ITEMS = [
@@ -436,14 +470,42 @@ def _envolver_plegable(id_ancla, titulo_html, contenido_html, color_borde=None):
 
 _SCRIPT_INDICE_PRIORIDADES = """
 <script>
-document.querySelectorAll('.indice-nav-link').forEach(function(enlace) {
-  enlace.addEventListener('click', function() {
-    var destino = document.getElementById(enlace.getAttribute('data-abre'));
-    if (destino) { destino.open = true; }
-    var menu = enlace.closest('details.indice-nav-grupo');
-    if (menu) { menu.open = false; }
+function _iniciarNavPrioridades() {
+  document.querySelectorAll('.indice-nav-link').forEach(function(enlace) {
+    enlace.addEventListener('click', function(ev) {
+      var destino = document.getElementById(enlace.getAttribute('data-abre'));
+      if (destino) {
+        ev.preventDefault();
+        destino.style.display = 'block';
+        destino.open = true;
+        destino.scrollIntoView({behavior: 'smooth', block: 'start'});
+      }
+      var menu = enlace.closest('details.indice-nav-grupo');
+      if (menu) { menu.open = false; }
+    });
   });
-});
+  [
+    'sec-tareas', 'sec-dudas', 'sec-ejecucion', 'sec-inv-bloqueado',
+    'sec-inv-sin_revisar', 'sec-inv-viable', 'sec-inv-otros_gremios',
+    'sec-inv-dudas', 'sec-inv-terminado', 'sec-preguntas-catalogo',
+    'sec-prevision'
+  ].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('toggle', function() {
+      if (!el.open) { el.style.display = 'none'; }
+    });
+  });
+}
+// El script se inserta antes que las secciones a las que apunta (viven mas
+// abajo en el HTML), asi que getElementById no las encuentra si se ejecuta
+// en el momento en que el parser llega aqui. DOMContentLoaded garantiza que
+// todo el documento ya existe, sin depender del orden de impresion.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', _iniciarNavPrioridades);
+} else {
+  _iniciarNavPrioridades();
+}
 </script>
 """
 
@@ -1047,7 +1109,7 @@ _ID_SEC_EJECUCION = 'sec-ejecucion'
 
 
 def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
-                       obra=''):
+                       obra='', avance_pct=None):
     """HTML de la pestana Prioridades.
 
     Separado de generar_panel para poder probarlo sin montar una obra entera:
@@ -1070,6 +1132,15 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
     items_prio = prioridades.get('items', [])
     inventario_prio = prioridades.get('inventario', [])
     dudas_prio = prioridades.get('dudas_pendientes', [])
+    n_tareas_pendientes = len(_tareas_pendientes(tareas_manual))
+    # Contados sobre los tajos reales de items_prio, no sobre resumen_prio:
+    # el resumen es un calculo aparte del priorizador y puede desincronizarse
+    # de lo que el timeline realmente pinta (bug real detectado en revision,
+    # invisible mientras VERIFICAR fue siempre 0 en obras reales).
+    n_listos_real = sum(
+        1 for item in items_prio if item.get('situacion') == 'LISTO')
+    n_verificar_real = sum(
+        1 for item in items_prio if item.get('situacion') == 'VERIFICAR')
 
     tarjetas_prio = ''.join(
         _tarjeta_timeline_html(item) for item in items_prio)
@@ -1167,7 +1238,7 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
                       f"<td>{e(g.get('estado_actual'))}</td><td style='font-size:12px;'>{e(g.get('motivo'))}</td></tr>")
         if not filas:
             filas = '<tr><td colspan="6" class="empty">Sin tajos en esta sección.</td></tr>'
-        titulo_seccion = f"{titulo} <span class='badge'>{len(grupos)}</span>"
+        titulo_seccion = titulo  # el recuento ya vive en el centro de mando de arriba
         contenido = (
             f"<p style='font-size:12px;color:var(--muted);margin-bottom:8px;'>{explicacion}</p>"
             "<div class='table-scroll'><table class='data'><thead><tr><th>Tajo agrupado</th>"
@@ -1180,9 +1251,7 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
             'n': len(grupos),
         }
 
-    titulo_ejecucion = (
-        "Qué hacer ahora: orden lógico de ejecución "
-        f"<span class='badge'>{len(items_prio)}</span>")
+    titulo_ejecucion = "Qué hacer ahora: orden lógico de ejecución"
     contenido_ejecucion = f"""<p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Primero aparecen los tajos viables de viviendas, después zonas comunes y edificio. Los tajos iguales se agrupan. VERIFICAR nunca se considera ejecutable hasta confirmar la duda. <a href="prioridades_trabajos.json" target="_blank">Ver cálculo y detalle completo</a>.</p>
       <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
         <span style="font-size:12px;color:var(--muted);">Filtrar:</span>
@@ -1205,9 +1274,17 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
         secciones_indice.append({
             'id': _ID_SEC_TAREAS,
             'etiqueta': (f"Tareas manuales — "
-                        f"{len(_tareas_pendientes(tareas_manual))} pendientes"),
+                        f"{n_tareas_pendientes} pendientes"),
             'grupo': 'actuar', 'color': 'var(--accent2)',
         })
+    else:
+        # La tarjeta del centro de mando enlaza siempre a #sec-tareas: sin
+        # esto, una obra sin tareas manuales dejaria ese enlace apuntando a
+        # una seccion que no existe en la pagina.
+        tareas_manual_html = _envolver_plegable(
+            _ID_SEC_TAREAS, 'Tareas manuales',
+            '<p style="color:var(--muted);font-size:13px;">No hay tareas '
+            'manuales declaradas en la ficha.</p>')
     secciones_indice.append({
         'id': _ID_SEC_DUDAS,
         'etiqueta': f"Preguntas pendientes antes de decidir — {len(dudas_prio)}",
@@ -1263,7 +1340,65 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
         'etiqueta': f"Tajos terminados — {inventario_por_codigo['TERMINADO']['n']}",
         'grupo': 'consulta',
     })
-    indice_html = _indice_prioridades(secciones_indice)
+    secciones_consulta = [
+        seccion for seccion in secciones_indice
+        if seccion.get('grupo') == 'consulta'
+    ]
+    id_terminados = inventario_por_codigo['TERMINADO']['id']
+    if not any(s.get('id') == id_terminados for s in secciones_consulta):
+        secciones_consulta.append({
+            'id': id_terminados,
+            'etiqueta': (f"Tajos terminados — "
+                         f"{inventario_por_codigo['TERMINADO']['n']}"),
+            'color': 'var(--muted)',
+        })
+    chips_consulta_html = ''.join(
+        f"<a class='bento-chip indice-nav-link' "
+        f"href='#{_e_atributo(seccion['id'])}' "
+        f"data-abre='{_e_atributo(seccion['id'])}' "
+        f"style='--bento-color:{seccion.get('color') or 'var(--muted)'};'>"
+        f"<span>{e(seccion['etiqueta'])}</span></a>"
+        for seccion in secciones_consulta
+    )
+
+    categorias_salud = [
+        ('Listos', n_listos_real, 'var(--ok)'),
+        ('Verificar', n_verificar_real, 'var(--warn)'),
+        ('Bloqueados', resumen_prio.get('bloqueados', 0), 'var(--warn)'),
+        ('Otros gremios', resumen_prio.get('otros_gremios', 0), 'var(--muted)'),
+        ('Sin revisar nunca', resumen_prio.get('sin_revisar', 0), 'var(--bad)'),
+        ('Terminados', resumen_prio.get('terminados', 0), 'var(--muted)'),
+    ]
+    segmentos_salud = ''.join(
+        f"<span class='bento-segment' "
+        f"style='flex:{cantidad} 1 0;background:{color};' "
+        f"title='{_e_atributo(etiqueta)}: {_e_atributo(cantidad)}'></span>"
+        for etiqueta, cantidad, color in categorias_salud if cantidad
+    )
+    leyenda_salud = ''.join(
+        f"<div class='bento-legend-item' style='--bento-color:{color};'>"
+        f"<div class='bento-legend-label'><span class='bento-dot'></span>"
+        f"<span>{e(etiqueta)}</span></div><strong>{e(cantidad)}</strong></div>"
+        for etiqueta, cantidad, color in categorias_salud
+    )
+
+    n_bloqueados = resumen_prio.get('bloqueados', 0)
+    n_preguntas = resumen_prio.get('preguntas_pendientes', 0)
+    atencion_requerida = n_bloqueados > 0 or n_preguntas > 0
+    if atencion_requerida:
+        atencion_titulo = 'Atención requerida'
+        atencion_detalle = (
+            'Se activa porque bloqueados > 0 o preguntas pendientes > 0: '
+            f'{n_bloqueados} bloqueados · {n_preguntas} preguntas pendientes.')
+        atencion_clase = ''
+    else:
+        atencion_titulo = 'Sin atención requerida'
+        atencion_detalle = (
+            f'No se activa: bloqueados = {n_bloqueados} y preguntas '
+            f'pendientes = {n_preguntas}.')
+        atencion_clase = ' is-ok'
+
+    avance_html = '—' if avance_pct is None else f'{e(avance_pct)}%'
 
     grupo_actuar_html = (
         tareas_manual_html + dudas_html + ejecucion_html
@@ -1279,22 +1414,73 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
     )
 
     return f"""
-    <div class="kpi-row">
-      <div class="kpi"><div class="label">Bloques viables</div><div class="value">{resumen_prio.get('listos', 0)}</div><div class="hint">{resumen_prio.get('unidades_listas', 0)} unidades de trabajo</div></div>
-      <div class="kpi"><div class="label">Bloqueados</div><div class="value">{resumen_prio.get('bloqueados', 0)}</div><div class="hint">Tajos propios con dependencias</div></div>
-      <div class="kpi"><div class="label">Otros gremios</div><div class="value">{resumen_prio.get('otros_gremios', 0)}</div><div class="hint">Control de interferencias</div></div>
-      <div class="kpi"><div class="label">Sin revisar nunca</div><div class="value">{resumen_prio.get('sin_revisar', 0)}</div><div class="hint">{resumen_prio.get('unidades_sin_revisar', 0)} celdas que nadie ha mirado</div></div>
-      <div class="kpi"><div class="label">Preguntas</div><div class="value">{resumen_prio.get('preguntas_pendientes', 0)}</div><div class="hint">Resolver antes de decidir</div></div>
-      <div class="kpi"><div class="label">Terminados</div><div class="value">{resumen_prio.get('terminados', 0)}</div><div class="hint">Conservados del histórico</div></div>
-      <div class="kpi"><div class="label">Inventario completo</div><div class="value">{resumen_prio.get('inventario_total', 0)}</div><div class="hint">Tipos de tajo agrupados</div></div>
-      <div class="kpi"><div class="label">Revisión utilizada</div><div class="value" style="font-size:18px;">{e(prioridades.get('revision'))}</div><div class="hint">Motor v{e(prioridades.get('version'))} · catálogo v{e(prioridades.get('catalogo_version'))}</div></div>
-    </div>
+    <section class="bento-command" aria-label="Centro de mando de prioridades">
+      <div class="bento-health">
+        <div class="bento-health-top">
+          <div>
+            <span class="bento-eyebrow">Centro de mando · Prioridades</span>
+            <h2>Estado del proyecto</h2>
+            <p class="bento-health-meta">Revisión utilizada: {e(prioridades.get('revision'))} · Motor v{e(prioridades.get('version'))} · catálogo v{e(prioridades.get('catalogo_version'))}</p>
+          </div>
+          <div class="bento-health-side">
+            <div class="bento-attention{atencion_clase}">
+              <strong>{e(atencion_titulo)}</strong>
+              <span>{e(atencion_detalle)}</span>
+            </div>
+            <div class="bento-stat"><strong>{e(resumen_prio.get('inventario_total', 0))}</strong><span>tipos de tajo agrupados</span></div>
+            <div class="bento-stat"><strong>{avance_html}</strong><span>completado · avance estimado</span></div>
+          </div>
+        </div>
+        <div class="bento-segments" role="img" aria-label="Distribución de la salud del proyecto">{segmentos_salud}</div>
+        <div class="bento-legend">{leyenda_salud}</div>
+      </div>
+
+      <div class="bento-grid">
+        <a class="bento-link bento-card bento-hero indice-nav-link" href="#{_ID_SEC_EJECUCION}" data-abre="{_ID_SEC_EJECUCION}">
+          <div class="bento-hero-head">
+            <div>
+              <div class="bento-card-kicker"><span class="bento-dot"></span>Acción principal</div>
+              <h3>Qué hacer ahora</h3>
+              <p class="bento-card-copy">Orden lógico de ejecución de tajos</p>
+            </div>
+            <div class="bento-hero-total"><strong>{e(n_listos_real)}</strong><span>tajos listos</span></div>
+          </div>
+          <div class="bento-breakdown">
+            <div class="bento-breakdown-item" style="--bento-color:var(--ok);"><span>Listos</span><strong>{e(n_listos_real)}</strong></div>
+            <div class="bento-breakdown-item" style="--bento-color:var(--warn);"><span>Verificar</span><strong>{e(n_verificar_real)}</strong></div>
+          </div>
+        </a>
+
+        <a class="bento-link bento-card bento-small indice-nav-link" style="--bento-color:var(--warn);" href="#{inventario_por_codigo['BLOQUEADO']['id']}" data-abre="{inventario_por_codigo['BLOQUEADO']['id']}">
+          <div class="bento-card-kicker"><span class="bento-dot"></span>Dependencias</div><h3>Tajos bloqueados</h3>
+          <div class="bento-number">{e(n_bloqueados)}</div><div class="bento-number-label">tajos propios con dependencias</div>
+        </a>
+
+        <a class="bento-link bento-card bento-small indice-nav-link" style="--bento-color:var(--accent2);" href="#{_ID_SEC_TAREAS}" data-abre="{_ID_SEC_TAREAS}">
+          <div class="bento-card-kicker"><span class="bento-dot"></span>Manual</div><h3>Tareas manuales</h3>
+          <div class="bento-number">{n_tareas_pendientes}</div><div class="bento-number-label">pendientes declaradas en la ficha</div>
+        </a>
+
+        <a class="bento-link bento-card bento-half indice-nav-link" style="--bento-color:var(--bad);" href="#{inventario_por_codigo['SIN_REVISAR']['id']}" data-abre="{inventario_por_codigo['SIN_REVISAR']['id']}">
+          <div class="bento-card-kicker"><span class="bento-dot"></span>Revisar</div><h3>Sin revisar nunca</h3>
+          <div class="bento-number">{e(resumen_prio.get('sin_revisar', 0))}</div><div class="bento-number-label">tajos que nadie ha mirado todavía · {e(resumen_prio.get('unidades_sin_revisar', 0))} celdas</div>
+        </a>
+
+        <a class="bento-link bento-card bento-half indice-nav-link" style="--bento-color:{'var(--warn)' if n_preguntas else 'var(--ok)'};" href="#{_ID_SEC_DUDAS}" data-abre="{_ID_SEC_DUDAS}">
+          <div class="bento-card-kicker"><span class="bento-dot"></span>Decisiones</div><h3>Preguntas pendientes</h3>
+          <div class="bento-number">{e(n_preguntas)}</div><div class="bento-number-label">resolver antes de decidir</div>
+        </a>
+      </div>
+
+      <nav class="bento-reference" aria-label="Consulta y referencia">
+        <div class="bento-reference-title">Consulta y referencia</div>
+        <div class="bento-chips">{chips_consulta_html}</div>
+      </nav>
+    </section>
     {estado_obra_html}
     {avisos_prio}
-    {indice_html}
-    <div class="grupo-etiqueta">Para actuar hoy</div>
+    {_SCRIPT_INDICE_PRIORIDADES}
     {grupo_actuar_html}
-    <div class="grupo-etiqueta">Consulta y referencia</div>
     {grupo_consulta_html}"""
 
 
@@ -1415,7 +1601,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     # ---- PRIORIDADES E INVENTARIO COMPLETO DE TAJOS (motor v4) ----
     prioridades_html = bloque_prioridades(
         prioridades, tareas_manual=ficha.get('tareas', []),
-        documentos=documentos, obra=obra)
+        documentos=documentos, obra=obra,
+        avance_pct=kpis.get('pct_ponderado'))
 
     # Se reconstruye desde la base/priorizador del mismo ciclo. La ficha XLSX
     # solo aporta el registro manual complementario.

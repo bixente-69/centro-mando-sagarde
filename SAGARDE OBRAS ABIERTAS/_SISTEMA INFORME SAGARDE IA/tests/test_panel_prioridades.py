@@ -6,6 +6,7 @@ pruebas son la red de eso: cada cosa nueva del motor tiene que llegar a la
 pantalla.
 """
 import os
+import re
 import sys
 import tempfile
 import unittest
@@ -88,7 +89,14 @@ class TestTareasManuales(unittest.TestCase):
 
         html = panel_obra.bloque_prioridades(
             _prioridades(), tareas_manual=[], documentos=[])
-        self.assertNotIn('Tareas manuales', html)
+        # La tarjeta del centro de mando sigue apareciendo (igual que el
+        # resto de tarjetas, muestra 0 en vez de desaparecer), pero su
+        # enlace tiene que apuntar a una seccion real: sin lista de tareas
+        # no se deja un enlace muerto a un id que no existe.
+        self.assertIn("id='sec-tareas'", html)
+        self.assertIn(
+            'No hay tareas manuales declaradas en la ficha.', html)
+        self.assertNotIn('marcar-tarea-hecha', html)
 
     def test_archivo_sin_coincidencia_se_muestra_sin_enlace(self):
         html = panel_obra._tabla_tareas_manuales([{
@@ -110,10 +118,13 @@ class TestTareasManuales(unittest.TestCase):
                 }]),
             tareas_manual=self.TAREAS, documentos=[])
 
+        # 'Tareas manuales' ya no es un ancla univoca: el centro de mando
+        # tambien la nombra, antes de 'Estado de la obra'. Se comprueba el
+        # orden real de las secciones por su id, no por texto ambiguo.
         self.assertLess(html.index('Estado de la obra'),
-                        html.index('Tareas manuales'))
-        self.assertLess(html.index('Tareas manuales'),
-                        html.index('Preguntas pendientes antes de decidir'))
+                        html.index("id='sec-tareas'"))
+        self.assertLess(html.index("id='sec-tareas'"),
+                        html.index("id='sec-dudas'"))
 
     def test_generar_panel_pasa_tareas_y_documentos(self):
         ficha = {
@@ -423,9 +434,16 @@ class TestConteoPorAmbito(unittest.TestCase):
         n_tarjetas = timeline.count('<article class="timeline-item"')
         self.assertEqual(n_tarjetas, 2)
 
-        seccion = html[html.index("id='sec-ejecucion'"):
-                        html.index("id='sec-ejecucion'") + 300]
-        self.assertIn(f"<span class='badge'>{n_tarjetas}</span>", seccion)
+        # La tarjeta heroe del centro de mando tiene que contar LISTO y
+        # VERIFICAR contando los tajos reales, no fiarse a ciegas de
+        # resumen_prio (aqui deliberadamente incompleto: solo declara
+        # 'listos', no 'verificar').
+        hero = html[html.index("bento-hero"):html.index("bento-hero") + 900]
+        self.assertIn("<strong>1</strong><span>tajos listos</span>", hero)
+        self.assertIn(
+            "<span>Listos</span><strong>1</strong>", hero)
+        self.assertIn(
+            "<span>Verificar</span><strong>1</strong>", hero)
 
 
 class TestTimelineEjecucion(unittest.TestCase):
@@ -545,7 +563,18 @@ class TestIndicePrioridades(unittest.TestCase):
                        "name='indice-nav-grupo'>"), 2)
 
 
-class TestIndiceConectado(unittest.TestCase):
+def _contar_data_abre(html, id_seccion):
+    """Cuenta enlaces data-abre a un id, sin importar la comilla usada:
+    las tarjetas bento usan comillas dobles y los chips comillas simples."""
+    return len(re.findall(
+        r"""data-abre=["']""" + re.escape(id_seccion) + r"""["']""", html))
+
+
+class TestCentroDeMandoConectado(unittest.TestCase):
+    """El centro de mando (bento) sustituyo a la fila de KPIs + el indice
+    desplegable. Estas pruebas protegen la misma familia de fallo de
+    siempre: un dato o un enlace que el motor calcula pero que la pagina no
+    conecta con la seccion real a la que dice apuntar."""
 
     def _html_obra_completa(self):
         return panel_obra.bloque_prioridades(_prioridades(
@@ -572,97 +601,103 @@ class TestIndiceConectado(unittest.TestCase):
             'Fecha': '22/08/2026', 'Archivo': '', 'Estado': 'Pendiente',
         }], documentos=[])
 
-    def test_el_indice_aparece_una_sola_vez(self):
+    def test_el_centro_de_mando_aparece_una_sola_vez(self):
         html = self._html_obra_completa()
-        self.assertEqual(html.count("class='indice-nav'"), 1)
+        self.assertEqual(html.count('class="bento-command"'), 1)
 
-    def test_el_indice_es_un_desplegable_por_grupo_no_una_lista_de_tarjetas(self):
-        html = self._html_obra_completa()
-        self.assertEqual(
-            html.count("class='indice-nav-grupo' name='indice-nav-grupo'"), 2)
-        self.assertNotIn('indice-item', html)
-        self.assertNotIn('indice-grupo-label', html)
+    def test_las_secciones_clasicas_estan_ocultas_por_defecto(self):
+        """Bixente: 'si ya tengo arriba enlace, no necesito debajo' — un
+        enlace bento + la seccion real duplicando la misma cabecera visible
+        alargaba la pagina. Se comprueba que la regla CSS que las oculta
+        por defecto sigue cubriendo las once secciones reales, para que
+        nadie la borre sin darse cuenta y resucite la duplicidad."""
+        estilo = panel_obra.ESTILOS
+        for id_seccion in (
+            'sec-tareas', 'sec-dudas', 'sec-ejecucion', 'sec-inv-bloqueado',
+            'sec-inv-sin_revisar', 'sec-inv-viable', 'sec-inv-otros_gremios',
+            'sec-inv-dudas', 'sec-inv-terminado', 'sec-preguntas-catalogo',
+            'sec-prevision',
+        ):
+            self.assertIn(
+                f'#{id_seccion}', estilo,
+                f'{id_seccion} no esta en la regla que oculta por defecto')
 
-    def test_el_indice_va_antes_que_todas_las_secciones_plegables(self):
+    def test_el_centro_de_mando_va_antes_que_todas_las_secciones_plegables(self):
         html = self._html_obra_completa()
-        posicion_indice = html.index("class='indice-nav'")
+        posicion_bento = html.index('class="bento-command"')
         for id_seccion in ('sec-tareas', 'sec-dudas', 'sec-ejecucion',
                             'sec-inv-bloqueado', 'sec-inv-sin_revisar'):
             self.assertLess(
-                posicion_indice, html.index(f"id='{id_seccion}'"),
-                f"el indice deberia ir antes que {id_seccion}")
+                posicion_bento, html.index(f"id='{id_seccion}'"),
+                f"el centro de mando deberia ir antes que {id_seccion}")
 
-    def test_bloqueados_y_sin_revisar_estan_en_el_grupo_actuar(self):
+    def test_bloqueados_y_sin_revisar_son_tarjetas_no_chips(self):
+        """Tienen su propia tabla completa (no solo un contador), asi que
+        van en la rejilla de tarjetas grandes, no en la fila de chips de
+        solo consulta."""
         html = self._html_obra_completa()
-        inicio_actuar = html.index('Para actuar hoy')
-        inicio_consulta = html.index('Consulta y referencia')
-        pos_bloqueados = html.index("data-abre='sec-inv-bloqueado'")
-        pos_sin_revisar = html.index("data-abre='sec-inv-sin_revisar'")
-        self.assertTrue(inicio_actuar < pos_bloqueados < inicio_consulta)
-        self.assertTrue(inicio_actuar < pos_sin_revisar < inicio_consulta)
+        inicio_grid = html.index('class="bento-grid"')
+        inicio_referencia = html.index('class="bento-reference"')
+        pos_bloqueados = html.index("sec-inv-bloqueado", inicio_grid)
+        pos_sin_revisar = html.index("sec-inv-sin_revisar", inicio_grid)
+        self.assertTrue(inicio_grid < pos_bloqueados < inicio_referencia)
+        self.assertTrue(inicio_grid < pos_sin_revisar < inicio_referencia)
 
-    def test_el_numero_del_indice_coincide_con_las_filas_reales_de_la_seccion(self):
+    def test_el_numero_de_la_tarjeta_coincide_con_las_filas_reales_de_la_seccion(self):
         html = self._html_obra_completa()
         # "Tajos bloqueados" tiene 1 grupo en el inventario de esta obra de
-        # prueba (seccion BLOQUEADO): el indice debe decir "1", no otra cosa.
-        indice_bloqueados = html[
-            html.index("data-abre='sec-inv-bloqueado'"):
-            html.index("data-abre='sec-inv-bloqueado'") + 200]
-        self.assertIn('1', indice_bloqueados)
-        # Y la propia seccion debe traer el mismo "1" en su badge.
+        # prueba (seccion BLOQUEADO): la tarjeta debe decir "1", no otra cosa.
+        tarjeta_bloqueados = html[
+            html.index("sec-inv-bloqueado"):
+            html.index("sec-inv-bloqueado") + 300]
+        self.assertIn('<div class="bento-number">1</div>', tarjeta_bloqueados)
+        # Y la seccion real debe traer exactamente 1 fila de tajo (mas la
+        # cabecera de la tabla, que no cuenta).
         seccion_bloqueados = html[
             html.index("id='sec-inv-bloqueado'"):
-            html.index("id='sec-inv-bloqueado'") + 400]
-        self.assertIn("<span class='badge'>1</span>", seccion_bloqueados)
+            html.index("id='sec-inv-sin_revisar'")]
+        self.assertEqual(seccion_bloqueados.count('<tr><td><b>'), 1)
 
-    def test_una_seccion_vacia_no_aparece_en_el_indice(self):
+    def test_una_seccion_vacia_no_aparece_como_tarjeta_ni_chip(self):
         # Sin preguntas_orden ni prevision: _tabla_preguntas_orden y
-        # _tabla_prevision devuelven '' y no deben dejar entrada en el indice.
+        # _tabla_prevision devuelven '' y no deben dejar tarjeta ni chip
+        # (la regla CSS que las oculta por id sigue mencionandolas, eso es
+        # aparte y ya lo cubre otra prueba).
         html = self._html_obra_completa()
-        self.assertNotIn('sec-preguntas-catalogo', html)
-        self.assertNotIn('sec-prevision', html)
+        self.assertNotIn("id='sec-preguntas-catalogo'", html)
+        self.assertNotIn("data-abre='sec-preguntas-catalogo'", html)
+        self.assertNotIn("id='sec-prevision'", html)
+        self.assertNotIn("data-abre='sec-prevision'", html)
 
-    def test_tareas_manuales_vacio_no_deja_entrada_en_el_indice(self):
-        html = panel_obra.bloque_prioridades(
-            _prioridades(), tareas_manual=[], documentos=[])
-        self.assertNotIn('sec-tareas', html)
-
-    def test_las_seis_secciones_del_inventario_salen_en_el_indice_una_sola_vez(self):
+    def test_las_seis_secciones_del_inventario_salen_conectadas_una_sola_vez(self):
         """Guarda contra la familia de fallo de este proyecto: un codigo que
         el bucle de mas arriba construye en `inventario_por_codigo` pero que
-        el montaje final (hardcodeado por nombre) no coloca en ningun grupo
-        ni en el indice se quedaria construido y nunca mostrado, en
+        el montaje final (hardcodeado por nombre) no coloca en ninguna
+        tarjeta ni chip se quedaria construido y nunca mostrado, en
         silencio. Esta prueba pasa hoy porque los seis codigos actuales
         estan bien conectados; su valor es fallar el dia que se añada un
         septimo codigo a _SECCIONES_INVENTARIO sin conectarlo."""
         html = self._html_obra_completa()
         for codigo, _, _ in panel_obra._SECCIONES_INVENTARIO:
             self.assertEqual(
-                html.count(f"data-abre='sec-inv-{codigo.lower()}'"), 1,
-                f'{codigo} no tiene exactamente una entrada de indice')
+                _contar_data_abre(html, f'sec-inv-{codigo.lower()}'), 1,
+                f'{codigo} no tiene exactamente un enlace conectado')
 
-    def test_el_contenido_real_repite_las_etiquetas_de_grupo(self):
-        """El indice es solo la barra de arriba; el contenido de verdad
-        tambien lleva su propio rotulo de grupo, para que al bajar no se
-        pierda en que zona estas."""
+    def test_pinchar_un_enlace_revela_abre_y_hace_scroll(self):
+        """El script no solo abre la seccion destino: primero la revela
+        (estaba oculta por CSS) y hace scroll manual, porque el salto de
+        ancla nativo del navegador no funciona sobre un elemento oculto."""
         html = self._html_obra_completa()
-        pos_etiqueta_actuar = html.index(
-            'class="grupo-etiqueta">Para actuar hoy')
-        pos_etiqueta_consulta = html.index(
-            'class="grupo-etiqueta">Consulta y referencia')
-        pos_tareas = html.index("id='sec-tareas'")
-        pos_viable = html.index("id='sec-inv-viable'")
-        self.assertLess(pos_etiqueta_actuar, pos_tareas)
-        self.assertLess(pos_tareas, pos_etiqueta_consulta)
-        self.assertLess(pos_etiqueta_consulta, pos_viable)
+        self.assertIn("destino.style.display = 'block'", html)
+        self.assertIn('destino.open = true', html)
+        self.assertIn('destino.scrollIntoView(', html)
 
-    def test_pinchar_un_enlace_del_indice_cierra_el_desplegable(self):
-        """El script del indice no solo abre la seccion destino: cierra el
-        desplegable desde el que se pincho, para no dejarlo tapando el
-        contenido."""
+    def test_cerrar_una_seccion_la_vuelve_a_ocultar(self):
+        """Para que la pagina en reposo siga siendo 'solo bento': si el
+        usuario explora una seccion y la cierra, no debe quedar un resto
+        visible suelto."""
         html = self._html_obra_completa()
-        self.assertIn("closest('details.indice-nav-grupo')", html)
-        self.assertIn('menu.open = false', html)
+        self.assertIn("if (!el.open) { el.style.display = 'none'; }", html)
 
 
 if __name__ == '__main__':
