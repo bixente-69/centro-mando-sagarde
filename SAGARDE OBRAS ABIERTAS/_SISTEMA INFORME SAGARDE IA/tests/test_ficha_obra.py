@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import copy
 import io
 import os
 import sys
@@ -733,9 +734,42 @@ class TestSnapshotDesdeFicha(unittest.TestCase):
         fila = next(r for r in ficha_obra.snapshot_desde_ficha(ficha)
                     if r['unit'] == 'A' and r['task'] == 'Tubeado'
                     and r['floor'] == 'PB')
-        self.assertEqual(set(fila), {'task', 'floor', 'building', 'unit', 'status'})
+        self.assertEqual(set(fila), {
+            'task', 'floor', 'building', 'unit', 'status',
+            'portal_id', 'planta_id', 'unidad_id',
+        })
         self.assertEqual(fila['building'], 'P1')
         self.assertEqual(fila['status'], 'X')
+
+    def test_ids_canonicos_distinguen_portales_homonimos_al_reimportar(self):
+        ficha = self._ficha_con_estados({
+            'p1__pb__tubeado__A': 'X',
+        })
+        bloque_2 = copy.deepcopy(ficha['estructura']['bloques'][0])
+        bloque_2['id'] = 'b2'
+        bloque_2['nombre'] = 'B2'
+        bloque_2['portales'][0]['id'] = 'p2'
+        ficha['estructura']['bloques'][0]['nombre'] = 'B1'
+        ficha['estructura']['bloques'].append(bloque_2)
+        for clave, dato in list(ficha['estados'].items()):
+            ficha['estados']['p2' + clave[2:]] = copy.deepcopy(dato)
+        ficha['estados']['p2__pb__tubeado__A'] = {
+            'v': 'M', 'f': '27/07/2026', 'r': 'rev_27072026'}
+
+        snapshot = ficha_obra.snapshot_desde_ficha(ficha)
+        edificios = {fila['portal_id']: fila['building'] for fila in snapshot}
+        self.assertEqual(edificios['p1'], 'B1 P1')
+        self.assertEqual(edificios['p2'], 'B2 P1')
+        destino = copy.deepcopy(ficha)
+        destino['estados']['p1__pb__tubeado__A']['v'] = 'P'
+        destino['estados']['p2__pb__tubeado__A']['v'] = 'P'
+        destino, _ = ficha_obra.actualizar_desde_snapshot(
+            destino, snapshot, '28/07/2026')
+
+        self.assertEqual(
+            destino['estados']['p1__pb__tubeado__A']['v'], 'X')
+        self.assertEqual(
+            destino['estados']['p2__pb__tubeado__A']['v'], 'M')
 
     def test_pendiente_confirmado_viaja_como_vacio(self):
         """P entra en el denominador: se comprobo y no esta hecho."""

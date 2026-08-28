@@ -68,6 +68,16 @@ OBRAS = [
         'adaptador': 'adaptador_prueba',
         'carpeta_obra': '2026 OBRA PRUEBA',
         'bloque_revision': 'BLOQUE 1',
+        # La hoja HTML enumera los portales en el orden de la estructura:
+        # B1/P1, B1/P2 y B2/P1. Los dos ultimos no se pueden deducir solo
+        # por el nombre "PORTAL" porque el orden natural alternativo los
+        # intercambia. El adaptador exige este mapa explicito antes de
+        # aceptar sus celdas; nunca debe adivinar una ubicacion plausible.
+        'mapa_portales_revision_html': {
+            'src_prueba_p1': 'p1',
+            'src_prueba_p2': 'p2',
+            'src_prueba_p3': 'p3',
+        },
         'materiales_rel': os.path.join(
             'REVISIONES', 'hoja de entrega de materiales OBRA PRUEBA.xlsx'),
     },

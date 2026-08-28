@@ -178,6 +178,31 @@ class TestCutoverLeerHojaMarcada(unittest.TestCase):
         self.assertEqual(
             guardar.call_args.args[1]['revisiones'][-1]['fecha'], FECHA)
 
+    def test_digital_pasa_al_html_los_mapas_explicitos_de_la_obra(self):
+        self._crear_html_gemelo()
+        self.obra['mapa_portales_revision_html'] = {
+            'src_pruebas_p1': 'p1',
+        }
+        impresos = {CLAVE: 'X'}
+        with (
+                mock.patch.object(
+                    lector, 'estados_impresos', return_value=impresos),
+                mock.patch.object(
+                    adaptar_revision_html,
+                    'construir_revision_normalizada_html',
+                    wraps=(adaptar_revision_html
+                           .construir_revision_normalizada_html)
+                ) as adaptar_html):
+            _salida, guardar = self._ejecutar([
+                self.pdf, 'pruebas', '--digital', '--fecha', FECHA,
+                '--escribir'], _ficha('P'))
+
+        self.assertEqual(
+            adaptar_html.call_args.kwargs['portal_id_a_real'],
+            {'src_pruebas_p1': 'p1'},
+        )
+        guardar.assert_called_once()
+
     def test_digital_escribir_sin_html_usa_pdf(self):
         impresos = {CLAVE: 'X'}
         with (

@@ -872,7 +872,7 @@ def construir_revision_normalizada_desde_snapshot(
     ids_tajo_de_ficha = set(id_por_nombre.values())
     id_por_alias_catalogo = fichas._indice_tajo_por_nombre()
     ids_tajo_validos = validar_revision._ids_tajos(catalogo, obra['id'])
-    _por_id, por_nombre = fichas._indice_ubicaciones(ficha_actual)
+    por_id, por_nombre = fichas._indice_ubicaciones(ficha_actual)
 
     for indice, registro in enumerate(snapshot_crudo or []):
         nombre_tajo = str(registro.get('task') or '').strip()
@@ -890,9 +890,15 @@ def construir_revision_normalizada_desde_snapshot(
                 'por el motor comun; la salvaguarda comprobara la paridad')
             continue
 
-        trio = fichas._localizar(
-            por_nombre, registro.get('building'), registro.get('floor'),
-            registro.get('unit'))
+        trio_canonico = (
+            registro.get('portal_id'), registro.get('planta_id'),
+            registro.get('unidad_id'))
+        trio = (trio_canonico if all(trio_canonico)
+                and trio_canonico in por_id else None)
+        if trio is None:
+            trio = fichas._localizar(
+                por_nombre, registro.get('building'), registro.get('floor'),
+                registro.get('unit'))
         if trio is None:
             avisos.append(
                 f"snapshot[{indice}]: ubicacion "

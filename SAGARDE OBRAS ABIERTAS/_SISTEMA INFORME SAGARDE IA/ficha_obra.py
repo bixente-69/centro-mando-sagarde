@@ -241,6 +241,33 @@ def volcar_apartados(ficha, ficha_xlsx=None, materiales=None, documentos=None):
 ESTADO_A_SNAPSHOT = {'X': 'X', 'M': 'M', '/': '/', 'P': ''}
 
 
+def _etiquetas_portal_desambiguadas(estructura):
+    """Devuelve ``portal_id -> etiqueta`` sin fusionar portales homonimos.
+
+    El nombre visible sigue siendo el de siempre mientras sea unico. Si dos
+    bloques contienen, por ejemplo, su propio ``PORTAL 1``, se antepone el
+    bloque solo a esos portales. Es la misma norma que usa el priorizador.
+    """
+    por_nombre = {}
+    for bloque in (estructura or {}).get('bloques') or []:
+        for portal in bloque.get('portales') or []:
+            nombre = (portal.get('referencia') or portal.get('nombre')
+                      or portal['id'])
+            por_nombre.setdefault(_fold(nombre), []).append(
+                (nombre, bloque, portal))
+
+    etiquetas = {}
+    for grupo in por_nombre.values():
+        for nombre, bloque, portal in grupo:
+            if len(grupo) > 1:
+                prefijo = (bloque.get('referencia') or bloque.get('nombre')
+                           or bloque['id'])
+                etiquetas[portal['id']] = f'{prefijo} {nombre}'
+            else:
+                etiquetas[portal['id']] = nombre
+    return etiquetas
+
+
 def snapshot_desde_ficha(ficha):
     """Traduce la ficha al formato plano que consume todo el sistema:
     [{'task','floor','building','unit','status'}, ...]
@@ -255,11 +282,13 @@ def snapshot_desde_ficha(ficha):
     nombres_tajo = {t['id']: (t.get('nombre') or t['id'])
                     for t in (ficha.get('tajos') or {}).get('detalle') or []}
     estados = ficha.get('estados') or {}
+    etiquetas_portal = _etiquetas_portal_desambiguadas(
+        ficha.get('estructura') or {})
 
     filas = []
     for bloque in (ficha.get('estructura') or {}).get('bloques') or []:
         for portal in bloque.get('portales') or []:
-            edificio = portal.get('referencia') or portal.get('nombre') or portal['id']
+            edificio = etiquetas_portal[portal['id']]
             for planta in portal.get('plantas') or []:
                 for ubi in planta.get('ubicaciones') or []:
                     clave_alias = f"{portal['id']}__{planta['id']}__{ubi['id']}"
@@ -279,6 +308,13 @@ def snapshot_desde_ficha(ficha):
                             'building': edificio,
                             'unit': unidad,
                             'status': estado,
+                            # Identidad canonica para el viaje ficha ->
+                            # snapshot -> ficha. Los nombres visibles no son
+                            # una clave: dos bloques pueden contener sendos
+                            # "PORTAL 1" con plantas y viviendas iguales.
+                            'portal_id': portal['id'],
+                            'planta_id': planta['id'],
+                            'unidad_id': ubi['id'],
                         })
     return filas
 
@@ -303,6 +339,8 @@ def _indice_ubicaciones(ficha):
     habla de (edificio, planta, unidad) con los nombres impresos."""
     por_id, por_nombre = {}, {}
     alias = (ficha.get('estructura') or {}).get('alias_historico') or {}
+    etiquetas_portal = _etiquetas_portal_desambiguadas(
+        ficha.get('estructura') or {})
     inverso = {}
     for clave, historico in alias.items():
         inverso.setdefault(historico, clave)
@@ -313,13 +351,18 @@ def _indice_ubicaciones(ficha):
                     trio = (portal['id'], planta['id'], ubi['id'])
                     por_id[trio] = ubi
                     ref = portal.get('referencia') or portal.get('nombre')
-                    por_nombre[(_fold(ref), _fold(planta.get('nombre')),
-                                _fold_unidad(ubi['id']))] = trio
+                    referencias = {ref, etiquetas_portal[portal['id']]}
+                    for referencia in referencias:
+                        por_nombre[(_fold(referencia),
+                                    _fold(planta.get('nombre')),
+                                    _fold_unidad(ubi['id']))] = trio
                     clave_alias = f"{portal['id']}__{planta['id']}__{ubi['id']}"
                     historico = alias.get(clave_alias)
                     if historico:
-                        por_nombre[(_fold(ref), _fold(planta.get('nombre')),
-                                    _fold_unidad(historico))] = trio
+                        for referencia in referencias:
+                            por_nombre[(_fold(referencia),
+                                        _fold(planta.get('nombre')),
+                                        _fold_unidad(historico))] = trio
     return por_id, por_nombre
 
 
@@ -425,6 +468,9 @@ def actualizar_desde_snapshot(ficha, snapshot, revision, correcciones=None,
             'edificio': reg.get('building'),
             'planta': reg.get('floor'),
             'unidad': reg.get('unit'),
+            'portal_id': reg.get('portal_id'),
+            'planta_id': reg.get('planta_id'),
+            'unidad_id': reg.get('unidad_id'),
             'estado_actual': reg.get('status', ''),
             'ultima_fecha': revision,
         })
@@ -486,8 +532,14 @@ def actualizar(ficha, prioridades, correcciones=None, mapa_tajos_cortos=None):
 
     # --- estados de las celdas que la revision SI menciona -----------------
     for item in detalle:
-        trio = _localizar(por_nombre, item.get('edificio'),
-                          item.get('planta'), item.get('unidad'))
+        trio_canonico = (
+            item.get('portal_id'), item.get('planta_id'),
+            item.get('unidad_id'))
+        trio = (trio_canonico if all(trio_canonico)
+                and trio_canonico in por_id else None)
+        if trio is None:
+            trio = _localizar(por_nombre, item.get('edificio'),
+                              item.get('planta'), item.get('unidad'))
         if trio is None:
             trio = _alta_ubicacion(ficha, item, revision, cambios,
                                    por_id, por_nombre)

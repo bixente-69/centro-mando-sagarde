@@ -571,8 +571,10 @@ def _ruta_html_gemelo(ruta_pdf):
     return os.path.splitext(os.path.abspath(ruta_pdf))[0] + '.html'
 
 
-def _construir_revision_digital(ruta_pdf, obra_id, ficha, fecha, catalogo,
-                                forzar_pdf=False):
+def _construir_revision_digital(
+        ruta_pdf, obra_id, ficha, fecha, catalogo, forzar_pdf=False,
+        portal_id_a_real=None, planta_id_a_real=None,
+        tarea_id_a_real=None):
     """Elige HTML gemelo o PDF y devuelve la revision normalizada."""
     import adaptar_revision_html
     import adaptar_revision_pdf_digital
@@ -581,7 +583,11 @@ def _construir_revision_digital(ruta_pdf, obra_id, ficha, fecha, catalogo,
     if os.path.isfile(ruta_html) and not forzar_pdf:
         print(f'usando el HTML gemelo: {ruta_html}')
         return adaptar_revision_html.construir_revision_normalizada_html(
-            ruta_html, obra_id, ficha, catalogo, fecha=fecha)
+            ruta_html, obra_id, ficha, catalogo,
+            portal_id_a_real=portal_id_a_real,
+            planta_id_a_real=planta_id_a_real,
+            tarea_id_a_real=tarea_id_a_real,
+            fecha=fecha)
 
     if os.path.isfile(ruta_html) and forzar_pdf:
         print('HTML gemelo ignorado por --forzar-pdf; '
@@ -788,7 +794,10 @@ def main():
         catalogo = validar_revision.cargar_catalogo_tajos()
         revision = _construir_revision_digital(
             args.hoja, obra['id'], ficha, args.fecha, catalogo,
-            forzar_pdf=args.forzar_pdf)
+            forzar_pdf=args.forzar_pdf,
+            portal_id_a_real=obra.get('mapa_portales_revision_html'),
+            planta_id_a_real=obra.get('mapa_plantas_revision_html'),
+            tarea_id_a_real=obra.get('mapa_tajos_revision_html'))
         validacion, aplicacion = _ejecutar_motor_comun(
             revision, ficha, catalogo, args.escribir)
         cambios = _cambios_de_validacion(validacion)
