@@ -17,6 +17,7 @@ calcula y se pinta.
 import html as html_lib
 import json
 import os
+from collections import OrderedDict
 from datetime import datetime
 
 import motor_informes as motor
@@ -83,8 +84,63 @@ table.data tbody tr:hover{background:#f8f9fb;}
 .indice-nav-link{display:flex;justify-content:space-between;gap:10px;padding:8px 10px;border-radius:6px;font-size:13px;font-weight:600;color:var(--text);text-decoration:none;}
 .indice-nav-link:hover{background:var(--bg);}
 .grupo-etiqueta{font-size:10.5px;font-weight:700;letter-spacing:.5px;color:var(--muted);text-transform:uppercase;margin:18px 2px 8px;}
+.timeline-prio{position:relative;}
+.timeline-item{position:relative;display:grid;grid-template-columns:50px minmax(0,1fr);gap:15px;padding-bottom:16px;}
+.timeline-item::before{content:"";position:absolute;left:24px;top:48px;bottom:-2px;width:2px;background:color-mix(in srgb,var(--muted) 28%,transparent);}
+.timeline-item.last-visible::before{display:none;}
+.timeline-item[hidden]{display:none;}
+.timeline-node{position:relative;z-index:2;width:50px;height:50px;display:grid;place-items:center;border-radius:50%;color:var(--card);font-size:17px;font-weight:800;box-shadow:0 4px 12px color-mix(in srgb,var(--header) 18%,transparent);}
+.timeline-node.ok{background:var(--ok);}.timeline-node.warn{background:var(--warn);}
+.task-card{min-width:0;background:var(--card);border-radius:var(--radius);border:1px solid color-mix(in srgb,var(--muted) 20%,transparent);border-left:4px solid var(--ok);box-shadow:0 1px 3px color-mix(in srgb,var(--header) 8%,transparent);overflow:hidden;transition:box-shadow .2s ease,border-color .2s ease;}
+.task-card.warn{border-left-color:var(--warn);}
+.task-card:hover,.task-card[open]{box-shadow:0 7px 22px color-mix(in srgb,var(--header) 12%,transparent);}
+.task-card>summary{position:relative;display:block;list-style:none;cursor:pointer;padding:16px 46px 16px 18px;}
+.task-card>summary::-webkit-details-marker,.more-locations>summary::-webkit-details-marker{display:none;}
+.task-card>summary::marker,.more-locations>summary::marker{content:"";}
+.task-card>summary:focus-visible{outline:3px solid color-mix(in srgb,var(--accent2) 35%,transparent);outline-offset:-3px;}
+.summary-topline,.summary-titleline,.compact-bottom,.progress-wrap{display:flex;align-items:center;min-width:0;}
+.summary-topline{gap:9px;}.summary-titleline{justify-content:space-between;gap:14px;margin-top:9px;}
+.task-meta,.scope{color:var(--muted);font-size:11.5px;}.task-meta{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.task-title{font-size:16px;font-weight:750;line-height:1.3;}.scope{flex:0 0 auto;}
+.compact-bottom{display:grid;grid-template-columns:minmax(250px,.9fr) minmax(210px,1.1fr);gap:20px;margin-top:13px;}
+.progress-wrap{gap:9px;}.progress-track{display:block;flex:1;height:8px;min-width:90px;background:color-mix(in srgb,var(--muted) 13%,var(--card));border-radius:20px;overflow:hidden;}
+.progress-fill{display:block;height:100%;background:var(--ok);border-radius:inherit;}.task-card.warn .progress-fill{background:var(--warn);}
+.progress-copy,.location-summary{font-size:11.5px;color:var(--muted);}.progress-copy{white-space:nowrap;}.location-summary{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.location-summary>span{color:var(--accent2);font-weight:800;}
+.chevron{position:absolute;right:20px;top:21px;width:9px;height:9px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .2s ease;}
+.task-card[open]>summary .chevron{transform:rotate(225deg);top:25px;}
+.task-detail{padding:16px 18px 18px;border-top:1px solid color-mix(in srgb,var(--muted) 17%,transparent);background:color-mix(in srgb,var(--bg) 70%,var(--card));}
+.stat-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:17px;}
+.stat{padding:12px;text-align:center;background:var(--card);border:1px solid color-mix(in srgb,var(--muted) 20%,transparent);border-radius:8px;}
+.stat strong{display:block;font-size:24px;line-height:1.1;}.stat span{display:block;margin-top:3px;color:var(--muted);font-size:11.5px;}
+.stat.done strong{color:var(--ok);}.stat.pending strong{color:var(--warn);}.stat.total strong{color:var(--header2);}
+.locations-block,.reason-block{padding:13px 14px;background:var(--card);border:1px solid color-mix(in srgb,var(--muted) 18%,transparent);border-radius:8px;}
+.reason-block{margin-top:12px;}.secondary-reason{border-left:3px solid var(--accent2);}
+.detail-heading,.location-group-head{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.detail-label{margin:0;color:var(--muted);font-size:10.5px;font-weight:800;letter-spacing:.55px;}
+.location-legend{display:flex;align-items:center;gap:5px;margin:0;color:var(--muted);font-size:10.5px;}
+.legend-dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-left:5px;}.legend-dot.done{background:var(--ok);}.legend-dot.pending{background:var(--warn);}
+.location-group{padding:11px 0;border-bottom:1px solid color-mix(in srgb,var(--muted) 14%,transparent);}
+.location-group:last-child{border-bottom:0;padding-bottom:0;}.location-group-head{margin-bottom:7px;font-size:11.5px;}.location-group-head strong{font-size:12px;color:var(--header2);}.location-group-head span{color:var(--muted);}
+.location-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.location-chip{display:inline-flex;align-items:center;gap:7px;padding:4px 5px 4px 8px;border:1px solid color-mix(in srgb,var(--muted) 24%,transparent);border-radius:7px;background:var(--card);font-size:11px;}
+.location-chip.is-done{border-left:3px solid var(--ok);}.location-chip.is-pending{border-left:3px solid var(--warn);}
+.chip-state{padding:1px 5px;border-radius:4px;color:var(--muted);background:color-mix(in srgb,var(--muted) 10%,var(--card));font-size:9.5px;font-weight:800;}
+.is-done .chip-state{color:var(--ok);}.is-pending .chip-state{color:var(--warn);}
+.more-locations{margin-top:10px;}.more-locations>summary{list-style:none;cursor:pointer;color:var(--accent2);font-size:12px;font-weight:700;padding:5px 0;}
+.more-locations>summary::before{content:"+";display:inline-grid;place-items:center;width:18px;height:18px;margin-right:6px;border:1px solid currentColor;border-radius:50%;}
+.more-locations[open]>summary::before{content:"−";}.more-locations-content{margin-top:2px;padding-left:12px;border-left:2px solid color-mix(in srgb,var(--accent2) 22%,transparent);}
+.reason-block p:last-child{margin:5px 0 0;font-size:12.5px;}.technical-meta{margin:12px 2px 0;color:var(--muted);font-size:10.5px;}
 @media(max-width:768px){.indice-nav-panel{left:0;right:0;min-width:0;}}
 @media(max-width:768px){.header{flex-direction:column;}.kpi-row{grid-template-columns:repeat(2,1fr);}.chart-row{grid-template-columns:1fr;}}
+@media(max-width:760px){
+  .timeline-item{grid-template-columns:40px minmax(0,1fr);gap:10px;}.timeline-node{width:40px;height:40px;font-size:14px;}.timeline-item::before{left:19px;top:39px;}
+  .task-card>summary{padding:14px 38px 14px 13px;}.chevron{right:15px;top:19px;}.task-card[open]>summary .chevron{top:23px;}
+  .summary-titleline{align-items:flex-start;flex-direction:column;gap:2px;}.compact-bottom{grid-template-columns:1fr;gap:8px;}.progress-wrap{flex-wrap:wrap;}.progress-track{flex-basis:120px;}
+  .task-meta{white-space:normal;}.location-summary{white-space:normal;}.task-detail{padding:13px;}.stat{padding:10px 5px;}.stat strong{font-size:20px;}
+  .detail-heading{align-items:flex-start;flex-direction:column;gap:5px;}
+}
+@media(prefers-reduced-motion:reduce){.task-card,.chevron{transition:none;}}
 """
 
 NORMATIVA_ITEMS = [
@@ -125,16 +181,242 @@ def _ub_div(ubicacion):
             f"planta {_e(ubicacion.get('planta'))}</b>: {_e(unidades_txt)}</div>")
 
 
-def _ubicaciones_html(ubicaciones, limite=4):
-    visibles = ''.join(_ub_div(u) for u in ubicaciones[:limite])
-    extra = ''.join(_ub_div(u) for u in ubicaciones[limite:])
-    n_extra = max(0, len(ubicaciones) - limite)
-    if n_extra:
-        return (visibles + f"<div class='ub-extra' style='display:none;'>{extra}</div>"
-                + f"<a href='#' class='show-ub' data-n='{n_extra}' "
-                  "style='font-size:11.5px;color:var(--accent2);'>"
-                + f"+{n_extra} ubicaciones más</a>")
-    return visibles or '—'
+def _ubicaciones_html(ubicaciones):
+    if not ubicaciones:
+        return '—'
+    n = len(ubicaciones)
+    detalle = ''.join(_ub_div(u) for u in ubicaciones)
+    return (
+        "<details style='margin-top:2px;'>"
+        "<summary style='cursor:pointer;font-size:12px;color:var(--accent2);"
+        f"white-space:nowrap;'>{n} ubicaci{'ón' if n == 1 else 'ones'}</summary>"
+        f"<div style='margin-top:4px;'>{detalle}</div></details>"
+    )
+
+
+_GRUPOS_UBICACION_TIMELINE_VISIBLES = 6
+_ESTADOS_MEDIDOS_TIMELINE = {'X', 'M'}
+
+
+def _texto_timeline(valor, defecto='—'):
+    """Devuelve texto no vacío para las tarjetas del orden de ejecución."""
+    if valor is None or valor == '':
+        return defecto
+    return str(valor)
+
+
+def _nombre_edificio_timeline(valor):
+    """Suaviza solo nombres de edificio escritos íntegramente en mayúsculas."""
+    nombre = _texto_timeline(valor)
+    return nombre.title() if nombre.isupper() else nombre
+
+
+def _compactar_rangos_numericos(valores):
+    """Compacta una secuencia como [1, 2, 3, 7] en ``1–3, 7``."""
+    numeros = sorted(set(valores))
+    if not numeros:
+        return ''
+    tramos = []
+    inicio = anterior = numeros[0]
+    for numero in numeros[1:]:
+        if numero == anterior + 1:
+            anterior = numero
+            continue
+        tramos.append((inicio, anterior))
+        inicio = anterior = numero
+    tramos.append((inicio, anterior))
+    return ', '.join(
+        str(inicio) if inicio == fin else f'{inicio}–{fin}'
+        for inicio, fin in tramos
+    )
+
+
+def _resumen_ubicaciones_timeline(ubicaciones):
+    """Resume edificio, plantas y ubicaciones sin usar el agregado de estado."""
+    total = len(ubicaciones)
+    if not ubicaciones:
+        return 'Sin ubicaciones'
+
+    edificios = list(dict.fromkeys(
+        _nombre_edificio_timeline(ub.get('edificio')) for ub in ubicaciones
+    ))
+    plantas_raw = list(dict.fromkeys(
+        _texto_timeline(ub.get('planta')) for ub in ubicaciones
+    ))
+    if len(edificios) != 1:
+        return (f'{len(edificios)} edificios · {len(plantas_raw)} plantas · '
+                f'{total} ubicaciones')
+
+    edificio = edificios[0]
+    if all(planta.lstrip('-').isdigit() for planta in plantas_raw):
+        plantas = _compactar_rangos_numericos(
+            int(planta) for planta in plantas_raw)
+    else:
+        plantas = ', '.join(plantas_raw[:3])
+        if len(plantas_raw) > 3:
+            plantas += f' +{len(plantas_raw) - 3}'
+    etiqueta = 'planta' if len(plantas_raw) == 1 else 'plantas'
+    return f'{edificio} · {etiqueta} {plantas} · {total} ubicaciones'
+
+
+def _agrupar_ubicaciones_timeline(ubicaciones):
+    """Agrupa por edificio/planta conservando el orden de las ubicaciones."""
+    grupos = OrderedDict()
+    for ubicacion in ubicaciones:
+        clave = (
+            _nombre_edificio_timeline(ubicacion.get('edificio')),
+            _texto_timeline(ubicacion.get('planta')),
+        )
+        grupos.setdefault(clave, []).append(ubicacion)
+    return list(grupos.items())
+
+
+def _etiqueta_unidades_timeline(ubicacion):
+    """Muestra todas las unidades de una ubicación, sin el truncado del inventario."""
+    unidades = ubicacion.get('unidades') or []
+    if not isinstance(unidades, list):
+        unidades = [unidades]
+    valores = [
+        _texto_timeline(unidad, '') for unidad in unidades
+        if unidad not in (None, '')
+    ]
+    return ', '.join(valores) if valores else 'Sin unidad'
+
+
+def _grupo_ubicaciones_timeline_html(clave, ubicaciones):
+    edificio, planta = clave
+    chips = []
+    for ubicacion in ubicaciones:
+        estado = _texto_timeline(
+            ubicacion.get('estado_actual'), 'Sin estado')
+        medido = estado in _ESTADOS_MEDIDOS_TIMELINE
+        clase = 'is-done' if medido else 'is-pending'
+        chips.append(
+            f'<span class="location-chip {clase}" '
+            f'title="Estado actual: {_e(estado)}">'
+            f'<span>{_e(_etiqueta_unidades_timeline(ubicacion))}</span>'
+            f'<span class="chip-state">{_e(estado)}</span></span>'
+        )
+    cantidad = len(ubicaciones)
+    return (
+        '<div class="location-group">'
+        '<div class="location-group-head">'
+        f'<strong>{_e(edificio)} · planta {_e(planta)}</strong>'
+        f'<span>{cantidad} ubicaci{"ón" if cantidad == 1 else "ones"}</span>'
+        '</div>'
+        f'<div class="location-chips">{"".join(chips)}</div>'
+        '</div>'
+    )
+
+
+def _ubicaciones_timeline_html(ubicaciones):
+    """Muestra seis grupos y deja el resto accesible en un details anidado."""
+    grupos = _agrupar_ubicaciones_timeline(ubicaciones)
+    visibles = grupos[:_GRUPOS_UBICACION_TIMELINE_VISIBLES]
+    restantes = grupos[_GRUPOS_UBICACION_TIMELINE_VISIBLES:]
+    salida = [
+        _grupo_ubicaciones_timeline_html(clave, grupo)
+        for clave, grupo in visibles
+    ]
+    if restantes:
+        n_restantes = sum(len(grupo) for _, grupo in restantes)
+        salida.append(
+            '<details class="more-locations">'
+            f'<summary>+{n_restantes} ubicaciones más en {len(restantes)} '
+            f'planta{"s" if len(restantes) != 1 else ""}</summary>'
+            '<div class="more-locations-content">'
+            + ''.join(
+                _grupo_ubicaciones_timeline_html(clave, grupo)
+                for clave, grupo in restantes
+            )
+            + '</div></details>'
+        )
+    return ''.join(salida) if salida else '<p class="empty">Sin ubicaciones.</p>'
+
+
+def _contar_avance_timeline(ubicaciones):
+    """Cuenta X/M como medido y cualquier otro estado como pendiente."""
+    medidos = sum(
+        1 for ubicacion in ubicaciones
+        if ubicacion.get('estado_actual') in _ESTADOS_MEDIDOS_TIMELINE
+    )
+    total = len(ubicaciones)
+    pendientes = total - medidos
+    porcentaje = round((medidos / total) * 100) if total else 0
+    return medidos, pendientes, total, porcentaje
+
+
+def _tarjeta_timeline_html(item):
+    """Pinta un tajo como nodo numerado y tarjeta nativa desplegable."""
+    ubicaciones = item.get('ubicaciones') or []
+    medidos, pendientes, total, porcentaje = _contar_avance_timeline(
+        ubicaciones)
+    situacion = _texto_timeline(item.get('situacion'))
+    clase_estado = 'ok' if situacion == 'LISTO' else 'warn'
+    icono_estado = ('' if situacion == 'LISTO'
+                    else '<span aria-hidden="true">⚠ </span>')
+    orden = item.get('orden')
+    identificador = 'tajo-' + ''.join(
+        caracter if caracter.isalnum() else '-'
+        for caracter in _texto_timeline(
+            item.get('tarea_id'), str(orden)).lower()
+    )
+    motivo = _texto_timeline(item.get('motivo'))
+    impacto = _texto_timeline(item.get('impacto_gremios'), '')
+    impacto_html = ''
+    if impacto and impacto != motivo:
+        impacto_html = (
+            '<div class="reason-block secondary-reason">'
+            '<p class="detail-label">IMPACTO EN GREMIOS</p>'
+            f'<p>{_e(impacto)}</p></div>'
+        )
+
+    return f"""
+      <article class="timeline-item" data-sit="{_e_atributo(situacion)}" data-fase="{_e_atributo(item.get('fase_nombre'))}" data-order="{_e_atributo(orden)}">
+        <div class="timeline-node {clase_estado}" aria-hidden="true">{_e(orden)}</div>
+        <details class="task-card {clase_estado}" id="{_e_atributo(identificador)}" data-total="{total}" data-reported-total="{_e_atributo(item.get('n_ubicaciones'))}">
+          <summary>
+            <span class="summary-topline">
+              <span class="badge {clase_estado}">{icono_estado}{_e(situacion)}</span>
+              <span class="task-meta">Orden lógico {_e(item.get('orden_ejecucion'))} · {_e(item.get('fase_nombre'))} · {_e(item.get('ambito_nombre'))}</span>
+            </span>
+            <span class="summary-titleline">
+              <span class="task-title" role="heading" aria-level="3">{_e(item.get('trabajo'))}</span>
+              <span class="scope">{_e(item.get('n_unidades'))} ud. · {total} ubicaciones</span>
+            </span>
+            <span class="compact-bottom">
+              <span class="progress-wrap">
+                <span class="progress-track" role="progressbar" aria-label="Ubicaciones medidas" aria-valuemin="0" aria-valuemax="{total}" aria-valuenow="{medidos}">
+                  <span class="progress-fill" style="width:{porcentaje}%"></span>
+                </span>
+                <span class="progress-copy">{porcentaje}% · {medidos} medidos · {pendientes} pendientes</span>
+              </span>
+              <span class="location-summary"><span aria-hidden="true">⌖</span> {_e(_resumen_ubicaciones_timeline(ubicaciones))}</span>
+            </span>
+            <span class="chevron" aria-hidden="true"></span>
+          </summary>
+          <div class="task-detail">
+            <div class="stat-grid" aria-label="Resumen de ubicaciones">
+              <div class="stat done"><strong>{medidos}</strong><span>Medidos</span></div>
+              <div class="stat pending"><strong>{pendientes}</strong><span>Pendientes</span></div>
+              <div class="stat total"><strong>{total}</strong><span>Total</span></div>
+            </div>
+            <div class="locations-block">
+              <div class="detail-heading">
+                <p class="detail-label">UBICACIONES ({total})</p>
+                <p class="location-legend"><span class="legend-dot done"></span>X/M medido <span class="legend-dot pending"></span>Resto pendiente</p>
+              </div>
+              {_ubicaciones_timeline_html(ubicaciones)}
+            </div>
+            <div class="reason-block">
+              <p class="detail-label">MOTIVO / COMPROBAR</p>
+              <p>{_e(motivo)}</p>
+            </div>
+            {impacto_html}
+            <p class="technical-meta">Categoría: {_e(item.get('categoria'))} · Prioridad: {_e(item.get('prioridad'))} · Celdas en hoja: {_e(item.get('n_celdas'))}</p>
+          </div>
+        </details>
+      </article>"""
 
 
 def _envolver_plegable(id_ancla, titulo_html, contenido_html, color_borde=None):
@@ -789,37 +1071,12 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
     inventario_prio = prioridades.get('inventario', [])
     dudas_prio = prioridades.get('dudas_pendientes', [])
 
-    filas_prio = ""
-    for item in items_prio:
-        sit_val = item.get('situacion', '')
-        clase_estado = 'ok' if sit_val == 'LISTO' else 'warn'
-        borde = 'var(--ok)' if sit_val == 'LISTO' else 'var(--warn)'
-        todas_ubs = item.get('ubicaciones', [])
-        n_ubicaciones = item.get('n_ubicaciones', len(todas_ubs))
-        ubicaciones_txt = _ubicaciones_html(todas_ubs)
-        motivo_html = e(item.get('motivo') or item.get('impacto_gremios', ''))
-        fase_val = e(item.get('fase_nombre', ''))
-        celdas = item.get('n_celdas')
-        detalle_celdas = ''
-        if celdas and celdas != item.get('n_unidades'):
-            detalle_celdas = (f"<br><span style='font-size:11px;color:var(--muted);'>"
-                              f"{e(celdas)} celdas en la hoja</span>")
-        filas_prio += (
-            f"<tr data-fase='{fase_val}' data-sit='{e(sit_val)}'>"
-            f"<td style='white-space:nowrap;border-left:3px solid {borde};'>"
-            f"<b>#{e(item.get('orden'))}</b>"
-            f"<div style='margin-top:4px;'><span class='badge {clase_estado}'>{e(sit_val)}</span></div></td>"
-            f"<td><b>{e(item.get('trabajo'))}</b>"
-            f"<div style='font-size:11px;color:var(--muted);margin-top:3px;'>"
-            f"Orden lógico {e(item.get('orden_ejecucion'))} · {e(item.get('fase_nombre'))} · {e(item.get('ambito_nombre'))}</div></td>"
-            f"<td style='white-space:nowrap;'><b>{e(item.get('n_unidades'))}</b> ud."
-            f"{detalle_celdas}</td>"
-            f"<td>{ubicaciones_txt}</td>"
-            f"<td style='font-size:12px;'>{e(item.get('estado_actual'))}</td>"
-            f"<td style='font-size:12px;'>{motivo_html}</td></tr>"
-        )
-    if not filas_prio:
-        filas_prio = '<tr><td colspan="6" class="empty">No se han identificado bloques ejecutables con las reglas y datos actuales.</td></tr>'
+    tarjetas_prio = ''.join(
+        _tarjeta_timeline_html(item) for item in items_prio)
+    if not tarjetas_prio:
+        tarjetas_prio = (
+            '<p class="empty">No se han identificado bloques ejecutables '
+            'con las reglas y datos actuales.</p>')
 
     _bp = ("El inventario incluye", "Los nombres nuevos", "Una X histórica",
            "El orden sigue")
@@ -936,8 +1193,9 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
         </select>
         <span id="prio-count" style="font-size:12px;color:var(--muted);"></span>
       </div>
-      <div class="table-scroll"><table id="tabla-prio" class="data"><thead><tr><th>#</th><th>Tajo</th><th>Alcance</th><th>Dónde</th><th>En obra</th><th>Motivo / Comprobar</th></tr></thead>
-      <tbody>{filas_prio}</tbody></table></div>"""
+      <section id="timeline-prio" class="timeline-prio" aria-label="Orden lógico de ejecución">
+        {tarjetas_prio}
+      </section>"""
     ejecucion_html = _envolver_plegable(
         _ID_SEC_EJECUCION, titulo_ejecucion, contenido_ejecucion,
         color_borde='var(--ok)')
@@ -1316,22 +1574,20 @@ if(Object.keys(DATA.por_planta.series).length){{
 if(DATA.por_tarea.length) new Chart(document.getElementById('chartTareas'),{{type:'bar',
   data:{{labels:DATA.por_tarea.map(t=>t[0]),datasets:[{{label:'% avance',data:DATA.por_tarea.map(t=>t[1]),backgroundColor:DATA.por_tarea.map(t=>pctColor(t[1]))}}]}},
   options:{{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{{legend:{{display:false}}}},scales:{{x:{{beginAtZero:true,max:100,ticks:{{callback:v=>v+'%'}}}}}}}}}});
-document.querySelectorAll('.show-ub').forEach(a=>a.addEventListener('click',function(ev){{
-  ev.preventDefault();
-  const extra=this.previousElementSibling;
-  if(extra.style.display==='none'){{extra.style.display='block';this.textContent='▲ Ocultar';}}
-  else{{extra.style.display='none';this.textContent='+'+this.dataset.n+' ubicaciones más';}}
-}}));
 function filtrarPrio(){{
   const fase=document.getElementById('filtro-fase')?.value||'';
   const sit=document.getElementById('filtro-sit')?.value||'';
-  const rows=document.querySelectorAll('#tabla-prio tbody tr[data-fase]');
+  const items=document.querySelectorAll('#timeline-prio .timeline-item[data-fase]');
+  const visibles=[];
   let n=0;
-  rows.forEach(tr=>{{
-    const ok=(!fase||tr.dataset.fase===fase)&&(!sit||tr.dataset.sit===sit);
-    tr.style.display=ok?'':'none';
-    if(ok)n++;
+  items.forEach(item=>{{
+    const ok=(!fase||item.dataset.fase===fase)&&(!sit||item.dataset.sit===sit);
+    item.hidden=!ok;
+    item.classList.remove('last-visible');
+    if(ok){{visibles.push(item);n++;}}
+    else{{const card=item.querySelector('.task-card');if(card)card.open=false;}}
   }});
+  if(visibles.length)visibles[visibles.length-1].classList.add('last-visible');
   const cnt=document.getElementById('prio-count');
   if(cnt)cnt.textContent=n+' bloque(s) visibles';
 }}

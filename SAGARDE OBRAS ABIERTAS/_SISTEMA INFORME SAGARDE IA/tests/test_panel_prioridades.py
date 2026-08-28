@@ -394,7 +394,8 @@ class TestConteoPorAmbito(unittest.TestCase):
             'orden_ejecucion': 235, 'ambito_nombre': 'Edificio general',
         }]))
         self.assertIn('Cuarto técnico', html)
-        self.assertIn('92 celdas en la hoja', html)
+        self.assertIn('1 ud.', html)
+        self.assertIn('Celdas en hoja: 92', html)
 
     def test_el_badge_de_que_hacer_ahora_cuenta_listo_y_verificar(self):
         """El badge de la tarjeta 'Qué hacer ahora' tiene que coincidir con
@@ -418,13 +419,60 @@ class TestConteoPorAmbito(unittest.TestCase):
                  'ambito_nombre': 'Viviendas'},
             ]))
 
-        tabla = html[html.index('id="tabla-prio"'):]
-        filas_tabla = tabla.count("<tr data-fase=")
-        self.assertEqual(filas_tabla, 2)
+        timeline = html[html.index('id="timeline-prio"'):]
+        n_tarjetas = timeline.count('<article class="timeline-item"')
+        self.assertEqual(n_tarjetas, 2)
 
         seccion = html[html.index("id='sec-ejecucion'"):
                         html.index("id='sec-ejecucion'") + 300]
-        self.assertIn(f"<span class='badge'>{filas_tabla}</span>", seccion)
+        self.assertIn(f"<span class='badge'>{n_tarjetas}</span>", seccion)
+
+
+class TestTimelineEjecucion(unittest.TestCase):
+    """El timeline de tarjetas de 'Qué hacer ahora' calcula sus propias
+    cifras sobre las ubicaciones reales, sin parsear el estado agregado."""
+
+    def test_medidos_solo_cuenta_x_y_m_el_resto_es_pendiente(self):
+        """Un '/' (iniciado) o el texto 'Pendiente' no deben colarse como
+        medidos: solo X y M cuentan. Si alguien reintroduce un parseo del
+        string agregado en vez de contar ubicaciones, esta prueba lo pilla."""
+        html = panel_obra.bloque_prioridades(_prioridades(items=[{
+            'orden': 1, 'situacion': 'LISTO', 'trabajo': 'Tajo mixto',
+            'n_unidades': 1, 'n_celdas': 5, 'n_ubicaciones': 5,
+            'motivo': 'x', 'fase_nombre': 'f', 'orden_ejecucion': 1,
+            'ambito_nombre': 'Viviendas',
+            'ubicaciones': [
+                {'edificio': 'OBRA', 'planta': '1', 'unidades': ['A'], 'estado_actual': 'X'},
+                {'edificio': 'OBRA', 'planta': '1', 'unidades': ['B'], 'estado_actual': 'M'},
+                {'edificio': 'OBRA', 'planta': '1', 'unidades': ['C'], 'estado_actual': '/'},
+                {'edificio': 'OBRA', 'planta': '1', 'unidades': ['D'], 'estado_actual': 'Pendiente'},
+                {'edificio': 'OBRA', 'planta': '1', 'unidades': ['E'], 'estado_actual': '?'},
+            ],
+        }]))
+        self.assertIn('<strong>2</strong><span>Medidos</span>', html)
+        self.assertIn('<strong>3</strong><span>Pendientes</span>', html)
+        self.assertIn('<strong>5</strong><span>Total</span>', html)
+        self.assertIn('40% · 2 medidos · 3 pendientes', html)
+
+    def test_mas_de_seis_plantas_no_pierde_ninguna_solo_las_pliega(self):
+        """Con muchas plantas, la tarjeta no lista todo de golpe, pero
+        ninguna ubicación desaparece: las que no caben en la vista directa
+        quedan dentro de un <details> anidado, no descartadas en silencio."""
+        ubicaciones = [
+            {'edificio': 'OBRA', 'planta': str(planta), 'unidades': ['A'],
+             'estado_actual': 'M'}
+            for planta in range(1, 9)
+        ]
+        html = panel_obra.bloque_prioridades(_prioridades(items=[{
+            'orden': 1, 'situacion': 'LISTO', 'trabajo': 'Tajo grande',
+            'n_unidades': 1, 'n_celdas': 8, 'n_ubicaciones': 8,
+            'motivo': 'x', 'fase_nombre': 'f', 'orden_ejecucion': 1,
+            'ambito_nombre': 'Edificio general',
+            'ubicaciones': ubicaciones,
+        }]))
+        self.assertIn('+2 ubicaciones más en 2 plantas', html)
+        for planta in range(1, 9):
+            self.assertIn(f'planta {planta}<', html)
 
 
 class TestEnvolverPlegable(unittest.TestCase):
