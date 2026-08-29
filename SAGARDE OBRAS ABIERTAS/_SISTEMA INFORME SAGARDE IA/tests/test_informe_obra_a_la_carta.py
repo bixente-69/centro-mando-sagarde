@@ -128,5 +128,48 @@ class TestMenuDeSeleccion(unittest.TestCase):
             self.assertIn(f'data-sub="{sub}"', html)
 
 
+class TestLogicaSelectorJS(unittest.TestCase):
+
+    def test_incluye_las_funciones_clave(self):
+        html = _generar()
+        for funcion in ('function abrirSelectorInforme',
+                        'function toggleGrupoPrioridades',
+                        'function marcarTodoInforme',
+                        'function generarVistaPreviaInforme',
+                        'function guardarSeleccionInforme',
+                        'function cargarSeleccionInforme'):
+            self.assertIn(funcion, html)
+
+    def test_la_clave_de_localstorage_incluye_el_nombre_de_la_obra(self):
+        html = _generar(obra='2026 OBRA PRUEBA')
+        self.assertIn("const OBRA_NOMBRE = \"2026 OBRA PRUEBA\"", html)
+        self.assertIn("'informe_obra_sel::' + OBRA_NOMBRE", html)
+
+    def test_la_vista_previa_abre_una_pestana_nueva_y_no_reescribe_la_actual(self):
+        html = _generar()
+        self.assertIn("window.open('', '_blank')", html)
+        self.assertIn('ventana.document.write(documento)', html)
+
+    def test_el_documento_generado_fuerza_abrir_los_details_y_ofrece_imprimir(self):
+        html = _generar()
+        self.assertIn("document.querySelectorAll('details').forEach(d => d.open = true)", html)
+        self.assertIn('window.print()', html)
+
+    def test_las_casillas_quedan_inertes_en_el_documento_generado(self):
+        """Evita que un clic en la vista previa dispare marcar-tarea-hecha
+        contra un servidor que no esta corriendo ahi."""
+        html = _generar()
+        self.assertIn('input[type=checkbox]{pointer-events:none;}', html)
+
+    def test_avisa_si_el_navegador_bloquea_la_ventana_emergente(self):
+        """Bug real detectado al probar en navegador: si window.open()
+        devuelve null (ventana emergente bloqueada), el codigo original
+        revienta con un TypeError sin decirle nada a Bixente. Debe avisar
+        y salir, nunca fallar en silencio."""
+        html = _generar()
+        self.assertIn('if (!ventana) {', html)
+        self.assertIn('El navegador ha bloqueado la ventana emergente', html)
+
+
 if __name__ == '__main__':
     unittest.main()

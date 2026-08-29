@@ -1889,6 +1889,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 </div>
 <script>
 const DATA = {data_json};
+const OBRA_NOMBRE = {json.dumps(obra, ensure_ascii=False)};
+const SECCIONES_INFORME = JSON.parse(document.getElementById('secciones-informe').textContent);
 document.querySelectorAll('.nav button').forEach(btn=>btn.addEventListener('click',()=>{{
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
@@ -1930,6 +1932,146 @@ function filtrarPrio(){{
 document.getElementById('filtro-fase')?.addEventListener('change',filtrarPrio);
 document.getElementById('filtro-sit')?.addEventListener('change',filtrarPrio);
 filtrarPrio();
+
+function _claveSeleccionInforme(){{ return 'informe_obra_sel::' + OBRA_NOMBRE; }}
+
+function _checksInforme(){{
+  return [...document.querySelectorAll(
+    '#informe-obra-grupos input[type=checkbox]')];
+}}
+
+function _idInforme(cb){{
+  return cb.dataset.sub
+    ? cb.dataset.seccion + ':' + cb.dataset.sub
+    : cb.dataset.seccion;
+}}
+
+function guardarSeleccionInforme(){{
+  const marcados = _checksInforme()
+    .filter(cb => cb.checked && cb.dataset.seccion)
+    .map(_idInforme);
+  try {{ localStorage.setItem(_claveSeleccionInforme(), JSON.stringify(marcados)); }}
+  catch(e) {{}}
+}}
+
+function cargarSeleccionInforme(){{
+  let marcados = [];
+  try {{ marcados = JSON.parse(localStorage.getItem(_claveSeleccionInforme()) || '[]'); }}
+  catch(e) {{}}
+  const set = new Set(marcados);
+  _checksInforme().forEach(cb => {{
+    if (cb.dataset.seccion) cb.checked = set.has(_idInforme(cb));
+  }});
+  document.querySelectorAll('.cb-prioridades').forEach(sub => {{
+    // El check del grupo Prioridades refleja si TODOS sus subapartados
+    // estan marcados, igual que un checkbox "seleccionar todo" normal.
+  }});
+  const subsPrio = [...document.querySelectorAll('.cb-prioridades')];
+  document.getElementById('cb-prioridades-all').checked =
+    subsPrio.length > 0 && subsPrio.every(cb => cb.checked);
+}}
+
+function abrirSelectorInforme(){{
+  document.getElementById('panel-informe-obra').style.display = 'block';
+  cargarSeleccionInforme();
+  document.getElementById('panel-informe-obra').scrollIntoView({{behavior:'smooth'}});
+}}
+
+function toggleGrupoInforme(cb){{
+  guardarSeleccionInforme();
+}}
+
+function toggleGrupoPrioridades(masterCb){{
+  document.querySelectorAll('.cb-prioridades').forEach(cb => cb.checked = masterCb.checked);
+  guardarSeleccionInforme();
+}}
+
+function marcarTodoInforme(){{
+  _checksInforme().forEach(cb => cb.checked = true);
+  guardarSeleccionInforme();
+}}
+
+document.querySelectorAll('.cb-prioridades').forEach(cb => {{
+  cb.addEventListener('change', () => {{
+    const subs = [...document.querySelectorAll('.cb-prioridades')];
+    document.getElementById('cb-prioridades-all').checked = subs.every(c => c.checked);
+    guardarSeleccionInforme();
+  }});
+}});
+
+function generarVistaPreviaInforme(){{
+  const marcadas = _checksInforme().filter(cb => cb.checked);
+  if (!marcadas.length) {{
+    alert('Marca al menos una sección antes de generar la vista previa.');
+    return;
+  }}
+  const NOMBRES = {{
+    trabajos: '✓ Trabajos', materiales: '▣ Materiales', personal: '👷 Personal',
+    riesgos: '⚠ Riesgos', normativa: '📘 Normativa', documentos: '📎 Documentos',
+    cierre: '📋 Cierre',
+  }};
+  const NOMBRES_SUB = {{
+    estado_proyecto: 'Estado del proyecto', que_hacer_ahora: 'Qué hacer ahora',
+    tajos_bloqueados: 'Tajos bloqueados', tareas_manuales: 'Tareas manuales',
+    sin_revisar: 'Sin revisar nunca',
+  }};
+  let contenido = '';
+  marcadas.forEach(cb => {{
+    const seccion = cb.dataset.seccion;
+    if (seccion === 'prioridades' && cb.dataset.sub) {{
+      const html = SECCIONES_INFORME.prioridades[cb.dataset.sub] || '';
+      contenido += `<section class="informe-seccion"><h2>${{NOMBRES_SUB[cb.dataset.sub]}}</h2>${{html}}</section>`;
+    }} else if (SECCIONES_INFORME[seccion] !== undefined && typeof SECCIONES_INFORME[seccion] === 'string') {{
+      contenido += `<section class="informe-seccion"><h2>${{NOMBRES[seccion]}}</h2>${{SECCIONES_INFORME[seccion]}}</section>`;
+    }}
+  }});
+  const fecha = new Date().toLocaleDateString('es-ES');
+  const ultimaRevision = (DATA.serie.length
+    ? DATA.serie[DATA.serie.length - 1].fecha : '—');
+  const documento = `<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8">
+<title>Informe de obra — ${{OBRA_NOMBRE}}</title>
+<style>
+  :root{{--header:#0b1f3a;--header2:#123a63;--accent:#f5a524;--ok:#2e9e5b;--warn:#e07b1a;--bad:#d9483c;--muted:#647184;--card:#fff;}}
+  *{{margin:0;padding:0;box-sizing:border-box;}}
+  body{{font-family:'IBM Plex Sans',Arial,sans-serif;color:#1c2733;background:#fff;padding:24px;}}
+  .cabecera{{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:3px solid var(--accent);padding-bottom:12px;margin-bottom:20px;}}
+  .cabecera .marca{{font-size:10px;letter-spacing:.08em;color:var(--accent);font-weight:700;text-transform:uppercase;}}
+  .cabecera h1{{font-size:19px;font-weight:800;color:var(--header);margin-top:3px;}}
+  .cabecera .meta{{text-align:right;font-size:11px;color:var(--muted);}}
+  .informe-seccion{{margin-bottom:22px;}}
+  .informe-seccion h2{{font-size:15px;color:var(--header2);border-left:4px solid var(--accent);padding-left:8px;margin-bottom:10px;}}
+  .card{{background:var(--card);border-radius:8px;padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);}}
+  table.data{{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px;}}
+  table.data th{{text-align:left;padding:5px 8px;border-bottom:2px solid #e3e7ee;color:var(--muted);font-size:10px;text-transform:uppercase;}}
+  table.data td{{padding:5px 8px;border-bottom:1px solid #eef1f5;}}
+  select, .filtro-oculta-impresion{{display:none !important;}}
+  input[type=checkbox]{{pointer-events:none;}}
+  .barra-accion{{position:sticky;top:0;background:#fff;padding:10px 0;display:flex;gap:8px;justify-content:flex-end;border-bottom:1px solid #eee;margin-bottom:16px;}}
+  .barra-accion button{{border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;}}
+  @media print{{ .barra-accion{{display:none;}} @page{{size:A4;margin:14mm;}} }}
+</style></head><body>
+<div class="barra-accion">
+  <button onclick="window.close()" style="background:#eef0f4;">← Volver</button>
+  <button onclick="window.print()" style="background:var(--header);color:#fff;">🖨️ Imprimir / Guardar como PDF</button>
+</div>
+<div class="cabecera">
+  <div><div class="marca">Informe Sagarde IA</div><h1>Informe de obra — ${{OBRA_NOMBRE}}</h1></div>
+  <div class="meta">Generado: ${{fecha}}<br>Última revisión: ${{ultimaRevision}}</div>
+</div>
+${{contenido}}
+<script>document.querySelectorAll('details').forEach(d => d.open = true);<\/script>
+</body></html>`;
+  const ventana = window.open('', '_blank');
+  if (!ventana) {{
+    alert('El navegador ha bloqueado la ventana emergente. Permite las '
+      + 'ventanas emergentes para esta página e inténtalo de nuevo.');
+    return;
+  }}
+  ventana.document.write(documento);
+  ventana.document.close();
+  guardarSeleccionInforme();
+}}
 </script></body></html>"""
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
