@@ -2047,37 +2047,39 @@ input[type=checkbox]{{pointer-events:none;}}
 
 @media print{{
   *{{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}
-  @page{{size:A4;margin:16mm 14mm;}}
+  @page{{size:A4;margin:12mm;}}
   html,body{{background:#fff;}}
   .barra-accion{{display:none;}}
   .wrap{{max-width:100%;padding:0;margin:0;}}
 
-  /* Cabecera fija: se repite en todas las paginas impresas, no solo en la
-     primera. El cuerpo reserva su hueco arriba para no quedar tapado. */
-  .header{{position:fixed;top:0;left:0;right:0;margin:0;border-radius:0;
-    padding:8mm 14mm;z-index:10;}}
-  .informe-cuerpo{{margin-top:34mm;}}
+  /* Cabecera pequena, UNA sola vez al principio del documento — nunca
+     repetida ni fija. Repetirla en cada pagina es lo que dejaba paginas
+     con solo un cabecero y un par de lineas, y encima obligaba a
+     adivinar cuanto hueco reservar arriba (si el calculo se quedaba
+     corto, tapaba el principio del contenido). */
+  .informe-cabecera{{display:flex;justify-content:space-between;
+    align-items:baseline;gap:16px;border-bottom:2px solid var(--accent);
+    padding-bottom:6px;margin-bottom:14px;}}
+  .informe-cabecera .marca{{font-size:9px;letter-spacing:.06em;
+    color:var(--accent);font-weight:700;text-transform:uppercase;}}
+  .informe-cabecera h1{{font-size:15px;font-weight:800;color:var(--header);
+    margin:1px 0 0;}}
+  .informe-cabecera .meta{{font-size:9.5px;color:var(--muted);
+    text-align:right;white-space:nowrap;}}
 
-  /* Los paneles de KPI/bento estan pensados para pantalla ancha; en A4
-     se apilan en una columna para que no se corten ni queden apretados. */
-  .kpi-row,.chart-row,.bento-grid,.bento-legend,.bento-health-top,
-  .bento-health-side,.bento-breakdown{{display:block!important;}}
-  .kpi-row>*,.bento-grid>*,.bento-legend>*{{margin-bottom:8px;}}
-  .bento-grid>*{{grid-column:auto!important;grid-row:auto!important;}}
-
-  /* Nada de tarjetas ni filas partidas a la mitad entre dos paginas. */
-  .card,.kpi,.bento-card,.bento-health,.bento-command{{
-    break-inside:avoid;box-shadow:none;border:1px solid #d8dce4;}}
+  /* Solo se evita partir la unidad mas pequena razonable: una tarjeta,
+     una fila de tabla. Nunca un bloque grande entero (una seccion de
+     prioridades, un desplegable con muchas filas): forzar eso es lo que
+     deja paginas casi en blanco cuando el bloque no cabe entero en lo
+     que queda de la pagina actual. Mejor un reajuste que un hueco. */
+  .card,.kpi,.bento-card{{break-inside:avoid;box-shadow:none;
+    border:1px solid #d8dce4;}}
   table.data{{break-inside:auto;}}
   table.data thead{{display:table-header-group;}}
   table.data tr{{break-inside:avoid;}}
-  details.seccion-plegable{{break-inside:avoid-page;}}
   details.seccion-plegable>summary{{break-after:avoid;}}
+  .informe-titulo{{break-after:avoid;}}
   img,canvas,svg{{max-width:100%;break-inside:avoid;}}
-
-  /* Cada seccion elegida empieza en pagina nueva y limpia. */
-  .informe-seccion{{break-before:page;}}
-  .informe-seccion:first-child{{break-before:avoid;}}
 
   a[href]{{color:inherit;text-decoration:none;}}
 }}
@@ -2086,13 +2088,11 @@ input[type=checkbox]{{pointer-events:none;}}
   <button onclick="window.close()" style="background:#eef0f4;">← Volver</button>
   <button onclick="window.print()" style="background:var(--header);color:#fff;">🖨️ Imprimir / Guardar como PDF</button>
 </div>
-<div class="header">
-  <div><div class="brand">Informe Sagarde IA · Informe de obra</div><h1>${{OBRA_NOMBRE}}</h1></div>
-  <div class="meta">Generado: ${{fecha}}<br>Última revisión: ${{ultimaRevision}}</div>
+<div class="informe-cabecera">
+  <div><div class="marca">Informe Sagarde IA · Informe de obra</div><h1>${{OBRA_NOMBRE}}</h1></div>
+  <div class="meta">Generado: ${{fecha}} · Última revisión: ${{ultimaRevision}}</div>
 </div>
-<div class="informe-cuerpo">
 ${{contenido}}
-</div>
 </div>
 <script>document.querySelectorAll('details').forEach(d => d.open = true);<\/script>
 </body></html>`;

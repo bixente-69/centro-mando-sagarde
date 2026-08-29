@@ -198,34 +198,50 @@ class TestPaginacionImpresion(unittest.TestCase):
         html = _generar()
         self.assertIn('print-color-adjust:exact!important', html)
 
-    def test_la_cabecera_es_fija_y_se_repite_en_cada_pagina(self):
+    def test_la_cabecera_es_pequena_y_aparece_una_sola_vez_sin_fijar(self):
+        """Bixente: la cabecera repetida y grande dejaba paginas con solo
+        un cabecero y un par de lineas, y el hueco reservado arriba podia
+        quedarse corto y tapar contenido. Ahora es pequena, aparece una
+        sola vez al principio, en flujo normal (nunca position:fixed)."""
         html = _generar()
-        self.assertIn('.header{position:fixed', html)
-        self.assertIn('.informe-cuerpo{margin-top:', html)
+        self.assertIn('.informe-cabecera{', html)
+        self.assertNotIn('position:fixed', html)
+        self.assertNotIn('margin-top:34mm', html)
+        self.assertEqual(html.count('class="informe-cabecera"'), 1)
 
-    def test_los_paneles_anchos_se_apilan_en_una_columna_para_a4(self):
+    def test_no_fuerza_una_columna_ni_salto_de_pagina_por_seccion(self):
+        """Bixente: prefiere un reajuste natural a una pagina casi vacia.
+        No se fuerza el apilado en una columna de los paneles anchos
+        (bento/kpi ya tienen su propio ajuste responsive) ni se obliga a
+        cada seccion elegida a empezar en pagina nueva."""
         html = _generar()
-        self.assertIn('.kpi-row,.chart-row,.bento-grid', html)
-        self.assertIn('display:block!important', html)
+        self.assertNotIn('display:block!important', html)
+        self.assertNotIn('break-before:page', html)
 
     def test_las_tablas_repiten_cabecera_y_no_cortan_filas(self):
         html = _generar()
         self.assertIn('table.data thead{display:table-header-group;}', html)
         self.assertIn('table.data tr{break-inside:avoid;}', html)
 
-    def test_las_tarjetas_y_desplegables_no_se_parten(self):
+    def test_solo_se_evita_partir_la_unidad_mas_pequena(self):
+        """break-inside:avoid solo en tarjetas/filas sueltas, nunca en un
+        bloque grande entero (una seccion de prioridades, un desplegable
+        largo): eso es lo que dejaba huecos en blanco cuando el bloque no
+        cabia entero en lo que quedaba de pagina."""
         html = _generar()
-        self.assertIn('break-inside:avoid', html)
-        self.assertIn("details.seccion-plegable{break-inside:avoid-page;}", html)
+        self.assertIn('.card,.kpi,.bento-card{break-inside:avoid', html)
+        # .bento-command SI aparece en ESTILOS con su propio estilo base
+        # (eso es normal); lo que no debe volver es la regla de impresion
+        # vieja que lo metia entero en el break-inside:avoid.
+        self.assertNotIn('.bento-health,.bento-command{', html)
+        self.assertNotIn('break-inside:avoid-page', html)
+        self.assertIn(
+            'details.seccion-plegable>summary{break-after:avoid;}', html)
+        self.assertIn('.informe-titulo{break-after:avoid;}', html)
 
-    def test_cada_seccion_elegida_empieza_en_pagina_nueva(self):
+    def test_el_tamano_de_pagina_es_a4_con_margen_ajustado(self):
         html = _generar()
-        self.assertIn('.informe-seccion{break-before:page;}', html)
-        self.assertIn('.informe-seccion:first-child{break-before:avoid;}', html)
-
-    def test_el_tamano_de_pagina_es_a4(self):
-        html = _generar()
-        self.assertIn('@page{size:A4;margin:16mm 14mm;}', html)
+        self.assertIn('@page{size:A4;margin:12mm;}', html)
 
 
 if __name__ == '__main__':
