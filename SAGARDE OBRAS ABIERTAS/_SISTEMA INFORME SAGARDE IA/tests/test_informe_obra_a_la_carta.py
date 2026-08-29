@@ -155,6 +155,31 @@ class TestLogicaSelectorJS(unittest.TestCase):
         self.assertIn("document.querySelectorAll('details').forEach(d => d.open = true)", html)
         self.assertIn('window.print()', html)
 
+    def test_el_open_se_hornea_en_el_html_antes_de_escribir_el_documento(self):
+        """Buena practica: <details open> ya en el HTML analizado la
+        primera vez es mas fiable que fijar la propiedad open por JS
+        sobre un nodo ya insertado."""
+        html = _generar()
+        self.assertIn(
+            "contenido = contenido.replace(/<details(?![a-zA-Z-])/g, "
+            "'<details open');", html)
+
+    def test_las_secciones_clasicas_no_quedan_ocultas_por_el_css_del_panel(self):
+        """La causa real de 'Que hacer ahora no esta desplegada, solo se
+        ven las cabeceras': ESTILOS oculta #sec-ejecucion (y las demas
+        secciones 'clasicas' de Prioridades) por defecto, porque en el
+        panel en vivo solo se revelan al pinchar una tarjeta del centro
+        de mando (destino.style.display='block'). Aqui no hay ningun
+        click que las revele, asi que hacia falta forzar el override —
+        confirmado en navegador de verdad: sin esto el <details> entero,
+        incluido su propio <summary>, medía 0 de alto."""
+        html = _generar()
+        self.assertIn(
+            "#sec-tareas,#sec-dudas,#sec-ejecucion,#sec-inv-bloqueado,"
+            "#sec-inv-sin_revisar,\n#sec-inv-viable,#sec-inv-otros_gremios,"
+            "#sec-inv-dudas,#sec-inv-terminado,\n#sec-preguntas-catalogo,"
+            "#sec-prevision{display:block!important;}", html)
+
     def test_las_casillas_quedan_inertes_en_el_documento_generado(self):
         """Evita que un clic en la vista previa dispare marcar-tarea-hecha
         contra un servidor que no esta corriendo ahi."""
@@ -215,7 +240,7 @@ class TestPaginacionImpresion(unittest.TestCase):
         (bento/kpi ya tienen su propio ajuste responsive) ni se obliga a
         cada seccion elegida a empezar en pagina nueva."""
         html = _generar()
-        self.assertNotIn('display:block!important', html)
+        self.assertNotIn('.kpi-row,.chart-row,.bento-grid', html)
         self.assertNotIn('break-before:page', html)
 
     def test_las_tablas_repiten_cabecera_y_no_cortan_filas(self):

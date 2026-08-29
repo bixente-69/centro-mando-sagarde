@@ -2025,6 +2025,13 @@ function generarVistaPreviaInforme(){{
       contenido += `<div class="informe-seccion"><div class="informe-titulo">${{NOMBRES[seccion]}}</div>${{SECCIONES_INFORME[seccion]}}</div>`;
     }}
   }});
+  // El <open> se hornea en el HTML ANTES de escribir el documento, para que
+  // el navegador lo interprete ya abierto desde el primer analisis de la
+  // pagina. Ponerlo despues con JS (details.open = true sobre un nodo ya
+  // insertado) es justo lo que dejaba "Que hacer ahora" con la cabecera
+  // visible pero el contenido a 0 de alto: bug real detectado probando de
+  // verdad, no una suposicion.
+  contenido = contenido.replace(/<details(?![a-zA-Z-])/g, '<details open');
   const fecha = new Date().toLocaleDateString('es-ES');
   const ultimaRevision = (DATA.serie.length
     ? DATA.serie[DATA.serie.length - 1].fecha : '—');
@@ -2038,6 +2045,16 @@ function generarVistaPreviaInforme(){{
 <title>Informe de obra — ${{OBRA_NOMBRE}}</title>
 <style>
 {ESTILOS}
+/* ESTILOS oculta estas secciones por defecto en el panel en vivo: solo se
+   revelan al pinchar una tarjeta del centro de mando de Prioridades (esa
+   tarjeta hace destino.style.display='block'). Aqui no hay ningun click
+   que las revele, asi que sin este override "Que hacer ahora", "Tajos
+   bloqueados", "Tareas manuales", etc. quedaban con su titulo a la vista
+   pero todo su contenido —incluida la cabecera del propio desplegable—
+   realmente oculto: bug real detectado probando en navegador de verdad. */
+#sec-tareas,#sec-dudas,#sec-ejecucion,#sec-inv-bloqueado,#sec-inv-sin_revisar,
+#sec-inv-viable,#sec-inv-otros_gremios,#sec-inv-dudas,#sec-inv-terminado,
+#sec-preguntas-catalogo,#sec-prevision{{display:block!important;}}
 .informe-seccion{{margin-bottom:22px;}}
 .informe-titulo{{font-size:15px;font-weight:700;color:var(--header2);border-left:4px solid var(--accent);padding-left:8px;margin-bottom:12px;}}
 .barra-accion{{position:sticky;top:0;background:#fff;padding:10px 0;display:flex;gap:8px;justify-content:flex-end;border-bottom:1px solid #eee;margin-bottom:16px;}}
