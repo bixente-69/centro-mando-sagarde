@@ -170,6 +170,20 @@ class TestLogicaSelectorJS(unittest.TestCase):
         self.assertIn('if (!ventana) {', html)
         self.assertIn('El navegador ha bloqueado la ventana emergente', html)
 
+    def test_la_vista_previa_reutiliza_el_mismo_css_del_panel(self):
+        """Bixente: la vista previa tiene que verse tal cual como al
+        pinchar en cada pestana, no un diseno aparte. ESTILOS (el mismo
+        CSS que ya pinta el panel en vivo) debe aparecer tambien dentro
+        del documento que arma generarVistaPreviaInforme(), no una hoja
+        de estilos nueva e independiente."""
+        html = _generar()
+        marcador = '--header:#0b1f3a'
+        self.assertIn(marcador, panel_obra.ESTILOS)
+        self.assertEqual(html.count(marcador), 2,
+            'ESTILOS deberia aparecer una vez para la pagina en vivo y '
+            'otra vez dentro del documento de la vista previa')
+        self.assertNotIn('IBM Plex Sans', html)
+
 
 if __name__ == '__main__':
     unittest.main()
