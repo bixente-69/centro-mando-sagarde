@@ -1108,12 +1108,14 @@ def _tabla_tareas_manuales(tareas, documentos, obra=''):
 _ID_SEC_EJECUCION = 'sec-ejecucion'
 
 
-def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
-                       obra='', avance_pct=None):
-    """HTML de la pestana Prioridades.
+def bloque_prioridades_partes(prioridades, tareas_manual=None,
+                              documentos=None, obra='', avance_pct=None):
+    """Calcula las piezas de Prioridades por separado, sin concatenarlas.
 
-    Separado de generar_panel para poder probarlo sin montar una obra entera:
-    un dato que se calcula y no se pinta es lo mismo que no calcularlo.
+    Usada por bloque_prioridades() (reconstruye el HTML de siempre) y por
+    el informe de obra a la carta (usa solo las piezas marcadas). El
+    cálculo vive aquí una sola vez: ninguna cifra se recalcula por un
+    camino distinto para el selector.
     """
     prioridades = prioridades or {}
     if prioridades.get('sin_base'):
@@ -1413,7 +1415,7 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
         + inventario_por_codigo['TERMINADO']['html']
     )
 
-    return f"""
+    bento_command = f"""
     <section class="bento-command" aria-label="Centro de mando de prioridades">
       <div class="bento-health">
         <div class="bento-health-top">
@@ -1476,12 +1478,57 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
         <div class="bento-reference-title">Consulta y referencia</div>
         <div class="bento-chips">{chips_consulta_html}</div>
       </nav>
-    </section>
-    {estado_obra_html}
-    {avisos_prio}
-    {_SCRIPT_INDICE_PRIORIDADES}
-    {grupo_actuar_html}
-    {grupo_consulta_html}"""
+    </section>"""
+
+    return {
+        'bento_command': bento_command,
+        'estado_obra_html': estado_obra_html,
+        'avisos_prio': avisos_prio,
+        'script_indice': _SCRIPT_INDICE_PRIORIDADES,
+        'tareas_manual_html': tareas_manual_html,
+        'dudas_html': dudas_html,
+        'ejecucion_html': ejecucion_html,
+        'bloqueado_html': inventario_por_codigo['BLOQUEADO']['html'],
+        'sin_revisar_html': inventario_por_codigo['SIN_REVISAR']['html'],
+        'orden_html': orden_html,
+        'prevision_html': prevision_html,
+        'viable_html': inventario_por_codigo['VIABLE']['html'],
+        'otros_gremios_html': inventario_por_codigo['OTROS_GREMIOS']['html'],
+        'dudas_inventario_html': inventario_por_codigo['DUDAS']['html'],
+        'terminado_html': inventario_por_codigo['TERMINADO']['html'],
+    }
+
+
+def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
+                       obra='', avance_pct=None):
+    """HTML de la pestana Prioridades — envoltorio sobre
+    bloque_prioridades_partes() que reconstruye el string de siempre.
+
+    Separado de generar_panel para poder probarlo sin montar una obra entera:
+    un dato que se calcula y no se pinta es lo mismo que no calcularlo.
+    """
+    partes = bloque_prioridades_partes(
+        prioridades, tareas_manual=tareas_manual, documentos=documentos,
+        obra=obra, avance_pct=avance_pct)
+    if isinstance(partes, str):
+        return partes
+    return (
+        partes['bento_command']
+        + partes['estado_obra_html']
+        + partes['avisos_prio']
+        + partes['script_indice']
+        + partes['tareas_manual_html']
+        + partes['dudas_html']
+        + partes['ejecucion_html']
+        + partes['bloqueado_html']
+        + partes['sin_revisar_html']
+        + partes['orden_html']
+        + partes['prevision_html']
+        + partes['viable_html']
+        + partes['otros_gremios_html']
+        + partes['dudas_inventario_html']
+        + partes['terminado_html']
+    )
 
 
 def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,

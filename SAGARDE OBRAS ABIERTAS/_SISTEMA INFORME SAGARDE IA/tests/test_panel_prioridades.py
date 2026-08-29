@@ -702,3 +702,68 @@ class TestCentroDeMandoConectado(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class TestBloquePrioridadesPartes(unittest.TestCase):
+    """bloque_prioridades_partes() es la fuente unica: bloque_prioridades()
+    y el informe de obra a la carta tienen que leer de aqui, nunca
+    recalcular por su cuenta."""
+
+    def test_devuelve_un_dict_con_las_claves_esperadas(self):
+        partes = panel_obra.bloque_prioridades_partes(_prioridades())
+        claves_esperadas = {
+            'bento_command', 'estado_obra_html', 'avisos_prio',
+            'script_indice', 'tareas_manual_html', 'dudas_html',
+            'ejecucion_html', 'bloqueado_html', 'sin_revisar_html',
+            'orden_html', 'prevision_html', 'viable_html',
+            'otros_gremios_html', 'dudas_inventario_html', 'terminado_html',
+        }
+        self.assertEqual(set(partes.keys()), claves_esperadas)
+
+    def test_sin_base_devuelve_string_no_dict(self):
+        partes = panel_obra.bloque_prioridades_partes(
+            _prioridades(sin_base=True, avisos=['sin base']))
+        self.assertIsInstance(partes, str)
+        self.assertIn('sin base', partes)
+
+    def test_concatenar_las_partes_da_el_mismo_html_que_bloque_prioridades(self):
+        """La prueba mas importante de esta tarea: bloque_prioridades()
+        tiene que seguir devolviendo exactamente lo mismo que antes de
+        dividir la funcion. Si un dia alguien cambia el orden en uno de
+        los dos sitios sin cambiar el otro, esta prueba lo detecta."""
+        prioridades = _prioridades(
+            resumen={'listos': 1, 'bloqueados': 1, 'sin_revisar': 1},
+            items=[{
+                'orden': 1, 'situacion': 'LISTO', 'trabajo': 'A',
+                'n_unidades': 1, 'n_celdas': 1, 'n_ubicaciones': 1,
+                'ubicaciones': [], 'estado_actual': 'Pendiente',
+                'motivo': 'x', 'fase_nombre': 'f', 'orden_ejecucion': 1,
+                'ambito_nombre': 'Viviendas',
+            }],
+            inventario=[{
+                'seccion': 'BLOQUEADO', 'trabajo': 'B', 'propiedad': 'propio',
+                'orden_ejecucion': 2, 'fase_nombre': 'f', 'n_ubicaciones': 3,
+                'ubicaciones': [], 'estado_actual': '—', 'motivo': 'x',
+                'subtajos': [],
+            }],
+        )
+        tareas_manual = [{
+            'Tarea': 'Revisar cuadro', 'Origen': 'Parte de obra',
+            'Fecha': '22/08/2026', 'Archivo': '', 'Estado': 'Pendiente',
+        }]
+
+        html_directo = panel_obra.bloque_prioridades(
+            prioridades, tareas_manual=tareas_manual, documentos=[])
+        partes = panel_obra.bloque_prioridades_partes(
+            prioridades, tareas_manual=tareas_manual, documentos=[])
+        html_reconstruido = (
+            partes['bento_command'] + partes['estado_obra_html']
+            + partes['avisos_prio'] + partes['script_indice']
+            + partes['tareas_manual_html'] + partes['dudas_html']
+            + partes['ejecucion_html'] + partes['bloqueado_html']
+            + partes['sin_revisar_html'] + partes['orden_html']
+            + partes['prevision_html'] + partes['viable_html']
+            + partes['otros_gremios_html'] + partes['dudas_inventario_html']
+            + partes['terminado_html']
+        )
+        self.assertEqual(html_directo, html_reconstruido)
