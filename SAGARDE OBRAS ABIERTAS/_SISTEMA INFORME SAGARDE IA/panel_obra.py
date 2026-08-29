@@ -2030,6 +2030,9 @@ function generarVistaPreviaInforme(){{
     ? DATA.serie[DATA.serie.length - 1].fecha : '—');
   // Mismo CSS que ya usa este panel (ESTILOS): la vista previa tiene que
   // verse tal cual se ve al pinchar en cada pestaña, no un diseño aparte.
+  // El bloque @media print de aqui abajo es lo que evita cabeceras que no
+  // salen, paginas que no cuadran en A4 y tablas/tarjetas partidas por la
+  // mitad al imprimir o guardar como PDF.
   const documento = `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
 <title>Informe de obra — ${{OBRA_NOMBRE}}</title>
@@ -2041,7 +2044,43 @@ function generarVistaPreviaInforme(){{
 .barra-accion button{{border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;}}
 select{{display:none !important;}}
 input[type=checkbox]{{pointer-events:none;}}
-@media print{{ .barra-accion{{display:none;}} @page{{size:A4;margin:12mm;}} }}
+
+@media print{{
+  *{{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}
+  @page{{size:A4;margin:16mm 14mm;}}
+  html,body{{background:#fff;}}
+  .barra-accion{{display:none;}}
+  .wrap{{max-width:100%;padding:0;margin:0;}}
+
+  /* Cabecera fija: se repite en todas las paginas impresas, no solo en la
+     primera. El cuerpo reserva su hueco arriba para no quedar tapado. */
+  .header{{position:fixed;top:0;left:0;right:0;margin:0;border-radius:0;
+    padding:8mm 14mm;z-index:10;}}
+  .informe-cuerpo{{margin-top:34mm;}}
+
+  /* Los paneles de KPI/bento estan pensados para pantalla ancha; en A4
+     se apilan en una columna para que no se corten ni queden apretados. */
+  .kpi-row,.chart-row,.bento-grid,.bento-legend,.bento-health-top,
+  .bento-health-side,.bento-breakdown{{display:block!important;}}
+  .kpi-row>*,.bento-grid>*,.bento-legend>*{{margin-bottom:8px;}}
+  .bento-grid>*{{grid-column:auto!important;grid-row:auto!important;}}
+
+  /* Nada de tarjetas ni filas partidas a la mitad entre dos paginas. */
+  .card,.kpi,.bento-card,.bento-health,.bento-command{{
+    break-inside:avoid;box-shadow:none;border:1px solid #d8dce4;}}
+  table.data{{break-inside:auto;}}
+  table.data thead{{display:table-header-group;}}
+  table.data tr{{break-inside:avoid;}}
+  details.seccion-plegable{{break-inside:avoid-page;}}
+  details.seccion-plegable>summary{{break-after:avoid;}}
+  img,canvas,svg{{max-width:100%;break-inside:avoid;}}
+
+  /* Cada seccion elegida empieza en pagina nueva y limpia. */
+  .informe-seccion{{break-before:page;}}
+  .informe-seccion:first-child{{break-before:avoid;}}
+
+  a[href]{{color:inherit;text-decoration:none;}}
+}}
 </style></head><body><div class="wrap">
 <div class="barra-accion">
   <button onclick="window.close()" style="background:#eef0f4;">← Volver</button>
@@ -2051,7 +2090,9 @@ input[type=checkbox]{{pointer-events:none;}}
   <div><div class="brand">Informe Sagarde IA · Informe de obra</div><h1>${{OBRA_NOMBRE}}</h1></div>
   <div class="meta">Generado: ${{fecha}}<br>Última revisión: ${{ultimaRevision}}</div>
 </div>
+<div class="informe-cuerpo">
 ${{contenido}}
+</div>
 </div>
 <script>document.querySelectorAll('details').forEach(d => d.open = true);<\/script>
 </body></html>`;

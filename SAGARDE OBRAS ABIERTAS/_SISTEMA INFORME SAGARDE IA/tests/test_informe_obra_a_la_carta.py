@@ -185,5 +185,48 @@ class TestLogicaSelectorJS(unittest.TestCase):
         self.assertNotIn('IBM Plex Sans', html)
 
 
+class TestPaginacionImpresion(unittest.TestCase):
+    """Bixente: al imprimir/guardar en PDF, las cabeceras tienen que salir
+    bien, las paginas cuadrar en A4 y nada (tablas, tarjetas) partirse a
+    la mitad. Cada regla de aqui responde a uno de esos sintomas
+    concretos, no a una idea general de 'que quede bonito'."""
+
+    def test_fuerza_a_imprimir_los_colores_y_fondos(self):
+        """Sin esto Chrome imprime todo en blanco y negro por defecto:
+        la cabecera naranja/marino desaparece del PDF aunque se vea bien
+        en pantalla."""
+        html = _generar()
+        self.assertIn('print-color-adjust:exact!important', html)
+
+    def test_la_cabecera_es_fija_y_se_repite_en_cada_pagina(self):
+        html = _generar()
+        self.assertIn('.header{position:fixed', html)
+        self.assertIn('.informe-cuerpo{margin-top:', html)
+
+    def test_los_paneles_anchos_se_apilan_en_una_columna_para_a4(self):
+        html = _generar()
+        self.assertIn('.kpi-row,.chart-row,.bento-grid', html)
+        self.assertIn('display:block!important', html)
+
+    def test_las_tablas_repiten_cabecera_y_no_cortan_filas(self):
+        html = _generar()
+        self.assertIn('table.data thead{display:table-header-group;}', html)
+        self.assertIn('table.data tr{break-inside:avoid;}', html)
+
+    def test_las_tarjetas_y_desplegables_no_se_parten(self):
+        html = _generar()
+        self.assertIn('break-inside:avoid', html)
+        self.assertIn("details.seccion-plegable{break-inside:avoid-page;}", html)
+
+    def test_cada_seccion_elegida_empieza_en_pagina_nueva(self):
+        html = _generar()
+        self.assertIn('.informe-seccion{break-before:page;}', html)
+        self.assertIn('.informe-seccion:first-child{break-before:avoid;}', html)
+
+    def test_el_tamano_de_pagina_es_a4(self):
+        html = _generar()
+        self.assertIn('@page{size:A4;margin:16mm 14mm;}', html)
+
+
 if __name__ == '__main__':
     unittest.main()
