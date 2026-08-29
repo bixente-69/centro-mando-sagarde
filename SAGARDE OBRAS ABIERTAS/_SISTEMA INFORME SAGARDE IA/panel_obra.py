@@ -1646,10 +1646,41 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     hitos_html = tabla_ficha(ficha.get('hitos', []))
 
     # ---- PRIORIDADES E INVENTARIO COMPLETO DE TAJOS (motor v4) ----
-    prioridades_html = bloque_prioridades(
+    partes_prioridades = bloque_prioridades_partes(
         prioridades, tareas_manual=ficha.get('tareas', []),
         documentos=documentos, obra=obra,
         avance_pct=kpis.get('pct_ponderado'))
+    if isinstance(partes_prioridades, str):
+        prioridades_html = partes_prioridades
+        secciones_prioridades = {}
+    else:
+        prioridades_html = (
+            partes_prioridades['bento_command']
+            + partes_prioridades['estado_obra_html']
+            + partes_prioridades['avisos_prio']
+            + partes_prioridades['script_indice']
+            + partes_prioridades['tareas_manual_html']
+            + partes_prioridades['dudas_html']
+            + partes_prioridades['ejecucion_html']
+            + partes_prioridades['bloqueado_html']
+            + partes_prioridades['sin_revisar_html']
+            + partes_prioridades['orden_html']
+            + partes_prioridades['prevision_html']
+            + partes_prioridades['viable_html']
+            + partes_prioridades['otros_gremios_html']
+            + partes_prioridades['dudas_inventario_html']
+            + partes_prioridades['terminado_html']
+        )
+        secciones_prioridades = {
+            'estado_proyecto': (
+                partes_prioridades['bento_command']
+                + partes_prioridades['estado_obra_html']
+                + partes_prioridades['avisos_prio']),
+            'que_hacer_ahora': partes_prioridades['ejecucion_html'],
+            'tajos_bloqueados': partes_prioridades['bloqueado_html'],
+            'tareas_manuales': partes_prioridades['tareas_manual_html'],
+            'sin_revisar': partes_prioridades['sin_revisar_html'],
+        }
 
     # Se reconstruye desde la base/priorizador del mismo ciclo. La ficha XLSX
     # solo aporta el registro manual complementario.
@@ -1711,6 +1742,38 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
   {mem_nota}
 </div>"""
 
+    # ---- INFORME DE OBRA A LA CARTA ----
+    # Cada valor es la MISMA cadena HTML que ya pinta la pestana
+    # correspondiente. No se recalcula ninguna cifra por un camino nuevo:
+    # es la salvaguarda contra la familia de fallo de este proyecto
+    # (un dato declarado que un camino distinto ignora en silencio).
+    secciones_informe = {
+        'trabajos': (
+            "<div class='card'><h3>Desviaciones de avance</h3>"
+            "<table class='data'><thead><tr><th>Tipo</th><th>Edificio</th>"
+            "<th>Planta</th><th>Unidad</th><th>Avance</th><th>Motivo</th>"
+            f"</tr></thead><tbody>{filas_bloq}</tbody></table></div>"
+            "<div class='card'><h3>Detalle por planta / edificio</h3>"
+            "<table class='data'><thead><tr><th>Edificio</th><th>Planta</th>"
+            "<th>% estricto</th><th>% estimado</th><th>Nº registros</th>"
+            f"</tr></thead><tbody>{filas_det}</tbody></table></div>"
+        ),
+        'materiales': materiales_html,
+        'personal': f"<div class='card'><h3>Personal asignado</h3>{personal_html}</div>",
+        'prioridades': secciones_prioridades,
+        'riesgos': riesgos_html,
+        'normativa': (
+            "<div class='card'><h3>Normativa y criterios técnicos "
+            "aplicables</h3><p style='font-size:12.5px;color:var(--muted);"
+            "margin-bottom:8px;'>Lista de referencia. No sustituye la "
+            "comprobación de la versión vigente ni las instrucciones de la "
+            f"Dirección Facultativa.</p><ul class='norm'>{norm_html}</ul></div>"
+        ),
+        'documentos': f"<div class='card'><h3>Documentos de la obra</h3>{docs_html}</div>",
+        'cierre': cierre_html,
+    }
+    secciones_json = json.dumps(secciones_informe, ensure_ascii=False).replace('</script>', '<\\/script>')
+
     data_json = json.dumps(payload, ensure_ascii=False).replace('</script>', '<\\/script>')
 
     # ---- HTML ----
@@ -1719,6 +1782,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Panel Sagarde IA · {obra}</title>
 <script src="../../_SISTEMA INFORME SAGARDE IA/static/chart.min.js"></script>
+<script id="secciones-informe" type="application/json">{secciones_json}</script>
 <style>{ESTILOS}</style></head><body><div class="wrap">
 <div class="header">
   <div><div class="brand">Informe Sagarde IA · Panel de obra</div><h1>{obra}</h1><div class="sub">{subtitulo}</div></div>
