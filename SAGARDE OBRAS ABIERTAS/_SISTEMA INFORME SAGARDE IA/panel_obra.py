@@ -175,6 +175,9 @@ table.data tbody tr:hover{background:#f8f9fb;}
 @media(max-width:980px){.bento-legend{grid-template-columns:repeat(3,minmax(0,1fr));}.bento-hero{grid-column:span 12;grid-row:auto;}.bento-small,.bento-half{grid-column:span 6;}}
 @media(max-width:640px){.bento-health-top,.bento-hero-head{flex-direction:column;}.bento-health-side{width:100%;flex-direction:column;}.bento-stat{text-align:left;border-left:0;border-top:1px solid color-mix(in srgb,var(--muted) 24%,transparent);padding:9px 0 0;}.bento-attention{max-width:none;}.bento-legend{grid-template-columns:repeat(2,minmax(0,1fr));}.bento-small,.bento-half{grid-column:span 12;}.bento-breakdown{grid-template-columns:1fr;}.bento-hero-total{text-align:left;}}
 @media(prefers-reduced-motion:reduce){.task-card,.chevron,.bento-card,.bento-chip{transition:none;}}
+.tj-group-hdr{display:flex;align-items:center;gap:8px;padding:8px 4px;border-bottom:1px solid #eef0f4;cursor:pointer;font-size:14px;}
+.tj-items{display:flex;flex-direction:column;gap:6px;padding:6px 4px 10px;}
+.tj-items label{font-size:13px;color:var(--text);display:flex;align-items:center;gap:7px;cursor:pointer;}
 """
 
 NORMATIVA_ITEMS = [
@@ -1789,7 +1792,42 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
   <div class="meta">Generado: {datetime.now().strftime('%d/%m/%Y %H:%M')}<br>
   Última revisión: {historial[-1][0] if historial else '—'}<br>
   <a class="volver" href="{volver_href}">← Todas las obras</a>
-  <a class="volver" href="{pdf_ejecutivo_nombre}" target="_blank" style="background:var(--bad);border-color:var(--bad);margin-left:6px;">📄 Informe Ejecutivo PDF</a></div>
+  <a class="volver" href="{pdf_ejecutivo_nombre}" target="_blank" style="background:var(--bad);border-color:var(--bad);margin-left:6px;">📄 Informe Ejecutivo PDF</a>
+  <a class="volver" id="btn-informe-obra" href="#panel-informe-obra" style="background:var(--accent);border-color:var(--accent);color:#1c2733;margin-left:6px;" onclick="abrirSelectorInforme();return true;">📋 Informe de obra</a></div>
+</div>
+
+<div id="panel-informe-obra" class="card" style="display:none;">
+  <h3>Informe de obra — elige qué secciones incluir</h3>
+  <p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">
+    Se genera con los datos de esta misma página (tan actualizado como la
+    última vez que se regeneró el panel). Marca lo que quieras enseñar,
+    dale a vista previa y desde ahí puedes imprimir o guardar como PDF.
+  </p>
+  <div id="informe-obra-grupos">
+    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="trabajos" onchange="toggleGrupoInforme(this)"> <b>✓ Trabajos</b></label>
+    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="materiales" onchange="toggleGrupoInforme(this)"> <b>▣ Materiales</b></label>
+    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="personal" onchange="toggleGrupoInforme(this)"> <b>👷 Personal</b></label>
+    <div class="tj-group-hdr">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+        <input type="checkbox" id="cb-prioridades-all" onchange="toggleGrupoPrioridades(this)"> <b>🎯 Prioridades</b>
+      </label>
+    </div>
+    <div class="tj-items" style="padding-left:26px;">
+      <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="estado_proyecto"> Estado del proyecto</label>
+      <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="que_hacer_ahora"> Qué hacer ahora</label>
+      <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="tajos_bloqueados"> Tajos bloqueados</label>
+      <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="tareas_manuales"> Tareas manuales</label>
+      <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="sin_revisar"> Sin revisar nunca</label>
+    </div>
+    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="riesgos" onchange="toggleGrupoInforme(this)"> <b>⚠ Riesgos</b></label>
+    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="normativa" onchange="toggleGrupoInforme(this)"> <b>📘 Normativa</b></label>
+    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="documentos" onchange="toggleGrupoInforme(this)"> <b>📎 Documentos</b></label>
+    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="cierre" onchange="toggleGrupoInforme(this)"> <b>📋 Cierre</b></label>
+  </div>
+  <div style="margin-top:16px;display:flex;gap:8px;justify-content:flex-end;">
+    <button type="button" onclick="marcarTodoInforme()" style="background:#eef0f4;border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;">Marcar todo</button>
+    <button type="button" onclick="generarVistaPreviaInforme()" style="background:var(--accent);border:none;border-radius:8px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;">👁 Vista previa</button>
+  </div>
 </div>
 
 <div class="nav">

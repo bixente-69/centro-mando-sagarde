@@ -50,6 +50,17 @@ def _extraer_secciones(html):
     return json.loads(html[inicio:fin])
 
 
+class TestBotonInformeObra(unittest.TestCase):
+
+    def test_el_boton_aparece_junto_al_ejecutivo(self):
+        html = _generar()
+        self.assertIn('Informe Ejecutivo PDF', html)
+        self.assertIn('Informe de obra', html)
+        pos_ejecutivo = html.index('Informe Ejecutivo PDF')
+        pos_a_la_carta = html.index('Informe de obra')
+        self.assertLess(pos_ejecutivo, pos_a_la_carta)
+
+
 class TestSeccionesEmbebidas(unittest.TestCase):
 
     def test_el_json_tiene_las_ocho_claves_esperadas(self):
@@ -95,6 +106,26 @@ class TestSeccionesEmbebidas(unittest.TestCase):
             sin_base=True, avisos=['sin base']))
         secciones = _extraer_secciones(html)
         self.assertEqual(secciones['prioridades'], {})
+
+
+class TestMenuDeSeleccion(unittest.TestCase):
+
+    def test_el_menu_esta_oculto_por_defecto(self):
+        html = _generar()
+        inicio = html.index('id="panel-informe-obra"')
+        self.assertIn('display:none', html[inicio:inicio + 60])
+
+    def test_las_ocho_secciones_simples_tienen_checkbox_con_data_seccion(self):
+        html = _generar()
+        for seccion in ('trabajos', 'materiales', 'personal', 'riesgos',
+                        'normativa', 'documentos', 'cierre'):
+            self.assertIn(f'data-seccion="{seccion}"', html)
+
+    def test_los_cinco_subapartados_de_prioridades_tienen_data_sub(self):
+        html = _generar()
+        for sub in ('estado_proyecto', 'que_hacer_ahora', 'tajos_bloqueados',
+                    'tareas_manuales', 'sin_revisar'):
+            self.assertIn(f'data-sub="{sub}"', html)
 
 
 if __name__ == '__main__':
