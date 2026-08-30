@@ -2106,18 +2106,24 @@ input[type=checkbox]{{pointer-events:none;}}
   .barra-accion{{display:none;}}
   .wrap{{max-width:100%;padding:0;margin:0;}}
 
-  /* Solo se evita partir la unidad mas pequena razonable: una tarjeta,
-     una fila de tabla. Nunca un bloque grande entero (una seccion de
-     prioridades, un desplegable con muchas filas): forzar eso es lo que
-     deja paginas casi en blanco cuando el bloque no cabe entero en lo
-     que queda de la pagina actual. Mejor un reajuste que un hueco. */
-  .card,.kpi,.bento-card{{break-inside:avoid;box-shadow:none;
-    border:1px solid #d8dce4;}}
+  /* Solo se evita partir la unidad mas pequena razonable: una tarjeta
+     de KPI, una tarjeta bento, una fila de tabla. OJO: .card NO entra en
+     ese "avoid" — es el envoltorio de tablas que pueden ser largas, y
+     tratarlo como bloque indivisible era justo el bug real que dejaba la
+     cabecera sola en una hoja en blanco (la primera tarjeta, si no cabia
+     entera en lo que quedaba de la pagina 1, se empujaba entera a la
+     pagina 2). Ahora .card fluye con su tabla, que ya sabe partirse bien
+     por filas (ver mas abajo) — se ahorra papel sin cortar nada a la
+     mitad. */
+  .kpi,.bento-card{{break-inside:avoid;}}
+  .card,.kpi,.bento-card{{box-shadow:none;border:1px solid #d8dce4;}}
+  .card h3{{break-after:avoid;}}
   table.data{{break-inside:auto;}}
   table.data thead{{display:table-header-group;}}
   table.data tr{{break-inside:avoid;}}
   details.seccion-plegable>summary{{break-after:avoid;}}
   .informe-titulo{{break-after:avoid;}}
+  .informe-cabecera{{break-after:avoid;}}
   img,canvas,svg{{max-width:100%;break-inside:avoid;}}
 
   a[href]{{color:inherit;text-decoration:none;}}

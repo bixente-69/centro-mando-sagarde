@@ -272,12 +272,15 @@ class TestPaginacionImpresion(unittest.TestCase):
         self.assertIn('table.data tr{break-inside:avoid;}', html)
 
     def test_solo_se_evita_partir_la_unidad_mas_pequena(self):
-        """break-inside:avoid solo en tarjetas/filas sueltas, nunca en un
-        bloque grande entero (una seccion de prioridades, un desplegable
-        largo): eso es lo que dejaba huecos en blanco cuando el bloque no
-        cabia entero en lo que quedaba de pagina."""
+        """break-inside:avoid solo en tarjetas de KPI/bento (siempre
+        pequenas), nunca en .card ni en un bloque grande entero (una
+        seccion de prioridades, un desplegable largo). Bug real: tratar
+        .card como bloque indivisible dejaba la cabecera sola en una hoja
+        en blanco cuando la primera tarjeta (con su tabla, a veces larga)
+        no cabia entera en lo que quedaba de la pagina 1."""
         html = _generar()
-        self.assertIn('.card,.kpi,.bento-card{break-inside:avoid', html)
+        self.assertIn('.kpi,.bento-card{break-inside:avoid;}', html)
+        self.assertNotIn('.card,.kpi,.bento-card{break-inside:avoid', html)
         # .bento-command SI aparece en ESTILOS con su propio estilo base
         # (eso es normal); lo que no debe volver es la regla de impresion
         # vieja que lo metia entero en el break-inside:avoid.
@@ -285,6 +288,16 @@ class TestPaginacionImpresion(unittest.TestCase):
         self.assertNotIn('break-inside:avoid-page', html)
         self.assertIn(
             'details.seccion-plegable>summary{break-after:avoid;}', html)
+
+    def test_la_cabecera_no_se_queda_sola_en_una_hoja_en_blanco(self):
+        """Bixente: al imprimir salia la cabecera sola en una hoja
+        totalmente en blanco y el informe seguia en la pagina 2 —
+        desperdicia papel. La cabecera no debe separarse de lo que viene
+        justo despues, y una tarjeta con tabla larga tiene que poder
+        empezar ya en la pagina 1 y continuar en la 2 sin cortar filas."""
+        html = _generar()
+        self.assertIn('.informe-cabecera{break-after:avoid;}', html)
+        self.assertIn('.card h3{break-after:avoid;}', html)
         self.assertIn('.informe-titulo{break-after:avoid;}', html)
 
     def test_el_tamano_de_pagina_es_a4_con_margen_ajustado(self):
