@@ -279,7 +279,7 @@ class TestPaginacionImpresion(unittest.TestCase):
         en blanco cuando la primera tarjeta (con su tabla, a veces larga)
         no cabia entera en lo que quedaba de la pagina 1."""
         html = _generar()
-        self.assertIn('.kpi,.bento-card{break-inside:avoid;}', html)
+        self.assertIn('.kpi,.bento-card,.task-card{break-inside:avoid;}', html)
         self.assertNotIn('.card,.kpi,.bento-card{break-inside:avoid', html)
         # .bento-command SI aparece en ESTILOS con su propio estilo base
         # (eso es normal); lo que no debe volver es la regla de impresion
@@ -299,6 +299,17 @@ class TestPaginacionImpresion(unittest.TestCase):
         self.assertIn('.informe-cabecera{break-after:avoid;}', html)
         self.assertIn('.card h3{break-after:avoid;}', html)
         self.assertIn('.informe-titulo{break-after:avoid;}', html)
+
+    def test_las_tarjetas_de_tajo_no_se_parten_al_imprimir(self):
+        """Bixente vio alguna tarjeta desplegable (.task-card, la de cada
+        tajo en 'Que hacer ahora' — se abre y cierra de verdad, a
+        diferencia de .bento-card que solo es un enlace) partida a la
+        mitad al imprimir. No tenia ninguna proteccion de break-inside;
+        .bento-card y .kpi si la tenian pero .task-card se quedo fuera
+        por error."""
+        html = _generar()
+        self.assertIn('.kpi,.bento-card,.task-card{break-inside:avoid;}', html)
+        self.assertIn('.timeline-item{break-inside:avoid;}', html)
 
     def test_el_tamano_de_pagina_es_a4_con_margen_ajustado(self):
         html = _generar()

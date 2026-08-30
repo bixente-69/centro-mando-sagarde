@@ -2107,21 +2107,23 @@ input[type=checkbox]{{pointer-events:none;}}
   .wrap{{max-width:100%;padding:0;margin:0;}}
 
   /* Solo se evita partir la unidad mas pequena razonable: una tarjeta
-     de KPI, una tarjeta bento, una fila de tabla. OJO: .card NO entra en
-     ese "avoid" — es el envoltorio de tablas que pueden ser largas, y
-     tratarlo como bloque indivisible era justo el bug real que dejaba la
-     cabecera sola en una hoja en blanco (la primera tarjeta, si no cabia
-     entera en lo que quedaba de la pagina 1, se empujaba entera a la
-     pagina 2). Ahora .card fluye con su tabla, que ya sabe partirse bien
-     por filas (ver mas abajo) — se ahorra papel sin cortar nada a la
-     mitad. */
-  .kpi,.bento-card{{break-inside:avoid;}}
+     de KPI, una tarjeta bento, una tarjeta de tajo (.task-card, la
+     desplegable de verdad -- se abre y cierra -- de "Que hacer ahora"),
+     una fila de tabla. OJO: .card NO entra en ese "avoid" — es el
+     envoltorio de tablas que pueden ser largas, y tratarlo como bloque
+     indivisible era justo el bug real que dejaba la cabecera sola en una
+     hoja en blanco (la primera tarjeta, si no cabia entera en lo que
+     quedaba de la pagina 1, se empujaba entera a la pagina 2). Ahora
+     .card fluye con su tabla, que ya sabe partirse bien por filas (ver
+     mas abajo) — se ahorra papel sin cortar nada a la mitad. */
+  .kpi,.bento-card,.task-card{{break-inside:avoid;}}
   .card,.kpi,.bento-card{{box-shadow:none;border:1px solid #d8dce4;}}
   .card h3{{break-after:avoid;}}
   table.data{{break-inside:auto;}}
   table.data thead{{display:table-header-group;}}
   table.data tr{{break-inside:avoid;}}
   details.seccion-plegable>summary{{break-after:avoid;}}
+  .timeline-item{{break-inside:avoid;}}
   .informe-titulo{{break-after:avoid;}}
   .informe-cabecera{{break-after:avoid;}}
   img,canvas,svg{{max-width:100%;break-inside:avoid;}}
