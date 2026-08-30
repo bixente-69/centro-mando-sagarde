@@ -14,6 +14,7 @@ Consume datos ya normalizados:
 No sabe leer archivos: eso lo hacen los adaptadores/lectores. Aqui solo se
 calcula y se pinta.
 """
+import base64
 import html as html_lib
 import json
 import os
@@ -21,6 +22,22 @@ from collections import OrderedDict
 from datetime import datetime
 
 import motor_informes as motor
+
+_LOGO_INFORME_OBRA_PATH = os.path.join(
+    os.path.dirname(os.path.dirname(os.path.dirname(
+        os.path.abspath(__file__)))),
+    '_SISTEMA', 'MOTOR', 'assets', 'logo_sagarde_web.png')
+
+
+def _logo_informe_obra_data_uri():
+    """Logo corporativo para la cabecera del informe de obra a la carta,
+    la misma identidad visual que ya usa el informe ejecutivo. Se embebe
+    como data URI para que funcione igual con doble clic en local que
+    publicado en GitHub Pages, sin depender de una ruta relativa que
+    cambia de profundidad segun la obra."""
+    with open(_LOGO_INFORME_OBRA_PATH, 'rb') as f:
+        datos = base64.b64encode(f.read()).decode('ascii')
+    return 'data:image/png;base64,' + datos
 
 ESTILOS = """
 :root{
@@ -1890,6 +1907,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 <script>
 const DATA = {data_json};
 const OBRA_NOMBRE = {json.dumps(obra, ensure_ascii=False)};
+const LOGO_INFORME_OBRA = {json.dumps(_logo_informe_obra_data_uri())};
 const SECCIONES_INFORME = JSON.parse(document.getElementById('secciones-informe').textContent);
 document.querySelectorAll('.nav button').forEach(btn=>btn.addEventListener('click',()=>{{
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
@@ -2062,27 +2080,31 @@ function generarVistaPreviaInforme(){{
 select{{display:none !important;}}
 input[type=checkbox]{{pointer-events:none;}}
 
+/* Cabecera corporativa (mismo logo y formato que el informe ejecutivo),
+   fuera de @media print a proposito: tiene que verse igual de bien en la
+   vista previa en pantalla que en el PDF impreso, nunca gigante en uno y
+   pequena en el otro. Aparece UNA sola vez al principio del documento —
+   nunca repetida ni fija: repetirla en cada pagina es lo que dejaba
+   paginas con solo un cabecero y un par de lineas, y encima obligaba a
+   adivinar cuanto hueco reservar arriba (si el calculo se quedaba corto,
+   tapaba el principio del contenido). */
+.informe-cabecera{{display:flex;align-items:center;gap:16px;
+  border-bottom:2px solid var(--accent);padding-bottom:8px;
+  margin-bottom:16px;}}
+.informe-cabecera img{{height:32px;width:auto;flex:0 0 auto;}}
+.informe-cabecera .datos-informe{{display:flex;flex-direction:column;
+  gap:2px;min-width:0;}}
+.informe-cabecera h1{{font-size:15px;font-weight:800;color:var(--header);
+  letter-spacing:.015em;text-transform:uppercase;}}
+.informe-cabecera .linea-meta{{font-size:10px;color:var(--muted);}}
+.informe-cabecera .linea-meta b{{color:var(--text);}}
+
 @media print{{
   *{{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}}
   @page{{size:A4;margin:12mm;}}
   html,body{{background:#fff;}}
   .barra-accion{{display:none;}}
   .wrap{{max-width:100%;padding:0;margin:0;}}
-
-  /* Cabecera pequena, UNA sola vez al principio del documento — nunca
-     repetida ni fija. Repetirla en cada pagina es lo que dejaba paginas
-     con solo un cabecero y un par de lineas, y encima obligaba a
-     adivinar cuanto hueco reservar arriba (si el calculo se quedaba
-     corto, tapaba el principio del contenido). */
-  .informe-cabecera{{display:flex;justify-content:space-between;
-    align-items:baseline;gap:16px;border-bottom:2px solid var(--accent);
-    padding-bottom:6px;margin-bottom:14px;}}
-  .informe-cabecera .marca{{font-size:9px;letter-spacing:.06em;
-    color:var(--accent);font-weight:700;text-transform:uppercase;}}
-  .informe-cabecera h1{{font-size:15px;font-weight:800;color:var(--header);
-    margin:1px 0 0;}}
-  .informe-cabecera .meta{{font-size:9.5px;color:var(--muted);
-    text-align:right;white-space:nowrap;}}
 
   /* Solo se evita partir la unidad mas pequena razonable: una tarjeta,
      una fila de tabla. Nunca un bloque grande entero (una seccion de
@@ -2106,8 +2128,12 @@ input[type=checkbox]{{pointer-events:none;}}
   <button onclick="window.print()" style="background:var(--header);color:#fff;">🖨️ Imprimir / Guardar como PDF</button>
 </div>
 <div class="informe-cabecera">
-  <div><div class="marca">Informe Sagarde IA · Informe de obra</div><h1>${{OBRA_NOMBRE}}</h1></div>
-  <div class="meta">Generado: ${{fecha}} · Última revisión: ${{ultimaRevision}}</div>
+  <img src="${{LOGO_INFORME_OBRA}}" alt="Montajes Eléctricos Sagarde, S.L.">
+  <div class="datos-informe">
+    <h1>Informe de obra</h1>
+    <div class="linea-meta"><b>OBRA:</b> ${{OBRA_NOMBRE}}</div>
+    <div class="linea-meta"><b>Generado:</b> ${{fecha}} &nbsp;|&nbsp; <b>Última revisión:</b> ${{ultimaRevision}}</div>
+  </div>
 </div>
 ${{contenido}}
 </div>

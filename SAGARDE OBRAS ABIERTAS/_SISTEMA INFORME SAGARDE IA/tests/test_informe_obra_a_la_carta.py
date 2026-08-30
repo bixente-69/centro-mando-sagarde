@@ -50,6 +50,17 @@ def _extraer_secciones(html):
     return json.loads(html[inicio:fin])
 
 
+class TestLogoInformeObra(unittest.TestCase):
+
+    def test_el_logo_existe_y_se_puede_codificar(self):
+        """Falla a gritos si falta el logo, en vez de generar un informe
+        con una imagen rota en silencio (misma norma que la tipografia
+        del informe ejecutivo)."""
+        uri = panel_obra._logo_informe_obra_data_uri()
+        self.assertTrue(uri.startswith('data:image/png;base64,'))
+        self.assertGreater(len(uri), 1000)
+
+
 class TestBotonInformeObra(unittest.TestCase):
 
     def test_el_boton_aparece_junto_al_ejecutivo(self):
@@ -233,6 +244,18 @@ class TestPaginacionImpresion(unittest.TestCase):
         self.assertNotIn('position:fixed', html)
         self.assertNotIn('margin-top:34mm', html)
         self.assertEqual(html.count('class="informe-cabecera"'), 1)
+
+    def test_la_cabecera_lleva_el_logo_corporativo_y_el_formato_del_ejecutivo(self):
+        """Bixente: quiere corporatividad — el mismo logo y formato que ya
+        usa el informe ejecutivo (logo + titulo + OBRA/fecha), no un
+        texto suelto."""
+        html = _generar(obra='2026 OBRA PRUEBA')
+        self.assertIn('const LOGO_INFORME_OBRA = "data:image/png;base64,', html)
+        self.assertIn(
+            '<img src="${LOGO_INFORME_OBRA}" '
+            'alt="Montajes Eléctricos Sagarde, S.L.">', html)
+        self.assertIn('<h1>Informe de obra</h1>', html)
+        self.assertIn('<b>OBRA:</b> ${OBRA_NOMBRE}', html)
 
     def test_no_fuerza_una_columna_ni_salto_de_pagina_por_seccion(self):
         """Bixente: prefiere un reajuste natural a una pagina casi vacia.

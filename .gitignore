@@ -27,6 +27,12 @@ VARIOS/APPS SAGARDE/
 !_SISTEMA/MOTOR/assets/fonts/*.ttf
 !_SISTEMA/MOTOR/assets/fonts/OFL.txt
 
+# Logo comprimido y con fondo transparente para el informe de obra a la
+# carta: panel_obra.py lo embebe como data URI en base64 en cada panel.
+# Distinto del .jpg de arriba (ese lo usa ReportLab para el informe
+# ejecutivo); sin esta linea el informe de obra publicaria sin logo.
+!_SISTEMA/MOTOR/assets/logo_sagarde_web.png
+
 # Informe ejecutivo vigente de cada obra. El nombre es canonico y se
 # sobrescribe al regenerar: se publica solo el ultimo, no el historial PDF.
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/INFORME_EJECUTIVO_*.pdf
