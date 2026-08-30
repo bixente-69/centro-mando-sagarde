@@ -28,9 +28,9 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 28/08/2026 09:43. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 30/08/2026 13:19. No editar a mano.*
 
-**22** carpetas de obra abiertas · **5** en el registro único · **5** con panel · **4** con ficha. En todo el árbol, **99** `.py` y **5** `.bat`.
+**22** carpetas de obra abiertas · **5** en el registro único · **5** con panel · **4** con ficha. En todo el árbol, **100** `.py` y **5** `.bat`.
 
 | Obra | Ubic. | Tajos | Celdas | X | M | / | P | ? | N | % |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -51,7 +51,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 28/08/2026 09:43).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 30/08/2026 13:19).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
