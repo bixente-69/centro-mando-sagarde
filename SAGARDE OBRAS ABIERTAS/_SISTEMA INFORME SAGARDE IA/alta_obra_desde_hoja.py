@@ -91,7 +91,8 @@ def _texto_en(page, bbox):
     chars = [c for c in page.chars
              if c['x0'] >= x0 - 0.5 and c['x1'] <= x1 + 0.5
              and c['top'] >= top - 0.5 and c['bottom'] <= bottom + 0.5
-             and ord(c.get('text', 'x')) < 0x10000]
+             and all(ord(ch) < 0x10000
+                     for ch in c.get('text', 'x'))]
     chars.sort(key=lambda c: (round(c['top'], 1), c['x0']))
     return _limpio(''.join(c['text'] for c in chars))
 

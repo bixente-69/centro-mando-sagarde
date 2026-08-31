@@ -427,7 +427,8 @@ def estados_impresos(ruta, obra, ficha):
             portal_id = resolver_portal(ficha, tabla['etiquetas'],
                                         aviso=f'pagina {npag}: ')
             chars = [c for c in page.chars
-                     if ord(c.get('text', 'x')) < 0x10000]
+                     if all(ord(ch) < 0x10000
+                            for ch in c.get('text', 'x'))]
             for celdas_col in _agrupar_por_columna(tabla['celdas']).values():
                 x0 = celdas_col[0]['bbox'][0]
                 x1 = celdas_col[0]['bbox'][2]

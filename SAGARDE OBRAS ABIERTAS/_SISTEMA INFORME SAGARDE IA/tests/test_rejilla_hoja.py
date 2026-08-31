@@ -209,6 +209,15 @@ class TestTextoDeToleranciaVertical(unittest.TestCase):
         self.assertIn('Rozas', crudo_siguiente)
         self.assertNotIn('Tabicado', crudo_siguiente)
 
+    def test_acepta_un_glifo_pdf_que_representa_dos_caracteres(self):
+        pagina = self._pagina()
+        pagina.chars.append(self._char('fi', 300.0, 308.0, 89.0, 95.0))
+
+        texto = rejilla._texto_de(pagina)
+        x0, top, x1, bottom = self.FILA
+
+        self.assertIn('fi', texto((0, top, x1, bottom)))
+
 
 class TestTraduccionDeTajos(unittest.TestCase):
     """La hoja imprime nombres cortos y el catalogo guarda los largos."""
