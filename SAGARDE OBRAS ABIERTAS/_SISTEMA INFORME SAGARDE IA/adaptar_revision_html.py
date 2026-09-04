@@ -362,3 +362,124 @@ def construir_revision_normalizada_html(
         celdas=celdas,
         metadata=metadata,
     )
+
+
+# --- Lector de historial generico, valido para CUALQUIER obra --------------
+#
+# A diferencia del patron antiguo (ver adaptador_gernika.py: cada obra
+# mantiene su propia PORTAL_NOMBRE_HTML / PLANTA_NOMBRE_HTML /
+# TAREA_ID_A_NOMBRE_HTML), esta funcion no necesita ninguna tabla propia de
+# la obra: el nombre de portal/planta sale de la ESTRUCTURA de su propia
+# ficha_obra.json (misma fuente que ya usa derivar_mapas_ubicacion arriba) y
+# el nombre de tarea sale del CATALOGO_TAJOS.json compartido. Como el HTML
+# ya trae los estados embebidos por la propia app del generador (sin marcas
+# manuscritas que interpretar), es previsible que sea el formato mas usado
+# a partir de ahora — por eso conviene que cualquier adaptador pueda sumarlo
+# con una sola llamada de 4 argumentos, sin repetir tablas de traduccion por
+# obra cada vez que se da de alta o se retoma una obra.
+
+
+def _mapa_tajo_nombre(catalogo):
+    """id de catalogo -> nombre oficial. Misma fuente que ya usan todos los
+    adaptadores para poblar su propio TAJO_NOMBRE_CATALOGO a mano; aqui se
+    lee directamente para no duplicar esa tabla por obra."""
+    return {
+        tajo['id']: tajo['nombre']
+        for tajo in catalogo.get('tajos') or []
+        if isinstance(tajo, dict) and tajo.get('id') and tajo.get('nombre')
+    }
+
+
+def _mapa_ubicacion_nombre(ficha_actual):
+    """(portal_id, planta_id) -> (nombre_portal, nombre_planta), leido de la
+    estructura de la ficha. Sustituye a PORTAL_NOMBRE_HTML/PLANTA_NOMBRE_HTML
+    por obra: mientras la ficha describa bien sus portales/plantas, cualquier
+    obra queda cubierta sin mantenimiento adicional."""
+    mapa = {}
+    for portal in _portales_en_estructura(ficha_actual):
+        portal_id = _id_real(portal.get('id'))
+        nombre_portal = _referencia_portal(portal) or portal_id
+        for planta in portal.get('plantas') or []:
+            if not isinstance(planta, dict):
+                continue
+            planta_id = _id_real(planta.get('id'))
+            nombre_planta = _referencia_planta(planta) or planta_id
+            mapa[(portal_id, planta_id)] = (nombre_portal, nombre_planta)
+    return mapa
+
+
+def cargar_historial_html_generico(
+        obra_id, carpeta_revisiones, ficha_actual, catalogo,
+        contiene=None, minimo_celdas=20, nombre_log=''):
+    """Historial ``[(fecha_display, [registros]), ...]`` desde los HTML de
+    ``carpeta_revisiones``, en el mismo esquema ``{'task','floor','building',
+    'unit','status'}`` que ya devuelven las rutas PDF/Word de cada
+    adaptador. Pensado para que CUALQUIER adaptador lo llame tal cual (solo
+    necesita su ficha y el catalogo compartido) y herede soporte HTML sin
+    escribir ninguna tabla nueva. Si una ficha concreta no permite traducir
+    una posicion sin ambiguedad, esa clave queda fuera del historial (avisada
+    por ``construir_revision_normalizada_html``) en vez de adivinarla — el
+    llamador puede entonces aportar mapas explicitos a mano solo para ese
+    caso (ver parametros opcionales de ``construir_revision_normalizada_html``).
+    """
+    if not os.path.isdir(carpeta_revisiones):
+        return []
+
+    candidatos = []
+    for fn in os.listdir(carpeta_revisiones):
+        if not fn.lower().endswith('.html'):
+            continue
+        if contiene and contiene.upper() not in fn.upper():
+            continue
+        try:
+            fecha = _fecha_html(os.path.join(carpeta_revisiones, fn))
+        except ValueError:
+            continue
+        candidatos.append((fecha, fn))
+    candidatos.sort(key=lambda par: datetime.strptime(par[0], '%d/%m/%Y'))
+
+    nombre_tajo = _mapa_tajo_nombre(catalogo)
+    nombre_ubicacion = _mapa_ubicacion_nombre(ficha_actual)
+
+    historial = []
+    for fecha, fn in candidatos:
+        ruta = os.path.join(carpeta_revisiones, fn)
+        try:
+            revision = construir_revision_normalizada_html(
+                ruta, obra_id, ficha_actual, catalogo)
+        except Exception as exc:
+            if nombre_log:
+                print("  [{}] AVISO: no se pudo leer '{}': {}".format(
+                    nombre_log, fn, exc))
+            continue
+
+        registros = []
+        for celda in revision['celdas']:
+            estado = celda['estado_leido']
+            if estado == 'N':
+                continue
+            portal_id, planta_id, tajo_id, unidad = celda['clave'].split('__')
+            nombres = nombre_ubicacion.get((portal_id, planta_id))
+            task = nombre_tajo.get(tajo_id)
+            if not (nombres and task):
+                continue
+            building, floor = nombres
+            registros.append({
+                'task': task, 'floor': floor, 'building': building,
+                'unit': unidad,
+                'status': estado if estado in ('X', 'M', '/') else '',
+            })
+
+        if len(registros) >= minimo_celdas:
+            if nombre_log:
+                avisos_n = len(revision['metadata']['avisos'])
+                extra = (' ({} clave(s) sin resolver)'.format(avisos_n)
+                         if avisos_n else '')
+                print("  [{}] {}: {} registros de '{}'{}".format(
+                    nombre_log, fecha, len(registros), fn, extra))
+            historial.append((fecha, registros))
+        elif nombre_log and registros:
+            print("  [{}] '{}' descartado ({} registros, por debajo del "
+                  "minimo {}).".format(nombre_log, fn, len(registros), minimo_celdas))
+
+    return historial

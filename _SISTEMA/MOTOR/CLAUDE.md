@@ -92,9 +92,19 @@ Cuando el usuario entregue una hoja corregida a mano, no basta con archivarla:
 
 La detecci?n vectorial solo localiza candidatos. La clasificaci?n final de una marca manuscrita o blanca requiere inspecci?n visual.
 
-### Receta: dar de alta el PDF en una obra nueva
+### Receta: dar de alta una obra nueva (TODOS los formatos desde el alta)
 
-El motor de lectura (`lector_hoja_tajos_pdf.py`, en
+**Regla (04/09/2026): cuando se da de alta una obra nueva, su adaptador debe
+aceptar desde el primer día todos los sistemas de recepción de datos y
+revisiones que el entorno soporta — JSON simple, PDF y HTML — no solo el que
+se vaya a usar primero.** No se onboardea una obra con un solo formato
+"de momento": el usuario cambia de formato de campo a oficina, o entre obras,
+sin avisar, y un adaptador que solo entiende uno de los tres deja revisiones
+reales sin recoger hasta que alguien se dé cuenta. El coste ya no es una
+excusa: el soporte HTML genérico (ver receta arriba) es un bloque de 4 líneas
+copiado tal cual, sin trabajo específico de la obra.
+
+El motor de lectura de PDF (`lector_hoja_tajos_pdf.py`, en
 `_SISTEMA INFORME SAGARDE IA\`) ya es genérico — NO se toca por obra. Lo único
 que hay que escribir por obra es un adaptador delgado que le pase 2 funciones
 propias. Usar `adaptadores/adaptador_mungia.py` como plantilla y copiar este
@@ -127,6 +137,13 @@ patrón (funciones `_portal_id_pdf` y `_parsear_pdf`/`_cargar_historial_pdf`):
    `_normalizar_zr12_pb` (punto 6 del protocolo arriba) al fusionar con
    revisiones antiguas de esa obra.
 7. Dar de alta la obra en el registro único (punto 7 del protocolo arriba).
+8. **Añadir también soporte HTML genérico**, aunque la obra no vaya a recibir
+   HTML de inmediato: copiar el bloque `_cargar_historial_html()` y su fusión
+   en `cargar_historial()` (precedencia HTML > PDF > Word) tal cual de
+   `adaptador_mungia.py`/`adaptador_bolueta.py`/`adaptador_gorliz.py`, solo
+   cambiando `obra_id` y `contiene=<PALABRA_OBRA>` — ver "Receta (recomendada
+   desde 04/09/2026): HTML genérico" arriba. Es inofensivo aunque la carpeta
+   `REVISIONES` no exista todavía: la función devuelve `[]` sin romper nada.
 
 ### Protocolo: cuándo un HTML de hoja de tajos es una revisión oficial válida
 
@@ -165,6 +182,69 @@ ejecutar nada). Antes de aceptar uno de estos ficheros como revisión oficial:
    el punto 6 del protocolo PDF) antes de aceptarlo como oficial.
 7. Dar de alta la obra en el registro único si es la primera vez (punto 7).
 
+**Nota (04/09/2026)**: los puntos 4 y 5 de arriba (tablas propias
+`PORTAL_NOMBRE_HTML`/`PLANTA_NOMBRE_HTML`/`TAREA_ID_A_NOMBRE_HTML` por obra)
+describen el método ANTIGUO, usado por `adaptador_gernika.py` vía
+`lector_hoja_tajos_html.py`. Se mantiene tal cual porque ya está verificado y
+en producción, pero **ya no es el método recomendado para obras nuevas ni
+para tocar un adaptador por otro motivo** — ver la receta genérica siguiente,
+que evita escribir esas tablas.
+
+### Receta (recomendada desde 04/09/2026): HTML genérico para cualquier obra
+
+El HTML exportado por la propia app de tajos es, de los tres formatos, el más
+sencillo de traducir (lo genera el propio entorno, sin marcas manuscritas que
+interpretar) y es previsiblemente el más usado a partir de ahora. Por eso
+existe un lector genérico, `adaptar_revision_html.cargar_historial_html_generico()`
+(`_SISTEMA INFORME SAGARDE IA\adaptar_revision_html.py`), que **no necesita
+ninguna tabla propia por obra**: deriva portal/planta directamente de la
+`estructura` que ya tiene `ficha_obra.json` (cruzando dos órdenes
+independientes — natural y de estructura — y solo acepta el mapeo cuando es
+inequívoco), resuelve alias de vivienda con el `alias_historico` de la propia
+ficha, y resuelve tarea_id contra `CATALOGO_TAJOS.json`. Si una posición no
+se puede traducir sin ambigüedad, esa clave queda fuera del historial (avisada
+por consola) en vez de adivinarla.
+
+Añadir soporte HTML a un adaptador (nuevo o existente) es un bloque de 4
+líneas más una fusión, sin nada específico de la obra. Copiar tal cual de
+`adaptador_mungia.py`, `adaptador_bolueta.py` o `adaptador_gorliz.py`:
+
+```python
+def _cargar_historial_html():
+    try:
+        ficha_actual = _fichas.cargar(CARPETA_OBRA)
+    except Exception as e:
+        print("AVISO: no se pudo cargar ficha_obra.json ({}); se ignoran los HTML.".format(e))
+        return []
+    try:
+        catalogo = _vr.cargar_catalogo_tajos()
+    except Exception as e:
+        print("AVISO: no se pudo cargar CATALOGO_TAJOS.json ({}); se ignoran los HTML.".format(e))
+        return []
+    return adaptar_revision_html.cargar_historial_html_generico(
+        '<obra_id>', CARPETA_REVISIONES, ficha_actual, catalogo,
+        contiene='<PALABRA_OBRA>', nombre_log='adaptador_<obra_id>',
+    )
+```
+
+Y fusionar su resultado dentro de `cargar_historial()` con el resto de
+formatos que tenga la obra, dando prioridad **HTML > PDF > Word** en caso de
+coincidir la misma fecha (el HTML es el más fiable de los tres al no llevar
+transcripción manual).
+
+Requisitos para que un adaptador pueda llamarlo: `import adaptar_revision_html`,
+`import ficha_obra as _fichas`, `import validar_revision as _vr` (con
+`sys.path` apuntando a `_SISTEMA INFORME SAGARDE IA\`), y una constante
+`CARPETA_REVISIONES` (`os.path.join(CARPETA_OBRA, "REVISIONES")`). Si la obra
+todavía no tiene `ficha_obra.json` o no tiene carpeta `REVISIONES`, la función
+devuelve `[]` sin romper nada — es seguro añadirlo aunque la obra no reciba
+HTML todavía (caso Gorliz, 04/09/2026).
+
+Validado en producción (04/09/2026) en Mungia (2356 celdas, salvaguarda de
+doble cálculo coincidente) y Bolueta (3686 celdas, coincidente). `adaptador_gernika.py`
+se deja con el método antiguo por no incurrir en riesgo de regresión sin
+necesidad, no porque el método antiguo siga siendo el recomendado.
+
 ## Rutas clave
 
 | Qué | Ruta |
@@ -191,6 +271,8 @@ ejecutar nada). Antes de aceptar uno de estos ficheros como revisión oficial:
 6. **Dar de alta una obra nueva (adaptador) en el registro único**: editar `_SISTEMA INFORME SAGARDE IA/registro_obras.py`; panel e informe ejecutivo lo comparten — ver protocolo arriba, punto 7.
 7. **SCORE (motor_informes.py) y ESTADO_VALOR (priorizador_trabajos.py) deben tener siempre los mismos valores** para cada estado (unificados el 25/07/2026, ambos M=0.60). Si se cambia uno, cambiar el otro.
 8. **Caducidad de avisos por antigüedad**: los avisos siguen visibles hasta 399 días y desaparecen al cumplir 400. No se elimina la obra o contrato; solo deja de figurar como aviso accionable. La regla compartida vive en `_MOTOR_SAGARDE/avisos.py`.
+9. **Alta de obra nueva = todos los formatos desde el primer día** (JSON, PDF y HTML), no solo el que se vaya a usar primero — ver "Receta: dar de alta una obra nueva" arriba, punto 8.
+10. **HTML nuevo en un adaptador existente**: usar siempre `adaptar_revision_html.cargar_historial_html_generico()` (ver receta arriba), no copiar el patrón de tablas por obra de `adaptador_gernika.py` salvo que ya se esté tocando ese adaptador por otro motivo.
 
 ## Estructura estándar de obra (ejemplo Gernika)
 

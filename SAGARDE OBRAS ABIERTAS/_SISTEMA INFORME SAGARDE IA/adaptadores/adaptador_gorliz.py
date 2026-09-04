@@ -54,14 +54,22 @@ porque el motor actual no representa "no aplica" en sus KPI.
 import json
 import os
 import re
+import sys
 from datetime import datetime
 
+_BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if _BASE_DIR not in sys.path:
+    sys.path.insert(0, _BASE_DIR)
+import adaptar_revision_html  # noqa: E402
+import ficha_obra as _fichas  # noqa: E402
+import validar_revision as _vr  # noqa: E402
 
 CARPETA_OBRA = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
     "2026 GORLIZ HOSPITAL",
 )
 CARPETA_IA = os.path.join(CARPETA_OBRA, "INFORME SAGARDE IA")
+CARPETA_REVISIONES = os.path.join(CARPETA_OBRA, "REVISIONES")
 
 PREFIJO_REVISION = "revision_gorliz_"
 ESTADOS_VALIDOS = {"", "/", "M", "X", "N"}
@@ -282,6 +290,33 @@ def _parsear_json(ruta, fecha_archivo):
     return _parsear_datos(data, fecha_archivo, ruta)
 
 
+def _cargar_historial_html():
+    """Hoja de tajos en HTML exportada por la propia app de generacion de
+    tajos, si esta obra llega a recibirla (carpeta REVISIONES). Delega en el
+    lector generico (adaptar_revision_html), que traduce portal/planta/tajo
+    directamente desde ficha_obra.json y el catalogo compartido — Gorliz no
+    mantiene aqui ninguna tabla propia de ids HTML. Mientras no exista
+    REVISIONES ni ficha_obra.json, se ignora sin romper el resto (nunca se
+    inventa un historial)."""
+    try:
+        ficha_actual = _fichas.cargar(CARPETA_OBRA)
+    except Exception as e:
+        print("  [adaptador_gorliz] AVISO: no se pudo cargar ficha_obra.json "
+              "para traducir HTML ({}); se ignoran los HTML de esta carpeta.".format(e))
+        return []
+    try:
+        catalogo = _vr.cargar_catalogo_tajos()
+    except Exception as e:
+        print("  [adaptador_gorliz] AVISO: no se pudo cargar CATALOGO_TAJOS.json "
+              "({}); se ignoran los HTML de esta carpeta.".format(e))
+        return []
+
+    return adaptar_revision_html.cargar_historial_html_generico(
+        'gorliz', CARPETA_REVISIONES, ficha_actual, catalogo,
+        contiene='GORLIZ', nombre_log='adaptador_gorliz',
+    )
+
+
 def cargar_historial(carpeta_ia=CARPETA_IA):
     """
     Devuelve [(fecha, registros), ...], ordenado de antiguo a nuevo.
@@ -289,60 +324,71 @@ def cargar_historial(carpeta_ia=CARPETA_IA):
     No crea una revision inicial ficticia. Si la carpeta o los JSON no existen,
     devuelve una lista vacia y explica el formato que falta.
     """
+    combinado = {}
+
     if not os.path.isdir(carpeta_ia):
         print(
             "[adaptador_gorliz] AVISO: no existe '{}'. "
             "La obra aun no tiene seguimiento de avance.".format(carpeta_ia)
         )
-        return []
+    else:
+        archivos = []
+        for nombre in os.listdir(carpeta_ia):
+            nombre_minusculas = nombre.lower()
+            if not (
+                nombre_minusculas.startswith(PREFIJO_REVISION)
+                and nombre_minusculas.endswith(".json")
+            ):
+                continue
+            clave, fecha = _fecha_desde_nombre(nombre)
+            if clave is None:
+                raise ValueError(
+                    "Nombre de revision sin fecha DDMMAAAA valida: {}".format(nombre)
+                )
+            archivos.append((clave, fecha, nombre))
+        archivos.sort()
 
-    archivos = []
-    for nombre in os.listdir(carpeta_ia):
-        nombre_minusculas = nombre.lower()
-        if not (
-            nombre_minusculas.startswith(PREFIJO_REVISION)
-            and nombre_minusculas.endswith(".json")
-        ):
-            continue
-        clave, fecha = _fecha_desde_nombre(nombre)
-        if clave is None:
+        fechas = [clave for clave, _, _ in archivos]
+        if len(fechas) != len(set(fechas)):
             raise ValueError(
-                "Nombre de revision sin fecha DDMMAAAA valida: {}".format(nombre)
+                "Hay dos revisiones de Gorliz con la misma fecha; deje una sola por dia"
             )
-        archivos.append((clave, fecha, nombre))
-    archivos.sort()
 
-    fechas = [clave for clave, _, _ in archivos]
-    if len(fechas) != len(set(fechas)):
-        raise ValueError(
-            "Hay dos revisiones de Gorliz con la misma fecha; deje una sola por dia"
-        )
-
-    if not archivos:
-        print(
-            "[adaptador_gorliz] AVISO: no hay revisiones. "
-            "Se espera revision_gorliz_DDMMAAAA.json en '{}'.".format(carpeta_ia)
-        )
-        return []
-
-    historial = []
-    for _, fecha, nombre in archivos:
-        ruta = os.path.join(carpeta_ia, nombre)
-        registros = _parsear_json(ruta, fecha)
-        if not registros:
+        if not archivos:
             print(
-                "  [gorliz] {}: sin registros aplicables en '{}', ignorado.".format(
-                    fecha, nombre
+                "[adaptador_gorliz] AVISO: no hay revisiones JSON. "
+                "Se espera revision_gorliz_DDMMAAAA.json en '{}'.".format(carpeta_ia)
+            )
+
+        for clave, fecha, nombre in archivos:
+            ruta = os.path.join(carpeta_ia, nombre)
+            registros = _parsear_json(ruta, fecha)
+            if not registros:
+                print(
+                    "  [gorliz] {}: sin registros aplicables en '{}', ignorado.".format(
+                        fecha, nombre
+                    )
+                )
+                continue
+            combinado[clave] = (fecha, registros)
+            print(
+                "  [gorliz] {}: {} registros de '{}'".format(
+                    fecha, len(registros), nombre
                 )
             )
-            continue
-        historial.append((fecha, registros))
-        print(
-            "  [gorliz] {}: {} registros de '{}'".format(
-                fecha, len(registros), nombre
-            )
-        )
-    return historial
+
+    historial_html = []
+    for display, registros in _cargar_historial_html():
+        m = re.search(r'(\d{2})/(\d{2})/(\d{4})', display)
+        clave = m.group(3) + m.group(2) + m.group(1)
+        historial_html.append((clave, display, registros))
+    if historial_html:
+        print("  [adaptador_gorliz] {} revision(es) en formato HTML encontradas.".format(
+            len(historial_html)))
+    for clave, display, registros in historial_html:
+        combinado[clave] = (display, registros)
+
+    return [combinado[clave] for clave in sorted(combinado)]
 
 
 def plantilla():

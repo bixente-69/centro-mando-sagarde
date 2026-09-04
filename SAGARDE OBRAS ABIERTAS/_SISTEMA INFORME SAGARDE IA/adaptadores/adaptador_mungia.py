@@ -52,10 +52,14 @@ _BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _BASE_DIR not in sys.path:
     sys.path.insert(0, _BASE_DIR)
 import lector_hoja_tajos_pdf as lector_pdf
+import adaptar_revision_html
+import ficha_obra as _fichas
+import validar_revision as _vr
 
 CARPETA_OBRA = os.path.join(_BASE_DIR, os.pardir, "2026 MUNGIA ACR NEINOR")
 CARPETA_OBRA = os.path.normpath(CARPETA_OBRA)
 CARPETA_REVISIONES = os.path.join(CARPETA_OBRA, "REVISIONES")
+CARPETA_IA = os.path.join(CARPETA_OBRA, "INFORME SAGARDE IA")
 
 LEFT_VALCOLS = {'ZR1.1': [2, 3, 4], 'ZR1.2': [6, 7, 8]}
 RIGHT_VALCOLS = {'ZR1.1': [11, 12, 13], 'ZR1.2': [15, 16, 17]}
@@ -308,6 +312,32 @@ def _normalizar_zr12_pb(registros):
     return resultado
 
 
+def _cargar_historial_html():
+    """Formato mas nuevo (HTML "hoja de tajos" exportada por la propia app):
+    delega en el lector generico (adaptar_revision_html), que traduce
+    portal/planta/tajo directamente desde ficha_obra.json y el catalogo
+    compartido — Mungia no mantiene aqui ninguna tabla propia de ids HTML.
+    Si la ficha aun no existe (primera vez) o el catalogo no carga, se
+    ignora el HTML sin romper docx/pdf (nunca se inventa un historial)."""
+    try:
+        ficha_actual = _fichas.cargar(CARPETA_OBRA)
+    except Exception as e:
+        print("  [adaptador_mungia] AVISO: no se pudo cargar ficha_obra.json "
+              "para traducir HTML ({}); se ignoran los HTML de esta carpeta.".format(e))
+        return []
+    try:
+        catalogo = _vr.cargar_catalogo_tajos()
+    except Exception as e:
+        print("  [adaptador_mungia] AVISO: no se pudo cargar CATALOGO_TAJOS.json "
+              "({}); se ignoran los HTML de esta carpeta.".format(e))
+        return []
+
+    return adaptar_revision_html.cargar_historial_html_generico(
+        'mungia', CARPETA_REVISIONES, ficha_actual, catalogo,
+        contiene='MUNGIA', nombre_log='adaptador_mungia',
+    )
+
+
 def cargar_historial():
     if not os.path.isdir(CARPETA_REVISIONES):
         raise FileNotFoundError(f"No se encuentra la carpeta de revisiones: {CARPETA_REVISIONES}")
@@ -331,12 +361,23 @@ def cargar_historial():
     if historial_pdf:
         print("  [adaptador_mungia] {} revision(es) en formato nuevo (PDF) encontradas.".format(len(historial_pdf)))
 
+    historial_html = []
+    for display, registros in _cargar_historial_html():
+        m = re.search(r'(\d{2})/(\d{2})/(\d{4})', display)
+        clave = m.group(3) + m.group(2) + m.group(1)
+        historial_html.append((clave, display, registros))
+    if historial_html:
+        print("  [adaptador_mungia] {} revision(es) en formato HTML encontradas.".format(len(historial_html)))
+
     # Fusion por fecha (clave_orden = AAAAMMDD). Si una misma fecha existe en
-    # ambos formatos, gana el PDF (formato nuevo, mas completo: incluye ZR2.1).
+    # varios formatos, gana el mas nuevo/completo: HTML > PDF > Word (el HTML
+    # lo exporta ya la propia app sin marcas manuscritas que interpretar).
     combinado = {}
     for clave, display, registros in historial_docx:
         combinado[clave] = (display, registros)
     for clave, display, registros in historial_pdf:
+        combinado[clave] = (display, registros)
+    for clave, display, registros in historial_html:
         combinado[clave] = (display, registros)
 
     historial = [
