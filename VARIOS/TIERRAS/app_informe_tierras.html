@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Generador Informes Tierra</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Inter',system-ui,-apple-system,'Segoe UI',Arial,sans-serif;background:#f0f4f8;color:#222}
@@ -124,6 +124,35 @@ textarea{height:65px;resize:vertical}
 .val-ok{background:#eafaf1;border:1px solid #a9dfbf;color:#1e8449;padding:4px 10px;border-radius:4px;font-size:.8em;font-weight:700;display:inline-block;margin:2px 4px 2px 0}
 .val-warn{background:#fef5e7;border:1px solid #f0b429;color:#d35400;padding:4px 10px;border-radius:4px;font-size:.8em;font-weight:700;display:inline-block;margin:2px 4px 2px 0}
 .val-bad{background:#fdedec;border:1px solid #f1948a;color:#b03a2e;padding:4px 10px;border-radius:4px;font-size:.8em;font-weight:700;display:inline-block;margin:2px 4px 2px 0}
+/* ── SELLO DE VERIFICACIÓN POR PUNTO — bloque autocontenido, ver construirSellos() ── */
+.seal-row{display:flex;gap:20px;flex-wrap:wrap;justify-content:flex-end;align-items:flex-start;padding:8px 0 4px}
+.seal{position:relative;width:168px;height:168px;flex-shrink:0}
+.seal-rings{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.tint-shape{stroke:none;opacity:.11}
+.ring-outer{fill:none;stroke-width:10}
+.ring-inner{fill:none;stroke-width:1.8;stroke-dasharray:2.2 3}
+.grain-shape{stroke:none;opacity:.4;mix-blend-mode:multiply}
+.seal-ok .ring-outer,.seal-ok .ring-inner{stroke:#27ae60}
+.seal-ok .grain-shape,.seal-ok .tint-shape{fill:#27ae60}
+.seal-warn .ring-outer,.seal-warn .ring-inner{stroke:#e67e22}
+.seal-warn .grain-shape,.seal-warn .tint-shape{fill:#e67e22}
+.seal-admisible .ring-outer,.seal-admisible .ring-inner{stroke:#c0550a}
+.seal-admisible .grain-shape,.seal-admisible .tint-shape{fill:#c0550a}
+.seal-fail .ring-outer,.seal-fail .ring-inner{stroke:#c0392b}
+.seal-fail .grain-shape,.seal-fail .tint-shape{fill:#c0392b}
+.seal-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:'Special Elite',monospace;text-align:center;padding:0 8px}
+.seal-ok .seal-text{color:#1c7a41}
+.seal-warn .seal-text{color:#a85a10}
+.seal-admisible .seal-text{color:#8a3e07}
+.seal-fail .seal-text{color:#a5311f}
+.seal-id{font-size:19px;letter-spacing:2px}
+.seal-id.long{font-size:14px;letter-spacing:.5px}
+.seal-rule{width:46px;height:2px;background:currentColor;opacity:.55;margin:6px 0}
+.seal-val{font-size:34px;letter-spacing:-.5px;font-variant-numeric:tabular-nums}
+.seal-verdict{font-size:12.5px;letter-spacing:1.1px;margin-top:6px}
+.seal-cap{font-size:10px;letter-spacing:.3px;opacity:.82;margin-top:6px}
+/* ── FIN SELLO DE VERIFICACIÓN POR PUNTO ── */
 /* ── A4 e impresión en color ── */
 @page{size:A4 portrait;margin:10mm 12mm}
 @media print{
@@ -140,6 +169,8 @@ textarea{height:65px;resize:vertical}
   .concbox,.pendbox,.pendbox-blue,.calcbox,.tip,.sug-card{break-inside:avoid;page-break-inside:avoid}
   .gauge-wrap,.chart-wrap{break-inside:avoid;page-break-inside:avoid}
   .photo-card{break-inside:avoid;page-break-inside:avoid}
+  .seal-row{break-inside:avoid;page-break-inside:avoid}
+  .seal{break-inside:avoid;page-break-inside:avoid}
   .photo-grid{break-before:auto;page-break-before:auto}
   .sign-area{break-inside:avoid;page-break-inside:avoid}
   .itable{break-inside:auto}
@@ -618,6 +649,8 @@ body.dark #inf-out *{color:#222}
     </div>
   </div>
 
+
+  <div id="o_sellos"></div>
 
   <div class="sign-area" style="margin-top:28px;border-top:1px solid #ccc;padding-top:14px">
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:14px">
@@ -1265,6 +1298,63 @@ function _paraBadge(v){
   if(v<=LIM_UNE21186) return '<span class="ok">⚡ Cumple UNE 21186 ('+v+' Ω)</span>';
   return '<span class="fail">⚡ No cumple ('+v+' Ω &gt; '+LIM_UNE21186+' Ω)</span>';
 }
+
+// ============================================================
+// SELLO DE VERIFICACIÓN POR PUNTO — bloque autocontenido y retirable.
+// Reutiliza _btCls/_paraBadge (mismo criterio que el §5 Resumen);
+// no repite ningún umbral propio. Para quitar el sello: borrar este
+// bloque hasta "FIN SELLO", el <div id="o_sellos"> del HTML, la línea
+// que lo rellena en generar(), el bloque CSS "SELLO DE VERIFICACIÓN
+// POR PUNTO" y el family=Special+Elite del <link> de fuentes.
+// ============================================================
+function _sealBT(v,idn,ul){
+  var cls=_btCls(v,idn,ul);
+  var txt=cls==='fail'?'No cumple':cls==='ok'?'Muy favorable':cls==='warn'?'Mejorar hasta ≤20 Ω':'Admisible';
+  return {cls:cls,txt:txt};
+}
+function _sealPara(v){
+  if(v>LIM_UNE21186) return {cls:'fail',txt:'No cumple'};
+  if(v<=5) return {cls:'ok',txt:'Muy favorable'};
+  return {cls:'ok',txt:'Cumple UNE 21186'};
+}
+function _sealId(etiq){
+  etiq=(etiq||'').toString().toUpperCase();
+  if(etiq.length>13) etiq=etiq.slice(0,12)+'…';
+  return etiq;
+}
+function construirSellos(grupos,idn,ul){
+  var rot=[-7,6,-9,5,-6,8];
+  var html='';
+  grupos.forEach(function(g,i){
+    if(!(g.v>0))return; // sin medida válida (intento descartado) → sin sello, sin nota
+    var etiqRaw=(g.pt&&g.pt.trim()&&g.pt!=='—')?g.pt:(g.para?'Pararrayos':'Red de Tierras');
+    var sv=g.para?_sealPara(g.v):_sealBT(g.v,idn,ul);
+    var cap=g.para?((g.best?g.best.met:'')+' · UNE 21186'):(g.best?g.best.met:'');
+    var val=g.conf?g.mean:g.v;
+    html+='<div class="seal seal-'+sv.cls+'" style="transform:rotate('+rot[i%rot.length]+'deg)">'+
+      '<svg class="seal-rings" viewBox="0 0 168 168" width="168" height="168" aria-hidden="true">'+
+        '<defs><filter id="selloGrain'+i+'" x="-20%" y="-20%" width="140%" height="140%">'+
+          '<feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="'+(i*7+3)+'" result="noise"/>'+
+          '<feColorMatrix in="noise" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.7 0" result="mask"/>'+
+          '<feComposite in="SourceGraphic" in2="mask" operator="in"/>'+
+        '</filter></defs>'+
+        '<circle class="tint-shape" cx="84" cy="84" r="68"/>'+
+        '<circle class="grain-shape" cx="84" cy="84" r="74" filter="url(#selloGrain'+i+')"/>'+
+        '<circle class="ring-outer" cx="84" cy="84" r="72"/>'+
+        '<circle class="ring-inner" cx="84" cy="84" r="62"/>'+
+      '</svg>'+
+      '<div class="seal-text">'+
+        '<span class="seal-id'+(etiqRaw.length>9?' long':'')+'">'+_sealId(etiqRaw)+'</span>'+
+        '<span class="seal-rule"></span>'+
+        '<span class="seal-val">'+val+' Ω</span>'+
+        '<span class="seal-verdict">'+sv.txt.toUpperCase()+'</span>'+
+        (cap?'<span class="seal-cap">'+cap+'</span>':'')+
+      '</div>'+
+    '</div>';
+  });
+  return html?'<div class="seal-row">'+html+'</div>':'';
+}
+// ── FIN SELLO ──
 
 // ── Cálculos ──
 function calcUt(pid){
@@ -2055,6 +2145,7 @@ function generar(){
   // ── Agrupar medidas por elemento ──
   var _paraGrp=agruparValFin(valFin.filter(function(x){return x.para&&x.v>0;}));
   var _btGrp=agruparValFin(valFin.filter(function(x){return !x.para&&x.v>0;}));
+  document.getElementById('o_sellos').innerHTML=construirSellos(_btGrp.concat(_paraGrp),idn,ul);
   // Copia de _failsMap para §6 (§5 consume/borra las entradas)
   var _paraFailsCopy={};Object.keys(_failsMap).forEach(function(k){_paraFailsCopy[k]=_failsMap[k].slice();});
 
