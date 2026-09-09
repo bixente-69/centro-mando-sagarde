@@ -4,11 +4,11 @@
   "obra": "2026 OBRA PRUEBA",
   "revision": "28/08/2026",
   "sin_base": false,
-  "edad_revision_dias": 7,
+  "edad_revision_dias": 12,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "04/09/2026 14:22",
+  "generado": "09/09/2026 18:55",
   "resumen": {
     "listos": 15,
     "verificar": 0,

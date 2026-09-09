@@ -27,8 +27,11 @@ def _entrada(revision, resultado_aplicacion, salvaguarda_coincidio,
         raise TypeError('resultado_aplicacion debe ser un dict')
     if not resultado_aplicacion.get('escrito'):
         raise ValueError('el resultado no corresponde a una aplicacion escrita')
-    if not isinstance(salvaguarda_coincidio, bool):
-        raise TypeError('salvaguarda_coincidio debe ser bool')
+    if salvaguarda_coincidio is not None and not isinstance(
+            salvaguarda_coincidio, bool):
+        raise TypeError(
+            'salvaguarda_coincidio debe ser bool, o None si no hubo '
+            'comprobacion cruzada que hacer (p.ej. --digital sin PDF real)')
 
     resumen = resultado_aplicacion.get('resumen') or {}
     metadata = revision.get('metadata') or {}

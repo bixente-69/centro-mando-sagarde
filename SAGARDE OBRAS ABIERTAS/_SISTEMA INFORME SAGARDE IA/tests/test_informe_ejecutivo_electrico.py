@@ -13,6 +13,42 @@ sys.path.insert(0, os.path.join(ROOT_DIR, '_SISTEMA', 'MOTOR', 'scripts'))
 import generar_informe_ejecutivo as gie
 
 
+class TestFechaBaseSnapshot(unittest.TestCase):
+    """La etiqueta de fecha del snapshot no puede quedarse desfasada.
+
+    Bug real encontrado el 09/09/2026: la ficha de Bolueta ya tenia una
+    revision del 09/09 (escrita via HTML, sin PDF que el adaptador viera),
+    pero el informe ejecutivo seguia imprimiendo 'Datos: 31/08/2026' -- la
+    ultima fecha que conocia el adaptador -- aunque el snapshot usado SI
+    era el estado actual y completo de la ficha.
+    """
+
+    def test_prefiere_la_fecha_mas_reciente_aunque_el_adaptador_no_la_conozca(self):
+        self.assertEqual(
+            gie._fecha_base_snapshot('31/08/2026', '09/09/2026'),
+            '09/09/2026')
+
+    def test_conserva_la_fecha_del_adaptador_si_es_la_mas_reciente(self):
+        self.assertEqual(
+            gie._fecha_base_snapshot('31/08/2026', '24/08/2026'),
+            '31/08/2026')
+
+    def test_comparacion_no_es_alfabetica(self):
+        # '09/09/2026' < '31/08/2026' como texto plano (el '0' inicial
+        # gana); la comparacion real de fechas tiene que dar lo contrario.
+        self.assertGreater(
+            gie._fecha_ordenable('09/09/2026'),
+            gie._fecha_ordenable('31/08/2026'))
+
+    def test_sin_fecha_de_ficha_usa_la_del_adaptador(self):
+        self.assertEqual(
+            gie._fecha_base_snapshot('31/08/2026', ''), '31/08/2026')
+
+    def test_fecha_de_adaptador_invalida_usa_la_de_la_ficha(self):
+        self.assertEqual(
+            gie._fecha_base_snapshot('', '09/09/2026'), '09/09/2026')
+
+
 class TestAlcanceSagarde(unittest.TestCase):
 
     def setUp(self):

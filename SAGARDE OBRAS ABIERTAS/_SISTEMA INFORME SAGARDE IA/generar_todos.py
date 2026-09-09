@@ -1178,7 +1178,25 @@ def main(hacer_pdf=True):
 
                 snapshot_ficha = fichas.snapshot_desde_ficha(ficha_actual)
                 if snapshot_ficha:
-                    historial[-1] = (fecha_ultima, snapshot_ficha)
+                    # ``fecha_ultima`` es la ultima fecha que CONOCE EL
+                    # ADAPTADOR (DOCX/PDF): puede quedar desfasada si la
+                    # ficha ya tiene una revision mas reciente que el
+                    # adaptador no sabe leer (p.ej. un HTML suelto sin PDF,
+                    # aplicado por leer_hoja_marcada.py). El snapshot que se
+                    # publica aqui es SIEMPRE el de la ficha actual: su
+                    # etiqueta de fecha tiene que describir eso, no lo
+                    # ultimo que vio el adaptador. No toca ``fecha_ultima``
+                    # en si (la usa la salvaguarda de arriba, que compara
+                    # contra lo que el adaptador sabe, a proposito).
+                    import generar_informe_ejecutivo
+                    revisiones_ficha = ficha_actual.get('revisiones') or []
+                    fecha_revision_ficha = (
+                        revisiones_ficha[-1].get('fecha')
+                        if revisiones_ficha else '')
+                    fecha_snapshot = (
+                        generar_informe_ejecutivo._fecha_base_snapshot(
+                            fecha_ultima, fecha_revision_ficha))
+                    historial[-1] = (fecha_snapshot, snapshot_ficha)
                     print(f"  [FICHA] el sistema lee de la ficha: "
                           f"{len(snapshot_ficha)} registros")
                 else:

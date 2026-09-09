@@ -178,6 +178,34 @@ class TestCutoverLeerHojaMarcada(unittest.TestCase):
         self.assertEqual(
             guardar.call_args.args[1]['revisiones'][-1]['fecha'], FECHA)
 
+    def test_digital_escribir_html_sin_pdf_omite_salvaguarda(self):
+        """Revision exportada solo en HTML (nunca hubo PDF, no que se
+        perdiera): no existe "camino antiguo" que reproducir, asi que se
+        omite esa comprobacion cruzada -- sin reventar intentando abrir un
+        PDF que no existe -- y se escribe apoyandose solo en el motor
+        comun. La omision queda registrada, no oculta."""
+        html = self._crear_html_gemelo()
+        with (
+                mock.patch.object(lector, 'estados_impresos') as impresos,
+                mock.patch.object(
+                    adaptar_revision_html,
+                    'construir_revision_normalizada_html',
+                    wraps=(adaptar_revision_html
+                           .construir_revision_normalizada_html)
+                ) as adaptar_html):
+            salida, guardar = self._ejecutar([
+                html, 'pruebas', '--digital', '--fecha', FECHA,
+                '--escribir'], _ficha('P'))
+
+        impresos.assert_not_called()
+        adaptar_html.assert_called_once()
+        self.assertIn('sin PDF real que releer', salida)
+        self.assertIn('[SALVAGUARDA OMITIDA]', salida)
+        self.assertNotIn('[SALVAGUARDA]', salida)
+        guardar.assert_called_once()
+        ficha_guardada = guardar.call_args.args[1]
+        self.assertEqual(ficha_guardada['estados'][CLAVE]['v'], 'X')
+
     def test_digital_pasa_al_html_los_mapas_explicitos_de_la_obra(self):
         self._crear_html_gemelo()
         self.obra['mapa_portales_revision_html'] = {

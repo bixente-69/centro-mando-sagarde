@@ -655,6 +655,11 @@ def _revisiones_sin_duplicado_legado(
     y una relectura de la hoja del generador (123 cambios) lo borro sin
     avisar, dejando 472 celdas apuntando a un id que ya no existia en
     'revisiones'.
+
+    ``cambios_antiguos`` puede ser ``None`` (HTML sin PDF real: no hubo
+    camino antiguo que recalcular). Sin ese numero para comparar, cualquier
+    id heredado que coincida se trata igual que una revision de otra
+    fuente: se conserva sin tocar y se avisa.
     """
     resultado = []
     for entrada in revisiones_previas:
@@ -662,13 +667,16 @@ def _revisiones_sin_duplicado_legado(
         if id_actual == rev_id_nuevo:
             continue
         if id_actual == rev_id_antiguo:
-            if _cambios_registrados(entrada) == len(cambios_antiguos):
+            if (cambios_antiguos is not None
+                    and _cambios_registrados(entrada) == len(cambios_antiguos)):
                 continue
+            de_esta_relectura = (
+                'sin camino antiguo que recalcular' if cambios_antiguos is None
+                else f'no {len(cambios_antiguos)}, los de esta relectura')
             print(f"  [AVISO] ya existia una revision '{rev_id_antiguo}' "
                   f"con {_cambios_registrados(entrada)} cambios registrados "
-                  f"(no {len(cambios_antiguos)}, los de esta relectura): "
-                  "parece de otra fuente o fecha de proceso. Se conserva "
-                  "sin tocar.")
+                  f"({de_esta_relectura}): parece de otra fuente o fecha de "
+                  "proceso. Se conserva sin tocar.")
         resultado.append(entrada)
     return resultado
 
@@ -784,12 +792,23 @@ def main():
         rev_id_antiguo = 'rev_' + args.fecha.replace('/', '')
         estados_antiguos = None
         cambios_antiguos = None
-        if args.escribir:
+        # La salvaguarda del primer cutover (reproducir el camino antiguo
+        # basado en el PDF, en memoria, antes de fiarse del motor comun)
+        # solo tiene sentido si hay un PDF real que releer: si la revision
+        # es HTML sin PDF (p.ej. exportado solo-HTML), no existe "camino
+        # antiguo" que reproducir -- nunca lo hubo, para HTML sin PDF.
+        hay_pdf_real = (
+            os.path.isfile(args.hoja) and not args.hoja.lower().endswith('.html'))
+        if args.escribir and hay_pdf_real:
             # Salvaguarda del primer cutover: reproduce primero, integramente
             # y solo en memoria, el camino anterior basado en el PDF.
             impresos_antiguos = estados_impresos(args.hoja, obra, ficha)
             estados_antiguos, cambios_antiguos = aplicar_digital(
                 ficha, impresos_antiguos, args.fecha, rev_id_antiguo)
+        elif args.escribir:
+            print('sin PDF real que releer (solo hay HTML): se omite la '
+                  'comprobacion cruzada geometrica de la salvaguarda; se '
+                  'escribe apoyandose solo en el motor comun ya validado.')
 
         import validar_revision
         catalogo = validar_revision.cargar_catalogo_tajos()
@@ -822,8 +841,15 @@ def main():
             return
 
         ficha_nueva = aplicacion['ficha_actualizada']
-        celdas_comparadas = _comprobar_paridad_estados(
-            estados_antiguos, ficha_nueva.get('estados') or {})
+        if estados_antiguos is not None:
+            celdas_comparadas = _comprobar_paridad_estados(
+                estados_antiguos, ficha_nueva.get('estados') or {})
+            salvaguarda_coincidio = True
+        else:
+            celdas_comparadas = None
+            salvaguarda_coincidio = None
+            print('\n[SALVAGUARDA OMITIDA] sin PDF real: no hay '
+                  'comprobacion cruzada independiente para esta escritura.')
 
         sidecar = _ruta_sistema(args.hoja, crear=True) + '.correcciones.json'
         if os.path.isfile(sidecar) and not args.reemplazar:
@@ -856,7 +882,7 @@ def main():
             aplicacion,
             trazabilidad_revisiones.ruta_log_obra(carpeta),
             revision=revision,
-            salvaguarda_coincidio=True,
+            salvaguarda_coincidio=salvaguarda_coincidio,
             celdas_comparadas=celdas_comparadas,
         )
         print(f'\n  sidecar: {sidecar}')

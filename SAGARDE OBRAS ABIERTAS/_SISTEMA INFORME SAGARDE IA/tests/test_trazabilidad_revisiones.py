@@ -139,6 +139,32 @@ class TestTrazabilidadRevisiones(unittest.TestCase):
         self.assertIn('La ficha ya guardada se conserva', salida.getvalue())
         self.assertFalse(self.log.exists())
 
+    def test_salvaguarda_coincidio_none_se_registra_como_no_comprobada(self):
+        """None es un tercer estado honesto: 'no habia camino antiguo que
+        comparar' (HTML sin PDF real), distinto de True/False. No debe
+        confundirse con 'se comprobo y coincidio'."""
+        self.assertTrue(tr.registrar_trazabilidad(
+            _aplicacion(), self.log, revision=_revision(),
+            salvaguarda_coincidio=None, celdas_comparadas=None))
+
+        entrada = json.loads(self.log.read_text(encoding='utf-8'))
+        self.assertIsNone(entrada['salvaguarda_doble_calculo_coincidio'])
+        self.assertIsNone(entrada['celdas_comparadas_salvaguarda'])
+
+    def test_salvaguarda_coincidio_exige_bool_o_none(self):
+        # registrar_trazabilidad es deliberadamente no bloqueante: un valor
+        # invalido no debe tumbar la escritura de la ficha ya guardada,
+        # asi que aqui se manifiesta como aviso + False, no como excepcion.
+        salida = io.StringIO()
+        with contextlib.redirect_stdout(salida):
+            registrado = tr.registrar_trazabilidad(
+                _aplicacion(), self.log, revision=_revision(),
+                salvaguarda_coincidio='si')
+        self.assertFalse(registrado)
+        self.assertIn('[AVISO TRAZABILIDAD]', salida.getvalue())
+        self.assertIn('TypeError', salida.getvalue())
+        self.assertFalse(self.log.exists())
+
     def test_resultado_no_escrito_no_crea_log(self):
         aplicacion = _aplicacion()
         aplicacion['escrito'] = False

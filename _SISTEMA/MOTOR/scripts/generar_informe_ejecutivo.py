@@ -1161,6 +1161,39 @@ def generar_pdf_ejecutivo(
     return output_pdf
 
 
+def _fecha_ordenable(fecha_ddmmaaaa):
+    """Convierte 'DD/MM/AAAA' en algo comparable de verdad.
+
+    Comparar estas fechas como texto plano es un bug real: '09/09/2026' <
+    '31/08/2026' alfabeticamente (el '0' inicial gana), aunque sea la mas
+    reciente. ``None`` si el texto no es una fecha valida.
+    """
+    try:
+        return datetime.strptime(fecha_ddmmaaaa, '%d/%m/%Y')
+    except (TypeError, ValueError):
+        return None
+
+
+def _fecha_base_snapshot(fecha_historial_adaptador, fecha_ficha):
+    """Fecha que describe de verdad el snapshot actual de la ficha.
+
+    ``fichas.snapshot_desde_ficha(ficha)`` siempre construye el estado
+    ACTUAL de la ficha vaya o no el adaptador. Pero el adaptador puede no
+    conocer la revision mas reciente -- p.ej. escrita por
+    leer_hoja_marcada.py via HTML o tinta, sin PDF/DOCX que el adaptador
+    lea -- y en ese caso su ultima fecha queda desfasada respecto a la
+    ficha real. Preferir siempre la mas reciente de las dos, comparando
+    fechas de verdad (no texto): la etiqueta debe describir lo que el
+    snapshot realmente es.
+    """
+    ordenable_ficha = _fecha_ordenable(fecha_ficha)
+    ordenable_adaptador = _fecha_ordenable(fecha_historial_adaptador)
+    if ordenable_ficha and (
+            ordenable_adaptador is None or ordenable_ficha > ordenable_adaptador):
+        return fecha_ficha
+    return fecha_historial_adaptador or fecha_ficha
+
+
 # ─── Entry Point ──────────────────────────────────────────────────────────
 def generar_para_obra(
     nombre_obra: str,
@@ -1189,12 +1222,14 @@ def generar_para_obra(
         if ficha:
             snapshot_base = fichas.snapshot_desde_ficha(ficha)
             if snapshot_base:
+                revisiones = ficha.get('revisiones') or []
+                fecha_ficha = revisiones[-1].get('fecha') if revisiones else ''
                 if historial:
-                    fecha_base = historial[-1][0]
+                    fecha_base = _fecha_base_snapshot(
+                        historial[-1][0], fecha_ficha)
                     historial[-1] = (fecha_base, snapshot_base)
                 else:
-                    revisiones = ficha.get('revisiones') or []
-                    fecha_base = revisiones[-1].get('fecha') if revisiones else ''
+                    fecha_base = fecha_ficha
                     historial = [(fecha_base, snapshot_base)] if fecha_base else []
     else:
         print(f"[1/2] Usando el historial validado por la ficha para '{nombre_oficial}'...")
