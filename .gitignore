@@ -37,6 +37,13 @@ VARIOS/APPS SAGARDE/
 # sobrescribe al regenerar: se publica solo el ultimo, no el historial PDF.
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/INFORME_EJECUTIVO_*.pdf
 
+# Excepcion puntual (09/09/2026): un unico documento que Bixente pidio
+# publicar para poder compartir su enlace. NO es un patron general para
+# listas de obra -- solo este fichero exacto, a proposito: otras listas de
+# vivienda concretas (nombres, incidencias) no deben acabar en un sitio
+# publico sin que Bixente lo pida cada vez.
+!SAGARDE OBRAS ABIERTAS/2026 BOLUETA ACR/BOLUETA_cableado_cortado_cuadro_mecanizado_09092026.pdf
+
 # Datos calculados enlazados desde los paneles de obras
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/prioridades_trabajos.json
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/dudas_pendientes.json
