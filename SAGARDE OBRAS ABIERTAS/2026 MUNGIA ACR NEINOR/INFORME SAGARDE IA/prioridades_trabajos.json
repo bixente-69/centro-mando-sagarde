@@ -4,17 +4,17 @@
   "obra": "2026 MUNGIA ACR NEINOR",
   "revision": "25/08/2026",
   "sin_base": false,
-  "edad_revision_dias": 15,
+  "edad_revision_dias": 16,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "09/09/2026 22:35",
+  "generado": "10/09/2026 13:43",
   "resumen": {
-    "listos": 7,
+    "listos": 6,
     "verificar": 0,
-    "unidades_listas": 117,
+    "unidades_listas": 82,
     "unidades_verificar": 0,
-    "bloqueados": 1,
+    "bloqueados": 2,
     "otros_gremios": 2,
     "dudas": 0,
     "sin_revisar": 0,
@@ -23,7 +23,7 @@
     "inventario_total": 37,
     "detalle_total": 2356,
     "preguntas_pendientes": 0,
-    "viviendas": 5,
+    "viviendas": 4,
     "zonas_comunes": 1,
     "edificio": 1
   },
@@ -755,206 +755,6 @@
       "orden": 3
     },
     {
-      "tarea_id": "placas_tapas",
-      "trabajo": "Placas y tapas",
-      "situacion": "LISTO",
-      "categoria": "VIABLE",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "prioridad": "P1",
-      "orden_ejecucion": 300,
-      "fase_nombre": "Remates finales",
-      "ubicaciones": [
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidades": [
-            "C2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidades": [
-            "C2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidades": [
-            "C2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "6",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "6",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        }
-      ],
-      "n_celdas": 20,
-      "n_ubicaciones": 20,
-      "n_unidades": 20,
-      "estado_actual": "Pendiente: 20",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "impacto_gremios": "Tajo final; no equivale a cuadro mecanizado.",
-      "orden": 4
-    },
-    {
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "situacion": "LISTO",
@@ -1530,7 +1330,7 @@
       "estado_actual": "M: 52 · /: 1 · Pendiente: 9",
       "motivo": "Rama independiente; requiere fachada terminada.",
       "impacto_gremios": "Rama independiente; requiere fachada terminada.",
-      "orden": 5
+      "orden": 4
     },
     {
       "tarea_id": "agujeros_iluminacion_zzcc",
@@ -1568,7 +1368,7 @@
       "estado_actual": "M: 2",
       "motivo": "Partida común solo para zonas comunes.",
       "impacto_gremios": "Partida común solo para zonas comunes.",
-      "orden": 6
+      "orden": 5
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -1581,141 +1381,6 @@
       "orden_ejecucion": 320,
       "fase_nombre": "Entrega",
       "ubicaciones": [
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidades": [
-            "C2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidades": [
-            "C2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidades": [
-            "C2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidades": [
-            "A2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidades": [
-            "B2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidades": [
-            "C3"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
         {
           "edificio": "ZR1.1",
           "planta": "PB",
@@ -1744,13 +1409,13 @@
           "estado_actual": "M"
         }
       ],
-      "n_celdas": 18,
-      "n_ubicaciones": 18,
-      "n_unidades": 18,
-      "estado_actual": "M: 18",
+      "n_celdas": 3,
+      "n_ubicaciones": 3,
+      "n_unidades": 3,
+      "estado_actual": "M: 3",
       "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
       "impacto_gremios": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "orden": 7
+      "orden": 6
     }
   ],
   "detalle_items": [
@@ -53841,51 +53506,17 @@
       "edificio": "ZR1.1",
       "planta": "1",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -53902,51 +53533,17 @@
       "edificio": "ZR1.1",
       "planta": "1",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -53963,51 +53560,17 @@
       "edificio": "ZR1.1",
       "planta": "1",
       "unidad": "C2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54024,51 +53587,17 @@
       "edificio": "ZR1.1",
       "planta": "2",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54085,51 +53614,17 @@
       "edificio": "ZR1.1",
       "planta": "2",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54146,51 +53641,17 @@
       "edificio": "ZR1.1",
       "planta": "2",
       "unidad": "C2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54207,51 +53668,17 @@
       "edificio": "ZR1.1",
       "planta": "3",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54268,51 +53695,17 @@
       "edificio": "ZR1.1",
       "planta": "3",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54329,51 +53722,17 @@
       "edificio": "ZR1.1",
       "planta": "3",
       "unidad": "C2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54390,51 +53749,17 @@
       "edificio": "ZR1.1",
       "planta": "4",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54451,51 +53776,17 @@
       "edificio": "ZR1.1",
       "planta": "4",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54512,51 +53803,17 @@
       "edificio": "ZR1.1",
       "planta": "4",
       "unidad": "C3",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54573,51 +53830,17 @@
       "edificio": "ZR1.1",
       "planta": "5",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54634,51 +53857,17 @@
       "edificio": "ZR1.1",
       "planta": "5",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54695,51 +53884,17 @@
       "edificio": "ZR1.1",
       "planta": "5",
       "unidad": "C3",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54756,51 +53911,17 @@
       "edificio": "ZR1.1",
       "planta": "6",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54817,51 +53938,17 @@
       "edificio": "ZR1.1",
       "planta": "6",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54878,51 +53965,17 @@
       "edificio": "ZR1.1",
       "planta": "PB",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -54939,51 +53992,17 @@
       "edificio": "ZR1.1",
       "planta": "PB",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -55000,51 +54019,17 @@
       "edificio": "ZR1.1",
       "planta": "PB",
       "unidad": "C3",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Tajo final; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -64966,43 +63951,17 @@
       "edificio": "ZR1.1",
       "planta": "1",
       "unidad": "A2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65019,43 +63978,17 @@
       "edificio": "ZR1.1",
       "planta": "1",
       "unidad": "B2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65072,43 +64005,17 @@
       "edificio": "ZR1.1",
       "planta": "1",
       "unidad": "C2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65125,43 +64032,17 @@
       "edificio": "ZR1.1",
       "planta": "2",
       "unidad": "A2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65178,43 +64059,17 @@
       "edificio": "ZR1.1",
       "planta": "2",
       "unidad": "B2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65231,43 +64086,17 @@
       "edificio": "ZR1.1",
       "planta": "2",
       "unidad": "C2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65284,43 +64113,17 @@
       "edificio": "ZR1.1",
       "planta": "3",
       "unidad": "A2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65337,43 +64140,17 @@
       "edificio": "ZR1.1",
       "planta": "3",
       "unidad": "B2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65390,43 +64167,17 @@
       "edificio": "ZR1.1",
       "planta": "3",
       "unidad": "C2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65443,43 +64194,17 @@
       "edificio": "ZR1.1",
       "planta": "4",
       "unidad": "A2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65496,43 +64221,17 @@
       "edificio": "ZR1.1",
       "planta": "4",
       "unidad": "B2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65549,43 +64248,17 @@
       "edificio": "ZR1.1",
       "planta": "4",
       "unidad": "C3",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65602,43 +64275,17 @@
       "edificio": "ZR1.1",
       "planta": "5",
       "unidad": "A2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65655,43 +64302,17 @@
       "edificio": "ZR1.1",
       "planta": "5",
       "unidad": "B2",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -65708,43 +64329,17 @@
       "edificio": "ZR1.1",
       "planta": "5",
       "unidad": "C3",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -67135,8 +65730,8 @@
       "edificio": "ZR1.1",
       "planta": "1",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67155,7 +65750,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67172,8 +65767,8 @@
       "edificio": "ZR1.1",
       "planta": "1",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67192,7 +65787,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67209,8 +65804,8 @@
       "edificio": "ZR1.1",
       "planta": "1",
       "unidad": "C2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67229,7 +65824,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67246,8 +65841,8 @@
       "edificio": "ZR1.1",
       "planta": "2",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67266,7 +65861,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67283,8 +65878,8 @@
       "edificio": "ZR1.1",
       "planta": "2",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67303,7 +65898,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67320,8 +65915,8 @@
       "edificio": "ZR1.1",
       "planta": "2",
       "unidad": "C2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67340,7 +65935,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67357,8 +65952,8 @@
       "edificio": "ZR1.1",
       "planta": "3",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67377,7 +65972,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67394,8 +65989,8 @@
       "edificio": "ZR1.1",
       "planta": "3",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67414,7 +66009,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67431,8 +66026,8 @@
       "edificio": "ZR1.1",
       "planta": "3",
       "unidad": "C2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67451,7 +66046,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67468,8 +66063,8 @@
       "edificio": "ZR1.1",
       "planta": "4",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67488,7 +66083,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67505,8 +66100,8 @@
       "edificio": "ZR1.1",
       "planta": "4",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67525,7 +66120,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67542,8 +66137,8 @@
       "edificio": "ZR1.1",
       "planta": "4",
       "unidad": "C3",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67562,7 +66157,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67579,8 +66174,8 @@
       "edificio": "ZR1.1",
       "planta": "5",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67599,7 +66194,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67616,8 +66211,8 @@
       "edificio": "ZR1.1",
       "planta": "5",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67636,7 +66231,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67653,8 +66248,8 @@
       "edificio": "ZR1.1",
       "planta": "5",
       "unidad": "C3",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67673,7 +66268,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67690,8 +66285,8 @@
       "edificio": "ZR1.1",
       "planta": "6",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67710,7 +66305,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67727,8 +66322,8 @@
       "edificio": "ZR1.1",
       "planta": "6",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67747,7 +66342,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67764,8 +66359,8 @@
       "edificio": "ZR1.1",
       "planta": "PB",
       "unidad": "A2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67784,7 +66379,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67801,8 +66396,8 @@
       "edificio": "ZR1.1",
       "planta": "PB",
       "unidad": "B2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67821,7 +66416,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -67838,8 +66433,8 @@
       "edificio": "ZR1.1",
       "planta": "PB",
       "unidad": "C3",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "dependencias_cumplidas": [],
@@ -67858,7 +66453,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/07/2026"
+      "ultima_fecha": "10/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -70775,463 +69370,6 @@
       "orden_inventario": 3
     },
     {
-      "grupo_id": "placas_tapas",
-      "trabajo": "Placas y tapas",
-      "propiedad": "propio",
-      "orden_ejecucion": 300,
-      "fase_nombre": "Remates finales",
-      "ubicaciones": [
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "1",
-          "unidad": "C2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "2",
-          "unidad": "C2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "3",
-          "unidad": "C2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "4",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "5",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "6",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "6",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.1",
-          "planta": "PB",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "1",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "1",
-          "unidad": "B3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidad": "B3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "2",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidad": "B3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "3",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidad": "B3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "4",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidad": "B3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "5",
-          "unidad": "C3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "6",
-          "unidad": "A2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "6",
-          "unidad": "B2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR1.2",
-          "planta": "PB",
-          "unidad": "PORTAL",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "2",
-          "unidad": "E",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "3",
-          "unidad": "E",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "4",
-          "unidad": "E",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "5",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "ZR2.1",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Placas y tapas"
-      ],
-      "seccion": "VIABLE",
-      "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 62,
-      "estado_actual": "Pendiente: 62",
-      "resumen_categorias": {
-        "VIABLE": 20,
-        "BLOQUEADO": 41,
-        "SIN_REVISAR": 1
-      },
-      "motivo": "Dependencias pendientes: Pintura — segunda mano, Telemecanizado. Dependencias pendientes: Pintura — segunda mano. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Tajo final; no equivale a cuadro mecanizado.",
-      "orden_inventario": 4
-    },
-    {
       "grupo_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
       "propiedad": "propio",
@@ -71684,7 +69822,7 @@
         "VIABLE": 62
       },
       "motivo": "Rama independiente; requiere fachada terminada.",
-      "orden_inventario": 5
+      "orden_inventario": 4
     },
     {
       "grupo_id": "agujeros_iluminacion_zzcc",
@@ -72140,7 +70278,7 @@
         "VIABLE": 2
       },
       "motivo": "Partida común solo para zonas comunes. Terminado según la última confirmación válida.",
-      "orden_inventario": 6
+      "orden_inventario": 5
     },
     {
       "grupo_id": "casquillos_bombillas",
@@ -72153,106 +70291,106 @@
           "edificio": "ZR1.1",
           "planta": "1",
           "unidad": "A2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "1",
           "unidad": "B2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "1",
           "unidad": "C2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "2",
           "unidad": "A2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "2",
           "unidad": "B2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "2",
           "unidad": "C2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "3",
           "unidad": "A2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "3",
           "unidad": "B2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "3",
           "unidad": "C2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "4",
           "unidad": "A2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "4",
           "unidad": "B2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "4",
           "unidad": "C3",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "5",
           "unidad": "A2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "5",
           "unidad": "B2",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "5",
           "unidad": "C3",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "ZR1.1",
@@ -72590,13 +70728,470 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 62,
-      "estado_actual": "M: 18 · Pendiente: 1 · X: 43",
+      "estado_actual": "M: 3 · Pendiente: 1 · X: 58",
       "resumen_categorias": {
-        "VIABLE": 18,
-        "TERMINADO": 43,
+        "TERMINADO": 58,
+        "VIABLE": 3,
         "BLOQUEADO": 1
       },
       "motivo": "Dependencias pendientes: Pintura — segunda mano. Se coloca al final para evitar robos; la tensión no es requisito de colocación. Terminado según la última confirmación válida.",
+      "orden_inventario": 6
+    },
+    {
+      "grupo_id": "placas_tapas",
+      "trabajo": "Placas y tapas",
+      "propiedad": "propio",
+      "orden_ejecucion": 300,
+      "fase_nombre": "Remates finales",
+      "ubicaciones": [
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "1",
+          "unidad": "C2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "2",
+          "unidad": "C2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "3",
+          "unidad": "C2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "4",
+          "unidad": "C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "5",
+          "unidad": "C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "6",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "A2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "B2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.1",
+          "planta": "PB",
+          "unidad": "C3",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "1",
+          "unidad": "B3",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "B3",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "2",
+          "unidad": "C3",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "B3",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "3",
+          "unidad": "C3",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "B3",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "4",
+          "unidad": "C3",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "B3",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "5",
+          "unidad": "C3",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "6",
+          "unidad": "A2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "6",
+          "unidad": "B2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR1.2",
+          "planta": "PB",
+          "unidad": "PORTAL",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "2",
+          "unidad": "E",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "3",
+          "unidad": "E",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "4",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "4",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "4",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "4",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "4",
+          "unidad": "E",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "5",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "5",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "5",
+          "unidad": "C",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "5",
+          "unidad": "D",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "ZR2.1",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        }
+      ],
+      "subtajos": [
+        "Placas y tapas"
+      ],
+      "seccion": "BLOQUEADO",
+      "seccion_nombre": "Tajos bloqueados",
+      "n_ubicaciones": 62,
+      "estado_actual": "Pendiente: 42 · X: 20",
+      "resumen_categorias": {
+        "TERMINADO": 20,
+        "BLOQUEADO": 41,
+        "SIN_REVISAR": 1
+      },
+      "motivo": "Dependencias pendientes: Pintura — segunda mano, Telemecanizado. Dependencias pendientes: Pintura — segunda mano. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
       "orden_inventario": 7
     },
     {
@@ -72610,140 +71205,140 @@
           "edificio": "ZR1.1",
           "planta": "1",
           "unidad": "A2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "1",
           "unidad": "B2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "1",
           "unidad": "C2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "2",
           "unidad": "A2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "2",
           "unidad": "B2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "2",
           "unidad": "C2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "3",
           "unidad": "A2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "3",
           "unidad": "B2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "3",
           "unidad": "C2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "4",
           "unidad": "A2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "4",
           "unidad": "B2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "4",
           "unidad": "C3",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "5",
           "unidad": "A2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "5",
           "unidad": "B2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "5",
           "unidad": "C3",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "6",
           "unidad": "A2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "6",
           "unidad": "B2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "PB",
           "unidad": "A2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "PB",
           "unidad": "B2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
           "edificio": "ZR1.1",
           "planta": "PB",
           "unidad": "C3",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
@@ -73047,7 +71642,7 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 62,
-      "estado_actual": "Pendiente: 62",
+      "estado_actual": "/: 20 · Pendiente: 42",
       "resumen_categorias": {
         "BLOQUEADO": 61,
         "SIN_REVISAR": 1
