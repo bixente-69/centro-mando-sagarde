@@ -79,9 +79,18 @@ class TestCutoverGenerarTodos(unittest.TestCase):
         estado = ficha_resultado['estados'][CLAVE]
         self.assertEqual(estado['v'], 'P')
         self.assertIn('historial_consolidado', estado['r'])
-        # El camino antiguo habria registrado rev_01092026. Que no aparezca
-        # demuestra que se persiste la copia producida por apply_revision.
-        self.assertEqual(ficha_resultado['revisiones'], [])
+        # apply_revision (motor comun) solo toca 'estados', nunca
+        # 'revisiones' -- por eso se adopta el valor ya calculado por el
+        # camino antiguo (ficha_antigua, via ficha_obra.actualizar), que si
+        # lo mantiene. Bug real encontrado en Gernika el 11/09/2026: 155
+        # celdas avanzaban pero 'revisiones' se quedaba en su ultima entrada
+        # de julio, asi que resumen_obras.json (la tarjeta del portal)
+        # seguia mostrando la fecha vieja aunque el panel de la obra ya
+        # tuviera los datos frescos.
+        self.assertEqual(
+            [r['id'] for r in ficha_resultado['revisiones']],
+            ['rev_01092026'])
+        self.assertEqual(ficha_resultado['revisiones'][0]['fecha'], FECHA)
 
     def test_discrepancia_de_una_obra_no_impide_actualizar_la_siguiente(self):
         obras = [

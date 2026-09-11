@@ -1064,6 +1064,18 @@ def actualizar_ficha_con_salvaguarda(
         return ficha_actual, False
 
     ficha_nueva = resultado['ficha_nueva']
+    # El motor comun (aplicar_revision.apply_revision) solo toca 'estados':
+    # nunca escribe 'revisiones'. El camino antiguo (ficha_antigua, via
+    # ficha_obra.actualizar) SI la mantiene -- añade la entrada nueva con
+    # dedup y orden ya resueltos -- pero se descartaba tras la comparacion,
+    # dejando 'revisiones' desde su ultimo id conocido aunque los estados ya
+    # llevaran semanas mas avanzados. No forma parte de la salvaguarda de
+    # paridad (es trazabilidad, no estado funcional, mismo criterio que
+    # `_comprobar_paridad_estados` en leer_hoja_marcada.py) asi que adoptar
+    # el valor ya calculado por el camino antiguo es seguro.
+    ficha_nueva['revisiones'] = (
+        (resultado.get('ficha_antigua') or {}).get('revisiones')
+        or ficha_nueva.get('revisiones') or [])
     tocados = fichas.volcar_apartados(
         ficha_nueva, ficha_xlsx=ficha_xlsx, materiales=materiales,
         documentos=documentos)
