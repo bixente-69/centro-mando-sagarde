@@ -388,6 +388,25 @@ class TestIndexarBiblioteca(unittest.TestCase):
             lineas = [json.loads(l) for l in f if l.strip()]
         self.assertGreater(len(lineas), 0)
 
+    def test_pdf_con_fallo_de_api_se_salta_sin_tumbar_la_indexacion(self):
+        # generar_embeddings (Task 2) usa sys.exit() cuando agota los
+        # reintentos con la API real - SystemExit no hereda de Exception.
+        # Simulamos ese fallo para comprobar que ejecutar_indexacion lo
+        # captura y sigue, en vez de que el proceso entero se pare.
+        import indexar_biblioteca
+        original = indexar_biblioteca.generar_embeddings
+
+        def fallar_siempre(*args, **kwargs):
+            raise SystemExit("ERROR simulado: fallo de red tras agotar reintentos")
+
+        indexar_biblioteca.generar_embeddings = fallar_siempre
+        try:
+            indice = ejecutar_indexacion(self.carpeta_temporal, self.carpeta_indexador, self.ruta_indice)
+        finally:
+            indexar_biblioteca.generar_embeddings = original
+
+        self.assertEqual(indice, [])
+
 
 if __name__ == '__main__':
     unittest.main()
@@ -504,7 +523,11 @@ def ejecutar_indexacion(carpeta_biblioteca, carpeta_indexador, ruta_indice, forz
         print(f"[{i}/{len(pdfs_pendientes)}] {ruta_relativa}")
         try:
             nuevos_fragmentos = indexar_pdf(ruta_relativa, carpeta_biblioteca)
-        except Exception as e:
+        except (Exception, SystemExit) as e:
+            # generar_embeddings (Task 2) usa sys.exit() cuando agota los
+            # reintentos con la API — SystemExit no hereda de Exception, así
+            # que sin este segundo tipo aquí, un solo PDF con fallo de red
+            # tumbaría la indexación completa en vez de saltarse solo ese PDF.
             print(f"  [ERROR] no se pudo indexar: {e}")
             continue
         indice.extend(nuevos_fragmentos)
@@ -537,7 +560,7 @@ if __name__ == '__main__':
 - [ ] **Step 4: Ejecutar el test y comprobar que pasa**
 
 Run: `cd "/d/Nueva carpeta/OneDrive/PROYECTO ELECTRICO/_INDEXADOR" && python -m unittest tests.test_indexar_biblioteca -v`
-Expected: PASS (5 tests)
+Expected: PASS (6 tests)
 
 - [ ] **Step 5: Commit**
 
