@@ -7071,7 +7071,7 @@
   "dudas": [],
   "materiales": {},
   "documentos": {
-    "total": 185,
+    "total": 186,
     "por_categoria": {
       "Comprimidos": 3,
       "Excel": 2,
@@ -7079,10 +7079,10 @@
       "Otros": 19,
       "PDF": 136,
       "Planos y gráfica": 3,
-      "Word": 1
+      "Word": 2
     },
     "_meta": {
-      "actualizado": "11/09/2026 13:37"
+      "actualizado": "16/09/2026 12:34"
     }
   },
   "contactos": []

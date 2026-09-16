@@ -20485,16 +20485,16 @@
     }
   },
   "documentos": {
-    "total": 123,
+    "total": 124,
     "por_categoria": {
       "Excel": 7,
       "Imágenes": 77,
       "Otros": 6,
       "PDF": 24,
-      "Word": 9
+      "Word": 10
     },
     "_meta": {
-      "actualizado": "09/09/2026 22:29"
+      "actualizado": "16/09/2026 12:35"
     }
   },
   "contactos": []

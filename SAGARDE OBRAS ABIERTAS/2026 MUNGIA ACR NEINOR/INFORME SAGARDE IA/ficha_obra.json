@@ -13196,7 +13196,7 @@
   "materiales": {
     "ultimo_mes": "Mayo26",
     "ultima_fecha": "08/05/2026",
-    "dias_desde": 126,
+    "dias_desde": 131,
     "meses": [
       "Febrero26",
       "Marzo26",
@@ -13204,13 +13204,13 @@
       "Mayo26"
     ],
     "n_items": 50,
-    "aviso": "La hoja de materiales no se actualiza desde 08/05/2026 (126 días). Los datos de consumo/stock pueden estar desfasados.",
+    "aviso": "La hoja de materiales no se actualiza desde 08/05/2026 (131 días). Los datos de consumo/stock pueden estar desfasados.",
     "_meta": {
-      "actualizado": "11/09/2026 13:37"
+      "actualizado": "16/09/2026 12:34"
     }
   },
   "documentos": {
-    "total": 122,
+    "total": 123,
     "por_categoria": {
       "Comprimidos": 1,
       "Excel": 4,
@@ -13218,10 +13218,10 @@
       "Otros": 7,
       "PDF": 58,
       "Planos y gráfica": 5,
-      "Word": 26
+      "Word": 27
     },
     "_meta": {
-      "actualizado": "11/09/2026 13:37"
+      "actualizado": "16/09/2026 12:34"
     }
   },
   "contactos": []
