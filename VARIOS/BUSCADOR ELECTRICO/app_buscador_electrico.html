@@ -41,7 +41,7 @@ textarea{width:100%;padding:10px;border:1px solid #bcd;border-radius:6px;font-si
 @media print{
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;color-adjust:exact!important}
   body{background:#fff!important}
-  h1,.caja-clave,.caja-pregunta,.error{display:none!important}
+  h1,.caja-clave,.caja-pregunta,.error,.pensando{display:none!important}
   .contenido{padding:0!important;max-width:none!important;margin:0!important}
   .letterhead-impresion{display:block!important;break-inside:avoid;page-break-inside:avoid}
   .ih{display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid #1a3a5c;padding-bottom:10px;margin-bottom:10px}
@@ -146,6 +146,14 @@ function añadirMensajeUsuario(texto) {
   hilo.appendChild(div);
 }
 
+function añadirMensajePensando() {
+  const div = document.createElement("div");
+  div.className = "msg pensando";
+  div.textContent = "Pensando... puede tardar hasta 2 minutos si la pregunta necesita cálculos.";
+  hilo.appendChild(div);
+  return div;
+}
+
 function añadirMensajeIA(datos) {
   const div = document.createElement("div");
   div.className = "msg msg-ia";
@@ -204,6 +212,7 @@ async function preguntar() {
   btnPreguntar.disabled = true;
   btnPreguntar.textContent = "Pensando...";
   ocultarError();
+  const elementoPensando = añadirMensajePensando();
 
   const cuerpo = { pregunta, clave };
   if (conversacionActual) {
@@ -243,6 +252,7 @@ async function preguntar() {
   } catch (error) {
     mostrarError("No se ha podido conectar con el buscador. Comprueba tu conexión a internet.");
   } finally {
+    elementoPensando.remove();
     btnPreguntar.disabled = false;
     btnPreguntar.textContent = "Preguntar";
   }
