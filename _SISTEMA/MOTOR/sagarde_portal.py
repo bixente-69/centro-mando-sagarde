@@ -806,6 +806,8 @@ def _etiqueta_app_herramienta(app: dict) -> tuple[str, str]:
         return "Informe de tierras", "Mediciones, cálculo y preparación de informes"
     if nombre_archivo == "app_informes.html":
         return "Baterías de condensadores", "Revisiones, perfiles e historial de informes"
+    if nombre_archivo == "app_buscador_electrico.html":
+        return "Buscador Eléctrico", "Preguntas técnicas con IA sobre la biblioteca de electricidad"
     return app["name"].title(), "Aplicación disponible en la biblioteca técnica"
 
 

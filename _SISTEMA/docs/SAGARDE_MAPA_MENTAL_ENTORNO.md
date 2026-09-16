@@ -322,7 +322,7 @@ flowchart TD
 | A18 | Presentación | Móvil | 5 pestañas | interfaz | `PORTAL SAGARDE.html` | Portal compacto | Resúmenes | HTML | `generar_portal_movil` | Usuario | APARENTEMENTE OBSOLETO | archivo 25/07; código `:569-759` |
 | A19 | Presentación | Postventa | Índice/previews | interfaz | `postventas_index.py` | Filtros, pendientes, Word | Carpetas | HTML/JSON | python-docx | Portal | Operativo | `postventas_index.py:345-765` |
 | A20 | Presentación | Mantenimiento | Índice/mapas | interfaz | dos Python | Resumen/árbol | Carpetas | HTML/JSON | filesystem | Portal | Duplicado | BAT + `sagarde_portal.main` |
-| A21 | Presentación | Apps | 7 herramientas | interfaz | `APLICACIONES/index.html`, `VARIOS/*` | Tierras, baterías, personal | Datos locales | HTML/JSON/PDF | navegador | Portal | Mixto | `sagarde_portal.py:519-565`, `:853-887` |
+| A21 | Presentación | Apps | 3 herramientas | interfaz | `APLICACIONES/index.html`, `VARIOS/*` | Tierras, baterías, Buscador Eléctrico, personal | Datos locales y consulta remota | HTML/JSON/PDF | navegador + Cloudflare Worker privado | Portal | Mixto | `sagarde_portal.py:519-565`, `:853-887`; `VARIOS/BUSCADOR ELECTRICO/app_buscador_electrico.html` |
 | A22 | Informes | Ejecutivo eléctrico | PDF A4 | script | `generar_informe_ejecutivo.py` | Producción propia Sagarde por obra/portal | Ficha + historial + prioridades | PDF | ReportLab + catálogo + **fuentes en `assets/fonts/`** | Orquestador | Operativo desde base viva; tipografía propia desde 14/08/2026 | `generar_informe_ejecutivo.py` |
 | A23 | Automatización | Global | Actualizador | automatización | `Actualizar_Sagarde.bat` | Regenerar y publicar | Árbol | Archivos/commit | Python/Git | Usuario | Riesgoso | BAT completo |
 | A24 | Calidad | Pruebas | unittest | prueba | dos carpetas `tests` | 114 casos | Código/fixtures | Resultado | dependencias | Desarrollo | No ejecutado aquí | clases `Test*` |
@@ -486,7 +486,7 @@ No se localizaron `AGENTS.md`, `README`/`README.md`, `requirements.txt`, `pyproj
 
 ## 5.5 Interfaz, pestañas y vistas
 
-Criterio: **135 vistas/estados navegables**: 126 pestañas/pasos/filtros (5 móvil + 9 panel + 6 generador + 6 filtros postventa + 5 tierras + 3 baterías + 7 años nóminas + 85 meses 2019-2026) y 9 páginas únicas. No se multiplican las 9 vistas del panel por sus 5 instancias.
+Criterio: **136 vistas/estados navegables**: 126 pestañas/pasos/filtros (5 móvil + 9 panel + 6 generador + 6 filtros postventa + 5 tierras + 3 baterías + 7 años nóminas + 85 meses 2019-2026) y 10 páginas únicas. No se multiplican las 9 vistas del panel por sus 5 instancias.
 
 | Pestaña o vista | Identificador | Ruta | Finalidad | Datos | Acciones | Relacionados | Estado |
 |---|---|---|---|---|---|---|---|
@@ -513,6 +513,7 @@ Criterio: **135 vistas/estados navegables**: 126 pestañas/pasos/filtros (5 móv
 | Aplicaciones | página | `APLICACIONES/index.html` | 7 accesos | discovery | buscar/abrir | portal | Operativo |
 | Tierras | `datos`, `metodos`, `equipo`, `sugerencias`, `preview` | `VARIOS/TIERRAS/app_informe_tierras.html` | Informe tierra | formulario/storage | JSON/fotos/cálculo/PDF | navegador | Auxiliar operativo |
 | Baterías | `tab-nueva`, `tab-historial`, `tab-perfiles` | `VARIOS/BATERIAS DE CONDENSADORES/app_informes.html` | Condensadores | formulario/storage | JSON/imprimir | navegador | Auxiliar operativo |
+| Buscador Eléctrico | hilo de conversación | `VARIOS/BUSCADOR ELECTRICO/app_buscador_electrico.html` | Preguntas técnicas de electricidad con IA sobre la biblioteca personal de Bixente | contraseña en localStorage; conversación en memoria de la pestaña (no persiste) | preguntar/continuar hilo/imprimir A4 | Cloudflare Worker privado (fuera de este repo, sin secretos aquí) | Auxiliar operativo |
 | Nóminas | Todos + 2021…2026 | `[zona personal, excluida del repositorio]` | Histórico salarial | HTML | filtro/gráfico | CDN Chart.js | Sensible |
 | Registros | 85 pestañas mensuales | `[zona personal, excluida del repositorio]` | Producción | HTML | cambiar mes | generar_html | Histórico/activo |
 | Vida laboral | página | `[zona personal, excluida del repositorio]` | Resumen laboral | HTML | consulta | personal | Sensible |
@@ -666,6 +667,7 @@ El pipeline ejecuta primero `mantenimientos_index.py`, que crea JSON e índice; 
 
 - **Tierras:** formulario → cálculo/validación → fotos → informe/impresión; importa/exporta JSON y usa cuatro claves localStorage.
 - **Baterías:** revisión/perfiles/historial → validación → informe; importa/exporta JSON y usa `sgd_perfiles`/`sgd_historial`.
+- **Buscador Eléctrico:** pregunta/seguimiento → Cloudflare Worker privado fuera de este repo → respuesta con fuentes o conocimiento general → informe/impresión A4; guarda la contraseña en localStorage y mantiene la conversación solo en memoria de la pestaña.
 - **Personal:** CSV/PDF/XLSX → Excel → HTML anual, vida laboral y nóminas; algunos scripts encadenan `subprocess`.
 
 # 8. Estructura de directorios comentada
@@ -760,7 +762,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | Postventa | Operativo | 31 contratos/resumen |
 | Sync postventa | Experimental/manual | mutador sin llamada BAT |
 | Mantenimiento | Operativo duplicado | dos escritores |
-| Tierras/Baterías | Auxiliar operativo | UI/storage |
+| Tierras/Baterías/Buscador Eléctrico | Auxiliar operativo | UI/storage; consulta al Worker privado externo y conversación no persistente |
 | Personal | Auxiliar sensible | scripts/8 años/exclusión Git |
 | Skills revisión/actualizar | Documentadas | comandos coherentes |
 | Skill nueva obra | Obsoleta aparente | registro/esquema antiguos |
@@ -826,7 +828,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 - `docs/2026-07-28-memoria-diccionario-tajos-alertas-informes.md`; `docs/superpowers/{plans,specs}/*.md`; `.superpowers/sdd/**/*.md`.
 - `_SISTEMA/docs/superpowers/specs/2026-08-25-unificacion-revisiones-design.md`; informes de Fases 0 y 2–9; `_SISTEMA/docs/SAGARDE_MOTOR_REVISIONES_GUIA_RAPIDA.md`; `.claude/skills/sagarde-revision/SKILL.md`.
 - `_SISTEMA/MOTOR/GUIA_CAMPO_MOBIL.md`; `_SISTEMA/MOTOR/HOJA_DE_RUTA.md`; `_SISTEMA.../LEEME.md`; `_SISTEMA.../PROCEDIMIENTO.md`.
-- `VARIOS/TIERRAS/app_informe_tierras.html`; `VARIOS/BATERIAS DE CONDENSADORES/app_informes.html`; proyecto personal Python/HTML 2019-2026.
+- `VARIOS/TIERRAS/app_informe_tierras.html`; `VARIOS/BATERIAS DE CONDENSADORES/app_informes.html`; `VARIOS/BUSCADOR ELECTRICO/app_buscador_electrico.html`; proyecto personal Python/HTML 2019-2026.
 
 
 
