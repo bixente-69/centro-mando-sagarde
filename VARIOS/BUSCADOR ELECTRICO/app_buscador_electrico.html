@@ -25,6 +25,9 @@ h1{background:#1a3a5c;color:#fff;padding:14px 20px;font-size:1.1em;display:flex;
 .fuente-cita{background:#f7fafc;border:1px solid #dce8f5;border-left:3px solid #1a3a5c;border-radius:0 6px 6px 0;padding:10px 12px;margin-bottom:8px}
 .fuente-cita-libro{color:#1a3a5c;font-weight:700;font-size:.78em;margin-bottom:4px}
 .fuente-cita-texto{font-style:italic;color:#444;font-size:.85em;line-height:1.5}
+.fuente-imagen{margin-top:8px;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.fuente-imagen img{max-width:280px;border:1px solid #d0d5dd;border-radius:6px}
+.fuente-imagen label{font-size:.8em;color:#555;display:flex;align-items:center;gap:6px}
 .caja-pregunta{background:#fff;border:1px solid #dce8f5;border-radius:8px;padding:16px}
 .caja-pregunta label{display:block;margin-bottom:6px;font-size:.85em;color:#444;font-weight:700}
 textarea{width:100%;padding:10px;border:1px solid #bcd;border-radius:6px;font-size:.95em;font-family:inherit;height:70px;resize:vertical}
@@ -164,13 +167,24 @@ function añadirMensajeIA(datos) {
   html += formatearTexto(datos.respuesta);
   if (datos.fuentes && datos.fuentes.length > 0) {
     html += '<div class="fuentes"><div class="fuentes-titulo">Fragmentos consultados (para que compruebes lo dicho arriba — no sale en el informe impreso):</div>';
+    let indiceFuente = 0;
     for (const f of datos.fuentes) {
       html += '<div class="fuente-cita">';
       html += `<div class="fuente-cita-libro">${escaparHtml(f.libro)} (pág. ${f.paginas.join(", ")})</div>`;
       if (f.texto) {
         html += `<div class="fuente-cita-texto">"${escaparHtml(f.texto)}"</div>`;
       }
+      if (f.imagenes && f.imagenes.length > 0) {
+        f.imagenes.forEach((imagenB64, idxImagen) => {
+          const idCasilla = `incluir-img-${indiceFuente}-${idxImagen}`;
+          html += '<div class="fuente-imagen">';
+          html += `<img src="data:image/png;base64,${imagenB64}" alt="Diagrama de ${escaparHtml(f.libro)}, página ${f.paginas.join(", ")}">`;
+          html += `<label><input type="checkbox" id="${idCasilla}" class="casilla-informe-imagen" data-src="data:image/png;base64,${imagenB64}"> Incluir en el informe</label>`;
+          html += "</div>";
+        });
+      }
       html += "</div>";
+      indiceFuente++;
     }
     html += "</div>";
   }
