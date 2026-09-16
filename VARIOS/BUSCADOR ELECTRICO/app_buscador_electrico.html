@@ -113,6 +113,7 @@ const fechaInforme = document.getElementById("fechaInforme");
 // este hilo). Se guarda solo en memoria de esta pestaña, no en localStorage
 // — cada pregunta nueva empieza su propio hilo.
 let conversacionActual = null;
+let indiceFuente = 0;
 
 const claveGuardada = localStorage.getItem("buscadorElectricoClave");
 if (claveGuardada) {
@@ -130,7 +131,7 @@ function formatearTexto(texto) {
 }
 
 function escaparHtml(texto) {
-  return texto.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  return texto.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
 function mostrarError(mensaje) {
@@ -167,7 +168,6 @@ function añadirMensajeIA(datos) {
   html += formatearTexto(datos.respuesta);
   if (datos.fuentes && datos.fuentes.length > 0) {
     html += '<div class="fuentes"><div class="fuentes-titulo">Fragmentos consultados (para que compruebes lo dicho arriba — no sale en el informe impreso):</div>';
-    let indiceFuente = 0;
     for (const f of datos.fuentes) {
       html += '<div class="fuente-cita">';
       html += `<div class="fuente-cita-libro">${escaparHtml(f.libro)} (pág. ${f.paginas.join(", ")})</div>`;
