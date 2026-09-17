@@ -56,7 +56,9 @@ textarea{width:100%;padding:10px;border:1px solid #bcd;border-radius:6px;font-si
   .msg-usuario::before{content:"Pregunta: "}
   .msg-ia{padding:2px 0 4px!important;break-inside:avoid;page-break-inside:avoid}
   .msg-ia img,.msg-ia .grafico,.msg-ia table{break-inside:avoid;page-break-inside:avoid}
-  .fuentes,.fuente-cita{display:none!important}
+  .fuentes,.fuente-cita,.fuente-imagen{display:none!important}
+  #imagenes-para-imprimir{display:block!important}
+  #imagenes-para-imprimir img{max-width:100%;margin-bottom:12px;break-inside:avoid}
 }
 </style>
 </head>
@@ -205,7 +207,22 @@ function nuevaPregunta() {
 
 function imprimirInforme() {
   fechaInforme.textContent = new Date().toLocaleDateString("es-ES", { day: "2-digit", month: "2-digit", year: "numeric" });
+
+  const marcadas = [...document.querySelectorAll(".casilla-informe-imagen:checked")];
+  const contenedorImpresion = document.createElement("div");
+  contenedorImpresion.id = "imagenes-para-imprimir";
+  contenedorImpresion.style.display = "none";
+  marcadas.forEach((casilla) => {
+    const img = document.createElement("img");
+    img.src = casilla.dataset.src;
+    img.style.maxWidth = "100%";
+    contenedorImpresion.appendChild(img);
+  });
+  document.querySelector(".contenido").appendChild(contenedorImpresion);
+
   window.print();
+
+  contenedorImpresion.remove();
 }
 
 async function preguntar() {
