@@ -28,14 +28,14 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 11/09/2026 14:08. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 17/09/2026 19:30. No editar a mano.*
 
 **23** carpetas de obra abiertas · **5** en el registro único · **5** con panel · **4** con ficha. En todo el árbol, **100** `.py` y **5** `.bat`.
 
 | Obra | Ubic. | Tajos | Celdas | X | M | / | P | ? | N | % |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2025 GERNIKA 32V | 32 | 38 | 1216 | 1057 | 15 | 11 | 133 | – | – | 87.9 |
-| 2026 BOLUETA ACR | 97 | 38 | 3686 | 2011 | 112 | 74 | 1310 | 179 | – | 59.8 |
+| 2025 GERNIKA 32V | 32 | 38 | 1216 | 1073 | 15 | 7 | 121 | – | – | 89.1 |
+| 2026 BOLUETA ACR | 97 | 38 | 3686 | 2103 | 107 | 71 | 1226 | 179 | – | 62.3 |
 | 2026 MUNGIA ACR NEINOR | 62 | 38 | 2356 | 2005 | 60 | 21 | 265 | 5 | – | 87.0 |
 | 2026 OBRA PRUEBA | 31 | 38 | 1178 | 161 | 36 | 5 | 976 | – | – | 15.6 |
 
@@ -51,7 +51,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 11/09/2026 14:08).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 17/09/2026 19:30).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
