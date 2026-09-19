@@ -139,6 +139,7 @@ function escaparHtml(texto) {
 function mostrarError(mensaje) {
   cajaError.textContent = mensaje;
   cajaError.classList.remove("oculta");
+  cajaError.scrollIntoView({ behavior: "smooth", block: "nearest" });
 }
 
 function ocultarError() {
@@ -150,6 +151,7 @@ function añadirMensajeUsuario(texto) {
   div.className = "msg msg-usuario";
   div.textContent = texto;
   hilo.appendChild(div);
+  return div;
 }
 
 function añadirMensajePensando() {
@@ -238,12 +240,18 @@ async function preguntar() {
     return;
   }
 
-  añadirMensajeUsuario(pregunta);
+  const burbujaPregunta = añadirMensajeUsuario(pregunta);
   inputPregunta.value = "";
   btnPreguntar.disabled = true;
   btnPreguntar.textContent = "Pensando...";
   ocultarError();
   const elementoPensando = añadirMensajePensando();
+  // Si la pregunta no llega a contestarse, se devuelve al recuadro para reintentar con un clic
+  // (y no queda en el hilo, ni en el informe impreso, una pregunta sin respuesta).
+  const deshacerEnvio = () => {
+    burbujaPregunta.remove();
+    inputPregunta.value = pregunta;
+  };
 
   const cuerpo = { pregunta, clave };
   if (conversacionActual) {
@@ -259,6 +267,7 @@ async function preguntar() {
     const datos = await resp.json();
 
     if (!resp.ok) {
+      deshacerEnvio();
       if (datos.error === "no_autorizado") {
         mostrarError("Contraseña incorrecta.");
       } else if (datos.error === "ia_no_responde") {
@@ -281,6 +290,7 @@ async function preguntar() {
       btnImprimir.classList.remove("oculta");
     }
   } catch (error) {
+    deshacerEnvio();
     mostrarError("No se ha podido conectar con el buscador. Comprueba tu conexión a internet.");
   } finally {
     elementoPensando.remove();
