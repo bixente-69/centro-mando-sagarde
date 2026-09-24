@@ -5025,9 +5025,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__4__pintura_segunda__A": {
-      "v": "X",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__4__placas_tapas__A": {
       "v": "P",
@@ -5215,9 +5215,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__4__pintura_segunda__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__4__placas_tapas__B": {
       "v": "P",
@@ -6546,9 +6546,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__6__pintura_segunda__A": {
-      "v": "X",
-      "f": "31/08/2026",
-      "r": "bolueta__31/08/2026__html_digital__2102809f"
+      "v": "/",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__6__placas_tapas__A": {
       "v": "P",
@@ -6764,9 +6764,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__6__pintura_zzcc__B": {
-      "v": "M",
-      "f": "24/08/2026",
-      "r": "rev_24082026"
+      "v": "/",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__6__casquillos_bombillas__B": {
       "v": "P",
@@ -6774,9 +6774,9 @@
       "r": "rev_26072026"
     },
     "p1__6__iluminacion_rellanos__B": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "/",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__6__tabicado__C": {
       "v": "X",
@@ -6956,10 +6956,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__6__pintura_zzcc__C": {
-      "v": "M",
-      "f": "24/08/2026",
-      "r": "rev_24082026",
-      "origen": "hoja generada rellenada digitalmente"
+      "v": "/",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__6__casquillos_bombillas__C": {
       "v": "P",
@@ -6967,9 +6966,9 @@
       "r": "rev_26072026"
     },
     "p1__6__iluminacion_rellanos__C": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "/",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__6__tabicado__D": {
       "v": "X",
@@ -8885,9 +8884,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__pintura_zzcc__A": {
-      "v": "X",
-      "f": "24/08/2026",
-      "r": "rev_24082026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__9__casquillos_bombillas__A": {
       "v": "P",
@@ -9079,9 +9078,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__pintura_zzcc__B": {
-      "v": "X",
-      "f": "24/08/2026",
-      "r": "rev_24082026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__9__casquillos_bombillas__B": {
       "v": "P",
@@ -9273,9 +9272,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__pintura_zzcc__C": {
-      "v": "X",
-      "f": "24/08/2026",
-      "r": "rev_24082026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__9__casquillos_bombillas__C": {
       "v": "P",
@@ -9467,9 +9466,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__9__pintura_zzcc__D": {
-      "v": "X",
-      "f": "24/08/2026",
-      "r": "rev_24082026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__9__casquillos_bombillas__D": {
       "v": "P",
@@ -9512,9 +9511,9 @@
       "r": "rev_28072026"
     },
     "p1__10__cableado_zzcc__A": {
-      "v": "M",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__10__suelo_radiante__A": {
       "v": "X",
@@ -9708,9 +9707,9 @@
       "r": "rev_28072026"
     },
     "p1__10__cableado_zzcc__B": {
-      "v": "M",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__10__suelo_radiante__B": {
       "v": "X",
@@ -9904,9 +9903,9 @@
       "r": "rev_28072026"
     },
     "p1__10__cableado_zzcc__C": {
-      "v": "M",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__10__suelo_radiante__C": {
       "v": "X",
@@ -10099,9 +10098,9 @@
       "r": "rev_28072026"
     },
     "p1__10__cableado_zzcc__D": {
-      "v": "M",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__10__suelo_radiante__D": {
       "v": "X",
@@ -11058,9 +11057,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__12__montante_sscc__A": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "/",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__12__tubeado_zzcc__A": {
       "v": "X",
@@ -11134,9 +11133,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__12__embornado__A": {
-      "v": "X",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__12__telembornado__A": {
       "v": "P",
@@ -11252,9 +11251,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__12__montante_sscc__B": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "/",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__12__tubeado_zzcc__B": {
       "v": "X",
@@ -11328,9 +11327,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__12__embornado__B": {
-      "v": "X",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__12__telembornado__B": {
       "v": "P",
@@ -11447,9 +11446,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__12__montante_sscc__C": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "/",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__12__tubeado_zzcc__C": {
       "v": "X",
@@ -11643,9 +11642,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__12__montante_sscc__D": {
-      "v": "M",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "/",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__12__tubeado_zzcc__D": {
       "v": "X",
@@ -11930,9 +11929,9 @@
       "r": "rev_26072026"
     },
     "p1__13__cuadro_mecanizado__A": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__13__cuarto_tecnico__A": {
       "v": "P",
@@ -12125,9 +12124,9 @@
       "r": "rev_26072026"
     },
     "p1__13__cuadro_mecanizado__B": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__13__cuarto_tecnico__B": {
       "v": "P",
@@ -12710,9 +12709,9 @@
       "r": "rev_26072026"
     },
     "p1__14__cuadro_mecanizado__A": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__14__cuarto_tecnico__A": {
       "v": "P",
@@ -12906,9 +12905,9 @@
       "r": "rev_26072026"
     },
     "p1__14__cuadro_mecanizado__B": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__14__cuarto_tecnico__B": {
       "v": "P",
@@ -13102,9 +13101,9 @@
       "r": "rev_26072026"
     },
     "p1__14__cuadro_mecanizado__C": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__14__cuarto_tecnico__C": {
       "v": "P",
@@ -13298,9 +13297,9 @@
       "r": "rev_26072026"
     },
     "p1__14__cuadro_mecanizado__D": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__14__cuarto_tecnico__D": {
       "v": "P",
@@ -14265,9 +14264,9 @@
       "r": "rev_26072026"
     },
     "p1__16__cuadro_mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__16__cuarto_tecnico__A": {
       "v": "P",
@@ -14654,9 +14653,9 @@
       "r": "rev_26072026"
     },
     "p1__16__cuadro_mecanizado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__16__cuarto_tecnico__C": {
       "v": "P",
@@ -14848,9 +14847,9 @@
       "r": "rev_26072026"
     },
     "p1__16__cuadro_mecanizado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__16__cuarto_tecnico__D": {
       "v": "P",
@@ -15043,9 +15042,9 @@
       "r": "rev_26072026"
     },
     "p1__17__cuadro_mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__17__cuarto_tecnico__A": {
       "v": "P",
@@ -15053,9 +15052,9 @@
       "r": "rev_26072026"
     },
     "p1__17__techos_zzcc__A": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__17__techos__A": {
       "v": "X",
@@ -15238,9 +15237,9 @@
       "r": "rev_26072026"
     },
     "p1__17__cuadro_mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__17__cuarto_tecnico__B": {
       "v": "P",
@@ -15248,9 +15247,9 @@
       "r": "rev_26072026"
     },
     "p1__17__techos_zzcc__B": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__17__techos__B": {
       "v": "X",
@@ -15433,9 +15432,9 @@
       "r": "rev_26072026"
     },
     "p1__17__cuadro_mecanizado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__17__cuarto_tecnico__C": {
       "v": "P",
@@ -15443,9 +15442,9 @@
       "r": "rev_26072026"
     },
     "p1__17__techos_zzcc__C": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__17__techos__C": {
       "v": "X",
@@ -15628,9 +15627,9 @@
       "r": "rev_26072026"
     },
     "p1__17__cuadro_mecanizado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__17__cuarto_tecnico__D": {
       "v": "P",
@@ -15638,9 +15637,9 @@
       "r": "rev_26072026"
     },
     "p1__17__techos_zzcc__D": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__17__techos__D": {
       "v": "X",
@@ -15822,9 +15821,9 @@
       "r": "rev_26072026"
     },
     "p1__18__cuadro_mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__18__cuarto_tecnico__A": {
       "v": "P",
@@ -16015,9 +16014,9 @@
       "r": "rev_26072026"
     },
     "p1__18__cuadro_mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__18__cuarto_tecnico__B": {
       "v": "P",
@@ -16208,9 +16207,9 @@
       "r": "rev_26072026"
     },
     "p1__18__cuadro_mecanizado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__18__cuarto_tecnico__C": {
       "v": "P",
@@ -16401,9 +16400,9 @@
       "r": "rev_26072026"
     },
     "p1__18__cuadro_mecanizado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__18__cuarto_tecnico__D": {
       "v": "P",
@@ -16594,9 +16593,9 @@
       "r": "rev_26072026"
     },
     "p1__19__cuadro_mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__19__cuarto_tecnico__A": {
       "v": "P",
@@ -16787,9 +16786,9 @@
       "r": "rev_26072026"
     },
     "p1__19__cuadro_mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__19__cuarto_tecnico__B": {
       "v": "P",
@@ -16980,9 +16979,9 @@
       "r": "rev_26072026"
     },
     "p1__19__cuadro_mecanizado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__19__cuarto_tecnico__C": {
       "v": "P",
@@ -17173,9 +17172,9 @@
       "r": "rev_26072026"
     },
     "p1__19__cuadro_mecanizado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__19__cuarto_tecnico__D": {
       "v": "P",
@@ -17371,9 +17370,9 @@
       "r": "rev_26072026"
     },
     "p1__20__cuadro_mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__20__cuarto_tecnico__A": {
       "v": "P",
@@ -17381,9 +17380,9 @@
       "r": "rev_26072026"
     },
     "p1__20__techos_zzcc__A": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__20__techos__A": {
       "v": "/",
@@ -17569,9 +17568,9 @@
       "r": "rev_26072026"
     },
     "p1__20__cuadro_mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__20__cuarto_tecnico__B": {
       "v": "P",
@@ -17579,9 +17578,9 @@
       "r": "rev_26072026"
     },
     "p1__20__techos_zzcc__B": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__20__techos__B": {
       "v": "X",
@@ -17765,9 +17764,9 @@
       "r": "rev_26072026"
     },
     "p1__20__cuadro_mecanizado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__20__cuarto_tecnico__C": {
       "v": "P",
@@ -17775,9 +17774,9 @@
       "r": "rev_26072026"
     },
     "p1__20__techos_zzcc__C": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__20__techos__C": {
       "v": "/",
@@ -17961,9 +17960,9 @@
       "r": "rev_26072026"
     },
     "p1__20__cuadro_mecanizado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__20__cuarto_tecnico__D": {
       "v": "P",
@@ -17971,9 +17970,9 @@
       "r": "rev_26072026"
     },
     "p1__20__techos_zzcc__D": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__20__techos__D": {
       "v": "X",
@@ -18130,9 +18129,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__termostatos__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__segunda_cara_pladur__A": {
       "v": "X",
@@ -18160,9 +18159,9 @@
       "r": "rev_26072026"
     },
     "p1__21__cuadro_mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__cuarto_tecnico__A": {
       "v": "P",
@@ -18170,9 +18169,9 @@
       "r": "rev_26072026"
     },
     "p1__21__techos_zzcc__A": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__techos__A": {
       "v": "X",
@@ -18329,9 +18328,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__termostatos__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__segunda_cara_pladur__B": {
       "v": "X",
@@ -18360,9 +18359,9 @@
       "r": "rev_26072026"
     },
     "p1__21__cuadro_mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__cuarto_tecnico__B": {
       "v": "P",
@@ -18370,9 +18369,9 @@
       "r": "rev_26072026"
     },
     "p1__21__techos_zzcc__B": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__techos__B": {
       "v": "X",
@@ -18528,9 +18527,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__termostatos__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__segunda_cara_pladur__C": {
       "v": "X",
@@ -18558,9 +18557,9 @@
       "r": "rev_26072026"
     },
     "p1__21__cuadro_mecanizado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__cuarto_tecnico__C": {
       "v": "P",
@@ -18568,9 +18567,9 @@
       "r": "rev_26072026"
     },
     "p1__21__techos_zzcc__C": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__techos__C": {
       "v": "X",
@@ -18726,9 +18725,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__21__termostatos__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__segunda_cara_pladur__D": {
       "v": "X",
@@ -18756,9 +18755,9 @@
       "r": "rev_26072026"
     },
     "p1__21__cuadro_mecanizado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__cuarto_tecnico__D": {
       "v": "P",
@@ -18766,9 +18765,9 @@
       "r": "rev_26072026"
     },
     "p1__21__techos_zzcc__D": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__21__techos__D": {
       "v": "X",
@@ -18925,9 +18924,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__22__termostatos__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__segunda_cara_pladur__A": {
       "v": "X",
@@ -18955,9 +18954,9 @@
       "r": "rev_26072026"
     },
     "p1__22__cuadro_mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__cuarto_tecnico__A": {
       "v": "P",
@@ -18965,9 +18964,9 @@
       "r": "rev_26072026"
     },
     "p1__22__techos_zzcc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__techos__A": {
       "v": "X",
@@ -19124,9 +19123,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__22__termostatos__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__segunda_cara_pladur__B": {
       "v": "X",
@@ -19154,9 +19153,9 @@
       "r": "rev_26072026"
     },
     "p1__22__cuadro_mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__cuarto_tecnico__B": {
       "v": "P",
@@ -19164,9 +19163,9 @@
       "r": "rev_26072026"
     },
     "p1__22__techos_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__techos__B": {
       "v": "X",
@@ -19321,9 +19320,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__22__termostatos__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__segunda_cara_pladur__C": {
       "v": "X",
@@ -19351,9 +19350,9 @@
       "r": "rev_26072026"
     },
     "p1__22__cuadro_mecanizado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__cuarto_tecnico__C": {
       "v": "P",
@@ -19361,9 +19360,9 @@
       "r": "rev_26072026"
     },
     "p1__22__techos_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__techos__C": {
       "v": "X",
@@ -19518,9 +19517,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__22__termostatos__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__segunda_cara_pladur__D": {
       "v": "X",
@@ -19548,9 +19547,9 @@
       "r": "rev_26072026"
     },
     "p1__22__cuadro_mecanizado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__cuarto_tecnico__D": {
       "v": "P",
@@ -19558,9 +19557,9 @@
       "r": "rev_26072026"
     },
     "p1__22__techos_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__techos__D": {
       "v": "M",
@@ -19719,9 +19718,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__23__segunda_cara_pladur__A": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__23__doblar_cajas__A": {
       "v": "P",
@@ -19744,9 +19743,9 @@
       "r": "rev_26072026"
     },
     "p1__23__cuadro_mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__23__cuarto_tecnico__A": {
       "v": "P",
@@ -19915,9 +19914,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__23__segunda_cara_pladur__B": {
-      "v": "/",
-      "f": "21/09/2026",
-      "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
+      "v": "M",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__23__doblar_cajas__B": {
       "v": "P",
@@ -19940,9 +19939,9 @@
       "r": "rev_26072026"
     },
     "p1__23__cuadro_mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__23__cuarto_tecnico__B": {
       "v": "P",
@@ -20136,9 +20135,9 @@
       "r": "rev_26072026"
     },
     "p1__23__cuadro_mecanizado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__23__cuarto_tecnico__C": {
       "v": "P",
@@ -20332,9 +20331,9 @@
       "r": "rev_26072026"
     },
     "p1__23__cuadro_mecanizado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "23/09/2026",
+      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__23__cuarto_tecnico__D": {
       "v": "P",
@@ -20474,6 +20473,13 @@
       "procesada": "21/09/2026 14:16",
       "celdas": 3686,
       "cambios": 75
+    },
+    {
+      "id": "rev_23092026",
+      "fecha": "23/09/2026",
+      "procesada": "24/09/2026 06:39",
+      "celdas": 3686,
+      "cambios": 90
     }
   ],
   "dudas": [],
@@ -20495,16 +20501,16 @@
     }
   },
   "documentos": {
-    "total": 126,
+    "total": 127,
     "por_categoria": {
       "Excel": 7,
       "Imágenes": 77,
-      "Otros": 8,
+      "Otros": 9,
       "PDF": 24,
       "Word": 10
     },
     "_meta": {
-      "actualizado": "21/09/2026 14:16"
+      "actualizado": "24/09/2026 06:39"
     }
   },
   "contactos": []
