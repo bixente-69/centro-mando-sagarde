@@ -42,7 +42,7 @@ fases sin dejar nada roto**, no para completarse de una sentada.
 | Fase | Qué es | Quién | Estado |
 |---|---|---|---|
 | 1 | Catálogo de tajos garaje en `CATALOGO_TAJOS.json` | Claude diseña la tabla exacta → **agy** transcribe → Codex escribe/ejecuta los tests → Claude verifica | ✅ **CERRADA** (`b694b97`) |
-| 2 | `ficha_garajes.json` + módulo Python equivalente a `ficha_obra.py` | Claude diseña la forma → **Codex** implementa y prueba → Claude verifica | pendiente |
+| 2 | `ficha_garajes.json` + módulo Python equivalente a `ficha_obra.py` | Claude diseña la forma → **Codex** implementa y prueba → Claude verifica | ✅ **CERRADA** (`3e5da0a`) |
 | 3 | Segunda ficha por obra en `generar_todos.py` / `panel_obra.py` / `motor_informes.py` / `priorizador_trabajos.py` | **Codex** implementa con salvaguarda de doble cálculo → Claude verifica que las obras no implicadas no se mueven | pendiente |
 | 4 | Wizard de 4 pantallas + hoja por tipo de zona en `generador_revisiones.html` | **Codex** implementa a partir del prototipo de referencia → Claude verifica en navegador real | pendiente |
 | 5 | Adaptador de lectura de revisiones de garaje | **Codex** implementa y prueba | pendiente |
@@ -136,7 +136,7 @@ añadieron y por qué (no solo "añadir tajos garaje").
 
 ---
 
-## Fase 2 — `ficha_garajes.json` y su módulo Python
+## Fase 2 — `ficha_garajes.json` y su módulo Python — ✅ CERRADA
 
 **Objetivo:** estructura de datos real (garaje→planta→zona→tajo) y las
 funciones equivalentes a las de `ficha_obra.py` (`snapshot_desde_ficha`,
@@ -167,6 +167,16 @@ módulos de lectura/paneles (eso es la Fase 3).
 **Checkpoint de cierre:** commit propio. `ficha_garajes.json` de `OBRA
 PRUEBA` puede quedar vacío o con un caso mínimo — el poblado real es la
 Fase 6.
+
+**✅ CERRADA (24/09/2026, commit `3e5da0a`).** `ficha_garajes.py` con
+`ruta_ficha`/`cargar`/`guardar`/`asegurar_apartados`/`snapshot_desde_ficha`/
+`actualizar`/`actualizar_desde_snapshot`/`esta_rancia`/`resumen_cambios`,
+11 tests propios. Verificación de Claude fue más allá de correr la suite:
+trazado a mano de la máquina de estados encontró que el diseño (no Codex)
+introduce una diferencia deliberada frente a `ficha_obra.py` — un estado no
+reconocido (no solo uno vacío) nunca baja un estado ya guardado, más
+protector que vivienda para una vía de entrada sin historial probado
+todavía. Suite completa: 622 tests, 0 fallos.
 
 ---
 
