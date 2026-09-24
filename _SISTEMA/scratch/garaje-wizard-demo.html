@@ -1,0 +1,1043 @@
+<title>Asistente de Garaje</title>
+<style>
+/* Paleta y tipografía reales de generador_revisiones.html (Sagarde) —
+   no es un estilo inventado, son los mismos tokens que ya usa la app. */
+:root{
+  --navy:#1A3558; --blue:#2E6DA4; --lblue:#E4EEF8; --red:#C0392B; --green:#1A6030;
+  --bg:#F0F4F8; --surface:#FFFFFF; --border:rgba(26,53,88,.14); --border-mid:rgba(26,53,88,.24);
+  --text:#1A3558; --text-mid:#3A5580; --text-muted:#7A8A9A;
+  --ext-bg:#F5F0FA; --ext-fg:#7A50A0;
+  --r:5px; --font:'Arial Narrow',Arial,sans-serif;
+  --ink:var(--text); --ink-dim:var(--text-mid); --paper:var(--bg); --surface-2:var(--lblue);
+  --line:var(--border-mid); --accent:var(--blue); --accent-ink:#FFFFFF; --accent-soft:var(--lblue);
+  --ok:var(--green); --ok-soft:#D5EDD9; --amber:#7A5000; --amber-soft:#FEF7D5;
+  --violet:var(--ext-fg); --violet-soft:var(--ext-bg); --danger:var(--red);
+  --radius:var(--r); --shadow:0 1px 2px rgba(26,53,88,.08);
+  color-scheme: light;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--text);font-family:var(--font);
+  padding:0 16px;padding-block:20px 48px;font-size:14px;}
+.wrap{max-width:1180px;margin:0 auto;display:flex;flex-direction:column;gap:18px;}
+code,.mono{font-family:ui-monospace,monospace;}
+[hidden]{display:none!important;}
+
+/* header / stepper */
+.top{display:flex;flex-direction:column;gap:14px;}
+.eyebrow{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-dim);font-weight:600;}
+h1{font-size:22px;margin:2px 0 0;font-weight:700;letter-spacing:-.01em;}
+.sub{color:var(--ink-dim);font-size:13.5px;max-width:66ch;line-height:1.5;}
+.stepper{display:flex;gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--surface);}
+.step{flex:1;padding:10px 14px;font-size:12.5px;font-weight:600;color:var(--ink-dim);
+  border-right:1px solid var(--line);display:flex;align-items:center;gap:8px;background:transparent;
+  font-family:inherit;cursor:pointer;text-align:left;}
+.step:last-child{border-right:none;}
+.step .n{width:18px;height:18px;border-radius:50%;background:var(--surface-2);color:var(--ink-dim);
+  font-size:10.5px;display:flex;align-items:center;justify-content:center;flex:none;}
+.step.active{background:var(--accent-soft);color:var(--accent);}
+.step.active .n{background:var(--accent);color:var(--accent-ink);}
+.step.done .n{background:var(--ok);color:#fff;}
+
+/* mode toggle */
+.modebar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.modeset{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--surface);gap:2px;}
+.modeset button{border:none;background:transparent;padding:6px 14px;border-radius:999px;font:inherit;
+  font-size:12.5px;font-weight:600;color:var(--ink-dim);cursor:pointer;}
+.modeset button.on{background:var(--accent);color:var(--accent-ink);}
+.modeset button:disabled{opacity:.45;cursor:not-allowed;}
+.hint{font-size:12px;color:var(--ink-dim);}
+.notice{font-size:12.5px;background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber);
+  border-radius:8px;padding:9px 12px;line-height:1.5;}
+.notice.info{background:var(--accent-soft);color:var(--accent);border-color:var(--accent);}
+
+/* garaje tabs */
+.garaje-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.gtab{display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);
+  border-radius:999px;padding:6px 8px 6px 14px;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink-dim);}
+.gtab.on{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+.gtab .count{font-family:ui-monospace,Consolas,'Courier New',monospace;font-weight:500;font-size:11px;color:var(--ink-dim);
+  background:var(--surface-2);border-radius:999px;padding:1px 7px;}
+.gtab .rm{width:18px;height:18px;border-radius:50%;border:none;background:transparent;color:var(--ink-dim);
+  cursor:pointer;font-size:13px;line-height:1;display:flex;align-items:center;justify-content:center;}
+.gtab .rm:hover{background:var(--danger);color:#fff;}
+.btn-ghost{border:1px dashed var(--line);background:transparent;color:var(--ink-dim);border-radius:999px;
+  padding:7px 14px;font:inherit;font-size:13px;font-weight:600;cursor:pointer;}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+/* layout: builder + summary */
+.grid{display:grid;grid-template-columns:1.6fr 1fr;gap:18px;align-items:start;}
+@media (max-width:920px){.grid{grid-template-columns:1fr;}}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+.plantas{display:flex;flex-direction:column;gap:14px;}
+.planta{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden;}
+.planta-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--surface-2);}
+.planta-name{font-weight:700;font-size:14px;border:1px solid transparent;background:transparent;color:var(--ink);
+  font:inherit;font-weight:700;width:90px;border-radius:6px;padding:4px 6px;}
+.planta-name:hover,.planta-name:focus{border-color:var(--line);background:var(--surface);outline:none;}
+.planta-meta{font-size:12px;color:var(--ink-dim);margin-left:2px;}
+.spacer{flex:1;}
+.icon-btn{border:none;background:transparent;color:var(--ink-dim);cursor:pointer;width:26px;height:26px;
+  border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;}
+.icon-btn:hover{background:var(--danger);color:#fff;}
+.planta-body{padding:14px;display:flex;flex-direction:column;gap:16px;}
+
+.section-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-dim);font-weight:700;margin-bottom:8px;}
+.chipset{display:flex;flex-wrap:wrap;gap:7px;}
+.addchip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:8px;
+  padding:6px 10px;font-size:12.5px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+.addchip:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+.addchip .plus{font-weight:700;color:var(--accent);}
+.grp-tecnico .addchip{border-left:3px solid var(--violet);}
+.grp-circ .addchip{border-left:3px solid var(--accent);}
+.grp-ligero .addchip{border-left:3px solid var(--ink-dim);}
+
+.zonas{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+.zona{display:flex;align-items:center;gap:6px;background:var(--surface-2);border:1px solid var(--line);
+  border-radius:8px;padding:4px 4px 4px 10px;}
+.zona input{border:none;background:transparent;font:inherit;font-size:12.5px;font-weight:600;color:var(--ink);
+  width:auto;min-width:44px;max-width:150px;}
+.zona input:focus{outline:none;}
+.zona .dot{width:7px;height:7px;border-radius:50%;flex:none;}
+.zona .x{border:none;background:transparent;color:var(--ink-dim);cursor:pointer;width:18px;height:18px;
+  border-radius:50%;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.zona .x:hover{background:var(--danger);color:#fff;}
+.empty-zonas{font-size:12px;color:var(--ink-dim);font-style:italic;padding:2px 0;}
+
+.conteo-row{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px solid var(--line);
+  border-radius:8px;padding:9px 11px;background:var(--surface-2);}
+.conteo-label{font-size:12.5px;font-weight:600;}
+.conteo-label .prefix{display:block;font-size:10.5px;color:var(--ink-dim);font-weight:500;font-family:ui-monospace,Consolas,'Courier New',monospace;margin-top:1px;}
+.stepper-ctl{display:flex;align-items:center;gap:0;border:1px solid var(--line);border-radius:999px;background:var(--surface);overflow:hidden;}
+.stepper-ctl button{border:none;background:transparent;width:26px;height:26px;font:inherit;font-size:15px;
+  color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;}
+.stepper-ctl button:hover{background:var(--accent-soft);color:var(--accent);}
+.stepper-ctl .num{width:26px;text-align:center;font-family:ui-monospace,Consolas,'Courier New',monospace;font-weight:600;font-size:13px;}
+
+.add-planta-btn{align-self:flex-start;}
+
+/* summary panel */
+.summary{position:sticky;top:16px;padding:16px;display:flex;flex-direction:column;gap:12px;}
+.summary h2{font-size:13px;margin:0;font-weight:700;}
+.summary .path{font-size:11.5px;color:var(--ink-dim);font-family:ui-monospace,Consolas,'Courier New',monospace;}
+.tree{font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:12px;line-height:1.9;}
+.tree .g{font-weight:600;color:var(--ink);}
+.tree .p{padding-left:14px;color:var(--ink-dim);}
+.tree .p b{color:var(--ink);font-weight:600;}
+.tree .z{padding-left:28px;display:flex;align-items:center;gap:7px;}
+.tree .z .dot{width:6px;height:6px;border-radius:50%;flex:none;}
+.tree .zcount{padding-left:28px;color:var(--ink-dim);font-style:italic;font-size:11.5px;}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:11px;color:var(--ink-dim);padding-top:8px;border-top:1px dashed var(--line);}
+.legend span{display:inline-flex;align-items:center;gap:5px;}
+.legend .dot{width:7px;height:7px;border-radius:50%;}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.kpi{background:var(--surface-2);border-radius:8px;padding:9px 10px;}
+.kpi b{display:block;font-size:18px;font-family:ui-monospace,Consolas,'Courier New',monospace;font-weight:600;}
+.kpi span{font-size:10.5px;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.05em;}
+.json-toggle{font-size:11.5px;color:var(--accent);cursor:pointer;font-weight:600;background:none;border:none;font-family:inherit;padding:0;text-align:left;}
+pre.json{margin:0;font-size:10.5px;background:var(--surface-2);border-radius:8px;padding:10px;overflow:auto;
+  max-height:220px;color:var(--ink-dim);line-height:1.6;}
+
+/* panels + nav */
+.panel{display:flex;flex-direction:column;gap:16px;}
+.navrow{display:flex;justify-content:space-between;align-items:center;padding-top:4px;}
+.btn{font-family:var(--font);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;
+  background:transparent;color:var(--text-mid);border:1px solid var(--border-mid);border-radius:4px;
+  padding:10px 18px;cursor:pointer;transition:all .14s;font-weight:700;}
+.btn:hover{border-color:var(--blue);color:var(--blue);}
+.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff;}
+.btn.primary:hover{background:var(--blue);border-color:var(--blue);color:#fff;}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+.btn:disabled:hover{border-color:var(--border-mid);color:var(--text-mid);background:transparent;}
+
+/* step 1: obra */
+.obra-list{display:flex;flex-direction:column;gap:8px;}
+.obra-card{display:flex;align-items:center;gap:12px;border:1px solid var(--line);border-radius:var(--radius);
+  padding:12px 14px;cursor:pointer;background:var(--surface);}
+.obra-card:hover{border-color:var(--accent);}
+.obra-card.on{border-color:var(--accent);background:var(--accent-soft);}
+.obra-radio{width:16px;height:16px;border-radius:50%;border:2px solid var(--line);flex:none;position:relative;}
+.obra-card.on .obra-radio{border-color:var(--accent);}
+.obra-card.on .obra-radio::after{content:'';position:absolute;inset:2px;border-radius:50%;background:var(--accent);}
+.obra-name{font-weight:600;font-size:13.5px;flex:1;}
+.obra-tags{display:flex;gap:6px;}
+.tag{font-size:10px;font-weight:700;letter-spacing:.04em;padding:2px 7px;border-radius:999px;
+  background:var(--surface-2);color:var(--ink-dim);}
+.tag.on{background:var(--ok-soft);color:var(--ok);}
+.field-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:11px;color:var(--ink-dim);font-weight:600;text-transform:uppercase;letter-spacing:.05em;}
+.field input[type=date],.field input[type=text]{border:1px solid var(--line);border-radius:8px;padding:8px 10px;
+  font:inherit;font-size:13px;background:var(--surface);color:var(--ink);}
+
+/* step 3: tajos */
+.tajo-groups{display:flex;flex-direction:column;gap:12px;}
+.tajo-group{border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);overflow:hidden;}
+.tajo-group-head{display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--surface-2);
+  border-bottom:1px solid var(--line);font-size:12.5px;font-weight:700;}
+.tajo-group-items{display:flex;flex-direction:column;}
+.tajo-item{display:flex;align-items:center;gap:10px;padding:9px 14px;border-bottom:1px solid var(--line);font-size:13px;}
+.tajo-item:last-child{border-bottom:none;}
+.tajo-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);flex:none;}
+.tajo-item label{flex:1;cursor:pointer;}
+.badge{font-size:9.5px;font-weight:700;letter-spacing:.04em;padding:2px 7px;border-radius:999px;flex:none;}
+.badge.sgd{background:var(--accent-soft);color:var(--accent);}
+.badge.ext{background:var(--surface-2);color:var(--ink-dim);}
+.badge.completo{background:var(--violet-soft);color:var(--violet);}
+.badge.alim{background:var(--amber-soft);color:var(--amber);}
+.tajo-count{font-size:12.5px;color:var(--ink-dim);}
+
+/* step 4: generar */
+.final-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+@media (max-width:700px){.final-grid{grid-template-columns:1fr;}}
+.final-card{border:1px solid var(--line);border-radius:var(--radius);padding:16px;background:var(--surface);}
+.final-card h3{margin:0 0 10px;font-size:12.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-dim);}
+.final-row{display:flex;justify-content:space-between;font-size:13.5px;padding:6px 0;border-bottom:1px dashed var(--line);}
+.final-row:last-child{border-bottom:none;}
+.final-row b{font-family:ui-monospace,Consolas,'Courier New',monospace;}
+.generate-box{text-align:center;padding:28px 20px;border:1px dashed var(--line);border-radius:var(--radius);}
+.success-box{background:var(--ok-soft);border:1px solid var(--ok);color:var(--ok);border-radius:8px;
+  padding:12px 14px;font-size:13px;font-weight:600;display:none;}
+.success-box.show{display:block;}
+
+/* obra nueva */
+.obra-card.obra-nueva{border-style:dashed;color:var(--accent);}
+.obra-card.obra-nueva .obra-name{color:var(--accent);font-weight:600;}
+.obra-nueva-form{display:flex;gap:8px;align-items:center;width:100%;}
+.obra-nueva-form input{flex:1;border:1px solid var(--line);border-radius:8px;padding:7px 10px;font:inherit;
+  font-size:13px;background:var(--surface);color:var(--ink);}
+
+/* ── HOJA DE CAMPO: mismas clases y comportamiento que sheetCSS() del
+   generador real. El fondo de la celda de estado siempre es blanco y la
+   marca impresa gris medio (no negro): así, cuando se marca encima a boli
+   en obra, el escaneo distingue lo impreso (gris) de lo escrito a mano
+   (negro/azul) — es la norma "blanco borra, negro escribe" del proyecto,
+   no un descuido de contraste. */
+.hoja-legend{background:var(--lblue);border-top:1px solid #7A8A9E;border-bottom:1px solid #7A8A9E;
+  padding:7px 12px;display:flex;gap:14px;align-items:center;flex-wrap:wrap;border-radius:var(--r);margin-bottom:12px;}
+.leg-label{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#293E58;font-weight:800;}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;color:#213E62;}
+.leg-dot{width:21px;height:15px;border-radius:2px;border:1.2px solid #6E6E6E;display:flex;align-items:center;
+  justify-content:center;font-size:10px;font-weight:800;background:#fff;color:#6E6E6E;}
+.leg-dot.pend{color:#aaa;border-color:rgba(26,53,88,.24);}
+.leg-tip{margin-left:auto;font-size:10.5px;color:#7A8A9A;font-style:italic;}
+
+.hoja-page-label{font-size:11.5px;font-weight:800;color:var(--text-mid);text-transform:uppercase;
+  letter-spacing:.06em;padding:9px 12px;background:var(--lblue);border-radius:var(--r) var(--r) 0 0;}
+.hoja-scroll{overflow-x:auto;}
+.rev-table{border-collapse:collapse;font-size:10.5px;white-space:nowrap;min-width:100%;border:1.5px solid var(--navy);}
+.th-corner{background:var(--navy);}
+.th-floor{background:var(--navy);color:#fff;font-size:9.5px;font-weight:800;letter-spacing:.045em;
+  text-transform:uppercase;padding:5px 3px;text-align:center;border-right:1px solid #718096;}
+.th-apt{background:#E7EDF3;color:#102A4C;font-weight:800;padding:5px 4px;text-align:center;
+  border-bottom:1.5px solid var(--navy);border-right:1px solid #53677F;font-size:10px;}
+.tr-grp td{background:#EDF1F5;font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:#173A63;padding:3px 6px;border-top:1.3px solid #435A74;border-bottom:1.3px solid #435A74;}
+.tr-tajo{border-bottom:1.15px solid #53677F;}
+.tr-tajo:hover{background:#F5F9FF;}
+.td-name{padding:4px 8px;color:#102A4C;font-weight:700;white-space:normal;min-width:170px;
+  border-right:2px solid var(--navy);cursor:default;}
+.td-st{height:22px;min-width:30px;padding:0;text-align:center;vertical-align:middle;font-weight:800;
+  font-size:12px;border-right:1.15px solid #53677F;cursor:pointer;user-select:none;
+  transition:background .08s;background:#fff;color:#6E6E6E;}
+.td-st:hover{filter:brightness(.93);background:#F5F9FF;}
+.td-st.pend{color:#ccc;}
+
+/* navegación de la hoja: índice + pestañas tipo Excel, todo dentro del mismo fichero */
+.hoja-tabs{display:flex;flex-wrap:wrap;gap:6px;padding:4px 0 12px;border-bottom:1px solid var(--border-mid);margin-bottom:14px;}
+.hoja-tab{border:1px solid var(--border-mid);background:var(--surface);color:var(--text-mid);border-radius:999px;
+  padding:6px 12px;font-family:var(--font);font-size:11.5px;font-weight:700;letter-spacing:.03em;
+  cursor:pointer;display:inline-flex;align-items:center;gap:6px;}
+.hoja-tab:hover{border-color:var(--blue);color:var(--blue);}
+.hoja-tab.on{background:var(--navy);border-color:var(--navy);color:#fff;}
+.hoja-tab.on .hoja-tab-n{background:rgba(255,255,255,.25);color:#fff;}
+.hoja-tab-n{font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:10px;background:var(--lblue);color:var(--text-mid);
+  border-radius:999px;padding:1px 6px;}
+.hoja-tab-all{border-style:dashed;}
+.hoja-section + .hoja-section{margin-top:16px;}
+@media print{
+  .hoja-tabs{display:none;}
+  .hoja-section{display:block!important;}
+}
+
+/* cuartos técnicos: una tarjeta por zona, checklist vertical (sin columnas huérfanas) */
+.tecnico-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+.tecnico-card{border:1.5px solid var(--navy);border-radius:var(--r);background:var(--surface);overflow:hidden;}
+.tecnico-card-head{padding:6px 10px;background:var(--navy);color:#fff;border-bottom:1px solid var(--border-mid);
+  font-weight:800;font-size:11.5px;letter-spacing:.03em;display:flex;justify-content:space-between;align-items:center;gap:6px;}
+.tecnico-card-head span{font-family:ui-monospace,Consolas,'Courier New',monospace;font-size:10px;color:rgba(255,255,255,.75);font-weight:500;}
+.tecnico-check{display:flex;align-items:center;gap:8px;padding:5px 10px;font-size:11.5px;font-weight:600;
+  color:var(--text);border-bottom:1px dashed var(--border-mid);}
+.tecnico-check:last-child{border-bottom:none;}
+.tecnico-check.especifico{background:var(--ext-bg);}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div>
+      <div class="eyebrow">Sagarde · generador_revisiones.html — propuesta</div>
+      <h1>Asistente de Garaje</h1>
+      <div class="sub">Primera presentación de las 4 pantallas, para ver cómo encaja «Estructura» dentro del recorrido completo antes de tocar la app real. Datos de ejemplo inspirados en Mungia (2 bloques, 2 garajes independientes).</div>
+    </div>
+    <div class="stepper" id="stepperHost"></div>
+  </div>
+
+  <!-- PANEL 1: OBRA -->
+  <div class="panel" id="panel-1">
+    <div class="card" style="padding:16px;">
+      <div class="section-lbl">Obra</div>
+      <div class="obra-list" id="obraList"></div>
+    </div>
+    <div class="card" style="padding:16px;" id="modoCard"></div>
+    <div class="navrow">
+      <span class="hint">Paso 1 de 4</span>
+      <button class="btn primary" id="next1">Siguiente: Estructura →</button>
+    </div>
+  </div>
+
+  <!-- PANEL 2: ESTRUCTURA -->
+  <div class="panel" id="panel-2" hidden>
+    <div class="modebar">
+      <div class="modeset">
+        <button id="modeViv" disabled title="Este prototipo cubre solo el modo Garajes">Viviendas</button>
+        <button id="modeGar" class="on" disabled>Garajes</button>
+      </div>
+      <div class="hint">Modo elegido en el paso 1.</div>
+    </div>
+    <div class="card" style="padding:14px 16px;">
+      <div class="garaje-row" id="garajeTabs"></div>
+    </div>
+    <div class="grid">
+      <div class="plantas" id="plantasHost"></div>
+      <div class="card summary" id="summaryHost"></div>
+    </div>
+    <div class="navrow">
+      <button class="btn" id="back2">← Obra</button>
+      <span class="hint">Paso 2 de 4</span>
+      <button class="btn primary" id="next2">Siguiente: Tajos →</button>
+    </div>
+  </div>
+
+  <!-- PANEL 3: TAJOS -->
+  <div class="panel" id="panel-3" hidden>
+    <div class="card" style="padding:16px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;gap:10px;flex-wrap:wrap;">
+        <div class="section-lbl" style="margin-bottom:0;">Catálogo de tajos — v1 básico de garaje</div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="tajo-count" id="tajoCount"></span>
+          <button class="btn" id="resetTajosBtn" style="padding:5px 11px;font-size:10.5px;" title="Vuelve a marcar los tajos de partida — útil si el navegador recordaba una selección de una prueba anterior">↺ Restablecer</button>
+        </div>
+      </div>
+      <div class="sub" style="margin-bottom:10px;">Los que ya se cerraron en el diseño (spec 24/09/2026): obra civil como columna vertebral, más lo eléctrico básico. Las ampliaciones específicas por función de cuarto técnico llegarán en una vuelta posterior.</div>
+      <div class="tajo-groups" id="tajoGroups"></div>
+    </div>
+    <div class="navrow">
+      <button class="btn" id="back3">← Estructura</button>
+      <span class="hint">Paso 3 de 4</span>
+      <button class="btn primary" id="next3">Siguiente: Generar →</button>
+    </div>
+  </div>
+
+  <!-- PANEL 4: GENERAR -->
+  <div class="panel" id="panel-4" hidden>
+    <div class="final-grid">
+      <div class="final-card">
+        <h3>Resumen de la hoja</h3>
+        <div id="finalSummary"></div>
+      </div>
+      <div class="final-card">
+        <h3>Vista previa del árbol</h3>
+        <div class="tree" id="finalTree" style="max-height:260px;overflow:auto;"></div>
+      </div>
+    </div>
+    <div class="card" style="padding:16px;">
+      <div class="section-lbl">Cómo se repartiría la hoja de campo — <span id="hojaGarajeNombre"></span></div>
+      <div class="sub" style="margin-bottom:10px;">Agrupado por tipo de zona en vez de una tabla única, para no repetir en cada fila tajos que no le tocan (p.ej. Rotulación solo aparece en la tarjeta del cuarto técnico que tiene cuadro propio). Pestañas para mirar solo un tipo en pantalla — al imprimir, salen todas seguidas en el mismo archivo. Viales/Trasteros/Escaleras/Rellanos siguen partiéndose en hojas de ≈8 columnas (orientativo) si hay muchas zonas; Cuartos técnicos va en tarjetas porque cada uno suele ser único. Solo se muestra el garaje activo del paso 2.</div>
+      <div id="hojaPreview"></div>
+    </div>
+    <div class="generate-box">
+      <button class="btn primary" id="generateBtn" style="padding:12px 26px;font-size:14px;">Generar hoja de campo</button>
+      <div class="success-box" id="successBox">Aquí se generaría el HTML/PDF de la hoja, igual que hoy para viviendas — descarga y guardado en <code>REVISIONES</code> con «_garaje» en el nombre.</div>
+    </div>
+    <div class="navrow">
+      <button class="btn" id="back4">← Tajos</button>
+      <span class="hint">Paso 4 de 4</span>
+      <span></span>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ---------- datos de catálogo ---------- */
+const CHECK_TYPES = [
+  {id:'escalera', label:'Escalera', grp:'circ', dot:'var(--accent)'},
+  {id:'rellano', label:'Rellano', hint:'También pasillos internos, pasillos de trasteros y otras zonas comunes con el mismo perfil', grp:'circ', dot:'var(--accent)'},
+  {id:'ct_riti', label:'Cuarto RITI / Teleco', grp:'tecnico', dot:'var(--violet)'},
+  {id:'ct_achique', label:'Cuarto Achique / Bombas', grp:'tecnico', dot:'var(--violet)'},
+  {id:'ct_aerotermia', label:'Cuarto Aerotermia', grp:'tecnico', dot:'var(--violet)'},
+  {id:'ct_calderas', label:'Sala de calderas', grp:'tecnico', dot:'var(--violet)'},
+  {id:'ct_central', label:'Centralización de contadores', grp:'tecnico', dot:'var(--violet)'},
+  {id:'ct_pci', label:'Cuarto PCI', grp:'tecnico', dot:'var(--violet)'},
+  {id:'ct_ascensor', label:'Cuarto ascensor', grp:'tecnico', dot:'var(--violet)'},
+  {id:'ct_generales', label:'Instalaciones generales', grp:'tecnico', dot:'var(--violet)'},
+  {id:'lig_basuras', label:'Basuras', grp:'ligero', dot:'var(--ink-dim)'},
+  {id:'lig_bicis', label:'Bicicletas', grp:'ligero', dot:'var(--ink-dim)'},
+];
+const COUNT_TYPES = [
+  {id:'vial', label:'Viales / alumbrado de parcelas', prefix:'Zona', names:['A','B','C','D','E','F','G','H'], grp:'circ', dot:'var(--accent)'},
+  {id:'trastero', label:'Trasteros', prefix:'Trasteros', names:null, grp:'ligero2', dot:'var(--ok)'},
+];
+const TYPE_BY_ID = Object.fromEntries([...CHECK_TYPES, ...COUNT_TYPES].map(t=>[t.id,t]));
+
+const OBRAS_DEMO = [
+  {id:'mungia', nombre:'2026 MUNGIA ACR NEINOR', viv:true, gar:true},
+  {id:'bolueta', nombre:'2026 BOLUETA ACR', viv:true, gar:false},
+  {id:'gernika', nombre:'2025 GERNIKA 32V', viv:true, gar:false},
+  {id:'olabeaga', nombre:'2026 OLABEAGA BILBAO', viv:false, gar:false},
+];
+
+const TAJO_GROUPS = [
+  { id:'civil', label:'Obra civil', items:[
+    {id:'tabicado', label:'Tabicado', prop:'ext'},
+    {id:'lucido', label:'Lucido', prop:'ext'},
+    {id:'falso_techo', label:'Falso techo (Pladur/escayola, genérico)', prop:'ext'},
+    {id:'raseado_techo', label:'Raseado/yeso de techo (viales)', prop:'ext'},
+    {id:'pintura_1', label:'Pintura 1ª mano', prop:'ext'},
+    {id:'pintura_2', label:'Pintura 2ª mano', prop:'ext'},
+  ]},
+  { id:'canal', label:'Canalización', items:[
+    {id:'tubeado_emp', label:'Tubeado empotrado (corrugado)', prop:'sgd'},
+    {id:'tubeado_visto', label:'Tubeado visto (PVC superficie)', prop:'sgd'},
+    {id:'cableado', label:'Cableado', prop:'sgd'},
+  ]},
+  { id:'alumbrado', label:'Alumbrado y emergencias', items:[
+    {id:'alum_fijo', label:'Alumbrado fijo (circuito permanente)', prop:'sgd'},
+    {id:'alum_temp', label:'Alumbrado temporizado (detector/reloj)', prop:'sgd'},
+    {id:'emergencias', label:'Emergencias', prop:'sgd'},
+  ]},
+  { id:'equipos', label:'Equipos (pantallas, detectores, downlights, apliques)', items:[
+    {id:'coloc_equipos', label:'Colocación de equipos', prop:'sgd'},
+    {id:'embornado_equipos', label:'Embornado', prop:'sgd'},
+  ]},
+  { id:'cuadros', label:'Cuadros (cada uno su propio tajo)', items:[
+    {id:'cgg', label:'Cuadro General de Garaje', prop:'sgd', nivel:'completo'},
+    {id:'cuadro_riti', label:'Cuadro RITI / Teleco', prop:'sgd', nivel:'completo'},
+    {id:'cuadro_vent', label:'Cuadro Ventilación', prop:'sgd', nivel:'alim'},
+    {id:'cuadro_bombas', label:'Cuadro Bombas / Achique', prop:'sgd', nivel:'alim'},
+    {id:'cuadro_aero', label:'Cuadro Aerotermia', prop:'sgd', nivel:'alim'},
+    {id:'cuadro_pci', label:'Cuadro PCI', prop:'sgd', nivel:'alim'},
+    {id:'cuadro_puerta', label:'Cuadro Puerta (mecanizado en standby)', prop:'sgd', nivel:'alim'},
+    {id:'cuadro_ascensor', label:'Cuadro Ascensor (si lo hay)', prop:'sgd', nivel:'alim'},
+  ]},
+  { id:'otros', label:'Otros', items:[
+    {id:'irve', label:'Preinstalación vehículo eléctrico (IRVE)', prop:'sgd'},
+    {id:'telco_transito', label:'Telecomunicaciones de tránsito', prop:'sgd'},
+    {id:'tierras', label:'Tierras (llegada a centralización + embornado)', prop:'sgd'},
+    {id:'deriv_tierra', label:'Derivación de tierra al cuarto', prop:'sgd'},
+    {id:'rotulacion', label:'Rotulación (solo cuadros propios)', prop:'sgd'},
+  ]},
+];
+const ALL_TAJO_IDS = TAJO_GROUPS.flatMap(g=>g.items.map(i=>i.id));
+
+function uid(p){ return p + Math.random().toString(36).slice(2,8); }
+function esc(s){ return String(s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+/* Mismo ciclo, símbolo y clase que ya usa generador_revisiones.html al
+   descargar la hoja: pulsar avanza vacío→/→M→X→vacío. Fondo siempre blanco,
+   letra gris — es el mismo motivo que ya explica el comentario de sheetCSS()
+   en el fichero real: el gris identifica lo impreso frente al boli. */
+const CYCLE = ['','/','M','X','N'];
+const SYM   = {'':'','/':'/','M':'M','X':'X','N':'N'};
+const CLS   = {'':'pend','/':'half','M':'prog','X':'done','N':'ext'};
+function cycleCell(el){
+  const cur = el.dataset.st || '';
+  const nxt = CYCLE[(CYCLE.indexOf(cur)+1) % CYCLE.length];
+  el.dataset.st = nxt;
+  el.textContent = SYM[nxt] || '';
+  el.className = 'td-st ' + (CLS[nxt] || 'pend');
+  state.marcas[el.dataset.k] = nxt;
+  persist();
+}
+function wireCeldas(host){
+  host.querySelectorAll('.td-st[data-k]').forEach(el=>{
+    const guardado = state.marcas[el.dataset.k];
+    if(guardado){ el.dataset.st = guardado; el.textContent = SYM[guardado]||''; el.className = 'td-st '+(CLS[guardado]||'pend'); }
+    el.addEventListener('click', ()=>cycleCell(el));
+  });
+}
+
+function seedZonas(){
+  const z = [];
+  z.push({id:uid('z'), tipo:'escalera', nombre:'Escalera 1'});
+  z.push({id:uid('z'), tipo:'rellano', nombre:'Rellano 1'});
+  z.push({id:uid('z'), tipo:'ct_riti', nombre:'Cuarto RITI / Teleco'});
+  z.push({id:uid('z'), tipo:'ct_generales', nombre:'Instalaciones generales'});
+  z.push({id:uid('z'), tipo:'ct_central', nombre:'Centralización de contadores'});
+  z.push({id:uid('z'), tipo:'vial', nombre:'Zona A'});
+  z.push({id:uid('z'), tipo:'vial', nombre:'Zona B'});
+  z.push({id:uid('z'), tipo:'vial', nombre:'Rampa acceso'});
+  z.push({id:uid('z'), tipo:'trastero', nombre:'Trasteros 1'});
+  return z;
+}
+
+/* ---------- estado ---------- */
+const DEFAULT_TAJOS = ['tabicado','lucido','pintura_1','pintura_2','tubeado_emp','tubeado_visto','cableado',
+  'alum_fijo','alum_temp','emergencias','coloc_equipos','embornado_equipos','cgg','cuadro_riti','deriv_tierra','tierras',
+  'irve','telco_transito'];
+
+let state = {
+  step: 1,
+  obraId: 'mungia',
+  obrasNuevas: [],
+  obraNuevaModo: false,
+  modo: null,
+  fecha: new Date().toISOString().slice(0,10),
+  activeGarajeIdx: 0,
+  garajes: [
+    { id:uid('g'), nombre:'Garaje Bloque 1', plantas:[
+      { id:uid('p'), nombre:'S-1', zonas: seedZonas() },
+      { id:uid('p'), nombre:'S-2', zonas: [
+          {id:uid('z'), tipo:'vial', nombre:'Zona A'},
+          {id:uid('z'), tipo:'vial', nombre:'Zona B'},
+          {id:uid('z'), tipo:'ct_achique', nombre:'Cuarto Achique / Bombas'},
+        ] },
+    ]},
+    { id:uid('g'), nombre:'Garaje Bloque 2', plantas:[
+      { id:uid('p'), nombre:'S-1', zonas: [
+          {id:uid('z'), tipo:'escalera', nombre:'Escalera 1'},
+          {id:uid('z'), tipo:'vial', nombre:'Zona A'},
+        ] },
+    ]},
+  ],
+  tajos: new Set(DEFAULT_TAJOS),
+  marcas: {},
+};
+
+try{
+  const saved = JSON.parse(localStorage.getItem('sgd_garaje_demo_v2')||'null');
+  if(saved && saved.garajes && saved.garajes.length){
+    saved.tajos = new Set(saved.tajos||[]);
+    /* migración suave: sesiones guardadas antes de añadir la derivación de
+       tierra por cuarto técnico no la tenían marcada */
+    if(saved.tajos.has('cableado') && !saved.tajos.has('deriv_tierra')){
+      saved.tajos.add('deriv_tierra');
+    }
+    state = Object.assign(state, saved);
+    if(!state.marcas) state.marcas = {};
+  }
+}catch(e){}
+
+function persist(){
+  try{
+    const dump = Object.assign({}, state, {tajos:[...state.tajos]});
+    localStorage.setItem('sgd_garaje_demo_v2', JSON.stringify(dump));
+  }catch(e){}
+}
+
+/* ---------- navegación ---------- */
+function goStep(n){
+  state.step = n;
+  persist();
+  document.querySelectorAll('.panel').forEach((p,i)=>{ p.hidden = (i+1)!==n; });
+  renderStepper();
+  if(n===1) renderStep1();
+  if(n===2) render();
+  if(n===3) renderStep3();
+  if(n===4) renderStep4();
+  window.scrollTo({top:0, behavior:'instant'});
+}
+function renderStepper(){
+  const labels = ['Obra','Estructura','Tajos','Generar'];
+  document.getElementById('stepperHost').innerHTML = labels.map((l,i)=>{
+    const n = i+1;
+    const cls = n===state.step ? 'active' : (n<state.step ? 'done' : '');
+    return `<button class="step ${cls}" data-step="${n}"><span class="n">${n<state.step?'✓':n}</span> ${l}</button>`;
+  }).join('');
+  document.querySelectorAll('[data-step]').forEach(el=>{
+    el.addEventListener('click', ()=>goStep(+el.dataset.step));
+  });
+}
+
+/* ---------- paso 1: obra ---------- */
+function todasLasObras(){ return [...OBRAS_DEMO, ...state.obrasNuevas]; }
+
+function renderStep1(){
+  const host = document.getElementById('obraList');
+  const lista = todasLasObras();
+  host.innerHTML = lista.map(o=>`
+    <div class="obra-card ${state.obraId===o.id?'on':''}" data-obra="${o.id}">
+      <span class="obra-radio"></span>
+      <span class="obra-name">${esc(o.nombre)}</span>
+      <span class="obra-tags">
+        <span class="tag ${o.viv?'on':''}">VIVIENDAS</span>
+        <span class="tag ${o.gar?'on':''}">GARAJES</span>
+      </span>
+    </div>`).join('')
+    + (state.obraNuevaModo
+      ? `<div class="obra-card obra-nueva">
+          <span class="obra-radio" style="border-style:dashed;"></span>
+          <div class="obra-nueva-form">
+            <input type="text" id="obraNuevaInput" placeholder="Nombre de la obra nueva, p.ej. 2026 SESTAO 18V" autofocus>
+            <button class="btn primary" id="obraNuevaCrear" style="padding:6px 12px;">Crear</button>
+            <button class="btn" id="obraNuevaCancelar" style="padding:6px 12px;">Cancelar</button>
+          </div>
+        </div>`
+      : `<div class="obra-card obra-nueva" id="obraNuevaBtn">
+          <span class="obra-radio" style="border-style:dashed;"></span>
+          <span class="obra-name">+ Obra nueva…</span>
+        </div>`);
+
+  host.querySelectorAll('[data-obra]').forEach(el=>{
+    el.addEventListener('click', ()=>{ state.obraId = el.dataset.obra; state.modo=null; persist(); renderStep1(); });
+  });
+  const nuevaBtn = document.getElementById('obraNuevaBtn');
+  if(nuevaBtn) nuevaBtn.addEventListener('click', ()=>{ state.obraNuevaModo = true; renderStep1(); });
+  const crearBtn = document.getElementById('obraNuevaCrear');
+  const cancelarBtn = document.getElementById('obraNuevaCancelar');
+  const input = document.getElementById('obraNuevaInput');
+  if(crearBtn){
+    const crear = ()=>{
+      const nombre = (input.value||'').trim();
+      if(!nombre) return;
+      const id = 'nueva_'+uid('');
+      state.obrasNuevas.push({id, nombre, viv:false, gar:false});
+      state.obraId = id; state.modo = null; state.obraNuevaModo = false;
+      persist(); renderStep1();
+    };
+    crearBtn.addEventListener('click', crear);
+    input.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); crear(); } });
+  }
+  if(cancelarBtn) cancelarBtn.addEventListener('click', ()=>{ state.obraNuevaModo = false; renderStep1(); });
+  if(input) input.focus();
+
+  const obra = lista.find(o=>o.id===state.obraId) || lista[0];
+  if(obra && state.obraId!==obra.id){ state.obraId = obra.id; }
+  const modoHost = document.getElementById('modoCard');
+  const ambas = obra.viv && obra.gar;
+  const fresca = !obra.viv && !obra.gar;
+  modoHost.innerHTML = `
+    <div class="section-lbl">¿Qué generas?</div>
+    ${ambas ? `<div class="notice" style="margin-bottom:10px;">Esta obra ya tiene <b>Viviendas</b> y <b>Garajes</b> dados de alta — hay que preguntar cuál de las dos.</div>` : ''}
+    ${fresca ? `<div class="notice info" style="margin-bottom:10px;">Obra nueva, sin estructura todavía. Elige qué vas a dar de alta primero.</div>` : ''}
+    <div class="modeset" style="margin-bottom:8px;">
+      <button id="pickViv" class="${state.modo==='viviendas'?'on':''}">Viviendas</button>
+      <button id="pickGar" class="${state.modo==='garajes'?'on':''}">Garajes</button>
+    </div>
+    <div id="modoNote"></div>
+  `;
+  document.getElementById('pickViv').addEventListener('click', ()=>{ state.modo='viviendas'; persist(); renderStep1(); });
+  document.getElementById('pickGar').addEventListener('click', ()=>{ state.modo='garajes'; persist(); renderStep1(); });
+  const note = document.getElementById('modoNote');
+  if(state.modo==='viviendas'){
+    note.innerHTML = `<div class="notice">El modo Viviendas ya existe en la app real — este prototipo no lo reconstruye. Cambia a «Garajes» para seguir probando.</div>`;
+  } else if(state.modo==='garajes'){
+    note.innerHTML = `<div class="notice info">Al guardar, la hoja irá a la carpeta <code>REVISIONES</code> con «_garaje» en el nombre, igual que las de vivienda.</div>`;
+  }
+  document.getElementById('next1').disabled = state.modo!=='garajes';
+}
+
+/* ---------- paso 2: estructura (igual que antes) ---------- */
+function activeGaraje(){ return state.garajes[state.activeGarajeIdx]; }
+function addGaraje(){
+  state.garajes.push({id:uid('g'), nombre:'Garaje '+(state.garajes.length+1), plantas:[{id:uid('p'), nombre:'S-1', zonas:[]}]});
+  state.activeGarajeIdx = state.garajes.length-1; persist(); render();
+}
+function removeGaraje(idx){
+  if(state.garajes.length<=1) return;
+  state.garajes.splice(idx,1);
+  if(state.activeGarajeIdx>=state.garajes.length) state.activeGarajeIdx = state.garajes.length-1;
+  persist(); render();
+}
+function renameGaraje(idx, val){ state.garajes[idx].nombre = val.trim() || state.garajes[idx].nombre; persist(); renderSummary(); }
+function addPlanta(){
+  const g = activeGaraje();
+  g.plantas.push({id:uid('p'), nombre:'S-'+(g.plantas.length+1), zonas:[]});
+  persist(); render();
+}
+function removePlanta(pIdx){
+  const g = activeGaraje();
+  if(g.plantas.length<=1) return;
+  g.plantas.splice(pIdx,1); persist(); render();
+}
+function renamePlanta(pIdx, val){
+  activeGaraje().plantas[pIdx].nombre = val.trim() || activeGaraje().plantas[pIdx].nombre; persist(); renderSummary();
+}
+function addChecklistZona(pIdx, tipoId){
+  const planta = activeGaraje().plantas[pIdx];
+  const def = TYPE_BY_ID[tipoId];
+  const existentes = planta.zonas.filter(z=>z.tipo===tipoId).length;
+  const singular = ['ct_riti','ct_achique','ct_aerotermia','ct_calderas','ct_central','ct_pci','ct_ascensor','ct_generales','lig_basuras','lig_bicis'];
+  let nombre = def.label;
+  if(!singular.includes(tipoId) || existentes>0) nombre = def.label + ' ' + (existentes+1);
+  planta.zonas.push({id:uid('z'), tipo:tipoId, nombre});
+  persist(); render();
+}
+function countOf(pIdx, tipoId){ return activeGaraje().plantas[pIdx].zonas.filter(z=>z.tipo===tipoId).length; }
+function incCount(pIdx, tipoId){
+  const def = TYPE_BY_ID[tipoId];
+  const n = countOf(pIdx, tipoId);
+  const nombre = def.names ? (def.prefix+' '+ (def.names[n]||(n+1))) : (def.prefix+' '+(n+1));
+  activeGaraje().plantas[pIdx].zonas.push({id:uid('z'), tipo:tipoId, nombre});
+  persist(); render();
+}
+function decCount(pIdx, tipoId){
+  const planta = activeGaraje().plantas[pIdx];
+  for(let i=planta.zonas.length-1;i>=0;i--){ if(planta.zonas[i].tipo===tipoId){ planta.zonas.splice(i,1); break; } }
+  persist(); render();
+}
+function removeZona(pIdx, zId){
+  const planta = activeGaraje().plantas[pIdx];
+  planta.zonas = planta.zonas.filter(z=>z.id!==zId); persist(); render();
+}
+function renameZona(pIdx, zId, val){
+  const z = activeGaraje().plantas[pIdx].zonas.find(z=>z.id===zId);
+  if(z) z.nombre = val.trim() || z.nombre; persist(); renderSummary();
+}
+function renderGarajeTabs(){
+  const host = document.getElementById('garajeTabs');
+  host.innerHTML = state.garajes.map((g,i)=>`
+    <div class="gtab ${i===state.activeGarajeIdx?'on':''}" data-gi="${i}">
+      <span class="gname" contenteditable="true" spellcheck="false">${esc(g.nombre)}</span>
+      <span class="count">${g.plantas.length} planta${g.plantas.length!==1?'s':''}</span>
+      ${state.garajes.length>1?`<button class="rm" data-rmg="${i}" title="Quitar garaje">&times;</button>`:''}
+    </div>`).join('') + `<button class="btn-ghost" id="addGarajeBtn">+ Añadir garaje</button>`;
+  host.querySelectorAll('.gtab').forEach(el=>{
+    el.addEventListener('click', (e)=>{
+      if(e.target.closest('.rm') || e.target.closest('.gname')) return;
+      state.activeGarajeIdx = +el.dataset.gi; persist(); render();
+    });
+  });
+  host.querySelectorAll('.gname').forEach(el=>{
+    el.addEventListener('blur', ()=>renameGaraje(+el.closest('.gtab').dataset.gi, el.textContent));
+    el.addEventListener('keydown', e=>{ if(e.key==='Enter'){ e.preventDefault(); el.blur(); }});
+    el.addEventListener('click', e=>e.stopPropagation());
+  });
+  host.querySelectorAll('[data-rmg]').forEach(el=>{
+    el.addEventListener('click', e=>{ e.stopPropagation(); removeGaraje(+el.dataset.rmg); });
+  });
+  document.getElementById('addGarajeBtn').addEventListener('click', addGaraje);
+}
+function checklistGroup(label, grpKey, pIdx){
+  const items = CHECK_TYPES.filter(t=>t.grp===grpKey);
+  return `<div class="grp-${grpKey}">
+    <div class="section-lbl">${label}</div>
+    <div class="chipset">
+      ${items.map(t=>`<button class="addchip" data-add="${pIdx}:${t.id}" ${t.hint?`title="${esc(t.hint)}"`:''}><span class="plus">+</span> ${t.label}</button>`).join('')}
+    </div>
+  </div>`;
+}
+function renderPlantas(){
+  const host = document.getElementById('plantasHost');
+  const g = activeGaraje();
+  host.innerHTML = g.plantas.map((planta, pIdx)=>{
+    const conteo = COUNT_TYPES.map(ct=>{
+      const zonasCt = planta.zonas.filter(z=>z.tipo===ct.id);
+      return `<div class="conteo-row">
+        <div class="conteo-label">${ct.label}<span class="prefix">${zonasCt.length} zona${zonasCt.length!==1?'s':''}</span></div>
+        <div class="stepper-ctl">
+          <button data-dec="${pIdx}:${ct.id}">&minus;</button>
+          <span class="num">${zonasCt.length}</span>
+          <button data-inc="${pIdx}:${ct.id}">+</button>
+        </div>
+      </div>
+      <div class="zonas">
+        ${zonasCt.length? zonasCt.map(z=>zonaChip(pIdx,z)).join('') : '<div class="empty-zonas">sin zonas todavía</div>'}
+      </div>`;
+    }).join('');
+    const checklistZonas = planta.zonas.filter(z=>CHECK_TYPES.find(t=>t.id===z.tipo));
+    return `<div class="planta">
+      <div class="planta-head">
+        <input class="planta-name" value="${esc(planta.nombre)}" data-planta-name="${pIdx}">
+        <span class="planta-meta">${planta.zonas.length} zona${planta.zonas.length!==1?'s':''}</span>
+        <div class="spacer"></div>
+        ${g.plantas.length>1?`<button class="icon-btn" data-rmp="${pIdx}" title="Quitar planta">&times;</button>`:''}
+      </div>
+      <div class="planta-body">
+        <div>${checklistGroup('Estructuras de circulación', 'circ', pIdx)}</div>
+        <div class="zonas">${checklistZonas.filter(z=>['escalera','rellano'].includes(z.tipo)).map(z=>zonaChip(pIdx,z)).join('') || ''}</div>
+        ${checklistGroup('Cuartos técnicos', 'tecnico', pIdx)}
+        <div class="zonas">${checklistZonas.filter(z=>TYPE_BY_ID[z.tipo].grp==='tecnico').map(z=>zonaChip(pIdx,z)).join('') || '<div class="empty-zonas">sin cuartos técnicos todavía</div>'}</div>
+        ${checklistGroup('Cuartos ligeros', 'ligero', pIdx)}
+        <div class="zonas">${checklistZonas.filter(z=>TYPE_BY_ID[z.tipo].grp==='ligero').map(z=>zonaChip(pIdx,z)).join('') || '<div class="empty-zonas">sin cuartos ligeros todavía</div>'}</div>
+        <div>
+          <div class="section-lbl">Zonas por conteo (según circuitos)</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">${conteo}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('') + `<button class="btn-ghost add-planta-btn" id="addPlantaBtn">+ Añadir planta</button>`;
+
+  host.querySelectorAll('[data-planta-name]').forEach(el=>el.addEventListener('change', ()=>renamePlanta(+el.dataset.plantaName, el.value)));
+  host.querySelectorAll('[data-rmp]').forEach(el=>el.addEventListener('click', ()=>removePlanta(+el.dataset.rmp)));
+  host.querySelectorAll('[data-add]').forEach(el=>el.addEventListener('click', ()=>{ const [p,t]=el.dataset.add.split(':'); addChecklistZona(+p,t); }));
+  host.querySelectorAll('[data-inc]').forEach(el=>el.addEventListener('click', ()=>{ const [p,t]=el.dataset.inc.split(':'); incCount(+p,t); }));
+  host.querySelectorAll('[data-dec]').forEach(el=>el.addEventListener('click', ()=>{ const [p,t]=el.dataset.dec.split(':'); decCount(+p,t); }));
+  host.querySelectorAll('[data-zona-name]').forEach(el=>el.addEventListener('change', ()=>{ const [p,z]=el.dataset.zonaName.split('|'); renameZona(+p,z,el.value); }));
+  host.querySelectorAll('[data-rmz]').forEach(el=>el.addEventListener('click', ()=>{ const [p,z]=el.dataset.rmz.split('|'); removeZona(+p,z); }));
+  document.getElementById('addPlantaBtn').addEventListener('click', addPlanta);
+}
+function zonaChip(pIdx, z){
+  const def = TYPE_BY_ID[z.tipo];
+  return `<div class="zona">
+    <span class="dot" style="background:${def.dot}"></span>
+    <input value="${esc(z.nombre)}" data-zona-name="${pIdx}|${z.id}" size="${Math.max(4,z.nombre.length)}">
+    <button class="x" data-rmz="${pIdx}|${z.id}" title="Quitar zona">&times;</button>
+  </div>`;
+}
+function renderSummary(){
+  const host = document.getElementById('summaryHost');
+  if(!host) return;
+  const totalZonas = state.garajes.reduce((s,g)=>s+g.plantas.reduce((s2,p)=>s2+p.zonas.length,0),0);
+  const totalPlantas = state.garajes.reduce((s,g)=>s+g.plantas.length,0);
+  const tree = state.garajes.map(g=>{
+    const plantas = g.plantas.map(p=>{
+      const zonas = p.zonas.map(z=>{
+        const def = TYPE_BY_ID[z.tipo];
+        return `<div class="z"><span class="dot" style="background:${def.dot}"></span>${esc(z.nombre)}</div>`;
+      }).join('') || `<div class="zcount">sin zonas</div>`;
+      return `<div class="p"><b>${esc(p.nombre)}</b> · ${p.zonas.length} zona${p.zonas.length!==1?'s':''}</div>${zonas}`;
+    }).join('');
+    return `<div class="g">${esc(g.nombre)}</div>${plantas}`;
+  }).join('<div style="height:6px"></div>');
+  const json = JSON.stringify({garajes: state.garajes.map(g=>({id:g.id, nombre:g.nombre,
+    plantas:g.plantas.map(p=>({id:p.id, nombre:p.nombre, zonas:p.zonas.map(z=>({id:z.id, tipo:z.tipo, nombre:z.nombre}))}))}))}, null, 2);
+  host.innerHTML = `
+    <h2>Estructura resultante</h2>
+    <div class="path">ficha_garajes.json (borrador)</div>
+    <div class="kpis">
+      <div class="kpi"><b>${state.garajes.length}</b><span>Garajes</span></div>
+      <div class="kpi"><b>${totalPlantas}</b><span>Plantas</span></div>
+      <div class="kpi"><b>${totalZonas}</b><span>Zonas totales</span></div>
+      <div class="kpi"><b>${activeGaraje().plantas.reduce((s,p)=>s+p.zonas.length,0)}</b><span>En este garaje</span></div>
+    </div>
+    <div class="tree">${tree}</div>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--accent)"></span>circulación / viales</span>
+      <span><span class="dot" style="background:var(--violet)"></span>cuarto técnico</span>
+      <span><span class="dot" style="background:var(--ink-dim)"></span>cuarto ligero</span>
+      <span><span class="dot" style="background:var(--ok)"></span>trasteros</span>
+    </div>
+    <button class="json-toggle" id="jsonToggle">▸ Ver JSON de esta estructura</button>
+    <pre class="json" id="jsonBlock" hidden>${esc(json)}</pre>
+  `;
+  const btn = document.getElementById('jsonToggle');
+  const block = document.getElementById('jsonBlock');
+  btn.addEventListener('click', ()=>{ block.hidden = !block.hidden; btn.textContent = (block.hidden?'▸':'▾') + ' Ver JSON de esta estructura'; });
+}
+function render(){ renderGarajeTabs(); renderPlantas(); renderSummary(); }
+
+/* ---------- paso 3: tajos ---------- */
+function renderStep3(){
+  const host = document.getElementById('tajoGroups');
+  host.innerHTML = TAJO_GROUPS.map(g=>`
+    <div class="tajo-group">
+      <div class="tajo-group-head">${g.label}</div>
+      <div class="tajo-group-items">
+        ${g.items.map(it=>`
+          <div class="tajo-item">
+            <input type="checkbox" id="tj-${it.id}" data-tajo="${it.id}" ${state.tajos.has(it.id)?'checked':''}>
+            <label for="tj-${it.id}">${it.label}</label>
+            ${it.nivel==='completo'?'<span class="badge completo">COMPLETO</span>':''}
+            ${it.nivel==='alim'?'<span class="badge alim">SOLO ALIMENTACIÓN</span>':''}
+            <span class="badge ${it.prop}">${it.prop==='sgd'?'SGD':'EXT'}</span>
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+  host.querySelectorAll('[data-tajo]').forEach(el=>{
+    el.addEventListener('change', ()=>{
+      if(el.checked) state.tajos.add(el.dataset.tajo); else state.tajos.delete(el.dataset.tajo);
+      persist(); updateTajoCount();
+    });
+  });
+  updateTajoCount();
+  document.getElementById('resetTajosBtn').addEventListener('click', ()=>{
+    state.tajos = new Set(DEFAULT_TAJOS);
+    persist(); renderStep3();
+  });
+}
+function updateTajoCount(){
+  document.getElementById('tajoCount').textContent = `${state.tajos.size} de ${ALL_TAJO_IDS.length} tajos seleccionados`;
+}
+
+/* ---------- paso 4: generar ---------- */
+function renderStep4(){
+  const obra = todasLasObras().find(o=>o.id===state.obraId);
+  const totalZonas = state.garajes.reduce((s,g)=>s+g.plantas.reduce((s2,p)=>s2+p.zonas.length,0),0);
+  const totalPlantas = state.garajes.reduce((s,g)=>s+g.plantas.length,0);
+  document.getElementById('finalSummary').innerHTML = `
+    <div class="final-row"><span>Obra</span><b>${esc(obra.nombre)}</b></div>
+    <div class="final-row"><span>Modo</span><b>Garajes</b></div>
+    <div class="final-row"><span>Fecha</span><b>${esc(state.fecha)}</b></div>
+    <div class="final-row"><span>Garajes</span><b>${state.garajes.length}</b></div>
+    <div class="final-row"><span>Plantas</span><b>${totalPlantas}</b></div>
+    <div class="final-row"><span>Zonas</span><b>${totalZonas}</b></div>
+    <div class="final-row"><span>Tajos activos</span><b>${state.tajos.size}</b></div>
+    <div class="final-row"><span>Nombre de fichero</span><b>...${esc(obra.id)}_garaje_${esc(state.fecha.replace(/-/g,''))}</b></div>
+  `;
+  const tree = state.garajes.map(g=>{
+    const plantas = g.plantas.map(p=>`<div class="p"><b>${esc(p.nombre)}</b> · ${p.zonas.length} zonas</div>`).join('');
+    return `<div class="g">${esc(g.nombre)}</div>${plantas}`;
+  }).join('<div style="height:6px"></div>');
+  document.getElementById('finalTree').innerHTML = tree;
+  document.getElementById('successBox').classList.remove('show');
+  document.getElementById('hojaGarajeNombre').textContent = activeGaraje().nombre;
+  renderHojaPreview();
+}
+
+const HOJA_COLS_POR_PAGINA = 8; /* orientativo: cuántas columnas de zona caben en una hoja A4 apaisada */
+
+/* a qué categoría de perfil pertenece cada tipo de zona, y qué tajos son
+   relevantes para esa categoría — para no repetir en cada zona tajos que no
+   le corresponden (evita la fila "Rotulación" con 20 casillas vacías hasta
+   llegar a la única columna de su cuadro) */
+const ZONA_CATEGORIA = {
+  vial:'vial', trastero:'trastero', escalera:'escalera', rellano:'rellano',
+  lig_basuras:'ligero', lig_bicis:'ligero',
+  ct_riti:'tecnico', ct_achique:'tecnico', ct_aerotermia:'tecnico', ct_calderas:'tecnico',
+  ct_central:'tecnico', ct_pci:'tecnico', ct_ascensor:'tecnico', ct_generales:'tecnico',
+};
+/* tajos que solo existen en UN cuarto técnico concreto, no en el perfil
+   genérico de la categoría — cada uno se pinta como fila propia destacada
+   en la tarjeta de esa zona, nunca repetido en las demás. Tierras va aquí
+   y no en el perfil de "vial": es una sola llegada a Centralización,
+   independiente de cuántas zonas de vial haya (confirmado por Bixente). */
+const ZONA_EXTRAS = {
+  ct_riti:['cuadro_riti'], ct_achique:['cuadro_bombas'], ct_aerotermia:['cuadro_aero'],
+  ct_pci:['cuadro_pci'], ct_ascensor:['cuadro_ascensor'], ct_generales:['cgg'],
+  ct_central:['tierras'],
+};
+const PERFIL_TAJOS = {
+  vial:     ['raseado_techo','pintura_1','pintura_2','tubeado_visto','cableado','coloc_equipos','embornado_equipos','irve','telco_transito'],
+  trastero: ['tabicado','lucido','falso_techo','pintura_1','pintura_2','tubeado_emp','tubeado_visto','cableado','coloc_equipos','embornado_equipos'],
+  escalera: ['lucido','pintura_1','pintura_2','tubeado_visto','cableado','emergencias','coloc_equipos','embornado_equipos'],
+  rellano:  ['lucido','falso_techo','pintura_1','pintura_2','tubeado_emp','cableado','emergencias','coloc_equipos','embornado_equipos'],
+  tecnico:  ['tabicado','lucido','falso_techo','pintura_1','pintura_2','tubeado_emp','tubeado_visto','cableado','alum_fijo','emergencias','coloc_equipos','embornado_equipos','deriv_tierra'],
+  ligero:   ['tabicado','lucido','pintura_1','pintura_2','tubeado_emp','tubeado_visto','cableado','alum_fijo'],
+};
+const SECCIONES = [
+  {cat:'vial', label:'Viales y alumbrado de parcelas'},
+  {cat:'trastero', label:'Trasteros'},
+  {cat:'escalera', label:'Escaleras'},
+  {cat:'rellano', label:'Rellanos / Zonas comunes'},
+  {cat:'tecnico', label:'Cuartos técnicos'},
+  {cat:'ligero', label:'Cuartos ligeros'},
+];
+function tajoById(id){ return TAJO_GROUPS.flatMap(g=>g.items).find(i=>i.id===id); }
+
+function construirPaginasPorZonas(zonas){
+  const paginas = [];
+  let actual = [];
+  zonas.forEach(z=>{
+    if(actual.length >= HOJA_COLS_POR_PAGINA) { paginas.push(actual); actual = []; }
+    actual.push(z);
+  });
+  if(actual.length) paginas.push(actual);
+  return paginas.length ? paginas : [zonas];
+}
+
+function renderTablaSeccion(seccion, zonas){
+  const tajosIds = PERFIL_TAJOS[seccion.cat] || [];
+  const filas = TAJO_GROUPS.flatMap(grp=>grp.items.filter(it=>tajosIds.includes(it.id) && state.tajos.has(it.id)));
+  if(!filas.length){
+    return `<div class="notice">Ningún tajo del paso 3 aplica a «${esc(seccion.label)}» todavía.</div>`;
+  }
+  const paginas = construirPaginasPorZonas(zonas);
+  return paginas.map((pagZonas, pi)=>`
+    <div class="hoja-scroll" ${paginas.length>1?`style="margin-top:${pi?10:0}px"`:''}>
+      ${paginas.length>1?`<div class="hoja-page-label">${esc(seccion.label)} — hoja ${pi+1} de ${paginas.length}</div>`:''}
+      <table class="rev-table">
+        <thead>
+          <tr>
+            <th class="th-corner"></th>
+            ${pagZonas.map(z=>`<th class="th-floor">${esc(z.plantaNombre)}</th>`).join('')}
+          </tr>
+          <tr>
+            <th class="th-apt" style="background:var(--navy);color:#fff;">TAJO</th>
+            ${pagZonas.map(z=>`<th class="th-apt">${esc(z.nombre)}</th>`).join('')}
+          </tr>
+        </thead>
+        <tbody>
+          ${filas.map(it=>`<tr class="tr-tajo"><td class="td-name">${esc(it.label)}</td>${pagZonas.map(z=>`<td class="td-st pend" data-k="${seccion.cat}__${it.id}__${z.id}" data-st="">${'' }</td>`).join('')}</tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`).join('');
+}
+
+function renderTarjetasTecnico(zonas){
+  const generico = PERFIL_TAJOS.tecnico.filter(id=>state.tajos.has(id));
+  return `<div class="tecnico-grid">${zonas.map(z=>{
+    const extrasIds = (ZONA_EXTRAS[z.tipo]||[]).filter(id=>state.tajos.has(id));
+    return `<div class="tecnico-card">
+      <div class="tecnico-card-head">${esc(z.nombre)}<span>${esc(z.plantaNombre)}</span></div>
+      ${generico.map(id=>`<div class="tecnico-check"><span class="td-st pend" style="display:inline-block;width:22px;height:18px;border-radius:2px;vertical-align:middle;" data-k="tecnico__${id}__${z.id}" data-st=""></span>${esc(tajoById(id).label)}</div>`).join('')}
+      ${extrasIds.map(id=>{ const it=tajoById(id); const badge = it.nivel==='completo'?'COMPLETO':(it.nivel==='alim'?'ALIM.':''); return `<div class="tecnico-check especifico"><span class="td-st pend" style="display:inline-block;width:22px;height:18px;border-radius:2px;vertical-align:middle;" data-k="tecnico__${id}__${z.id}" data-st=""></span>${esc(it.label)} ${badge?`<span class="badge ${it.nivel==='completo'?'completo':'alim'}">${badge}</span>`:''}</div>`; }).join('')}
+    </div>`;
+  }).join('')}</div>`;
+}
+
+function renderHojaPreview(){
+  const host = document.getElementById('hojaPreview');
+  const g = activeGaraje();
+  const porCategoria = {};
+  g.plantas.forEach(planta=>{
+    planta.zonas.forEach(z=>{
+      const cat = ZONA_CATEGORIA[z.tipo] || 'otros';
+      (porCategoria[cat] = porCategoria[cat]||[]).push(Object.assign({}, z, {plantaNombre:planta.nombre}));
+    });
+  });
+  const seccionesConDatos = SECCIONES.filter(s=>(porCategoria[s.cat]||[]).length);
+  if(!seccionesConDatos.length){
+    host.innerHTML = `<div class="notice">Añade zonas en el paso 2 para ver la hoja.</div>`;
+    return;
+  }
+
+  const tabsHtml = `<div class="hoja-tabs">
+    <button class="hoja-tab on" data-tab="all">Ver todas</button>
+    ${seccionesConDatos.map(s=>`<button class="hoja-tab" data-tab="sec-${s.cat}">${esc(s.label)} <span class="hoja-tab-n">${porCategoria[s.cat].length}</span></button>`).join('')}
+  </div>`;
+
+  const legendHtml = `<div class="hoja-legend">
+    <span class="leg-label">Leyenda</span>
+    <span class="leg-item"><span class="leg-dot pend"></span> Pendiente</span>
+    <span class="leg-item"><span class="leg-dot">/</span> Iniciado</span>
+    <span class="leg-item"><span class="leg-dot">M</span> Más del 50%</span>
+    <span class="leg-item"><span class="leg-dot">X</span> Terminado</span>
+    <span class="leg-item"><span class="leg-dot">N</span> No aplica</span>
+    <span class="leg-tip">Pulsa una casilla para avanzar el estado — un clic más allá de X marca "no aplica"</span>
+  </div>`;
+
+  const seccionesHtml = seccionesConDatos.map(s=>`
+    <section class="hoja-section" id="sec-${s.cat}">
+      <div class="hoja-page-label">${esc(s.label)} <span class="hoja-tab-n">${porCategoria[s.cat].length} zona${porCategoria[s.cat].length!==1?'s':''}</span></div>
+      ${s.cat==='tecnico' ? renderTarjetasTecnico(porCategoria[s.cat]) : renderTablaSeccion(s, porCategoria[s.cat])}
+    </section>`).join('');
+
+  host.innerHTML = legendHtml + tabsHtml + seccionesHtml;
+  wireCeldas(host);
+
+  host.querySelectorAll('.hoja-tab').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      host.querySelectorAll('.hoja-tab').forEach(b=>b.classList.remove('on'));
+      btn.classList.add('on');
+      const target = btn.dataset.tab;
+      host.querySelectorAll('.hoja-section').forEach(sec=>{ sec.hidden = !(target==='all' || sec.id===target); });
+    });
+  });
+}
+
+/* ---------- wiring general ---------- */
+document.getElementById('next1').addEventListener('click', ()=>goStep(2));
+document.getElementById('back2').addEventListener('click', ()=>goStep(1));
+document.getElementById('next2').addEventListener('click', ()=>goStep(3));
+document.getElementById('back3').addEventListener('click', ()=>goStep(2));
+document.getElementById('next3').addEventListener('click', ()=>goStep(4));
+document.getElementById('back4').addEventListener('click', ()=>goStep(3));
+document.getElementById('generateBtn').addEventListener('click', ()=>{
+  document.getElementById('successBox').classList.add('show');
+});
+
+renderStepper();
+renderStep1();
+render();
+goStep(1);
+</script>

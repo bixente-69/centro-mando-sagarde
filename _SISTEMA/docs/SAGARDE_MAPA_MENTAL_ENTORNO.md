@@ -457,6 +457,8 @@ Hay 55 Markdown previos a esta auditoría. Se agrupan series repetitivas conserv
 | Plan generador | `docs/superpowers/plans/2026-07-28-generador-revisiones-desde-la-base.md` | plan | Generador desde ficha | Implementación hallada | spec | Checklist del plan persiste |
 | Diseño unificación de revisiones | `_SISTEMA/docs/superpowers/specs/2026-08-25-unificacion-revisiones-design.md` | especificación y bitácora | Arquitectura objetivo y resultado verificado de las Fases 0–11 | Vigente | skill y guía rápida | Fuente completa de decisiones, paridad, cutovers y trazabilidad |
 | Guía rápida del motor de revisiones | `_SISTEMA/docs/SAGARDE_MOTOR_REVISIONES_GUIA_RAPIDA.md` | guía | Explicar en 3–5 minutos el flujo común, piezas, operación y respuesta ante salvaguardas | Vigente desde 26/08/2026 | mapa mental e informe de Fase 12 | Remite a la skill para los comandos y al diseño para el detalle |
+| Diseño ampliación garajes | `_SISTEMA/docs/superpowers/specs/2026-09-24-ampliacion-garajes-design.md` | especificación | Estructura de datos, obra civil como columna vertebral, catálogo de tajos y wizard de 4 pantallas para extender revisiones a garajes | Diseño cerrado y validado contra prototipo interactivo; sin implementar salvo el estado `N`, ya aplicado al `generador_revisiones.html` real | plan de reparto y prototipo (Artifact enlazado en el propio doc, §9) | Obra de prueba real elegida: Mungia o Gernika |
+| Plan ampliación garajes | `_SISTEMA/docs/superpowers/specs/2026-09-24-ampliacion-garajes-plan.md` | plan | Reparto de 7 fases (catálogo → ficha → integración → wizard → adaptador → `OBRA PRUEBA` → obra real) entre Claude/Codex/agy | Sin ejecutar | diseño | Pensado para pausarse entre fases sin publicación a medias |
 | Trabajo restante | `docs/superpowers/plans/2026-07-28-trabajo-restante-y-reparto.md` | plan | Bloques A-F | Histórico/parcialmente superado | handoff/memoria | Cifras anteriores |
 | Handoff B | `docs/superpowers/plans/2026-07-28-bloque-b-handoff.md` | handoff | Continuidad | APARENTEMENTE OBSOLETO | memoria posterior | Cabecera declara que dejó de estar vigente |
 | 3 diseños | `docs/superpowers/specs/*.md` | especificación | Base/ficha/generador | Diseño | planes | No confirma ejecución |
@@ -465,7 +467,7 @@ Hay 55 Markdown previos a esta auditoría. Se agrupan series repetitivas conserv
 | Personal | `[zona personal, excluida del repositorio]` | instrucciones/datos | Vida laboral/convenio/nómina | Auxiliar activo | scripts | Datos sensibles; excluido de Git |
 | Transcripción Gernika | `SAGARDE OBRAS ABIERTAS/2025 GERNIKA 32V/REVISIÓN/.../*.md` | fuente | Transcripción | Histórica | carpeta obra | No es código |
 
-**Planificación localizada:** 4 planes, 1 handoff, 3 especificaciones y 2 ledgers de ejecución.
+**Planificación localizada:** 5 planes, 1 handoff, 4 especificaciones y 2 ledgers de ejecución.
 
 ## 5.4 Configuraciones
 

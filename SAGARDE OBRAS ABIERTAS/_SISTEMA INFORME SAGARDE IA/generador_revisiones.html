@@ -1150,6 +1150,7 @@ function generateHTML(cellData={}){
     <span class="leg-item"><span class="leg-dot prog">M</span>En marcha &gt;50%</span>
     <span class="leg-item"><span class="leg-dot half">/</span>Iniciado &lt;50%</span>
     <span class="leg-item"><span class="leg-dot pend">&nbsp;</span>Pendiente</span>
+    <span class="leg-item"><span class="leg-dot ext">N</span>No aplica</span>
     <span class="leg-dot-sep"></span>
     <span class="leg-label">Prop:</span>
     <span class="leg-item"><span class="tajo-prop p">SGD</span>Sagarde</span>
@@ -1170,8 +1171,8 @@ function generateHTML(cellData={}){
   <button onclick="doClear()">✕ Limpiar</button>
 </div>
 <script>
-const CYCLE=['','/',  'M','X'];
-const SYM  ={'':'','/':'/','M':'M','X':'X','N':'·'};
+const CYCLE=['','/',  'M','X','N'];
+const SYM  ={'':'','/':'/','M':'M','X':'X','N':'N'};
 const CLS  ={'':'pend','/':'half','M':'prog','X':'done','N':'ext'};
 const KEY  ='sgd_rev_${safeKey}';
 const REVISION_FILE_BASE=${JSON.stringify(fileBase)};
@@ -1241,6 +1242,7 @@ body{font-family:Arial,'Aptos','Liberation Sans',sans-serif;background:#fff;colo
 .leg-dot.half{background:#fff;color:#6E6E6E;border-color:#6E6E6E}
 .leg-dot.prog{background:#fff;color:#6E6E6E;border-color:#6E6E6E}
 .leg-dot.pend{background:#fff;color:#aaa;border-color:rgba(26,53,88,.18)}
+.leg-dot.ext{background:#fff;color:#6E6E6E;border-color:#6E6E6E}
 .leg-dot-sep{border-left:1px solid rgba(26,53,88,.2);margin:0 4px;height:12px}
 .tajo-prop{display:inline-block;font-size:6.5px;font-weight:700;letter-spacing:.04em;border-radius:2px;padding:0 3px;margin-right:4px;vertical-align:middle;line-height:13px;border:1px solid currentColor;background:transparent}
 .tajo-prop.p{color:#1A3558}.tajo-prop.e{color:#7A50A0}.tajo-prop.c{color:#1A5830}
