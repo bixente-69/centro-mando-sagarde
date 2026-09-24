@@ -39,19 +39,44 @@ fases sin dejar nada roto**, no para completarse de una sentada.
 
 ## Resumen de reparto por fase
 
-| Fase | Qué es | Quién |
-|---|---|---|
-| 1 | Catálogo de tajos garaje en `CATALOGO_TAJOS.json` | Claude diseña la tabla exacta → **agy** transcribe → Codex escribe/ejecuta los tests → Claude verifica |
-| 2 | `ficha_garajes.json` + módulo Python equivalente a `ficha_obra.py` | Claude diseña la forma → **Codex** implementa y prueba → Claude verifica |
-| 3 | Segunda ficha por obra en `generar_todos.py` / `panel_obra.py` / `motor_informes.py` / `priorizador_trabajos.py` | **Codex** implementa con salvaguarda de doble cálculo → Claude verifica que las obras no implicadas no se mueven |
-| 4 | Wizard de 4 pantallas + hoja por tipo de zona en `generador_revisiones.html` | **Codex** implementa a partir del prototipo de referencia → Claude verifica en navegador real |
-| 5 | Adaptador de lectura de revisiones de garaje | **Codex** implementa y prueba | 
-| 6 | Validación completa contra `OBRA PRUEBA` (con mutación) | **Claude** dirige, **Codex** ejecuta los escenarios | 
-| 7 | Alta y primera revisión real: Mungia o Gernika | **Claude + Bixente** (necesita su hoja/planos reales, ningún worker puede inventarlos) |
+| Fase | Qué es | Quién | Estado |
+|---|---|---|---|
+| 1 | Catálogo de tajos garaje en `CATALOGO_TAJOS.json` | Claude diseña la tabla exacta → **agy** transcribe → Codex escribe/ejecuta los tests → Claude verifica | ✅ **CERRADA** (`b694b97`) |
+| 2 | `ficha_garajes.json` + módulo Python equivalente a `ficha_obra.py` | Claude diseña la forma → **Codex** implementa y prueba → Claude verifica | pendiente |
+| 3 | Segunda ficha por obra en `generar_todos.py` / `panel_obra.py` / `motor_informes.py` / `priorizador_trabajos.py` | **Codex** implementa con salvaguarda de doble cálculo → Claude verifica que las obras no implicadas no se mueven | pendiente |
+| 4 | Wizard de 4 pantallas + hoja por tipo de zona en `generador_revisiones.html` | **Codex** implementa a partir del prototipo de referencia → Claude verifica en navegador real | pendiente |
+| 5 | Adaptador de lectura de revisiones de garaje | **Codex** implementa y prueba | pendiente |
+| 6 | Validación completa contra `OBRA PRUEBA` (con mutación) | **Claude** dirige, **Codex** ejecuta los escenarios | pendiente |
+| 7 | Alta y primera revisión real: Mungia o Gernika | **Claude + Bixente** (necesita su hoja/planos reales, ningún worker puede inventarlos) | pendiente |
 
 ---
 
-## Fase 1 — Catálogo de tajos garaje
+## Fase 1 — CERRADA (24/09/2026, commit `b694b97`)
+
+Ejecutada tal como estaba planeada, reparto incluido: Claude diseñó la tabla
+completa (`_SISTEMA/scratch/fase1-catalogo-garajes-borrador.md`, 42 tajos),
+agy la transcribió al JSON sin errores de transcripción, Codex escribió y
+ejecutó `tests/test_catalogo_garajes.py` más la suite entera.
+
+**El paso de verificación de Claude no fue un trámite — encontró dos fallos
+reales antes de commitear:**
+1. Detectado por la propia suite (test ya existente,
+   `test_catalogo_invariantes.py`): `garaje_cuadro_embornado` dependía de
+   `garaje_pintura_2_recinto` con un `orden` numérico posterior — ninguna
+   dependencia puede apuntar hacia delante. Era un fallo de mi propio
+   diseño de la tabla, no de la transcripción de agy.
+2. Detectado releyendo el catálogo línea a línea (ningún test lo cubría):
+   las 4 entradas de pintura tenían `propiedad: "propio"` en vez de
+   `"externo"` — hueco en mis propias instrucciones a agy, no un error suyo.
+
+Los dos corregidos y reverificados de forma independiente (script de
+Python aparte, no solo la suite) antes de commitear. Queda como precedente
+concreto de por qué el plan exige verificación independiente en cada fase,
+no solo confiar en que "los tests pasan": el primer fallo SÍ lo habría
+detectado cualquiera que corriera la suite, pero el segundo no lo detecta
+ningún test automático — solo revisar el diff de verdad.
+
+### Detalle original de la Fase 1 (para referencia — ya ejecutado)
 
 **Objetivo:** las entradas nuevas de `CATALOGO_TAJOS.json` que traducen §4 y
 §5 del diseño a `id`/`nombre`/`aliases`/`propiedad`/`ambito`/`orden`/`fase`/
