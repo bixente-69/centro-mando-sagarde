@@ -46,6 +46,7 @@ VARIOS/APPS SAGARDE/
 
 # Datos calculados enlazados desde los paneles de obras
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/prioridades_trabajos.json
+!SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/prioridades_trabajos_garaje.json
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/dudas_pendientes.json
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/cierre_expediente.json
 

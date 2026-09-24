@@ -37,6 +37,7 @@ import cierre_expediente  # noqa: E402
 import memoria_obra as mem  # noqa: E402
 import motor_informes       # noqa: E402
 import ficha_obra as fichas    # noqa: E402
+import ficha_garajes           # noqa: E402
 import aplicar_revision        # noqa: E402
 import trazabilidad_revisiones  # noqa: E402
 import validar_revision        # noqa: E402
@@ -1136,6 +1137,8 @@ def main(hacer_pdf=True):
         salida_dir = os.path.join(carpeta_abs, 'INFORME SAGARDE IA')
         salida_html = os.path.join(salida_dir, 'panel.html')
         salida_prioridades = os.path.join(salida_dir, 'prioridades_trabajos.json')
+        salida_prioridades_garaje = os.path.join(
+            salida_dir, 'prioridades_trabajos_garaje.json')
         salida_dudas = os.path.join(salida_dir, 'dudas_pendientes.json')
         salida_memoria = os.path.join(salida_dir, 'memoria_obra.json')
         salida_cierre = os.path.join(salida_dir, 'cierre_expediente.json')
@@ -1164,6 +1167,15 @@ def main(hacer_pdf=True):
             motivo_cobertura = motor_informes.cobertura_encogida(historial)
 
             ficha_actual = fichas.cargar(carpeta_abs)
+            ficha_garaje_actual = ficha_garajes.cargar(carpeta_abs)
+            if ficha_garaje_actual:
+                prioridades_garaje = (
+                    priorizador_trabajos.priorizar_ficha_garaje(
+                        ficha_garaje_actual, obra=obra['nombre']))
+                priorizador_trabajos.escribir_json(
+                    prioridades_garaje, salida_prioridades_garaje)
+            else:
+                prioridades_garaje = None
             bloquear_guardado_ficha = False
 
             if motivo_cobertura:
@@ -1253,6 +1265,7 @@ def main(hacer_pdf=True):
                 prioridades=prioridades, output_path=salida_html, volver_href=volver,
                 tajos_memoria=tajos_memoria, mem_resumen=mem_resumen, bat_path=bat_abs,
                 cierre=cierre_datos, cierre_avisos=cierre_avisos,
+                prioridades_garaje=prioridades_garaje,
             )
         except Exception as e:
             print(f"  [ERROR] Fallo al generar el panel: {e}")

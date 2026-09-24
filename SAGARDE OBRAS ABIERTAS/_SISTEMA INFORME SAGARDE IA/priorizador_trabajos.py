@@ -194,6 +194,14 @@ def _etiquetas_de_portal(estructura):
     return etiquetas
 
 
+def _etiquetas_de_garaje(estructura):
+    """Devuelve {garaje_id: nombre visible}; no hay portal que desambiguar."""
+    return {
+        garaje["id"]: garaje.get("nombre") or garaje["id"]
+        for garaje in estructura.get("garajes") or []
+    }
+
+
 def _ultima_revision_ficha(ficha):
     """La fecha mas reciente registrada en la base, o None si no hay ninguna."""
     fechas = [r.get("fecha") for r in (ficha.get("revisiones") or [])
@@ -268,6 +276,51 @@ def estado_desde_ficha(ficha, catalogo):
                             "forzado_entregado": False,
                         }
     return estados, _ultima_revision_ficha(ficha)
+
+
+def estado_desde_ficha_garaje(ficha_garaje, catalogo):
+    """Construye el estado de garaje recorriendo garaje, planta y zona."""
+    estructura = ficha_garaje.get("estructura") or {}
+    tajos = (ficha_garaje.get("tajos") or {}).get("detalle") or []
+    guardados = ficha_garaje.get("estados") or {}
+
+    etiquetas = _etiquetas_de_garaje(estructura)
+    estados = {}
+    for garaje in estructura.get("garajes") or []:
+        edificio = etiquetas[garaje["id"]]
+        for planta in garaje.get("plantas") or []:
+            planta_nom = planta.get("nombre") or planta["id"]
+            for zona in planta.get("zonas") or []:
+                unidad = zona.get("nombre") or zona["id"]
+                loc = (edificio, planta_nom, unidad)
+                for tajo in tajos:
+                    clave = "%s__%s__%s__%s" % (
+                        garaje["id"], planta["id"], tajo["id"], zona["id"])
+                    dato = guardados.get(clave)
+                    if not dato:
+                        continue
+                    nombre = tajo.get("nombre") or tajo["id"]
+                    meta = catalogo.meta(tajo["id"])
+                    if meta:
+                        task_id, desconocido = tajo["id"], False
+                    else:
+                        task_id, meta, desconocido = catalogo.resolver(nombre)
+                    valor = str(dato.get("v") or "")
+                    estados[(loc, tajo["id"])] = {
+                        "estado": ESTADO_BASE_A_MOTOR.get(valor, ""),
+                        "estado_base": valor,
+                        "originales": {nombre},
+                        "meta": meta,
+                        "desconocido": desconocido,
+                        "loc": loc,
+                        "task_id": task_id,
+                        "primera_fecha": dato.get("f"),
+                        "ultima_fecha": dato.get("f"),
+                        "conflicto": False,
+                        "omitido_ultima": False,
+                        "forzado_entregado": False,
+                    }
+    return estados, _ultima_revision_ficha(ficha_garaje)
 
 
 CAMPOS_SEMBRADOS = ("orden", "propiedad", "ambito", "fase", "deps")
@@ -634,7 +687,7 @@ def _estado_resumen(conteo):
     )
 
 
-def _clave_unidad(item):
+def _clave_unidad(item, colapsar_zona_comun=True):
     """Que cuenta como 'una unidad' segun el ambito del tajo.
 
     La hoja repite cada tajo en TODAS las ubicaciones, tambien los que son
@@ -644,12 +697,13 @@ def _clave_unidad(item):
     ambito = item["ambito"]
     if ambito == "edificio":
         return (item["edificio"],)
-    if ambito == "zona_comun":
+    if ambito == "zona_comun" and colapsar_zona_comun:
         return (item["edificio"], item["planta"])
     return (item["edificio"], item["planta"], item["unidad"])
 
 
-def _agrupar_prioridades(detalle, limite=200, con_recorte=False):
+def _agrupar_prioridades(detalle, limite=200, con_recorte=False,
+                         colapsar_zona_comun=True):
     grupos = {}
     for item in detalle:
         if item["propiedad"] != "propio" or item["categoria"] not in ("VIABLE", "DUDAS"):
@@ -673,7 +727,8 @@ def _agrupar_prioridades(detalle, limite=200, con_recorte=False):
         })
         g["estado_conteo"][item["estado_actual"]] += 1
         g["motivos"].add(item["motivo"])
-        g["unidades_reales"].add(_clave_unidad(item))
+        g["unidades_reales"].add(_clave_unidad(
+            item, colapsar_zona_comun=colapsar_zona_comun))
         g["n_celdas"] += 1
 
     salida = []
@@ -765,7 +820,7 @@ def _agrupar_inventario(detalle):
     return salida
 
 
-def prevision_desbloqueos(detalle):
+def prevision_desbloqueos(detalle, colapsar_zona_comun=True):
     """Que se libera al terminar cada tajo.
 
     Es el valor de este apartado en una obra de meses: no solo saber que el
@@ -786,7 +841,11 @@ def prevision_desbloqueos(detalle):
             if dep.get("cumplida"):
                 continue
             registro = libera[dep["id"]]
-            registro["unidades"].add((_clave_unidad(item), item["tarea_id"]))
+            registro["unidades"].add((
+                _clave_unidad(
+                    item, colapsar_zona_comun=colapsar_zona_comun),
+                item["tarea_id"],
+            ))
             registro["tajos"].add(item["trabajo"])
 
     salida = []
@@ -925,6 +984,88 @@ def priorizar_ficha(ficha, obra="", limite=200, hoy=None):
         "detalle_items": detalle, "inventario": inventario,
         "dudas_pendientes": dudas, "preguntas_orden": preguntas_orden,
         "prevision": prevision_desbloqueos(detalle),
+        "avisos": avisos,
+    }
+
+
+def priorizar_ficha_garaje(ficha_garaje, obra="", limite=200, hoy=None):
+    """Prioriza la base separada de garaje sin colapsar sus zonas reales."""
+    preguntas = {}
+    catalogo = Catalogo(obra)
+    for error in catalogo.errores:
+        _pregunta(preguntas, "ERROR_CATALOGO", error)
+
+    preguntas_orden = sembrar_reglas(ficha_garaje, catalogo)
+    # V1 no tiene perfiles zona x tajo: una rejilla densa seria falsa.
+    avisos_rejilla = []
+    estados, ultima_fecha = estado_desde_ficha_garaje(
+        ficha_garaje, catalogo)
+    if not estados:
+        return sin_base(obra)
+
+    _aplicar_excepciones_obra(estados, catalogo, preguntas)
+    detalle, edad_dias, caducada = _clasificar_detalle(
+        estados, catalogo, ultima_fecha, preguntas, hoy=hoy)
+    items, recortados = _agrupar_prioridades(
+        detalle, limite=limite, con_recorte=True,
+        colapsar_zona_comun=False)
+    inventario = _agrupar_inventario(detalle)
+    dudas = _serializar_preguntas(preguntas)
+
+    listos = [x for x in items if x["situacion"] == "LISTO"]
+    verificar = [x for x in items if x["situacion"] == "VERIFICAR"]
+    secciones = Counter(x["seccion"] for x in inventario)
+    resumen = {
+        "listos": len(listos), "verificar": len(verificar),
+        "unidades_listas": sum(x["n_unidades"] for x in listos),
+        "unidades_verificar": sum(x["n_unidades"] for x in verificar),
+        "bloqueados": secciones.get("BLOQUEADO", 0),
+        "otros_gremios": secciones.get("OTROS_GREMIOS", 0),
+        "dudas": secciones.get("DUDAS", 0),
+        "sin_revisar": secciones.get("SIN_REVISAR", 0),
+        "unidades_sin_revisar": sum(
+            1 for x in detalle if x["categoria"] == "SIN_REVISAR"),
+        "terminados": secciones.get("TERMINADO", 0),
+        "inventario_total": len(inventario),
+        "detalle_total": len(detalle),
+        "preguntas_pendientes": len(dudas) + len(preguntas_orden),
+        "viviendas": sum(1 for x in listos if x["ambito"] == "vivienda"),
+        "zonas_comunes": sum(
+            1 for x in listos if x["ambito"] == "zona_comun"),
+        "edificio": sum(1 for x in listos if x["ambito"] == "edificio"),
+    }
+    avisos = list(avisos_rejilla) + [
+        "El inventario incluye todos los tajos de la base; los terminados "
+        "aparecen al final.",
+        "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta "
+        "confirmaciÃ³n.",
+        "El orden sigue la secuencia lÃ³gica definida en CATALOGO_TAJOS.json.",
+    ]
+    if catalogo.config_obra.get("estado_obra"):
+        avisos.insert(0, catalogo.config_obra["estado_obra"] + ".")
+    if caducada:
+        avisos.append(
+            "La revisiÃ³n es del %s (%s dÃ­as). Los tajos conservan su "
+            "clasificaciÃ³n; confirmar en obra antes de ejecutar."
+            % (ultima_fecha, edad_dias))
+    if recortados:
+        avisos.append(
+            "La lista se ha recortado a %d bloques; hay %d mÃ¡s sin mostrar."
+            % (limite, recortados))
+
+    return {
+        "version": VERSION, "catalogo_version": catalogo.version,
+        "obra": obra, "revision": ultima_fecha, "sin_base": False,
+        "edad_revision_dias": edad_dias, "revision_caducada": caducada,
+        "estado_obra": catalogo.config_obra.get("estado_obra"),
+        "historial_confirmado_terminado": bool(
+            catalogo.config_obra.get("forzar_historial_terminado")),
+        "generado": datetime.now().strftime("%d/%m/%Y %H:%M"),
+        "resumen": resumen, "items": items,
+        "detalle_items": detalle, "inventario": inventario,
+        "dudas_pendientes": dudas, "preguntas_orden": preguntas_orden,
+        "prevision": prevision_desbloqueos(
+            detalle, colapsar_zona_comun=False),
         "avisos": avisos,
     }
 

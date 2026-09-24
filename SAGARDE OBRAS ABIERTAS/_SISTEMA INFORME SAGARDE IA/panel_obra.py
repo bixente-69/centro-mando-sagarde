@@ -1554,7 +1554,9 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
 def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   output_path, volver_href="../../index.html", prioridades=None,
                   tajos_memoria=None, mem_resumen=None, bat_path=None,
-                  cierre=None, cierre_avisos=None):
+                  cierre=None, cierre_avisos=None, prioridades_garaje=None):
+    # `prioridades_garaje` se acepta ya (Fase 3a) pero no se usa todavia:
+    # la seccion de garaje en el panel es la Fase 3b, aparte.
     prioridades = prioridades or {}
     snapshot = historial[-1][1] if historial else []
     historial_panel = list(historial)
