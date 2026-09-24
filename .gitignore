@@ -167,6 +167,17 @@ VARIOS/MANUALES/informe_mantenimiento_cardiva_20250529.html
 !VARIOS/CATALOGOS/ELECTRICIDAD/ACLARACION AL NUEVO REGLAMENTO ELECTROTECNICO DE BAJA TENSION.pdf
 !VARIOS/CATALOGOS/ELECTRICIDAD/BOE-326_Reglamento_electrotecnico_para_baja_tension_e_ITC.pdf
 
+# Bocetos de diseño de trabajo en _SISTEMA/scratch/, citados por ruta desde
+# las specs de _SISTEMA/docs/superpowers/specs/ (p.ej. la tabla de tajos de
+# la Fase 1 de garajes). Sin esta linea quedaban silenciosamente fuera de
+# git aunque una spec ya publicada los citara como si fueran permanentes —
+# mismo fallo ya visto una vez con las specs/docs de mas arriba
+# (10/08/2026), detectado aqui el 24/09/2026 al comprobar `git status` tras
+# escribir el segundo boceto y verlo vacio. Solo ficheros directos de esa
+# carpeta (no `**`): el resto de scratch (QA, imagenes de depuracion) se
+# queda fuera a proposito.
+!_SISTEMA/scratch/*.md
+
 # Mantener este archivo rastreado
 !.gitignore
 
