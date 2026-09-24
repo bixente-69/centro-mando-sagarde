@@ -43,7 +43,7 @@ fases sin dejar nada roto**, no para completarse de una sentada.
 |---|---|---|---|
 | 1 | Catálogo de tajos garaje en `CATALOGO_TAJOS.json` | Claude diseña la tabla exacta → **agy** transcribe → Codex escribe/ejecuta los tests → Claude verifica | ✅ **CERRADA** (`b694b97`) |
 | 2 | `ficha_garajes.json` + módulo Python equivalente a `ficha_obra.py` | Claude diseña la forma → **Codex** implementa y prueba → Claude verifica | ✅ **CERRADA** (`3e5da0a`) |
-| 3a | Cálculo: `priorizar_ficha_garaje` en `priorizador_trabajos.py` + llamada en `generar_todos.py` | Claude diseñó 5 hallazgos y las funciones exactas → **Codex** implementa con diff byte a byte → Claude verifica | pendiente |
+| 3a | Cálculo: `priorizar_ficha_garaje` en `priorizador_trabajos.py` + llamada en `generar_todos.py` | Claude diseñó 5 hallazgos y las funciones exactas → **Codex** implementa con diff byte a byte → Claude verifica | ✅ **CERRADA** (`daf4c2a`) |
 | 3b | Mostrarlo: sección de garaje en `panel_obra.py` | Claude diseña dónde insertarla → **Codex** implementa con diff byte a byte del HTML → Claude verifica en navegador real | pendiente |
 | 4 | Wizard de 4 pantallas + hoja por tipo de zona en `generador_revisiones.html` | **Codex** implementa a partir del prototipo de referencia → Claude verifica en navegador real | pendiente |
 | 5 | Adaptador de lectura de revisiones de garaje | **Codex** implementa y prueba | pendiente |
@@ -236,6 +236,17 @@ ningún llamador existente.
 **Checkpoint de cierre:** commit propio. Reportar a Bixente el antes/después
 de las obras reales existentes antes de seguir — regla explícita del
 CLAUDE.md del proyecto (§3), no un extra opcional.
+
+**✅ CERRADA (24/09/2026, commit `daf4c2a`).** Las 6 obras reales
+registradas (Gernika, Mungia, Bolueta, Gorliz, OBRA PRUEBA, Olabeaga)
+conservan `prioridades_trabajos.json` byte a byte idéntico, verificado por
+un test que recarga su `ficha_obra.json` real y recalcula, no una
+comparación hardcodeada. `panel_obra.py` recibió su único toque permitido
+(`prioridades_garaje=None` en la firma de `generar_panel`, sin usar
+todavía) — Codex había resuelto la misma necesidad con detección por
+`inspect.signature`, correcta pero más compleja de lo necesario; Claude la
+sustituyó por el parámetro simple ya previsto en este mismo plan. Suite
+completa: 632 tests, 0 fallos.
 
 ### Fase 3b — Mostrarlo en `panel_obra.py`
 
