@@ -91,7 +91,7 @@ Las capas confirmadas son:
 
 1. **Fuentes documentales**: las carpetas de obras abiertas (cuenta viva en «Estado de hoy»), 128 obras cerradas publicadas, 31 contratos de postventa y 4 contratos de mantenimiento en sus resúmenes actuales.
 2. **Normalización**: siete adaptadores de obra y lectores genéricos PDF/HTML/XLSX. Solo cinco adaptadores de obra están registrados; dos apuntan a obras ya cerradas y sus rutas bajo obras abiertas no existen. Desde el 26/08/2026 hay además tres adaptadores de revisión —tinta, PDF digital y HTML digital— que producen el mismo contrato `REVISION_NORMALIZADA`; el HTML sirve para cualquier obra y es la vía digital preferente cuando existe el gemelo del PDF.
-3. **Estado persistente**: un `ficha_obra.json` por obra registrada —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Tras cada aplicación real que supera la salvaguarda se intenta añadir además una entrada no bloqueante a `revisiones_aplicadas.jsonl`. Gorliz está registrado pero sin revisión ni base.
+3. **Estado persistente**: un `ficha_obra.json` por obra registrada —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Tras cada aplicación real que supera la salvaguarda se intenta añadir además una entrada no bloqueante a `revisiones_aplicadas.jsonl`. Gorliz está registrado pero sin revisión ni base. Olabeaga (alta 24/09/2026: 30 viviendas con garajes y trasteros, en fase de garajes) se registró con el mismo patrón — adaptador con revisiones JSON explícitas, sin `ficha_obra.json` todavía — porque el plano de garaje no trae plazas numeradas y la ampliación del generador de revisiones para garajes sigue pendiente.
 
    **Las cifras de cada base están en «Estado de hoy»**, al principio de este
    documento, con su desglose de estados. Aquí había una segunda copia de esa
@@ -753,6 +753,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | Gernika/Mungia/Bolueta/PRUEBA | Operativo con ficha | ver «Estado de hoy» |
 | Obispo Orueta | **Cerrada el 13/08/2026** | archivada con su `cierre.json`; sus 18 tajos propios siguen en el catálogo |
 | Gorliz | En desarrollo | registro/panel 0%; sin revisión |
+| Olabeaga | En desarrollo | alta 24/09/2026, modo adaptador (sin ficha); en fase de garajes, sin revisión |
 | Otras 16 abiertas | Sin uso confirmado | resumen sin panel |
 | Motor/priorizador | Operativo | salidas/tests/memoria |
 | Motor común de revisiones | Operativo con salvaguarda | tinta/PDF/HTML e historial consolidado convergen en validación/aplicación; 0 discrepancias en los casos reales verificados el 26/08/2026 |
@@ -805,6 +806,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | ¿Automatizar las otras 16 obras? | No registradas | registro/resumen/roadmap | decisión por obra | alcance real |
 | ¿Crear ficha para Obispo? | panel/JS sin ficha | adaptador/prioridades/memoria/JS | estructura definitiva | generador/KPI |
 | ¿Primera revisión de Gorliz? | historial vacío | adaptador/registro/JS | archivo oficial | hoja/KPI |
+| ¿Ampliación del generador para garajes? | Olabeaga en fase de garajes sin rejilla (plano sin plazas numeradas) | plan pendiente, por Bixente | diseño de la ampliación | alta nativa de Olabeaga |
 | ¿Conservar adaptadores OLD? | rutas rotas | adaptadores/árbol | intención | deuda técnica |
 | ¿Qué índice de mantenimiento manda? | 2 escritores | BAT/Python/HTML | decisión | salida variable |
 | ¿Mantener portal móvil? | launch/código vs salida vieja | launch/portal/HTML | intención | interfaz estancada |

@@ -81,6 +81,29 @@ OBRAS = [
         'materiales_rel': os.path.join(
             'REVISIONES', 'hoja de entrega de materiales OBRA PRUEBA.xlsx'),
     },
+    {
+        # Alta el 24/09/2026. Promocion de 30 viviendas con garajes y
+        # trasteros (proyecto "makia", mayo 2024). En fase de garajes; las
+        # viviendas no han arrancado. Sin numeracion de plazas en el plano
+        # (CAD sin texto extraible) y sin la ampliacion del generador de
+        # revisiones para garajes (pendiente, por Bixente): no hay de donde
+        # sacar una rejilla sin inventarla. Registrada en modo Gorliz —
+        # mismo patron probado: adaptador con revisiones JSON explicitas,
+        # sin ficha_obra.json todavia. Migra a alta nativa
+        # (alta_obra_desde_hoja.py) cuando exista esa ampliacion y/o
+        # arranque la fase de viviendas con su propia hoja en blanco.
+        'id': 'olabeaga',
+        'nombre': '2026 OLABEAGA BILBAO',
+        'aliases': ['OLABEAGA'],
+        'subtitulo': ('Electricidad y telecomunicaciones · 30 viviendas con '
+                       'garajes y trasteros · en fase de garajes, sin '
+                       'seguimiento estructurado todavia'),
+        'adaptador': 'adaptador_olabeaga',
+        'carpeta_obra': '2026 OLABEAGA BILBAO',
+        'bloque_revision': 'Olabeaga',
+        'materiales_rel': os.path.join(
+            'REVISIONES', 'hoja de entrega de materiales OLABEAGA.xlsx'),
+    },
 ]
 
 
