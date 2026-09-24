@@ -1555,8 +1555,6 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   output_path, volver_href="../../index.html", prioridades=None,
                   tajos_memoria=None, mem_resumen=None, bat_path=None,
                   cierre=None, cierre_avisos=None, prioridades_garaje=None):
-    # `prioridades_garaje` se acepta ya (Fase 3a) pero no se usa todavia:
-    # la seccion de garaje en el panel es la Fase 3b, aparte.
     prioridades = prioridades or {}
     snapshot = historial[-1][1] if historial else []
     historial_panel = list(historial)
@@ -1711,6 +1709,70 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         riesgos_manual=ficha.get('riesgos', []), sin_cambios=sin_cambios)
     cierre_html = bloque_cierre(cierre, avisos=cierre_avisos)
 
+    # Garaje v1 queda fuera de SECCIONES_INFORME y no muestra porcentaje:
+    # ese dato todavia no existe. Tampoco reutiliza bloque_prioridades_partes,
+    # cuyos ids fijos solo admiten una instancia por pagina (Hallazgo 6).
+    garaje_nav_html = ''
+    garaje_seccion_html = ''
+    if prioridades_garaje is not None:
+        garaje_nav_html = (
+            '  <button data-view="v-garaje">🅿️ Garaje</button>\n')
+        if prioridades_garaje.get('sin_base'):
+            avisos_garaje = prioridades_garaje.get('avisos') or [
+                'Esta obra no tiene base de datos todavía.']
+            garaje_html = (
+                "<div class='banner bad'>⚠ "
+                + _e(avisos_garaje[0])
+                + "</div><p style='font-size:12.5px;color:var(--muted);'>"
+                  "Las prioridades salen de la base de datos de la obra. "
+                  "Sin ella no se calcula nada: un recuento vacío sería un "
+                  "dato falso.</p>"
+            )
+        else:
+            resumen_garaje = prioridades_garaje.get('resumen', {})
+            kpis_garaje = (
+                '<div class="kpi-row">'
+                '<div class="kpi"><div class="label">Tajos listos</div>'
+                f'<div class="value">{_e(resumen_garaje.get("listos", 0))}</div></div>'
+                '<div class="kpi"><div class="label">Bloqueados</div>'
+                f'<div class="value">{_e(resumen_garaje.get("bloqueados", 0))}</div></div>'
+                '<div class="kpi"><div class="label">Dudas pendientes</div>'
+                f'<div class="value">{_e(resumen_garaje.get("dudas", 0))}</div></div>'
+                '<div class="kpi"><div class="label">Terminados</div>'
+                f'<div class="value">{_e(resumen_garaje.get("terminados", 0))}</div></div>'
+                '</div>'
+            )
+            filas_garaje = ''
+            for item in prioridades_garaje.get('items', []):
+                situacion = item.get('situacion')
+                clase_situacion = 'ok' if situacion == 'LISTO' else 'warn'
+                filas_garaje += (
+                    f"<tr><td><b>{_e(item.get('trabajo'))}</b></td>"
+                    f"<td><span class='badge {clase_situacion}'>"
+                    f"{_e(situacion)}</span></td>"
+                    f"<td>{_e(item.get('n_unidades', 0))}</td>"
+                    f"<td>{_ubicaciones_html(item.get('ubicaciones', []))}"
+                    "</td></tr>"
+                )
+            if not filas_garaje:
+                filas_garaje = (
+                    '<tr><td colspan="4" class="empty">No hay tajos LISTO '
+                    'ni VERIFICAR con los datos actuales.</td></tr>')
+            tabla_garaje = (
+                '<div class="card"><h3>Prioridades de garaje</h3>'
+                '<div class="table-scroll"><table class="data"><thead><tr>'
+                '<th>Tajo</th><th>Situación</th><th>Nº de unidades</th>'
+                '<th>Ubicaciones</th></tr></thead><tbody>'
+                + filas_garaje
+                + '</tbody></table></div></div>'
+            )
+            garaje_html = kpis_garaje + tabla_garaje
+        garaje_seccion_html = (
+            '<section id="v-garaje" class="view">'
+            + garaje_html
+            + '</section>\n\n'
+        )
+
     # ---- DOCUMENTOS ----
     docs_html = ""
     if documentos:
@@ -1859,7 +1921,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
   <button data-view="v-normativa">📘 Normativa</button>
   <button data-view="v-docs">📎 Documentos</button>
   <button data-view="v-cierre">📋 Cierre</button>
-  <button data-view="v-actualizar" style="margin-left:auto;background:var(--header2);color:#fff;">↻ Actualizar</button>
+{garaje_nav_html}  <button data-view="v-actualizar" style="margin-left:auto;background:var(--header2);color:#fff;">↻ Actualizar</button>
 </div>
 
 {banners}
@@ -1902,7 +1964,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 
 <section id="v-cierre" class="view">{cierre_html}</section>
 
-<section id="v-actualizar" class="view">{actualizar_html}</section>
+{garaje_seccion_html}<section id="v-actualizar" class="view">{actualizar_html}</section>
 
 <div class="footer">Informe Sagarde IA · Generado automáticamente a partir de los archivos de la carpeta de la obra. Los porcentajes, bloqueos y prioridades son cálculos de apoyo; no sustituyen la verificación en obra.</div>
 </div>
