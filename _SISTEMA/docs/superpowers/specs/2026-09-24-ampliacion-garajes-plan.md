@@ -44,7 +44,7 @@ fases sin dejar nada roto**, no para completarse de una sentada.
 | 1 | Catálogo de tajos garaje en `CATALOGO_TAJOS.json` | Claude diseña la tabla exacta → **agy** transcribe → Codex escribe/ejecuta los tests → Claude verifica | ✅ **CERRADA** (`b694b97`) |
 | 2 | `ficha_garajes.json` + módulo Python equivalente a `ficha_obra.py` | Claude diseña la forma → **Codex** implementa y prueba → Claude verifica | ✅ **CERRADA** (`3e5da0a`) |
 | 3a | Cálculo: `priorizar_ficha_garaje` en `priorizador_trabajos.py` + llamada en `generar_todos.py` | Claude diseñó 5 hallazgos y las funciones exactas → **Codex** implementa con diff byte a byte → Claude verifica | ✅ **CERRADA** (`daf4c2a`) |
-| 3b | Mostrarlo: sección de garaje en `panel_obra.py` | Claude diseña dónde insertarla → **Codex** implementa con diff byte a byte del HTML → Claude verifica en navegador real | pendiente |
+| 3b | Mostrarlo: sección de garaje en `panel_obra.py` | Claude diseña dónde insertarla → **Codex** implementa con diff byte a byte del HTML → Claude verifica en navegador real | ✅ **CERRADA** (`f623e24`) |
 | 4 | Wizard de 4 pantallas + hoja por tipo de zona en `generador_revisiones.html` | **Codex** implementa a partir del prototipo de referencia → Claude verifica en navegador real | pendiente |
 | 5 | Adaptador de lectura de revisiones de garaje | **Codex** implementa y prueba | pendiente |
 | 6 | Validación completa contra `OBRA PRUEBA` (con mutación) | **Claude** dirige, **Codex** ejecuta los escenarios | pendiente |
@@ -181,15 +181,17 @@ todavía. Suite completa: 622 tests, 0 fallos.
 
 ---
 
-## Fase 3 — Segunda ficha por obra (la parte de más riesgo real)
+## Fase 3 — Segunda ficha por obra (la parte de más riesgo real) — ✅ CERRADA (3a + 3b)
 
 **Dividida en dos al diseñar el detalle (24/09/2026)**, tras leer completos
 `priorizador_trabajos.py`, `generar_todos.py`, `motor_informes.py` y
 `panel_obra.py`: no era tan simple como "llamar dos veces a lo mismo".
-Aparecieron 5 hallazgos reales (uno de ellos, un fallo de conteo real que
-habría afectado a garaje de forma silenciosa) que hacían irresponsable
-diseñar el cálculo y el renderizado como una sola pieza. Detalle completo
-del cálculo en `_SISTEMA/scratch/fase3a-calculo-garaje-diseno.md`.
+Aparecieron 6 hallazgos reales en total (5 en el cálculo, uno de ellos un
+fallo de conteo real que habría afectado a garaje de forma silenciosa; 1
+más en el render, sobre `panel_obra.py`) que hacían irresponsable diseñar
+el cálculo y el renderizado como una sola pieza. Detalle completo del
+cálculo en `_SISTEMA/scratch/fase3a-calculo-garaje-diseno.md` y del
+render en `_SISTEMA/scratch/fase3b-panel-garaje-diseno.md`.
 
 **Objetivo general (de las dos sub-fases juntas):** que el sistema sepa
 calcular Y mostrar prioridades y KPIs de garaje junto a los de vivienda,
@@ -288,6 +290,20 @@ CSS/print ya aprendida una vez en este proyecto).
 
 **Checkpoint de cierre:** commit propio. No empezar sin que la Fase 3a
 esté cerrada y verificada.
+
+**✅ CERRADA (24/09/2026, commit `f623e24` — el subject dice "Fase 3a" por
+un error de tecleo al escribirlo, el contenido es 100% Fase 3b, ver el
+cuerpo del propio commit).** Pestaña "🅿️ Garaje" añadida al panel con KPIs
+simples y tabla de prioridades, condicionada por completo a que
+`prioridades_garaje` no sea `None` — para las 6 obras reales de hoy el
+HTML no cambia ni un carácter (verificado por SHA-256 de Codex y por un
+test que compara el contenido completo de cada vista `v-*`). Verificado
+además visualmente en el navegador con datos sintéticos: la pestaña
+cambia de vista, las tarjetas KPI y la tabla muestran los números
+correctos, y las ubicaciones se despliegan bien al pulsarlas. Suite
+completa: 634 tests, 0 fallos.
+
+**Con esto, la Fase 3 completa (3a + 3b) queda cerrada.**
 
 ---
 
