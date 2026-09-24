@@ -270,11 +270,18 @@ más verificable de la salvaguarda de doble cálculo, adaptada a que aquí no
 hay dos caminos de cálculo que comparar, sino una función de render que no
 debe cambiar su salida cuando no hay nada nuevo que mostrar.
 
-**Reparto:** igual patrón que el resto — Claude diseña exactamente dónde
-se inserta la sección nueva (probablemente reusando
-`bloque_prioridades_partes(prioridades_garaje, ...)` para no duplicar la
-lógica de tablas), Codex implementa con la comprobación byte a byte
-activa, Claude verifica en navegador real además de revisar el diff — no
+**Hallazgo 6 (al diseñar el detalle):** `bloque_prioridades_partes` NO se
+puede llamar una segunda vez con los datos de garaje — usa `id` de HTML
+fijos por constantes de módulo (`_ID_SEC_DUDAS` y similares), pensados
+para una sola instancia por página. Llamarla dos veces duplicaría esos
+`id`, HTML inválido y acordeones/filtros rotos. La sección de garaje es
+una pestaña nueva (`v-garaje`, mismo patrón que las demás pestañas de la
+página) con una tabla simple propia, no una reutilización de esa función.
+Detalle completo en `_SISTEMA/scratch/fase3b-panel-garaje-diseno.md`.
+
+**Reparto:** igual patrón que el resto — Claude diseñó exactamente dónde
+se inserta la sección nueva, Codex implementa con la comprobación byte a
+byte activa, Claude verifica en navegador real además de revisar el diff — no
 basta con mirar el HTML como texto (ver
 [[feedback_sagarde_dirigir_codex_y_verificar_de_verdad]], la lección de
 CSS/print ya aprendida una vez en este proyecto).
