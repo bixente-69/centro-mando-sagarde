@@ -847,6 +847,875 @@
       "estado_m": "Más del 50 % de los equipos colocados",
       "estado_x": "Todos los equipos colocados",
       "impacto": "Tajo independiente de los agujeros. Mide únicamente la colocación de equipos en los huecos ya preparados."
+    },
+    {
+      "id": "garaje_tabicado",
+      "nombre": "Tabicado de garaje",
+      "aliases": [
+        "Tabicado de garaje"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "orden": 500,
+      "fase": "Obra civil garaje",
+      "deps": [],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tabicado terminado",
+      "impacto": "Sin separaciones no se inicia nada del resto en esa zona."
+    },
+    {
+      "id": "garaje_lucido",
+      "nombre": "Lucido de garaje",
+      "aliases": [
+        "Lucido de garaje"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "orden": 505,
+      "fase": "Obra civil garaje",
+      "deps": [
+        {
+          "id": "garaje_tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Paredes lucidas",
+      "impacto": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1)."
+    },
+    {
+      "id": "garaje_falso_techo",
+      "nombre": "Falso techo de garaje",
+      "aliases": [
+        "Falso techo de garaje"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "orden": 510,
+      "fase": "Obra civil garaje",
+      "deps": [
+        {
+          "id": "garaje_tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Falso techo terminado",
+      "impacto": "Si aplica en esa zona (trasteros/cuartos técnicos/rellano); rama independiente de lucido."
+    },
+    {
+      "id": "garaje_raseado_viales",
+      "nombre": "Raseado/yeso de viales",
+      "aliases": [
+        "Raseado/yeso de viales"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "orden": 515,
+      "fase": "Obra civil garaje",
+      "deps": [],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Raseado o yeso terminado",
+      "impacto": "Acabado del forjado visto en viales; no hay tabicado ni lucido que lo condicione."
+    },
+    {
+      "id": "garaje_tubeado_emp",
+      "nombre": "Tubeado empotrado de garaje",
+      "aliases": [
+        "Tubeado empotrado de garaje"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 520,
+      "fase": "Instalación interior garaje",
+      "deps": [
+        {
+          "id": "garaje_tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tubeado terminado",
+      "impacto": "Ruta empotrada: va antes que el lucido en obra real, pero no depende de él (§4.1)."
+    },
+    {
+      "id": "garaje_cableado_emp",
+      "nombre": "Cableado empotrado de garaje",
+      "aliases": [
+        "Cableado empotrado de garaje"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 525,
+      "fase": "Instalación interior garaje",
+      "deps": [
+        {
+          "id": "garaje_tubeado_emp",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cableado terminado",
+      "impacto": "Cableado de circuitos de la ruta empotrada de garaje."
+    },
+    {
+      "id": "garaje_tubeado_visto",
+      "nombre": "Tubeado visto de garaje",
+      "aliases": [
+        "Tubeado visto de garaje"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 530,
+      "fase": "Instalación interior garaje",
+      "deps": [
+        {
+          "id": "garaje_lucido",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tubeado terminado",
+      "impacto": "Ruta vista: aquí sí depende del lucido — el tubo de superficie se monta sobre la pared ya acabada."
+    },
+    {
+      "id": "garaje_cableado_visto",
+      "nombre": "Cableado visto de garaje",
+      "aliases": [
+        "Cableado visto de garaje"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 535,
+      "fase": "Instalación interior garaje",
+      "deps": [
+        {
+          "id": "garaje_tubeado_visto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cableado terminado",
+      "impacto": "Cableado de circuitos de la ruta vista de garaje."
+    },
+    {
+      "id": "garaje_tubeado_vial",
+      "nombre": "Tubeado de viales",
+      "aliases": [
+        "Tubeado de viales"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 540,
+      "fase": "Instalación interior garaje",
+      "deps": [],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tubeado terminado",
+      "impacto": "Raíz propia de los viales; no espera a raseado (superficies distintas)."
+    },
+    {
+      "id": "garaje_cableado_vial",
+      "nombre": "Cableado de viales",
+      "aliases": [
+        "Cableado de viales"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 545,
+      "fase": "Instalación interior garaje",
+      "deps": [
+        {
+          "id": "garaje_tubeado_vial",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cableado terminado",
+      "impacto": "Cableado de circuitos en viales de garaje."
+    },
+    {
+      "id": "garaje_pintura_1_recinto",
+      "nombre": "Pintura de garaje (recintos) — 1ª mano",
+      "aliases": [
+        "Pintura de garaje (recintos) — 1ª mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "display_group": "garaje_pintura",
+      "orden": 550,
+      "fase": "Pintura garaje",
+      "deps": [
+        {
+          "id": "garaje_lucido",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Primera mano terminada",
+      "impacto": "Primera mano de pintura en recintos de garaje; habilita colocación de equipos."
+    },
+    {
+      "id": "garaje_pintura_1_vial",
+      "nombre": "Pintura de garaje (viales) — 1ª mano",
+      "aliases": [
+        "Pintura de garaje (viales) — 1ª mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "display_group": "garaje_pintura",
+      "orden": 555,
+      "fase": "Pintura garaje",
+      "deps": [
+        {
+          "id": "garaje_raseado_viales",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Primera mano terminada",
+      "impacto": "Primera mano de pintura en viales de garaje; habilita colocación de equipos."
+    },
+    {
+      "id": "garaje_alum_fijo_coloc_recinto",
+      "nombre": "Colocación alumbrado fijo (recintos)",
+      "aliases": [
+        "Colocación alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 560,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_pintura_1_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Pantallas colocadas",
+      "impacto": "Colocación de pantallas de alumbrado fijo en recintos de garaje."
+    },
+    {
+      "id": "garaje_alum_fijo_coloc_vial",
+      "nombre": "Colocación alumbrado fijo (viales)",
+      "aliases": [
+        "Colocación alumbrado fijo (viales)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 561,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_pintura_1_vial",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Pantallas colocadas",
+      "impacto": "Colocación de pantallas de alumbrado fijo en viales de garaje."
+    },
+    {
+      "id": "garaje_alum_temp_coloc_recinto",
+      "nombre": "Colocación alumbrado temporizado (recintos)",
+      "aliases": [
+        "Colocación alumbrado temporizado (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 562,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_pintura_1_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Detectores/pantallas colocados",
+      "impacto": "Colocación de detectores y pantallas de alumbrado temporizado en recintos."
+    },
+    {
+      "id": "garaje_alum_temp_coloc_vial",
+      "nombre": "Colocación alumbrado temporizado (viales)",
+      "aliases": [
+        "Colocación alumbrado temporizado (viales)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 563,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_pintura_1_vial",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Detectores/pantallas colocados",
+      "impacto": "Colocación de detectores y pantallas de alumbrado temporizado en viales."
+    },
+    {
+      "id": "garaje_emergencia_coloc_recinto",
+      "nombre": "Colocación luminarias de emergencia (recintos)",
+      "aliases": [
+        "Colocación luminarias de emergencia (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 564,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_pintura_1_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Luminarias colocadas",
+      "impacto": "Colocación de luminarias de emergencia en recintos de garaje."
+    },
+    {
+      "id": "garaje_emergencia_coloc_vial",
+      "nombre": "Colocación luminarias de emergencia (viales)",
+      "aliases": [
+        "Colocación luminarias de emergencia (viales)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 565,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_pintura_1_vial",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Luminarias colocadas",
+      "impacto": "Colocación de luminarias de emergencia en viales de garaje."
+    },
+    {
+      "id": "garaje_enchufe_coloc",
+      "nombre": "Colocación de enchufe de cuarto técnico",
+      "aliases": [
+        "Colocación de enchufe de cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 566,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_pintura_1_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Enchufe colocado",
+      "impacto": "Colocación de base de enchufe en cuartos técnicos de garaje."
+    },
+    {
+      "id": "garaje_cuadro_tubeado_cableado",
+      "nombre": "Tubeado y cableado hasta cuadro secundario",
+      "aliases": [
+        "Tubeado y cableado hasta cuadro secundario"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 580,
+      "fase": "Cuadros garaje",
+      "deps": [
+        {
+          "id": "garaje_tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Alimentación tendida",
+      "impacto": "Desde el Cuadro General de Garaje. Todo cuadro lo lleva, sea o no nuestro por dentro (§5.6)."
+    },
+    {
+      "id": "garaje_cuadro_colocacion",
+      "nombre": "Colocación y mecanizado de cuadro propio",
+      "aliases": [
+        "Colocación y mecanizado de cuadro propio"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 585,
+      "fase": "Cuadros garaje",
+      "deps": [
+        {
+          "id": "garaje_cuadro_tubeado_cableado",
+          "minimo": 1
+        },
+        {
+          "id": "garaje_pintura_1_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cuadro colocado y mecanizado",
+      "impacto": "Solo si el cuadro es nuestro por dentro (RITI, Cuadro Eléctrico General...)."
+    },
+    {
+      "id": "garaje_cuadro_embornado",
+      "nombre": "Embornado de cuadro propio",
+      "aliases": [
+        "Embornado de cuadro propio"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 590,
+      "fase": "Cuadros garaje",
+      "deps": [
+        {
+          "id": "garaje_cuadro_colocacion",
+          "minimo": 1
+        },
+        {
+          "id": "garaje_pintura_2_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Embornado terminado",
+      "impacto": "Embornado de protecciones y circuitos del cuadro propio."
+    },
+    {
+      "id": "garaje_cuadro_rotulacion",
+      "nombre": "Rotulación de cuadro propio",
+      "aliases": [
+        "Rotulación de cuadro propio"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 595,
+      "fase": "Cuadros garaje",
+      "deps": [
+        {
+          "id": "garaje_cuadro_embornado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cuadro rotulado",
+      "impacto": "Solo si el cuadro es nuestro por dentro."
+    },
+    {
+      "id": "garaje_cuadro_equipo_tubeado_cableado",
+      "nombre": "Tubeado y cableado del cuadro al equipo que controla",
+      "aliases": [
+        "Tubeado y cableado del cuadro al equipo que controla"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 600,
+      "fase": "Cuadros garaje",
+      "deps": [
+        {
+          "id": "garaje_cuadro_colocacion",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Alimentación al equipo tendida",
+      "impacto": "Solo cuando el cuadro es nuestro por dentro (bomba, ventilador...); no aplica a Ventilación/Bombas/Aerotermia/CO2/PCI/Ascensor con cuadro ajeno."
+    },
+    {
+      "id": "garaje_pintura_2_recinto",
+      "nombre": "Pintura de garaje (recintos) — 2ª mano",
+      "aliases": [
+        "Pintura de garaje (recintos) — 2ª mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "display_group": "garaje_pintura",
+      "orden": 587,
+      "fase": "Pintura garaje",
+      "deps": [
+        {
+          "id": "garaje_pintura_1_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Segunda mano terminada",
+      "impacto": "Segunda mano de pintura en recintos de garaje; remate previo a embornado."
+    },
+    {
+      "id": "garaje_pintura_2_vial",
+      "nombre": "Pintura de garaje (viales) — 2ª mano",
+      "aliases": [
+        "Pintura de garaje (viales) — 2ª mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "display_group": "garaje_pintura",
+      "orden": 588,
+      "fase": "Pintura garaje",
+      "deps": [
+        {
+          "id": "garaje_pintura_1_vial",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Segunda mano terminada",
+      "impacto": "Segunda mano de pintura en viales de garaje; remate previo a embornado."
+    },
+    {
+      "id": "garaje_alum_fijo_embornado_recinto",
+      "nombre": "Embornado alumbrado fijo (recintos)",
+      "aliases": [
+        "Embornado alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 620,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_alum_fijo_coloc_recinto",
+          "minimo": 1
+        },
+        {
+          "id": "garaje_pintura_2_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Embornado terminado",
+      "impacto": "Conexión y embornado de pantallas de alumbrado fijo en recintos."
+    },
+    {
+      "id": "garaje_alum_fijo_embornado_vial",
+      "nombre": "Embornado alumbrado fijo (viales)",
+      "aliases": [
+        "Embornado alumbrado fijo (viales)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 621,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_alum_fijo_coloc_vial",
+          "minimo": 1
+        },
+        {
+          "id": "garaje_pintura_2_vial",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Embornado terminado",
+      "impacto": "Conexión y embornado de pantallas de alumbrado fijo en viales."
+    },
+    {
+      "id": "garaje_alum_temp_embornado_recinto",
+      "nombre": "Embornado alumbrado temporizado (recintos)",
+      "aliases": [
+        "Embornado alumbrado temporizado (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 622,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_alum_temp_coloc_recinto",
+          "minimo": 1
+        },
+        {
+          "id": "garaje_pintura_2_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Embornado terminado",
+      "impacto": "Conexión y embornado de alumbrado temporizado en recintos."
+    },
+    {
+      "id": "garaje_alum_temp_embornado_vial",
+      "nombre": "Embornado alumbrado temporizado (viales)",
+      "aliases": [
+        "Embornado alumbrado temporizado (viales)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 623,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_alum_temp_coloc_vial",
+          "minimo": 1
+        },
+        {
+          "id": "garaje_pintura_2_vial",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Embornado terminado",
+      "impacto": "Conexión y embornado de alumbrado temporizado en viales."
+    },
+    {
+      "id": "garaje_emergencia_embornado_recinto",
+      "nombre": "Embornado luminarias de emergencia (recintos)",
+      "aliases": [
+        "Embornado luminarias de emergencia (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 624,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_emergencia_coloc_recinto",
+          "minimo": 1
+        },
+        {
+          "id": "garaje_pintura_2_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Embornado terminado",
+      "impacto": "Conexión y embornado de luminarias de emergencia en recintos."
+    },
+    {
+      "id": "garaje_emergencia_embornado_vial",
+      "nombre": "Embornado luminarias de emergencia (viales)",
+      "aliases": [
+        "Embornado luminarias de emergencia (viales)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 625,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_emergencia_coloc_vial",
+          "minimo": 1
+        },
+        {
+          "id": "garaje_pintura_2_vial",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Embornado terminado",
+      "impacto": "Conexión y embornado de luminarias de emergencia en viales."
+    },
+    {
+      "id": "garaje_enchufe_embornado",
+      "nombre": "Embornado de enchufe de cuarto técnico",
+      "aliases": [
+        "Embornado de enchufe de cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 626,
+      "fase": "Equipos garaje",
+      "deps": [
+        {
+          "id": "garaje_enchufe_coloc",
+          "minimo": 1
+        },
+        {
+          "id": "garaje_pintura_2_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Embornado terminado",
+      "impacto": "Conexión y embornado de base de enchufe en cuartos técnicos."
+    },
+    {
+      "id": "garaje_tierras_general",
+      "nombre": "Tierras — llegada y embornado en Centralización",
+      "aliases": [
+        "Tierras — llegada y embornado en Centralización"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 650,
+      "fase": "Cuartos técnicos garaje",
+      "deps": [
+        {
+          "id": "garaje_tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tierras embornadas en Centralización",
+      "impacto": "Una sola vez por garaje; vive en la zona de Centralización."
+    },
+    {
+      "id": "garaje_tierras_derivacion",
+      "nombre": "Derivación de tierra de cuarto técnico",
+      "aliases": [
+        "Derivación de tierra de cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 655,
+      "fase": "Cuartos técnicos garaje",
+      "deps": [
+        {
+          "id": "garaje_tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Derivación embornada",
+      "impacto": "Una por cada cuarto técnico (achique, ventilación, aerotermia, sala de calderas...), distinta de la general."
+    },
+    {
+      "id": "garaje_centralizacion_modulos",
+      "nombre": "Colocación de módulos de contadores",
+      "aliases": [
+        "Colocación de módulos de contadores"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 660,
+      "fase": "Cuartos técnicos garaje",
+      "deps": [
+        {
+          "id": "garaje_pintura_1_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Módulos colocados",
+      "impacto": "Colocación de módulos de contadores en centralización."
+    },
+    {
+      "id": "garaje_centralizacion_derivaciones",
+      "nombre": "Derivaciones individuales — centralización y embornado",
+      "aliases": [
+        "Derivaciones individuales — centralización y embornado"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 665,
+      "fase": "Cuartos técnicos garaje",
+      "deps": [
+        {
+          "id": "garaje_centralizacion_modulos",
+          "minimo": 1
+        },
+        {
+          "id": "garaje_pintura_2_recinto",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Derivaciones centralizadas y embornadas",
+      "impacto": "Centralización y embornado de derivaciones individuales."
+    },
+    {
+      "id": "garaje_centralizacion_lga",
+      "nombre": "Acometida LGA desde CGP de calle",
+      "aliases": [
+        "Acometida LGA desde CGP de calle"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 669,
+      "fase": "Cuartos técnicos garaje",
+      "deps": [
+        {
+          "id": "garaje_tabicado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tubeado, cableado y embornado terminados",
+      "impacto": "Tratada como un único tajo autocontenido en Centralización a propósito — no depende del tajo de vial aunque discurra por ahí, para no cruzar zonas (mismo motivo que §5.3)."
+    },
+    {
+      "id": "garaje_puerta_alimentacion",
+      "nombre": "Alimentación de cuadro de puerta de acceso",
+      "aliases": [
+        "Alimentación de cuadro de puerta de acceso"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 670,
+      "fase": "Remates garaje",
+      "deps": [
+        {
+          "id": "garaje_tubeado_vial",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Alimentación terminada",
+      "impacto": "Vive en la zona Rampa (ruta de vial). Siempre nuestra."
+    },
+    {
+      "id": "garaje_puerta_mecanizado",
+      "nombre": "Mecanizado de puerta de acceso",
+      "aliases": [
+        "Mecanizado de puerta de acceso"
+      ],
+      "propiedad": "coordinacion",
+      "ambito": "zona_comun",
+      "orden": 675,
+      "fase": "Remates garaje",
+      "deps": [
+        {
+          "id": "garaje_puerta_alimentacion",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Semáforo/llaves/detectores instalados",
+      "impacto": "Puede ser del instalador de la puerta; en catálogo pero no marcado por defecto."
+    },
+    {
+      "id": "garaje_irve_preinstalacion",
+      "nombre": "Preinstalación vehículo eléctrico (IRVE)",
+      "aliases": [
+        "Preinstalación vehículo eléctrico (IRVE)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 680,
+      "fase": "Remates garaje",
+      "deps": [
+        {
+          "id": "garaje_tubeado_vial",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Bandeja/canaleta reservada hasta última plaza",
+      "impacto": "Un único tajo básico; cargadores concretos fuera de v1."
+    },
+    {
+      "id": "garaje_telco_transito",
+      "nombre": "Telecomunicaciones de tránsito",
+      "aliases": [
+        "Telecomunicaciones de tránsito"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "orden": 685,
+      "fase": "Remates garaje",
+      "deps": [
+        {
+          "id": "garaje_tubeado_vial",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tubo/bandeja de tránsito terminado",
+      "impacto": "Solo cuando el garaje es paso entre edificios o entrada desde calle."
     }
   ],
   "obras": {
