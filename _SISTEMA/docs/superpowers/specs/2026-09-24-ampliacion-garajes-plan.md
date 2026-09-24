@@ -43,7 +43,8 @@ fases sin dejar nada roto**, no para completarse de una sentada.
 |---|---|---|---|
 | 1 | Catálogo de tajos garaje en `CATALOGO_TAJOS.json` | Claude diseña la tabla exacta → **agy** transcribe → Codex escribe/ejecuta los tests → Claude verifica | ✅ **CERRADA** (`b694b97`) |
 | 2 | `ficha_garajes.json` + módulo Python equivalente a `ficha_obra.py` | Claude diseña la forma → **Codex** implementa y prueba → Claude verifica | ✅ **CERRADA** (`3e5da0a`) |
-| 3 | Segunda ficha por obra en `generar_todos.py` / `panel_obra.py` / `motor_informes.py` / `priorizador_trabajos.py` | **Codex** implementa con salvaguarda de doble cálculo → Claude verifica que las obras no implicadas no se mueven | pendiente |
+| 3a | Cálculo: `priorizar_ficha_garaje` en `priorizador_trabajos.py` + llamada en `generar_todos.py` | Claude diseñó 5 hallazgos y las funciones exactas → **Codex** implementa con diff byte a byte → Claude verifica | pendiente |
+| 3b | Mostrarlo: sección de garaje en `panel_obra.py` | Claude diseña dónde insertarla → **Codex** implementa con diff byte a byte del HTML → Claude verifica en navegador real | pendiente |
 | 4 | Wizard de 4 pantallas + hoja por tipo de zona en `generador_revisiones.html` | **Codex** implementa a partir del prototipo de referencia → Claude verifica en navegador real | pendiente |
 | 5 | Adaptador de lectura de revisiones de garaje | **Codex** implementa y prueba | pendiente |
 | 6 | Validación completa contra `OBRA PRUEBA` (con mutación) | **Claude** dirige, **Codex** ejecuta los escenarios | pendiente |
@@ -182,49 +183,93 @@ todavía. Suite completa: 622 tests, 0 fallos.
 
 ## Fase 3 — Segunda ficha por obra (la parte de más riesgo real)
 
-**Objetivo:** que `generar_todos.py`, `panel_obra.py`, `motor_informes.py`
-y `priorizador_trabajos.py` sepan que una obra puede tener **dos** fichas
-(vivienda + garaje) y las combinen donde toca (§3.3 del diseño: dos
-lecturas, no una por garaje físico).
+**Dividida en dos al diseñar el detalle (24/09/2026)**, tras leer completos
+`priorizador_trabajos.py`, `generar_todos.py`, `motor_informes.py` y
+`panel_obra.py`: no era tan simple como "llamar dos veces a lo mismo".
+Aparecieron 5 hallazgos reales (uno de ellos, un fallo de conteo real que
+habría afectado a garaje de forma silenciosa) que hacían irresponsable
+diseñar el cálculo y el renderizado como una sola pieza. Detalle completo
+del cálculo en `_SISTEMA/scratch/fase3a-calculo-garaje-diseno.md`.
 
-**Por qué es la fase de más riesgo:** toca cuatro módulos que hoy asumen
-una sola ficha por obra y que ya generan **todas** las obras existentes,
-no solo garajes. Un error aquí no falla "silenciosamente en garajes" — puede
-mover el porcentaje de obras que no tienen nada que ver con esta ampliación,
-que es exactamente la familia de fallo que el CLAUDE.md del proyecto pide
-vigilar por encima de todo.
+**Objetivo general (de las dos sub-fases juntas):** que el sistema sepa
+calcular Y mostrar prioridades y KPIs de garaje junto a los de vivienda,
+sin mover ni una cifra de las obras que no tienen garaje (§3.3 del diseño:
+dos lecturas, no una por garaje físico).
 
-**Mitigación obligatoria — salvaguarda de doble cálculo** (patrón ya
-validado en el proyecto, usado para el cutover del motor unificado de
-revisiones): calcular el resultado por el camino viejo (solo vivienda) y
-por el nuevo (vivienda + garaje si existe) para **todas** las obras, no
-solo la de prueba, comparar, y solo escribir si:
-- las obras sin `ficha_garajes.json` dan exactamente el mismo resultado que
-  antes (camino viejo y nuevo coinciden porque no hay garaje que sumar);
-- las obras con `ficha_garajes.json` cambian solo en lo esperado (aparece
-  la segunda lectura), no en la lectura de vivienda que ya tenían.
+**Por qué es la fase de más riesgo:** toca módulos que ya generan **todas**
+las obras existentes, no solo garajes. Un error aquí no falla
+"silenciosamente en garajes" — puede mover el porcentaje de obras que no
+tienen nada que ver con esta ampliación, que es exactamente la familia de
+fallo que el CLAUDE.md del proyecto pide vigilar por encima de todo.
 
-**Qué toca:** los 4 módulos citados, siempre con ficha de vivienda como
-antes y garaje como añadido opcional (si no existe `ficha_garajes.json`
-para esa obra, comportamiento idéntico al actual — ni una línea de
-diferencia).
-**Qué NO toca:** la lógica de agregación de vivienda ya existente, que se
-reutiliza tal cual sobre la lista de garajes (§3.3 del diseño).
+### Fase 3a — Cálculo (sin tocar ningún HTML)
+
+**Objetivo:** que `priorizador_trabajos.py` sepa calcular prioridades de
+una ficha de garaje (`priorizar_ficha_garaje`, nueva, en paralelo a
+`priorizar_ficha`) y que `generar_todos.py` la llame y escriba
+`prioridades_trabajos_garaje.json` cuando la obra tenga
+`ficha_garajes.json`. Nada se muestra todavía.
+
+**Qué toca:** `priorizador_trabajos.py` (funciones nuevas, más un
+parámetro opcional con su valor por defecto igual al actual en
+`_clave_unidad`/`_agrupar_prioridades`/`prevision_desbloqueos` — ver
+Hallazgo 5 del diseño, la única excepción real a "no tocar vivienda" de
+todo el plan, y está acotada y verificable) y `generar_todos.py` (llamada
+nueva dentro de `main()`, más el parámetro nuevo `prioridades_garaje` que
+`panel_obra.generar_panel` recibirá pero todavía no usa).
+**Qué NO toca:** ni una línea de `panel_obra.py` ni de `motor_informes.py`
+(este último no hace falta tocarlo — es agnóstico de estructura, ver
+Hallazgo 1). `priorizar_ficha` (vivienda) no cambia de comportamiento para
+ningún llamador existente.
 
 **Reparto:**
-1. Claude diseña exactamente dónde entra cada lectura nueva en cada uno de
-   los 4 módulos (puntos de entrada concretos, no "haz que funcione").
-2. **Codex** implementa con la salvaguarda de doble cálculo activa y
-   escribe/ejecuta los tests, incluyendo uno que congele el resultado de
-   las obras reales existentes (Mungia, Gernika, Bolueta, Obispo Orueta...)
-   antes y después del cambio.
-3. Claude verifica de forma independiente — no solo lee el informe de
-   Codex: ejecuta la suite completa y, aparte, compara a mano el resumen de
-   al menos 2 obras reales antes/después.
+1. Claude diseñó las funciones exactas, sus firmas y qué reutiliza tal
+   cual (`_SISTEMA/scratch/fase3a-calculo-garaje-diseno.md`).
+2. **Codex** implementa y escribe/ejecuta los tests, incluyendo la prueba
+   de no regresión más importante de toda la fase: generar
+   `prioridades_trabajos.json` de las obras reales antes y después del
+   cambio y compararlos **byte a byte** — no solo "el test pasa".
+3. Claude verifica de forma independiente: lee el diff línea a línea,
+   corre la suite completa, y comprueba a mano al menos 2 obras reales
+   antes/después.
 
 **Checkpoint de cierre:** commit propio. Reportar a Bixente el antes/después
 de las obras reales existentes antes de seguir — regla explícita del
 CLAUDE.md del proyecto (§3), no un extra opcional.
+
+### Fase 3b — Mostrarlo en `panel_obra.py`
+
+**Objetivo:** que el panel de una obra con `ficha_garajes.json` muestre una
+sección de garaje (KPIs + tabla de prioridades) junto a la de vivienda,
+usando `prioridades_garaje` que la Fase 3a ya deja calculado y pasado como
+parámetro.
+
+**Por qué se separó de la 3a:** `panel_obra.py` (2183 líneas) genera el
+HTML de **todas** las obras hoy mismo, con muchas funciones entrelazadas
+(`bloque_prioridades_partes`, tarjetas de KPI, tablas) que habría que
+llamar una segunda vez con los datos de garaje. Es la pieza con más
+superficie de fallo visual de toda la ampliación.
+
+**Mitigación obligatoria — más estricta que "correr los tests":**
+generar el panel de **todas** las obras reales antes y después del cambio
+y comparar el HTML resultante **byte a byte** para cualquier obra sin
+`ficha_garajes.json` (es decir, todas las de hoy) — tiene que ser
+idéntico, no solo "visualmente parecido". Es una versión más mecánica y
+más verificable de la salvaguarda de doble cálculo, adaptada a que aquí no
+hay dos caminos de cálculo que comparar, sino una función de render que no
+debe cambiar su salida cuando no hay nada nuevo que mostrar.
+
+**Reparto:** igual patrón que el resto — Claude diseña exactamente dónde
+se inserta la sección nueva (probablemente reusando
+`bloque_prioridades_partes(prioridades_garaje, ...)` para no duplicar la
+lógica de tablas), Codex implementa con la comprobación byte a byte
+activa, Claude verifica en navegador real además de revisar el diff — no
+basta con mirar el HTML como texto (ver
+[[feedback_sagarde_dirigir_codex_y_verificar_de_verdad]], la lección de
+CSS/print ya aprendida una vez en este proyecto).
+
+**Checkpoint de cierre:** commit propio. No empezar sin que la Fase 3a
+esté cerrada y verificada.
 
 ---
 
