@@ -224,6 +224,22 @@ aplicable a esta obra" (Gernika ya excluye suelo radiante y termostatos),
 solo que aquí opera a nivel de zona en vez de obra entera. No hace falta
 mecanismo nuevo.
 
+**Hallazgo verificado leyendo `priorizador_trabajos.py` (24/09/2026), que
+generaliza el motivo técnico anterior más allá de empotrada/vista:**
+`_clasificar_detalle` construye `tajos_de_la_obra` como el conjunto de
+tajos que existen **en toda la obra**, no por ubicación; el bucle de `deps`
+solo deja de bloquear (`continue`) cuando el `id` no existe **en ningún
+sitio de la obra entera**. Si el `id` existe en la obra pero no en la
+ubicación concreta evaluada, `_buscar_dep` devuelve `None` y bloquea para
+siempre — no hay excepción por "esta zona en concreto no tiene ese tajo".
+Consecuencia: **ningún tajo de un tipo de zona puede depender de un tajo
+que solo exista en otro tipo de zona**, aunque ambos existan en la misma
+obra — un vial y un trastero conviven en el mismo garaje, así que un tajo
+de trastero que dependiera de un tajo exclusivo de vial se quedaría
+bloqueado para siempre. Cada cadena de `deps` del catálogo de garaje
+(§7, tabla de la Fase 1 del plan) se mantiene dentro de su propio tipo de
+zona a propósito, precisamente por esto.
+
 ### 4.2 Qué ruta lleva cada tipo de zona
 
 | Zona | Ruta | Techo | Luminaria | Notas |
@@ -305,13 +321,25 @@ marcados cada tipo de zona por defecto".
 
 Para cualquier equipo propio de Sagarde que no sea un cuadro (pantalla de
 alumbrado fijo, pantalla temporizada, luminaria de emergencia, detector,
-downlight, aplique...): **Cableado → Colocación (depende de Cableado +
-Pintura 1ª) → Embornado (depende de Colocación + Pintura 2ª)**. Tajos
-independientes por tipo de equipo y por zona — nunca uno genérico que cubra
-"todo lo que haya en la zona". El tajo se llama **"Embornado"**, sin
-"de equipos": cubre también cajas de registro, pulsadores y detectores de
-esa parte de la instalación, no solo el equipo final (corrección de Bixente,
-24/09/2026).
+downlight, aplique...): **Cableado → Colocación → Embornado**. El tajo se
+llama **"Embornado"**, sin "de equipos": cubre también cajas de registro,
+pulsadores y detectores de esa parte de la instalación, no solo el equipo
+final (corrección de Bixente, 24/09/2026).
+
+**Precisión añadida al traducir esto a catálogo real (Fase 1 del plan):**
+"Cableado" es un tajo **compartido por zona/ruta**, no uno distinto por tipo
+de equipo — solo Colocación y Embornado son independientes por tipo de
+equipo. Motivo: la instrucción explícita y más tardía de Bixente sobre
+viales ("ponemos un solo cableado por zona que abarque los tres tipos, menos
+tajos") pesa más que la lectura literal de "tajos independientes" de más
+arriba, y es coherente con no complicar el catálogo. Colocación, además,
+depende solo de Pintura 1ª de su zona — nunca directamente del cableado —
+aplicando la misma simplificación ya usada para Lucido (no depender del
+tubeado) y ya presente en el catálogo real de vivienda (`pintura_primera` no
+depende de `cableado`). Sin esto, Colocación habría necesitado una variante
+por cada ruta (empotrada/vista/vial), triplicando el número de tajos de
+equipo. Detalle completo en el borrador de la Fase 1
+(`_SISTEMA/scratch/fase1-catalogo-garajes-borrador.md`).
 
 ### 5.6 Cuadros
 
