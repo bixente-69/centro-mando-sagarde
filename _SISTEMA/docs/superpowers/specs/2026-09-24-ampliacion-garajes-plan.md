@@ -45,7 +45,7 @@ fases sin dejar nada roto**, no para completarse de una sentada.
 | 2 | `ficha_garajes.json` + módulo Python equivalente a `ficha_obra.py` | Claude diseña la forma → **Codex** implementa y prueba → Claude verifica | ✅ **CERRADA** (`3e5da0a`) |
 | 3a | Cálculo: `priorizar_ficha_garaje` en `priorizador_trabajos.py` + llamada en `generar_todos.py` | Claude diseñó 5 hallazgos y las funciones exactas → **Codex** implementa con diff byte a byte → Claude verifica | ✅ **CERRADA** (`daf4c2a`) |
 | 3b | Mostrarlo: sección de garaje en `panel_obra.py` | Claude diseña dónde insertarla → **Codex** implementa con diff byte a byte del HTML → Claude verifica en navegador real | ✅ **CERRADA** (`f623e24`) |
-| 4 | Wizard de 4 pantallas + hoja por tipo de zona en `generador_revisiones.html` | **Codex** implementa a partir del prototipo de referencia → Claude verifica en navegador real | pendiente |
+| 4 | Wizard de 4 pantallas + hoja por tipo de zona en `generador_revisiones.html` | **Codex** implementa a partir del prototipo de referencia → Claude verifica en navegador real | ✅ **CERRADA** (`645d9b8`) |
 | 5 | Adaptador de lectura de revisiones de garaje | **Codex** implementa y prueba | pendiente |
 | 6 | Validación completa contra `OBRA PRUEBA` (con mutación) | **Claude** dirige, **Codex** ejecuta los escenarios | pendiente |
 | 7 | Alta y primera revisión real: Mungia o Gernika | **Claude + Bixente** (necesita su hoja/planos reales, ningún worker puede inventarlos) | pendiente |
@@ -351,6 +351,22 @@ actual).
 **Checkpoint de cierre:** commit propio. Este es el primer punto en que
 Bixente puede empezar a usar algo con sus manos en un navegador normal,
 antes incluso de que exista el adaptador de lectura.
+
+**✅ CERRADA (24-25/09/2026, commit `645d9b8`).** El asistente completo de
+garaje (selector de modo, estructura por lista de comprobación/conteo,
+catálogo de 42 tajos, hoja repartida por tipo de zona con pestañas y
+tarjetas) está en el fichero real. `sheetRuntime()` comparte de verdad el
+ciclo `CYCLE/SYM/CLS` entre los dos modos — no hay una segunda copia.
+Verificación independiente encontró un fallo real (`GARAGE_PROFILE_TAJOS.cuarto_ligero`
+solo llevaba alumbrado fijo, faltaban temporizado/emergencia/enchufe
+completos pese a que §5.7 del diseño pide expresamente los tres),
+corregido y reverificado mecánicamente contra los 42 tajos del catálogo.
+Probado de verdad en el navegador (Claude, tras crear una copia de
+prueba sin el logo — el fichero real pesa 1,3&nbsp;MB por el logo en
+base64 y excede el límite de carga del navegador integrado): estructura,
+tajos, generación de hoja, pestañas, ciclo de marcado hasta `N` con
+símbolo grande y visible, y la fila resaltada del tajo específico de
+cada cuarto técnico. Suite completa: 634 tests, 0 fallos.
 
 ---
 
