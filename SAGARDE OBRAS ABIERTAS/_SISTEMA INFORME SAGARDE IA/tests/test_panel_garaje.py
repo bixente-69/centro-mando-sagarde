@@ -173,6 +173,12 @@ class TestPanelGaraje(unittest.TestCase):
         vistas_con = _vistas(con_garaje)
         self.assertEqual(set(vistas_con), set(vistas_sin) | {"v-garaje"})
         for vista, contenido in vistas_sin.items():
+            if vista == "v-riesgos":
+                # Desde la pieza 3 de la integracion garaje-obra
+                # (25/09/2026), v-riesgos SI cambia a proposito cuando hay
+                # garaje: gana su propia seccion de riesgos. Cubierto aparte
+                # en TestPanelRiesgosGaraje.
+                continue
             with self.subTest(vista=vista):
                 self.assertEqual(vistas_con[vista], contenido)
 
@@ -291,6 +297,71 @@ class TestPanelAvanceCombinadoConGaraje(unittest.TestCase):
                 continue  # la cabecera SI cambia a proposito, ver el test de arriba
             with self.subTest(vista=vista):
                 self.assertEqual(vistas_con[vista], contenido)
+
+
+class TestPanelRiesgosGaraje(unittest.TestCase):
+    """Integracion garaje-obra, pieza 3 (25/09/2026): la vista Riesgos
+    debe incluir una seccion de garaje, reutilizando bloque_riesgos tal
+    cual (misma funcion que ya usa vivienda), cuando prioridades_garaje
+    no es None. Sin garaje, la vista queda exactamente igual que antes."""
+
+    def test_sin_garaje_v_riesgos_no_cambia(self):
+        prioridades_garaje = priorizar_ficha_garaje(
+            _ficha_garaje(estados={
+                ("z1", "garaje_tubeado_vial"): "X",
+                ("z1", "garaje_cableado_vial"): "P",
+                ("z2", "garaje_tubeado_vial"): "P",
+                ("z2", "garaje_cableado_vial"): "P",
+            }),
+            obra="OBRA GARAJE PRUEBA", hoy=date(2026, 9, 24))
+
+        con_garaje = _generar(prioridades_garaje, historial=_HISTORIAL_VIVIENDA)
+        sin_garaje = _generar(None, historial=_HISTORIAL_VIVIENDA)
+
+        vistas_con = _vistas(con_garaje)
+        vistas_sin = _vistas(sin_garaje)
+        self.assertEqual(set(vistas_con), set(vistas_sin) | {"v-garaje"})
+        for vista, contenido in vistas_sin.items():
+            if vista == "v-riesgos":
+                continue
+            with self.subTest(vista=vista):
+                self.assertEqual(vistas_con[vista], contenido)
+
+    def test_v_riesgos_sin_garaje_no_tiene_seccion_de_garaje(self):
+        html = _generar(None, historial=_HISTORIAL_VIVIENDA)
+        riesgos = _vistas(html)["v-riesgos"]
+        self.assertNotIn("🅿️ Garaje", riesgos)
+
+    def test_v_riesgos_con_garaje_incluye_su_propia_seccion(self):
+        prioridades_garaje = priorizar_ficha_garaje(
+            _ficha_garaje(estados={
+                ("z1", "garaje_tubeado_vial"): "X",
+                ("z1", "garaje_cableado_vial"): "P",
+                ("z2", "garaje_tubeado_vial"): "P",
+                ("z2", "garaje_cableado_vial"): "P",
+            }),
+            obra="OBRA GARAJE PRUEBA", hoy=date(2026, 9, 24))
+        # Valores reales de esta ficha, calculados aparte con
+        # priorizar_ficha_garaje antes de escribir este test (no
+        # inventados): resumen listos=2, bloqueados=0, terminados=0,
+        # dudas=0; un condicionante activo en 'prevision'
+        # (Tubeado de viales -> desbloquea Cableado de viales).
+        self.assertEqual(2, prioridades_garaje["resumen"]["listos"])
+        self.assertEqual(0, prioridades_garaje["resumen"]["bloqueados"])
+        self.assertEqual(1, len(prioridades_garaje["prevision"]))
+
+        html = _generar(prioridades_garaje, historial=_HISTORIAL_VIVIENDA)
+        riesgos = _vistas(html)["v-riesgos"]
+
+        self.assertIn("🅿️ Garaje", riesgos)
+        self.assertEqual(riesgos.count("Riesgos de producción Sagarde"), 2)
+        # bloque_riesgos escribe su HTML con comillas simples (ver su
+        # fuente real en panel_obra.py), no dobles.
+        self.assertIn(
+            "<div class='kpi'><div class='label'>Tajos bloqueados</div>"
+            "<div class='value'>0</div>", riesgos)
+        self.assertIn("Tubeado de viales", riesgos)
+        self.assertIn("Cableado de viales", riesgos)
 
 
 if __name__ == "__main__":

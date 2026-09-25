@@ -1718,6 +1718,11 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     riesgos_html = bloque_riesgos(
         prioridades, bloqueos=bloqueos,
         riesgos_manual=ficha.get('riesgos', []), sin_cambios=sin_cambios)
+    riesgos_garaje_html = ''
+    if prioridades_garaje is not None:
+        riesgos_garaje_html = '<h2>🅿️ Garaje</h2>' + bloque_riesgos(
+            prioridades_garaje, bloqueos=[], riesgos_manual=[],
+            sin_cambios=False)
     cierre_html = bloque_cierre(cierre, avisos=cierre_avisos)
 
     # Garaje v1 queda fuera de SECCIONES_INFORME y no muestra porcentaje:
@@ -1963,7 +1968,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 <section id="v-prioridades" class="view">{prioridades_html}
   <div class="card"><h3>Hitos manuales</h3>{hitos_html}</div></section>
 
-<section id="v-riesgos" class="view">{riesgos_html}</section>
+<section id="v-riesgos" class="view">{riesgos_html}{riesgos_garaje_html}</section>
 
 <section id="v-normativa" class="view"><div class="card"><h3>Normativa y criterios técnicos aplicables</h3>
   <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px;">Lista de referencia. No sustituye la comprobación de la versión vigente ni las instrucciones de la Dirección Facultativa.</p>
