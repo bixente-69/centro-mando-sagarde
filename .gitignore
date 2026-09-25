@@ -63,6 +63,12 @@ VARIOS/APPS SAGARDE/
 # Ficha de obra: fuente de verdad de estructura y estados (una por obra)
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/ficha_obra.json
 
+# Ficha de garajes: igual que ficha_obra.json pero para garajes (Fase 2 de
+# la ampliacion a garajes, 24/09/2026). Omitida por descuido al crear esa
+# fase -- solo se noto al escribir la primera real en disco (Fase 6,
+# OBRA PRUEBA, 25/09/2026): se generaba pero nunca se publicaba.
+!SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/ficha_garajes.json
+
 # Traza comun de cada aplicacion que supera la salvaguarda de doble calculo.
 # Es evidencia auditable de la ficha, igual que los sidecars permitidos abajo.
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/revisiones_aplicadas.jsonl

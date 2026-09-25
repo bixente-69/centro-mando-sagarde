@@ -1,0 +1,642 @@
+{
+  "version": "4.3",
+  "catalogo_version": "1.3",
+  "obra": "2026 OBRA PRUEBA",
+  "revision": "25/09/2026",
+  "sin_base": false,
+  "edad_revision_dias": 0,
+  "revision_caducada": false,
+  "estado_obra": null,
+  "historial_confirmado_terminado": false,
+  "generado": "25/09/2026 09:50",
+  "resumen": {
+    "listos": 0,
+    "verificar": 0,
+    "unidades_listas": 0,
+    "unidades_verificar": 0,
+    "bloqueados": 1,
+    "otros_gremios": 2,
+    "dudas": 0,
+    "sin_revisar": 0,
+    "unidades_sin_revisar": 0,
+    "terminados": 5,
+    "inventario_total": 8,
+    "detalle_total": 12,
+    "preguntas_pendientes": 0,
+    "viviendas": 0,
+    "zonas_comunes": 0,
+    "edificio": 0
+  },
+  "items": [],
+  "detalle_items": [
+    {
+      "tarea_id": "garaje_tabicado",
+      "trabajo": "Tabicado de garaje",
+      "trabajos_originales": [
+        "Tabicado de garaje"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 500,
+      "fase_nombre": "Obra civil garaje",
+      "display_group": "garaje_tabicado",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Escalera",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_tabicado",
+      "trabajo": "Tabicado de garaje",
+      "trabajos_originales": [
+        "Tabicado de garaje"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 500,
+      "fase_nombre": "Obra civil garaje",
+      "display_group": "garaje_tabicado",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Rellano / Zona común",
+      "estado": "/",
+      "estado_actual": "/",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_tabicado",
+      "trabajo": "Tabicado de garaje",
+      "trabajos_originales": [
+        "Tabicado de garaje"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 500,
+      "fase_nombre": "Obra civil garaje",
+      "display_group": "garaje_tabicado",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Trasteros 1",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_tabicado",
+      "trabajo": "Tabicado de garaje",
+      "trabajos_originales": [
+        "Tabicado de garaje"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 500,
+      "fase_nombre": "Obra civil garaje",
+      "display_group": "garaje_tabicado",
+      "edificio": "Garaje 2",
+      "planta": "S-1",
+      "unidad": "Escalera",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_lucido",
+      "trabajo": "Lucido de garaje",
+      "trabajos_originales": [
+        "Lucido de garaje"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 505,
+      "fase_nombre": "Obra civil garaje",
+      "display_group": "garaje_lucido",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Escalera",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1).",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_lucido",
+      "trabajo": "Lucido de garaje",
+      "trabajos_originales": [
+        "Lucido de garaje"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 505,
+      "fase_nombre": "Obra civil garaje",
+      "display_group": "garaje_lucido",
+      "edificio": "Garaje 2",
+      "planta": "S-1",
+      "unidad": "Zona A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_tubeado_vial",
+      "trabajo": "Tubeado de viales",
+      "trabajos_originales": [
+        "Tubeado de viales"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 540,
+      "fase_nombre": "Instalación interior garaje",
+      "display_group": "garaje_tubeado_vial",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Zona A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_cableado_vial",
+      "trabajo": "Cableado de viales",
+      "trabajos_originales": [
+        "Cableado de viales"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 545,
+      "fase_nombre": "Instalación interior garaje",
+      "display_group": "garaje_cableado_vial",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Zona A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_pintura_1_recinto",
+      "trabajo": "Pintura de garaje (recintos) — 1ª mano",
+      "trabajos_originales": [
+        "Pintura de garaje (recintos) — 1ª mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 550,
+      "fase_nombre": "Pintura garaje",
+      "display_group": "garaje_pintura",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Rellano / Zona común",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_alum_temp_coloc_recinto",
+      "trabajo": "Colocación alumbrado temporizado (recintos)",
+      "trabajos_originales": [
+        "Colocación alumbrado temporizado (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 562,
+      "fase_nombre": "Equipos garaje",
+      "display_group": "garaje_alum_temp_coloc_recinto",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Basuras",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_tierras_general",
+      "trabajo": "Tierras — llegada y embornado en Centralización",
+      "trabajos_originales": [
+        "Tierras — llegada y embornado en Centralización"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 650,
+      "fase_nombre": "Cuartos técnicos garaje",
+      "display_group": "garaje_tierras_general",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Centralización de contadores",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_centralizacion_modulos",
+      "trabajo": "Colocación de módulos de contadores",
+      "trabajos_originales": [
+        "Colocación de módulos de contadores"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 660,
+      "fase_nombre": "Cuartos técnicos garaje",
+      "display_group": "garaje_centralizacion_modulos",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Centralización de contadores",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Pintura de garaje (recintos) — 1ª mano"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "garaje_pintura_1_recinto",
+          "nombre": "Pintura de garaje (recintos) — 1ª mano",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    }
+  ],
+  "inventario": [
+    {
+      "grupo_id": "garaje_centralizacion_modulos",
+      "trabajo": "Colocación de módulos de contadores",
+      "propiedad": "propio",
+      "orden_ejecucion": 660,
+      "fase_nombre": "Cuartos técnicos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Centralización de contadores",
+          "estado": "M",
+          "categoria": "BLOQUEADO"
+        }
+      ],
+      "subtajos": [
+        "Colocación de módulos de contadores"
+      ],
+      "seccion": "BLOQUEADO",
+      "seccion_nombre": "Tajos bloqueados",
+      "n_ubicaciones": 1,
+      "estado_actual": "M: 1",
+      "resumen_categorias": {
+        "BLOQUEADO": 1
+      },
+      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "orden_inventario": 1
+    },
+    {
+      "grupo_id": "garaje_tabicado",
+      "trabajo": "Tabicado de garaje",
+      "propiedad": "externo",
+      "orden_ejecucion": 500,
+      "fase_nombre": "Obra civil garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Escalera",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Rellano / Zona común",
+          "estado": "/",
+          "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros 1",
+          "estado": "M",
+          "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "Garaje 2",
+          "planta": "S-1",
+          "unidad": "Escalera",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Tabicado de garaje"
+      ],
+      "seccion": "OTROS_GREMIOS",
+      "seccion_nombre": "Otros gremios e interferencias",
+      "n_ubicaciones": 4,
+      "estado_actual": "M: 1 · /: 1 · X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2,
+        "OTROS_GREMIOS": 2
+      },
+      "motivo": "Sin separaciones no se inicia nada del resto en esa zona. Terminado según la última confirmación válida.",
+      "orden_inventario": 2
+    },
+    {
+      "grupo_id": "garaje_lucido",
+      "trabajo": "Lucido de garaje",
+      "propiedad": "externo",
+      "orden_ejecucion": 505,
+      "fase_nombre": "Obra civil garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Escalera",
+          "estado": "M",
+          "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "Garaje 2",
+          "planta": "S-1",
+          "unidad": "Zona A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Lucido de garaje"
+      ],
+      "seccion": "OTROS_GREMIOS",
+      "seccion_nombre": "Otros gremios e interferencias",
+      "n_ubicaciones": 2,
+      "estado_actual": "M: 1 · X: 1",
+      "resumen_categorias": {
+        "OTROS_GREMIOS": 1,
+        "TERMINADO": 1
+      },
+      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1). Terminado según la última confirmación válida.",
+      "orden_inventario": 3
+    },
+    {
+      "grupo_id": "garaje_tubeado_vial",
+      "trabajo": "Tubeado de viales",
+      "propiedad": "propio",
+      "orden_ejecucion": 540,
+      "fase_nombre": "Instalación interior garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Zona A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Tubeado de viales"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 1,
+      "estado_actual": "X: 1",
+      "resumen_categorias": {
+        "TERMINADO": 1
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 4
+    },
+    {
+      "grupo_id": "garaje_cableado_vial",
+      "trabajo": "Cableado de viales",
+      "propiedad": "propio",
+      "orden_ejecucion": 545,
+      "fase_nombre": "Instalación interior garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Zona A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Cableado de viales"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 1,
+      "estado_actual": "X: 1",
+      "resumen_categorias": {
+        "TERMINADO": 1
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 5
+    },
+    {
+      "grupo_id": "garaje_pintura",
+      "trabajo": "Pintura de garaje (recintos) — 1ª mano",
+      "propiedad": "externo",
+      "orden_ejecucion": 550,
+      "fase_nombre": "Pintura garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Rellano / Zona común",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Pintura de garaje (recintos) — 1ª mano"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 1,
+      "estado_actual": "X: 1",
+      "resumen_categorias": {
+        "TERMINADO": 1
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 6
+    },
+    {
+      "grupo_id": "garaje_alum_temp_coloc_recinto",
+      "trabajo": "Colocación alumbrado temporizado (recintos)",
+      "propiedad": "propio",
+      "orden_ejecucion": 562,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Basuras",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Colocación alumbrado temporizado (recintos)"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 1,
+      "estado_actual": "X: 1",
+      "resumen_categorias": {
+        "TERMINADO": 1
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 7
+    },
+    {
+      "grupo_id": "garaje_tierras_general",
+      "trabajo": "Tierras — llegada y embornado en Centralización",
+      "propiedad": "propio",
+      "orden_ejecucion": 650,
+      "fase_nombre": "Cuartos técnicos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Centralización de contadores",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Tierras — llegada y embornado en Centralización"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 1,
+      "estado_actual": "X: 1",
+      "resumen_categorias": {
+        "TERMINADO": 1
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 8
+    }
+  ],
+  "dudas_pendientes": [],
+  "preguntas_orden": [],
+  "prevision": [
+    {
+      "tarea_id": "garaje_pintura_1_recinto",
+      "trabajo": "Pintura de garaje (recintos) — 1ª mano",
+      "estado_actual": "X",
+      "propiedad": "externo",
+      "desbloquea": 1,
+      "tajos_afectados": [
+        "Colocación de módulos de contadores"
+      ]
+    }
+  ],
+  "avisos": [
+    "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
+    "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmaciÃ³n.",
+    "El orden sigue la secuencia lÃ³gica definida en CATALOGO_TAJOS.json."
+  ]
+}
