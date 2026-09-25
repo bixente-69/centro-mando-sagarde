@@ -104,16 +104,36 @@ si building/floor/unit no casan 1:1 — verificar).
   bug real (`snapshot_garaje` llevaba el id del tajo en `'task'` en vez
   del nombre, la página de garaje salía vacía) que no habría salido a
   la luz sin generar el PDF de verdad, solo con la suite.
-- ✅ **Prioridades**, commit `924ae25`. "Calca el formato de vivienda"
-  (Bixente, textual): misma `bloque_prioridades_partes()`, llamada una
-  segunda vez con `sufijo='-garaje'`. Hecho por Claude directamente (no
-  delegado): requería sostener ~15 ids interdependientes a la vez y
-  verificar en navegador real, el tipo de tarea que este proyecto ha
-  aprendido a no delegar sin supervisión estrecha. De paso corrigió un
-  enlace fijo a JSON equivocado, encontrado solo al probar en un
-  servidor local real (el snapshot estático del navegador integrado no
-  ejecuta bien la interactividad de esta plantilla — hace falta origen
-  http de verdad).
+- ✅ **Prioridades**, commit `924ae25`, **corregido en commit `6fd46a7`**.
+  "Calca el formato de vivienda" (Bixente, textual): misma
+  `bloque_prioridades_partes()`, llamada una segunda vez con
+  `sufijo='-garaje'`. Hecho por Claude directamente (no delegado):
+  requería sostener ~15 ids interdependientes a la vez y verificar en
+  navegador real. De paso corrigió un enlace fijo a JSON equivocado,
+  encontrado solo al probar en un servidor local real (el snapshot
+  estático del navegador integrado no ejecuta bien la interactividad de
+  esta plantilla — hace falta origen http de verdad).
+
+  **Malentendido real en la primera versión (25/09/2026), señalado por
+  Bixente al ver el panel de Gernika**: el bento de garaje se metió
+  pegado DENTRO de la pestaña "Prioridades" de vivienda, dejando la
+  pestaña "🅿️ Garaje" con su formato viejo (KPI-row + tabla). Bixente,
+  textual: "pestaña prioridades se suponia prioridades de vivienda,
+  simbolo en la pestaña de vivienda. pestaña de garaje se suponia igual
+  que prioridades de vivienda pero con los datos de garaje. no se
+  parecen en nada". Corregido: son dos pestañas separadas, cada una con
+  su propio centro de mando; "🎯 Prioridades 🏠" queda solo de vivienda,
+  "🅿️ Garaje" recibe el mismo `bloque_prioridades_partes(sufijo='-garaje')`
+  que antes estaba mal conectado. El namespacing de ids (la parte
+  difícil) no cambió, solo a qué pestaña se conecta su resultado.
+
+  **De la misma tanda de avisos**: "Panel: no hay nada de garaje" — el
+  gráfico "Avance por planta y edificio" ahora funde vivienda y garaje
+  con icono de origen (🏠/🅿️), vía `_combinar_matriz_planta_edificio`
+  (misma lógica que Trabajos). "Evolución del avance" (serie temporal)
+  se deja tal cual: `generar_panel()` no recibe un historial propio de
+  garaje, solo un snapshot puntual — no hay con qué construir esa serie
+  todavía. Verificado con 665 tests y en navegador real.
 - ✅ **Trabajos**, commit `ce4dda0`. "Trabajos es una cosa, debería de
   ir todo junto" (Bixente, textual) — a diferencia de Riesgos/
   Prioridades, aquí NO hay sección aparte: las filas de vivienda y
