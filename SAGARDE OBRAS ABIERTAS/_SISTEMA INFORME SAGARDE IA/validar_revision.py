@@ -10,6 +10,7 @@ import os
 from datetime import datetime
 
 from ficha_obra import MAPA_ESTADO
+from registro_obras import OBRAS
 
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
@@ -200,12 +201,36 @@ def _ubicacion_existe(ficha, portal_id, planta_id, vivienda_id):
     return False
 
 
+def _configuracion_obra(catalogo, obra):
+    """Busca la seccion de ``catalogo['obras']`` que corresponde a ``obra``.
+
+    ``CATALOGO_TAJOS.json.obras`` esta indexado por el NOMBRE completo de la
+    obra (p.ej. ``'2025 BILBAO OBISPO ORUETA'``), pero ``ficha_obra.json`` y
+    ``REVISION_NORMALIZADA.obra`` guardan siempre el id corto del registro
+    (p.ej. ``'mungia'``): lo exige la regla 1 de :func:`validar`, que compara
+    ``revision['obra']`` contra ``ficha_actual['id']``. Sin esta traduccion,
+    una obra ACTIVA que declare tajos propios en el catalogo los veria
+    invisibles en silencio por este camino (antes del 25/09/2026 solo le
+    pasaba a Obispo Orueta, ya archivada, y por eso nunca se noto).
+    """
+    obras = catalogo.get('obras')
+    if not isinstance(obras, dict):
+        return {}
+    if obra in obras:
+        return obras[obra] or {}
+    coincidencia = next((o for o in OBRAS if o.get('id') == obra), None)
+    nombre = coincidencia.get('nombre') if coincidencia else None
+    if nombre and nombre in obras:
+        return obras[nombre] or {}
+    return {}
+
+
 def _ids_tajos(catalogo, obra):
     ids = {
         tajo.get('id') for tajo in catalogo.get('tajos') or []
         if isinstance(tajo, dict) and isinstance(tajo.get('id'), str)
     }
-    configuracion_obra = (catalogo.get('obras') or {}).get(obra) or {}
+    configuracion_obra = _configuracion_obra(catalogo, obra)
     ids.update(
         tajo.get('id') for tajo in configuracion_obra.get('tajos') or []
         if isinstance(tajo, dict) and isinstance(tajo.get('id'), str)

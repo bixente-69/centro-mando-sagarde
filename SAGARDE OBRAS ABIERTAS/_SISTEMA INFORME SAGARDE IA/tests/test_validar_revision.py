@@ -271,6 +271,56 @@ class TestRegla4TajoEnCatalogo(unittest.TestCase):
             _ficha(obra=obra), catalogo)
         self.assertTrue(resultado['aplicable'], resultado)
 
+    def test_regla_4_pasa_con_tajo_propio_de_obra_activa_por_id_corto(self):
+        """CATALOGO_TAJOS.json.obras esta indexado por el NOMBRE completo
+        (ver el test anterior, que usa '2025 BILBAO OBISPO ORUETA'), pero
+        ficha_obra.json y REVISION_NORMALIZADA.obra SIEMPRE guardan el id
+        CORTO del registro (regla 1: revision['obra'] == ficha['id']; los
+        cuatro ficha_obra.json reales de obras activas lo confirman: 'mungia',
+        'gernika', 'bolueta', 'prueba', nunca el nombre completo).
+
+        El test anterior no lo detecta porque usa el nombre completo como si
+        fuera el id de ficha, algo que no ocurre nunca en produccion. Este
+        reproduce la forma real: id corto en ficha/revision, nombre completo
+        solo como clave del catalogo -- la unica obra con tajos propios hoy
+        (Obispo Orueta) esta archivada y nunca paso por aqui con su id corto,
+        asi que el hueco no se habia notado.
+        """
+        catalogo = {
+            'version': 'test',
+            'tajos': [{'id': 'tubeado'}],
+            'obras': {
+                '2026 MUNGIA ACR NEINOR': {
+                    'tajos': [{'id': 'tajo_propio_mungia'}],
+                },
+            },
+        }
+        clave = 'p1__pb__tajo_propio_mungia__a'
+        resultado = validador.validar(
+            _revision([_celda(clave=clave)], obra='mungia'),
+            _ficha(obra='mungia'), catalogo)
+        self.assertTrue(resultado['aplicable'], resultado)
+
+    def test_ids_tajos_no_inventa_coincidencia_con_obra_desconocida(self):
+        """La resolucion id-corto -> nombre solo debe actuar cuando el id
+        esta realmente en el registro activo. Una obra que no esta en
+        registro_obras.OBRAS (archivada o inventada) no debe hacer 'match'
+        por accidente con ninguna entrada del catalogo: falla cerrado (sin
+        tajos propios), no abierto.
+        """
+        catalogo = {
+            'version': 'test',
+            'tajos': [{'id': 'tubeado'}],
+            'obras': {
+                '2026 MUNGIA ACR NEINOR': {
+                    'tajos': [{'id': 'tajo_propio_mungia'}],
+                },
+            },
+        }
+        self.assertEqual(
+            validador._ids_tajos(catalogo, 'obra_que_no_existe'),
+            {'tubeado'})
+
 
 class TestRegla5AlfabetoHoja(unittest.TestCase):
 

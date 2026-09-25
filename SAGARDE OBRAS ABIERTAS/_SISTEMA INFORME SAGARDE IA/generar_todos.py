@@ -872,7 +872,7 @@ def construir_revision_normalizada_desde_snapshot(
     }
     ids_tajo_de_ficha = set(id_por_nombre.values())
     id_por_alias_catalogo = fichas._indice_tajo_por_nombre()
-    ids_tajo_validos = validar_revision._ids_tajos(catalogo, obra['id'])
+    ids_tajo_validos = validar_revision._ids_tajos(catalogo, obra['nombre'])
     por_id, por_nombre = fichas._indice_ubicaciones(ficha_actual)
 
     for indice, registro in enumerate(snapshot_crudo or []):
