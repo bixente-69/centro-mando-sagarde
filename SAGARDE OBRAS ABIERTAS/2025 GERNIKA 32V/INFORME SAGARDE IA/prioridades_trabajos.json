@@ -2,19 +2,19 @@
   "version": "4.3",
   "catalogo_version": "1.3",
   "obra": "2025 GERNIKA 32V",
-  "revision": "16/09/2026",
+  "revision": "25/09/2026",
   "sin_base": false,
-  "edad_revision_dias": 9,
+  "edad_revision_dias": 0,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "25/09/2026 12:56",
+  "generado": "25/09/2026 13:03",
   "resumen": {
-    "listos": 2,
+    "listos": 3,
     "verificar": 0,
-    "unidades_listas": 22,
+    "unidades_listas": 23,
     "unidades_verificar": 0,
-    "bloqueados": 2,
+    "bloqueados": 1,
     "otros_gremios": 2,
     "dudas": 0,
     "sin_revisar": 0,
@@ -25,9 +25,101 @@
     "preguntas_pendientes": 0,
     "viviendas": 2,
     "zonas_comunes": 0,
-    "edificio": 0
+    "edificio": 1
   },
   "items": [
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "situacion": "LISTO",
+      "categoria": "VIABLE",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "prioridad": "P3",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        }
+      ],
+      "n_celdas": 8,
+      "n_ubicaciones": 8,
+      "n_unidades": 1,
+      "estado_actual": "M: 8",
+      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
+      "impacto_gremios": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
+      "orden": 1
+    },
     {
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
@@ -154,7 +246,7 @@
       "estado_actual": "M: 12",
       "motivo": "Rama independiente; requiere fachada terminada.",
       "impacto_gremios": "Rama independiente; requiere fachada terminada.",
-      "orden": 1
+      "orden": 2
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -264,7 +356,7 @@
       "estado_actual": "M: 2 · /: 2 · Pendiente: 6",
       "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
       "impacto_gremios": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "orden": 2
+      "orden": 3
     }
   ],
   "detalle_items": [
@@ -20587,17 +20679,17 @@
       "edificio": "PORTAL 2",
       "planta": "1",
       "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "cuarto_tecnico",
@@ -20614,17 +20706,17 @@
       "edificio": "PORTAL 2",
       "planta": "1",
       "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "cuarto_tecnico",
@@ -20641,17 +20733,17 @@
       "edificio": "PORTAL 2",
       "planta": "1",
       "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "cuarto_tecnico",
@@ -20668,17 +20760,17 @@
       "edificio": "PORTAL 2",
       "planta": "1",
       "unidad": "D",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "cuarto_tecnico",
@@ -20911,17 +21003,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "cuarto_tecnico",
@@ -20938,17 +21030,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "cuarto_tecnico",
@@ -20965,17 +21057,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "cuarto_tecnico",
@@ -20992,17 +21084,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "D",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "techos_zzcc",
@@ -33790,27 +33882,17 @@
       "edificio": "PORTAL 1",
       "planta": "1",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -33827,27 +33909,17 @@
       "edificio": "PORTAL 1",
       "planta": "1",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -33864,27 +33936,17 @@
       "edificio": "PORTAL 1",
       "planta": "1",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -33901,27 +33963,17 @@
       "edificio": "PORTAL 1",
       "planta": "1",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -33938,27 +33990,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -33975,27 +34017,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34012,27 +34044,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34049,27 +34071,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34086,27 +34098,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34123,27 +34125,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34160,27 +34152,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34197,27 +34179,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34234,27 +34206,17 @@
       "edificio": "PORTAL 1",
       "planta": "PB",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34271,27 +34233,17 @@
       "edificio": "PORTAL 1",
       "planta": "PB",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34308,27 +34260,17 @@
       "edificio": "PORTAL 1",
       "planta": "PB",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34345,27 +34287,17 @@
       "edificio": "PORTAL 1",
       "planta": "PB",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34382,27 +34314,17 @@
       "edificio": "PORTAL 2",
       "planta": "1",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34419,27 +34341,17 @@
       "edificio": "PORTAL 2",
       "planta": "1",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34456,27 +34368,17 @@
       "edificio": "PORTAL 2",
       "planta": "1",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34493,27 +34395,17 @@
       "edificio": "PORTAL 2",
       "planta": "1",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34530,27 +34422,17 @@
       "edificio": "PORTAL 2",
       "planta": "2",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34567,27 +34449,17 @@
       "edificio": "PORTAL 2",
       "planta": "2",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34604,27 +34476,17 @@
       "edificio": "PORTAL 2",
       "planta": "2",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34641,27 +34503,17 @@
       "edificio": "PORTAL 2",
       "planta": "2",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34678,27 +34530,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34715,27 +34557,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34752,27 +34584,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34789,27 +34611,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34826,27 +34638,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34863,27 +34665,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34900,27 +34692,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     },
     {
       "tarea_id": "iluminacion_rellanos",
@@ -34937,30 +34719,266 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de zonas comunes"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_zzcc",
-          "nombre": "Pintura de zonas comunes",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "25/09/2026"
     }
   ],
   "inventario": [
+    {
+      "grupo_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "propiedad": "propio",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "M",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "M",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "M",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "M",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "M",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "M",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "M",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "M",
+          "categoria": "VIABLE"
+        }
+      ],
+      "subtajos": [
+        "Cuarto técnico"
+      ],
+      "seccion": "VIABLE",
+      "seccion_nombre": "Tajos viables",
+      "n_ubicaciones": 32,
+      "estado_actual": "M: 8 · X: 24",
+      "resumen_categorias": {
+        "TERMINADO": 24,
+        "VIABLE": 8
+      },
+      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos. Terminado según la última confirmación válida.",
+      "orden_inventario": 1
+    },
     {
       "grupo_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
@@ -35205,7 +35223,7 @@
         "TERMINADO": 20
       },
       "motivo": "Rama independiente; requiere fachada terminada. Terminado según la última confirmación válida.",
-      "orden_inventario": 1
+      "orden_inventario": 2
     },
     {
       "grupo_id": "casquillos_bombillas",
@@ -35452,7 +35470,7 @@
         "VIABLE": 10
       },
       "motivo": "Dependencias pendientes: Pintura — segunda mano. Se coloca al final para evitar robos; la tensión no es requisito de colocación. Terminado según la última confirmación válida.",
-      "orden_inventario": 2
+      "orden_inventario": 3
     },
     {
       "grupo_id": "placas_tapas",
@@ -35698,251 +35716,6 @@
         "TERMINADO": 12
       },
       "motivo": "Dependencias pendientes: Pintura — segunda mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 3
-    },
-    {
-      "grupo_id": "iluminacion_rellanos",
-      "trabajo": "Iluminación de rellanos / ZZCC",
-      "propiedad": "propio",
-      "orden_ejecucion": 330,
-      "fase_nombre": "Entrega",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Iluminación de rellanos / ZZCC"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 32",
-      "resumen_categorias": {
-        "BLOQUEADO": 32
-      },
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "orden_inventario": 4
     },
     {
@@ -42297,251 +42070,6 @@
       "orden_inventario": 29
     },
     {
-      "grupo_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "propiedad": "propio",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        }
-      ],
-      "subtajos": [
-        "Cuarto técnico"
-      ],
-      "seccion": "TERMINADO",
-      "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 32,
-      "estado_actual": "X: 32",
-      "resumen_categorias": {
-        "TERMINADO": 32
-      },
-      "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 30
-    },
-    {
       "grupo_id": "techos_zzcc",
       "trabajo": "Techos de zonas comunes",
       "propiedad": "externo",
@@ -42784,7 +42312,7 @@
         "TERMINADO": 32
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 31
+      "orden_inventario": 30
     },
     {
       "grupo_id": "techos",
@@ -43029,7 +42557,7 @@
         "TERMINADO": 32
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 32
+      "orden_inventario": 31
     },
     {
       "grupo_id": "enchapado",
@@ -43274,7 +42802,7 @@
         "TERMINADO": 32
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 33
+      "orden_inventario": 32
     },
     {
       "grupo_id": "mecanizado",
@@ -43519,7 +43047,7 @@
         "TERMINADO": 32
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 34
+      "orden_inventario": 33
     },
     {
       "grupo_id": "telemecanizado",
@@ -43764,7 +43292,7 @@
         "TERMINADO": 32
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 35
+      "orden_inventario": 34
     },
     {
       "grupo_id": "fachada_terminada",
@@ -44009,7 +43537,7 @@
         "TERMINADO": 32
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 36
+      "orden_inventario": 35
     },
     {
       "grupo_id": "agujeros_iluminacion_zzcc",
@@ -44254,6 +43782,251 @@
         "TERMINADO": 32
       },
       "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 36
+    },
+    {
+      "grupo_id": "iluminacion_rellanos",
+      "trabajo": "Iluminación de rellanos / ZZCC",
+      "propiedad": "propio",
+      "orden_ejecucion": 330,
+      "fase_nombre": "Entrega",
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Iluminación de rellanos / ZZCC"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 32,
+      "estado_actual": "X: 32",
+      "resumen_categorias": {
+        "TERMINADO": 32
+      },
+      "motivo": "Terminado según la última confirmación válida.",
       "orden_inventario": 37
     }
   ],
@@ -44269,16 +44042,6 @@
       "tajos_afectados": [
         "Casquillos y bombillas",
         "Placas y tapas"
-      ]
-    },
-    {
-      "tarea_id": "pintura_zzcc",
-      "trabajo": "Pintura de zonas comunes",
-      "estado_actual": "Pendiente",
-      "propiedad": "externo",
-      "desbloquea": 8,
-      "tajos_afectados": [
-        "Iluminación de rellanos / ZZCC"
       ]
     }
   ],
