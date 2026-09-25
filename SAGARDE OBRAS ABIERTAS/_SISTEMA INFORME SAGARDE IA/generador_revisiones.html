@@ -1819,9 +1819,18 @@ function generateGarajeHTML(cellData={}){
   const totalZonas=S.garajes.reduce((sum,g)=>sum+g.plantas.reduce((n,p)=>n+p.zonas.length,0),0);
   const respLine=S.resp?`<div class="doc-resp">Resp. técnico: ${escHtml(S.resp)}</div>`:'';
   const sections=S.garajes.map((garaje,gi)=>renderGarageSheetSection(garaje,gi,cellData)).join('');
+  // La estructura completa va embebida en la propia hoja (misma forma que
+  // ficha_garajes.json espera en estructura.garajes: id/nombre/plantas/
+  // zonas/tipo, sin transformar). Así la primera alta de una obra no
+  // necesita un fichero de configuracion aparte: basta la hoja que
+  // Bixente ya sabe generar y guardar. Ver Fase 5 del plan.
+  const estructuraJSON=JSON.stringify({
+    obra:S.obra, garajes:S.garajes, tajos_seleccionados:[...S.selGaraje],
+  }).replace(/</g,'\\u003c');
   return `<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8">
 <title>${escHtml(fileBase)}</title>
+<script type="application/json" id="garaje-estructura">${estructuraJSON}</script>
 <style>${sheetCSS()}${garageSheetCSS()}</style></head><body>
 <div class="wrap">
   <header class="doc-header">
