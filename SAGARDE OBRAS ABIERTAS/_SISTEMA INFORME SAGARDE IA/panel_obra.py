@@ -1554,7 +1554,8 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
 def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   output_path, volver_href="../../index.html", prioridades=None,
                   tajos_memoria=None, mem_resumen=None, bat_path=None,
-                  cierre=None, cierre_avisos=None, prioridades_garaje=None):
+                  cierre=None, cierre_avisos=None, prioridades_garaje=None,
+                  snapshot_garaje=None):
     prioridades = prioridades or {}
     snapshot = historial[-1][1] if historial else []
     historial_panel = list(historial)
@@ -1564,6 +1565,15 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         historial_panel[-1] = (historial_panel[-1][0], snapshot)
 
     kpis = motor.kpis_snapshot(snapshot) if snapshot else {}
+    # % de la obra completa (vivienda + garaje en una sola bolsa de celdas,
+    # decision de Bixente 25/09/2026: "si hay garaje... forma parte del
+    # total de la obra"). Solo para la cabecera del Panel y para lo que se
+    # exporta a resumen_obras.json (Portal Sagarde) -- el resto de esta
+    # funcion (bloqueos, series, tablas de detalle, el bento de Prioridades)
+    # sigue leyendo `snapshot`/`kpis` tal cual, de solo vivienda: el garaje
+    # mantiene su propia grafica, no se funden las filas.
+    snapshot_total = snapshot + (snapshot_garaje or [])
+    kpis_obra_total = motor.kpis_snapshot(snapshot_total) if snapshot_total else kpis
     bloqueos = [] if historial_confirmado else (motor.detectar_bloqueos(snapshot) if snapshot else [])
     sin_cambios = False if historial_confirmado else motor.sin_cambios_entre_ultimas(historial)
     n_bloqueos_base = (prioridades.get('resumen') or {}).get(
@@ -1600,11 +1610,12 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         for k, v in datos.items()
     ) or '<tr><td class="empty">Sin ficha de obra.</td></tr>'
 
+    hint_incluye_garaje = ' · incluye garaje' if snapshot_garaje else ''
     kpi_html = ""
-    if kpis:
+    if kpis_obra_total:
         kpi_html = f"""
-        <div class="kpi"><div class="label">Avance estricto (X)</div><div class="value">{kpis['pct_estricto']}%</div><div class="hint">Solo tareas 100% terminadas</div></div>
-        <div class="kpi"><div class="label">Avance estimado</div><div class="value">{kpis['pct_ponderado']}%</div><div class="hint">Incluye parciales (estimación)</div></div>
+        <div class="kpi"><div class="label">Avance estricto (X)</div><div class="value">{kpis_obra_total['pct_estricto']}%</div><div class="hint">Solo tareas 100% terminadas{hint_incluye_garaje}</div></div>
+        <div class="kpi"><div class="label">Avance estimado</div><div class="value">{kpis_obra_total['pct_ponderado']}%</div><div class="hint">Incluye parciales (estimación){hint_incluye_garaje}</div></div>
         <div class="kpi"><div class="label">Revisiones</div><div class="value">{len(historial)}</div><div class="hint">Desde {historial[0][0]}</div></div>
         <div class="kpi"><div class="label">Tajos bloqueados</div><div class="value">{n_bloqueos_base}</div><div class="hint">Sagarde · dependencias de la base</div></div>
         """
@@ -2228,7 +2239,10 @@ ${{contenido}}
         f.write(html)
 
     return {
-        'kpis': kpis, 'bloqueos': bloqueos, 'sin_cambios': sin_cambios,
+        # % de la obra completa (vivienda+garaje); ver kpis_obra_total mas
+        # arriba. generar_todos.py exporta este valor a resumen_obras.json
+        # (Portal Sagarde), por eso es el combinado, no solo el de vivienda.
+        'kpis': kpis_obra_total, 'bloqueos': bloqueos, 'sin_cambios': sin_cambios,
         'n_docs': len(documentos), 'output_path': output_path,
         'materiales_aviso': materiales.get('aviso'),
         'prioridades': prioridades,

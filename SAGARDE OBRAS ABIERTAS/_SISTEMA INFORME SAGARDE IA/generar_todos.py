@@ -1174,8 +1174,24 @@ def main(hacer_pdf=True):
                         ficha_garaje_actual, obra=obra['nombre']))
                 priorizador_trabajos.escribir_json(
                     prioridades_garaje, salida_prioridades_garaje)
+                # Mismos registros que ya calculo priorizar_ficha_garaje
+                # (tarea_id/edificio/planta/unidad/estado ya vienen en el
+                # alfabeto X/M///''), reformados a {task,floor,building,unit,
+                # status} para que motor_informes.kpis_snapshot -- el mismo
+                # motor que ya usa vivienda -- pueda sumar ambos en una sola
+                # bolsa de celdas. Decision de Bixente 25/09/2026: el garaje
+                # cuenta siempre dentro del total de la obra.
+                snapshot_garaje = [
+                    {
+                        'task': item['tarea_id'], 'floor': item['planta'],
+                        'building': item['edificio'], 'unit': item['unidad'],
+                        'status': item['estado'],
+                    }
+                    for item in prioridades_garaje.get('detalle_items') or []
+                ]
             else:
                 prioridades_garaje = None
+                snapshot_garaje = []
             bloquear_guardado_ficha = False
 
             if motivo_cobertura:
@@ -1266,6 +1282,7 @@ def main(hacer_pdf=True):
                 tajos_memoria=tajos_memoria, mem_resumen=mem_resumen, bat_path=bat_abs,
                 cierre=cierre_datos, cierre_avisos=cierre_avisos,
                 prioridades_garaje=prioridades_garaje,
+                snapshot_garaje=snapshot_garaje,
             )
         except Exception as e:
             print(f"  [ERROR] Fallo al generar el panel: {e}")

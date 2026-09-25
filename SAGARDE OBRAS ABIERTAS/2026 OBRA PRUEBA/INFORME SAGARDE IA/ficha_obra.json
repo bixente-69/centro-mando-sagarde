@@ -7927,14 +7927,14 @@
   "dudas": [],
   "materiales": {},
   "documentos": {
-    "total": 4,
+    "total": 6,
     "por_categoria": {
       "Excel": 1,
-      "Otros": 1,
+      "Otros": 3,
       "PDF": 2
     },
     "_meta": {
-      "actualizado": "28/08/2026 09:55"
+      "actualizado": "25/09/2026 13:58"
     }
   },
   "contactos": []

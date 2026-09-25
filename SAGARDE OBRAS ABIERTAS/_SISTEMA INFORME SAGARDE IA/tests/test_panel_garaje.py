@@ -85,7 +85,7 @@ class _DatetimeFijo(datetime):
         return instante if tz is None else instante.replace(tzinfo=tz)
 
 
-def _generar(prioridades_garaje):
+def _generar(prioridades_garaje, historial=None, snapshot_garaje=None):
     ficha = {
         "_disponible": True,
         "datos": {},
@@ -101,16 +101,30 @@ def _generar(prioridades_garaje):
             panel_obra.generar_panel(
                 obra="OBRA GARAJE PRUEBA",
                 subtitulo="Prueba de panel",
-                historial=[],
+                historial=historial or [],
                 materiales={},
                 ficha=ficha,
                 documentos=[],
                 prioridades=_prioridades_vivienda(),
                 prioridades_garaje=prioridades_garaje,
+                snapshot_garaje=snapshot_garaje,
                 output_path=salida,
             )
         with open(salida, encoding="utf-8") as fichero:
             return fichero.read()
+
+
+def _snapshot_garaje_desde_prioridades(prioridades_garaje):
+    """Mismo mapeo que usa generar_todos.py para pasar de detalle_items al
+    esquema {task,floor,building,unit,status} de motor_informes."""
+    return [
+        {
+            "task": item["tarea_id"], "floor": item["planta"],
+            "building": item["edificio"], "unit": item["unidad"],
+            "status": item["estado"],
+        }
+        for item in prioridades_garaje.get("detalle_items") or []
+    ]
 
 
 def _vistas(html):
@@ -194,6 +208,89 @@ class TestPanelGaraje(unittest.TestCase):
         self.assertIn("banner bad", garaje)
         self.assertIn("no tiene base de datos", garaje)
         self.assertNotIn("<table", garaje)
+
+
+_HISTORIAL_VIVIENDA = [("24/09/2026", [
+    {"task": "T1", "floor": "PB", "building": "P1", "unit": "A", "status": "X"},
+    {"task": "T1", "floor": "PB", "building": "P1", "unit": "B", "status": "M"},
+    {"task": "T1", "floor": "1", "building": "P1", "unit": "A", "status": ""},
+])]
+
+
+class TestPanelAvanceCombinadoConGaraje(unittest.TestCase):
+    """Fase de integracion 25/09/2026: el % de la cabecera del Panel debe
+    contar vivienda Y garaje juntos ('si hay garaje... forma parte del
+    total de la obra', decision textual de Bixente), pero el resto de las
+    vistas (Trabajos, Prioridades, etc.) sigue siendo solo de vivienda --
+    el garaje mantiene su propia grafica, no se funden filas."""
+
+    def test_cabecera_combina_vivienda_y_garaje_en_una_sola_bolsa(self):
+        prioridades_garaje = priorizar_ficha_garaje(
+            _ficha_garaje(estados={
+                ("z1", "garaje_tubeado_vial"): "X",
+                ("z1", "garaje_cableado_vial"): "P",
+                ("z2", "garaje_tubeado_vial"): "P",
+                ("z2", "garaje_cableado_vial"): "P",
+            }),
+            obra="OBRA GARAJE PRUEBA", hoy=date(2026, 9, 24))
+        snapshot_garaje = _snapshot_garaje_desde_prioridades(prioridades_garaje)
+        # Vivienda sola: X,M,'' (3 celdas) -> estricto 1/3=33.3%, ponderado
+        # (1.0+0.6+0)/3=53.3%. Garaje solo (del fixture de arriba): X,'','',''
+        # (4 celdas) -> estricto 1/4=25%. Juntos: X,M,'',X,'','','' (7 celdas)
+        # -> estricto 2/7=28.6%, ponderado (1.0+0.6+0+1.0+0+0+0)/7=37.1%
+        # (verificado aparte con un script, no de cabeza).
+        self.assertEqual(4, len(snapshot_garaje))
+        con_garaje = _generar(
+            prioridades_garaje, historial=_HISTORIAL_VIVIENDA,
+            snapshot_garaje=snapshot_garaje)
+        sin_garaje = _generar(
+            prioridades_garaje, historial=_HISTORIAL_VIVIENDA,
+            snapshot_garaje=None)
+
+        panel_con = _vistas(con_garaje)["v-panel"]
+        panel_sin = _vistas(sin_garaje)["v-panel"]
+        self.assertIn(
+            '<div class="value">28.6%</div><div class="hint">Solo tareas '
+            '100% terminadas · incluye garaje</div>', panel_con)
+        self.assertIn(
+            '<div class="value">37.1%</div><div class="hint">Incluye '
+            'parciales (estimación) · incluye garaje</div>', panel_con)
+        # Sin snapshot_garaje, la cabecera es solo de vivienda (33.3% /
+        # 53.3%) y sin la coletilla "incluye garaje" -- mismo comportamiento
+        # de antes de esta fase, ningun caso existente deja de funcionar.
+        self.assertIn(
+            '<div class="value">33.3%</div><div class="hint">Solo tareas '
+            '100% terminadas</div>', panel_sin)
+        self.assertIn(
+            '<div class="value">53.3%</div><div class="hint">Incluye '
+            'parciales (estimación)</div>', panel_sin)
+        self.assertNotIn("incluye garaje", panel_sin)
+
+    def test_las_demas_vistas_no_cambian_aunque_cambie_la_cabecera(self):
+        prioridades_garaje = priorizar_ficha_garaje(
+            _ficha_garaje(estados={
+                ("z1", "garaje_tubeado_vial"): "X",
+                ("z1", "garaje_cableado_vial"): "P",
+                ("z2", "garaje_tubeado_vial"): "P",
+                ("z2", "garaje_cableado_vial"): "P",
+            }),
+            obra="OBRA GARAJE PRUEBA", hoy=date(2026, 9, 24))
+        snapshot_garaje = _snapshot_garaje_desde_prioridades(prioridades_garaje)
+        con_garaje = _generar(
+            prioridades_garaje, historial=_HISTORIAL_VIVIENDA,
+            snapshot_garaje=snapshot_garaje)
+        sin_garaje = _generar(
+            prioridades_garaje, historial=_HISTORIAL_VIVIENDA,
+            snapshot_garaje=None)
+
+        vistas_con = _vistas(con_garaje)
+        vistas_sin = _vistas(sin_garaje)
+        self.assertEqual(set(vistas_con), set(vistas_sin))
+        for vista, contenido in vistas_sin.items():
+            if vista == "v-panel":
+                continue  # la cabecera SI cambia a proposito, ver el test de arriba
+            with self.subTest(vista=vista):
+                self.assertEqual(vistas_con[vista], contenido)
 
 
 if __name__ == "__main__":
