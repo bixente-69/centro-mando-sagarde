@@ -531,9 +531,16 @@ function _iniciarNavPrioridades() {
   // Cualquier seccion plegable de Prioridades, sea de vivienda o de una
   // instancia con sufijo (garaje): sin lista fija que se pueda desincronizar
   // si se añade una seccion nueva o una segunda instancia.
+  //
+  // El mirror del `else` cubre cualquier apertura que NO pase por el click
+  // de arriba (navegacion nativa por ancla #sec-... desde otro enlace, una
+  // pestaña nueva con ctrl/click-central, o el "forced open" que el propio
+  // navegador aplica cuando el fragmento de la URL apunta dentro de un
+  // <details>): sin el mirror, open pasaba a true pero la seccion seguia
+  // con display:none de la hoja de estilos, invisible pese a estar abierta.
   document.querySelectorAll('details.seccion-plegable').forEach(function(el) {
     el.addEventListener('toggle', function() {
-      if (!el.open) { el.style.display = 'none'; }
+      if (!el.open) { el.style.display = 'none'; } else { el.style.display = 'block'; }
     });
   });
 }

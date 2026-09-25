@@ -699,6 +699,22 @@ class TestCentroDeMandoConectado(unittest.TestCase):
         html = self._html_obra_completa()
         self.assertIn("if (!el.open) { el.style.display = 'none'; }", html)
 
+    def test_abrir_por_cualquier_via_la_vuelve_a_mostrar(self):
+        """Bug real (confirmado en navegador, no solo leyendo el codigo):
+        la regla CSS que oculta estas 11 secciones no distingue abierta de
+        cerrada, solo el inline style puesto a mano la gana. El click del
+        bento ya ponia ese inline style el mismo, pero cualquier otra via
+        que ponga open=true (un enlace de ancla #sec-... que no pase por
+        ese click, una pestaña nueva con ctrl/click-central, el forced-open
+        nativo del navegador sobre el fragmento de la URL) dejaba
+        open=true con display:none de la hoja de estilos: nada visible.
+        El 'toggle' ya escuchaba el cierre; le falta el espejo de apertura
+        para cubrir cualquier camino que llegue a open=true."""
+        html = self._html_obra_completa()
+        self.assertIn(
+            "if (!el.open) { el.style.display = 'none'; } "
+            "else { el.style.display = 'block'; }", html)
+
 
 if __name__ == '__main__':
     unittest.main()
