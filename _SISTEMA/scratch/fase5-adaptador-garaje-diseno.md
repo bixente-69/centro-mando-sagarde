@@ -1,9 +1,8 @@
 # Fase 5 — Adaptador de lectura de garaje (fichero de trabajo)
 
-Diseño de Claude, para cuando la Fase 4 esté cerrada y verificada (no
-empezar antes: comparten el mismo fichero `generador_revisiones.html` en
-cuanto a qué `data-k`/estructura produce, y "nunca dos trabajadores a la
-vez" aplica también en el tiempo dentro de una misma sesión).
+Diseño de Claude. La Fase 4 ya está cerrada y verificada (commits
+`645d9b8` y `1216d49`, este último añade la estructura embebida en la
+hoja que la sección 5.1 de más abajo usa).
 
 ## Hallazgo, releyendo `adaptar_revision_html.py` (vivienda) completo
 
@@ -43,25 +42,44 @@ sin pasar por ninguna hoja.**
 
 Dos piezas, no una:
 
-### 5.1 — Alta: de la estructura del asistente a `ficha_garajes.json`
+### 5.1 — Alta: de la estructura embebida en la hoja a `ficha_garajes.json`
 
-- El asistente ya guarda su configuración completa en `localStorage` vía
-  `saveConfig()` (incluye `S.garajes` en modo garaje). Añadir un botón
-  "⬇ Descargar estructura (JSON)" en el paso Generar, en modo garaje, que
-  descarga exactamente `{obra, garajes: S.garajes, selGaraje: [...S.selGaraje]}`
-  — un fichero JSON pequeño, no la hoja HTML.
-- `alta_garaje_desde_config.py` (nuevo, pequeño): recibe ese JSON +
-  `id_obra`, valida que la obra no tenga ya `ficha_garajes.json` (si lo
-  tiene, para y avisa — no se sobrescribe una estructura confirmada sin
-  que alguien lo pida explícitamente, mismo espíritu que
-  `_esta_excluida`/estructura confirmada de vivienda), construye la
-  ficha inicial con `ficha_garajes.asegurar_apartados` +
-  `estructura.garajes = datos['garajes']`, y la guarda con
-  `ficha_garajes.guardar`.
+**Revisado tras cerrar la Fase 4 (25/09/2026):** en vez de un botón nuevo
+de "Descargar estructura (JSON)" (lo que se planteó primero, y habría
+sido una vía de entrada nueva que Bixente tendría que aprender),
+`generateGarajeHTML()` ya embebe la estructura completa en la propia hoja:
+
+```html
+<script type="application/json" id="garaje-estructura">
+  {"obra": "...", "garajes": [...], "tajos_seleccionados": [...]}
+</script>
+```
+
+Con la MISMA forma que espera `estructura.garajes` de
+`ficha_garajes.json`, sin transformar nada. Esto significa que **la
+primera alta usa exactamente el mismo fichero HTML** que Bixente ya sabe
+generar y guardar con el botón "⬇ Descargar HTML" que ya existe — cero UI
+nueva, cero fichero nuevo que aprender a manejar.
+
+- `alta_garaje_desde_hoja.py` (nuevo, pequeño): recibe la ruta de esa hoja
+  (en blanco o ya con marcas, da igual — la estructura embebida es la
+  misma) + `id_obra`. Extrae el bloque `<script id="garaje-estructura">`
+  con un regex simple (no hace falta un parser HTML completo — el propio
+  generador solo emite un `<script>` con ese id) y `json.loads`. Valida
+  que la obra no tenga ya `ficha_garajes.json` (si lo tiene, para y avisa
+  — no se sobrescribe una estructura confirmada sin que alguien lo pida
+  explícitamente, mismo espíritu que `_esta_excluida`/estructura
+  confirmada de vivienda). Construye la ficha inicial con
+  `ficha_garajes.asegurar_apartados` + `estructura.garajes = datos['garajes']`,
+  y la guarda con `ficha_garajes.guardar`.
 - Tajos: `ficha['tajos']['detalle']` se rellena desde `CATALOGO_TAJOS.json`
-  filtrando por los ids `garaje_*` que el JSON marque como seleccionados
-  (`selGaraje`), igual patrón que ya usa `sembrar_reglas` para completar
-  metadatos desde el catálogo.
+  filtrando por los ids `garaje_*` que el JSON embebido marque como
+  seleccionados (`tajos_seleccionados`), igual patrón que ya usa
+  `sembrar_reglas` para completar metadatos desde el catálogo.
+- Verificado el escapado antes de delegar esto (`<` en vez de solo
+  `</script>`, para que ningún nombre con "<" pueda romper el HTML):
+  viaje de ida y vuelta real en Python (construir, extraer con regex,
+  `json.loads`) — coincide exactamente con el original.
 
 ### 5.2 — Revisión: `adaptar_revision_garaje.py`, calco simplificado de `adaptar_revision_html.py`
 
