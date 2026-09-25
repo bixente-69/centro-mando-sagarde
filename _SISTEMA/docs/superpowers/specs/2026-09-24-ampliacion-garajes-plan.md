@@ -48,7 +48,7 @@ fases sin dejar nada roto**, no para completarse de una sentada.
 | 4 | Wizard de 4 pantallas + hoja por tipo de zona en `generador_revisiones.html` | **Codex** implementa a partir del prototipo de referencia → Claude verifica en navegador real | ✅ **CERRADA** (`645d9b8`) |
 | 5 | Adaptador de lectura de revisiones de garaje | **Codex** implementa y prueba → Claude verifica | ✅ **CERRADA** (`9298c2f`) |
 | 6 | Validación completa contra `OBRA PRUEBA` (con mutación) | Codex sin cuota → **Claude** lo ejecutó directamente (fase de verificación, su punto fuerte) | ✅ **CERRADA** (`410de53`) |
-| 7 | Alta y primera revisión real: Mungia o Gernika | **Claude + Bixente** (necesita su hoja/planos reales, ningún worker puede inventarlos) | pendiente |
+| 7 | Alta y primera revisión real: Mungia o Gernika | **Claude + Bixente** (necesita su hoja/planos reales, ningún worker puede inventarlos) | ✅ **CERRADA** (`9e9b4ec`, Gernika, solo local) |
 
 ---
 
@@ -548,6 +548,36 @@ verifica el resultado con él en el momento.
 
 **Checkpoint de cierre:** ninguno técnico — el cierre es que Bixente vea su
 garaje real reflejado y dé el visto bueno, o corrija lo que no cuadre.
+
+**✅ CERRADA (25/09/2026, commit `9e9b4ec`, SOLO en local — sin publicar
+a petición expresa de Bixente).** Primer garaje real del sistema:
+Gernika 32V. Bixente ya había generado y rellenado parcialmente en campo
+la hoja real (1 garaje, planta S-1, 11 zonas, 42 tajos, 24 celdas
+marcadas) con el asistente recién arreglado; el aviso llegó como "tengo
+una revisión de gernika a modo prueba, todavía sin pasar... acabamos
+todo lo de la sesión, la incluyo". `alta_garaje_desde_hoja.py` y
+`adaptar_revision_garaje.py` reales, primera vez contra datos de verdad:
+155 estados (18 terminados, 137 subidos de blanco a `P` por la norma ya
+vigente, 6 en `N` excluidos), 18 tajos bloqueados por dependencia.
+Verificado en el panel real de Gernika en el navegador: TAJOS LISTOS 2,
+BLOQUEADOS 18, TERMINADOS 9 — coincide exactamente con
+`priorizar_ficha_garaje` ejecutado aparte.
+
+De paso, el mismo día apareció también una revisión de VIVIENDA de
+Gernika (guardada por Bixente en caliente mientras se verificaba la
+parte de garaje) — procesada aparte con la skill `sagarde-revision`
+(commit `2842a89`): 40 cambios reales, avance 90.2%→91.5%, verificado
+en el panel. Ninguna de las demás obras se movió (confirmado dos veces
+con `git diff --stat`, descartando los efectos colaterales incidentales
+de `generar_todos.py` regenerando las 6 obras reales cada vez que se
+invoca).
+
+**Con esto, las 7 fases del plan original quedan cerradas.**
+Pendiente de decisión de Bixente, no de esta ampliación: cuándo publicar
+(y reconciliar antes el worktree paralelo que arregló `_ids_tajos`,
+commit `e736447`, que ha divergido de este desde `ae0f5d7`), si Mungia
+recibe también su alta, y seguir revisando el resto de la hoja de
+Gernika (137 celdas siguen en `P`, sin mirar de verdad todavía).
 
 ---
 
