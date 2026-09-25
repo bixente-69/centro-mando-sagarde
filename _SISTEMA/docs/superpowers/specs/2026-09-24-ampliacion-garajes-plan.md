@@ -46,7 +46,7 @@ fases sin dejar nada roto**, no para completarse de una sentada.
 | 3a | Cálculo: `priorizar_ficha_garaje` en `priorizador_trabajos.py` + llamada en `generar_todos.py` | Claude diseñó 5 hallazgos y las funciones exactas → **Codex** implementa con diff byte a byte → Claude verifica | ✅ **CERRADA** (`daf4c2a`) |
 | 3b | Mostrarlo: sección de garaje en `panel_obra.py` | Claude diseña dónde insertarla → **Codex** implementa con diff byte a byte del HTML → Claude verifica en navegador real | ✅ **CERRADA** (`f623e24`) |
 | 4 | Wizard de 4 pantallas + hoja por tipo de zona en `generador_revisiones.html` | **Codex** implementa a partir del prototipo de referencia → Claude verifica en navegador real | ✅ **CERRADA** (`645d9b8`) |
-| 5 | Adaptador de lectura de revisiones de garaje | **Codex** implementa y prueba | pendiente |
+| 5 | Adaptador de lectura de revisiones de garaje | **Codex** implementa y prueba → Claude verifica | ✅ **CERRADA** (`9298c2f`) |
 | 6 | Validación completa contra `OBRA PRUEBA` (con mutación) | **Claude** dirige, **Codex** ejecuta los escenarios | pendiente |
 | 7 | Alta y primera revisión real: Mungia o Gernika | **Claude + Bixente** (necesita su hoja/planos reales, ningún worker puede inventarlos) | pendiente |
 
@@ -389,6 +389,42 @@ entrada exacto, **Codex** implementa y prueba con una hoja de garaje real
 generada en la Fase 4, Claude verifica.
 
 **Checkpoint de cierre:** commit propio.
+
+**✅ CERRADA (25/09/2026, commit `9298c2f`).** Dos piezas: `alta_garaje_desde_hoja.py`
+extrae el `<script id="garaje-estructura">` que la Fase 4 embebe en la
+hoja (misma hoja que Bixente ya sabe generar y guardar, cero UI nueva)
+y crea `ficha_garajes.json` — nunca pisa una ficha existente.
+`adaptar_revision_garaje.py` aplica una hoja de garaje ya rellena vía
+`ficha_garajes.actualizar_desde_snapshot`, sin ninguna de las dos capas
+de numeración sintética que arrastra `adaptar_revision_html.py`: los
+ids que escribe el asistente de garaje ya son los canónicos. Codex se
+quedó sin cuota (185.753 tokens) justo al terminar de escribir los
+tests — el código y los tests que dejó estaban completos y correctos,
+sin necesidad del fallback gratuito ni de que Claude reescribiera nada.
+
+Verificación independiente de Claude (no solo el informe de Codex, ni
+solo "la suite pasa"): los tres ficheros leídos línea a línea contra el
+diseño; el contrato con `ficha_garajes.actualizar_desde_snapshot` y
+`resumen_cambios` releído y confirmado exacto, incluida la delegación
+correcta de zonas desconocidas (el adaptador no duplica esa lógica); el
+regex de extracción del JSON embebido contrastado contra la línea real
+de `generador_revisiones.html` (no solo la prueba sintética de
+escapado ya hecha al cerrar la Fase 4); `data-k`/`data-st` de
+`extraer_pares` contrastado contra el HTML real que emite el generador
+para vivienda y para garaje; `registro_obras.OBRAS` y el formato real
+de `CATALOGO_TAJOS.json.obras` confirmados contra disco, no de memoria.
+Suite completa: **639 tests, 0 fallos** (634 previos + 5 nuevos).
+
+Hallazgo real, fuera de alcance de esta fase y no corregido aquí: el
+camino principal de `generar_todos.py`
+(`construir_revision_normalizada_desde_snapshot`) llama a
+`validar_revision._ids_tajos` con el id corto de la obra (`obra['id']`,
+p. ej. `'mungia'`), pero `CATALOGO_TAJOS.json.obras` está indexado por
+el nombre completo de la obra — nunca coinciden, así que los tajos
+propios de obra declarados ahí son invisibles para ese camino. Hoy es
+inofensivo (solo Obispo Orueta, ya archivada, tiene tajos propios en el
+catálogo), pero afectaría en cuanto una obra activa —de vivienda o de
+garaje— declare tajos propios. Pendiente de revisar aparte.
 
 ---
 
