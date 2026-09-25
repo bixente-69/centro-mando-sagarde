@@ -88,6 +88,27 @@ si building/floor/unit no casan 1:1 — verificar).
   ninguno de los dos toca garaje hoy. Añadir una sección de garaje,
   tratada como un bloque más (palabras de Bixente), en ambos.
 
+## Estado (25/09/2026)
+
+- ✅ **% total combinado** (panel + Portal Sagarde), commit `1077c39`.
+  Verificado contra Gernika real: 85.9%/87.1%.
+- ✅ **Riesgos**, commit `8e95763`. Sección propia de garaje reutilizando
+  `bloque_riesgos` tal cual. Hecho por **agy** (edición exacta) tras dos
+  intentos fallidos de Codex (sin cuota) — Claude corrigió 2 fallos
+  reales de su propio encargo detectados por la suite, no de agy.
+- ✅ **Informe Ejecutivo PDF**, commit `a12b69b`. Resumen general
+  combinado + página GARAJE completa (mismo detalle que un bloque de
+  vivienda). Codex vía `-p free` se quedó inestable ("alta demanda") y
+  solo dejó una firma sin usar — lo hizo Claude directamente. Verificado
+  generando el PDF real de Gernika y leyéndolo: encontró y corrigió un
+  bug real (`snapshot_garaje` llevaba el id del tajo en `'task'` en vez
+  del nombre, la página de garaje salía vacía) que no habría salido a
+  la luz sin generar el PDF de verdad, solo con la suite.
+- ⏳ **Trabajos / Prioridades** — pendiente, la pieza ambigua (ver
+  abajo). No empezada.
+- ⏳ **Informe de obra a la carta** — pendiente, no confirmado con
+  Bixente si necesita el mismo tratamiento que el PDF ejecutivo.
+
 ## Orden de trabajo propuesto
 
 1. `snapshot_garaje` + `kpis_obra_total` en `generar_todos.py`,
