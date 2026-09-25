@@ -183,12 +183,14 @@ class TestPanelGaraje(unittest.TestCase):
                 # garaje: gana su propia seccion de riesgos. Cubierto aparte
                 # en TestPanelRiesgosGaraje.
                 continue
-            if vista == "v-prioridades":
-                # Desde la pieza 6 (25/09/2026), v-prioridades SI cambia a
-                # proposito cuando hay garaje: calca el formato completo de
-                # Prioridades de vivienda (bloque_prioridades_partes con
-                # sufijo='-garaje'). Cubierto aparte mas abajo en este mismo
-                # fichero, en TestPanelPrioridadesGaraje.
+            if vista == "v-panel":
+                # El grafico "Avance por planta y edificio" del Panel
+                # ahora funde vivienda y garaje con icono de origen
+                # (🏠/🅿️) via _combinar_matriz_planta_edificio -- SIEMPRE
+                # marca tambien las series de vivienda con 🏠, haya o no
+                # garaje (mismo criterio que Trabajos, pieza 5), asi que
+                # v-panel cambia para CUALQUIER obra, no solo con garaje.
+                # Cubierto aparte en TestPanelGraficaPlantaGaraje.
                 continue
             if vista == "v-trabajos":
                 # Pieza 5 (25/09/2026): v-trabajos SI cambia a proposito
@@ -200,25 +202,17 @@ class TestPanelGaraje(unittest.TestCase):
             with self.subTest(vista=vista):
                 self.assertEqual(vistas_con[vista], contenido)
 
+        # v-prioridades (vivienda) NO debe llevar nada de garaje: cada
+        # pestaña es autonoma (pieza 6, version corregida 25/09/2026 --
+        # la primera version metia el bento de garaje pegado dentro de
+        # esta pestaña, malentendido señalado por Bixente: "pestaña
+        # prioridades se suponia prioridades de vivienda... pestaña de
+        # garaje se suponia igual pero con los datos de garaje").
+        self.assertNotIn("🅿️", vistas_con["v-prioridades"])
+        # El contenido rico de garaje vive SOLO en su propia pestaña,
+        # verificado en detalle en TestPanelGarajeFormatoPrioridades.
         garaje = vistas_con["v-garaje"]
-        cuerpo = re.search(r"<tbody>(.*?)</tbody>", garaje, re.DOTALL)
-        self.assertIsNotNone(cuerpo)
-        self.assertEqual(cuerpo.group(1).count("<tr>"),
-                         len(prioridades["items"]))
-        for etiqueta in (
-                "Tajos listos", "Bloqueados", "Dudas pendientes",
-                "Terminados"):
-            self.assertIn(etiqueta, garaje)
-        for etiqueta, clave in (
-                ("Tajos listos", "listos"),
-                ("Bloqueados", "bloqueados"),
-                ("Dudas pendientes", "dudas"),
-                ("Terminados", "terminados")):
-            patron = (r'<div class="label">' + re.escape(etiqueta)
-                      + r'</div><div class="value">'
-                      + str(prioridades["resumen"][clave]) + r'</div>')
-            self.assertRegex(garaje, patron)
-        self.assertNotIn("% de avance", garaje)
+        self.assertIn("Centro de mando · Prioridades", garaje)
         self.assertEqual(
             _secciones_informe(con_garaje), _secciones_informe(sin_garaje))
 
@@ -313,10 +307,10 @@ class TestPanelAvanceCombinadoConGaraje(unittest.TestCase):
         for vista, contenido in vistas_sin.items():
             if vista == "v-panel":
                 continue  # la cabecera SI cambia a proposito, ver el test de arriba
-            if vista == "v-prioridades":
-                # El avance_pct propio del garaje en su tarjeta de Prioridades
-                # (pieza 6) tambien sale de snapshot_garaje -- mismo motivo
-                # que v-panel, no una desincronizacion.
+            if vista == "v-garaje":
+                # El avance_pct propio del garaje en su pestaña (pieza 6,
+                # version corregida) tambien sale de snapshot_garaje --
+                # mismo motivo que v-panel, no una desincronizacion.
                 continue
             if vista == "v-trabajos":
                 # Pieza 5 (25/09/2026): v-trabajos SI cambia a proposito
@@ -353,9 +347,6 @@ class TestPanelRiesgosGaraje(unittest.TestCase):
         self.assertEqual(set(vistas_con), set(vistas_sin) | {"v-garaje"})
         for vista, contenido in vistas_sin.items():
             if vista == "v-riesgos":
-                continue
-            if vista == "v-prioridades":
-                # Pieza 6: cubierto aparte en TestPanelPrioridadesGaraje.
                 continue
             if vista == "v-trabajos":
                 # Pieza 5 (25/09/2026): v-trabajos SI cambia a proposito
@@ -404,13 +395,20 @@ class TestPanelRiesgosGaraje(unittest.TestCase):
         self.assertIn("Cableado de viales", riesgos)
 
 
-class TestPanelPrioridadesGaraje(unittest.TestCase):
-    """Integracion garaje-obra, pieza 6 (25/09/2026): la vista Prioridades
-    calca el formato completo de vivienda para el garaje (mismo
+class TestPanelGarajeFormatoPrioridades(unittest.TestCase):
+    """Integracion garaje-obra, pieza 6 (25/09/2026, version CORREGIDA
+    tras aviso de Bixente). La pestaña propia "🅿️ Garaje" calca el
+    formato completo de Prioridades de vivienda (mismo
     bloque_prioridades_partes, con sufijo='-garaje' para que sus ids no
     choquen con los de vivienda en la misma pagina -- ver _namespace_ids
-    en panel_obra.py). Sin garaje, la vista queda exactamente igual que
-    antes de que existiera este parametro."""
+    en panel_obra.py) -- son DOS PESTAÑAS SEPARADAS, cada una con su
+    propio centro de mando completo, no una seccion de garaje pegada
+    dentro de la pestaña de vivienda (ese fue el malentendido de la
+    primera version: Bixente, textual, "pestaña prioridades se suponia
+    prioridades de vivienda... pestaña de garaje se suponia igual que
+    prioridades de vivienda pero con los datos de garaje. no se parecen
+    en nada"). v-prioridades queda intacta, exactamente igual que antes
+    de que existiera garaje."""
 
     def _prioridades_garaje_con_datos(self):
         prioridades_garaje = priorizar_ficha_garaje(
@@ -428,49 +426,63 @@ class TestPanelPrioridadesGaraje(unittest.TestCase):
         self.assertEqual(1, len(prioridades_garaje["prevision"]))
         return prioridades_garaje
 
-    def test_v_prioridades_sin_garaje_no_tiene_seccion_de_garaje(self):
-        html = _generar(None, historial=_HISTORIAL_VIVIENDA)
-        prioridades = _vistas(html)["v-prioridades"]
-        self.assertNotIn("🅿️ Garaje", prioridades)
+    def test_v_prioridades_nunca_lleva_nada_de_garaje(self):
+        """Con garaje o sin el, v-prioridades es solo de vivienda -- es
+        la pestaña "🎯 Prioridades 🏠", el icono de casita la marca como
+        tal."""
+        prioridades_garaje = self._prioridades_garaje_con_datos()
+        con_garaje = _vistas(
+            _generar(prioridades_garaje, historial=_HISTORIAL_VIVIENDA)
+        )["v-prioridades"]
+        sin_garaje = _vistas(
+            _generar(None, historial=_HISTORIAL_VIVIENDA)
+        )["v-prioridades"]
+        self.assertNotIn("🅿️", con_garaje)
+        self.assertEqual(con_garaje, sin_garaje)
 
-    def test_v_prioridades_con_garaje_incluye_su_propia_seccion(self):
+    def test_boton_de_prioridades_lleva_el_icono_de_vivienda(self):
+        html = _generar(None, historial=_HISTORIAL_VIVIENDA)
+        self.assertIn(
+            '<button data-view="v-prioridades">🎯 Prioridades 🏠</button>',
+            html)
+
+    def test_v_garaje_incluye_el_formato_completo_de_prioridades(self):
         prioridades_garaje = self._prioridades_garaje_con_datos()
         html = _generar(prioridades_garaje, historial=_HISTORIAL_VIVIENDA)
-        prioridades = _vistas(html)["v-prioridades"]
+        garaje = _vistas(html)["v-garaje"]
 
-        self.assertIn("🅿️ Garaje", prioridades)
-        self.assertIn("Tubeado de viales", prioridades)
-        self.assertIn("Cableado de viales", prioridades)
-        # El bento de "Centro de mando" sale dos veces: una por vivienda,
-        # otra por garaje.
-        self.assertEqual(
-            prioridades.count("Centro de mando · Prioridades"), 2)
+        self.assertIn("Centro de mando · Prioridades", garaje)
+        self.assertIn("Tubeado de viales", garaje)
+        self.assertIn("Cableado de viales", garaje)
+        # No lleva un <h2>🅿️ Garaje</h2> de mas: la propia pestaña ya
+        # esta etiquetada "🅿️ Garaje" en su boton.
+        self.assertNotIn("<h2>🅿️ Garaje</h2>", garaje)
         # Encontrado probando en navegador real (25/09/2026): el enlace
         # "Ver calculo y detalle completo" estaba fijo a
         # prioridades_trabajos.json, asi que la instancia de garaje
-        # enlazaba en silencio al JSON de vivienda. Cada instancia debe
-        # apuntar a SU PROPIO fichero.
-        self.assertIn('href="prioridades_trabajos.json"', prioridades)
-        self.assertIn(
-            'href="prioridades_trabajos_garaje.json"', prioridades)
+        # enlazaba en silencio al JSON de vivienda. Debe apuntar al suyo.
+        self.assertIn('href="prioridades_trabajos_garaje.json"', garaje)
+        self.assertNotIn('href="prioridades_trabajos.json"', garaje)
 
-    def test_ids_de_garaje_llevan_sufijo_y_no_colisionan_con_vivienda(self):
+    def test_ids_de_garaje_llevan_sufijo_y_viven_en_su_propia_pestaña(self):
         """La prueba mas importante de esta pieza: cada id de vivienda
-        aparece UNA sola vez (sin sufijo) y su version de garaje aparece
-        UNA sola vez (con '-garaje'). Si esto fallara, un
-        document.getElementById en el navegador encontraria el elemento de
-        la instancia equivocada -- en silencio, sin ningun error."""
+        aparece UNA sola vez, dentro de v-prioridades, sin sufijo; su
+        version de garaje aparece UNA sola vez, con '-garaje', dentro de
+        v-garaje. Si esto fallara, un document.getElementById en el
+        navegador encontraria el elemento de la instancia equivocada --
+        en silencio, sin ningun error."""
         prioridades_garaje = self._prioridades_garaje_con_datos()
         html = _generar(prioridades_garaje, historial=_HISTORIAL_VIVIENDA)
-        prioridades = _vistas(html)["v-prioridades"]
+        vistas = _vistas(html)
+        prioridades, garaje = vistas["v-prioridades"], vistas["v-garaje"]
 
-        def _cuenta_id(id_exacto):
+        def _cuenta_id(texto, id_exacto):
             # id='...' e id="..." conviven en este HTML segun que helper lo
             # escribio (_envolver_plegable usa comillas simples,
             # _tarjeta_timeline_html y el filtro de ejecucion usan dobles):
             # contar con las dos, igual que _RE_ID_HTML al namespacing.
             patron = re.compile(r"""id=['"]%s['"]""" % re.escape(id_exacto))
-            return len(patron.findall(prioridades))
+            return len(patron.findall(texto))
 
         for id_base in (
             "filtro-sit", "prio-count", "timeline-prio", "sec-ejecucion",
@@ -480,34 +492,35 @@ class TestPanelPrioridadesGaraje(unittest.TestCase):
         ):
             with self.subTest(id_base=id_base):
                 self.assertEqual(
-                    _cuenta_id(id_base), 1,
-                    f'id {id_base!r} (vivienda) deberia aparecer 1 vez')
+                    _cuenta_id(prioridades, id_base), 1,
+                    f'id {id_base!r} deberia estar en v-prioridades')
                 self.assertEqual(
-                    _cuenta_id(id_base + "-garaje"), 1,
-                    f'id {id_base + "-garaje"!r} deberia aparecer 1 vez')
-                # Sanity check: el sufijo no se aplica dos veces.
-                self.assertEqual(_cuenta_id(id_base + "-garaje-garaje"), 0)
+                    _cuenta_id(garaje, id_base + "-garaje"), 1,
+                    f'id {id_base + "-garaje"!r} deberia estar en v-garaje')
+                # Cada id vive en SU pestaña, no en la otra.
+                self.assertEqual(_cuenta_id(garaje, id_base), 0)
+                self.assertEqual(
+                    _cuenta_id(prioridades, id_base + "-garaje"), 0)
 
         # sec-prevision solo lo pinta garaje en este dataset (vivienda no
         # tiene prevision en _prioridades_vivienda()): confirma que la
         # ausencia en vivienda no rompe el conteo de garaje.
-        self.assertEqual(_cuenta_id("sec-prevision"), 0)
-        self.assertEqual(_cuenta_id("sec-prevision-garaje"), 1)
+        self.assertEqual(_cuenta_id(prioridades, "sec-prevision"), 0)
+        self.assertEqual(_cuenta_id(garaje, "sec-prevision-garaje"), 1)
 
-        # Los enlaces de navegacion del bento apuntan al ancla con el mismo
-        # sufijo que su seccion, no al de la otra instancia.
-        self.assertIn('href="#sec-ejecucion-garaje"', prioridades)
-        self.assertIn('data-abre="sec-ejecucion-garaje"', prioridades)
+        # Los enlaces de navegacion del bento de garaje apuntan a su
+        # propio ancla con sufijo, no al de vivienda.
+        self.assertIn('href="#sec-ejecucion-garaje"', garaje)
+        self.assertIn('data-abre="sec-ejecucion-garaje"', garaje)
 
     def test_script_indice_no_se_duplica_con_garaje(self):
         """script_indice es el mismo <script> para toda la pagina (ya
-        selecciona por clase, no por lista fija de ids): la instancia de
+        selecciona por clase, no por lista fija de ids): la pestaña de
         garaje no debe repetirlo."""
         prioridades_garaje = self._prioridades_garaje_con_datos()
         html = _generar(prioridades_garaje, historial=_HISTORIAL_VIVIENDA)
-        prioridades = _vistas(html)["v-prioridades"]
         self.assertEqual(
-            prioridades.count("function _iniciarNavPrioridades"), 1)
+            html.count("function _iniciarNavPrioridades"), 1)
 
 
 class TestPanelTrabajosGaraje(unittest.TestCase):
@@ -591,6 +604,77 @@ class TestPanelTrabajosGaraje(unittest.TestCase):
             "<thead><tr><th></th><th>Edificio</th><th>Planta</th>"
             "<th>% estricto</th><th>% estimado</th><th>Nº registros</th>"
             "</tr></thead>", trabajos)
+
+
+class TestPanelGraficaPlantaGaraje(unittest.TestCase):
+    """Integracion garaje-obra, pieza extra (25/09/2026, a raiz de aviso
+    de Bixente: "Panel: no hay nada de garaje"). El grafico "Avance por
+    planta y edificio" del Panel funde vivienda y garaje con icono de
+    origen (🏠/🅿️), igual que ya hace Trabajos con sus tablas -- por
+    eso SIEMPRE marca tambien a vivienda con 🏠, haya o no garaje (mismo
+    criterio de la pieza 5). "Evolución del avance" (el grafico de linea
+    temporal) NO se toca: generar_panel() no recibe un historial propio
+    de garaje, solo un snapshot puntual -- no hay con que construir una
+    serie temporal de garaje todavia."""
+
+    def test_sin_garaje_las_series_de_vivienda_llevan_icono_de_casita(self):
+        html = _generar(None, historial=_HISTORIAL_VIVIENDA)
+        self.assertIn('"\U0001f3e0 P1"', html)
+        self.assertNotIn('"P1"', html.replace('"\U0001f3e0 P1"', ''))
+
+    def test_con_garaje_el_grafico_funde_las_plantas_con_null_en_los_huecos(self):
+        prioridades_garaje = priorizar_ficha_garaje(
+            _ficha_garaje(estados={
+                ("z1", "garaje_tubeado_vial"): "X",
+                ("z1", "garaje_cableado_vial"): "P",
+                ("z2", "garaje_tubeado_vial"): "P",
+                ("z2", "garaje_cableado_vial"): "P",
+            }),
+            obra="OBRA GARAJE PRUEBA", hoy=date(2026, 9, 24))
+        snapshot_garaje = _snapshot_garaje_desde_prioridades(prioridades_garaje)
+        html = _generar(
+            prioridades_garaje, historial=_HISTORIAL_VIVIENDA,
+            snapshot_garaje=snapshot_garaje)
+
+        # Valores reales de motor_informes.matriz_planta_edificio() sobre
+        # ambos snapshots y de panel_obra._combinar_matriz_planta_edificio(),
+        # calculados aparte antes de escribir esta prueba (no inventados):
+        # labels combinadas ['PB','1','Sótano 1']; vivienda [80.0,0.0,null]
+        # bajo '🏠 P1'; garaje [null,null,25.0] bajo '🅿️ Garaje principal'.
+        # Se comparan sin espacios porque json.dumps puede o no llevarlos
+        # entre separadores segun la version de Python.
+        sin_espacios = html.replace(' ', '')
+        self.assertIn('"labels":["PB","1","Sótano1"]', sin_espacios)
+        self.assertIn('"\U0001f3e0P1":[80.0,0.0,null]', sin_espacios)
+        self.assertIn(
+            '"\U0001f17f️Garajeprincipal":[null,null,25.0]',
+            sin_espacios)
+
+    def test_evolucion_del_avance_sigue_siendo_solo_de_vivienda(self):
+        """No hay historial de garaje que combinar todavia -- confirma
+        que DATA.serie no cambia por la presencia de garaje (a
+        diferencia de DATA.por_planta, que si)."""
+        prioridades_garaje = priorizar_ficha_garaje(
+            _ficha_garaje(estados={
+                ("z1", "garaje_tubeado_vial"): "X",
+                ("z1", "garaje_cableado_vial"): "P",
+                ("z2", "garaje_tubeado_vial"): "P",
+                ("z2", "garaje_cableado_vial"): "P",
+            }),
+            obra="OBRA GARAJE PRUEBA", hoy=date(2026, 9, 24))
+        snapshot_garaje = _snapshot_garaje_desde_prioridades(prioridades_garaje)
+        con_garaje = _generar(
+            prioridades_garaje, historial=_HISTORIAL_VIVIENDA,
+            snapshot_garaje=snapshot_garaje)
+        sin_garaje = _generar(
+            None, historial=_HISTORIAL_VIVIENDA, snapshot_garaje=None)
+
+        def _serie(html):
+            inicio = html.index('"serie":')
+            fin = html.index(', "por_planta"', inicio)
+            return html[inicio:fin]
+
+        self.assertEqual(_serie(con_garaje), _serie(sin_garaje))
 
 
 if __name__ == "__main__":

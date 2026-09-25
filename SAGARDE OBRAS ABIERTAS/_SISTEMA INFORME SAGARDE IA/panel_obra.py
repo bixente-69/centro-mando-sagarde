@@ -1604,6 +1604,32 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
     )
 
 
+def _combinar_matriz_planta_edificio(matriz_vivienda, matriz_garaje):
+    """Funde el gráfico 'Avance por planta y edificio' del Panel: cada
+    edificio de vivienda y cada garaje pasan a ser una serie más, marcada
+    con su icono de origen (🏠/🅿️), sobre un eje de plantas combinado.
+
+    Las plantas de garaje (p.ej. 'Sótano 1') no existen para los
+    edificios de vivienda y viceversa: se usa None (no 0) en esos huecos
+    para que Chart.js deje un hueco real en la barra en vez de pintar un
+    0% falso donde ese edificio no tiene esa planta.
+    """
+    labels = list(matriz_vivienda.get('labels') or [])
+    for planta in matriz_garaje.get('labels') or []:
+        if planta not in labels:
+            labels.append(planta)
+
+    series = {}
+    for edificio, valores in (matriz_vivienda.get('series') or {}).items():
+        indice = dict(zip(matriz_vivienda.get('labels') or [], valores))
+        series['🏠 ' + edificio] = [indice.get(planta) for planta in labels]
+    for edificio, valores in (matriz_garaje.get('series') or {}).items():
+        indice = dict(zip(matriz_garaje.get('labels') or [], valores))
+        series['🅿️ ' + edificio] = [indice.get(planta) for planta in labels]
+
+    return {'labels': labels, 'series': series}
+
+
 def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   output_path, volver_href="../../index.html", prioridades=None,
                   tajos_memoria=None, mem_resumen=None, bat_path=None,
@@ -1646,7 +1672,10 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         if snapshot_garaje else [])
     payload = {
         'serie': motor.serie_tiempo(historial_panel) if historial_panel else [],
-        'por_planta': motor.matriz_planta_edificio(snapshot) if snapshot else {'labels': [], 'series': {}},
+        'por_planta': _combinar_matriz_planta_edificio(
+            motor.matriz_planta_edificio(snapshot) if snapshot else {'labels': [], 'series': {}},
+            motor.matriz_planta_edificio(snapshot_garaje) if snapshot_garaje else {'labels': [], 'series': {}},
+        ),
         'por_tarea': sorted(
             [('🏠 ' + t, p, n) for t, p, n in por_tarea_vivienda]
             + [('🅿️ ' + t, p, n) for t, p, n in por_tarea_garaje],
@@ -1799,103 +1828,51 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
             prioridades_garaje, bloqueos=[], riesgos_manual=[],
             sin_cambios=False)
 
-    # Mismo formato que Prioridades de vivienda (Bixente, 25/09/2026:
-    # "prioridades es calcar el formato de vivienda a prioridades garaje"),
-    # con sufijo='-garaje' para que sus ids no choquen con los de vivienda
-    # en la misma página (antes bloqueado por Hallazgo 6, ver
-    # _namespace_ids). No repite el script de navegación: ya lo emite la
-    # instancia de vivienda y ahora selecciona por clase, no por lista fija.
-    prioridades_garaje_html = ''
-    if prioridades_garaje is not None:
-        avance_garaje_pct = None
-        if snapshot_garaje:
-            avance_garaje_pct = motor.kpis_snapshot(snapshot_garaje).get('pct_ponderado')
-        partes_prioridades_garaje = bloque_prioridades_partes(
-            prioridades_garaje, tareas_manual=None, documentos=None,
-            obra=obra, avance_pct=avance_garaje_pct, sufijo='-garaje',
-            incluir_script_indice=False,
-            nombre_fichero_json='prioridades_trabajos_garaje.json')
-        if isinstance(partes_prioridades_garaje, str):
-            prioridades_garaje_html = '<h2>🅿️ Garaje</h2>' + partes_prioridades_garaje
-        else:
-            prioridades_garaje_html = '<h2>🅿️ Garaje</h2>' + (
-                partes_prioridades_garaje['bento_command']
-                + partes_prioridades_garaje['estado_obra_html']
-                + partes_prioridades_garaje['avisos_prio']
-                + partes_prioridades_garaje['tareas_manual_html']
-                + partes_prioridades_garaje['dudas_html']
-                + partes_prioridades_garaje['ejecucion_html']
-                + partes_prioridades_garaje['bloqueado_html']
-                + partes_prioridades_garaje['sin_revisar_html']
-                + partes_prioridades_garaje['orden_html']
-                + partes_prioridades_garaje['prevision_html']
-                + partes_prioridades_garaje['viable_html']
-                + partes_prioridades_garaje['otros_gremios_html']
-                + partes_prioridades_garaje['dudas_inventario_html']
-                + partes_prioridades_garaje['terminado_html']
-            )
-
     cierre_html = bloque_cierre(cierre, avisos=cierre_avisos)
 
-    # Garaje v1 (pestaña propia) queda fuera de SECCIONES_INFORME y no
-    # muestra porcentaje: ese dato todavia no existe ahi. Es un resumen
-    # aparte, mas simple -- ver prioridades_garaje_html arriba para la
-    # version completa, integrada en la pestaña Prioridades.
+    # Pestaña propia "🅿️ Garaje" = el mismo formato que Prioridades de
+    # vivienda, calcado (Bixente, 25/09/2026: "prioridades es calcar el
+    # formato de vivienda a prioridades garaje" -- pestañas separadas,
+    # cada una con su propio centro de mando completo; NO una sección
+    # pegada dentro de la pestaña de vivienda, eso fue un malentendido
+    # de la primera pasada). sufijo='-garaje' evita que sus ids choquen
+    # con los de vivienda en la misma página (las dos pestañas conviven
+    # en el mismo documento, solo una visible a la vez) -- ver
+    # _namespace_ids. No repite el script de navegación: ya lo emite la
+    # instancia de vivienda y ahora selecciona por clase, no por lista
+    # fija.
     garaje_nav_html = ''
     garaje_seccion_html = ''
     if prioridades_garaje is not None:
         garaje_nav_html = (
             '  <button data-view="v-garaje">🅿️ Garaje</button>\n')
-        if prioridades_garaje.get('sin_base'):
-            avisos_garaje = prioridades_garaje.get('avisos') or [
-                'Esta obra no tiene base de datos todavía.']
-            garaje_html = (
-                "<div class='banner bad'>⚠ "
-                + _e(avisos_garaje[0])
-                + "</div><p style='font-size:12.5px;color:var(--muted);'>"
-                  "Las prioridades salen de la base de datos de la obra. "
-                  "Sin ella no se calcula nada: un recuento vacío sería un "
-                  "dato falso.</p>"
-            )
+        avance_garaje_pct = None
+        if snapshot_garaje:
+            avance_garaje_pct = motor.kpis_snapshot(snapshot_garaje).get('pct_ponderado')
+        partes_garaje = bloque_prioridades_partes(
+            prioridades_garaje, tareas_manual=None, documentos=None,
+            obra=obra, avance_pct=avance_garaje_pct, sufijo='-garaje',
+            incluir_script_indice=False,
+            nombre_fichero_json='prioridades_trabajos_garaje.json')
+        if isinstance(partes_garaje, str):
+            garaje_html = partes_garaje
         else:
-            resumen_garaje = prioridades_garaje.get('resumen', {})
-            kpis_garaje = (
-                '<div class="kpi-row">'
-                '<div class="kpi"><div class="label">Tajos listos</div>'
-                f'<div class="value">{_e(resumen_garaje.get("listos", 0))}</div></div>'
-                '<div class="kpi"><div class="label">Bloqueados</div>'
-                f'<div class="value">{_e(resumen_garaje.get("bloqueados", 0))}</div></div>'
-                '<div class="kpi"><div class="label">Dudas pendientes</div>'
-                f'<div class="value">{_e(resumen_garaje.get("dudas", 0))}</div></div>'
-                '<div class="kpi"><div class="label">Terminados</div>'
-                f'<div class="value">{_e(resumen_garaje.get("terminados", 0))}</div></div>'
-                '</div>'
+            garaje_html = (
+                partes_garaje['bento_command']
+                + partes_garaje['estado_obra_html']
+                + partes_garaje['avisos_prio']
+                + partes_garaje['tareas_manual_html']
+                + partes_garaje['dudas_html']
+                + partes_garaje['ejecucion_html']
+                + partes_garaje['bloqueado_html']
+                + partes_garaje['sin_revisar_html']
+                + partes_garaje['orden_html']
+                + partes_garaje['prevision_html']
+                + partes_garaje['viable_html']
+                + partes_garaje['otros_gremios_html']
+                + partes_garaje['dudas_inventario_html']
+                + partes_garaje['terminado_html']
             )
-            filas_garaje = ''
-            for item in prioridades_garaje.get('items', []):
-                situacion = item.get('situacion')
-                clase_situacion = 'ok' if situacion == 'LISTO' else 'warn'
-                filas_garaje += (
-                    f"<tr><td><b>{_e(item.get('trabajo'))}</b></td>"
-                    f"<td><span class='badge {clase_situacion}'>"
-                    f"{_e(situacion)}</span></td>"
-                    f"<td>{_e(item.get('n_unidades', 0))}</td>"
-                    f"<td>{_ubicaciones_html(item.get('ubicaciones', []))}"
-                    "</td></tr>"
-                )
-            if not filas_garaje:
-                filas_garaje = (
-                    '<tr><td colspan="4" class="empty">No hay tajos LISTO '
-                    'ni VERIFICAR con los datos actuales.</td></tr>')
-            tabla_garaje = (
-                '<div class="card"><h3>Prioridades de garaje</h3>'
-                '<div class="table-scroll"><table class="data"><thead><tr>'
-                '<th>Tajo</th><th>Situación</th><th>Nº de unidades</th>'
-                '<th>Ubicaciones</th></tr></thead><tbody>'
-                + filas_garaje
-                + '</tbody></table></div></div>'
-            )
-            garaje_html = kpis_garaje + tabla_garaje
         garaje_seccion_html = (
             '<section id="v-garaje" class="view">'
             + garaje_html
@@ -2045,7 +2022,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
   <button data-view="v-trabajos">✓ Trabajos</button>
   <button data-view="v-materiales">▣ Materiales</button>
   <button data-view="v-personal">👷 Personal</button>
-  <button data-view="v-prioridades">🎯 Prioridades</button>
+  <button data-view="v-prioridades">🎯 Prioridades 🏠</button>
   <button data-view="v-riesgos">⚠ Riesgos</button>
   <button data-view="v-normativa">📘 Normativa</button>
   <button data-view="v-docs">📎 Documentos</button>
@@ -2078,7 +2055,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 
 <section id="v-personal" class="view"><div class="card"><h3>Personal asignado</h3>{personal_html}</div></section>
 
-<section id="v-prioridades" class="view">{prioridades_html}{prioridades_garaje_html}
+<section id="v-prioridades" class="view">{prioridades_html}
   <div class="card"><h3>Hitos manuales</h3>{hitos_html}</div></section>
 
 <section id="v-riesgos" class="view">{riesgos_html}{riesgos_garaje_html}</section>
