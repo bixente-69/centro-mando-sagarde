@@ -1074,7 +1074,7 @@ function generateHTML(cellData={}){
         const cells=viviendaCols.map(({planta,viv,floorIndex,first})=>{
           const k=`${portal.id}__${planta.id}__${t.id}__${viv}`;
           const st=cellData[k]||'';
-          const sym={X:'X',M:'M','/':'/',''  :'','N':'·'}[st]||'';
+          const sym={X:'X',M:'M','/':'/',''  :'','N':'N'}[st]||'';
           const cls={X:'done',M:'prog','/':'half','':'pend','N':'ext'}[st]||'pend';
           const boundary=floorIndex>0&&first?' right-first':'';
           return `<td class="td-st ${cls}${boundary}" style="font-size:${stateFont}pt" data-k="${escHtml(k)}" data-st="${st}">${sym}</td>`;
