@@ -314,14 +314,27 @@ diseño) al generador real: Obra → Estructura → Tajos → Generar, con la ho
 repartida por tipo de zona (tablas anchas para zonas de conteo uniforme,
 tarjetas individuales para cuartos técnicos).
 
-**Qué toca:** `generador_revisiones.html` (ya tiene el precedente de los 3
-cambios del estado `N` de hoy, mismo fichero). El prototipo
+**Diseño detallado ya escrito**, tras leer el fichero real completo (1459
+líneas): `_SISTEMA/scratch/fase4-wizard-garaje-diseno.md`. Decisión clave
+de arquitectura: los pasos 2-4 del asistente no se duplican en HTML —
+sus funciones de render ya existentes se ramifican por `S.modo` y
+rellenan los mismos contenedores; solo el paso 1 necesita HTML nuevo (el
+selector de modo). Incluye ya generado mecánicamente (no retecleado a
+mano) el `CAT_GARAJE` de 42 entradas desde el `CATALOGO_TAJOS.json` real.
+De paso, leer el fichero completo destapó y corrigió un cabo suelto de la
+Fase 0: `generateHTML()` tenía una segunda correspondencia de símbolos
+(para prerellenar celdas desde una obra con base de datos) que aún usaba
+el punto pequeño en vez de `N` — commit `944a6fd`.
+
+**Qué toca:** `generador_revisiones.html`. El prototipo
 (`_SISTEMA/scratch/garaje-wizard-demo.html`, Artifact
 `https://claude.ai/artifact/TKc74kuhSoykLidgbgJnbD`) es referencia de
-comportamiento, no código a copiar literal — está desconectado del backend
-real y usa datos de ejemplo.
+comportamiento ya validada con Bixente, no código a copiar literal — está
+desconectado del backend real y usa datos de ejemplo.
 **Qué NO toca:** el flujo de vivienda existente, que tiene que seguir
-funcionando exactamente igual (mismo generador, dos flujos dentro).
+funcionando exactamente igual (mismo generador, dos flujos dentro,
+`S.modo==='vivienda'` por defecto preserva el 100% del comportamiento
+actual).
 
 **Reparto:**
 1. Claude traduce el comportamiento validado del prototipo a instrucciones
