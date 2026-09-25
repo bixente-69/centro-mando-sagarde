@@ -47,7 +47,7 @@ fases sin dejar nada roto**, no para completarse de una sentada.
 | 3b | Mostrarlo: sección de garaje en `panel_obra.py` | Claude diseña dónde insertarla → **Codex** implementa con diff byte a byte del HTML → Claude verifica en navegador real | ✅ **CERRADA** (`f623e24`) |
 | 4 | Wizard de 4 pantallas + hoja por tipo de zona en `generador_revisiones.html` | **Codex** implementa a partir del prototipo de referencia → Claude verifica en navegador real | ✅ **CERRADA** (`645d9b8`) |
 | 5 | Adaptador de lectura de revisiones de garaje | **Codex** implementa y prueba → Claude verifica | ✅ **CERRADA** (`9298c2f`) |
-| 6 | Validación completa contra `OBRA PRUEBA` (con mutación) | **Claude** dirige, **Codex** ejecuta los escenarios | pendiente |
+| 6 | Validación completa contra `OBRA PRUEBA` (con mutación) | Codex sin cuota → **Claude** lo ejecutó directamente (fase de verificación, su punto fuerte) | ✅ **CERRADA** (`410de53`) |
 | 7 | Alta y primera revisión real: Mungia o Gernika | **Claude + Bixente** (necesita su hoja/planos reales, ningún worker puede inventarlos) | pendiente |
 
 ---
@@ -449,6 +449,83 @@ salida) porque requieren ejecución real repetida.
 **Checkpoint de cierre:** informe a Bixente con capturas o datos concretos
 del ciclo completo en `OBRA PRUEBA`, antes de pasar a obra real — es el
 punto de decisión de Bixente para dar luz verde a la Fase 7.
+
+**✅ CERRADA (25/09/2026, commit `410de53`).** Reparto real distinto del
+previsto: Codex estaba sin cuota (agotada a mitad de la Fase 5, reset
+28/09), y esta fase es sobre todo verificación — el punto fuerte de
+Claude — así que la ejecutó Claude directamente en vez de esperar o usar
+el fallback gratuito, dejándolo dicho aquí con transparencia.
+
+Ciclo completo de verdad, no solo código leído: wizard real en el
+navegador (servido por HTTP para poder hacer clics de verdad — `file://`
+no permite interactividad con el fichero real de 1,3&nbsp;MB) → modo
+Garajes → 2 garajes, 9 zonas cubriendo los 6 tipos → 42 tajos → hoja
+generada de verdad con `generateGarajeHTML()` → `alta_garaje_desde_hoja.py`
+real → `ficha_garajes.json` real de `OBRA PRUEBA` → hoja de revisión con
+casos límite a propósito → `adaptar_revision_garaje.py` real →
+`priorizador_trabajos.priorizar_ficha_garaje` real → `panel_obra.py`
+real, comprobado con capturas en el navegador (pestaña 🅿️ Garaje:
+BLOQUEADOS 1, TERMINADOS 5, coincide exactamente con lo calculado aparte).
+
+Mutaciones probadas, las cinco confirmadas con datos reales: `N` se
+excluye del todo; zona inexistente se descarta con aviso; tajo
+inexistente se descarta con aviso; estado no reconocido no crea ningún
+estado nuevo; y la más importante — una dependencia sin resolver **en
+esa zona concreta** (pero que sí existe en otra zona de la misma obra)
+bloquea de verdad, reconfirmando en caliente el hallazgo de la Fase 1.
+La primera versión de esta última prueba salió mal montada: marcar un
+tajo como `X` (un hecho observado) con su dependencia sin marcar **en
+ningún sitio de la obra** NO bloquea — `_buscar_dep` no tiene nada que
+comparar. Hubo que corregir el escenario para que la dependencia sí
+existiera, pero en otra zona.
+
+Test permanente añadido, `tests/test_fase6_ciclo_completo_garaje.py`, y
+probado por mutación de verdad (no solo escrito y dado por bueno): la
+primera versión usaba un catálogo sintético en memoria que
+`priorizador_trabajos.Catalogo` ignora por completo — su constructor
+carga siempre `reglas/CATALOGO_TAJOS.json` real, con la ruta fija, sin
+forma de inyectar uno propio. Mutar esa dependencia ficticia no cambiaba
+el resultado del test: señal clara de que no probaba nada de verdad.
+Reescrito para usar el catálogo real de punta a punta (mismo patrón que
+ya usa toda `test_priorizador_garaje.py`), con un test-guarda que falla
+con un mensaje claro si el par de tajos reales que se asume alguna vez
+cambia. Vuelto a mutar para confirmar que esta vez sí falla donde debe.
+
+**Dos hallazgos reales más, fuera del objetivo original de esta fase:**
+
+1. **Crítico, ya arreglado por separado (commit `bb73f32`):**
+   `generador_revisiones.html` llevaba roto para todo el mundo — vivienda
+   Y garaje, cualquier uso — desde el commit de la Fase 4 que embebió la
+   estructura (`1216d49`, 24/09/2026). Un `</script>` sin escapar dentro
+   de `generateGarajeHTML()` cerraba prematuramente el `<script>`
+   principal del HTML entero: `startWizard` quedaba indefinido y el
+   asistente no respondía a ningún clic, para nadie. El propio fichero
+   ya tenía la solución establecida (línea 358, y `sheetRuntime()` en la
+   1578); solo faltaba aplicarla también aquí. Se descubrió precisamente
+   al intentar esta verificación en el navegador de verdad — nunca
+   habría salido a la luz solo leyendo código o con la suite de tests
+   (que no carga este HTML en un navegador real).
+2. **`ficha_garajes.json` no estaba en la lista blanca del `.gitignore`**
+   desde que se creó en la Fase 2 (24/09/2026): se generaba pero nunca se
+   habría publicado. Solo se notó al escribir la primera ficha real en
+   disco (la de `OBRA PRUEBA`, aquí mismo). Arreglado en el mismo commit.
+
+**Efecto colateral evitado, sin consecuencias:** al comprobar los
+argumentos de línea de comandos de `generar_todos.py` (no tiene
+`argparse`; cualquier invocación regenera las 6 obras reales enteras) se
+disparó sin querer una regeneración completa. Revisado antes de
+commitear: solo tocaba metadatos inocuos (recuento de documentos,
+timestamps) en Gernika/Bolueta/Gorliz/Mungia/Olabeaga — descartado sin
+commitear para no mezclar cambios sin relación con esta fase.
+
+**Bixente parece estar trabajando en campo ahora mismo, en vivo:** ese
+mismo escaneo detectó `REVISION 2025 GERNIKA 32V 25092026_garaje.html`
+sin commitear en la carpeta real de Gernika, generada ya con el fix del
+`</script>` puesto — probablemente el propio Bixente probando el
+asistente ya arreglado sobre una obra real. **Se ha dejado completamente
+intacta**, sin tocarla ni darla de alta: es su hoja, no una de prueba.
+
+Suite completa: **641 tests, 0 fallos** (639 previos + 2 nuevos).
 
 ---
 
