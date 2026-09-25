@@ -8,26 +8,254 @@
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "25/09/2026 13:03",
+  "generado": "25/09/2026 13:47",
   "resumen": {
-    "listos": 2,
+    "listos": 7,
     "verificar": 0,
-    "unidades_listas": 4,
+    "unidades_listas": 14,
     "unidades_verificar": 0,
-    "bloqueados": 18,
-    "otros_gremios": 5,
+    "bloqueados": 9,
+    "otros_gremios": 4,
     "dudas": 0,
     "sin_revisar": 0,
     "unidades_sin_revisar": 0,
-    "terminados": 9,
+    "terminados": 14,
     "inventario_total": 34,
     "detalle_total": 155,
     "preguntas_pendientes": 0,
     "viviendas": 0,
-    "zonas_comunes": 2,
+    "zonas_comunes": 7,
     "edificio": 0
   },
   "items": [
+    {
+      "tarea_id": "garaje_tubeado_emp",
+      "trabajo": "Tubeado empotrado de garaje",
+      "situacion": "LISTO",
+      "categoria": "VIABLE",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "prioridad": "P2",
+      "orden_ejecucion": 520,
+      "fase_nombre": "Instalación interior garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Cuarto Achique / Bombas"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Trasteros portal 1"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Trasteros portal 2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        }
+      ],
+      "n_celdas": 3,
+      "n_ubicaciones": 3,
+      "n_unidades": 3,
+      "estado_actual": "Pendiente: 3",
+      "motivo": "Ruta empotrada: va antes que el lucido en obra real, pero no depende de él (§4.1).",
+      "impacto_gremios": "Ruta empotrada: va antes que el lucido en obra real, pero no depende de él (§4.1).",
+      "orden": 1
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_coloc_recinto",
+      "trabajo": "Colocación alumbrado fijo (recintos)",
+      "situacion": "LISTO",
+      "categoria": "VIABLE",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "prioridad": "P2",
+      "orden_ejecucion": 560,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Instalaciones generales / vetibulo portal 1"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        }
+      ],
+      "n_celdas": 1,
+      "n_ubicaciones": 1,
+      "n_unidades": 1,
+      "estado_actual": "Pendiente: 1",
+      "motivo": "Colocación de pantallas de alumbrado fijo en recintos de garaje.",
+      "impacto_gremios": "Colocación de pantallas de alumbrado fijo en recintos de garaje.",
+      "orden": 2
+    },
+    {
+      "tarea_id": "garaje_alum_temp_coloc_recinto",
+      "trabajo": "Colocación alumbrado temporizado (recintos)",
+      "situacion": "LISTO",
+      "categoria": "VIABLE",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "prioridad": "P2",
+      "orden_ejecucion": 562,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Instalaciones generales / vetibulo portal 1"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Trasteros portal 1"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Trasteros portal 2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        }
+      ],
+      "n_celdas": 3,
+      "n_ubicaciones": 3,
+      "n_unidades": 3,
+      "estado_actual": "Pendiente: 3",
+      "motivo": "Colocación de detectores y pantallas de alumbrado temporizado en recintos.",
+      "impacto_gremios": "Colocación de detectores y pantallas de alumbrado temporizado en recintos.",
+      "orden": 3
+    },
+    {
+      "tarea_id": "garaje_emergencia_coloc_recinto",
+      "trabajo": "Colocación luminarias de emergencia (recintos)",
+      "situacion": "LISTO",
+      "categoria": "VIABLE",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "prioridad": "P2",
+      "orden_ejecucion": 564,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Instalaciones generales / vetibulo portal 1"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Trasteros portal 1"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Trasteros portal 2"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        }
+      ],
+      "n_celdas": 3,
+      "n_ubicaciones": 3,
+      "n_unidades": 3,
+      "estado_actual": "Pendiente: 3",
+      "motivo": "Colocación de luminarias de emergencia en recintos de garaje.",
+      "impacto_gremios": "Colocación de luminarias de emergencia en recintos de garaje.",
+      "orden": 4
+    },
+    {
+      "tarea_id": "garaje_cuadro_rotulacion",
+      "trabajo": "Rotulación de cuadro propio",
+      "situacion": "LISTO",
+      "categoria": "VIABLE",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "prioridad": "P2",
+      "orden_ejecucion": 595,
+      "fase_nombre": "Cuadros garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Instalaciones generales / vetibulo portal 1"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        }
+      ],
+      "n_celdas": 1,
+      "n_ubicaciones": 1,
+      "n_unidades": 1,
+      "estado_actual": "Pendiente: 1",
+      "motivo": "Solo si el cuadro es nuestro por dentro.",
+      "impacto_gremios": "Solo si el cuadro es nuestro por dentro.",
+      "orden": 5
+    },
+    {
+      "tarea_id": "garaje_tierras_derivacion",
+      "trabajo": "Derivación de tierra de cuarto técnico",
+      "situacion": "LISTO",
+      "categoria": "VIABLE",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "prioridad": "P2",
+      "orden_ejecucion": 655,
+      "fase_nombre": "Cuartos técnicos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidades": [
+            "Cuarto Achique / Bombas"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        }
+      ],
+      "n_celdas": 1,
+      "n_ubicaciones": 1,
+      "n_unidades": 1,
+      "estado_actual": "Pendiente: 1",
+      "motivo": "Una por cada cuarto técnico (achique, ventilación, aerotermia, sala de calderas...), distinta de la general.",
+      "impacto_gremios": "Una por cada cuarto técnico (achique, ventilación, aerotermia, sala de calderas...), distinta de la general.",
+      "orden": 6
+    },
     {
       "tarea_id": "garaje_puerta_alimentacion",
       "trabajo": "Alimentación de cuadro de puerta de acceso",
@@ -64,45 +292,7 @@
       "estado_actual": "Pendiente: 2",
       "motivo": "Vive en la zona Rampa (ruta de vial). Siempre nuestra.",
       "impacto_gremios": "Vive en la zona Rampa (ruta de vial). Siempre nuestra.",
-      "orden": 1
-    },
-    {
-      "tarea_id": "garaje_irve_preinstalacion",
-      "trabajo": "Preinstalación vehículo eléctrico (IRVE)",
-      "situacion": "LISTO",
-      "categoria": "VIABLE",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "prioridad": "P2",
-      "orden_ejecucion": 680,
-      "fase_nombre": "Remates garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidades": [
-            "Vial / portal 1"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidades": [
-            "Vial /portal 2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        }
-      ],
-      "n_celdas": 2,
-      "n_ubicaciones": 2,
-      "n_unidades": 2,
-      "estado_actual": "Pendiente: 2",
-      "motivo": "Un único tajo básico; cargadores concretos fuera de v1.",
-      "impacto_gremios": "Un único tajo básico; cargadores concretos fuera de v1.",
-      "orden": 2
+      "orden": 7
     }
   ],
   "detalle_items": [
@@ -121,10 +311,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Cuarto Achique / Bombas",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -148,10 +338,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -175,10 +365,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -202,10 +392,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -283,10 +473,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1).",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -337,10 +527,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1).",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -364,10 +554,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1).",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -391,10 +581,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo1 / Portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1).",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -418,10 +608,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo / Portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1).",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -445,10 +635,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo trasteros / Portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1).",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -690,19 +880,19 @@
       "unidad": "Cuarto Achique / Bombas",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado de garaje.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Ruta empotrada: va antes que el lucido en obra real, pero no depende de él (§4.1).",
+      "dependencias_cumplidas": [
         "Tabicado de garaje"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_tabicado",
           "nombre": "Tabicado de garaje",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -725,23 +915,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tabicado",
-          "nombre": "Tabicado de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -801,19 +981,19 @@
       "unidad": "Trasteros portal 1",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado de garaje.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Ruta empotrada: va antes que el lucido en obra real, pero no depende de él (§4.1).",
+      "dependencias_cumplidas": [
         "Tabicado de garaje"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_tabicado",
           "nombre": "Tabicado de garaje",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -838,19 +1018,19 @@
       "unidad": "Trasteros portal 2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado de garaje.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Ruta empotrada: va antes que el lucido en obra real, pero no depende de él (§4.1).",
+      "dependencias_cumplidas": [
         "Tabicado de garaje"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_tabicado",
           "nombre": "Tabicado de garaje",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -1021,23 +1201,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado empotrado de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado empotrado de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_emp",
-          "nombre": "Tubeado empotrado de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -1280,23 +1450,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Cuarto Achique / Bombas",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Lucido de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Lucido de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_lucido",
-          "nombre": "Lucido de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -1317,23 +1477,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Escalera",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Lucido de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Lucido de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_lucido",
-          "nombre": "Lucido de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -1354,23 +1504,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Lucido de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Lucido de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_lucido",
-          "nombre": "Lucido de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -1391,23 +1531,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Lucido de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Lucido de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_lucido",
-          "nombre": "Lucido de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -1428,23 +1558,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Lucido de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Lucido de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_lucido",
-          "nombre": "Lucido de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -1465,23 +1585,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Cuarto Achique / Bombas",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado visto de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado visto de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_visto",
-          "nombre": "Tubeado visto de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -1502,23 +1612,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Escalera",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado visto de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado visto de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_visto",
-          "nombre": "Tubeado visto de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -1539,23 +1639,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado visto de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado visto de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_visto",
-          "nombre": "Tubeado visto de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -1576,23 +1666,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado visto de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado visto de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_visto",
-          "nombre": "Tubeado visto de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -1613,23 +1693,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado visto de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado visto de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_visto",
-          "nombre": "Tubeado visto de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -1812,10 +1882,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Primera mano de pintura en recintos de garaje; habilita colocación de equipos.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -1866,10 +1936,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Primera mano de pintura en recintos de garaje; habilita colocación de equipos.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -1893,10 +1963,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Primera mano de pintura en recintos de garaje; habilita colocación de equipos.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -2001,23 +2071,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Cuarto Achique / Bombas",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -2038,23 +2098,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Escalera",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -2077,19 +2127,19 @@
       "unidad": "Instalaciones generales / vetibulo portal 1",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Colocación de pantallas de alumbrado fijo en recintos de garaje.",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 1ª mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_pintura_1_recinto",
           "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -2351,23 +2401,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Escalera",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -2390,19 +2430,19 @@
       "unidad": "Instalaciones generales / vetibulo portal 1",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Colocación de detectores y pantallas de alumbrado temporizado en recintos.",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 1ª mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_pintura_1_recinto",
           "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -2425,23 +2465,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Rellano ESCALERA",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -2464,19 +2494,19 @@
       "unidad": "Trasteros portal 1",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Colocación de detectores y pantallas de alumbrado temporizado en recintos.",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 1ª mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_pintura_1_recinto",
           "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -2501,19 +2531,19 @@
       "unidad": "Trasteros portal 2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Colocación de detectores y pantallas de alumbrado temporizado en recintos.",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 1ª mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_pintura_1_recinto",
           "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -2701,23 +2731,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Cuarto Achique / Bombas",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -2738,23 +2758,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Escalera",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -2777,19 +2787,19 @@
       "unidad": "Instalaciones generales / vetibulo portal 1",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Colocación de luminarias de emergencia en recintos de garaje.",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 1ª mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_pintura_1_recinto",
           "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -2812,23 +2822,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Rellano ESCALERA",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -2851,19 +2851,19 @@
       "unidad": "Trasteros portal 1",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Colocación de luminarias de emergencia en recintos de garaje.",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 1ª mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_pintura_1_recinto",
           "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -2888,19 +2888,19 @@
       "unidad": "Trasteros portal 2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Colocación de luminarias de emergencia en recintos de garaje.",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 1ª mano"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_pintura_1_recinto",
           "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -2923,23 +2923,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo1 / Portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -2960,23 +2950,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo / Portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -2997,23 +2977,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo trasteros / Portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -3125,133 +3095,104 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_cuadro_tubeado_cableado",
+      "trabajo": "Tubeado y cableado hasta cuadro secundario",
+      "trabajos_originales": [
+        "Tubeado y cableado hasta cuadro secundario"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 580,
+      "fase_nombre": "Cuadros garaje",
+      "display_group": "garaje_cuadro_tubeado_cableado",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Cuarto Achique / Bombas",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_cuadro_tubeado_cableado",
+      "trabajo": "Tubeado y cableado hasta cuadro secundario",
+      "trabajos_originales": [
+        "Tubeado y cableado hasta cuadro secundario"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 580,
+      "fase_nombre": "Cuadros garaje",
+      "display_group": "garaje_cuadro_tubeado_cableado",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Instalaciones generales / vetibulo portal 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "garaje_cuadro_colocacion",
+      "trabajo": "Colocación y mecanizado de cuadro propio",
+      "trabajos_originales": [
+        "Colocación y mecanizado de cuadro propio"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 585,
+      "fase_nombre": "Cuadros garaje",
+      "display_group": "garaje_cuadro_colocacion",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Cuarto Achique / Bombas",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "garaje_cuadro_tubeado_cableado",
-      "trabajo": "Tubeado y cableado hasta cuadro secundario",
-      "trabajos_originales": [
+      "dependencias_cumplidas": [
         "Tubeado y cableado hasta cuadro secundario"
       ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 580,
-      "fase_nombre": "Cuadros garaje",
-      "display_group": "garaje_cuadro_tubeado_cableado",
-      "edificio": "Garaje 1",
-      "planta": "S-1",
-      "unidad": "Cuarto Achique / Bombas",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado de garaje.",
-      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [
-        "Tabicado de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tabicado",
-          "nombre": "Tabicado de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "garaje_cuadro_tubeado_cableado",
-      "trabajo": "Tubeado y cableado hasta cuadro secundario",
-      "trabajos_originales": [
-        "Tubeado y cableado hasta cuadro secundario"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 580,
-      "fase_nombre": "Cuadros garaje",
-      "display_group": "garaje_cuadro_tubeado_cableado",
-      "edificio": "Garaje 1",
-      "planta": "S-1",
-      "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado de garaje.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tabicado",
-          "nombre": "Tabicado de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "garaje_cuadro_colocacion",
-      "trabajo": "Colocación y mecanizado de cuadro propio",
-      "trabajos_originales": [
-        "Colocación y mecanizado de cuadro propio"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 585,
-      "fase_nombre": "Cuadros garaje",
-      "display_group": "garaje_cuadro_colocacion",
-      "edificio": "Garaje 1",
-      "planta": "S-1",
-      "unidad": "Cuarto Achique / Bombas",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado y cableado hasta cuadro secundario, Pintura de garaje (recintos) — 1ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado y cableado hasta cuadro secundario",
         "Pintura de garaje (recintos) — 1ª mano"
       ],
       "dependencias_detalle": [
         {
           "id": "garaje_cuadro_tubeado_cableado",
           "nombre": "Tubeado y cableado hasta cuadro secundario",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         },
         {
           "id": "garaje_pintura_1_recinto",
@@ -3281,31 +3222,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado y cableado hasta cuadro secundario, Pintura de garaje (recintos) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado y cableado hasta cuadro secundario",
-        "Pintura de garaje (recintos) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_cuadro_tubeado_cableado",
-          "nombre": "Tubeado y cableado hasta cuadro secundario",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -3380,10 +3303,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Segunda mano de pintura en recintos de garaje; remate previo a embornado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -3434,10 +3357,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Segunda mano de pintura en recintos de garaje; remate previo a embornado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -3461,10 +3384,10 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Segunda mano de pintura en recintos de garaje; remate previo a embornado.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -3614,31 +3537,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio, Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación y mecanizado de cuadro propio",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_cuadro_colocacion",
-          "nombre": "Colocación y mecanizado de cuadro propio",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -3698,19 +3603,19 @@
       "unidad": "Instalaciones generales / vetibulo portal 1",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Embornado de cuadro propio.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Solo si el cuadro es nuestro por dentro.",
+      "dependencias_cumplidas": [
         "Embornado de cuadro propio"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_cuadro_embornado",
           "nombre": "Embornado de cuadro propio",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -3770,23 +3675,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación y mecanizado de cuadro propio"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_cuadro_colocacion",
-          "nombre": "Colocación y mecanizado de cuadro propio",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -3807,31 +3702,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Cuarto Achique / Bombas",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado fijo (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_alum_fijo_coloc_recinto",
-          "nombre": "Colocación alumbrado fijo (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -3852,31 +3729,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Escalera",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado fijo (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_alum_fijo_coloc_recinto",
-          "nombre": "Colocación alumbrado fijo (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -3897,31 +3756,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado fijo (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_alum_fijo_coloc_recinto",
-          "nombre": "Colocación alumbrado fijo (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -3987,31 +3828,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo1 / Portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado fijo (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_alum_fijo_coloc_recinto",
-          "nombre": "Colocación alumbrado fijo (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -4032,31 +3855,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo / Portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado fijo (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_alum_fijo_coloc_recinto",
-          "nombre": "Colocación alumbrado fijo (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -4077,31 +3882,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo trasteros / Portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado fijo (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_alum_fijo_coloc_recinto",
-          "nombre": "Colocación alumbrado fijo (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -4221,31 +4008,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Escalera",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado temporizado (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_alum_temp_coloc_recinto",
-          "nombre": "Colocación alumbrado temporizado (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -4269,11 +4038,12 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (recintos), Pintura de garaje (recintos) — 2ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado temporizado (recintos)",
+      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (recintos).",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 2ª mano"
+      ],
+      "dependencias_bloqueantes": [
+        "Colocación alumbrado temporizado (recintos)"
       ],
       "dependencias_detalle": [
         {
@@ -4286,9 +4056,9 @@
         {
           "id": "garaje_pintura_2_recinto",
           "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -4311,31 +4081,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Rellano ESCALERA",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado temporizado (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_alum_temp_coloc_recinto",
-          "nombre": "Colocación alumbrado temporizado (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -4359,11 +4111,12 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (recintos), Pintura de garaje (recintos) — 2ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado temporizado (recintos)",
+      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (recintos).",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 2ª mano"
+      ],
+      "dependencias_bloqueantes": [
+        "Colocación alumbrado temporizado (recintos)"
       ],
       "dependencias_detalle": [
         {
@@ -4376,9 +4129,9 @@
         {
           "id": "garaje_pintura_2_recinto",
           "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -4404,11 +4157,12 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (recintos), Pintura de garaje (recintos) — 2ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado temporizado (recintos)",
+      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (recintos).",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 2ª mano"
+      ],
+      "dependencias_bloqueantes": [
+        "Colocación alumbrado temporizado (recintos)"
       ],
       "dependencias_detalle": [
         {
@@ -4421,9 +4175,9 @@
         {
           "id": "garaje_pintura_2_recinto",
           "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -4635,31 +4389,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Cuarto Achique / Bombas",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación luminarias de emergencia (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_emergencia_coloc_recinto",
-          "nombre": "Colocación luminarias de emergencia (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -4680,31 +4416,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Escalera",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación luminarias de emergencia (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_emergencia_coloc_recinto",
-          "nombre": "Colocación luminarias de emergencia (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -4725,31 +4443,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación luminarias de emergencia (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_emergencia_coloc_recinto",
-          "nombre": "Colocación luminarias de emergencia (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -4770,31 +4470,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Rellano ESCALERA",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación luminarias de emergencia (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_emergencia_coloc_recinto",
-          "nombre": "Colocación luminarias de emergencia (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -4818,11 +4500,12 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos), Pintura de garaje (recintos) — 2ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación luminarias de emergencia (recintos)",
+      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos).",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 2ª mano"
+      ],
+      "dependencias_bloqueantes": [
+        "Colocación luminarias de emergencia (recintos)"
       ],
       "dependencias_detalle": [
         {
@@ -4835,9 +4518,9 @@
         {
           "id": "garaje_pintura_2_recinto",
           "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -4863,11 +4546,12 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos), Pintura de garaje (recintos) — 2ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación luminarias de emergencia (recintos)",
+      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos).",
+      "dependencias_cumplidas": [
         "Pintura de garaje (recintos) — 2ª mano"
+      ],
+      "dependencias_bloqueantes": [
+        "Colocación luminarias de emergencia (recintos)"
       ],
       "dependencias_detalle": [
         {
@@ -4880,9 +4564,9 @@
         {
           "id": "garaje_pintura_2_recinto",
           "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -4905,31 +4589,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo1 / Portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación luminarias de emergencia (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_emergencia_coloc_recinto",
-          "nombre": "Colocación luminarias de emergencia (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -4950,31 +4616,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo / Portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación luminarias de emergencia (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_emergencia_coloc_recinto",
-          "nombre": "Colocación luminarias de emergencia (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -4995,31 +4643,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo trasteros / Portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos), Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación luminarias de emergencia (recintos)",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_emergencia_coloc_recinto",
-          "nombre": "Colocación luminarias de emergencia (recintos)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -5139,31 +4769,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación de enchufe de cuarto técnico, Pintura de garaje (recintos) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación de enchufe de cuarto técnico",
-        "Pintura de garaje (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_enchufe_coloc",
-          "nombre": "Colocación de enchufe de cuarto técnico",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura de garaje (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -5186,19 +4798,19 @@
       "unidad": "Cuarto Achique / Bombas",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado de garaje.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Una por cada cuarto técnico (achique, ventilación, aerotermia, sala de calderas...), distinta de la general.",
+      "dependencias_cumplidas": [
         "Tabicado de garaje"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_tabicado",
           "nombre": "Tabicado de garaje",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -5221,23 +4833,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Instalaciones generales / vetibulo portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado de garaje.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado de garaje"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tabicado",
-          "nombre": "Tabicado de garaje",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -5386,23 +4988,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vial / portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Un único tajo básico; cargadores concretos fuera de v1.",
-      "dependencias_cumplidas": [
-        "Tubeado de viales"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_vial",
-          "nombre": "Tubeado de viales",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -5423,23 +5015,13 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vial /portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Un único tajo básico; cargadores concretos fuera de v1.",
-      "dependencias_cumplidas": [
-        "Tubeado de viales"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_vial",
-          "nombre": "Tubeado de viales",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
@@ -5502,6 +5084,400 @@
   ],
   "inventario": [
     {
+      "grupo_id": "garaje_tubeado_emp",
+      "trabajo": "Tubeado empotrado de garaje",
+      "propiedad": "propio",
+      "orden_ejecucion": 520,
+      "fase_nombre": "Instalación interior garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Cuarto Achique / Bombas",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Instalaciones generales / vetibulo portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Rellano ESCALERA",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 1",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 2",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo1 / Portal 2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo / Portal 1",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo trasteros / Portal 2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        }
+      ],
+      "subtajos": [
+        "Tubeado empotrado de garaje"
+      ],
+      "seccion": "VIABLE",
+      "seccion_nombre": "Tajos viables",
+      "n_ubicaciones": 8,
+      "estado_actual": "Pendiente: 7 · X: 1",
+      "resumen_categorias": {
+        "VIABLE": 3,
+        "TERMINADO": 1,
+        "BLOQUEADO": 4
+      },
+      "motivo": "Dependencias pendientes: Tabicado de garaje. Ruta empotrada: va antes que el lucido en obra real, pero no depende de él (§4.1). Terminado según la última confirmación válida.",
+      "orden_inventario": 1
+    },
+    {
+      "grupo_id": "garaje_alum_fijo_coloc_recinto",
+      "trabajo": "Colocación alumbrado fijo (recintos)",
+      "propiedad": "propio",
+      "orden_ejecucion": 560,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Cuarto Achique / Bombas",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Escalera",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Instalaciones generales / vetibulo portal 1",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Rellano ESCALERA",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo1 / Portal 2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo / Portal 1",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo trasteros / Portal 2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        }
+      ],
+      "subtajos": [
+        "Colocación alumbrado fijo (recintos)"
+      ],
+      "seccion": "VIABLE",
+      "seccion_nombre": "Tajos viables",
+      "n_ubicaciones": 7,
+      "estado_actual": "Pendiente: 5 · X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2,
+        "VIABLE": 1,
+        "BLOQUEADO": 4
+      },
+      "motivo": "Colocación de pantallas de alumbrado fijo en recintos de garaje. Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano. Terminado según la última confirmación válida.",
+      "orden_inventario": 2
+    },
+    {
+      "grupo_id": "garaje_alum_temp_coloc_recinto",
+      "trabajo": "Colocación alumbrado temporizado (recintos)",
+      "propiedad": "propio",
+      "orden_ejecucion": 562,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Cuarto Achique / Bombas",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Escalera",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Instalaciones generales / vetibulo portal 1",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Rellano ESCALERA",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 1",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 2",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo1 / Portal 2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo / Portal 1",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo trasteros / Portal 2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        }
+      ],
+      "subtajos": [
+        "Colocación alumbrado temporizado (recintos)"
+      ],
+      "seccion": "VIABLE",
+      "seccion_nombre": "Tajos viables",
+      "n_ubicaciones": 9,
+      "estado_actual": "Pendiente: 7 · X: 2",
+      "resumen_categorias": {
+        "BLOQUEADO": 4,
+        "TERMINADO": 2,
+        "VIABLE": 3
+      },
+      "motivo": "Colocación de detectores y pantallas de alumbrado temporizado en recintos. Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano. Terminado según la última confirmación válida.",
+      "orden_inventario": 3
+    },
+    {
+      "grupo_id": "garaje_emergencia_coloc_recinto",
+      "trabajo": "Colocación luminarias de emergencia (recintos)",
+      "propiedad": "propio",
+      "orden_ejecucion": 564,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Cuarto Achique / Bombas",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Escalera",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Instalaciones generales / vetibulo portal 1",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Rellano ESCALERA",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 1",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 2",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo1 / Portal 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo / Portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vestibulo trasteros / Portal 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Colocación luminarias de emergencia (recintos)"
+      ],
+      "seccion": "VIABLE",
+      "seccion_nombre": "Tajos viables",
+      "n_ubicaciones": 9,
+      "estado_actual": "Pendiente: 3 · X: 6",
+      "resumen_categorias": {
+        "TERMINADO": 6,
+        "VIABLE": 3
+      },
+      "motivo": "Colocación de luminarias de emergencia en recintos de garaje. Terminado según la última confirmación válida.",
+      "orden_inventario": 4
+    },
+    {
+      "grupo_id": "garaje_cuadro_rotulacion",
+      "trabajo": "Rotulación de cuadro propio",
+      "propiedad": "propio",
+      "orden_ejecucion": 595,
+      "fase_nombre": "Cuadros garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Cuarto Achique / Bombas",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Instalaciones generales / vetibulo portal 1",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        }
+      ],
+      "subtajos": [
+        "Rotulación de cuadro propio"
+      ],
+      "seccion": "VIABLE",
+      "seccion_nombre": "Tajos viables",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
+      "resumen_categorias": {
+        "BLOQUEADO": 1,
+        "VIABLE": 1
+      },
+      "motivo": "Dependencias pendientes: Embornado de cuadro propio. Solo si el cuadro es nuestro por dentro.",
+      "orden_inventario": 5
+    },
+    {
+      "grupo_id": "garaje_tierras_derivacion",
+      "trabajo": "Derivación de tierra de cuarto técnico",
+      "propiedad": "propio",
+      "orden_ejecucion": 655,
+      "fase_nombre": "Cuartos técnicos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Cuarto Achique / Bombas",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Instalaciones generales / vetibulo portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Derivación de tierra de cuarto técnico"
+      ],
+      "seccion": "VIABLE",
+      "seccion_nombre": "Tajos viables",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 1 · X: 1",
+      "resumen_categorias": {
+        "VIABLE": 1,
+        "TERMINADO": 1
+      },
+      "motivo": "Terminado según la última confirmación válida. Una por cada cuarto técnico (achique, ventilación, aerotermia, sala de calderas...), distinta de la general.",
+      "orden_inventario": 6
+    },
+    {
       "grupo_id": "garaje_puerta_alimentacion",
       "trabajo": "Alimentación de cuadro de puerta de acceso",
       "propiedad": "propio",
@@ -5534,119 +5510,7 @@
         "VIABLE": 2
       },
       "motivo": "Vive en la zona Rampa (ruta de vial). Siempre nuestra.",
-      "orden_inventario": 1
-    },
-    {
-      "grupo_id": "garaje_irve_preinstalacion",
-      "trabajo": "Preinstalación vehículo eléctrico (IRVE)",
-      "propiedad": "propio",
-      "orden_ejecucion": 680,
-      "fase_nombre": "Remates garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vial / portal 1",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vial /portal 2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        }
-      ],
-      "subtajos": [
-        "Preinstalación vehículo eléctrico (IRVE)"
-      ],
-      "seccion": "VIABLE",
-      "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
-      "resumen_categorias": {
-        "VIABLE": 2
-      },
-      "motivo": "Un único tajo básico; cargadores concretos fuera de v1.",
-      "orden_inventario": 2
-    },
-    {
-      "grupo_id": "garaje_tubeado_emp",
-      "trabajo": "Tubeado empotrado de garaje",
-      "propiedad": "propio",
-      "orden_ejecucion": 520,
-      "fase_nombre": "Instalación interior garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Rellano ESCALERA",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo1 / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo / Portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo trasteros / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Tubeado empotrado de garaje"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 8,
-      "estado_actual": "Pendiente: 8",
-      "resumen_categorias": {
-        "BLOQUEADO": 8
-      },
-      "motivo": "Dependencias pendientes: Tabicado de garaje.",
-      "orden_inventario": 3
+      "orden_inventario": 7
     },
     {
       "grupo_id": "garaje_cableado_emp",
@@ -5666,8 +5530,8 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
@@ -5718,362 +5582,13 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 8,
-      "estado_actual": "Pendiente: 8",
+      "estado_actual": "Pendiente: 7 · X: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 8
+        "BLOQUEADO": 7,
+        "TERMINADO": 1
       },
-      "motivo": "Dependencias pendientes: Tubeado empotrado de garaje.",
-      "orden_inventario": 4
-    },
-    {
-      "grupo_id": "garaje_tubeado_visto",
-      "trabajo": "Tubeado visto de garaje",
-      "propiedad": "propio",
-      "orden_ejecucion": 530,
-      "fase_nombre": "Instalación interior garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Escalera",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Tubeado visto de garaje"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 5,
-      "estado_actual": "Pendiente: 5",
-      "resumen_categorias": {
-        "BLOQUEADO": 5
-      },
-      "motivo": "Dependencias pendientes: Lucido de garaje.",
-      "orden_inventario": 5
-    },
-    {
-      "grupo_id": "garaje_cableado_visto",
-      "trabajo": "Cableado visto de garaje",
-      "propiedad": "propio",
-      "orden_ejecucion": 535,
-      "fase_nombre": "Instalación interior garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Escalera",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Cableado visto de garaje"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 5,
-      "estado_actual": "Pendiente: 5",
-      "resumen_categorias": {
-        "BLOQUEADO": 5
-      },
-      "motivo": "Dependencias pendientes: Tubeado visto de garaje.",
-      "orden_inventario": 6
-    },
-    {
-      "grupo_id": "garaje_alum_fijo_coloc_recinto",
-      "trabajo": "Colocación alumbrado fijo (recintos)",
-      "propiedad": "propio",
-      "orden_ejecucion": 560,
-      "fase_nombre": "Equipos garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Escalera",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Rellano ESCALERA",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo1 / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo / Portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo trasteros / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Colocación alumbrado fijo (recintos)"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 7,
-      "estado_actual": "Pendiente: 7",
-      "resumen_categorias": {
-        "BLOQUEADO": 7
-      },
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
-      "orden_inventario": 7
-    },
-    {
-      "grupo_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "propiedad": "propio",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Escalera",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Rellano ESCALERA",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo1 / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo / Portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo trasteros / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 9,
-      "estado_actual": "Pendiente: 9",
-      "resumen_categorias": {
-        "BLOQUEADO": 9
-      },
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "motivo": "Dependencias pendientes: Tubeado empotrado de garaje. Terminado según la última confirmación válida.",
       "orden_inventario": 8
-    },
-    {
-      "grupo_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "propiedad": "propio",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Escalera",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Rellano ESCALERA",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo1 / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo / Portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vestibulo trasteros / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 9,
-      "estado_actual": "Pendiente: 9",
-      "resumen_categorias": {
-        "BLOQUEADO": 9
-      },
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
-      "orden_inventario": 9
     },
     {
       "grupo_id": "garaje_enchufe_coloc",
@@ -6093,8 +5608,8 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -6103,47 +5618,13 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "estado_actual": "Pendiente: 1 · X: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 2
+        "BLOQUEADO": 1,
+        "TERMINADO": 1
       },
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
-      "orden_inventario": 10
-    },
-    {
-      "grupo_id": "garaje_cuadro_tubeado_cableado",
-      "trabajo": "Tubeado y cableado hasta cuadro secundario",
-      "propiedad": "propio",
-      "orden_ejecucion": 580,
-      "fase_nombre": "Cuadros garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Tubeado y cableado hasta cuadro secundario"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
-      "resumen_categorias": {
-        "BLOQUEADO": 2
-      },
-      "motivo": "Dependencias pendientes: Tabicado de garaje.",
-      "orden_inventario": 11
+      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano. Terminado según la última confirmación válida.",
+      "orden_inventario": 9
     },
     {
       "grupo_id": "garaje_cuadro_colocacion",
@@ -6163,8 +5644,8 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -6173,12 +5654,13 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "estado_actual": "Pendiente: 1 · X: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 2
+        "BLOQUEADO": 1,
+        "TERMINADO": 1
       },
-      "motivo": "Dependencias pendientes: Tubeado y cableado hasta cuadro secundario, Pintura de garaje (recintos) — 1ª mano.",
-      "orden_inventario": 12
+      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano. Terminado según la última confirmación válida.",
+      "orden_inventario": 10
     },
     {
       "grupo_id": "garaje_cuadro_embornado",
@@ -6198,8 +5680,8 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -6208,47 +5690,13 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "estado_actual": "Pendiente: 1 · X: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 2
+        "BLOQUEADO": 1,
+        "TERMINADO": 1
       },
-      "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio, Pintura de garaje (recintos) — 2ª mano.",
-      "orden_inventario": 13
-    },
-    {
-      "grupo_id": "garaje_cuadro_rotulacion",
-      "trabajo": "Rotulación de cuadro propio",
-      "propiedad": "propio",
-      "orden_ejecucion": 595,
-      "fase_nombre": "Cuadros garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Rotulación de cuadro propio"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
-      "resumen_categorias": {
-        "BLOQUEADO": 2
-      },
-      "motivo": "Dependencias pendientes: Embornado de cuadro propio.",
-      "orden_inventario": 14
+      "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio, Pintura de garaje (recintos) — 2ª mano. Terminado según la última confirmación válida.",
+      "orden_inventario": 11
     },
     {
       "grupo_id": "garaje_cuadro_equipo_tubeado_cableado",
@@ -6268,8 +5716,8 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -6278,12 +5726,13 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "estado_actual": "Pendiente: 1 · X: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 2
+        "BLOQUEADO": 1,
+        "TERMINADO": 1
       },
-      "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio.",
-      "orden_inventario": 15
+      "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio. Terminado según la última confirmación válida.",
+      "orden_inventario": 12
     },
     {
       "grupo_id": "garaje_alum_fijo_embornado_recinto",
@@ -6296,22 +5745,22 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Escalera",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
@@ -6324,22 +5773,22 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo1 / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo / Portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo trasteros / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -6348,12 +5797,13 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 7,
-      "estado_actual": "Pendiente: 7",
+      "estado_actual": "Pendiente: 1 · X: 6",
       "resumen_categorias": {
-        "BLOQUEADO": 7
+        "TERMINADO": 6,
+        "BLOQUEADO": 1
       },
-      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura de garaje (recintos) — 2ª mano.",
-      "orden_inventario": 16
+      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura de garaje (recintos) — 2ª mano. Terminado según la última confirmación válida.",
+      "orden_inventario": 13
     },
     {
       "grupo_id": "garaje_alum_temp_embornado_recinto",
@@ -6373,8 +5823,8 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Escalera",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
@@ -6387,8 +5837,8 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Rellano ESCALERA",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
@@ -6432,12 +5882,13 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 9,
-      "estado_actual": "Pendiente: 9",
+      "estado_actual": "Pendiente: 7 · X: 2",
       "resumen_categorias": {
-        "BLOQUEADO": 9
+        "BLOQUEADO": 7,
+        "TERMINADO": 2
       },
-      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (recintos), Pintura de garaje (recintos) — 2ª mano.",
-      "orden_inventario": 17
+      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (recintos), Pintura de garaje (recintos) — 2ª mano. Dependencias pendientes: Colocación alumbrado temporizado (recintos). Terminado según la última confirmación válida.",
+      "orden_inventario": 14
     },
     {
       "grupo_id": "garaje_emergencia_embornado_recinto",
@@ -6450,29 +5901,29 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Escalera",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Rellano ESCALERA",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
@@ -6492,22 +5943,22 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo1 / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo / Portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo trasteros / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -6516,12 +5967,13 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 9,
-      "estado_actual": "Pendiente: 9",
+      "estado_actual": "Pendiente: 2 · X: 7",
       "resumen_categorias": {
-        "BLOQUEADO": 9
+        "TERMINADO": 7,
+        "BLOQUEADO": 2
       },
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos), Pintura de garaje (recintos) — 2ª mano.",
-      "orden_inventario": 18
+      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos). Terminado según la última confirmación válida.",
+      "orden_inventario": 15
     },
     {
       "grupo_id": "garaje_enchufe_embornado",
@@ -6541,8 +5993,8 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -6551,96 +6003,13 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "estado_actual": "Pendiente: 1 · X: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 2
+        "BLOQUEADO": 1,
+        "TERMINADO": 1
       },
-      "motivo": "Dependencias pendientes: Colocación de enchufe de cuarto técnico, Pintura de garaje (recintos) — 2ª mano.",
-      "orden_inventario": 19
-    },
-    {
-      "grupo_id": "garaje_tierras_derivacion",
-      "trabajo": "Derivación de tierra de cuarto técnico",
-      "propiedad": "propio",
-      "orden_ejecucion": 655,
-      "fase_nombre": "Cuartos técnicos garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Derivación de tierra de cuarto técnico"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
-      "resumen_categorias": {
-        "BLOQUEADO": 2
-      },
-      "motivo": "Dependencias pendientes: Tabicado de garaje.",
-      "orden_inventario": 20
-    },
-    {
-      "grupo_id": "garaje_tabicado",
-      "trabajo": "Tabicado de garaje",
-      "propiedad": "externo",
-      "orden_ejecucion": 500,
-      "fase_nombre": "Obra civil garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Cuarto Achique / Bombas",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 1",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Trasteros portal 2",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
-        }
-      ],
-      "subtajos": [
-        "Tabicado de garaje"
-      ],
-      "seccion": "OTROS_GREMIOS",
-      "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 4,
-      "estado_actual": "Pendiente: 4",
-      "resumen_categorias": {
-        "OTROS_GREMIOS": 4
-      },
-      "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
-      "orden_inventario": 21
+      "motivo": "Dependencias pendientes: Colocación de enchufe de cuarto técnico, Pintura de garaje (recintos) — 2ª mano. Terminado según la última confirmación válida.",
+      "orden_inventario": 16
     },
     {
       "grupo_id": "garaje_lucido",
@@ -6667,8 +6036,8 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
@@ -6681,36 +6050,36 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Trasteros portal 1",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Trasteros portal 2",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo1 / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo / Portal 1",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo trasteros / Portal 2",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -6719,12 +6088,13 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 9,
-      "estado_actual": "Pendiente: 9",
+      "estado_actual": "Pendiente: 3 · X: 6",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 9
+        "OTROS_GREMIOS": 3,
+        "TERMINADO": 6
       },
-      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1).",
-      "orden_inventario": 22
+      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1). Terminado según la última confirmación válida.",
+      "orden_inventario": 17
     },
     {
       "grupo_id": "garaje_falso_techo",
@@ -6801,7 +6171,7 @@
         "OTROS_GREMIOS": 8
       },
       "motivo": "Si aplica en esa zona (trasteros/cuartos técnicos/rellano); rama independiente de lucido.",
-      "orden_inventario": 23
+      "orden_inventario": 18
     },
     {
       "grupo_id": "garaje_pintura",
@@ -6842,15 +6212,15 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Instalaciones generales / vetibulo portal 1",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
@@ -6870,29 +6240,29 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Trasteros portal 1",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Trasteros portal 1",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Trasteros portal 2",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Trasteros portal 2",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "Garaje 1",
@@ -6944,12 +6314,13 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 18,
-      "estado_actual": "Pendiente: 18",
+      "estado_actual": "Pendiente: 12 · X: 6",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 18
+        "OTROS_GREMIOS": 12,
+        "TERMINADO": 6
       },
-      "motivo": "Primera mano de pintura en recintos de garaje; habilita colocación de equipos. Segunda mano de pintura en recintos de garaje; remate previo a embornado.",
-      "orden_inventario": 24
+      "motivo": "Primera mano de pintura en recintos de garaje; habilita colocación de equipos. Segunda mano de pintura en recintos de garaje; remate previo a embornado. Terminado según la última confirmación válida.",
+      "orden_inventario": 19
     },
     {
       "grupo_id": "garaje_puerta_mecanizado",
@@ -6984,7 +6355,168 @@
         "OTROS_GREMIOS": 2
       },
       "motivo": "Puede ser del instalador de la puerta; en catálogo pero no marcado por defecto.",
-      "orden_inventario": 25
+      "orden_inventario": 20
+    },
+    {
+      "grupo_id": "garaje_tabicado",
+      "trabajo": "Tabicado de garaje",
+      "propiedad": "externo",
+      "orden_ejecucion": 500,
+      "fase_nombre": "Obra civil garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Cuarto Achique / Bombas",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Instalaciones generales / vetibulo portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Tabicado de garaje"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 4,
+      "estado_actual": "X: 4",
+      "resumen_categorias": {
+        "TERMINADO": 4
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 21
+    },
+    {
+      "grupo_id": "garaje_tubeado_visto",
+      "trabajo": "Tubeado visto de garaje",
+      "propiedad": "propio",
+      "orden_ejecucion": 530,
+      "fase_nombre": "Instalación interior garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Cuarto Achique / Bombas",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Escalera",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Instalaciones generales / vetibulo portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Tubeado visto de garaje"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 5,
+      "estado_actual": "X: 5",
+      "resumen_categorias": {
+        "TERMINADO": 5
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 22
+    },
+    {
+      "grupo_id": "garaje_cableado_visto",
+      "trabajo": "Cableado visto de garaje",
+      "propiedad": "propio",
+      "orden_ejecucion": 535,
+      "fase_nombre": "Instalación interior garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Cuarto Achique / Bombas",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Escalera",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Instalaciones generales / vetibulo portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Cableado visto de garaje"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 5,
+      "estado_actual": "X: 5",
+      "resumen_categorias": {
+        "TERMINADO": 5
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 23
     },
     {
       "grupo_id": "garaje_tubeado_vial",
@@ -7019,7 +6551,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 26
+      "orden_inventario": 24
     },
     {
       "grupo_id": "garaje_cableado_vial",
@@ -7054,7 +6586,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 27
+      "orden_inventario": 25
     },
     {
       "grupo_id": "garaje_alum_fijo_coloc_vial",
@@ -7089,7 +6621,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 28
+      "orden_inventario": 26
     },
     {
       "grupo_id": "garaje_alum_temp_coloc_vial",
@@ -7124,7 +6656,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 29
+      "orden_inventario": 27
     },
     {
       "grupo_id": "garaje_emergencia_coloc_vial",
@@ -7159,7 +6691,42 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 30
+      "orden_inventario": 28
+    },
+    {
+      "grupo_id": "garaje_cuadro_tubeado_cableado",
+      "trabajo": "Tubeado y cableado hasta cuadro secundario",
+      "propiedad": "propio",
+      "orden_ejecucion": 580,
+      "fase_nombre": "Cuadros garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Cuarto Achique / Bombas",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Instalaciones generales / vetibulo portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Tubeado y cableado hasta cuadro secundario"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 29
     },
     {
       "grupo_id": "garaje_alum_fijo_embornado_vial",
@@ -7194,7 +6761,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 31
+      "orden_inventario": 30
     },
     {
       "grupo_id": "garaje_alum_temp_embornado_vial",
@@ -7229,7 +6796,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 32
+      "orden_inventario": 31
     },
     {
       "grupo_id": "garaje_emergencia_embornado_vial",
@@ -7255,6 +6822,41 @@
       ],
       "subtajos": [
         "Embornado luminarias de emergencia (viales)"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 32
+    },
+    {
+      "grupo_id": "garaje_irve_preinstalacion",
+      "trabajo": "Preinstalación vehículo eléctrico (IRVE)",
+      "propiedad": "propio",
+      "orden_ejecucion": 680,
+      "fase_nombre": "Remates garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vial / portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vial /portal 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Preinstalación vehículo eléctrico (IRVE)"
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
@@ -7310,39 +6912,12 @@
       "trabajo": "Pintura de garaje (recintos) — 1ª mano",
       "estado_actual": "Pendiente",
       "propiedad": "externo",
-      "desbloquea": 29,
+      "desbloquea": 10,
       "tajos_afectados": [
         "Colocación alumbrado fijo (recintos)",
         "Colocación alumbrado temporizado (recintos)",
         "Colocación de enchufe de cuarto técnico",
-        "Colocación luminarias de emergencia (recintos)",
         "Colocación y mecanizado de cuadro propio"
-      ]
-    },
-    {
-      "tarea_id": "garaje_pintura_2_recinto",
-      "trabajo": "Pintura de garaje (recintos) — 2ª mano",
-      "estado_actual": "Pendiente",
-      "propiedad": "externo",
-      "desbloquea": 29,
-      "tajos_afectados": [
-        "Embornado alumbrado fijo (recintos)",
-        "Embornado alumbrado temporizado (recintos)",
-        "Embornado de cuadro propio",
-        "Embornado de enchufe de cuarto técnico",
-        "Embornado luminarias de emergencia (recintos)"
-      ]
-    },
-    {
-      "tarea_id": "garaje_tabicado",
-      "trabajo": "Tabicado de garaje",
-      "estado_actual": "Pendiente",
-      "propiedad": "externo",
-      "desbloquea": 12,
-      "tajos_afectados": [
-        "Derivación de tierra de cuarto técnico",
-        "Tubeado empotrado de garaje",
-        "Tubeado y cableado hasta cuadro secundario"
       ]
     },
     {
@@ -7350,19 +6925,22 @@
       "trabajo": "Colocación alumbrado temporizado (recintos)",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 9,
+      "desbloquea": 7,
       "tajos_afectados": [
         "Embornado alumbrado temporizado (recintos)"
       ]
     },
     {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
+      "tarea_id": "garaje_pintura_2_recinto",
+      "trabajo": "Pintura de garaje (recintos) — 2ª mano",
       "estado_actual": "Pendiente",
-      "propiedad": "propio",
-      "desbloquea": 9,
+      "propiedad": "externo",
+      "desbloquea": 7,
       "tajos_afectados": [
-        "Embornado luminarias de emergencia (recintos)"
+        "Embornado alumbrado fijo (recintos)",
+        "Embornado alumbrado temporizado (recintos)",
+        "Embornado de cuadro propio",
+        "Embornado de enchufe de cuarto técnico"
       ]
     },
     {
@@ -7370,39 +6948,29 @@
       "trabajo": "Tubeado empotrado de garaje",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 8,
+      "desbloquea": 7,
       "tajos_afectados": [
         "Cableado empotrado de garaje"
       ]
     },
     {
-      "tarea_id": "garaje_alum_fijo_coloc_recinto",
-      "trabajo": "Colocación alumbrado fijo (recintos)",
-      "estado_actual": "Pendiente",
-      "propiedad": "propio",
-      "desbloquea": 7,
-      "tajos_afectados": [
-        "Embornado alumbrado fijo (recintos)"
-      ]
-    },
-    {
-      "tarea_id": "garaje_lucido",
-      "trabajo": "Lucido de garaje",
-      "estado_actual": "Pendiente",
+      "tarea_id": "garaje_tabicado",
+      "trabajo": "Tabicado de garaje",
+      "estado_actual": "X",
       "propiedad": "externo",
-      "desbloquea": 5,
+      "desbloquea": 4,
       "tajos_afectados": [
-        "Tubeado visto de garaje"
+        "Tubeado empotrado de garaje"
       ]
     },
     {
-      "tarea_id": "garaje_tubeado_visto",
-      "trabajo": "Tubeado visto de garaje",
-      "estado_actual": "Pendiente",
+      "tarea_id": "garaje_emergencia_coloc_recinto",
+      "trabajo": "Colocación luminarias de emergencia (recintos)",
+      "estado_actual": "X",
       "propiedad": "propio",
-      "desbloquea": 5,
+      "desbloquea": 2,
       "tajos_afectados": [
-        "Cableado visto de garaje"
+        "Embornado luminarias de emergencia (recintos)"
       ]
     },
     {
@@ -7410,10 +6978,20 @@
       "trabajo": "Colocación y mecanizado de cuadro propio",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 4,
+      "desbloquea": 2,
       "tajos_afectados": [
         "Embornado de cuadro propio",
         "Tubeado y cableado del cuadro al equipo que controla"
+      ]
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_coloc_recinto",
+      "trabajo": "Colocación alumbrado fijo (recintos)",
+      "estado_actual": "X",
+      "propiedad": "propio",
+      "desbloquea": 1,
+      "tajos_afectados": [
+        "Embornado alumbrado fijo (recintos)"
       ]
     },
     {
@@ -7421,7 +6999,7 @@
       "trabajo": "Colocación de enchufe de cuarto técnico",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 2,
+      "desbloquea": 1,
       "tajos_afectados": [
         "Embornado de enchufe de cuarto técnico"
       ]
@@ -7431,19 +7009,9 @@
       "trabajo": "Embornado de cuadro propio",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 2,
+      "desbloquea": 1,
       "tajos_afectados": [
         "Rotulación de cuadro propio"
-      ]
-    },
-    {
-      "tarea_id": "garaje_cuadro_tubeado_cableado",
-      "trabajo": "Tubeado y cableado hasta cuadro secundario",
-      "estado_actual": "Pendiente",
-      "propiedad": "propio",
-      "desbloquea": 2,
-      "tajos_afectados": [
-        "Colocación y mecanizado de cuadro propio"
       ]
     }
   ],
