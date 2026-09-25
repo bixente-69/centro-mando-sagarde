@@ -104,8 +104,21 @@ si building/floor/unit no casan 1:1 — verificar).
   bug real (`snapshot_garaje` llevaba el id del tajo en `'task'` en vez
   del nombre, la página de garaje salía vacía) que no habría salido a
   la luz sin generar el PDF de verdad, solo con la suite.
-- ⏳ **Trabajos / Prioridades** — pendiente, la pieza ambigua (ver
-  abajo). No empezada.
+- ✅ **Prioridades**, commit `924ae25`. "Calca el formato de vivienda"
+  (Bixente, textual): misma `bloque_prioridades_partes()`, llamada una
+  segunda vez con `sufijo='-garaje'`. Hecho por Claude directamente (no
+  delegado): requería sostener ~15 ids interdependientes a la vez y
+  verificar en navegador real, el tipo de tarea que este proyecto ha
+  aprendido a no delegar sin supervisión estrecha. De paso corrigió un
+  enlace fijo a JSON equivocado, encontrado solo al probar en un
+  servidor local real (el snapshot estático del navegador integrado no
+  ejecuta bien la interactividad de esta plantilla — hace falta origen
+  http de verdad).
+- ⏳ **Trabajos** — pendiente. Bixente: "trabajos es una cosa, debería
+  de ir todo junto" (fusionar filas de vivienda y garaje en una sola
+  vista, con icono 🏠/🅿️ por fila) — a diferencia de Prioridades, NO
+  es "una hoja aparte". Candidata a **agy** (edición mecánica de tablas
+  ya diseñada), nunca en paralelo con otro cambio sobre panel_obra.py.
 - ⏳ **Informe de obra a la carta** — pendiente, no confirmado con
   Bixente si necesita el mismo tratamiento que el PDF ejecutivo.
 
@@ -118,8 +131,8 @@ si building/floor/unit no casan 1:1 — verificar).
 2. Verificar contra Gernika real (86-87% esperado) antes de seguir.
 3. Riesgos — reusar `prioridades_garaje` ya calculado, riesgo bajo.
 4. Informes (PDF + a la carta) — sección nueva, no toca cálculo.
-5. Trabajos / Prioridades — la pieza ambigua, hablarla con Bixente
-   antes de tocarla.
+5. Prioridades — hecho (ver Estado arriba).
+6. Trabajos — pendiente.
 
 Cada pieza se verifica contra Gernika real antes de pasar a la
 siguiente (igual que las 7 fases anteriores) — "la forma de perfeccionar
