@@ -190,6 +190,13 @@ class TestPanelGaraje(unittest.TestCase):
                 # sufijo='-garaje'). Cubierto aparte mas abajo en este mismo
                 # fichero, en TestPanelPrioridadesGaraje.
                 continue
+            if vista == "v-trabajos":
+                # Pieza 5 (25/09/2026): v-trabajos SI cambia a proposito
+                # cuando hay garaje -- a diferencia de Riesgos/Prioridades,
+                # aqui las filas se FUNDEN en la misma tabla (Bixente:
+                # "trabajos es una cosa, deberia de ir todo junto").
+                # Cubierto aparte en TestPanelTrabajosGaraje.
+                continue
             with self.subTest(vista=vista):
                 self.assertEqual(vistas_con[vista], contenido)
 
@@ -237,9 +244,9 @@ _HISTORIAL_VIVIENDA = [("24/09/2026", [
 class TestPanelAvanceCombinadoConGaraje(unittest.TestCase):
     """Fase de integracion 25/09/2026: el % de la cabecera del Panel debe
     contar vivienda Y garaje juntos ('si hay garaje... forma parte del
-    total de la obra', decision textual de Bixente), pero el resto de las
-    vistas (Trabajos, Prioridades, etc.) sigue siendo solo de vivienda --
-    el garaje mantiene su propia grafica, no se funden filas."""
+    total de la obra', decision textual de Bixente). Riesgos y
+    Prioridades ganan su propia seccion aparte; Trabajos (pieza 5) funde
+    las filas en la misma tabla -- ver TestPanelTrabajosGaraje."""
 
     def test_cabecera_combina_vivienda_y_garaje_en_una_sola_bolsa(self):
         prioridades_garaje = priorizar_ficha_garaje(
@@ -311,6 +318,13 @@ class TestPanelAvanceCombinadoConGaraje(unittest.TestCase):
                 # (pieza 6) tambien sale de snapshot_garaje -- mismo motivo
                 # que v-panel, no una desincronizacion.
                 continue
+            if vista == "v-trabajos":
+                # Pieza 5 (25/09/2026): v-trabajos SI cambia a proposito
+                # cuando hay garaje -- a diferencia de Riesgos/Prioridades,
+                # aqui las filas se FUNDEN en la misma tabla (Bixente:
+                # "trabajos es una cosa, deberia de ir todo junto").
+                # Cubierto aparte en TestPanelTrabajosGaraje.
+                continue
             with self.subTest(vista=vista):
                 self.assertEqual(vistas_con[vista], contenido)
 
@@ -342,6 +356,13 @@ class TestPanelRiesgosGaraje(unittest.TestCase):
                 continue
             if vista == "v-prioridades":
                 # Pieza 6: cubierto aparte en TestPanelPrioridadesGaraje.
+                continue
+            if vista == "v-trabajos":
+                # Pieza 5 (25/09/2026): v-trabajos SI cambia a proposito
+                # cuando hay garaje -- a diferencia de Riesgos/Prioridades,
+                # aqui las filas se FUNDEN en la misma tabla (Bixente:
+                # "trabajos es una cosa, deberia de ir todo junto").
+                # Cubierto aparte en TestPanelTrabajosGaraje.
                 continue
             with self.subTest(vista=vista):
                 self.assertEqual(vistas_con[vista], contenido)
@@ -487,6 +508,89 @@ class TestPanelPrioridadesGaraje(unittest.TestCase):
         prioridades = _vistas(html)["v-prioridades"]
         self.assertEqual(
             prioridades.count("function _iniciarNavPrioridades"), 1)
+
+
+class TestPanelTrabajosGaraje(unittest.TestCase):
+    """Integracion garaje-obra, pieza 5 (25/09/2026): a diferencia de
+    Riesgos/Prioridades (su propia seccion aparte), en Trabajos las filas
+    de vivienda y garaje se FUNDEN en las mismas tablas y en la misma
+    grafica -- Bixente, textual: "trabajos es una cosa, deberia de ir
+    todo junto" -- cada fila marcada con su icono de origen (🏠/🅿️) para
+    no perder de donde viene."""
+
+    def _datos_garaje(self):
+        prioridades_garaje = priorizar_ficha_garaje(
+            _ficha_garaje(estados={
+                ("z1", "garaje_tubeado_vial"): "X",
+                ("z1", "garaje_cableado_vial"): "P",
+                ("z2", "garaje_tubeado_vial"): "P",
+                ("z2", "garaje_cableado_vial"): "P",
+            }),
+            obra="OBRA GARAJE PRUEBA", hoy=date(2026, 9, 24))
+        snapshot_garaje = _snapshot_garaje_desde_prioridades(prioridades_garaje)
+        return prioridades_garaje, snapshot_garaje
+
+    def test_v_trabajos_sin_garaje_no_tiene_filas_de_garaje(self):
+        html = _generar(None, historial=_HISTORIAL_VIVIENDA)
+        trabajos = _vistas(html)["v-trabajos"]
+        self.assertNotIn("🅿️", trabajos)
+        self.assertIn("🏠", trabajos)
+
+    def test_v_trabajos_con_garaje_funde_las_filas_con_icono_de_origen(self):
+        prioridades_garaje, snapshot_garaje = self._datos_garaje()
+        html = _generar(
+            prioridades_garaje, historial=_HISTORIAL_VIVIENDA,
+            snapshot_garaje=snapshot_garaje)
+        trabajos = _vistas(html)["v-trabajos"]
+
+        # Desviaciones de avance: valores reales de
+        # motor_informes.detectar_bloqueos(), calculados aparte antes de
+        # escribir esta prueba, no inventados. Con este dataset, vivienda
+        # aporta 1 fila y garaje 0.
+        self.assertIn(
+            "<tr><td>🏠</td><td>Planta rezagada</td><td>P1</td><td>1</td>"
+            "<td>-</td><td><span class='badge bad'>0.0%</span></td>"
+            "<td>Planta 1 de P1 al 0% frente a una media de edificio del "
+            "53%.</td></tr>",
+            trabajos)
+        self.assertNotIn(
+            "No se detectan desviaciones de avance con la heurística "
+            "actual.", trabajos)
+
+        # Detalle por planta/edificio: valores reales de
+        # motor_informes.tabla_detalle(), calculados aparte, no
+        # inventados. Vivienda aporta 2 filas (PB, planta 1), garaje 1
+        # (Sótano 1).
+        self.assertIn(
+            "<tr><td>🏠</td><td>P1</td><td>PB</td><td>50.0%</td>"
+            "<td>80.0%</td><td>2</td></tr>", trabajos)
+        self.assertIn(
+            "<tr><td>🏠</td><td>P1</td><td>1</td><td>0.0%</td>"
+            "<td>0.0%</td><td>1</td></tr>", trabajos)
+        self.assertIn(
+            "<tr><td>🅿️</td><td>Garaje principal</td><td>Sótano 1</td>"
+            "<td>25.0%</td><td>25.0%</td><td>4</td></tr>", trabajos)
+
+        # Grafica "Avance por tarea": el JSON incrustado en la pagina
+        # (const DATA = ...) debe llevar las tareas de garaje con su
+        # icono. Valores reales de
+        # motor_informes.ranking_tareas_con_memoria(snapshot_garaje),
+        # calculados aparte.
+        self.assertIn('"🏠 T1"', html)
+        self.assertIn('"🅿️ Cableado de viales"', html)
+        self.assertIn('"🅿️ Tubeado de viales"', html)
+
+    def test_cabeceras_de_tabla_llevan_columna_de_icono_nueva(self):
+        html = _generar(None, historial=_HISTORIAL_VIVIENDA)
+        trabajos = _vistas(html)["v-trabajos"]
+        self.assertIn(
+            "<thead><tr><th></th><th>Tipo</th><th>Edificio</th>"
+            "<th>Planta</th><th>Unidad</th><th>Avance</th><th>Motivo</th>"
+            "</tr></thead>", trabajos)
+        self.assertIn(
+            "<thead><tr><th></th><th>Edificio</th><th>Planta</th>"
+            "<th>% estricto</th><th>% estimado</th><th>Nº registros</th>"
+            "</tr></thead>", trabajos)
 
 
 if __name__ == "__main__":

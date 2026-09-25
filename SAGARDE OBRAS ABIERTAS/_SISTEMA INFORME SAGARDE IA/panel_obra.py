@@ -1625,10 +1625,25 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     n_bloqueos_base = (prioridades.get('resumen') or {}).get(
         'bloqueados', len(bloqueos))
 
+    # 'Todo junto' en Trabajos (Bixente, 25/09/2026: "trabajos es una cosa,
+    # deberia de ir todo junto"): a diferencia de Riesgos/Prioridades (su
+    # propia seccion aparte), aqui las filas de vivienda y garaje se
+    # fusionan en las mismas tablas/grafica, cada una marcada con su
+    # icono de origen (🏠 vivienda, 🅿️ garaje) para no perder de donde
+    # viene cada una.
+    por_tarea_vivienda = (
+        motor.ranking_tareas_con_memoria(snapshot, tajos_memoria)
+        if snapshot else [])
+    por_tarea_garaje = (
+        motor.ranking_tareas_con_memoria(snapshot_garaje)
+        if snapshot_garaje else [])
     payload = {
         'serie': motor.serie_tiempo(historial_panel) if historial_panel else [],
         'por_planta': motor.matriz_planta_edificio(snapshot) if snapshot else {'labels': [], 'series': {}},
-        'por_tarea': motor.ranking_tareas_con_memoria(snapshot, tajos_memoria) if snapshot else [],
+        'por_tarea': sorted(
+            [('🏠 ' + t, p, n) for t, p, n in por_tarea_vivienda]
+            + [('🅿️ ' + t, p, n) for t, p, n in por_tarea_garaje],
+            key=lambda fila: fila[1]),
     }
 
     # ---- Banners globales ----
@@ -1669,21 +1684,28 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         kpi_html = '<div class="kpi"><div class="label">Avance</div><div class="value">—</div><div class="hint">Sin datos de revisión</div></div>'
 
     # ---- TRABAJOS: desviaciones + ranking + detalle (charts via JS) ----
+    bloqueos_garaje = (
+        motor.detectar_bloqueos(snapshot_garaje) if snapshot_garaje else [])
     filas_bloq = ""
-    if bloqueos:
-        for b in bloqueos:
+    for icono, lista in (('🏠', bloqueos), ('🅿️', bloqueos_garaje)):
+        for b in lista:
             badge = 'bad' if b['avance'] < 30 else 'warn'
-            filas_bloq += (f"<tr><td>{b['tipo']}</td><td>{b['edificio']}</td><td>{b['planta']}</td>"
+            filas_bloq += (f"<tr><td>{icono}</td><td>{b['tipo']}</td><td>{b['edificio']}</td><td>{b['planta']}</td>"
                            f"<td>{b['unidad']}</td><td><span class='badge {badge}'>{b['avance']}%</span></td>"
                            f"<td>{b['motivo']}</td></tr>")
-    else:
-        filas_bloq = '<tr><td colspan="6" class="empty">No se detectan desviaciones de avance con la heurística actual.</td></tr>'
+    if not filas_bloq:
+        filas_bloq = '<tr><td colspan="7" class="empty">No se detectan desviaciones de avance con la heurística actual.</td></tr>'
 
     detalle = motor.tabla_detalle(snapshot) if snapshot else []
+    detalle_garaje = motor.tabla_detalle(snapshot_garaje) if snapshot_garaje else []
     filas_det = "".join(
-        f"<tr><td>{r['edificio']}</td><td>{r['planta']}</td><td>{r['pct_estricto']}%</td>"
+        f"<tr><td>🏠</td><td>{r['edificio']}</td><td>{r['planta']}</td><td>{r['pct_estricto']}%</td>"
         f"<td>{r['pct_ponderado']}%</td><td>{r['n']}</td></tr>" for r in detalle
-    ) or '<tr><td colspan="5" class="empty">Sin datos.</td></tr>'
+    ) + "".join(
+        f"<tr><td>🅿️</td><td>{r['edificio']}</td><td>{r['planta']}</td><td>{r['pct_estricto']}%</td>"
+        f"<td>{r['pct_ponderado']}%</td><td>{r['n']}</td></tr>" for r in detalle_garaje
+    )
+    filas_det = filas_det or '<tr><td colspan="6" class="empty">Sin datos.</td></tr>'
 
     # ---- MATERIALES ----
     if materiales.get('disponible') and materiales.get('items'):
@@ -1934,11 +1956,11 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     secciones_informe = {
         'trabajos': (
             "<div class='card'><h3>Desviaciones de avance</h3>"
-            "<table class='data'><thead><tr><th>Tipo</th><th>Edificio</th>"
+            "<table class='data'><thead><tr><th></th><th>Tipo</th><th>Edificio</th>"
             "<th>Planta</th><th>Unidad</th><th>Avance</th><th>Motivo</th>"
             f"</tr></thead><tbody>{filas_bloq}</tbody></table></div>"
             "<div class='card'><h3>Detalle por planta / edificio</h3>"
-            "<table class='data'><thead><tr><th>Edificio</th><th>Planta</th>"
+            "<table class='data'><thead><tr><th></th><th>Edificio</th><th>Planta</th>"
             "<th>% estricto</th><th>% estimado</th><th>Nº registros</th>"
             f"</tr></thead><tbody>{filas_det}</tbody></table></div>"
         ),
@@ -2038,10 +2060,10 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 <section id="v-trabajos" class="view">
   <div class="card"><h3>Avance por tarea — cuellos de botella</h3><canvas id="chartTareas" style="max-height:520px;"></canvas></div>
   <div class="card"><h3>Desviaciones de avance</h3>
-    <table class="data"><thead><tr><th>Tipo</th><th>Edificio</th><th>Planta</th><th>Unidad</th><th>Avance</th><th>Motivo</th></tr></thead>
+    <table class="data"><thead><tr><th></th><th>Tipo</th><th>Edificio</th><th>Planta</th><th>Unidad</th><th>Avance</th><th>Motivo</th></tr></thead>
     <tbody>{filas_bloq}</tbody></table></div>
   <div class="card"><h3>Detalle por planta / edificio</h3>
-    <table class="data"><thead><tr><th>Edificio</th><th>Planta</th><th>% estricto</th><th>% estimado</th><th>Nº registros</th></tr></thead>
+    <table class="data"><thead><tr><th></th><th>Edificio</th><th>Planta</th><th>% estricto</th><th>% estimado</th><th>Nº registros</th></tr></thead>
     <tbody>{filas_det}</tbody></table></div>
 </section>
 
