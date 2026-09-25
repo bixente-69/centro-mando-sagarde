@@ -175,9 +175,13 @@ class TestComprobarEnlaces(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             raiz = Path(tmp)
             resultado = ce.comprobar_enlaces(raiz)
-            # 6 paginas fijas + 1 panel.html por cada obra del registro real
-            # (hoy 5: gernika, mungia, bolueta, gorliz, prueba).
-            self.assertEqual(11, len(resultado["ausentes"]))
+            # Paginas fijas + 1 panel.html por cada obra del registro real.
+            # Derivado de registro_obras.OBRAS, no fijado a mano: un numero
+            # hardcodeado aqui ya quedo desactualizado una vez (decia "hoy 5"
+            # cuando Olabeaga elevo el registro a 6 obras el 24/09/2026) sin
+            # que nadie lo notara hasta esta auditoria.
+            esperadas = len(ce.PAGINAS_FIJAS) + len(registro_obras.OBRAS)
+            self.assertEqual(esperadas, len(resultado["ausentes"]))
 
     def test_devuelve_vacio_cuando_todo_resuelve(self):
         with tempfile.TemporaryDirectory() as tmp:
