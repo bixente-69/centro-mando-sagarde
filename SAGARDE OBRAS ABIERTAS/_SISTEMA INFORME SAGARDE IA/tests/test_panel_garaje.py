@@ -183,6 +183,13 @@ class TestPanelGaraje(unittest.TestCase):
                 # garaje: gana su propia seccion de riesgos. Cubierto aparte
                 # en TestPanelRiesgosGaraje.
                 continue
+            if vista == "v-prioridades":
+                # Desde la pieza 6 (25/09/2026), v-prioridades SI cambia a
+                # proposito cuando hay garaje: calca el formato completo de
+                # Prioridades de vivienda (bloque_prioridades_partes con
+                # sufijo='-garaje'). Cubierto aparte mas abajo en este mismo
+                # fichero, en TestPanelPrioridadesGaraje.
+                continue
             with self.subTest(vista=vista):
                 self.assertEqual(vistas_con[vista], contenido)
 
@@ -299,6 +306,11 @@ class TestPanelAvanceCombinadoConGaraje(unittest.TestCase):
         for vista, contenido in vistas_sin.items():
             if vista == "v-panel":
                 continue  # la cabecera SI cambia a proposito, ver el test de arriba
+            if vista == "v-prioridades":
+                # El avance_pct propio del garaje en su tarjeta de Prioridades
+                # (pieza 6) tambien sale de snapshot_garaje -- mismo motivo
+                # que v-panel, no una desincronizacion.
+                continue
             with self.subTest(vista=vista):
                 self.assertEqual(vistas_con[vista], contenido)
 
@@ -327,6 +339,9 @@ class TestPanelRiesgosGaraje(unittest.TestCase):
         self.assertEqual(set(vistas_con), set(vistas_sin) | {"v-garaje"})
         for vista, contenido in vistas_sin.items():
             if vista == "v-riesgos":
+                continue
+            if vista == "v-prioridades":
+                # Pieza 6: cubierto aparte en TestPanelPrioridadesGaraje.
                 continue
             with self.subTest(vista=vista):
                 self.assertEqual(vistas_con[vista], contenido)
@@ -366,6 +381,112 @@ class TestPanelRiesgosGaraje(unittest.TestCase):
             "<div class='value'>0</div>", riesgos)
         self.assertIn("Tubeado de viales", riesgos)
         self.assertIn("Cableado de viales", riesgos)
+
+
+class TestPanelPrioridadesGaraje(unittest.TestCase):
+    """Integracion garaje-obra, pieza 6 (25/09/2026): la vista Prioridades
+    calca el formato completo de vivienda para el garaje (mismo
+    bloque_prioridades_partes, con sufijo='-garaje' para que sus ids no
+    choquen con los de vivienda en la misma pagina -- ver _namespace_ids
+    en panel_obra.py). Sin garaje, la vista queda exactamente igual que
+    antes de que existiera este parametro."""
+
+    def _prioridades_garaje_con_datos(self):
+        prioridades_garaje = priorizar_ficha_garaje(
+            _ficha_garaje(estados={
+                ("z1", "garaje_tubeado_vial"): "X",
+                ("z1", "garaje_cableado_vial"): "P",
+                ("z2", "garaje_tubeado_vial"): "P",
+                ("z2", "garaje_cableado_vial"): "P",
+            }),
+            obra="OBRA GARAJE PRUEBA", hoy=date(2026, 9, 24))
+        # Mismos valores ya verificados (no inventados) que usa
+        # TestPanelRiesgosGaraje.test_v_riesgos_con_garaje_incluye_su_propia_seccion:
+        # resumen listos=2, bloqueados=0; un condicionante en 'prevision'.
+        self.assertEqual(2, prioridades_garaje["resumen"]["listos"])
+        self.assertEqual(1, len(prioridades_garaje["prevision"]))
+        return prioridades_garaje
+
+    def test_v_prioridades_sin_garaje_no_tiene_seccion_de_garaje(self):
+        html = _generar(None, historial=_HISTORIAL_VIVIENDA)
+        prioridades = _vistas(html)["v-prioridades"]
+        self.assertNotIn("🅿️ Garaje", prioridades)
+
+    def test_v_prioridades_con_garaje_incluye_su_propia_seccion(self):
+        prioridades_garaje = self._prioridades_garaje_con_datos()
+        html = _generar(prioridades_garaje, historial=_HISTORIAL_VIVIENDA)
+        prioridades = _vistas(html)["v-prioridades"]
+
+        self.assertIn("🅿️ Garaje", prioridades)
+        self.assertIn("Tubeado de viales", prioridades)
+        self.assertIn("Cableado de viales", prioridades)
+        # El bento de "Centro de mando" sale dos veces: una por vivienda,
+        # otra por garaje.
+        self.assertEqual(
+            prioridades.count("Centro de mando · Prioridades"), 2)
+        # Encontrado probando en navegador real (25/09/2026): el enlace
+        # "Ver calculo y detalle completo" estaba fijo a
+        # prioridades_trabajos.json, asi que la instancia de garaje
+        # enlazaba en silencio al JSON de vivienda. Cada instancia debe
+        # apuntar a SU PROPIO fichero.
+        self.assertIn('href="prioridades_trabajos.json"', prioridades)
+        self.assertIn(
+            'href="prioridades_trabajos_garaje.json"', prioridades)
+
+    def test_ids_de_garaje_llevan_sufijo_y_no_colisionan_con_vivienda(self):
+        """La prueba mas importante de esta pieza: cada id de vivienda
+        aparece UNA sola vez (sin sufijo) y su version de garaje aparece
+        UNA sola vez (con '-garaje'). Si esto fallara, un
+        document.getElementById en el navegador encontraria el elemento de
+        la instancia equivocada -- en silencio, sin ningun error."""
+        prioridades_garaje = self._prioridades_garaje_con_datos()
+        html = _generar(prioridades_garaje, historial=_HISTORIAL_VIVIENDA)
+        prioridades = _vistas(html)["v-prioridades"]
+
+        def _cuenta_id(id_exacto):
+            # id='...' e id="..." conviven en este HTML segun que helper lo
+            # escribio (_envolver_plegable usa comillas simples,
+            # _tarjeta_timeline_html y el filtro de ejecucion usan dobles):
+            # contar con las dos, igual que _RE_ID_HTML al namespacing.
+            patron = re.compile(r"""id=['"]%s['"]""" % re.escape(id_exacto))
+            return len(patron.findall(prioridades))
+
+        for id_base in (
+            "filtro-sit", "prio-count", "timeline-prio", "sec-ejecucion",
+            "sec-dudas", "sec-inv-bloqueado", "sec-inv-sin_revisar",
+            "sec-inv-viable", "sec-inv-otros_gremios", "sec-inv-dudas",
+            "sec-inv-terminado",
+        ):
+            with self.subTest(id_base=id_base):
+                self.assertEqual(
+                    _cuenta_id(id_base), 1,
+                    f'id {id_base!r} (vivienda) deberia aparecer 1 vez')
+                self.assertEqual(
+                    _cuenta_id(id_base + "-garaje"), 1,
+                    f'id {id_base + "-garaje"!r} deberia aparecer 1 vez')
+                # Sanity check: el sufijo no se aplica dos veces.
+                self.assertEqual(_cuenta_id(id_base + "-garaje-garaje"), 0)
+
+        # sec-prevision solo lo pinta garaje en este dataset (vivienda no
+        # tiene prevision en _prioridades_vivienda()): confirma que la
+        # ausencia en vivienda no rompe el conteo de garaje.
+        self.assertEqual(_cuenta_id("sec-prevision"), 0)
+        self.assertEqual(_cuenta_id("sec-prevision-garaje"), 1)
+
+        # Los enlaces de navegacion del bento apuntan al ancla con el mismo
+        # sufijo que su seccion, no al de la otra instancia.
+        self.assertIn('href="#sec-ejecucion-garaje"', prioridades)
+        self.assertIn('data-abre="sec-ejecucion-garaje"', prioridades)
+
+    def test_script_indice_no_se_duplica_con_garaje(self):
+        """script_indice es el mismo <script> para toda la pagina (ya
+        selecciona por clase, no por lista fija de ids): la instancia de
+        garaje no debe repetirlo."""
+        prioridades_garaje = self._prioridades_garaje_con_datos()
+        html = _generar(prioridades_garaje, historial=_HISTORIAL_VIVIENDA)
+        prioridades = _vistas(html)["v-prioridades"]
+        self.assertEqual(
+            prioridades.count("function _iniciarNavPrioridades"), 1)
 
 
 if __name__ == "__main__":

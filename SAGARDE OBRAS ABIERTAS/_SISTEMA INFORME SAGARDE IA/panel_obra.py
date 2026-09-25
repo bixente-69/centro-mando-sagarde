@@ -18,6 +18,7 @@ import base64
 import html as html_lib
 import json
 import os
+import re
 from collections import OrderedDict
 from datetime import datetime
 
@@ -488,6 +489,29 @@ def _envolver_plegable(id_ancla, titulo_html, contenido_html, color_borde=None):
     )
 
 
+_RE_ID_HTML = re.compile(r"""id=(['"])([\w-]+)\1""")
+_RE_HREF_ANCLA = re.compile(r"""href=(['"])#([\w-]+)\1""")
+_RE_DATA_ABRE = re.compile(r"""data-abre=(['"])([\w-]+)\1""")
+
+
+def _namespace_ids(html, sufijo):
+    """Añade sufijo a cada id/href-ancla/data-abre de un bloque de Prioridades.
+
+    Permite llamar a bloque_prioridades_partes() una segunda vez en la misma
+    página (p.ej. vivienda + garaje) sin que sus ids colisionen: un
+    getElementById que encuentra el elemento de la otra instancia por tener
+    el mismo id es exactamente la familia de fallo silencioso de este
+    proyecto (algo declarado que el motor ignora, aquí "ignora" leyendo lo
+    que no toca). Sin sufijo, no toca nada.
+    """
+    if not sufijo:
+        return html
+    html = _RE_ID_HTML.sub(lambda m: f"id={m.group(1)}{m.group(2)}{sufijo}{m.group(1)}", html)
+    html = _RE_HREF_ANCLA.sub(lambda m: f"href={m.group(1)}#{m.group(2)}{sufijo}{m.group(1)}", html)
+    html = _RE_DATA_ABRE.sub(lambda m: f"data-abre={m.group(1)}{m.group(2)}{sufijo}{m.group(1)}", html)
+    return html
+
+
 _SCRIPT_INDICE_PRIORIDADES = """
 <script>
 function _iniciarNavPrioridades() {
@@ -504,14 +528,10 @@ function _iniciarNavPrioridades() {
       if (menu) { menu.open = false; }
     });
   });
-  [
-    'sec-tareas', 'sec-dudas', 'sec-ejecucion', 'sec-inv-bloqueado',
-    'sec-inv-sin_revisar', 'sec-inv-viable', 'sec-inv-otros_gremios',
-    'sec-inv-dudas', 'sec-inv-terminado', 'sec-preguntas-catalogo',
-    'sec-prevision'
-  ].forEach(function(id) {
-    var el = document.getElementById(id);
-    if (!el) return;
+  // Cualquier seccion plegable de Prioridades, sea de vivienda o de una
+  // instancia con sufijo (garaje): sin lista fija que se pueda desincronizar
+  // si se añade una seccion nueva o una segunda instancia.
+  document.querySelectorAll('details.seccion-plegable').forEach(function(el) {
     el.addEventListener('toggle', function() {
       if (!el.open) { el.style.display = 'none'; }
     });
@@ -1129,13 +1149,28 @@ _ID_SEC_EJECUCION = 'sec-ejecucion'
 
 
 def bloque_prioridades_partes(prioridades, tareas_manual=None,
-                              documentos=None, obra='', avance_pct=None):
+                              documentos=None, obra='', avance_pct=None,
+                              sufijo='', incluir_script_indice=True,
+                              nombre_fichero_json='prioridades_trabajos.json'):
     """Calcula las piezas de Prioridades por separado, sin concatenarlas.
 
     Usada por bloque_prioridades() (reconstruye el HTML de siempre) y por
     el informe de obra a la carta (usa solo las piezas marcadas). El
     cálculo vive aquí una sola vez: ninguna cifra se recalcula por un
     camino distinto para el selector.
+
+    sufijo: para poder llamar a esta función una segunda vez en la misma
+    página (garaje, además de vivienda) sin que los ids colisionen — ver
+    _namespace_ids(). Con sufijo='' (el caso de vivienda de siempre) el
+    HTML sale byte a byte igual que antes de que existiera este parámetro.
+    incluir_script_indice: la segunda instancia no necesita repetir
+    _SCRIPT_INDICE_PRIORIDADES — es el mismo script para toda la página y
+    ya se emite con la primera.
+    nombre_fichero_json: el enlace "Ver cálculo y detalle completo" apunta
+    aquí. Vivienda y garaje leen ficheros distintos
+    (prioridades_trabajos.json / prioridades_trabajos_garaje.json,
+    ver generar_todos.py) — sin este parámetro, la instancia de garaje
+    enlazaría en silencio al JSON de vivienda.
     """
     prioridades = prioridades or {}
     if prioridades.get('sin_base'):
@@ -1274,7 +1309,7 @@ def bloque_prioridades_partes(prioridades, tareas_manual=None,
         }
 
     titulo_ejecucion = "Qué hacer ahora: orden lógico de ejecución"
-    contenido_ejecucion = f"""<p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Primero aparecen los tajos viables de viviendas, después zonas comunes y edificio. Los tajos iguales se agrupan. VERIFICAR nunca se considera ejecutable hasta confirmar la duda. <a href="prioridades_trabajos.json" target="_blank">Ver cálculo y detalle completo</a>.</p>
+    contenido_ejecucion = f"""<p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">Primero aparecen los tajos viables de viviendas, después zonas comunes y edificio. Los tajos iguales se agrupan. VERIFICAR nunca se considera ejecutable hasta confirmar la duda. <a href="{_e_atributo(nombre_fichero_json)}" target="_blank">Ver cálculo y detalle completo</a>.</p>
       <div style="margin-bottom:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
         <span style="font-size:12px;color:var(--muted);">Filtrar:</span>
         <select id="filtro-sit" style="font-size:12px;padding:4px 8px;border:1px solid #ddd;border-radius:6px;">
@@ -1500,11 +1535,11 @@ def bloque_prioridades_partes(prioridades, tareas_manual=None,
       </nav>
     </section>"""
 
-    return {
+    partes = {
         'bento_command': bento_command,
         'estado_obra_html': estado_obra_html,
         'avisos_prio': avisos_prio,
-        'script_indice': _SCRIPT_INDICE_PRIORIDADES,
+        'script_indice': _SCRIPT_INDICE_PRIORIDADES if incluir_script_indice else '',
         'tareas_manual_html': tareas_manual_html,
         'dudas_html': dudas_html,
         'ejecucion_html': ejecucion_html,
@@ -1517,10 +1552,19 @@ def bloque_prioridades_partes(prioridades, tareas_manual=None,
         'dudas_inventario_html': inventario_por_codigo['DUDAS']['html'],
         'terminado_html': inventario_por_codigo['TERMINADO']['html'],
     }
+    if sufijo:
+        partes = {
+            clave: (valor if clave == 'script_indice'
+                    else _namespace_ids(valor, sufijo))
+            for clave, valor in partes.items()
+        }
+    return partes
 
 
 def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
-                       obra='', avance_pct=None):
+                       obra='', avance_pct=None, sufijo='',
+                       incluir_script_indice=True,
+                       nombre_fichero_json='prioridades_trabajos.json'):
     """HTML de la pestana Prioridades — envoltorio sobre
     bloque_prioridades_partes() que reconstruye el string de siempre.
 
@@ -1529,7 +1573,9 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
     """
     partes = bloque_prioridades_partes(
         prioridades, tareas_manual=tareas_manual, documentos=documentos,
-        obra=obra, avance_pct=avance_pct)
+        obra=obra, avance_pct=avance_pct, sufijo=sufijo,
+        incluir_script_indice=incluir_script_indice,
+        nombre_fichero_json=nombre_fichero_json)
     if isinstance(partes, str):
         return partes
     return (
@@ -1723,11 +1769,49 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         riesgos_garaje_html = '<h2>🅿️ Garaje</h2>' + bloque_riesgos(
             prioridades_garaje, bloqueos=[], riesgos_manual=[],
             sin_cambios=False)
+
+    # Mismo formato que Prioridades de vivienda (Bixente, 25/09/2026:
+    # "prioridades es calcar el formato de vivienda a prioridades garaje"),
+    # con sufijo='-garaje' para que sus ids no choquen con los de vivienda
+    # en la misma página (antes bloqueado por Hallazgo 6, ver
+    # _namespace_ids). No repite el script de navegación: ya lo emite la
+    # instancia de vivienda y ahora selecciona por clase, no por lista fija.
+    prioridades_garaje_html = ''
+    if prioridades_garaje is not None:
+        avance_garaje_pct = None
+        if snapshot_garaje:
+            avance_garaje_pct = motor.kpis_snapshot(snapshot_garaje).get('pct_ponderado')
+        partes_prioridades_garaje = bloque_prioridades_partes(
+            prioridades_garaje, tareas_manual=None, documentos=None,
+            obra=obra, avance_pct=avance_garaje_pct, sufijo='-garaje',
+            incluir_script_indice=False,
+            nombre_fichero_json='prioridades_trabajos_garaje.json')
+        if isinstance(partes_prioridades_garaje, str):
+            prioridades_garaje_html = '<h2>🅿️ Garaje</h2>' + partes_prioridades_garaje
+        else:
+            prioridades_garaje_html = '<h2>🅿️ Garaje</h2>' + (
+                partes_prioridades_garaje['bento_command']
+                + partes_prioridades_garaje['estado_obra_html']
+                + partes_prioridades_garaje['avisos_prio']
+                + partes_prioridades_garaje['tareas_manual_html']
+                + partes_prioridades_garaje['dudas_html']
+                + partes_prioridades_garaje['ejecucion_html']
+                + partes_prioridades_garaje['bloqueado_html']
+                + partes_prioridades_garaje['sin_revisar_html']
+                + partes_prioridades_garaje['orden_html']
+                + partes_prioridades_garaje['prevision_html']
+                + partes_prioridades_garaje['viable_html']
+                + partes_prioridades_garaje['otros_gremios_html']
+                + partes_prioridades_garaje['dudas_inventario_html']
+                + partes_prioridades_garaje['terminado_html']
+            )
+
     cierre_html = bloque_cierre(cierre, avisos=cierre_avisos)
 
-    # Garaje v1 queda fuera de SECCIONES_INFORME y no muestra porcentaje:
-    # ese dato todavia no existe. Tampoco reutiliza bloque_prioridades_partes,
-    # cuyos ids fijos solo admiten una instancia por pagina (Hallazgo 6).
+    # Garaje v1 (pestaña propia) queda fuera de SECCIONES_INFORME y no
+    # muestra porcentaje: ese dato todavia no existe ahi. Es un resumen
+    # aparte, mas simple -- ver prioridades_garaje_html arriba para la
+    # version completa, integrada en la pestaña Prioridades.
     garaje_nav_html = ''
     garaje_seccion_html = ''
     if prioridades_garaje is not None:
@@ -1965,7 +2049,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 
 <section id="v-personal" class="view"><div class="card"><h3>Personal asignado</h3>{personal_html}</div></section>
 
-<section id="v-prioridades" class="view">{prioridades_html}
+<section id="v-prioridades" class="view">{prioridades_html}{prioridades_garaje_html}
   <div class="card"><h3>Hitos manuales</h3>{hitos_html}</div></section>
 
 <section id="v-riesgos" class="view">{riesgos_html}{riesgos_garaje_html}</section>
@@ -2010,26 +2094,31 @@ if(Object.keys(DATA.por_planta.series).length){{
 if(DATA.por_tarea.length) new Chart(document.getElementById('chartTareas'),{{type:'bar',
   data:{{labels:DATA.por_tarea.map(t=>t[0]),datasets:[{{label:'% avance',data:DATA.por_tarea.map(t=>t[1]),backgroundColor:DATA.por_tarea.map(t=>pctColor(t[1]))}}]}},
   options:{{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{{legend:{{display:false}}}},scales:{{x:{{beginAtZero:true,max:100,ticks:{{callback:v=>v+'%'}}}}}}}}}});
-function filtrarPrio(){{
-  const fase=document.getElementById('filtro-fase')?.value||'';
-  const sit=document.getElementById('filtro-sit')?.value||'';
-  const items=document.querySelectorAll('#timeline-prio .timeline-item[data-fase]');
+function filtrarPrio(sufijo){{
+  sufijo=sufijo||'';
+  const sit=document.getElementById('filtro-sit'+sufijo)?.value||'';
+  const items=document.querySelectorAll('#timeline-prio'+sufijo+' .timeline-item[data-fase]');
   const visibles=[];
   let n=0;
   items.forEach(item=>{{
-    const ok=(!fase||item.dataset.fase===fase)&&(!sit||item.dataset.sit===sit);
+    const ok=(!sit||item.dataset.sit===sit);
     item.hidden=!ok;
     item.classList.remove('last-visible');
     if(ok){{visibles.push(item);n++;}}
     else{{const card=item.querySelector('.task-card');if(card)card.open=false;}}
   }});
   if(visibles.length)visibles[visibles.length-1].classList.add('last-visible');
-  const cnt=document.getElementById('prio-count');
+  const cnt=document.getElementById('prio-count'+sufijo);
   if(cnt)cnt.textContent=n+' bloque(s) visibles';
 }}
-document.getElementById('filtro-fase')?.addEventListener('change',filtrarPrio);
-document.getElementById('filtro-sit')?.addEventListener('change',filtrarPrio);
-filtrarPrio();
+// Descubre cada instancia de la sección Ejecución por su timeline-prio*
+// (vivienda: sin sufijo; garaje: '-garaje'), sin lista fija en Python ni
+// en JS que se pueda desincronizar si se añade una tercera instancia.
+document.querySelectorAll('[id^="timeline-prio"]').forEach(function(el){{
+  const sufijo=el.id.slice('timeline-prio'.length);
+  document.getElementById('filtro-sit'+sufijo)?.addEventListener('change',function(){{filtrarPrio(sufijo);}});
+  filtrarPrio(sufijo);
+}});
 
 function _claveSeleccionInforme(){{ return 'informe_obra_sel::' + OBRA_NOMBRE; }}
 
