@@ -114,13 +114,29 @@ si building/floor/unit no casan 1:1 — verificar).
   servidor local real (el snapshot estático del navegador integrado no
   ejecuta bien la interactividad de esta plantilla — hace falta origen
   http de verdad).
-- ⏳ **Trabajos** — pendiente. Bixente: "trabajos es una cosa, debería
-  de ir todo junto" (fusionar filas de vivienda y garaje en una sola
-  vista, con icono 🏠/🅿️ por fila) — a diferencia de Prioridades, NO
-  es "una hoja aparte". Candidata a **agy** (edición mecánica de tablas
-  ya diseñada), nunca en paralelo con otro cambio sobre panel_obra.py.
-- ⏳ **Informe de obra a la carta** — pendiente, no confirmado con
-  Bixente si necesita el mismo tratamiento que el PDF ejecutivo.
+- ✅ **Trabajos**, commit `ce4dda0`. "Trabajos es una cosa, debería de
+  ir todo junto" (Bixente, textual) — a diferencia de Riesgos/
+  Prioridades, aquí NO hay sección aparte: las filas de vivienda y
+  garaje se funden en las mismas tablas ("Desviaciones de avance",
+  "Detalle por planta/edificio") y en la misma gráfica ("Avance por
+  tarea"), cada una con su icono de origen (🏠/🅿️). Hecho por **agy**:
+  el diseño completo (el diff exacto de 5 puntos en panel_obra.py + los
+  valores esperados de los tests, calculados aparte contra
+  `motor_informes` real antes de escribir el encargo) lo hizo Claude —
+  agy solo aplicó el texto tal cual se le dio, verificado después
+  idéntico byte a byte al pedido. Confirmado en navegador real contra
+  Gernika: la fila de Garaje 1 (52.3%) aparece al final de la tabla de
+  detalle, y la gráfica mezcla tareas de ambos con su icono.
+- ⏳ **Informe de obra a la carta** — la pieza "Trabajos" del selector
+  (`secciones_informe['trabajos']`) ya hereda el mismo merge (mismas
+  variables `filas_bloq`/`filas_det`), verificado. Lo que sigue sin
+  cubrir: las piezas de **Prioridades** del selector
+  (`secciones_prioridades`: `estado_proyecto`, `que_hacer_ahora`,
+  `tajos_bloqueados`, `tareas_manuales`, `sin_revisar`) se siguen
+  construyendo solo de `partes_prioridades` (vivienda) — la sección de
+  garaje que ya existe en la pestaña Prioridades (pieza de hoy) no está
+  entre las opciones seleccionables del informe a la carta. No
+  confirmado con Bixente si hace falta.
 
 ## Orden de trabajo propuesto
 
@@ -132,7 +148,9 @@ si building/floor/unit no casan 1:1 — verificar).
 3. Riesgos — reusar `prioridades_garaje` ya calculado, riesgo bajo.
 4. Informes (PDF + a la carta) — sección nueva, no toca cálculo.
 5. Prioridades — hecho (ver Estado arriba).
-6. Trabajos — pendiente.
+6. Trabajos — hecho (ver Estado arriba).
+7. Informe de obra a la carta (piezas de Prioridades) — pendiente,
+   sin confirmar con Bixente si hace falta.
 
 Cada pieza se verifica contra Gernika real antes de pasar a la
 siguiente (igual que las 7 fases anteriores) — "la forma de perfeccionar
