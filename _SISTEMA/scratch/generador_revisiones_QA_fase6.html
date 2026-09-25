@@ -1,0 +1,2154 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generador de Revisiones · Sagarde</title>
+<style>
+/* ── RESET & BASE ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Arial Narrow',Arial,sans-serif;background:#F0F4F8;color:#1A3558;min-height:100vh;font-size:14px}
+
+/* ── TOKENS ── */
+:root{
+  --navy:#1A3558;--blue:#2E6DA4;--lblue:#E4EEF8;--red:#C0392B;--green:#1A6030;
+  --bg:#F0F4F8;--surface:#FFF;--border:rgba(26,53,88,.14);--border-mid:rgba(26,53,88,.24);
+  --text:#1A3558;--text-mid:#3A5580;--text-muted:#7A8A9A;
+  --done-bg:#D5EDD9;--done-fg:#1A6030;--half-bg:#E4F4EC;--half-fg:#1A6040;
+  --prog-bg:#FEF7D5;--prog-fg:#7A5000;--pend-bg:#FFF;--pend-fg:#AAA;
+  --ext-bg:#F5F0FA;--ext-fg:#7A50A0;
+  --r:5px;--font:'Arial Narrow',Arial,sans-serif
+}
+
+/* ── SCREENS ── */
+.screen{display:none}.screen.active{display:flex;flex-direction:column;min-height:100vh}
+
+/* ── APP BAR ── */
+.app-bar{background:var(--navy);display:flex;align-items:center;gap:14px;padding:0 22px;height:54px;flex-shrink:0}
+.app-bar-logo{height:34px;display:block}
+.app-bar-sep{width:1px;height:28px;background:rgba(255,255,255,.15)}
+.app-bar-title{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.app-bar-back{margin-left:auto;background:none;border:none;color:rgba(255,255,255,.65);cursor:pointer;font-family:var(--font);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:6px 0;transition:color .15s}
+.app-bar-back:hover{color:#fff}
+
+/* ── HOME ── */
+.home-body{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;gap:20px}
+.home-eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-muted)}
+.home-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:18px;width:100%;max-width:660px}
+.action-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:30px 24px;cursor:pointer;transition:border-color .15s,box-shadow .15s,transform .1s;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px}
+.action-card:hover{border-color:var(--blue);box-shadow:0 4px 16px rgba(46,109,164,.14);transform:translateY(-2px)}
+.card-icon{font-size:34px;line-height:1}
+.card-title{font-size:15px;font-weight:700;color:var(--navy)}
+.card-desc{font-size:11.5px;color:var(--text-muted);line-height:1.55}
+
+/* Recent */
+.recent-wrap{width:100%;max-width:660px}
+.recent-label{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;padding-left:2px}
+.recent-list{display:flex;flex-direction:column;gap:5px}
+.recent-item{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:9px 14px;display:flex;align-items:center;gap:14px;cursor:pointer;font-size:11.5px;transition:border-color .12s}
+.recent-item:hover{border-color:var(--blue)}
+.ri-name{font-weight:700;color:var(--navy);flex:1}
+.ri-meta{color:var(--text-muted);font-size:10.5px}
+.ri-del{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:14px;padding:0 4px}
+.ri-del:hover{color:var(--red)}
+
+/* ── WIZARD ── */
+.wizard-layout{flex:1;display:grid;grid-template-columns:196px 1fr}
+.wiz-sidebar{background:var(--navy);padding:24px 0;display:flex;flex-direction:column;gap:2px}
+.wiz-step{display:flex;align-items:center;gap:11px;padding:10px 18px;transition:background .12s}
+.wiz-step.clickable{cursor:pointer}
+.wiz-step.clickable:hover{background:rgba(255,255,255,.06)}
+.wiz-step.active{background:rgba(255,255,255,.1)}
+.step-num{width:23px;height:23px;border-radius:50%;border:1.5px solid rgba(255,255,255,.28);display:flex;align-items:center;justify-content:center;font-size:10.5px;font-weight:700;color:rgba(255,255,255,.45);flex-shrink:0;transition:all .15s}
+.wiz-step.active .step-num{border-color:#fff;color:#fff;background:rgba(255,255,255,.12)}
+.wiz-step.done .step-num{border-color:#5AC880;color:#5AC880}
+.step-lbl{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.32);transition:color .15s}
+.wiz-step.active .step-lbl{color:rgba(255,255,255,.9)}
+.wiz-step.done .step-lbl{color:rgba(255,255,255,.6)}
+
+.wiz-body{padding:34px 44px;overflow-y:auto;background:var(--bg)}
+.step-panel{display:none}.step-panel.active{display:block}
+.step-h{font-size:19px;font-weight:700;color:var(--navy);margin-bottom:3px}
+.step-sub{font-size:11.5px;color:var(--text-muted);margin-bottom:26px}
+
+/* Forms */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:18px 26px}.fg.one{grid-template-columns:1fr}
+.field{display:flex;flex-direction:column;gap:4px}.field.w2{grid-column:1/-1}
+label.fl{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text-mid)}
+input[type=text],input[type=date],input[type=number],input[type=password],select,textarea{background:var(--surface);border:1px solid var(--border-mid);border-radius:4px;padding:7px 10px;font-family:var(--font);font-size:13px;color:var(--text);outline:none;transition:border-color .14s;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--blue)}
+.hint{font-size:10px;color:var(--text-muted);margin-top:2px}
+.installed-source{margin-bottom:16px;padding:14px;border:1px solid #A9BDD3;border-left:4px solid var(--blue);border-radius:4px;background:#F2F7FB}
+.installed-source select{background:#fff;font-weight:700;color:var(--navy)}
+.source-status{margin-top:8px;font-size:11px;line-height:1.45;color:#40546C}
+.source-status strong{color:#173A61}
+.source-status.empty{color:var(--text-muted)}
+.modo-toggle{display:flex;gap:8px;flex-wrap:wrap}
+.modo-btn{font-family:var(--font);font-size:12px;font-weight:700;background:var(--surface);color:var(--text-mid);border:1px solid var(--border-mid);border-radius:4px;padding:8px 14px;cursor:pointer;transition:all .14s}
+.modo-btn:hover{border-color:var(--blue);color:var(--blue)}
+.modo-btn.active{background:var(--navy);border-color:var(--navy);color:#fff}
+
+/* Structure builder */
+.struct-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;margin-top:10px}
+.struct-row{display:flex;flex-wrap:wrap;gap:7px;align-items:center}
+.s-tag{display:inline-flex;align-items:center;gap:5px;background:var(--lblue);border:1px solid rgba(46,109,164,.25);border-radius:3px;padding:3px 7px}
+.s-tag input{width:42px;border:none;background:transparent;padding:0;font-weight:700;font-size:12px;color:var(--navy);font-family:var(--font);text-align:center}
+.s-tag input:focus{outline:1px solid var(--blue);border-radius:2px}
+.btn-add-s{background:none;border:1px dashed var(--border-mid);border-radius:3px;padding:3px 10px;font-size:11.5px;color:var(--text-muted);cursor:pointer;transition:all .14s}
+.btn-add-s:hover{border-color:var(--blue);color:var(--blue)}
+.btn-rm{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:14px;line-height:1;padding:0}
+.btn-rm:hover{color:var(--red)}
+.blocks-config{display:flex;flex-direction:column;gap:12px;margin-top:10px}
+.block-config-card,.portal-structure-card{background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:var(--r);padding:16px 18px}
+.block-config-head,.portal-structure-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:13px}
+.block-config-title,.portal-structure-title{font-size:13px;font-weight:700;color:var(--navy)}
+.block-config-meta,.portal-structure-meta{font-size:10.5px;color:var(--text-muted)}
+.portal-name-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:9px;margin-top:13px}
+.portal-name-item{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:9px 10px}
+.portal-name-item label{display:block;font-size:9px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--text-muted);margin-bottom:4px}
+.portal-structures{display:flex;flex-direction:column;gap:16px}
+.portal-structure-card{border-left-color:var(--navy)}
+.portal-structure-card .struct-box{background:var(--bg)}
+.structure-section{margin-top:14px}
+.structure-section:first-of-type{margin-top:0}
+.structure-empty{background:var(--surface);border:1px dashed var(--border-mid);border-radius:var(--r);padding:20px;text-align:center;color:var(--text-muted)}
+.floor-config-list{display:flex;flex-direction:column;gap:9px;margin-top:14px}
+.floor-config-card{background:var(--bg);border:1px solid var(--border);border-radius:4px;padding:11px 12px}
+.floor-config-head{display:grid;grid-template-columns:minmax(150px,220px) 1fr auto;align-items:end;gap:12px;margin-bottom:9px}
+.floor-config-meta{font-size:10.5px;color:var(--text-muted);padding-bottom:8px}
+.floor-viv-row{gap:6px}
+.floor-viv-row .s-tag{background:#fff}
+.floor-viv-row .s-tag input{width:52px}
+.btn-rm-floor{background:none;border:1px solid var(--border-mid);border-radius:3px;color:var(--text-muted);cursor:pointer;padding:5px 9px;margin-bottom:1px}
+.btn-rm-floor:hover{border-color:var(--red);color:var(--red)}
+@media(max-width:700px){.floor-config-head{grid-template-columns:1fr auto}.floor-config-meta{display:none}}
+.garage-zone-groups{display:flex;flex-direction:column;gap:13px;margin-top:12px}
+.garage-zone-group{border-top:1px solid var(--border);padding-top:11px}
+.garage-zone-group:first-child{border-top:none;padding-top:0}
+.garage-zone-actions,.garage-zone-list{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.garage-zone-list{margin-top:7px}
+.garage-zone-chip{display:inline-flex;align-items:center;gap:5px;background:#fff;border:1px solid var(--border-mid);border-radius:3px;padding:3px 5px 3px 8px}
+.garage-zone-chip input{width:145px;border:none;padding:0;background:transparent;font-weight:700;font-size:11.5px}
+.garage-zone-chip input:focus{outline:1px solid var(--blue)}
+.garage-count-row{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#fff;border:1px solid var(--border);border-radius:4px;padding:8px 10px;margin-top:7px}
+.garage-count-controls{display:flex;align-items:center;border:1px solid var(--border-mid);border-radius:3px;overflow:hidden}
+.garage-count-controls button{width:28px;height:26px;border:none;background:#fff;color:var(--navy);cursor:pointer;font-weight:800}
+.garage-count-controls button:hover{background:var(--lblue)}
+.garage-count-controls span{min-width:28px;text-align:center;font-weight:800;font-size:11.5px}
+.garage-tree{font-size:11.5px;line-height:1.6;color:var(--text-mid)}
+.garage-tree strong{color:var(--navy)}
+
+/* Tajos selector */
+.tj-toolbar{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.btn-sm{font-family:var(--font);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;padding:5px 11px;border-radius:3px;cursor:pointer;border:1px solid var(--border-mid);background:var(--surface);color:var(--text-mid);transition:all .14s}
+.btn-sm:hover{border-color:var(--blue);color:var(--blue)}
+.tj-count{margin-left:auto;font-size:11.5px;color:var(--text-muted)}
+.tj-count.over{color:#A13D13;font-weight:800}
+.tj-group{margin-bottom:14px}
+.tj-group-hdr{display:flex;align-items:center;gap:10px;padding:4px 0;border-bottom:1px solid var(--border);margin-bottom:7px;cursor:pointer;user-select:none}
+.tj-gname{font-size:9.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);flex:1}
+.tj-items{display:flex;flex-direction:column;gap:3px}
+.tj-item{display:flex;align-items:center;gap:9px;padding:4px 9px;border-radius:3px;transition:background .1s;cursor:pointer;user-select:none}
+.tj-item:hover{background:var(--lblue)}
+.tj-item input[type=checkbox]{accent-color:var(--blue);width:13px;height:13px;flex-shrink:0}
+.tj-name{font-size:12.5px;color:var(--text);flex:1}
+.tj-badge{font-size:8.5px;font-weight:700;border:1px solid currentColor;border-radius:2px;padding:1px 4px}
+.tj-badge.p{color:var(--navy)}.tj-badge.e{color:var(--ext-fg)}.tj-badge.c{color:var(--green)}
+.tj-badge.a{color:var(--text-muted)}
+
+/* Wizard footer */
+.wiz-foot{margin-top:28px;display:flex;gap:10px;padding-top:18px;border-top:1px solid var(--border)}
+.btn-pri{font-family:var(--font);font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;background:var(--navy);color:#fff;border:none;border-radius:4px;padding:10px 22px;cursor:pointer;transition:background .14s}
+.btn-pri:hover{background:var(--blue)}
+.btn-sec{font-family:var(--font);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:var(--text-mid);border:1px solid var(--border-mid);border-radius:4px;padding:10px 18px;cursor:pointer;transition:all .14s}
+.btn-sec:hover{border-color:var(--blue);color:var(--blue)}
+
+/* Gen summary */
+.gen-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 22px;margin-bottom:22px;font-size:12.5px;line-height:1.75}
+.a4-capacity{grid-column:1/-1;margin-top:4px;padding:10px 12px;border:1px solid #8EB99A;border-left:4px solid #2F7A45;border-radius:3px;background:#F1F8F3;color:#234B30;line-height:1.45}
+.a4-capacity.limit{border-color:#D1A24A;border-left-color:#A86B00;background:#FFF8E8;color:#694500}
+.a4-capacity.warn{border-color:#D68A70;border-left-color:#A13D13;background:#FFF2ED;color:#742D14}
+.a4-capacity button{margin-left:10px;border:1px solid currentColor;border-radius:3px;background:#fff;color:inherit;padding:4px 9px;font-family:var(--font);font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;cursor:pointer}
+.gen-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn-dl{font-family:var(--font);font-size:11.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--blue);color:#fff;border:none;border-radius:4px;padding:11px 22px;cursor:pointer;transition:background .14s}
+.btn-dl:hover{background:var(--navy)}
+
+/* ── IMPORT ── */
+.drop-icon{font-size:34px;margin-bottom:10px}
+.drop-title{font-size:14px;font-weight:700;color:var(--navy);margin-bottom:5px}
+.drop-hint{font-size:11.5px;color:var(--text-muted)}
+.drop-fmts{font-size:9.5px;color:var(--text-muted);margin-top:6px;letter-spacing:.1em}
+#file-inp{display:none}
+.api-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px;margin-top:18px}
+.api-box-title{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px}
+.api-row{display:flex;gap:8px}
+.api-row input{flex:1}
+.btn-save-k{font-family:var(--font);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--navy);color:#fff;border:none;border-radius:4px;padding:7px 14px;cursor:pointer;transition:background .14s;white-space:nowrap}
+.btn-save-k:hover{background:var(--blue)}
+.status-box{margin-top:16px;padding:12px 16px;border-radius:4px;font-size:12.5px;display:none}
+.status-box.info{background:var(--lblue);color:var(--navy);border:1px solid rgba(46,109,164,.2)}
+.status-box.ok{background:var(--done-bg);color:var(--done-fg);border:1px solid rgba(26,96,48,.2)}
+.status-box.err{background:#FEE;color:var(--red);border:1px solid rgba(192,57,43,.2)}
+.preview-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 18px;margin-top:14px;font-size:11.5px;max-height:260px;overflow-y:auto;display:none}
+.preview-box pre{white-space:pre-wrap;word-break:break-word;line-height:1.5}
+
+/* preview image */
+#upload-preview{max-width:100%;max-height:200px;border-radius:4px;border:1px solid var(--border);margin-top:12px;display:none}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .wizard-layout{grid-template-columns:1fr}
+  .wiz-sidebar{display:none}
+  .wiz-body{padding:22px 18px}
+  .fg{grid-template-columns:1fr}
+    .home-cards{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: HOME
+══════════════════════════════════════════ -->
+<div id="sc-home" class="screen active">
+  <div class="app-bar">
+    <img class="app-bar-logo" src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=" alt="Sagarde">
+    <div class="app-bar-sep"></div>
+    <span class="app-bar-title">Generador de Hojas de Revisión</span>
+  </div>
+  <div class="home-body">
+    <div class="home-eyebrow">¿Qué quieres hacer?</div>
+    <div class="home-cards">
+      <div class="action-card" onclick="startWizard()">
+        <div class="card-icon">📋</div>
+        <div class="card-title">Nueva hoja de revisión</div>
+        <div class="card-desc">Configura los datos de la obra y genera una hoja en blanco interactiva, lista para imprimir o rellenar en pantalla.</div>
+      </div>
+
+    </div>
+    <div class="recent-wrap" id="recent-wrap" style="display:none">
+      <div class="recent-label">Obras recientes</div>
+      <div class="recent-list" id="recent-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: WIZARD
+══════════════════════════════════════════ -->
+<div id="sc-wizard" class="screen">
+  <div class="app-bar">
+    <img class="app-bar-logo" src="data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=" alt="Sagarde">
+    <div class="app-bar-sep"></div>
+    <span class="app-bar-title">Nueva hoja de revisión</span>
+    <button class="app-bar-back" onclick="goHome()">← Volver</button>
+  </div>
+  <div class="wizard-layout">
+    <div class="wiz-sidebar" id="wiz-sidebar"></div>
+    <div class="wiz-body">
+
+      <!-- STEP 1: Obra -->
+      <div class="step-panel" id="step-1">
+        <div class="step-h">Datos de la obra</div>
+        <div class="step-sub" id="step-1-sub">Datos generales y distribución de bloques y portales de la obra.</div>
+        <div class="field" style="margin-bottom:16px">
+          <label class="fl">Tipo de revisión</label>
+          <div class="modo-toggle">
+            <button type="button" class="modo-btn active" data-modo="vivienda" onclick="setModo('vivienda')">🏠 Viviendas</button>
+            <button type="button" class="modo-btn" data-modo="garaje" onclick="setModo('garaje')">🅿️ Garajes</button>
+          </div>
+        </div>
+        <div class="field installed-source">
+          <label class="fl">Obra ya instalada con portal informático</label>
+          <select id="f-installed" onchange="loadInstalledWork(this.value)">
+            <option value="">— Configuración manual —</option>
+          </select>
+          <div class="source-status empty" id="installed-status">Elige una obra para cargar su estructura real y los estados X, / y M guardados en el portal.</div>
+        </div>
+        <div class="fg">
+          <div class="field w2">
+            <label class="fl">Nombre de la obra</label>
+            <input type="text" id="f-obra" placeholder="Ej: RESIDENCIAL LAS FLORES" oninput="S.obra=this.value">
+          </div>
+          <div class="field">
+            <label class="fl">Fecha de revisión</label>
+            <input type="date" id="f-fecha" oninput="S.fecha=this.value">
+          </div>
+          <div class="field">
+            <label class="fl">Responsable técnico</label>
+            <input type="text" id="f-resp" placeholder="Ej: M. García" oninput="S.resp=this.value">
+          </div>
+          <div class="field w2" id="f-nbloques-wrap">
+            <label class="fl">Número de bloques</label>
+            <input type="number" id="f-nbloques" min="1" max="12" value="1" onchange="rebuildBloques(+this.value)">
+            <div class="hint">Después podrás indicar cuántos portales tiene cada bloque y cambiar sus nombres.</div>
+          </div>
+          <div class="field w2" id="f-ngarajes-wrap" style="display:none">
+            <label class="fl">Número de garajes</label>
+            <input type="number" id="f-ngarajes" min="1" max="12" value="1" onchange="rebuildGarajes(+this.value)">
+            <div class="hint">Mungia, por ejemplo, tiene 2 — uno por bloque. Después se nombran y se les añaden plantas y zonas.</div>
+          </div>
+        </div>
+        <div style="margin-top:18px" id="f-bloques-section">
+          <label class="fl">Bloques y portales de la obra</label>
+          <div class="blocks-config" id="bloques-config"></div>
+        </div>
+        <div class="wiz-foot">
+          <button class="btn-pri" onclick="goStep(2)">Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: Estructura -->
+      <div class="step-panel" id="step-2">
+        <div class="step-h" id="step-2-title">Estructura del edificio</div>
+        <div class="step-sub" id="step-2-sub">Configura cada portal y añade o quita viviendas de forma independiente en cada planta.</div>
+        <div class="portal-structures" id="portal-structures"></div>
+        <div class="wiz-foot">
+          <button class="btn-sec" onclick="goStep(1)">← Atrás</button>
+          <button class="btn-pri" onclick="goStep(3)">Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Tajos -->
+      <div class="step-panel" id="step-3">
+        <div class="step-h">Selección de tajos</div>
+        <div class="step-sub" id="step-3-sub">Marca los tajos que aplican a esta obra. Todos activos por defecto.</div>
+        <div class="tj-toolbar">
+          <button class="btn-sm" onclick="checkAll(true)">✓ Todos</button>
+          <button class="btn-sm" onclick="checkAll(false)">✗ Ninguno</button>
+          <button class="btn-sm" onclick="checkPreset('sgd')">Solo Sagarde</button>
+          <button class="btn-sm" id="tj-preset-viv" onclick="checkPreset('viv')">Solo vivienda</button>
+          <span class="tj-count" id="tj-count">38 tajos</span>
+        </div>
+        <div id="tj-sel"></div>
+        <div class="wiz-foot">
+          <button class="btn-sec" onclick="goStep(2)">← Atrás</button>
+          <button class="btn-pri" onclick="goStep(4)">Siguiente →</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: Generar -->
+      <div class="step-panel" id="step-4">
+        <div class="step-h">Generar hoja</div>
+        <div class="step-sub" id="step-4-sub">La descarga incluirá todos los bloques y portales en una única revisión de la obra completa.</div>
+        <div class="gen-box" id="gen-summary"></div>
+        <div class="gen-actions">
+          <button class="btn-dl" onclick="doDownload()">⬇ Descargar HTML</button>
+          <button class="btn-sec" onclick="doPreview()">👁 Vista previa</button>
+          <button class="btn-sec" onclick="saveConfig()">💾 Guardar config</button>
+        </div>
+        <div class="wiz-foot">
+          <button class="btn-sec" onclick="goStep(3)">← Atrás</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SCREEN: IMPORT
+══════════════════════════════════════════ -->
+<!-- El registro de obras se recarga SIEMPRE fresco. Sin el parametro de version
+     el navegador (sobre todo en la tablet) se queda con la copia antigua y el
+     generador sigue mostrando la obra como estaba hace dias: era la razon por
+     la que no aparecia la vivienda E de ZR2.1 despues de actualizar.
+     Se usa document.write para conservar la carga sincrona: el resto del
+     script cuenta con que window.SAGARDE_OBRAS_REVISION ya existe. -->
+<script>document.write('<scr'+'ipt src="obras_revisiones.js?v='+Date.now()+'"></scr'+'ipt>');</script>
+<script>
+/* ════════════════════════════════════════════
+   CONSTANTS
+════════════════════════════════════════════ */
+const LOGO_URI = 'data:image/jpeg;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+A8AAQUBAScY42YAAAAASUVORK5CYII=';
+
+const TODAY_ISO = new Date().toISOString().split('T')[0];
+const fmtDate   = iso => iso ? new Date(iso+'T00:00').toLocaleDateString('es-ES',{day:'2-digit',month:'2-digit',year:'numeric'}) : '';
+
+// Nombre oficial que reconocen los lectores de revisiones de SAGARDE:
+// REVISION + obra + fecha DDMMAAAA. Se usa exactamente el mismo nombre al
+// descargar el HTML, guardar desde la hoja e imprimirla como PDF.
+function safeRevisionWorkName(value){
+  return String(value||'OBRA')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g,' ')
+    .trim()
+    .replace(/\s+/g,' ');
+}
+function revisionDateToken(iso){
+  const value=String(iso||TODAY_ISO);
+  const match=value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(match) return match[3]+match[2]+match[1];
+  const fallback=TODAY_ISO.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return fallback[3]+fallback[2]+fallback[1];
+}
+function revisionFileBase(obra=S.obra,fecha=S.fecha){
+  return `REVISION ${safeRevisionWorkName(obra)} ${revisionDateToken(fecha)}`;
+}
+function revisionGarajeFileBase(){
+  return revisionFileBase()+'_garaje';
+}
+
+/* ── CATALOG ── */
+let CAT = [
+  {id:'tabicado',    name:'Tabicado',             g:'Inicio de obra',       p:'e',a:'v'},
+  {id:'rozas',       name:'Rozas de timbres',      g:'Inicio de obra',       p:'p',a:'v'},
+  {id:'mont-elec',   name:'Montante eléctrica',    g:'Infraestructura',      p:'p',a:'d'},
+  {id:'mont-telco',  name:'Montante teleco',        g:'Infraestructura',      p:'p',a:'d'},
+  {id:'mont-sscc',   name:'Montante SSCC',          g:'Infraestructura',      p:'p',a:'d'},
+  {id:'tube-zzcc',   name:'Tubeado ZZCC',           g:'Zonas comunes',        p:'p',a:'z'},
+  {id:'cabl-zzcc',   name:'Cableado ZZCC',          g:'Zonas comunes',        p:'p',a:'z'},
+  {id:'suelo-rad',   name:'Suelo radiante',         g:'Obra previa',          p:'c',a:'v'},
+  {id:'suelo-rec',   name:'Suelo recrecido',        g:'Obra previa',          p:'e',a:'v'},
+  {id:'pladur-p',    name:'Perfilado de Pladur',    g:'Pladur',               p:'e',a:'v'},
+  {id:'pladur-1c',   name:'1ªs caras Pladur',       g:'Pladur',               p:'e',a:'v'},
+  {id:'cuad-pres',   name:'Cuadros presentados',    g:'Instalación interior', p:'p',a:'v'},
+  {id:'tube-viv',    name:'Tubeado vivienda',        g:'Instalación interior', p:'p',a:'v'},
+  {id:'cabl-elec',   name:'Cableado eléctrico',     g:'Instalación interior', p:'p',a:'v'},
+  {id:'telecabl',    name:'Telecableado',            g:'Instalación interior', p:'p',a:'v'},
+  {id:'portero',     name:'Portero / videoportero',  g:'Instalación interior', p:'p',a:'v'},
+  {id:'termostatos', name:'Termostatos',             g:'Instalación interior', p:'p',a:'v'},
+  {id:'pladur-2c',   name:'2ªs caras Pladur',       g:'Pladur',               p:'e',a:'v'},
+  {id:'doblar-caj',  name:'Doblar cajas',            g:'Recuperación',         p:'p',a:'v'},
+  {id:'embornado',   name:'Embornado eléctrico',     g:'Conexiones',           p:'p',a:'v'},
+  {id:'teleembor',   name:'Telembornado',            g:'Conexiones',           p:'p',a:'v'},
+  {id:'deriv-ind',   name:'Derivación individual',   g:'Cierre técnico',       p:'p',a:'v'},
+  {id:'cuad-mec',    name:'Cuadro mecanizado',       g:'Cierre técnico',       p:'p',a:'v'},
+  {id:'ct-tec',      name:'Cuarto técnico',          g:'Cierre técnico',       p:'p',a:'d'},
+  {id:'techos-zzcc', name:'Techos ZZCC',             g:'Acabados previos',     p:'e',a:'z'},
+  {id:'techos',      name:'Techos',                  g:'Acabados previos',     p:'e',a:'v'},
+  {id:'enchapado',   name:'Enchapado',               g:'Acabados previos',     p:'e',a:'v'},
+  {id:'pint-1',      name:'Pintura — 1ª mano',       g:'Pintura',              p:'e',a:'v'},
+  {id:'mecanizado',  name:'Mecanizado eléctrico',    g:'Mecanismos',           p:'p',a:'v'},
+  {id:'telemec',     name:'Telemecanizado',           g:'Mecanismos',           p:'p',a:'v'},
+  {id:'aguj-zzcc',   name:'Agujeros ilum. ZZCC',     g:'Iluminación',          p:'p',a:'z'},
+  {id:'pint-zzcc',   name:'Pintura ZZCC',            g:'Pintura',              p:'e',a:'z'},
+  {id:'pint-2',      name:'Pintura — 2ª mano',       g:'Pintura',              p:'e',a:'v'},
+  {id:'plac-tapas',  name:'Placas y tapas',          g:'Remates finales',      p:'p',a:'v'},
+  {id:'fachada',     name:'Fachada terminada',        g:'Remates finales',      p:'e',a:'d'},
+  {id:'apliques',    name:'Apliques terraza',         g:'Remates exteriores',   p:'p',a:'v'},
+  {id:'casquillos',  name:'Casquillos y bombillas',  g:'Entrega',              p:'p',a:'v'},
+  {id:'ilum-rell',   name:'Ilum. rellanos / ZZCC',   g:'Entrega',              p:'p',a:'z'},
+];
+const CAT_GARAJE = [
+  {id:'garaje_tabicado', name:'Tabicado de garaje', g:'Obra civil garaje', p:'e', a:'z'},
+  {id:'garaje_lucido', name:'Lucido de garaje', g:'Obra civil garaje', p:'e', a:'z'},
+  {id:'garaje_falso_techo', name:'Falso techo de garaje', g:'Obra civil garaje', p:'e', a:'z'},
+  {id:'garaje_raseado_viales', name:'Raseado/yeso de viales', g:'Obra civil garaje', p:'e', a:'z'},
+  {id:'garaje_tubeado_emp', name:'Tubeado empotrado de garaje', g:'Instalación interior garaje', p:'p', a:'z'},
+  {id:'garaje_cableado_emp', name:'Cableado empotrado de garaje', g:'Instalación interior garaje', p:'p', a:'z'},
+  {id:'garaje_tubeado_visto', name:'Tubeado visto de garaje', g:'Instalación interior garaje', p:'p', a:'z'},
+  {id:'garaje_cableado_visto', name:'Cableado visto de garaje', g:'Instalación interior garaje', p:'p', a:'z'},
+  {id:'garaje_tubeado_vial', name:'Tubeado de viales', g:'Instalación interior garaje', p:'p', a:'z'},
+  {id:'garaje_cableado_vial', name:'Cableado de viales', g:'Instalación interior garaje', p:'p', a:'z'},
+  {id:'garaje_pintura_1_recinto', name:'Pintura de garaje (recintos) — 1ª mano', g:'Pintura garaje', p:'e', a:'z'},
+  {id:'garaje_pintura_1_vial', name:'Pintura de garaje (viales) — 1ª mano', g:'Pintura garaje', p:'e', a:'z'},
+  {id:'garaje_alum_fijo_coloc_recinto', name:'Colocación alumbrado fijo (recintos)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_alum_fijo_coloc_vial', name:'Colocación alumbrado fijo (viales)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_alum_temp_coloc_recinto', name:'Colocación alumbrado temporizado (recintos)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_alum_temp_coloc_vial', name:'Colocación alumbrado temporizado (viales)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_emergencia_coloc_recinto', name:'Colocación luminarias de emergencia (recintos)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_emergencia_coloc_vial', name:'Colocación luminarias de emergencia (viales)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_enchufe_coloc', name:'Colocación de enchufe de cuarto técnico', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_cuadro_tubeado_cableado', name:'Tubeado y cableado hasta cuadro secundario', g:'Cuadros garaje', p:'p', a:'z'},
+  {id:'garaje_cuadro_colocacion', name:'Colocación y mecanizado de cuadro propio', g:'Cuadros garaje', p:'p', a:'z'},
+  {id:'garaje_pintura_2_recinto', name:'Pintura de garaje (recintos) — 2ª mano', g:'Pintura garaje', p:'e', a:'z'},
+  {id:'garaje_pintura_2_vial', name:'Pintura de garaje (viales) — 2ª mano', g:'Pintura garaje', p:'e', a:'z'},
+  {id:'garaje_cuadro_embornado', name:'Embornado de cuadro propio', g:'Cuadros garaje', p:'p', a:'z'},
+  {id:'garaje_cuadro_rotulacion', name:'Rotulación de cuadro propio', g:'Cuadros garaje', p:'p', a:'z'},
+  {id:'garaje_cuadro_equipo_tubeado_cableado', name:'Tubeado y cableado del cuadro al equipo que controla', g:'Cuadros garaje', p:'p', a:'z'},
+  {id:'garaje_alum_fijo_embornado_recinto', name:'Embornado alumbrado fijo (recintos)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_alum_fijo_embornado_vial', name:'Embornado alumbrado fijo (viales)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_alum_temp_embornado_recinto', name:'Embornado alumbrado temporizado (recintos)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_alum_temp_embornado_vial', name:'Embornado alumbrado temporizado (viales)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_emergencia_embornado_recinto', name:'Embornado luminarias de emergencia (recintos)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_emergencia_embornado_vial', name:'Embornado luminarias de emergencia (viales)', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_enchufe_embornado', name:'Embornado de enchufe de cuarto técnico', g:'Equipos garaje', p:'p', a:'z'},
+  {id:'garaje_tierras_general', name:'Tierras — llegada y embornado en Centralización', g:'Cuartos técnicos garaje', p:'p', a:'z'},
+  {id:'garaje_tierras_derivacion', name:'Derivación de tierra de cuarto técnico', g:'Cuartos técnicos garaje', p:'p', a:'z'},
+  {id:'garaje_centralizacion_modulos', name:'Colocación de módulos de contadores', g:'Cuartos técnicos garaje', p:'p', a:'z'},
+  {id:'garaje_centralizacion_derivaciones', name:'Derivaciones individuales — centralización y embornado', g:'Cuartos técnicos garaje', p:'p', a:'z'},
+  {id:'garaje_centralizacion_lga', name:'Acometida LGA desde CGP de calle', g:'Cuartos técnicos garaje', p:'p', a:'z'},
+  {id:'garaje_puerta_alimentacion', name:'Alimentación de cuadro de puerta de acceso', g:'Remates garaje', p:'p', a:'z'},
+  {id:'garaje_puerta_mecanizado', name:'Mecanizado de puerta de acceso', g:'Remates garaje', p:'c', a:'z'},
+  {id:'garaje_irve_preinstalacion', name:'Preinstalación vehículo eléctrico (IRVE)', g:'Remates garaje', p:'p', a:'z'},
+  {id:'garaje_telco_transito', name:'Telecomunicaciones de tránsito', g:'Remates garaje', p:'p', a:'z'},
+];
+const BASE_CAT = CAT.map(t=>({...t}));
+const BASE_SOURCE_ID = {
+  rozas:'rozas_timbres','mont-elec':'montante_electrica','mont-telco':'montante_teleco',
+  'mont-sscc':'montante_sscc','tube-zzcc':'tubeado_zzcc','cabl-zzcc':'cableado_zzcc',
+  'suelo-rad':'suelo_radiante','suelo-rec':'suelo_recrecido','pladur-p':'perfilado_pladur',
+  'pladur-1c':'primera_cara_pladur','cuad-pres':'cuadros_presentados','tube-viv':'tubeado',
+  'cabl-elec':'cableado',telecabl:'telecableado','pladur-2c':'segunda_cara_pladur',
+  'doblar-caj':'doblar_cajas',teleembor:'telembornado','deriv-ind':'derivacion_individual',
+  'cuad-mec':'cuadro_mecanizado','ct-tec':'cuarto_tecnico','techos-zzcc':'techos_zzcc',
+  'pint-1':'pintura_primera','telemec':'telemecanizado','aguj-zzcc':'agujeros_iluminacion_zzcc',
+  'pint-zzcc':'pintura_zzcc','pint-2':'pintura_segunda','plac-tapas':'placas_tapas',
+  fachada:'fachada_terminada',casquillos:'casquillos_bombillas','ilum-rell':'iluminacion_rellanos',
+};
+function catalogForSource(source){
+  const portalCatalog=(Array.isArray(source?.catalog)?source.catalog:[]).map(t=>({...t}));
+  if(!portalCatalog.length) return BASE_CAT.map(t=>({...t}));
+  const sourceIds=new Set(portalCatalog.map(t=>t.id));
+  const missing=BASE_CAT.filter(t=>!sourceIds.has(BASE_SOURCE_ID[t.id]||t.id));
+  return portalCatalog.concat(missing.map((t,index)=>({...t,orden:10000+index})));
+}
+
+/* ── PAGINACIÓN A4 ──────────────────────────────────────────────────────
+   Alturas MEDIDAS con pdfplumber sobre el PDF real que produce el navegador
+   (Mungia, 06/08/2026), no deducidas del CSS: el CSS declara la fila de tajo
+   a 4.65mm y en el papel mide 5.01mm, porque bordes y relleno suman.
+
+   Contar tajos e ignorar los rótulos de fase era el error de MAX_TAJOS_A4:
+   38 tajos con 18 fases necesitan 249.42mm y había 249.70. La hoja cabía por
+   0.28mm. Eso no es un diseño, es una casualidad, y por eso el navegador
+   escupía restos de tabla en páginas sueltas. */
+const MM = {
+  filaTajo: 5.01,
+  filaGrupo: 3.28,
+  cabeceraTabla: 28.00,   // thead (3 filas) + observaciones, ya recortados
+  altoUtil: 284.00,       // A4 297 - 7 de margen arriba - 6 abajo
+  colchon: 4.00,          // nada debe rozar el borde
+};
+
+function cupoFilasMM(){ return MM.altoUtil - MM.cabeceraTabla - MM.colchon; }
+
+function alturaFilasMM(tajos){
+  const lista = Array.isArray(tajos) ? tajos : [];
+  const fases = new Set(lista.map(t=>t.g));
+  return lista.length*MM.filaTajo + fases.size*MM.filaGrupo;
+}
+
+function repartirEn(lista,n){
+  const porHoja = Math.ceil(lista.length/n);
+  const hojas = [];
+  for(let i=0;i<lista.length;i+=porHoja) hojas.push(lista.slice(i,i+porHoja));
+  return hojas;
+}
+
+/* Cuántas hojas hacen falta y con qué reparto.
+
+   El reparto es EQUILIBRADO a propósito: 55 tajos en 2 hojas son 28 y 27, no
+   42 y 13. Cuesta el mismo papel y se lee mejor.
+
+   No hace falta guarda contra rótulos de fase huérfanos: se reparten tajos,
+   no filas, y generateHTML reconstruye los grupos de cada hoja, así que un
+   rótulo sólo aparece si detrás va al menos un tajo suyo. */
+function repartirTajosEnHojas(tajos){
+  const lista = Array.isArray(tajos) ? tajos : [];
+  if(!lista.length) return [lista];
+  const cupo = cupoFilasMM();
+  for(let n=1;n<=lista.length;n++){
+    const hojas = repartirEn(lista,n);
+    if(hojas.every(h=>alturaFilasMM(h)<=cupo)) return hojas;
+  }
+  return lista.map(t=>[t]);
+}
+
+const MAX_TAJOS_A4 = 38;   // sólo informativo: el límite real es cupoFilasMM()
+const PROP_LBL = {p:'SGD',e:'EXT',c:'COO'};
+const AMB_LBL  = {v:'',z:'zzcc',d:'edif'};
+
+/* Perfiles de presentación del garaje. La selección del paso 3 sigue siendo
+   plana; aquí sólo se decide en qué tipo de zona se imprime cada tajo. Esta
+   fase no lee/escribe ficha_garajes.json, no auto-carga garajes del registro
+   y no valida dependencias: esas integraciones pertenecen a fases posteriores. */
+const GARAGE_ZONE_DEFS = [
+  {key:'escalera',tipo:'escalera',label:'Escalera',grupo:'circulacion'},
+  {key:'rellano',tipo:'rellano',label:'Rellano / Zona común',grupo:'circulacion'},
+  {key:'ct_centralizacion',tipo:'cuarto_tecnico',funcion:'centralizacion',label:'Centralización de contadores',grupo:'tecnico'},
+  {key:'ct_riti',tipo:'cuarto_tecnico',funcion:'riti',label:'Cuarto RITI / Teleco',grupo:'tecnico'},
+  {key:'ct_achique',tipo:'cuarto_tecnico',funcion:'achique',label:'Cuarto Achique / Bombas',grupo:'tecnico'},
+  {key:'ct_aerotermia',tipo:'cuarto_tecnico',funcion:'aerotermia',label:'Cuarto Aerotermia',grupo:'tecnico'},
+  {key:'ct_calderas',tipo:'cuarto_tecnico',funcion:'calderas',label:'Sala de calderas',grupo:'tecnico'},
+  {key:'ct_pci',tipo:'cuarto_tecnico',funcion:'pci',label:'Cuarto PCI',grupo:'tecnico'},
+  {key:'ct_ascensor',tipo:'cuarto_tecnico',funcion:'ascensor',label:'Cuarto ascensor',grupo:'tecnico'},
+  {key:'ct_generales',tipo:'cuarto_tecnico',funcion:'generales',label:'Instalaciones generales',grupo:'tecnico'},
+  {key:'cl_basuras',tipo:'cuarto_ligero',funcion:'basuras',label:'Basuras',grupo:'ligero'},
+  {key:'cl_bicicletas',tipo:'cuarto_ligero',funcion:'bicicletas',label:'Bicicletas',grupo:'ligero'},
+];
+const GARAGE_ZONE_BY_KEY = Object.fromEntries(GARAGE_ZONE_DEFS.map(z=>[z.key,z]));
+const GARAGE_PROFILE_TAJOS = {
+  vial:[
+    'garaje_raseado_viales','garaje_tubeado_vial','garaje_cableado_vial',
+    'garaje_pintura_1_vial','garaje_pintura_2_vial',
+    'garaje_alum_fijo_coloc_vial','garaje_alum_temp_coloc_vial','garaje_emergencia_coloc_vial',
+    'garaje_alum_fijo_embornado_vial','garaje_alum_temp_embornado_vial','garaje_emergencia_embornado_vial',
+    'garaje_puerta_alimentacion','garaje_puerta_mecanizado','garaje_irve_preinstalacion','garaje_telco_transito',
+  ],
+  trastero:[
+    'garaje_tabicado','garaje_lucido','garaje_falso_techo',
+    'garaje_tubeado_emp','garaje_cableado_emp','garaje_tubeado_visto','garaje_cableado_visto',
+    'garaje_pintura_1_recinto','garaje_pintura_2_recinto',
+    'garaje_alum_temp_coloc_recinto','garaje_emergencia_coloc_recinto',
+    'garaje_alum_temp_embornado_recinto','garaje_emergencia_embornado_recinto',
+  ],
+  escalera:[
+    'garaje_lucido','garaje_tubeado_visto','garaje_cableado_visto',
+    'garaje_pintura_1_recinto','garaje_pintura_2_recinto',
+    'garaje_alum_fijo_coloc_recinto','garaje_alum_temp_coloc_recinto','garaje_emergencia_coloc_recinto',
+    'garaje_alum_fijo_embornado_recinto','garaje_alum_temp_embornado_recinto','garaje_emergencia_embornado_recinto',
+  ],
+  rellano:[
+    'garaje_lucido','garaje_falso_techo','garaje_tubeado_emp','garaje_cableado_emp',
+    'garaje_pintura_1_recinto','garaje_pintura_2_recinto',
+    'garaje_alum_fijo_coloc_recinto','garaje_alum_temp_coloc_recinto','garaje_emergencia_coloc_recinto',
+    'garaje_alum_fijo_embornado_recinto','garaje_alum_temp_embornado_recinto','garaje_emergencia_embornado_recinto',
+  ],
+  cuarto_tecnico:[
+    'garaje_tabicado','garaje_lucido','garaje_falso_techo',
+    'garaje_tubeado_emp','garaje_cableado_emp','garaje_tubeado_visto','garaje_cableado_visto',
+    'garaje_pintura_1_recinto','garaje_pintura_2_recinto',
+    'garaje_alum_fijo_coloc_recinto','garaje_alum_temp_coloc_recinto','garaje_emergencia_coloc_recinto',
+    'garaje_alum_fijo_embornado_recinto','garaje_alum_temp_embornado_recinto','garaje_emergencia_embornado_recinto',
+    'garaje_enchufe_coloc','garaje_enchufe_embornado',
+    'garaje_cuadro_tubeado_cableado','garaje_cuadro_colocacion','garaje_cuadro_embornado',
+    'garaje_cuadro_rotulacion','garaje_cuadro_equipo_tubeado_cableado',
+  ],
+  cuarto_ligero:[
+    'garaje_tabicado','garaje_lucido','garaje_tubeado_emp','garaje_cableado_emp',
+    'garaje_tubeado_visto','garaje_cableado_visto',
+    'garaje_pintura_1_recinto','garaje_pintura_2_recinto',
+    'garaje_alum_fijo_coloc_recinto','garaje_alum_temp_coloc_recinto','garaje_emergencia_coloc_recinto',
+    'garaje_alum_fijo_embornado_recinto','garaje_alum_temp_embornado_recinto','garaje_emergencia_embornado_recinto',
+    'garaje_enchufe_coloc','garaje_enchufe_embornado',
+  ],
+};
+const GARAGE_SECTIONS = [
+  {tipo:'vial',label:'Viales y alumbrado de parcelas'},
+  {tipo:'trastero',label:'Trasteros'},
+  {tipo:'escalera',label:'Escaleras'},
+  {tipo:'rellano',label:'Rellanos / Zonas comunes'},
+  {tipo:'cuarto_tecnico',label:'Cuartos técnicos'},
+  {tipo:'cuarto_ligero',label:'Cuartos ligeros'},
+];
+function garageExtraTajos(zona){
+  if(zona.tipo!=='cuarto_tecnico') return [];
+  if(zona.funcion==='centralizacion') return [
+    'garaje_tierras_general','garaje_centralizacion_modulos',
+    'garaje_centralizacion_derivaciones','garaje_centralizacion_lga',
+  ];
+  return ['garaje_tierras_derivacion'];
+}
+
+/* ════════════════════════════════════════════
+   STATE
+════════════════════════════════════════════ */
+const DEF_PL  = ['PB','1ª','2ª','3ª','4ª','5ª','6ª','7ª','8ª','9ª','10ª','11ª','12ª'];
+const DEF_VIV = ['A','B','C','D','E','F','G','H'];
+let UID_SEQ = 1;
+
+function uid(prefix){ return prefix+'_'+Date.now().toString(36)+'_'+(UID_SEQ++); }
+function makeFloor(index=0,nombre='',vivs=DEF_VIV.slice(0,4)){
+  return {id:uid('f'),nombre:nombre||DEF_PL[index]||`${index}ª`,vivs:[...vivs]};
+}
+function makePortal(index=0){
+  const baseVivs=DEF_VIV.slice(0,4);
+  return {id:uid('p'),nombre:`Portal ${index+1}`,
+          plantas:DEF_PL.slice(0,6).map((nombre,i)=>makeFloor(i,nombre,baseVivs))};
+}
+function makeBlock(index=0){
+  return {id:uid('b'),nombre:`Bloque ${index+1}`,portales:[makePortal(0)]};
+}
+function makeGarajeZona(tipo,nombre='',funcion=''){
+  const zona={id:uid('z'),nombre:nombre||'Zona',tipo};
+  if(funcion) zona.funcion=funcion;
+  return zona;
+}
+function makeGarajePlanta(index=0,nombre=''){
+  return {id:uid('gp'),nombre:nombre||`S-${index+1}`,zonas:[]};
+}
+function makeGaraje(index=0){
+  return {id:uid('g'),nombre:`Garaje ${index+1}`,plantas:[makeGarajePlanta(0)]};
+}
+function escHtml(value){
+  return String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+function normaliseFloor(planta,index,baseVivs){
+  if(planta&&typeof planta==='object'&&!Array.isArray(planta)){
+    return {
+      id:planta.id||uid('f'),
+      nombre:String(planta.nombre||DEF_PL[index]||`${index}ª`),
+      vivs:Array.isArray(planta.vivs)&&planta.vivs.length?[...planta.vivs]:[...baseVivs],
+    };
+  }
+  return makeFloor(index,String(planta||''),baseVivs);
+}
+function normaliseStructure(source={}){
+  if(Array.isArray(source.bloques)&&source.bloques.length){
+    return source.bloques.map((bloque,bi)=>({
+      id:bloque.id||uid('b'),
+      nombre:String(bloque.nombre||`Bloque ${bi+1}`),
+      portales:(Array.isArray(bloque.portales)&&bloque.portales.length?bloque.portales:[{}]).map((portal,pi)=>{
+        const baseVivs=Array.isArray(portal.vivs)&&portal.vivs.length?[...portal.vivs]:DEF_VIV.slice(0,4);
+        const rawPlantas=Array.isArray(portal.plantas)&&portal.plantas.length?portal.plantas:DEF_PL.slice(0,6);
+        return {
+          id:portal.id||uid('p'),
+          nombre:String(portal.nombre||`Portal ${pi+1}`),
+          plantas:rawPlantas.map((planta,fi)=>normaliseFloor(planta,fi,baseVivs)),
+        };
+      }),
+    }));
+  }
+  const legacyVivs=Array.isArray(source.vivs)&&source.vivs.length?[...source.vivs]:DEF_VIV.slice(0,4);
+  const legacyPlantas=Array.isArray(source.plantas)&&source.plantas.length?source.plantas:DEF_PL.slice(0,6);
+  return [{
+    id:uid('b'),
+    nombre:String(source.ref||'Bloque 1'),
+    portales:[{
+      id:uid('p'),
+      nombre:String(source.portal||'Portal 1'),
+      plantas:legacyPlantas.map((planta,fi)=>normaliseFloor(planta,fi,legacyVivs)),
+    }],
+  }];
+}
+function getPortalEntries(){
+  return S.bloques.flatMap((bloque,bi)=>bloque.portales.map((portal,pi)=>({bloque,portal,bi,pi})));
+}
+
+let S = {
+  step:1, obra:'', fecha:TODAY_ISO, resp:'',
+  modo:'vivienda',
+  bloques:[makeBlock(0)],
+  garajes:[],
+  sel:new Set(CAT.map(t=>t.id)),
+  selGaraje:new Set(),
+  importData:null,
+  sourceId:null,
+  sourceMeta:null,
+};
+
+/* ════════════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════════════ */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function goHome(){ showScreen('sc-home'); renderRecent(); }
+
+function installedWorks(){
+  return Array.isArray(window.SAGARDE_OBRAS_REVISION)?window.SAGARDE_OBRAS_REVISION:[];
+}
+function worksWithDatabase(){
+  // Solo las obras cuya estructura sale de ficha_obra.json. Las demas dan
+  // hoja desde la ultima revision, que es justo lo que no sirve: la hoja
+  // tiene que salir de la base para reflejar el estado real de los tajos.
+  return installedWorks().filter(o=>o.fuente_estructura==='ficha_obra.json');
+}
+function cloneData(value){ return JSON.parse(JSON.stringify(value)); }
+function setSourceStatus(source){
+  const host=document.getElementById('installed-status');
+  if(!host) return;
+  if(!source){
+    const total=installedWorks().length;
+    const conBase=worksWithDatabase().length;
+    host.className='source-status empty';
+    if(!total){
+      host.textContent='No hay registro de portales disponible todavía. '+
+        'Ejecuta la actualización de Sagarde para publicarlo.';
+    } else if(!conBase){
+      // Un recuento de cero es señal de alarma, no de "no aplica".
+      host.textContent=`Hay ${total} obra${total!==1?'s':''} publicada`+
+        `${total!==1?'s':''}, pero ninguna con base de datos todavía. `+
+        'Para que una obra aparezca aquí hay que sembrar su ficha_obra.json.';
+    } else {
+      host.textContent='Configuración manual: la estructura y las celdas '+
+        'no se leen de ningún portal.';
+    }
+    return;
+  }
+  if(S.modo==='garaje'){
+    host.className='source-status';
+    const ambas=!!source.tiene_garaje&&source.tiene_vivienda!==false;
+    host.innerHTML=ambas
+      ? '<strong>Esta obra tiene Viviendas y Garajes.</strong> El selector superior decide qué hoja generar. La estructura de garaje se configura manualmente en esta fase.'
+      : '<strong>Obra seleccionada.</strong> La estructura de garaje se configura manualmente en esta fase; todavía no se auto-carga desde ficha_garajes.json.';
+    return;
+  }
+  const resumen=source.resumen||{};
+  const revision=source.revision||source.generado||'sin fecha';
+  host.className='source-status';
+  host.innerHTML=`<strong>Memoria del portal cargada.</strong> Revisión ${escHtml(revision)} · `+
+    `${CAT.length} tajos disponibles · ${resumen.tajos||0} con memoria · `+
+    `${resumen.estados_precargados||0} celdas con estado previo.`;
+}
+function renderInstalledWorks(){
+  const select=document.getElementById('f-installed');
+  if(!select) return;
+  const obras=worksWithDatabase();
+  select.innerHTML='<option value="">— Configuración manual —</option>'+obras.map(obra=>
+    `<option value="${escHtml(obra.id)}">${escHtml(obra.nombre)}${obra.revision?' · rev. '+escHtml(obra.revision):''}</option>`
+  ).join('');
+  select.value=S.sourceId||'';
+  const source=obras.find(obra=>obra.id===S.sourceId)||S.sourceMeta;
+  setSourceStatus(source||null);
+}
+function loadInstalledWork(id){
+  const source=worksWithDatabase().find(obra=>obra.id===id);
+  if(!id){
+    if(S.modo==='vivienda'){
+      CAT=BASE_CAT.map(t=>({...t}));
+      S.sel=new Set(CAT.map(t=>t.id));
+    }
+    S.importData=null;
+    S.sourceId=null;
+    S.sourceMeta=null;
+    renderInstalledWorks();
+    if(S.step===3) renderTajos();
+    showToast('Modo manual activado');
+    return;
+  }
+  if(!source){
+    setSourceStatus(null);
+    showToast('No se pudo leer esa obra');
+    return;
+  }
+  if(S.modo==='garaje'){
+    S.obra=source.nombre||'';
+    S.importData=null;
+    S.sourceId=source.id;
+    S.sourceMeta=cloneData({
+      id:source.id,nombre:source.nombre,revision:source.revision,
+      generado:source.generado,resumen:source.resumen||{},
+      tiene_garaje:!!source.tiene_garaje,tiene_vivienda:source.tiene_vivienda!==false,
+    });
+    document.getElementById('f-obra').value=S.obra;
+    renderInstalledWorks();
+    showToast(source.tiene_garaje
+      ? 'Obra con Viviendas y Garajes: modo Garajes seleccionado ✓'
+      : 'Obra seleccionada · configura el garaje manualmente');
+    return;
+  }
+  CAT=catalogForSource(source);
+  S.obra=source.nombre||'';
+  S.bloques=normaliseStructure({bloques:cloneData(source.bloques||[])});
+  S.sel=new Set(CAT.map(t=>t.id));
+  S.importData=cloneData(source.estados||{});
+  S.sourceId=source.id;
+  S.sourceMeta=cloneData({
+    id:source.id,nombre:source.nombre,revision:source.revision,
+    generado:source.generado,resumen:source.resumen||{},
+  });
+  document.getElementById('f-obra').value=S.obra;
+  renderBloquesConfig();
+  renderInstalledWorks();
+  if(S.step===2) renderPortalStructures();
+  if(S.step===3) renderTajos();
+  showToast('Obra y memoria del portal cargadas ✓');
+}
+
+
+function startWizard(resetDate=true){
+  if(resetDate) S.fecha = TODAY_ISO;
+  S.bloques = normaliseStructure(S);
+  goStep(1);
+  showScreen('sc-wizard');
+  document.getElementById('f-obra').value = S.obra;
+  document.getElementById('f-fecha').value  = S.fecha;
+  document.getElementById('f-resp').value   = S.resp;
+  updateModeUI();
+  renderInstalledWorks();
+  renderBloquesConfig();
+}
+
+function updateModeUI(){
+  const garaje=S.modo==='garaje';
+  document.querySelectorAll('[data-modo]').forEach(btn=>
+    btn.classList.toggle('active',btn.dataset.modo===S.modo));
+  const bloquesWrap=document.getElementById('f-nbloques-wrap');
+  const garajesWrap=document.getElementById('f-ngarajes-wrap');
+  const bloquesSection=document.getElementById('f-bloques-section');
+  if(bloquesWrap) bloquesWrap.style.display=garaje?'none':'';
+  if(garajesWrap) garajesWrap.style.display=garaje?'':'none';
+  if(bloquesSection) bloquesSection.style.display=garaje?'none':'';
+  const garageCount=document.getElementById('f-ngarajes');
+  if(garageCount) garageCount.value=S.garajes.length;
+  const values=garaje?{
+    'step-1-sub':'Datos generales y número de garajes de la obra.',
+    'step-2-title':'Estructura de garajes',
+    'step-2-sub':'Nombra cada garaje, sus plantas y las zonas que existen en cada una.',
+    'step-3-sub':'Marca los tajos de garaje que aplican a esta obra. Todos activos por defecto.',
+    'step-4-sub':'La descarga incluirá todos los garajes en una única revisión, repartidos por tipo de zona.',
+  }:{
+    'step-1-sub':'Datos generales y distribución de bloques y portales de la obra.',
+    'step-2-title':'Estructura del edificio',
+    'step-2-sub':'Configura cada portal y añade o quita viviendas de forma independiente en cada planta.',
+    'step-3-sub':'Marca los tajos que aplican a esta obra. Todos activos por defecto.',
+    'step-4-sub':'La descarga incluirá todos los bloques y portales en una única revisión de la obra completa.',
+  };
+  Object.entries(values).forEach(([id,value])=>{
+    const el=document.getElementById(id); if(el) el.textContent=value;
+  });
+  const vivPreset=document.getElementById('tj-preset-viv');
+  if(vivPreset) vivPreset.style.display=garaje?'none':'';
+  const source=worksWithDatabase().find(obra=>obra.id===S.sourceId)||S.sourceMeta;
+  if(source) setSourceStatus(source);
+}
+
+function setModo(modo){
+  if(modo!=='vivienda'&&modo!=='garaje') return;
+  S.modo=modo;
+  if(modo==='garaje'&&!S.garajes.length){
+    S.garajes=[makeGaraje(0)];
+    S.selGaraje=new Set(CAT_GARAJE.map(t=>t.id));
+  }
+  updateModeUI();
+  const source=worksWithDatabase().find(obra=>obra.id===S.sourceId);
+  if(source&&source.tiene_garaje&&source.tiene_vivienda!==false){
+    showToast(`Esta obra tiene Viviendas y Garajes · modo ${modo==='garaje'?'Garajes':'Viviendas'} ✓`);
+  }
+  if(S.step===2) initStructure();
+  if(S.step===3) renderTajos();
+  if(S.step===4) renderSummary();
+}
+
+/* ════════════════════════════════════════════
+   WIZARD
+════════════════════════════════════════════ */
+const STEPS = ['Obra','Estructura','Tajos','Generar'];
+
+function goStep(n){
+  S.step = n;
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('step-'+n).classList.add('active');
+  renderSidebar();
+  if(n===1){ updateModeUI(); renderBloquesConfig(); }
+  if(n===2) initStructure();
+  if(n===3) renderTajos();
+  if(n===4) renderSummary();
+}
+
+function renderSidebar(){
+  document.getElementById('wiz-sidebar').innerHTML = STEPS.map((lbl,i)=>{
+    const n=i+1, done=n<S.step, act=n===S.step;
+    return `<div class="wiz-step${act?' active':''}${done?' done clickable':''}" ${done?`onclick="goStep(${n})"`:''}>`+
+      `<div class="step-num">${done?'✓':n}</div><div class="step-lbl">${lbl}</div></div>`;
+  }).join('');
+}
+
+/* ── BLOCKS AND PORTALS ── */
+function rebuildBloques(n){
+  n=Math.max(1,Math.min(12,n||1));
+  while(S.bloques.length<n) S.bloques.push(makeBlock(S.bloques.length));
+  S.bloques=S.bloques.slice(0,n);
+  renderBloquesConfig();
+}
+function rebuildGarajes(n){
+  n=Math.max(1,Math.min(12,n||1));
+  while(S.garajes.length<n) S.garajes.push(makeGaraje(S.garajes.length));
+  S.garajes=S.garajes.slice(0,n);
+  const count=document.getElementById('f-ngarajes');
+  if(count) count.value=S.garajes.length;
+  if(S.step===2) renderGarajeStructures();
+}
+function rebuildPortales(bi,n){
+  const bloque=S.bloques[bi];
+  if(!bloque) return;
+  n=Math.max(1,Math.min(12,n||1));
+  while(bloque.portales.length<n) bloque.portales.push(makePortal(bloque.portales.length));
+  bloque.portales=bloque.portales.slice(0,n);
+  renderBloquesConfig();
+}
+function renderBloquesConfig(){
+  const host=document.getElementById('bloques-config');
+  if(!host) return;
+  const count=document.getElementById('f-nbloques');
+  if(count) count.value=S.bloques.length;
+  host.innerHTML=S.bloques.map((bloque,bi)=>`
+    <div class="block-config-card">
+      <div class="block-config-head">
+        <div>
+          <div class="block-config-title">Bloque ${bi+1}</div>
+          <div class="block-config-meta">${bloque.portales.length} portal${bloque.portales.length!==1?'es':''}</div>
+        </div>
+      </div>
+      <div class="fg">
+        <div class="field">
+          <label class="fl">Nombre del bloque</label>
+          <input type="text" value="${escHtml(bloque.nombre)}" placeholder="Ej: Bloque 1 o ZR1.1"
+                 oninput="S.bloques[${bi}].nombre=this.value">
+        </div>
+        <div class="field">
+          <label class="fl">Número de portales</label>
+          <input type="number" min="1" max="12" value="${bloque.portales.length}"
+                 onchange="rebuildPortales(${bi},+this.value)">
+        </div>
+      </div>
+      <div class="portal-name-grid">
+        ${bloque.portales.map((portal,pi)=>`
+          <div class="portal-name-item">
+            <label>Portal ${pi+1}</label>
+            <input type="text" value="${escHtml(portal.nombre)}" placeholder="Ej: Portal 1"
+                   oninput="S.bloques[${bi}].portales[${pi}].nombre=this.value">
+          </div>`).join('')}
+      </div>
+    </div>`).join('');
+}
+
+/* ── STRUCTURE ── */
+function initStructure(){
+  if(S.modo==='garaje') renderGarajeStructures();
+  else renderPortalStructures();
+}
+
+function portalAt(bi,pi){ return S.bloques[bi]?.portales[pi]; }
+function rebuildPlantas(bi,pi,n){
+  const portal=portalAt(bi,pi);
+  if(!portal) return;
+  n = Math.max(1, Math.min(20,n||1));
+  while(portal.plantas.length<n){
+    const last=portal.plantas[portal.plantas.length-1];
+    const baseVivs=last&&Array.isArray(last.vivs)?last.vivs:DEF_VIV.slice(0,4);
+    portal.plantas.push(makeFloor(portal.plantas.length,'',baseVivs));
+  }
+  portal.plantas = portal.plantas.slice(0,n);
+  renderPortalStructures();
+}
+
+function floorVivTags(planta,bi,pi,fi){
+  return planta.vivs.map((value,vi)=>`<span class="s-tag">
+      <input type="text" value="${escHtml(value)}" maxlength="10"
+             onchange="setViv(${bi},${pi},${fi},${vi},this.value)">
+      ${planta.vivs.length>1?`<button class="btn-rm" title="Quitar vivienda de esta planta"
+              onclick="rmViv(${bi},${pi},${fi},${vi})">×</button>`:''}
+    </span>`).join('')+
+    `<button class="btn-add-s" onclick="addViv(${bi},${pi},${fi})">+ Añadir vivienda</button>`;
+}
+function renderPortalStructures(){
+  const host=document.getElementById('portal-structures');
+  if(!host) return;
+  const entries=getPortalEntries();
+  if(!entries.length){
+    host.innerHTML='<div class="structure-empty">Primero define los bloques y portales en el apartado Obra.</div>';
+    return;
+  }
+  host.innerHTML=entries.map(({bloque,portal,bi,pi})=>`
+    <div class="portal-structure-card">
+      <div class="portal-structure-head">
+        <div>
+          <div class="portal-structure-title">${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)}</div>
+          <div class="portal-structure-meta">Cada planta puede tener una distribución de viviendas diferente.</div>
+        </div>
+      </div>
+      <div class="fg one">
+        <div class="field">
+          <label class="fl">Número de plantas</label>
+          <input type="number" min="1" max="20" value="${portal.plantas.length}"
+                 onchange="rebuildPlantas(${bi},${pi},+this.value)">
+        </div>
+      </div>
+      <div class="floor-config-list">
+        ${portal.plantas.map((planta,fi)=>`
+          <div class="floor-config-card">
+            <div class="floor-config-head">
+              <div class="field">
+                <label class="fl">Planta ${fi+1}</label>
+                <input type="text" value="${escHtml(planta.nombre)}" maxlength="12"
+                       onchange="setPlanta(${bi},${pi},${fi},this.value)">
+              </div>
+              <div class="floor-config-meta">${planta.vivs.length} vivienda${planta.vivs.length!==1?'s':''} en esta planta</div>
+              <button class="btn-rm-floor" title="Eliminar esta planta"
+                      onclick="rmPlanta(${bi},${pi},${fi})">Eliminar planta</button>
+            </div>
+            <label class="fl">Viviendas de esta planta</label>
+            <div class="struct-box"><div class="struct-row floor-viv-row">${floorVivTags(planta,bi,pi,fi)}</div></div>
+          </div>`).join('')}
+      </div>
+      <button class="btn-add-s" style="margin-top:10px" onclick="addPlanta(${bi},${pi})">+ Añadir planta</button>
+    </div>`).join('');
+}
+function setPlanta(bi,pi,i,value){
+  const portal=portalAt(bi,pi);
+  if(portal) portal.plantas[i].nombre=value.trim()||portal.plantas[i].nombre;
+}
+function setViv(bi,pi,fi,vi,value){
+  const portal=portalAt(bi,pi);
+  if(portal) portal.plantas[fi].vivs[vi]=value.trim()||portal.plantas[fi].vivs[vi];
+}
+function rmPlanta(bi,pi,i){
+  const portal=portalAt(bi,pi); if(!portal||portal.plantas.length===1) return;
+  portal.plantas.splice(i,1); renderPortalStructures();
+}
+function addPlanta(bi,pi){
+  const portal=portalAt(bi,pi); if(!portal||portal.plantas.length>=20) return;
+  const last=portal.plantas[portal.plantas.length-1];
+  portal.plantas.push(makeFloor(portal.plantas.length,'',last?.vivs||DEF_VIV.slice(0,4)));
+  renderPortalStructures();
+}
+function rmViv(bi,pi,fi,vi){
+  const portal=portalAt(bi,pi);
+  const planta=portal?.plantas[fi];
+  if(!planta||planta.vivs.length===1) return;
+  planta.vivs.splice(vi,1); renderPortalStructures();
+}
+function addViv(bi,pi,fi){
+  const portal=portalAt(bi,pi);
+  const planta=portal?.plantas[fi];
+  if(!planta||planta.vivs.length>=12) return;
+  const used=new Set(planta.vivs.map(v=>String(v).toUpperCase()));
+  const next=DEF_VIV.find(v=>!used.has(v))||`V${planta.vivs.length+1}`;
+  planta.vivs.push(next); renderPortalStructures();
+}
+
+/* ── GARAGE STRUCTURE ── */
+function garajeAt(gi){ return S.garajes[gi]; }
+function garageZoneDef(zona){
+  return GARAGE_ZONE_DEFS.find(def=>def.tipo===zona.tipo&&
+    String(def.funcion||'')===String(zona.funcion||''));
+}
+function rebuildGarajePlantas(gi,n){
+  const garaje=garajeAt(gi); if(!garaje) return;
+  n=Math.max(1,Math.min(20,n||1));
+  while(garaje.plantas.length<n) garaje.plantas.push(makeGarajePlanta(garaje.plantas.length));
+  garaje.plantas=garaje.plantas.slice(0,n);
+  renderGarajeStructures();
+}
+function setGaraje(gi,value){
+  const garaje=garajeAt(gi); if(garaje) garaje.nombre=value.trim()||garaje.nombre;
+}
+function setGarajePlanta(gi,pi,value){
+  const planta=garajeAt(gi)?.plantas[pi]; if(planta) planta.nombre=value.trim()||planta.nombre;
+}
+function addGarajePlanta(gi){
+  const garaje=garajeAt(gi); if(!garaje||garaje.plantas.length>=20) return;
+  garaje.plantas.push(makeGarajePlanta(garaje.plantas.length));
+  renderGarajeStructures();
+}
+function rmGarajePlanta(gi,pi){
+  const garaje=garajeAt(gi); if(!garaje||garaje.plantas.length===1) return;
+  garaje.plantas.splice(pi,1); renderGarajeStructures();
+}
+function addZona(gi,pi,key){
+  const planta=garajeAt(gi)?.plantas[pi];
+  const def=GARAGE_ZONE_BY_KEY[key];
+  if(!planta||!def) return;
+  const iguales=planta.zonas.filter(z=>z.tipo===def.tipo&&String(z.funcion||'')===String(def.funcion||'')).length;
+  const nombre=iguales?`${def.label} ${iguales+1}`:def.label;
+  planta.zonas.push(makeGarajeZona(def.tipo,nombre,def.funcion||''));
+  renderGarajeStructures();
+}
+function rmZona(gi,pi,zid){
+  const planta=garajeAt(gi)?.plantas[pi]; if(!planta) return;
+  planta.zonas=planta.zonas.filter(z=>z.id!==zid); renderGarajeStructures();
+}
+function setZona(gi,pi,zid,value){
+  const zona=garajeAt(gi)?.plantas[pi]?.zonas.find(z=>z.id===zid);
+  if(zona) zona.nombre=value.trim()||zona.nombre;
+}
+function garageCount(gi,pi,tipo){
+  return garajeAt(gi)?.plantas[pi]?.zonas.filter(z=>z.tipo===tipo).length||0;
+}
+function incGarageCount(gi,pi,tipo){
+  const planta=garajeAt(gi)?.plantas[pi]; if(!planta) return;
+  const n=garageCount(gi,pi,tipo);
+  const nombre=tipo==='vial'?`Zona ${DEF_VIV[n]||n+1}`:`Trasteros ${n+1}`;
+  planta.zonas.push(makeGarajeZona(tipo,nombre));
+  renderGarajeStructures();
+}
+function decGarageCount(gi,pi,tipo){
+  const planta=garajeAt(gi)?.plantas[pi]; if(!planta) return;
+  for(let i=planta.zonas.length-1;i>=0;i--){
+    if(planta.zonas[i].tipo===tipo){ planta.zonas.splice(i,1); break; }
+  }
+  renderGarajeStructures();
+}
+function garageZoneChip(zona,gi,pi){
+  return `<span class="garage-zone-chip">
+    <input type="text" value="${escHtml(zona.nombre)}" maxlength="50"
+           data-zone-id="${escHtml(zona.id)}"
+           onchange="setZona(${gi},${pi},'${escHtml(zona.id)}',this.value)">
+    <button class="btn-rm" title="Quitar zona" onclick="rmZona(${gi},${pi},'${escHtml(zona.id)}')">×</button>
+  </span>`;
+}
+function garageChecklistGroup(planta,gi,pi,grupo,label){
+  const defs=GARAGE_ZONE_DEFS.filter(def=>def.grupo===grupo);
+  const zonas=planta.zonas.filter(z=>garageZoneDef(z)?.grupo===grupo);
+  return `<div class="garage-zone-group">
+    <label class="fl">${label}</label>
+    <div class="garage-zone-actions">${defs.map(def=>
+      `<button class="btn-add-s" data-add-zone="${def.key}" onclick="addZona(${gi},${pi},'${def.key}')">+ ${escHtml(def.label)}</button>`
+    ).join('')}</div>
+    <div class="garage-zone-list">${zonas.length?zonas.map(z=>garageZoneChip(z,gi,pi)).join(''):
+      '<span class="hint">Sin zonas de este tipo</span>'}</div>
+  </div>`;
+}
+function garageCountGroup(planta,gi,pi,tipo,label){
+  const zonas=planta.zonas.filter(z=>z.tipo===tipo);
+  return `<div class="garage-zone-group">
+    <div class="garage-count-row">
+      <div><label class="fl">${label}</label><div class="hint">${zonas.length} zona${zonas.length!==1?'s':''}</div></div>
+      <div class="garage-count-controls">
+        <button data-dec-zone="${tipo}" onclick="decGarageCount(${gi},${pi},'${tipo}')">−</button>
+        <span>${zonas.length}</span>
+        <button data-inc-zone="${tipo}" onclick="incGarageCount(${gi},${pi},'${tipo}')">+</button>
+      </div>
+    </div>
+    <div class="garage-zone-list">${zonas.length?zonas.map(z=>garageZoneChip(z,gi,pi)).join(''):
+      '<span class="hint">Sin zonas todavía</span>'}</div>
+  </div>`;
+}
+function renderGarajeStructures(){
+  const host=document.getElementById('portal-structures');
+  if(!host) return;
+  if(!S.garajes.length){
+    host.innerHTML='<div class="structure-empty">Primero indica el número de garajes en el apartado Obra.</div>';
+    return;
+  }
+  host.innerHTML=S.garajes.map((garaje,gi)=>`
+    <div class="portal-structure-card garage-structure-card">
+      <div class="portal-structure-head">
+        <div>
+          <div class="portal-structure-title">Garaje ${gi+1}</div>
+          <div class="portal-structure-meta">${garaje.plantas.length} planta${garaje.plantas.length!==1?'s':''} · configura qué zonas existen en cada una.</div>
+        </div>
+      </div>
+      <div class="fg">
+        <div class="field"><label class="fl">Nombre del garaje</label>
+          <input type="text" value="${escHtml(garaje.nombre)}" maxlength="50" onchange="setGaraje(${gi},this.value)"></div>
+        <div class="field"><label class="fl">Número de plantas</label>
+          <input type="number" min="1" max="20" value="${garaje.plantas.length}" onchange="rebuildGarajePlantas(${gi},+this.value)"></div>
+      </div>
+      <div class="floor-config-list">${garaje.plantas.map((planta,pi)=>`
+        <div class="floor-config-card">
+          <div class="floor-config-head">
+            <div class="field"><label class="fl">Planta ${pi+1}</label>
+              <input type="text" value="${escHtml(planta.nombre)}" maxlength="20" onchange="setGarajePlanta(${gi},${pi},this.value)"></div>
+            <div class="floor-config-meta">${planta.zonas.length} zona${planta.zonas.length!==1?'s':''} en esta planta</div>
+            <button class="btn-rm-floor" title="Eliminar esta planta" onclick="rmGarajePlanta(${gi},${pi})">Eliminar planta</button>
+          </div>
+          <div class="garage-zone-groups">
+            ${garageChecklistGroup(planta,gi,pi,'circulacion','Lista de comprobación · circulación')}
+            ${garageChecklistGroup(planta,gi,pi,'tecnico','Lista de comprobación · cuartos técnicos')}
+            ${garageChecklistGroup(planta,gi,pi,'ligero','Lista de comprobación · cuartos ligeros')}
+            ${garageCountGroup(planta,gi,pi,'vial','Viales / alumbrado de parcelas')}
+            ${garageCountGroup(planta,gi,pi,'trastero','Trasteros')}
+          </div>
+        </div>`).join('')}</div>
+      <button class="btn-add-s" style="margin-top:10px" onclick="addGarajePlanta(${gi})">+ Añadir planta</button>
+    </div>`).join('');
+}
+
+/* ── TAJOS ── */
+function renderTajos(){
+  if(S.modo==='garaje') renderTajosGaraje();
+  else renderTajosVivienda();
+}
+function renderTajosVivienda(){
+  const groups={};
+  CAT.forEach(t=>{ (groups[t.g]||(groups[t.g]=[])).push(t); });
+  document.getElementById('tj-sel').innerHTML = Object.entries(groups).map(([g,tajos])=>`
+    <div class="tj-group">
+      <div class="tj-group-hdr" onclick="toggleGroup(this)"><span class="tj-gname">${g}</span></div>
+      <div class="tj-items">${tajos.map(t=>`
+        <label class="tj-item">
+          <input type="checkbox" id="cb-${t.id}" ${S.sel.has(t.id)?'checked':''} onchange="toggleT('${t.id}',this.checked)">
+          <span class="tj-name">${t.name}</span>
+          <span class="tj-badge ${t.p}">${PROP_LBL[t.p]}</span>
+          ${t.a!=='v'?`<span class="tj-badge a">${AMB_LBL[t.a]}</span>`:''}
+        </label>`).join('')}</div>
+    </div>`).join('');
+  updTjCount();
+}
+
+function renderTajosGaraje(){
+  const groups={};
+  CAT_GARAJE.forEach(t=>{ (groups[t.g]||(groups[t.g]=[])).push(t); });
+  document.getElementById('tj-sel').innerHTML=Object.entries(groups).map(([g,tajos])=>`
+    <div class="tj-group">
+      <div class="tj-group-hdr" onclick="toggleGroup(this)"><span class="tj-gname">${escHtml(g)}</span></div>
+      <div class="tj-items">${tajos.map(t=>`
+        <label class="tj-item">
+          <input type="checkbox" id="cb-${t.id}" ${S.selGaraje.has(t.id)?'checked':''} onchange="toggleT('${t.id}',this.checked)">
+          <span class="tj-name">${escHtml(t.name)}</span>
+          <span class="tj-badge ${t.p}">${PROP_LBL[t.p]}</span>
+          <span class="tj-badge a">${AMB_LBL[t.a]}</span>
+        </label>`).join('')}</div>
+    </div>`).join('');
+  updTjCount();
+}
+
+function toggleT(id,on){
+  const selected=S.modo==='garaje'?S.selGaraje:S.sel;
+  on?selected.add(id):selected.delete(id); updTjCount();
+}
+function updTjCount(){
+  const count=document.getElementById('tj-count');
+  if(S.modo==='garaje'){
+    count.textContent=`${S.selGaraje.size} de ${CAT_GARAJE.length} tajos de garaje`;
+    count.className='tj-count';
+    return;
+  }
+  // Se cuenta en hojas, que es lo que sale por la impresora. "+17 sobre A4"
+  // no le decia a nadie cuantas hojas iban a salir.
+  const hojas=repartirTajosEnHojas(getActiveTajos()).length;
+  count.textContent=hojas>1
+    ? `${S.sel.size} tajos · ${hojas} hojas por tabla`
+    : `${S.sel.size} tajos · 1 hoja por tabla`;
+  count.className='tj-count'+(hojas>1?' over':'');
+}
+
+function checkAll(v){
+  const catalog=S.modo==='garaje'?CAT_GARAJE:CAT;
+  const selected=S.modo==='garaje'?S.selGaraje:S.sel;
+  catalog.forEach(t=>{ v?selected.add(t.id):selected.delete(t.id);
+    const cb=document.getElementById('cb-'+t.id); if(cb) cb.checked=v; });
+  updTjCount();
+}
+function checkPreset(pr){
+  const catalog=S.modo==='garaje'?CAT_GARAJE:CAT;
+  const selected=S.modo==='garaje'?S.selGaraje:S.sel;
+  catalog.forEach(t=>{
+    const on = pr==='sgd'? t.p==='p' : pr==='viv'? t.a==='v' : true;
+    on?selected.add(t.id):selected.delete(t.id);
+    const cb=document.getElementById('cb-'+t.id); if(cb) cb.checked=on;
+  });
+  updTjCount();
+}
+function toggleGroup(hdr){
+  const items=[...hdr.nextElementSibling.querySelectorAll('input[type=checkbox]')];
+  const all=items.every(c=>c.checked);
+  items.forEach(c=>{ c.checked=!all; toggleT(c.id.replace('cb-',''),!all); });
+}
+
+/* ── SUMMARY ── */
+function renderSummary(){
+  if(S.modo==='garaje') renderSummaryGaraje();
+  else renderSummaryVivienda();
+}
+function renderSummaryVivienda(){
+  const n=S.sel.size;
+  const entries=getPortalEntries();
+  const hojasPorTabla=repartirTajosEnHojas(getActiveTajos()).length;
+  const gruposDePlantas=entries.reduce((sum,{portal})=>sum+groupCompleteFloors(portal.plantas).length,0);
+  const tables=gruposDePlantas*hojasPorTabla;
+  const fecha=fmtDate(S.fecha);
+  const sourceInfo=S.sourceId&&S.sourceMeta
+    ? `<div style="grid-column:1/-1;padding:8px 10px;background:#F2F7FB;border-left:4px solid var(--blue)">
+         <div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Origen de los datos</div>
+         <strong>Portal informático · revisión ${escHtml(S.sourceMeta.revision||S.sourceMeta.generado||'sin fecha')}</strong> ·
+         ${(S.sourceMeta.resumen||{}).estados_precargados||0} celdas precargadas
+       </div>`
+    : '';
+  const structure=entries.map(({bloque,portal})=>`
+    <div style="padding:6px 0;border-bottom:1px solid var(--border)">
+      <strong>${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)}</strong>
+      <span style="color:var(--text-muted)"> — ${portal.plantas.map(planta=>`${escHtml(planta.nombre)}: ${planta.vivs.length}`).join(' · ')}</span>
+    </div>`).join('');
+  // La capacidad se expresa en milimetros y en hojas, no en un tope de tajos:
+  // 38 tajos con 18 fases ocupan 249.42mm y caben 252. Contar tajos ignoraba
+  // los rotulos de fase, que se comen 59mm.
+  const altoUsado=alturaFilasMM(getActiveTajos());
+  const capacity=hojasPorTabla>1
+    ? `<div class="a4-capacity warn"><strong>Atención: ${n} tajos ocupan ${altoUsado.toFixed(0)} mm.</strong>
+         En un A4 caben ${cupoFilasMM().toFixed(0)} mm de filas, así que cada tabla saldrá
+         repartida en <strong>${hojasPorTabla} hojas</strong> con el cabecero de viviendas repetido.
+         Total: ${tables} páginas de tabla.
+         <button onclick="goStep(3)">Volver a Tajos</button></div>`
+    : `<div class="a4-capacity"><strong>Capacidad A4: ${altoUsado.toFixed(0)} de ${cupoFilasMM().toFixed(0)} mm.</strong>
+         ${n} tajos en 1 hoja por tabla · ${tables} páginas de tabla.</div>`;
+  document.getElementById('gen-summary').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 22px">
+      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Obra</div>
+           <strong>${escHtml(S.obra||'(sin nombre)')}</strong></div>
+      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Alcance</div>
+           <strong>${S.bloques.length} bloque${S.bloques.length!==1?'s':''} · ${entries.length} portal${entries.length!==1?'es':''}</strong></div>
+      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Fecha</div>
+           <strong>${fecha||'—'}</strong></div>
+      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Técnico</div>
+           <strong>${escHtml(S.resp||'—')}</strong></div>
+      ${sourceInfo}
+      <div style="grid-column:1/-1">
+        <div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Estructura completa</div>
+        ${structure}
+      </div>
+      <div style="grid-column:1/-1">
+        <div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Contenido</div>
+        <strong>${n} tajos</strong> en ${tables} tabla${tables!==1?'s':''} de revisión — una por página, agrupando plantas completas según el ancho disponible
+      </div>
+      ${capacity}
+    </div>`;
+}
+
+function getActiveTajosGaraje(){
+  return CAT_GARAJE.filter(t=>S.selGaraje.has(t.id));
+}
+function garageTajosForZone(zona){
+  const ids=new Set([...(GARAGE_PROFILE_TAJOS[zona.tipo]||[]),...garageExtraTajos(zona)]);
+  return getActiveTajosGaraje().filter(t=>ids.has(t.id));
+}
+function renderSummaryGaraje(){
+  const plantas=S.garajes.flatMap(g=>g.plantas);
+  const zonas=plantas.flatMap(p=>p.zonas);
+  const tablas=S.garajes.reduce((total,garaje)=>total+
+    GARAGE_SECTIONS.filter(s=>s.tipo!=='cuarto_tecnico').reduce((sum,section)=>{
+      const zonasTipo=garaje.plantas.flatMap(planta=>
+        planta.zonas.filter(zona=>zona.tipo===section.tipo&&garageTajosForZone(zona).length));
+      return sum+Math.ceil(zonasTipo.length/GARAGE_COLS_PER_TABLE);
+    },0),0);
+  const tarjetas=zonas.filter(z=>z.tipo==='cuarto_tecnico'&&garageTajosForZone(z).length).length;
+  const structure=S.garajes.map(garaje=>`
+    <div style="padding:6px 0;border-bottom:1px solid var(--border)">
+      <strong>${escHtml(garaje.nombre)}</strong>
+      <div class="garage-tree">${garaje.plantas.map(planta=>
+        `${escHtml(planta.nombre)}: ${planta.zonas.length} zona${planta.zonas.length!==1?'s':''}`
+      ).join(' · ')}</div>
+    </div>`).join('');
+  const empty=zonas.length?'':`<div class="a4-capacity warn"><strong>No hay zonas configuradas.</strong> Vuelve a Estructura antes de generar la hoja.</div>`;
+  document.getElementById('gen-summary').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px 22px">
+      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Obra</div>
+           <strong>${escHtml(S.obra||'(sin nombre)')}</strong></div>
+      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Modo</div>
+           <strong>Garajes</strong></div>
+      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Fecha</div>
+           <strong>${fmtDate(S.fecha)||'—'}</strong></div>
+      <div><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Técnico</div>
+           <strong>${escHtml(S.resp||'—')}</strong></div>
+      <div style="grid-column:1/-1"><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Estructura completa</div>${structure}</div>
+      <div style="grid-column:1/-1"><div style="font-size:10px;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase">Contenido</div>
+        <strong>${S.garajes.length} garaje${S.garajes.length!==1?'s':''} · ${plantas.length} planta${plantas.length!==1?'s':''} · ${zonas.length} zona${zonas.length!==1?'s':''}</strong><br>
+        ${S.selGaraje.size} tajos seleccionados · ${tablas} tabla${tablas!==1?'s':''} · ${tarjetas} tarjeta${tarjetas!==1?'s':''} de cuarto técnico<br>
+        Fichero: <strong>${escHtml(revisionGarajeFileBase())}.html</strong>
+      </div>${empty}
+    </div>`;
+}
+
+/* ── CONFIG STORAGE ── */
+function saveConfig(){
+  const key = 'sgd_rev_cfg_'+(S.obra||'default').replace(/\s+/g,'_')+(S.modo==='garaje'?'_garaje':'');
+  const cfg={
+    obra:S.obra,fecha:S.fecha,resp:S.resp,modo:S.modo,
+    bloques:S.bloques,garajes:S.garajes,sel:[...S.sel],selGaraje:[...S.selGaraje],
+    catalog:CAT,importData:S.importData||null,
+    sourceId:S.sourceId||null,sourceMeta:S.sourceMeta||null,
+  };
+  localStorage.setItem(key,JSON.stringify(cfg));
+  const recents = JSON.parse(localStorage.getItem('sgd_rev_recents')||'[]');
+  const entry={key,obra:S.obra,fecha:S.fecha,bloques:S.bloques.length,
+               portales:getPortalEntries().length,garajes:S.garajes.length,modo:S.modo,ts:Date.now()};
+  const filtered = recents.filter(r=>r.key!==key);
+  filtered.unshift(entry);
+  localStorage.setItem('sgd_rev_recents', JSON.stringify(filtered.slice(0,8)));
+  showToast('Configuración guardada ✓');
+}
+
+function renderRecent(){
+  const recents = JSON.parse(localStorage.getItem('sgd_rev_recents')||'[]');
+  const wrap=document.getElementById('recent-wrap');
+  if(!recents.length){ wrap.style.display='none'; return; }
+  wrap.style.display='block';
+  document.getElementById('recent-list').innerHTML = recents.map(r=>`
+    <div class="recent-item" onclick="loadConfig('${r.key}')">
+      <span class="ri-name">${r.obra||'(sin nombre)'}</span>
+      <span class="ri-meta">${r.modo==='garaje'
+        ? `${r.garajes||1} garaje${(r.garajes||1)!==1?'s':''} · ${fmtDate(r.fecha)||''}`
+        : `${r.bloques||1} bloq. · ${r.portales||1} port. · ${fmtDate(r.fecha)||''}`}</span>
+      <button class="ri-del" onclick="delRecent(event,'${r.key}')">×</button>
+    </div>`).join('');
+}
+
+function loadConfig(key){
+  const cfg=JSON.parse(localStorage.getItem(key)||'{}');
+  if(!cfg.obra) return;
+  // Una revision guardada conserva la estructura del dia en que se guardo. Si
+  // desde entonces la obra ha cambiado (una vivienda nueva, un portal, los
+  // garajes), hay que traer la version viva: si no, se generaria una hoja de
+  // campo incompleta sin que nadie se entere.
+  const modo=cfg.modo==='garaje'?'garaje':'vivienda';
+  const source=cfg.sourceId?worksWithDatabase().find(o=>o.id===cfg.sourceId):null;
+  if(cfg.sourceId&&!source){
+    // La revision guardada apunta a una obra que ya no sale de la base.
+    // Se abre igual, con sus datos de entonces, pero diciendolo.
+    showToast('Esa obra ya no tiene base de datos: se abre como estaba guardada');
+  }
+  const refrescar=modo==='vivienda'&&source&&source.generado&&source.generado!==(cfg.sourceMeta||{}).generado;
+  CAT=refrescar?catalogForSource(source)
+               :(Array.isArray(cfg.catalog)&&cfg.catalog.length?cfg.catalog:BASE_CAT).map(t=>({...t}));
+  S={...S,obra:cfg.obra,fecha:cfg.fecha||TODAY_ISO,resp:cfg.resp||'',modo,
+     bloques:refrescar?normaliseStructure({bloques:cloneData(source.bloques||[])})
+                      :normaliseStructure(cfg),
+     garajes:Array.isArray(cfg.garajes)&&cfg.garajes.length?cloneData(cfg.garajes):[makeGaraje(0)],
+     sel:new Set(cfg.sel||CAT.map(t=>t.id)),
+     selGaraje:new Set(cfg.selGaraje||CAT_GARAJE.map(t=>t.id)),
+     importData:refrescar?cloneData(source.estados||{})
+                         :(cfg.importData?cloneData(cfg.importData):null),
+     sourceId:cfg.sourceId||null,
+     sourceMeta:refrescar?cloneData({id:source.id,nombre:source.nombre,revision:source.revision,
+                                     generado:source.generado,resumen:source.resumen||{}})
+                         :(cfg.sourceMeta?cloneData(cfg.sourceMeta):null)};
+  startWizard(false);
+  if(refrescar) showToast('Estructura y estados actualizados desde el portal ✓');
+}
+function delRecent(e,key){
+  e.stopPropagation();
+  const recents=JSON.parse(localStorage.getItem('sgd_rev_recents')||'[]');
+  localStorage.setItem('sgd_rev_recents',JSON.stringify(recents.filter(r=>r.key!==key)));
+  localStorage.removeItem(key);
+  renderRecent();
+}
+
+/* ════════════════════════════════════════════
+   SHEET GENERATOR
+════════════════════════════════════════════ */
+function getActiveTajos(){ return CAT.filter(t=>S.sel.has(t.id)); }
+
+// Agrupa plantas consecutivas sin dividir ninguna entre tablas. Diez viviendas
+// ofrecen un ancho cómodo en A4 vertical; una planta mayor se conserva completa.
+function groupCompleteFloors(plantas,maxViviendas=10){
+  const result=[];
+  let current=[];
+  let used=0;
+  (plantas||[]).forEach(planta=>{
+    const count=Math.max(1,Array.isArray(planta.vivs)?planta.vivs.length:1);
+    if(current.length&&used+count>maxViviendas){
+      result.push(current);
+      current=[];
+      used=0;
+    }
+    current.push(planta);
+    used+=count;
+    if(used>=maxViviendas){
+      result.push(current);
+      current=[];
+      used=0;
+    }
+  });
+  if(current.length) result.push(current);
+  return result;
+}
+
+// Runtime único para viviendas y garajes: el alfabeto y el ciclo no se
+// bifurcan. Las pestañas sólo se conectan cuando la hoja de garaje las emite.
+function sheetRuntime(safeKey,fileBase,withGarageTabs=false){
+  return `<script>
+const CYCLE=['','/',  'M','X','N'];
+const SYM  ={'':'','/':'/','M':'M','X':'X','N':'N'};
+const CLS  ={'':'pend','/':'half','M':'prog','X':'done','N':'ext'};
+const KEY  ='sgd_rev_${safeKey}';
+const REVISION_FILE_BASE=${JSON.stringify(fileBase)};
+document.title=REVISION_FILE_BASE;
+document.querySelectorAll('.td-st[data-k]').forEach(c=>{
+  c.addEventListener('click',()=>{
+    const cur=c.dataset.st||'';
+    const nxt=CYCLE[(CYCLE.indexOf(cur)+1)%CYCLE.length];
+    c.dataset.st=nxt; c.textContent=SYM[nxt]||'';
+    const rf=c.classList.contains('right-first');
+    c.className='td-st '+(CLS[nxt]||'pend')+(rf?' right-first':'');
+    autoSave();
+  });
+});
+function getData(){const d={};document.querySelectorAll('.td-st[data-k]').forEach(c=>{if(c.dataset.st)d[c.dataset.k]=c.dataset.st;});return d;}
+function autoSave(){try{localStorage.setItem(KEY,JSON.stringify(getData()));}catch(e){}}
+function doSave(){
+  autoSave();
+  document.title=REVISION_FILE_BASE;
+  const source='<!DOCTYPE html>\\n'+document.documentElement.outerHTML;
+  const blob=new Blob([source],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=REVISION_FILE_BASE+'.html';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),1000);
+  showToast('Revisión guardada: '+REVISION_FILE_BASE+'.html');
+}
+function printRevision(){
+  autoSave();
+  document.title=REVISION_FILE_BASE;
+  window.print();
+}
+function doClear(){if(!confirm('¿Limpiar todos los estados?'))return;document.querySelectorAll('.td-st[data-k]').forEach(c=>{c.dataset.st='';c.textContent='';const rf=c.classList.contains('right-first');c.className='td-st pend'+(rf?' right-first':'');});localStorage.removeItem(KEY);}
+function showToast(m){const t=document.createElement('div');t.style.cssText='position:fixed;bottom:76px;right:20px;background:#1A3558;color:#fff;padding:8px 14px;border-radius:4px;font-size:12px;z-index:9999;opacity:1;transition:opacity .3s';t.textContent=m;document.body.appendChild(t);setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300);},1600);}
+(function restore(){try{const d=JSON.parse(localStorage.getItem(KEY)||'{}');Object.entries(d).forEach(([k,st])=>{const c=document.querySelector('.td-st[data-k="'+k+'"]');if(c&&st){c.dataset.st=st;c.textContent=SYM[st]||st;const rf=c.classList.contains('right-first');c.className='td-st '+(CLS[st]||'pend')+(rf?' right-first':'');}});}catch(e){}})();
+${withGarageTabs?`document.querySelectorAll('.hoja-tab').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    const host=btn.closest('.garage-section');
+    host.querySelectorAll('.hoja-tab').forEach(other=>other.classList.remove('on'));
+    btn.classList.add('on');
+    const target=btn.dataset.tab;
+    host.querySelectorAll('.hoja-section').forEach(section=>{
+      section.hidden=!(target==='all'||section.id===target);
+    });
+  });
+});
+`:''}<\/script>`;
+}
+
+function generateHTML(cellData={}){
+  const tajos   = getActiveTajos();
+  const fecha   = fmtDate(S.fecha);
+  const obraUp  = (S.obra||'OBRA').toUpperCase();
+  const obraFont=Math.max(12.5,Math.min(18.5,19-Math.max(0,obraUp.length-24)*.15)).toFixed(1);
+  const fileBase=revisionFileBase();
+
+  // Group tajos
+  const groups={};
+  tajos.forEach(t=>{ (groups[t.g]||(groups[t.g]=[])).push(t); });
+
+  const entries=getPortalEntries();
+  const portalSections=entries.map(({bloque,portal},portalIndex)=>{
+    const hojasDeTajos=repartirTajosEnHojas(tajos);
+    const blocks=groupCompleteFloors(portal.plantas).flatMap((plantasGrupo,groupIndex)=>
+      hojasDeTajos.map((tajosHoja,hojaIndex)=>{
+    const viviendaCols=plantasGrupo.flatMap((planta,floorIndex)=>
+      planta.vivs.map((viv,vi)=>({planta,viv,floorIndex,first:vi===0}))
+    );
+    const totalVivs=viviendaCols.length;
+    const ncols=1+totalVivs;
+    const tajoW=totalVivs<=4?48:totalVivs<=6?45:totalVivs<=8?42:totalVivs<=10?40:38;
+    const colW=((100-tajoW)/totalVivs).toFixed(3)+'%';
+    const longestViv=Math.max(...viviendaCols.map(c=>String(c.viv).length),1);
+    const aptFont=Math.max(7.5,Math.min(11.5,12.3-(totalVivs-4)*.38-(longestViv-2)*.25)).toFixed(1);
+    const stateFont=Math.max(9,Math.min(14,15-totalVivs*.45)).toFixed(1);
+
+    // Los grupos de fase se reconstruyen POR HOJA: el rótulo sólo aparece en
+    // la hoja donde hay algún tajo suyo, así que nunca queda huérfano.
+    const gruposHoja={};
+    tajosHoja.forEach(t=>{ (gruposHoja[t.g]||(gruposHoja[t.g]=[])).push(t); });
+    const rows = Object.entries(gruposHoja).map(([gn,gt])=>{
+      const grp = `<tr class="tr-grp"><td colspan="${ncols}">${escHtml(gn)}</td></tr>`;
+      const trs = gt.map(t=>{
+        const badge = `<span class="tajo-prop ${t.p}">${PROP_LBL[t.p]}</span>`;
+        const amb   = t.a!=='v'?`<span class="tajo-ambito">${AMB_LBL[t.a]}</span>`:'';
+        const nameFont=Math.max(8.2,Math.min(10.5,11-Math.max(0,t.name.length-24)*.055)).toFixed(1);
+        const cells=viviendaCols.map(({planta,viv,floorIndex,first})=>{
+          const k=`${portal.id}__${planta.id}__${t.id}__${viv}`;
+          const st=cellData[k]||'';
+          const sym={X:'X',M:'M','/':'/',''  :'','N':'N'}[st]||'';
+          const cls={X:'done',M:'prog','/':'half','':'pend','N':'ext'}[st]||'pend';
+          const boundary=floorIndex>0&&first?' right-first':'';
+          return `<td class="td-st ${cls}${boundary}" style="font-size:${stateFont}pt" data-k="${escHtml(k)}" data-st="${st}">${sym}</td>`;
+        }).join('');
+        return `<tr class="tr-tajo"><td class="td-name" style="font-size:${nameFont}pt">${badge}${escHtml(t.name)}${amb}</td>${cells}</tr>`;
+      }).join('');
+      return grp+trs;
+    }).join('');
+
+    const noteRow=`<tr class="tr-notes"><td colspan="${ncols}"><strong>Obs:</strong>&nbsp;<span class="notes-ln"></span></td></tr>`;
+    const colTpl=`<col style="width:${tajoW}%">`+viviendaCols.map(()=>`<col style="width:${colW}">`).join('');
+    const floorHeads=plantasGrupo.map((planta,floorIndex)=>
+      `<th class="th-floor${floorIndex?' right-floor':''}" colspan="${planta.vivs.length}">Planta ${escHtml(planta.nombre)} · ${planta.vivs.length} viv.</th>`
+    ).join('');
+    const aptHeads=viviendaCols.map(({viv,floorIndex,first})=>
+      `<th class="th-apt${floorIndex>0&&first?' right-first':''}" style="font-size:${aptFont}pt">${escHtml(viv)}</th>`
+    ).join('');
+    const plantNames=plantasGrupo.map(planta=>escHtml(planta.nombre)).join(' · ');
+    const plantLabel=plantasGrupo.length===1?`Planta ${plantNames}`:`Plantas ${plantNames}`;
+    // Sólo cuando la tabla necesita varias hojas: si no, no se ensucia la
+    // identificación de la inmensa mayoría de las hojas.
+    const rotuloHoja=hojasDeTajos.length>1
+      ? ` · HOJA ${hojaIndex+1} DE ${hojasDeTajos.length}` : '';
+
+    // La identificacion va DENTRO del thead a proposito: es lo unico que el
+    // navegador repite cuando una tabla se parte entre paginas. Fuera de la
+    // tabla, una hoja de continuacion perderia el portal, y con tres
+    // portales de mismas letras de vivienda eso es irresoluble al escanear.
+    return `<div class="planta-block"><div class="tbl-wrap"><table class="rev-table"><colgroup>${colTpl}</colgroup>
+      <thead>
+      <tr class="tr-ident"><th class="th-ident" colspan="${ncols}">${escHtml(obraUp)} · ${escHtml(fecha)} · ${escHtml(bloque.nombre)} · ${escHtml(portal.nombre)} · ${plantLabel}${rotuloHoja}</th></tr>
+      <tr><th class="th-floor th-floor-tajo" rowspan="2">TAJO</th>${floorHeads}</tr>
+      <tr>${aptHeads}</tr></thead>
+      <tbody>${rows}${noteRow}</tbody></table></div></div>`;
+    })).join('');
+    const distribution=portal.plantas.map(planta=>`${escHtml(planta.nombre)}: ${planta.vivs.length}`).join(' · ');
+    return `<section class="portal-section${portalIndex?' portal-break':''}">
+      <div class="portal-sheet-head">
+        <div><span class="portal-block-name">${escHtml(bloque.nombre)}</span>
+             <span class="portal-name">${escHtml(portal.nombre)}</span></div>
+        <div class="portal-sheet-meta">${portal.plantas.length} plantas · ${distribution}</div>
+      </div>
+      <div class="blocks">${blocks}</div>
+    </section>`;
+  }).join('');
+
+  const detail=`${S.bloques.length} bloque${S.bloques.length!==1?'s':''} &nbsp;|&nbsp; ${entries.length} portal${entries.length!==1?'es':''} &nbsp;|&nbsp; Revisión completa`;
+  const respLine=S.resp?`<div class="doc-resp">Resp. técnico: ${escHtml(S.resp)}</div>`:'';
+  const safeKey=encodeURIComponent((S.obra||'obra')+'_'+(S.fecha||TODAY_ISO));
+
+  return `<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8">
+<title>${escHtml(fileBase)}</title>
+<style>${sheetCSS()}</style></head><body>
+<div class="wrap">
+  <header class="doc-header">
+    <div class="hd-brand"><img class="brand-logo" src="${LOGO_URI}" alt="Sagarde"></div>
+    <div class="hd-obra">
+      <div class="obra-badge">Hoja de revisión de tajos</div>
+      <div class="obra-title" style="font-size:${obraFont}pt">${escHtml(obraUp)}</div>
+      <div class="obra-detail">${detail}</div>
+    </div>
+    <div class="hd-doc">
+      <div class="doc-label">Fecha revisión</div>
+      <div class="doc-fecha">${fecha||'—'}</div>
+      ${respLine}
+      <div class="doc-doctitle">Hoja de revisión de tajos</div>
+    </div>
+  </header>
+  <div class="legend-strip">
+    <span class="leg-label">Estado:</span>
+    <span class="leg-item"><span class="leg-dot done">X</span>Terminado</span>
+    <span class="leg-item"><span class="leg-dot prog">M</span>En marcha &gt;50%</span>
+    <span class="leg-item"><span class="leg-dot half">/</span>Iniciado &lt;50%</span>
+    <span class="leg-item"><span class="leg-dot pend">&nbsp;</span>Pendiente</span>
+    <span class="leg-item"><span class="leg-dot ext">N</span>No aplica</span>
+    <span class="leg-dot-sep"></span>
+    <span class="leg-label">Prop:</span>
+    <span class="leg-item"><span class="tajo-prop p">SGD</span>Sagarde</span>
+    <span class="leg-item"><span class="tajo-prop e">EXT</span>Otro gremio</span>
+    <span class="leg-item"><span class="tajo-prop c">COO</span>Coordinación</span>
+    <span class="leg-tip">Clic en celda → cambia estado</span>
+  </div>
+  <div class="all-portals">${portalSections}</div>
+  <footer class="doc-footer">
+    <span>SAGARDE · Montajes Eléctricos · Revisión de tajos</span>
+    <span>Obra completa · ${S.bloques.length} bloque${S.bloques.length!==1?'s':''} · ${entries.length} portal${entries.length!==1?'es':''}</span>
+    <span>${fecha||''}</span>
+  </footer>
+</div>
+<div class="float-bar">
+  <button onclick="printRevision()">🖨 Imprimir</button>
+  <button onclick="doSave()">💾 Guardar revisión</button>
+  <button onclick="doClear()">✕ Limpiar</button>
+</div>
+${sheetRuntime(safeKey,fileBase)}
+</body></html>`;
+}
+
+const GARAGE_COLS_PER_TABLE=8;
+function garageCellHTML(garaje,planta,tajo,zona,cellData,extraClass=''){
+  const key=`${garaje.id}__${planta.id}__${tajo.id}__${zona.id}`;
+  const st=cellData[key]||'';
+  const sym={X:'X',M:'M','/':'/','':'','N':'N'}[st]||'';
+  const cls={X:'done',M:'prog','/':'half','':'pend','N':'ext'}[st]||'pend';
+  return `<span class="td-st ${cls}${extraClass}" data-k="${escHtml(key)}" data-st="${st}">${sym}</span>`;
+}
+function splitGarageZones(zones){
+  const pages=[];
+  for(let i=0;i<zones.length;i+=GARAGE_COLS_PER_TABLE) pages.push(zones.slice(i,i+GARAGE_COLS_PER_TABLE));
+  return pages;
+}
+function renderGarageZoneTable(garaje,section,zones,cellData){
+  const allowed=new Set(GARAGE_PROFILE_TAJOS[section.tipo]||[]);
+  const tajos=getActiveTajosGaraje().filter(t=>allowed.has(t.id));
+  if(!tajos.length) return '';
+  return splitGarageZones(zones).map((page,pageIndex)=>{
+    const groups={};
+    tajos.forEach(t=>{ (groups[t.g]||(groups[t.g]=[])).push(t); });
+    const rows=Object.entries(groups).map(([group,items])=>{
+      const groupRow=`<tr class="tr-grp"><td colspan="${page.length+1}">${escHtml(group)}</td></tr>`;
+      const itemRows=items.map(t=>`<tr class="tr-tajo">
+        <td class="td-name"><span class="tajo-prop ${t.p}">${PROP_LBL[t.p]}</span>${escHtml(t.name)}</td>
+        ${page.map(({planta,zona})=>{
+          const span=garageCellHTML(garaje,planta,t,zona,cellData);
+          return `<td class="garage-state-cell">${span}</td>`;
+        }).join('')}
+      </tr>`).join('');
+      return groupRow+itemRows;
+    }).join('');
+    const pageLabel=splitGarageZones(zones).length>1
+      ? ` · HOJA ${pageIndex+1} DE ${splitGarageZones(zones).length}`:'';
+    return `<div class="planta-block garage-table-block" data-zone-category="${section.tipo}">
+      <div class="tbl-wrap"><table class="rev-table">
+        <thead>
+          <tr class="tr-ident"><th class="th-ident" colspan="${page.length+1}">${escHtml(S.obra.toUpperCase())} · ${escHtml(garaje.nombre)} · ${escHtml(section.label)}${pageLabel}</th></tr>
+          <tr><th class="th-floor th-floor-tajo" rowspan="2">TAJO</th>${page.map(({planta})=>`<th class="th-floor">${escHtml(planta.nombre)}</th>`).join('')}</tr>
+          <tr>${page.map(({zona})=>`<th class="th-apt">${escHtml(zona.nombre)}</th>`).join('')}</tr>
+        </thead>
+        <tbody>${rows}<tr class="tr-notes"><td colspan="${page.length+1}"><strong>Obs:</strong>&nbsp;<span class="notes-ln"></span></td></tr></tbody>
+      </table></div>
+    </div>`;
+  }).join('');
+}
+function renderGarageTechnicalCards(garaje,zones,cellData){
+  return `<div class="tecnico-grid">${zones.map(({planta,zona})=>{
+    const extraIds=new Set(garageExtraTajos(zona));
+    const tajos=garageTajosForZone(zona);
+    return `<div class="tecnico-card" data-zone-category="cuarto_tecnico">
+      <div class="tecnico-card-head"><strong>${escHtml(zona.nombre)}</strong><span>${escHtml(planta.nombre)}</span></div>
+      ${tajos.map(t=>`<div class="tecnico-check${extraIds.has(t.id)?' especifico':''}">
+        ${garageCellHTML(garaje,planta,t,zona,cellData,' tecnico-state')}
+        <span><span class="tajo-prop ${t.p}">${PROP_LBL[t.p]}</span>${escHtml(t.name)}</span>
+      </div>`).join('')}
+    </div>`;
+  }).join('')}</div>`;
+}
+function renderGarageSheetSection(garaje,gi,cellData){
+  const byType={};
+  garaje.plantas.forEach(planta=>planta.zonas.forEach(zona=>{
+    (byType[zona.tipo]||(byType[zona.tipo]=[])).push({planta,zona});
+  }));
+  const sections=GARAGE_SECTIONS.filter(section=>{
+    const zones=byType[section.tipo]||[];
+    return zones.some(({zona})=>garageTajosForZone(zona).length);
+  });
+  if(!sections.length){
+    return `<section class="garage-section"><div class="portal-sheet-head"><div><span class="portal-block-name">${escHtml(garaje.nombre)}</span></div></div><div class="garage-empty">Sin zonas con tajos seleccionados.</div></section>`;
+  }
+  const tabs=`<div class="hoja-tabs">
+    <button class="hoja-tab on" data-tab="all">Ver todas</button>
+    ${sections.map(section=>`<button class="hoja-tab" data-tab="garage-${gi}-${section.tipo}">${escHtml(section.label)} <span class="hoja-tab-n">${byType[section.tipo].length}</span></button>`).join('')}
+  </div>`;
+  const content=sections.map(section=>{
+    const zones=byType[section.tipo];
+    const body=section.tipo==='cuarto_tecnico'
+      ? renderGarageTechnicalCards(garaje,zones,cellData)
+      : renderGarageZoneTable(garaje,section,zones,cellData);
+    return `<section class="hoja-section" id="garage-${gi}-${section.tipo}">
+      <div class="garage-section-title">${escHtml(section.label)} · ${zones.length} zona${zones.length!==1?'s':''}</div>
+      ${body}
+    </section>`;
+  }).join('');
+  return `<section class="garage-section${gi?' garage-break':''}">
+    <div class="portal-sheet-head">
+      <div><span class="portal-block-name">${escHtml(garaje.nombre)}</span></div>
+      <div class="portal-sheet-meta">${garaje.plantas.length} planta${garaje.plantas.length!==1?'s':''}</div>
+    </div>${tabs}${content}
+  </section>`;
+}
+function generateGarajeHTML(cellData={}){
+  const fecha=fmtDate(S.fecha);
+  const obraUp=(S.obra||'OBRA').toUpperCase();
+  const obraFont=Math.max(12.5,Math.min(18.5,19-Math.max(0,obraUp.length-24)*.15)).toFixed(1);
+  const fileBase=revisionGarajeFileBase();
+  const safeKey=encodeURIComponent((S.obra||'obra')+'_'+(S.fecha||TODAY_ISO)+'_garaje');
+  const totalPlantas=S.garajes.reduce((sum,g)=>sum+g.plantas.length,0);
+  const totalZonas=S.garajes.reduce((sum,g)=>sum+g.plantas.reduce((n,p)=>n+p.zonas.length,0),0);
+  const respLine=S.resp?`<div class="doc-resp">Resp. técnico: ${escHtml(S.resp)}</div>`:'';
+  const sections=S.garajes.map((garaje,gi)=>renderGarageSheetSection(garaje,gi,cellData)).join('');
+  // La estructura completa va embebida en la propia hoja (misma forma que
+  // ficha_garajes.json espera en estructura.garajes: id/nombre/plantas/
+  // zonas/tipo, sin transformar). Así la primera alta de una obra no
+  // necesita un fichero de configuracion aparte: basta la hoja que
+  // Bixente ya sabe generar y guardar. Ver Fase 5 del plan.
+  const estructuraJSON=JSON.stringify({
+    obra:S.obra, garajes:S.garajes, tajos_seleccionados:[...S.selGaraje],
+  }).replace(/</g,'\\u003c');
+  return `<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8">
+<title>${escHtml(fileBase)}</title>
+<script type="application/json" id="garaje-estructura">${estructuraJSON}</script>
+<style>${sheetCSS()}${garageSheetCSS()}</style></head><body>
+<div class="wrap">
+  <header class="doc-header">
+    <div class="hd-brand"><img class="brand-logo" src="${LOGO_URI}" alt="Sagarde"></div>
+    <div class="hd-obra">
+      <div class="obra-badge">Hoja de revisión de garajes</div>
+      <div class="obra-title" style="font-size:${obraFont}pt">${escHtml(obraUp)}</div>
+      <div class="obra-detail">${S.garajes.length} garaje${S.garajes.length!==1?'s':''} &nbsp;|&nbsp; ${totalPlantas} planta${totalPlantas!==1?'s':''} &nbsp;|&nbsp; ${totalZonas} zona${totalZonas!==1?'s':''}</div>
+    </div>
+    <div class="hd-doc">
+      <div class="doc-label">Fecha revisión</div>
+      <div class="doc-fecha">${fecha||'—'}</div>
+      ${respLine}
+      <div class="doc-doctitle">Hoja de revisión de garajes</div>
+    </div>
+  </header>
+  <div class="legend-strip">
+    <span class="leg-label">Estado:</span>
+    <span class="leg-item"><span class="leg-dot done">X</span>Terminado</span>
+    <span class="leg-item"><span class="leg-dot prog">M</span>En marcha &gt;50%</span>
+    <span class="leg-item"><span class="leg-dot half">/</span>Iniciado &lt;50%</span>
+    <span class="leg-item"><span class="leg-dot pend">&nbsp;</span>Pendiente</span>
+    <span class="leg-item"><span class="leg-dot ext">N</span>No aplica</span>
+    <span class="leg-dot-sep"></span>
+    <span class="leg-label">Prop:</span>
+    <span class="leg-item"><span class="tajo-prop p">SGD</span>Sagarde</span>
+    <span class="leg-item"><span class="tajo-prop e">EXT</span>Otro gremio</span>
+    <span class="leg-item"><span class="tajo-prop c">COO</span>Coordinación</span>
+    <span class="leg-tip">Clic en celda → cambia estado</span>
+  </div>
+  <div class="all-garages">${sections}</div>
+  <footer class="doc-footer"><span>SAGARDE · Montajes Eléctricos · Revisión de garajes</span><span>${fileBase}</span><span>${fecha||''}</span></footer>
+</div>
+<div class="float-bar">
+  <button onclick="printRevision()">🖨 Imprimir</button>
+  <button onclick="doSave()">💾 Guardar revisión</button>
+  <button onclick="doClear()">✕ Limpiar</button>
+</div>
+${sheetRuntime(safeKey,fileBase,true)}
+</body></html>`;
+}
+
+function garageSheetCSS(){
+  return `
+.all-garages{padding:8px;display:flex;flex-direction:column;gap:12px}
+.garage-section{border:1px solid rgba(26,53,88,.18);padding-bottom:10px}
+.hoja-tabs{display:flex;flex-wrap:wrap;gap:6px;padding:9px 10px;border-bottom:1px solid rgba(26,53,88,.18)}
+.hoja-tab{border:1px solid rgba(26,53,88,.24);background:#fff;color:#3A5580;border-radius:999px;padding:5px 10px;font:700 10px Arial,sans-serif;cursor:pointer}
+.hoja-tab.on{background:#1A3558;border-color:#1A3558;color:#fff}
+.hoja-tab-n{display:inline-block;border-radius:999px;padding:1px 5px;background:#E4EEF8;color:#3A5580;margin-left:3px}
+.hoja-tab.on .hoja-tab-n{background:rgba(255,255,255,.25);color:#fff}
+.hoja-section{padding:10px}
+.hoja-section+.hoja-section{border-top:1px dashed rgba(26,53,88,.24)}
+.garage-section-title{font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#3A5580;margin-bottom:6px}
+.garage-table-block+.garage-table-block{margin-top:8px}
+.garage-table-block .td-name{width:38%}
+.garage-state-cell{height:4.65mm;padding:0;border-right:1.15px solid #53677F}
+.garage-state-cell .td-st{display:flex;width:100%;height:100%;align-items:center;justify-content:center}
+.tecnico-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:9px}
+.tecnico-card{border:1.5px solid #1A3558;break-inside:avoid;page-break-inside:avoid}
+.tecnico-card-head{display:flex;justify-content:space-between;gap:8px;background:#1A3558;color:#fff;padding:6px 9px;font-size:10px}
+.tecnico-card-head span{color:rgba(255,255,255,.75);font-size:8px}
+.tecnico-check{display:flex;align-items:center;gap:7px;min-height:5.4mm;padding:2px 7px;border-bottom:1px dashed rgba(26,53,88,.24);font-size:8.2pt;font-weight:700}
+.tecnico-check:last-child{border-bottom:none}
+.tecnico-check.especifico{background:#F5F0FA}
+.tecnico-state,.tecnico-check>.td-st{display:inline-flex;min-width:22px;width:22px;height:18px;align-items:center;justify-content:center;border:1px solid #53677F;flex:none}
+.garage-empty{padding:20px;color:#7A8A9A;text-align:center}
+@media print{
+  .all-garages{padding:0;gap:0}
+  .garage-section{border:none;padding:0}
+  .garage-section.garage-break{break-before:page;page-break-before:always}
+  .hoja-tabs{display:none}
+  .hoja-section{display:block!important;padding:0;border:none!important}
+  .garage-section-title{padding:1.5mm 2mm;margin:0;background:#E4EEF8}
+  .garage-table-block{break-after:page;page-break-after:always}
+  .tecnico-grid{grid-template-columns:repeat(2,1fr);padding:2mm;gap:2mm}
+}`;
+}
+
+function sheetCSS(){
+  return `
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,'Aptos','Liberation Sans',sans-serif;background:#fff;color:#142D4C;font-size:10.5px;line-height:1.12}
+.wrap{max-width:210mm;margin:0 auto}
+/* HEADER */
+.doc-header{background:#fff;display:grid;grid-template-columns:auto 1fr auto;align-items:stretch;border-bottom:3px solid #1A3558}
+.hd-brand{padding:8px 16px 6px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(26,53,88,.18)}
+.brand-logo{height:50px;width:auto;display:block}
+.hd-obra{padding:8px 20px 6px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center}
+.obra-badge{display:inline-block;font-size:8.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;background:#E4EEF8;color:#1A3558;border:1px solid #64758A;padding:3px 9px;border-radius:2px;margin-bottom:5px}
+.obra-title{font-size:18px;font-weight:800;letter-spacing:.025em;color:#102A4C;line-height:1.05;overflow-wrap:anywhere}
+.obra-detail{font-size:10px;font-weight:600;letter-spacing:.055em;color:#4D5E73;margin-top:4px}
+.hd-doc{padding:8px 16px 6px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;border-left:1px solid rgba(26,53,88,.18);text-align:right}
+.doc-label{font-size:8.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#4D5E73}
+.doc-fecha{font-size:17px;font-weight:800;color:#102A4C;letter-spacing:.035em;line-height:1.1;margin-top:2px}
+.doc-resp{font-size:10.5px;font-weight:700;color:#294B73;margin-top:4px}
+.doc-doctitle{font-size:8.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#4D5E73;margin-top:3px}
+/* LEGEND */
+.legend-strip{background:#E4EEF8;border-top:1px solid #7A8A9E;border-bottom:1px solid #7A8A9E;padding:5px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.leg-label{font-size:10px;letter-spacing:.11em;text-transform:uppercase;color:#293E58;font-weight:800}
+.leg-item{display:flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:#213E62}
+.leg-dot{width:21px;height:15px;border-radius:2px;border:1.2px solid #53677F;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800}
+.leg-dot.done{background:#fff;color:#6E6E6E;border-color:#6E6E6E}
+.leg-dot.half{background:#fff;color:#6E6E6E;border-color:#6E6E6E}
+.leg-dot.prog{background:#fff;color:#6E6E6E;border-color:#6E6E6E}
+.leg-dot.pend{background:#fff;color:#aaa;border-color:rgba(26,53,88,.18)}
+.leg-dot.ext{background:#fff;color:#6E6E6E;border-color:#6E6E6E}
+.leg-dot-sep{border-left:1px solid rgba(26,53,88,.2);margin:0 4px;height:12px}
+.tajo-prop{display:inline-block;font-size:6.5px;font-weight:700;letter-spacing:.04em;border-radius:2px;padding:0 3px;margin-right:4px;vertical-align:middle;line-height:13px;border:1px solid currentColor;background:transparent}
+.tajo-prop.p{color:#1A3558}.tajo-prop.e{color:#7A50A0}.tajo-prop.c{color:#1A5830}
+.tajo-ambito{display:inline-block;font-size:6px;color:#888;margin-left:3px;vertical-align:middle;opacity:.7}
+.leg-tip{margin-left:auto;font-size:8.5px;color:#aaa;font-style:italic}
+/* BLOCKS */
+.all-portals{display:flex;flex-direction:column}
+.portal-section{padding-top:8px}
+.portal-sheet-head{margin:0 8px;background:#1A3558;color:#fff;border-left:5px solid #2E6DA4;padding:6px 10px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.portal-block-name{font-size:14px;font-weight:800;letter-spacing:.065em;text-transform:uppercase}
+.portal-name{font-size:13px;font-weight:700;margin-left:12px;padding-left:12px;border-left:2px solid rgba(255,255,255,.65)}
+.portal-sheet-meta{font-size:9px;font-weight:600;line-height:1.15;letter-spacing:.025em;color:rgba(255,255,255,.9);max-width:58%;text-align:right}
+.blocks{padding:5px 8px 9px;display:flex;flex-direction:column;gap:7px}
+.planta-block{background:#fff;border:1px solid rgba(26,53,88,.18);border-left:3px solid #2E6DA4;border-radius:3px;overflow:hidden}
+.th-ident{background:#E4EEF8;padding:3px 7px;text-align:left;font-size:9.5pt;font-weight:800;line-height:1.08;letter-spacing:.05em;text-transform:uppercase;color:#102A4C;border-bottom:1px solid rgba(26,53,88,.18)}
+.tbl-wrap{overflow-x:auto}
+.rev-table{width:100%;border-collapse:collapse;table-layout:fixed;border:1.5px solid #1A3558}
+.th-floor{background:#1A3558;color:#fff;font-size:9pt;font-weight:800;line-height:1.05;letter-spacing:.045em;text-transform:uppercase;padding:2.2mm 1mm;text-align:center;vertical-align:middle;border-right:1px solid #718096}
+.th-floor-tajo{text-align:left;padding-left:2mm;font-size:9pt;color:#fff;font-weight:800;border-right:2px solid #fff}
+.th-floor.right-floor{border-left:2.5px solid #fff}
+.th-apt{background:#E7EDF3;color:#102A4C;font-weight:800;line-height:1;padding:1.25mm .45mm;text-align:center;vertical-align:middle;overflow-wrap:anywhere;border-bottom:1.5px solid #1A3558;border-right:1px solid #53677F}
+.th-apt.right-first{border-left:2.5px solid #1A3558}
+.tr-grp td{background:#EDF1F5;font-size:7.2pt;font-weight:800;line-height:1;letter-spacing:.075em;text-transform:uppercase;color:#173A63;padding:.25mm 1.5mm;border-top:1.3px solid #435A74;border-bottom:1.3px solid #435A74}
+.tr-tajo{height:4.65mm;border-bottom:1.15px solid #53677F}
+.tr-tajo:hover{background:#F5F9FF}
+.td-name{padding:.4mm 1.2mm;color:#102A4C;font-weight:700;line-height:1;white-space:normal;overflow-wrap:anywhere;vertical-align:middle;border-right:2px solid #1A3558;cursor:default}
+.td-name .tajo-prop{font-size:6.1pt;line-height:8.5pt;padding:0 1.5px;margin-right:3px}
+.td-name .tajo-ambito{font-size:5.8pt;font-weight:700;color:#43556B}
+.td-st{height:4.65mm;padding:0;text-align:center;vertical-align:middle;line-height:1;font-weight:800;border-right:1.15px solid #53677F;cursor:pointer;user-select:none;transition:background .08s}
+.td-st:hover{filter:brightness(.93)}
+/* Fondo blanco en todas: es mas facil tachar encima a boli y mas limpio de
+   leer al escanear. La marca impresa va en gris medio y no en negro porque
+   el discriminador tiene que estar en lo impreso, que es lo unico bajo
+   control: el boli cambia segun el dia (negro, azul o pen digital) y ningun
+   boli escribe en gris uniforme. */
+.td-st.done{background:#fff;color:#6E6E6E}.td-st.half{background:#fff;color:#6E6E6E}
+.td-st.prog{background:#fff;color:#6E6E6E}.td-st.pend{background:#fff;color:#ccc}
+.td-st.ext{background:#fff;color:#6E6E6E}
+.td-st.right-first{border-left:2.5px solid #1A3558}
+.tr-notes td{height:4.65mm;background:#F3F5F7;padding:.65mm 2mm;font-size:7pt;font-weight:700;line-height:1;color:#43556B;border-top:1.5px solid #1A3558}
+.notes-ln{display:inline-block;border-bottom:1px solid rgba(26,53,88,.15);min-width:200px}
+.doc-footer{display:flex;justify-content:space-between;padding:7px 16px;font-size:7.5px;color:#888;letter-spacing:.08em;border-top:1px solid rgba(26,53,88,.18);background:#F5F5F5}
+/* FLOAT TOOLBAR */
+.float-bar{position:fixed;bottom:0;left:0;right:0;background:#1A3558;display:flex;justify-content:center;gap:20px;padding:8px;z-index:999}
+.float-bar button{font-family:'Arial Narrow',Arial,sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:transparent;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.25);border-radius:4px;padding:6px 18px;cursor:pointer;transition:all .15s}
+.float-bar button:hover{background:rgba(255,255,255,.12);color:#fff}
+/* PRINT */
+@media print{
+  @page{size:A4 portrait;margin:7mm 7mm 6mm}
+  *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
+  html,body{width:196mm;background:#fff!important;font-size:8.5pt}
+  .wrap{max-width:100%}
+  .doc-header{grid-template-columns:28mm minmax(0,1fr) 46mm;min-height:17mm;border-bottom-width:2.5px}
+  .hd-brand{padding:1.8mm 2.5mm}.brand-logo{height:11mm;max-width:22mm;object-fit:contain}
+  .hd-obra{padding:1.4mm 2.5mm}.obra-badge{font-size:7.2pt;padding:.6mm 1.8mm;margin-bottom:.8mm}
+  .obra-detail{font-size:7.3pt;margin-top:.7mm}
+  .hd-doc{padding:1.4mm 2.2mm}.doc-label{font-size:6.8pt}.doc-fecha{font-size:11.5pt}
+  .doc-resp{font-size:7.2pt;margin-top:.6mm}.doc-doctitle{font-size:6.5pt;margin-top:.5mm}
+  .legend-strip{padding:1.25mm 2mm;gap:6px;flex-wrap:nowrap}
+  .leg-label{font-size:7.2pt}.leg-item{font-size:7.3pt}.leg-dot{width:17px;height:12px;font-size:7.2pt}
+  .legend-strip .tajo-prop{font-size:6.4pt;line-height:9pt;padding:0 2px}
+  .blocks{padding:2px 0 3px;gap:0}
+  .portal-section{padding-top:0}
+  /* La cabecera y la leyenda ocupan la pagina 1 a proposito. Antes le robaban
+     el sitio a la primera tabla —32mm— y esa pagina salia con 7 celdas de
+     nada. UN solo salto: ponerlo en las dos generaba dos portadas. */
+  .doc-header{break-after:auto;page-break-after:auto}
+  .legend-strip{break-after:page;page-break-after:always}
+  /* Cada tabla empieza donde acaba la anterior, no en una pagina forzada:
+     ahora cabe por construccion y es el break-after quien cierra la pagina. */
+  .portal-section.portal-break{break-before:auto;page-break-before:auto}
+  .portal-sheet-head{margin:0 0 2px;padding:1.7mm 2.3mm;break-inside:avoid;page-break-inside:avoid}
+  .portal-block-name{font-size:9.2pt}.portal-name{font-size:8.7pt}
+  .portal-sheet-meta{display:none}
+  /* Una tabla por pagina, innegociable: rejilla_hoja.leer_pdf coge solo
+     tablas[0] de cada pagina, asi que dos tablas en una hoja harian
+     desaparecer la segunda en silencio. */
+  .planta-block{page-break-inside:avoid;break-inside:avoid;border-radius:0;
+                break-after:page;page-break-after:always}
+  .planta-block+.planta-block{break-before:auto;page-break-before:auto}
+  .planta-block:last-child{break-after:auto;page-break-after:auto}
+  /* El rotulo de portal y el pie se quedaban solos en una pagina entre tablas
+     (medido: 2 de las 7 paginas de OBRA PRUEBA eran eso y nada mas). En papel
+     no hacen falta: el bloque y el portal van dentro de la identificacion de
+     CADA tabla, que es justo por lo que esa fila vive en el thead. */
+  .portal-sheet-head{display:none}
+  .doc-footer{display:none}
+  /* Colchon comprado recortando el thead, de 34.3mm a 28mm. NO se encogen las
+     casillas de marcar: siguen a 5.01mm, que es lo que necesita el boli en
+     obra y lo que necesita el recorte que luego lee la IA. */
+  .th-ident{padding:.6mm 2mm;font-size:8.2pt}
+  .th-floor{padding:1.1mm 1mm}
+  .th-apt{padding:.7mm .45mm}
+  .tr-notes td{height:3.6mm;padding:.4mm 2mm}
+  .doc-header,.legend-strip{break-inside:avoid}
+  .tr-tajo:hover{background:transparent!important}
+  .float-bar{display:none}
+  .leg-tip{display:none}
+}`;
+}
+
+/* ── DOWNLOAD / PREVIEW ── */
+
+/* Cuántas celdas IMPRESAS de cada tajo están ya en X.
+
+   Esto NO se puede llamar "terminado". Al generador sólo le llegan X, M y /:
+   generar_todos.py:237 documenta que `P` (pendiente confirmado), `?`
+   (desconocido) y `N` (no aplica) viajan los tres como celda vacía. El
+   generador no distingue "falta por hacer" de "aquí no aplica".
+
+   Medido el 07/08/2026: si "terminado" fuese "todas sus celdas en X", Orueta
+   —la única obra que no cabe en una hoja— tendría CERO tajos terminados,
+   porque le cuentan como pendientes las celdas que en realidad son N. Por eso
+   se enseña el recuento y decide Bixente, en vez de decidir el generador con
+   un criterio ciego. */
+function recuentoPorTajo(){
+  const columnas=getPortalEntries().flatMap(({portal})=>
+    portal.plantas.flatMap(pl=>pl.vivs.map(v=>({p:portal.id,f:pl.id,v}))));
+  const datos=S.importData||{};
+  const r={};
+  CAT.forEach(t=>{ r[t.id]={x:0,total:0}; });
+  columnas.forEach(c=>CAT.forEach(t=>{
+    const e=r[t.id];
+    e.total++;
+    if(datos[`${c.p}__${c.f}__${t.id}__${c.v}`]==='X') e.x++;
+  }));
+  return r;
+}
+
+function confirmA4Capacity(){
+  const activos=getActiveTajos();
+  const hojas=repartirTajosEnHojas(activos).length;
+  if(hojas<=1) return true;
+  const cuenta=recuentoPorTajo();
+  const alCien=activos.filter(t=>cuenta[t.id]&&cuenta[t.id].total
+                                 &&cuenta[t.id].x===cuenta[t.id].total);
+  const ranking=activos.slice()
+    .filter(t=>cuenta[t.id]&&cuenta[t.id].total)
+    .sort((a,b)=>(cuenta[b.id].x/cuenta[b.id].total)-(cuenta[a.id].x/cuenta[a.id].total))
+    .slice(0,8)
+    .map(t=>`   ${t.name}: ${cuenta[t.id].x} de ${cuenta[t.id].total} celdas en X`)
+    .join('\n');
+  const opcion=alCien.length
+    ? `Aceptar: quitar los ${alCien.length} tajos cuyas celdas están TODAS en X, y volver a Tajos.`
+    : 'Aceptar: volver a Tajos para quitarlos a mano. Ninguno tiene todas sus celdas en X.';
+  const seguir=window.confirm(
+    `Con ${activos.length} tajos, cada tabla saldrá en ${hojas} hojas.\n`+
+    `Ocupan ${alturaFilasMM(activos).toFixed(0)} mm y en un A4 caben ${cupoFilasMM().toFixed(0)} mm.\n\n`+
+    `Los más avanzados:\n${ranking}\n\n`+
+    `${opcion}\n`+
+    `Cancelar: generar igualmente en ${hojas} hojas (cada una lleva su cabecero de viviendas).`
+  );
+  if(!seguir) return true;                   // generar igualmente: es seguro
+  if(alCien.length){
+    alCien.forEach(t=>{ S.sel.delete(t.id);
+      const cb=document.getElementById('cb-'+t.id); if(cb) cb.checked=false; });
+    showToast(`Quitados ${alCien.length} tajos con todas sus celdas en X`);
+  } else {
+    showToast('Ninguno está al 100%: quítalos a mano');
+  }
+  goStep(3); renderTajos();
+  return false;
+}
+
+
+function doDownload(){
+  if(S.modo==='vivienda'&&!confirmA4Capacity()) return;
+  const html = S.modo==='garaje'?generateGarajeHTML({}):generateHTML(S.importData||{});
+  const blob = new Blob([html],{type:'text/html;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const fname=(S.modo==='garaje'?revisionGarajeFileBase():revisionFileBase())+'.html';
+  a.download = fname;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast('Descargado: '+fname);
+  saveConfig();
+}
+
+function doPreview(){
+  if(S.modo==='vivienda'&&!confirmA4Capacity()) return;
+  const html = S.modo==='garaje'?generateGarajeHTML({}):generateHTML(S.importData||{});
+  const w = window.open('','_blank');
+  w.document.write(html);
+  w.document.close();
+}
+
+/* ════════════════════════════════════════════
+   IMPORT — Claude API
+════════════════════════════════════════════ */
+
+function saveKey(){
+  const k=document.getElementById('api-key').value.trim();
+
+  showToast('Clave guardada ✓');
+}
+
+/* ════════════════════════════════════════════
+   UTILS
+════════════════════════════════════════════ */
+function showToast(m){
+  const t=document.createElement('div');
+  t.style.cssText='position:fixed;bottom:24px;right:22px;background:#1A3558;color:#fff;padding:9px 16px;border-radius:4px;font-family:Arial Narrow,Arial,sans-serif;font-size:12px;z-index:9999;opacity:1;transition:opacity .3s;pointer-events:none';
+  t.textContent=m; document.body.appendChild(t);
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300);},1700);
+}
+
+/* ── INIT ── */
+(function init(){
+  renderRecent();
+})();
+</script>
+</body>
+</html>
