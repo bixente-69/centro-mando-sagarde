@@ -116,10 +116,14 @@ def _generar(prioridades_garaje, historial=None, snapshot_garaje=None):
 
 def _snapshot_garaje_desde_prioridades(prioridades_garaje):
     """Mismo mapeo que usa generar_todos.py para pasar de detalle_items al
-    esquema {task,floor,building,unit,status} de motor_informes."""
+    esquema {task,floor,building,unit,status} de motor_informes. 'task'
+    lleva el NOMBRE (item['trabajo']), no el id: asi lo construye tambien
+    ficha_obra.snapshot_desde_ficha para vivienda, y es lo que
+    generar_informe_ejecutivo.py necesita para resolver metadatos por
+    nombre/alias (con el id ahi, su pagina de garaje salia vacia)."""
     return [
         {
-            "task": item["tarea_id"], "floor": item["planta"],
+            "task": item["trabajo"], "floor": item["planta"],
             "building": item["edificio"], "unit": item["unidad"],
             "status": item["estado"],
         }

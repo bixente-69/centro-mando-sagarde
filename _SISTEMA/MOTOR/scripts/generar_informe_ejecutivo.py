@@ -1090,6 +1090,8 @@ def generar_pdf_ejecutivo(
     historial: list | None = None,
     ficha: dict | None = None,
     prioridades: dict | None = None,
+    snapshot_garaje: list[dict] | None = None,
+    prioridades_garaje: dict | None = None,
     cierre: dict | None = None,
     avisos_cierre: list[str] | None = None,
 ) -> Path:
@@ -1130,10 +1132,19 @@ def generar_pdf_ejecutivo(
         for b in raw_buildings:
             portal_items.append((b, f"SUBDIVISIÓN: {b}", b))
 
-    # 1. Página General de la Obra
+    # 1. Página General de la Obra. Si la obra tiene garaje, el resumen
+    #    general cuenta vivienda+garaje juntos (decision de Bixente
+    #    25/09/2026: "si hay garaje... forma parte del total de la obra") --
+    #    misma bolsa de celdas que ya usa panel_obra.py para el % de
+    #    cabecera. El historial y las prioridades de esa llamada siguen
+    #    siendo solo de vivienda: no hay una forma honesta de fusionar el
+    #    historico de revisiones de vivienda con el de garaje (series
+    #    independientes), y los frentes/bloqueadores de garaje ya tienen su
+    #    propia pagina completa mas abajo.
+    snapshot_general = snapshot + (snapshot_garaje or [])
     sub_tit_gen = f"RESUMEN GENERAL ({len(portal_items)} PORTALES/BLOQUES)" if len(portal_items) >= 2 else "RESUMEN GENERAL"
     _construir_bloque_electrico(
-        story, nombre_obra, sub_tit_gen, fecha_rev, snapshot, historial,
+        story, nombre_obra, sub_tit_gen, fecha_rev, snapshot_general, historial,
         ficha, prioridades, metadatos_por_id, metadatos_por_nombre, content_w,
     )
 
@@ -1148,6 +1159,23 @@ def generar_pdf_ejecutivo(
                     ficha, prioridades, metadatos_por_id, metadatos_por_nombre,
                     content_w, referencias={ref, p_nom},
                 )
+
+    # 2b. Página de Garaje, tratada como un bloque más (decision de
+    #     Bixente: "quiero el informe igual que para los bloques"). Reusa
+    #     el mismo indice de metadatos que vivienda: ya viene del catalogo
+    #     completo (incluye los 42 tajos garaje_* desde la Fase 1 de la
+    #     ampliacion), asi que los nombres de tajo de garaje resuelven
+    #     correctamente sin construir un indice aparte -- verificado antes
+    #     de escribir esto, no asumido. Una sola pagina combinada por
+    #     ahora (no una por cada garaje fisico): la obra de referencia
+    #     (Gernika) solo tiene uno.
+    if prioridades_garaje is not None and snapshot_garaje:
+        story.append(PageBreak())
+        _construir_bloque_electrico(
+            story, nombre_obra, "GARAJE", fecha_rev, snapshot_garaje,
+            [(fecha_rev, snapshot_garaje)], ficha, prioridades_garaje,
+            metadatos_por_id, metadatos_por_nombre, content_w,
+        )
 
     # 3. Cierre de expediente: una vez, al final, sea cual sea el numero
     #    de portales/bloques de la obra.
@@ -1200,6 +1228,8 @@ def generar_para_obra(
     historial: list | None = None,
     ficha: dict | None = None,
     prioridades: dict | None = None,
+    snapshot_garaje: list[dict] | None = None,
+    prioridades_garaje: dict | None = None,
     cierre: dict | None = None,
     avisos_cierre: list[str] | None = None,
 ) -> Path | None:
@@ -1265,6 +1295,8 @@ def generar_para_obra(
         historial=historial,
         ficha=ficha,
         prioridades=prioridades,
+        snapshot_garaje=snapshot_garaje,
+        prioridades_garaje=prioridades_garaje,
         cierre=cierre,
         avisos_cierre=avisos_cierre,
     )

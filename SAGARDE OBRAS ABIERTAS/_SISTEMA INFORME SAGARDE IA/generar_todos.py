@@ -1181,9 +1181,19 @@ def main(hacer_pdf=True):
                 # motor que ya usa vivienda -- pueda sumar ambos en una sola
                 # bolsa de celdas. Decision de Bixente 25/09/2026: el garaje
                 # cuenta siempre dentro del total de la obra.
+                # 'task' lleva el NOMBRE del tajo (item['trabajo']), no su
+                # id (item['tarea_id']): asi construye 'task' tambien el
+                # snapshot de vivienda (ficha_obra.snapshot_desde_ficha),
+                # y generar_informe_ejecutivo.py resuelve 'task' contra
+                # metadatos_por_nombre por nombre/alias, no por id -- con
+                # el id puesto ahi, la pagina de garaje del PDF salia
+                # vacia ("sin datos eleactricos", ningun tajo resolvia).
+                # motor_informes.kpis_snapshot (panel_obra.py, pieza 1) no
+                # le importa que lleve 'task', solo cuenta 'status' -- el
+                # cambio no le afecta.
                 snapshot_garaje = [
                     {
-                        'task': item['tarea_id'], 'floor': item['planta'],
+                        'task': item['trabajo'], 'floor': item['planta'],
                         'building': item['edificio'], 'unit': item['unidad'],
                         'status': item['estado'],
                     }
@@ -1306,6 +1316,8 @@ def main(hacer_pdf=True):
                 historial=historial,
                 ficha=ficha_actual,
                 prioridades=prioridades,
+                snapshot_garaje=snapshot_garaje,
+                prioridades_garaje=prioridades_garaje,
                 cierre=cierre_datos,
                 avisos_cierre=cierre_avisos,
             )
