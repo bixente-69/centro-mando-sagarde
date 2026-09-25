@@ -7085,18 +7085,18 @@
   "dudas": [],
   "materiales": {},
   "documentos": {
-    "total": 187,
+    "total": 188,
     "por_categoria": {
       "Comprimidos": 3,
       "Excel": 2,
       "Imágenes": 21,
-      "Otros": 20,
+      "Otros": 21,
       "PDF": 136,
       "Planos y gráfica": 3,
       "Word": 2
     },
     "_meta": {
-      "actualizado": "17/09/2026 19:07"
+      "actualizado": "25/09/2026 12:56"
     }
   },
   "contactos": []
