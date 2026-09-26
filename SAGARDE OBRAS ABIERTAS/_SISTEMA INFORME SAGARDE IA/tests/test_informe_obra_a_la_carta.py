@@ -74,13 +74,21 @@ class TestBotonInformeObra(unittest.TestCase):
 
 class TestSeccionesEmbebidas(unittest.TestCase):
 
-    def test_el_json_tiene_las_ocho_claves_esperadas(self):
+    def test_el_json_tiene_las_nueve_claves_esperadas(self):
         html = _generar()
         secciones = _extraer_secciones(html)
         self.assertEqual(set(secciones.keys()), {
             'trabajos', 'materiales', 'personal', 'prioridades',
-            'riesgos', 'normativa', 'documentos', 'cierre',
+            'prioridades_garaje', 'riesgos', 'normativa', 'documentos',
+            'cierre',
         })
+
+    def test_prioridades_garaje_vacia_sin_garaje(self):
+        """Sin prioridades_garaje, la clave existe (para que el JS nunca
+        se encuentre con undefined) pero no aporta nada seleccionable."""
+        html = _generar()
+        secciones = _extraer_secciones(html)
+        self.assertEqual(secciones['prioridades_garaje'], {})
 
     def test_prioridades_tiene_los_cinco_subapartados(self):
         html = _generar(prioridades=_prioridades(
@@ -98,6 +106,42 @@ class TestSeccionesEmbebidas(unittest.TestCase):
             'tareas_manuales', 'sin_revisar',
         })
         self.assertIn('Tajos bloqueados', secciones['prioridades']['tajos_bloqueados'])
+
+    def test_prioridades_garaje_tiene_los_cinco_subapartados(self):
+        """Bixente, 26/09/2026, textual: "por supuesto que debe inclir
+        garaje, es una pieza mas de las obras y muchas veces una obra en
+        si solo" -- mismas cinco claves que vivienda, mismo contrato."""
+        html = _generar(prioridades_garaje=_prioridades(
+            resumen={'bloqueados': 1, 'sin_revisar': 1},
+            inventario=[{
+                'seccion': 'BLOQUEADO', 'trabajo': 'Tubeado de viales',
+                'propiedad': 'propio', 'orden_ejecucion': 1,
+                'fase_nombre': 'f', 'n_ubicaciones': 1, 'ubicaciones': [],
+                'estado_actual': '—', 'motivo': 'x', 'subtajos': [],
+            }],
+        ))
+        secciones = _extraer_secciones(html)
+        self.assertEqual(set(secciones['prioridades_garaje'].keys()), {
+            'estado_proyecto', 'que_hacer_ahora', 'tajos_bloqueados',
+            'tareas_manuales', 'sin_revisar',
+        })
+        self.assertIn(
+            'Tubeado de viales',
+            secciones['prioridades_garaje']['tajos_bloqueados'])
+
+    def test_el_selector_ofrece_garaje_solo_cuando_la_obra_lo_tiene(self):
+        sin_garaje = _generar()
+        con_garaje = _generar(prioridades_garaje=_prioridades())
+        # El id 'cb-prioridades-garaje-all' SIEMPRE aparece como string
+        # dentro del JS fijo (getElementById, addEventListener) tenga o
+        # no garaje la obra -- lo que debe faltar sin garaje es el
+        # ELEMENTO HTML en si, con comillas dobles como lo escribe Python.
+        self.assertNotIn('id="cb-prioridades-garaje-all"', sin_garaje)
+        self.assertNotIn(
+            'data-seccion="prioridades_garaje"', sin_garaje)
+        self.assertIn('id="cb-prioridades-garaje-all"', con_garaje)
+        self.assertEqual(
+            con_garaje.count('data-seccion="prioridades_garaje"'), 5)
 
     def test_el_contenido_embebido_coincide_con_la_pestana_visible(self):
         """La prueba central de esta tarea: el JSON no puede decir una cosa
@@ -183,13 +227,31 @@ class TestLogicaSelectorJS(unittest.TestCase):
         de mando (destino.style.display='block'). Aqui no hay ningun
         click que las revele, asi que hacia falta forzar el override —
         confirmado en navegador de verdad: sin esto el <details> entero,
-        incluido su propio <summary>, medía 0 de alto."""
+        incluido su propio <summary>, medía 0 de alto.
+
+        26/09/2026: el override pasa de una lista fija de ids a un
+        selector por clase (details.seccion-plegable) -- la lista fija
+        no incluia los ids con sufijo '-garaje' (pieza de garaje del
+        informe a la carta), misma familia de fallo que ya se habia
+        corregido antes en el panel en vivo."""
         html = _generar()
         self.assertIn(
-            "#sec-tareas,#sec-dudas,#sec-ejecucion,#sec-inv-bloqueado,"
-            "#sec-inv-sin_revisar,\n#sec-inv-viable,#sec-inv-otros_gremios,"
-            "#sec-inv-dudas,#sec-inv-terminado,\n#sec-preguntas-catalogo,"
-            "#sec-prevision{display:block!important;}", html)
+            "details.seccion-plegable{display:block!important;}", html)
+
+    def test_el_override_por_clase_cubre_tambien_las_secciones_de_garaje(self):
+        html = _generar(prioridades_garaje=_prioridades(
+            resumen={'bloqueados': 1},
+            inventario=[{
+                'seccion': 'BLOQUEADO', 'trabajo': 'Tubeado de viales',
+                'propiedad': 'propio', 'orden_ejecucion': 1,
+                'fase_nombre': 'f', 'n_ubicaciones': 1, 'ubicaciones': [],
+                'estado_actual': '—', 'motivo': 'x', 'subtajos': [],
+            }],
+        ))
+        self.assertIn('id=\'sec-inv-bloqueado-garaje\'', html)
+        # Ningun id concreto con sufijo aparece en el CSS: el selector por
+        # clase ya los cubre a todos sin enumerarlos.
+        self.assertNotIn('sec-inv-bloqueado-garaje{display:block', html)
 
     def test_las_casillas_quedan_inertes_en_el_documento_generado(self):
         """Evita que un clic en la vista previa dispare marcar-tarea-hecha

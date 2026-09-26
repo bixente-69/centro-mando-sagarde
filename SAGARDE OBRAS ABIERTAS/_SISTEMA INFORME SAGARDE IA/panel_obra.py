@@ -1843,9 +1843,24 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     # fija.
     garaje_nav_html = ''
     garaje_seccion_html = ''
+    garaje_informe_checkboxes_html = ''
+    secciones_prioridades_garaje = {}
     if prioridades_garaje is not None:
         garaje_nav_html = (
             '  <button data-view="v-garaje">🅿️ Garaje</button>\n')
+        garaje_informe_checkboxes_html = """
+    <div class="tj-group-hdr">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+        <input type="checkbox" id="cb-prioridades-garaje-all" onchange="toggleGrupoGarajeInforme(this)"> <b>🅿️ Garaje</b>
+      </label>
+    </div>
+    <div class="tj-items" style="padding-left:26px;">
+      <label><input type="checkbox" class="cb-prioridades-garaje" data-seccion="prioridades_garaje" data-sub="estado_proyecto"> Estado del proyecto</label>
+      <label><input type="checkbox" class="cb-prioridades-garaje" data-seccion="prioridades_garaje" data-sub="que_hacer_ahora"> Qué hacer ahora</label>
+      <label><input type="checkbox" class="cb-prioridades-garaje" data-seccion="prioridades_garaje" data-sub="tajos_bloqueados"> Tajos bloqueados</label>
+      <label><input type="checkbox" class="cb-prioridades-garaje" data-seccion="prioridades_garaje" data-sub="tareas_manuales"> Tareas manuales</label>
+      <label><input type="checkbox" class="cb-prioridades-garaje" data-seccion="prioridades_garaje" data-sub="sin_revisar"> Sin revisar nunca</label>
+    </div>"""
         avance_garaje_pct = None
         if snapshot_garaje:
             avance_garaje_pct = motor.kpis_snapshot(snapshot_garaje).get('pct_ponderado')
@@ -1873,6 +1888,20 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                 + partes_garaje['dudas_inventario_html']
                 + partes_garaje['terminado_html']
             )
+            # Informe de obra a la carta: piezas de garaje, mismas claves
+            # que secciones_prioridades de vivienda -- Bixente, 26/09/2026,
+            # textual: "por supuesto que debe inclir garaje, es una pieza
+            # mas de las obras y muchas veces una obra en si solo".
+            secciones_prioridades_garaje = {
+                'estado_proyecto': (
+                    partes_garaje['bento_command']
+                    + partes_garaje['estado_obra_html']
+                    + partes_garaje['avisos_prio']),
+                'que_hacer_ahora': partes_garaje['ejecucion_html'],
+                'tajos_bloqueados': partes_garaje['bloqueado_html'],
+                'tareas_manuales': partes_garaje['tareas_manual_html'],
+                'sin_revisar': partes_garaje['sin_revisar_html'],
+            }
         garaje_seccion_html = (
             '<section id="v-garaje" class="view">'
             + garaje_html
@@ -1951,6 +1980,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         'materiales': materiales_html,
         'personal': f"<div class='card'><h3>Personal asignado</h3>{personal_html}</div>",
         'prioridades': secciones_prioridades,
+        'prioridades_garaje': secciones_prioridades_garaje,
         'riesgos': riesgos_html,
         'normativa': (
             "<div class='card'><h3>Normativa y criterios técnicos "
@@ -2005,7 +2035,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="tajos_bloqueados"> Tajos bloqueados</label>
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="tareas_manuales"> Tareas manuales</label>
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="sin_revisar"> Sin revisar nunca</label>
-    </div>
+    </div>{garaje_informe_checkboxes_html}
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="riesgos" onchange="toggleGrupoInforme(this)"> <b>⚠ Riesgos</b></label>
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="normativa" onchange="toggleGrupoInforme(this)"> <b>📘 Normativa</b></label>
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="documentos" onchange="toggleGrupoInforme(this)"> <b>📎 Documentos</b></label>
@@ -2155,13 +2185,17 @@ function cargarSeleccionInforme(){{
   _checksInforme().forEach(cb => {{
     if (cb.dataset.seccion) cb.checked = set.has(_idInforme(cb));
   }});
-  document.querySelectorAll('.cb-prioridades').forEach(sub => {{
-    // El check del grupo Prioridades refleja si TODOS sus subapartados
-    // estan marcados, igual que un checkbox "seleccionar todo" normal.
-  }});
+  // El check de cada grupo con subapartados (Prioridades, Garaje si la
+  // obra lo tiene) refleja si TODOS sus subapartados estan marcados,
+  // igual que un checkbox "seleccionar todo" normal.
   const subsPrio = [...document.querySelectorAll('.cb-prioridades')];
   document.getElementById('cb-prioridades-all').checked =
     subsPrio.length > 0 && subsPrio.every(cb => cb.checked);
+  const cbGarajeAll = document.getElementById('cb-prioridades-garaje-all');
+  if (cbGarajeAll) {{
+    const subsGaraje = [...document.querySelectorAll('.cb-prioridades-garaje')];
+    cbGarajeAll.checked = subsGaraje.length > 0 && subsGaraje.every(cb => cb.checked);
+  }}
 }}
 
 function abrirSelectorInforme(){{
@@ -2179,6 +2213,11 @@ function toggleGrupoPrioridades(masterCb){{
   guardarSeleccionInforme();
 }}
 
+function toggleGrupoGarajeInforme(masterCb){{
+  document.querySelectorAll('.cb-prioridades-garaje').forEach(cb => cb.checked = masterCb.checked);
+  guardarSeleccionInforme();
+}}
+
 function marcarTodoInforme(){{
   _checksInforme().forEach(cb => cb.checked = true);
   guardarSeleccionInforme();
@@ -2188,6 +2227,14 @@ document.querySelectorAll('.cb-prioridades').forEach(cb => {{
   cb.addEventListener('change', () => {{
     const subs = [...document.querySelectorAll('.cb-prioridades')];
     document.getElementById('cb-prioridades-all').checked = subs.every(c => c.checked);
+    guardarSeleccionInforme();
+  }});
+}});
+
+document.querySelectorAll('.cb-prioridades-garaje').forEach(cb => {{
+  cb.addEventListener('change', () => {{
+    const subs = [...document.querySelectorAll('.cb-prioridades-garaje')];
+    document.getElementById('cb-prioridades-garaje-all').checked = subs.every(c => c.checked);
     guardarSeleccionInforme();
   }});
 }});
@@ -2208,12 +2255,25 @@ function generarVistaPreviaInforme(){{
     tajos_bloqueados: 'Tajos bloqueados', tareas_manuales: 'Tareas manuales',
     sin_revisar: 'Sin revisar nunca',
   }};
+  // Vivienda y garaje comparten las mismas claves de data-sub (arriba):
+  // sin este prefijo, marcar "Qué hacer ahora" de las dos a la vez
+  // imprimiria dos secciones con el mismo titulo, sin forma de saber
+  // cual es cual -- encontrado probando de verdad la vista previa, no
+  // solo leyendo el codigo.
+  const PREFIJO_SECCION = {{prioridades_garaje: '🅿️ '}};
   let contenido = '';
   marcadas.forEach(cb => {{
     const seccion = cb.dataset.seccion;
-    if (seccion === 'prioridades' && cb.dataset.sub) {{
-      const html = SECCIONES_INFORME.prioridades[cb.dataset.sub] || '';
-      contenido += `<div class="informe-seccion"><div class="informe-titulo">${{NOMBRES_SUB[cb.dataset.sub]}}</div>${{html}}</div>`;
+    // Generico a proposito: cualquier seccion con subapartados (hoy
+    // 'prioridades' y 'prioridades_garaje') usa las mismas claves de
+    // data-sub, asi que no hace falta enumerar los nombres de seccion
+    // aqui -- una tercera instancia (si llega) solo necesitaria, como
+    // mucho, una entrada en PREFIJO_SECCION si tambien comparte claves.
+    if (cb.dataset.sub) {{
+      const grupo = SECCIONES_INFORME[seccion] || {{}};
+      const html = grupo[cb.dataset.sub] || '';
+      const titulo = (PREFIJO_SECCION[seccion]||'') + NOMBRES_SUB[cb.dataset.sub];
+      contenido += `<div class="informe-seccion"><div class="informe-titulo">${{titulo}}</div>${{html}}</div>`;
     }} else if (SECCIONES_INFORME[seccion] !== undefined && typeof SECCIONES_INFORME[seccion] === 'string') {{
       contenido += `<div class="informe-seccion"><div class="informe-titulo">${{NOMBRES[seccion]}}</div>${{SECCIONES_INFORME[seccion]}}</div>`;
     }}
@@ -2244,10 +2304,13 @@ function generarVistaPreviaInforme(){{
    que las revele, asi que sin este override "Que hacer ahora", "Tajos
    bloqueados", "Tareas manuales", etc. quedaban con su titulo a la vista
    pero todo su contenido —incluida la cabecera del propio desplegable—
-   realmente oculto: bug real detectado probando en navegador de verdad. */
-#sec-tareas,#sec-dudas,#sec-ejecucion,#sec-inv-bloqueado,#sec-inv-sin_revisar,
-#sec-inv-viable,#sec-inv-otros_gremios,#sec-inv-dudas,#sec-inv-terminado,
-#sec-preguntas-catalogo,#sec-prevision{{display:block!important;}}
+   realmente oculto: bug real detectado probando en navegador de verdad.
+   Por clase, no por lista fija de ids (26/09/2026): una lista de ids sin
+   los sufijos "-garaje" es la misma familia de fallo que ya se corrigio
+   en el propio panel en vivo -- ver _namespace_ids/seccion-plegable en
+   panel_obra.py. Con la pieza de garaje del informe a la carta, una
+   lista fija aqui habria dejado sus secciones tituladas pero vacias. */
+details.seccion-plegable{{display:block!important;}}
 .informe-seccion{{margin-bottom:22px;}}
 .informe-titulo{{font-size:15px;font-weight:700;color:var(--header2);border-left:4px solid var(--accent);padding-left:8px;margin-bottom:12px;}}
 .barra-accion{{position:sticky;top:0;background:#fff;padding:10px 0;display:flex;gap:8px;justify-content:flex-end;border-bottom:1px solid #eee;margin-bottom:16px;}}

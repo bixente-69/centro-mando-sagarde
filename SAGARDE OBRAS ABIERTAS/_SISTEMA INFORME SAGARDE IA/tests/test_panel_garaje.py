@@ -213,8 +213,16 @@ class TestPanelGaraje(unittest.TestCase):
         # verificado en detalle en TestPanelGarajeFormatoPrioridades.
         garaje = vistas_con["v-garaje"]
         self.assertIn("Centro de mando · Prioridades", garaje)
-        self.assertEqual(
-            _secciones_informe(con_garaje), _secciones_informe(sin_garaje))
+        # 'prioridades_garaje' SI cambia a proposito (informe de obra a la
+        # carta, confirmado por Bixente 26/09/2026: "por supuesto que debe
+        # inclir garaje"). El resto del informe a la carta no se mueve.
+        secciones_con = _secciones_informe(con_garaje)
+        secciones_sin = _secciones_informe(sin_garaje)
+        self.assertEqual(secciones_sin.get('prioridades_garaje'), {})
+        self.assertNotEqual(secciones_con.get('prioridades_garaje'), {})
+        secciones_con.pop('prioridades_garaje')
+        secciones_sin.pop('prioridades_garaje')
+        self.assertEqual(secciones_con, secciones_sin)
 
     def test_sin_base_muestra_el_aviso_y_no_un_recuento_falso(self):
         prioridades = priorizar_ficha_garaje(
