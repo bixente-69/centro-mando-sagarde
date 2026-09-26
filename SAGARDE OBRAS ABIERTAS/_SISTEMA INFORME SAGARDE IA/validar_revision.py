@@ -408,13 +408,6 @@ def validar(revision, ficha_actual, catalogo):
                 f"{celda['clave']}: confianza dudosa; el adaptador debe haber "
                 'resuelto o descartado la lectura antes de aplicar')
 
-        # Regla 6: N es una instruccion valida de descarte, nunca se guarda.
-        if estado_leido == 'N':
-            resultado['aceptadas'].append(_aceptada(
-                indice, celda, antes, antes, 'descartar',
-                'regla 6: N se descarta y no se guarda'))
-            continue
-
         if estado_leido == '':
             if revision['origen'] in {
                     'pdf_digital', 'html_digital', 'historial_consolidado'}:

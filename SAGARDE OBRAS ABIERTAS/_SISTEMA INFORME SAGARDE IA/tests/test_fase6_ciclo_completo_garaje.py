@@ -145,7 +145,7 @@ class TestCicloCompletoGarajeObraPrueba(unittest.TestCase):
         #    hallazgo de la Fase 1: una dependencia que existe en otro
         #    sitio de la obra pero no en ESTA ubicacion bloquea para
         #    siempre, no se trata como "no aplica". Incluye ademas un N,
-        #    que debe excluirse del todo.
+        #    que debe quedar guardado como tal (no desaparecer).
         hoja_revision = self._escribir(
             'REVISION GARAJE 25092026.html',
             _html_revision([
@@ -161,9 +161,12 @@ class TestCicloCompletoGarajeObraPrueba(unittest.TestCase):
             )
         )
         self.assertEqual([], avisos)
-        self.assertEqual(2, cambios['estados_nuevos'])
-        self.assertNotIn(
-            f'g1__p1__garaje_tabicado__z_centralizacion', ficha['estados'],
+        self.assertEqual(3, cambios['estados_nuevos'])
+        self.assertEqual(
+            'N',
+            ficha['estados'][
+                'g1__p1__garaje_tabicado__z_centralizacion'
+            ]['v'],
         )
 
         # 3) El priorizador real (mismo Catalogo() que produccion, sin
@@ -188,8 +191,9 @@ class TestCicloCompletoGarajeObraPrueba(unittest.TestCase):
         self.assertEqual(1, resultado['resumen']['bloqueados'])
 
         # El estado N nunca debe aparecer como un tajo del priorizador
-        # (ni bloqueado, ni listo, ni de ningun tipo): esta excluido, no
-        # es que "no aplica" cuente como otra categoria.
+        # (ni bloqueado, ni listo, ni de ningun tipo), aunque ahora SI
+        # este guardado en la ficha: "no aplica" no cuenta como ninguna
+        # categoria de trabajo pendiente.
         self.assertNotIn(
             ('garaje_tabicado', 'Centralización de contadores'),
             por_tarea_unidad,

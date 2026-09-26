@@ -384,12 +384,12 @@ class TestRegla6TraduccionSegunOrigen(unittest.TestCase):
                                  ('?', '?'))
                 self.assertEqual(aceptada['accion'], 'conservar')
 
-    def test_regla_6_N_se_descarta_y_no_se_guarda(self):
+    def test_regla_6_N_es_una_marca_explicita_que_se_guarda(self):
         resultado = validador.validar(
             _revision([_celda(estado='N')]), _ficha('M'), _catalogo())
         aceptada = _una_aceptada(resultado)
-        self.assertEqual((aceptada['antes'], aceptada['despues']), ('M', 'M'))
-        self.assertEqual(aceptada['accion'], 'descartar')
+        self.assertEqual((aceptada['antes'], aceptada['despues']), ('M', 'N'))
+        self.assertEqual(aceptada['accion'], 'actualizar')
 
     def test_regla_6_no_traduce_blanco_de_tinta_si_la_hoja_no_fue_usada(self):
         resultado = validador.validar(
@@ -544,10 +544,10 @@ class TestResultadoYAislamiento(unittest.TestCase):
             _ficha('?'), _catalogo())
         self.assertEqual(
             [celda['accion'] for celda in resultado['aceptadas']],
-            ['actualizar', 'conservar', 'descartar'])
+            ['actualizar', 'conservar', 'actualizar'])
         self.assertEqual(resultado['resumen'], {
             'total': 3, 'aceptadas': 3, 'rechazadas': 0,
-            'cambios': 1, 'sin_cambio': 1, 'descartadas': 1,
+            'cambios': 2, 'sin_cambio': 1, 'descartadas': 0,
         })
 
     def test_una_celda_rechazada_hace_el_resultado_no_aplicable(self):

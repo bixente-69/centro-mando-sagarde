@@ -88,8 +88,6 @@ def construir_snapshot(ruta_html, obra_catalogo, catalogo):
                 data_k, f'tajo desconocido {tarea_id!r}'
             ))
             continue
-        if estado == 'N':
-            continue
 
         snapshot.append({
             'task': tarea_id,

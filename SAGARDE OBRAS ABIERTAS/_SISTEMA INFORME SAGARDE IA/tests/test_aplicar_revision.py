@@ -338,7 +338,7 @@ class TestAplicacionPura(unittest.TestCase):
         self.assertEqual(actualizada['estados'][CLAVE_A], {
             'v': 'X', 'f': '05/08/2026', 'r': 'rev_05082026'})
 
-    def test_varias_celdas_combinan_actualizar_conservar_y_descartar(self):
+    def test_varias_celdas_combinan_actualizar_conservar_y_n_explicita(self):
         ficha = _ficha_normalizada({
             CLAVE_A: '?',
             CLAVE_CABLEADO_A: 'M',
@@ -357,12 +357,13 @@ class TestAplicacionPura(unittest.TestCase):
 
         self.assertEqual(
             [celda['accion'] for celda in resultado['aceptadas']],
-            ['actualizar', 'conservar', 'descartar'])
+            ['actualizar', 'conservar', 'actualizar'])
         self.assertEqual(actualizados[CLAVE_A], {
             'v': 'X', 'f': '25/08/2026', 'r': 'rev_mixta'})
         self.assertEqual(actualizados[CLAVE_CABLEADO_A],
                          anteriores[CLAVE_CABLEADO_A])
-        self.assertEqual(actualizados[CLAVE_B], anteriores[CLAVE_B])
+        self.assertEqual(actualizados[CLAVE_B], {
+            'v': 'N', 'f': '25/08/2026', 'r': 'rev_mixta'})
         self.assertEqual(ficha['estados'], anteriores)
 
 

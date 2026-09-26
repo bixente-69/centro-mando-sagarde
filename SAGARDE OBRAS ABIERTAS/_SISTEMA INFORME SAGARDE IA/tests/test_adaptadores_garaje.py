@@ -157,7 +157,7 @@ class TestAdaptadoresGaraje(unittest.TestCase):
         with open(ruta_ficha, 'rb') as fichero:
             self.assertEqual(antes, fichero.read())
 
-    def test_revision_aplica_estados_y_excluye_n_del_todo(self):
+    def test_revision_aplica_estados_incluida_la_n_explicita(self):
         zonas = [
             {'id': 'zona_x', 'nombre': 'Zona X', 'tipo': 'vial'},
             {'id': 'zona_m', 'nombre': 'Zona M', 'tipo': 'vial'},
@@ -188,8 +188,37 @@ class TestAdaptadoresGaraje(unittest.TestCase):
         self.assertEqual('M', ficha['estados'][prefijo + 'zona_m']['v'])
         self.assertEqual('/', ficha['estados'][prefijo + 'zona_barra']['v'])
         self.assertEqual('P', ficha['estados'][prefijo + 'zona_vacia']['v'])
-        self.assertNotIn(prefijo + 'zona_n', ficha['estados'])
-        self.assertEqual(4, cambios['estados_nuevos'])
+        self.assertEqual('N', ficha['estados'][prefijo + 'zona_n']['v'])
+        self.assertEqual(5, cambios['estados_nuevos'])
+        self.assertEqual([], avisos)
+
+    def test_revision_n_explicita_sobre_una_celda_ya_pendiente_pasa_a_n(self):
+        """Reproduce el bug real de Gernika: una celda que ya era 'P' de una
+        revisión anterior, y que en esta revisión se marca 'N', debe pasar a
+        'N' explícito - no quedarse "invisible" en su valor previo."""
+        clave = 'garaje_1__planta_s1__garaje_tabicado__zona_1'
+        ficha = ficha_inicial()
+        ficha['estados'][clave] = {
+            'v': 'P', 'f': '20/09/2026', 'r': 'rev_20092026'
+        }
+        ficha_garajes.guardar(self.carpeta_obra, ficha)
+        hoja = self._escribir('REVISION GARAJE 25092026.html', html_revision([
+            (clave, 'N'),
+        ]))
+
+        guardada, cambios, avisos, _ = (
+            adaptar_revision_garaje.adaptar_revision_garaje(
+                hoja,
+                'prueba',
+                carpeta_obra_abs=self.carpeta_obra,
+                catalogo=CATALOGO,
+            )
+        )
+
+        self.assertEqual('N', guardada['estados'][clave]['v'])
+        self.assertEqual(
+            [(clave, 'P', 'N')], cambios['estados_cambiados']
+        )
         self.assertEqual([], avisos)
 
     def test_revision_descarta_zona_y_tajo_inexistentes_con_aviso(self):

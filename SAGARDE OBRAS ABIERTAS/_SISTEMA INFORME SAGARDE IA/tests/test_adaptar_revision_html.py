@@ -147,7 +147,7 @@ class TestAdaptarRevisionHtml(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'DDMMAAAA'):
             self._construir(ruta)
 
-    def test_n_se_conserva_para_que_la_descarte_el_validador(self):
+    def test_n_se_conserva_para_que_la_aplique_el_validador(self):
         ruta = self._escribir(_html([
             ('src_pruebas_p1__src_pruebas_p1_f1__tubeado__A', 'N'),
         ]))
@@ -156,7 +156,8 @@ class TestAdaptarRevisionHtml(unittest.TestCase):
         resultado = validador.validar(revision, self.ficha, self.catalogo)
 
         self.assertEqual(revision['celdas'][0]['estado_leido'], 'N')
-        self.assertEqual(resultado['aceptadas'][0]['accion'], 'descartar')
+        self.assertEqual(resultado['aceptadas'][0]['accion'], 'actualizar')
+        self.assertEqual(resultado['aceptadas'][0]['despues'], 'N')
 
     def test_alias_historico_impreso_vuelve_al_id_canonico(self):
         ficha = copy.deepcopy(self.ficha)

@@ -5648,9 +5648,9 @@
       "r": "rev_25072026"
     },
     "p2__2__cuarto_tecnico__A": {
-      "v": "X",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "N",
+      "f": "25/09/2026",
+      "r": "gernika__25/09/2026__html_digital__17364757"
     },
     "p2__2__techos_zzcc__A": {
       "v": "X",
@@ -5838,9 +5838,9 @@
       "r": "rev_25072026"
     },
     "p2__2__cuarto_tecnico__B": {
-      "v": "X",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "N",
+      "f": "25/09/2026",
+      "r": "gernika__25/09/2026__html_digital__17364757"
     },
     "p2__2__techos_zzcc__B": {
       "v": "X",
@@ -6028,9 +6028,9 @@
       "r": "rev_25072026"
     },
     "p2__2__cuarto_tecnico__C": {
-      "v": "X",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "N",
+      "f": "25/09/2026",
+      "r": "gernika__25/09/2026__html_digital__17364757"
     },
     "p2__2__techos_zzcc__C": {
       "v": "X",
@@ -6218,9 +6218,9 @@
       "r": "rev_25072026"
     },
     "p2__2__cuarto_tecnico__D": {
-      "v": "X",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "N",
+      "f": "25/09/2026",
+      "r": "gernika__25/09/2026__html_digital__17364757"
     },
     "p2__2__techos_zzcc__D": {
       "v": "X",
@@ -6408,9 +6408,9 @@
       "r": "rev_25072026"
     },
     "p2__3__cuarto_tecnico__A": {
-      "v": "X",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "N",
+      "f": "25/09/2026",
+      "r": "gernika__25/09/2026__html_digital__17364757"
     },
     "p2__3__techos_zzcc__A": {
       "v": "X",
@@ -6598,9 +6598,9 @@
       "r": "rev_25072026"
     },
     "p2__3__cuarto_tecnico__B": {
-      "v": "X",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "N",
+      "f": "25/09/2026",
+      "r": "gernika__25/09/2026__html_digital__17364757"
     },
     "p2__3__techos_zzcc__B": {
       "v": "X",
@@ -6788,9 +6788,9 @@
       "r": "rev_25072026"
     },
     "p2__3__cuarto_tecnico__C": {
-      "v": "X",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "N",
+      "f": "25/09/2026",
+      "r": "gernika__25/09/2026__html_digital__17364757"
     },
     "p2__3__techos_zzcc__C": {
       "v": "X",
@@ -6978,9 +6978,9 @@
       "r": "rev_25072026"
     },
     "p2__3__cuarto_tecnico__D": {
-      "v": "X",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "N",
+      "f": "25/09/2026",
+      "r": "gernika__25/09/2026__html_digital__17364757"
     },
     "p2__3__techos_zzcc__D": {
       "v": "X",
@@ -7082,18 +7082,18 @@
       "cambios": 0
     },
     {
-      "id": "gernika__25/09/2026__html_digital__17364757",
-      "fecha": "25/09/2026",
-      "origen": "hoja generada rellenada digitalmente, leida por la IA",
-      "celdas_medidas": 1119,
-      "celdas_cambiadas": 40
-    },
-    {
       "id": "rev_25092026",
       "fecha": "25/09/2026",
       "procesada": "25/09/2026 13:03",
       "celdas": 1208,
       "cambios": 0
+    },
+    {
+      "id": "gernika__25/09/2026__html_digital__17364757",
+      "fecha": "25/09/2026",
+      "origen": "hoja generada rellenada digitalmente, leida por la IA",
+      "celdas_medidas": 1119,
+      "celdas_cambiadas": 8
     }
   ],
   "dudas": [],
