@@ -147,16 +147,20 @@ si building/floor/unit no casan 1:1 — verificar).
   idéntico byte a byte al pedido. Confirmado en navegador real contra
   Gernika: la fila de Garaje 1 (52.3%) aparece al final de la tabla de
   detalle, y la gráfica mezcla tareas de ambos con su icono.
-- ⏳ **Informe de obra a la carta** — la pieza "Trabajos" del selector
-  (`secciones_informe['trabajos']`) ya hereda el mismo merge (mismas
-  variables `filas_bloq`/`filas_det`), verificado. Lo que sigue sin
-  cubrir: las piezas de **Prioridades** del selector
-  (`secciones_prioridades`: `estado_proyecto`, `que_hacer_ahora`,
-  `tajos_bloqueados`, `tareas_manuales`, `sin_revisar`) se siguen
-  construyendo solo de `partes_prioridades` (vivienda) — la sección de
-  garaje que ya existe en la pestaña Prioridades (pieza de hoy) no está
-  entre las opciones seleccionables del informe a la carta. No
-  confirmado con Bixente si hace falta.
+- ✅ **Informe de obra a la carta**, commit `8ea3afc` (26/09/2026).
+  Confirmado por Bixente, textual: "por supuesto que debe inclir
+  garaje, es una pieza mas de las obras y muchas veces una obra en si
+  solo". Nuevo grupo "🅿️ Garaje" en el selector con los mismos 5
+  subapartados que vivienda; JS generalizado (ya no fijado a
+  `'prioridades'`) + `PREFIJO_SECCION` para distinguir "Qué hacer
+  ahora" de vivienda y de garaje si se marcan los dos a la vez.
+  **Hallazgo real de la verificación**: el CSS `display:block!important`
+  de la vista previa enumeraba una lista fija de 11 ids de vivienda
+  (misma familia de fallo que `e7d9f74`, coleada aquí) — corregido a
+  selector por clase. Verificado generando la vista previa real
+  (interceptando `window.open`, servida por un servidor local) contra
+  Gernika: ambas secciones aparecen distintas y con su contenido
+  completo visible, no solo el título.
 
 ## Orden de trabajo propuesto
 
@@ -169,8 +173,10 @@ si building/floor/unit no casan 1:1 — verificar).
 4. Informes (PDF + a la carta) — sección nueva, no toca cálculo.
 5. Prioridades — hecho (ver Estado arriba).
 6. Trabajos — hecho (ver Estado arriba).
-7. Informe de obra a la carta (piezas de Prioridades) — pendiente,
-   sin confirmar con Bixente si hace falta.
+7. Informe de obra a la carta (piezas de Prioridades) — hecho (ver
+   Estado arriba).
+
+**Con esto, las 7 piezas de esta integración quedan cerradas.**
 
 Cada pieza se verifica contra Gernika real antes de pasar a la
 siguiente (igual que las 7 fases anteriores) — "la forma de perfeccionar
