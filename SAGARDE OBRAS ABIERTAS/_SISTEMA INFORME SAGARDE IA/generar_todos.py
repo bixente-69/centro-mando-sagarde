@@ -469,42 +469,175 @@ def crear_registro_revision(obra, prioridades):
     }
 
 
+def registro_garaje_desde_ficha(obra, ficha_garaje, prioridades_garaje):
+    """Analogo a registro_revision_desde_ficha, pero para garaje.
+
+    Mas simple que su equivalente de vivienda a proposito: la estructura de
+    ficha_garajes.json (garajes/plantas/zonas) ya usa ids canonicos, sin la
+    doble numeracion sintetica src_{obra}_pN que vivienda arrastra por
+    motivos historicos (ver Fase 5, adaptar_revision_garaje.py, que ya
+    evito ese problema resolviendo directo por id). Por eso aqui no hace
+    falta un `mapa` de traduccion: las claves de 'estados' que guarda la
+    ficha (garaje_id__planta_id__tajo_id__zona_id) SON las que necesita el
+    generador, sin reescribirlas.
+    """
+    garajes_ficha = (ficha_garaje.get('estructura') or {}).get('garajes') or []
+    if not garajes_ficha:
+        return None
+
+    garajes = []
+    for garaje in garajes_ficha:
+        plantas = []
+        for planta in garaje.get('plantas') or []:
+            zonas = []
+            for zona in planta.get('zonas') or []:
+                zona_reg = {
+                    'id': zona['id'], 'nombre': zona.get('nombre'),
+                    'tipo': zona.get('tipo'),
+                }
+                if zona.get('funcion'):
+                    zona_reg['funcion'] = zona['funcion']
+                zonas.append(zona_reg)
+            if zonas:
+                plantas.append({
+                    'id': planta['id'], 'nombre': planta.get('nombre'),
+                    'zonas': zonas,
+                })
+        if plantas:
+            garajes.append({
+                'id': garaje['id'], 'nombre': garaje.get('nombre'),
+                'plantas': plantas,
+            })
+    if not garajes:
+        return None
+
+    catalogo = []
+    for tajo in (ficha_garaje.get('tajos') or {}).get('detalle') or []:
+        try:
+            orden = float(tajo.get('orden') or 9999)
+        except (TypeError, ValueError):
+            orden = 9999
+        catalogo.append({
+            'id': tajo['id'],
+            'name': tajo.get('nombre') or tajo['id'],
+            'g': tajo.get('fase') or 'Otros',
+            'p': {'propio': 'p', 'externo': 'e', 'coordinacion': 'c'}.get(
+                str(tajo.get('propiedad') or '').casefold(), 'c'),
+            # 'z' por defecto (no 'v' como vivienda): un tajo de garaje sin
+            # ambito reconocido es mas probable que sea zona comun que
+            # vivienda, que aqui ni existe.
+            'a': {'vivienda': 'v', 'zona_comun': 'z', 'edificio': 'd'}.get(
+                str(tajo.get('ambito') or '').casefold(), 'z'),
+            'orden': int(orden) if float(orden).is_integer() else orden,
+        })
+    catalogo.sort(key=lambda t: (t['orden'], _clave_natural(t['name'])))
+    if not catalogo:
+        return None
+
+    estados = {
+        clave: (dato or {}).get('v')
+        for clave, dato in (ficha_garaje.get('estados') or {}).items()
+        if (dato or {}).get('v') in {'X', 'M', '/'}
+    }
+
+    resumen = (prioridades_garaje or {}).get('resumen') or {}
+    return {
+        'revision': (prioridades_garaje or {}).get('revision') or '',
+        'generado': (prioridades_garaje or {}).get('generado') or '',
+        'catalogo_version': (prioridades_garaje or {}).get('catalogo_version'),
+        'resumen': {
+            'tajos': len(catalogo),
+            'estados_precargados': len(estados),
+            'zonas': sum(
+                len(planta['zonas'])
+                for garaje in garajes for planta in garaje['plantas']
+            ),
+            'listos': resumen.get('listos', 0),
+            'verificar': resumen.get('verificar', 0),
+            'bloqueados': resumen.get('bloqueados', 0),
+        },
+        'garajes': garajes,
+        'catalog': catalogo,
+        'estados': estados,
+    }
+
+
 def publicar_registro_revisiones():
     """Publica un JS común, legible también al abrir la app con file://."""
     registros = []
     errores = []
     for obra in OBRAS:
-        ruta = os.path.join(
-            OBRAS_ABIERTAS_DIR, obra['carpeta_obra'],
-            'INFORME SAGARDE IA', 'prioridades_trabajos.json',
-        )
-        if not os.path.isfile(ruta):
-            errores.append(f"{obra['nombre']}: sin prioridades_trabajos.json")
+        carpeta_abs = os.path.join(OBRAS_ABIERTAS_DIR, obra['carpeta_obra'])
+        salida_dir = os.path.join(carpeta_abs, 'INFORME SAGARDE IA')
+
+        registro = None
+        ruta = os.path.join(salida_dir, 'prioridades_trabajos.json')
+        if os.path.isfile(ruta):
+            try:
+                with open(ruta, encoding='utf-8') as f:
+                    prioridades = json.load(f)
+                # Si la obra tiene ficha, manda la ficha. Si no, se deduce
+                # la estructura de las revisiones como se ha hecho siempre.
+                ficha = cargar_ficha_obra(obra)
+                if ficha:
+                    registro = registro_revision_desde_ficha(obra, ficha, prioridades)
+                    if registro:
+                        print(f"  [FICHA] {obra['nombre']}: estructura leida de "
+                              f"ficha_obra.json ({registro['resumen']['viviendas_planta']} "
+                              f"ubicaciones).")
+                    else:
+                        print(f"  [AVISO FICHA] {obra['nombre']}: la ficha no tiene "
+                              f"estructura utilizable. Se deduce de las revisiones.")
+                if registro is None:
+                    registro = crear_registro_revision(obra, prioridades)
+            except Exception as exc:
+                errores.append(f"{obra['nombre']}: {exc}")
+
+        # Garaje se procesa siempre, tenga o no vivienda: "si hay garaje...
+        # forma parte del total de la obra" (Bixente, 25/09/2026) vale
+        # tambien aqui -- y hay obras que son solo garaje.
+        registro_garaje = None
+        ruta_garaje = os.path.join(salida_dir, 'prioridades_trabajos_garaje.json')
+        if os.path.isfile(ruta_garaje):
+            try:
+                with open(ruta_garaje, encoding='utf-8') as f:
+                    prioridades_garaje = json.load(f)
+                ficha_garaje = ficha_garajes.cargar(carpeta_abs)
+                if ficha_garaje:
+                    registro_garaje = registro_garaje_desde_ficha(
+                        obra, ficha_garaje, prioridades_garaje)
+                    if registro_garaje:
+                        print(f"  [FICHA GARAJE] {obra['nombre']}: estructura "
+                              f"leida de ficha_garajes.json "
+                              f"({registro_garaje['resumen']['zonas']} zonas).")
+            except Exception as exc:
+                errores.append(f"{obra['nombre']} (garaje): {exc}")
+
+        if registro is None and registro_garaje is None:
+            errores.append(f"{obra['nombre']}: sin detalle de viviendas ni de garaje")
             continue
-        try:
-            with open(ruta, encoding='utf-8') as f:
-                prioridades = json.load(f)
-            # Si la obra tiene ficha, manda la ficha. Si no, se deduce la
-            # estructura de las revisiones como se ha hecho siempre.
-            ficha = cargar_ficha_obra(obra)
-            registro = None
-            if ficha:
-                registro = registro_revision_desde_ficha(obra, ficha, prioridades)
-                if registro:
-                    print(f"  [FICHA] {obra['nombre']}: estructura leida de "
-                          f"ficha_obra.json ({registro['resumen']['viviendas_planta']} "
-                          f"ubicaciones).")
-                else:
-                    print(f"  [AVISO FICHA] {obra['nombre']}: la ficha no tiene "
-                          f"estructura utilizable. Se deduce de las revisiones.")
-            if registro is None:
-                registro = crear_registro_revision(obra, prioridades)
-            if registro:
-                registros.append(registro)
-            else:
-                errores.append(f"{obra['nombre']}: sin detalle de viviendas")
-        except Exception as exc:
-            errores.append(f"{obra['nombre']}: {exc}")
+
+        if registro is None:
+            # Obra solo de garaje: entrada minima con los campos que la app
+            # siempre espera encontrar (id/nombre/bloques/catalog/estados),
+            # vacios en vez de ausentes -- un campo que falta rompe en
+            # silencio a quien no comprueba antes de leer.
+            registro = {
+                'id': obra['id'], 'nombre': obra['nombre'],
+                'revision': '', 'generado': '', 'catalogo_version': None,
+                'fuente_estructura': None,
+                'resumen': {
+                    'tajos': 0, 'estados_precargados': 0,
+                    'viviendas_planta': 0, 'listos': 0, 'verificar': 0,
+                    'bloqueados': 0,
+                },
+                'bloques': [], 'catalog': [], 'estados': {},
+            }
+        registro['tiene_vivienda'] = bool(registro.get('bloques'))
+        registro['tiene_garaje'] = registro_garaje is not None
+        if registro_garaje is not None:
+            registro['garaje'] = registro_garaje
+        registros.append(registro)
 
     meta = {
         'version': 1,

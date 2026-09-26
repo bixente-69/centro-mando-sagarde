@@ -439,5 +439,131 @@ class TestObraSinRevisiones(unittest.TestCase):
         self.assertIn('bad', bloque)
 
 
+class TestRegistroGarajeDesdeFicha(unittest.TestCase):
+    """26/09/2026: el desplegable 'Obra ya instalada' del generador solo
+    ofrecia revisiones de VIVIENDA aunque tuviera Garajes seleccionado
+    (aviso real de Bixente, viendo Gernika en el generador). Causa raiz:
+    publicar_registro_revisiones() nunca leia ficha_garajes.json, asi que
+    window.SAGARDE_OBRAS_REVISION nunca llevaba nada de garaje pese a que
+    el propio JS del generador ya esperaba un campo 'garaje' con
+    tiene_garaje/tiene_vivienda (loadInstalledWork ya los leia, pero nadie
+    los escribia nunca). Estas pruebas fijan el contrato de
+    registro_garaje_desde_ficha(), la funcion que llena ese hueco."""
+
+    OBRA = {'id': 'pruebas', 'nombre': 'OBRA DE PRUEBAS'}
+
+    def _ficha_garaje(self, estados=None):
+        return {
+            'version': 1,
+            'estructura': {
+                'garajes': [{
+                    'id': 'g1', 'nombre': 'Garaje 1',
+                    'plantas': [{
+                        'id': 'gp1', 'nombre': 'S-1',
+                        'zonas': [
+                            {'id': 'z1', 'nombre': 'Vial 1', 'tipo': 'vial'},
+                            {'id': 'z2', 'nombre': 'Cuarto técnico',
+                             'tipo': 'cuarto_tecnico', 'funcion': 'generales'},
+                        ],
+                    }],
+                }],
+            },
+            'tajos': {
+                'detalle': [
+                    {'id': 'garaje_tubeado_vial', 'nombre': 'Tubeado de viales',
+                     'propiedad': 'propio', 'ambito': 'zona_comun', 'orden': 100,
+                     'fase': 'Instalación interior garaje'},
+                    {'id': 'garaje_tabicado', 'nombre': 'Tabicado de garaje',
+                     'propiedad': 'externo', 'ambito': 'zona_comun', 'orden': 50,
+                     'fase': 'Obra civil garaje'},
+                ],
+            },
+            'estados': {
+                clave: {'v': valor, 'f': '25/09/2026', 'r': 'rev_25092026'}
+                for clave, valor in (estados or {}).items()
+            },
+            'revisiones': [{'id': 'rev_25092026', 'fecha': '25/09/2026'}],
+            'dudas': [],
+        }
+
+    def _prioridades_garaje(self, revision='25/09/2026'):
+        return {'revision': revision, 'generado': '25/09/2026 12:00',
+                'catalogo_version': '1.3', 'resumen': {}}
+
+    def test_estructura_se_pasa_practicamente_tal_cual(self):
+        """A diferencia de vivienda, garaje NO reescribe ids: los de la
+        ficha ya son los que necesita el generador (Fase 5)."""
+        registro = gt.registro_garaje_desde_ficha(
+            self.OBRA, self._ficha_garaje(), self._prioridades_garaje())
+        self.assertIsNotNone(registro)
+        self.assertEqual(registro['garajes'], [{
+            'id': 'g1', 'nombre': 'Garaje 1',
+            'plantas': [{
+                'id': 'gp1', 'nombre': 'S-1',
+                'zonas': [
+                    {'id': 'z1', 'nombre': 'Vial 1', 'tipo': 'vial'},
+                    {'id': 'z2', 'nombre': 'Cuarto técnico',
+                     'tipo': 'cuarto_tecnico', 'funcion': 'generales'},
+                ],
+            }],
+        }])
+
+    def test_catalogo_ordenado_por_orden_con_propiedad_y_ambito_mapeados(self):
+        registro = gt.registro_garaje_desde_ficha(
+            self.OBRA, self._ficha_garaje(), self._prioridades_garaje())
+        self.assertEqual([t['id'] for t in registro['catalog']],
+                         ['garaje_tabicado', 'garaje_tubeado_vial'])
+        tabicado = registro['catalog'][0]
+        self.assertEqual(tabicado['p'], 'e')  # externo
+        self.assertEqual(tabicado['a'], 'z')  # zona_comun
+
+    def test_las_claves_de_estados_no_se_reescriben(self):
+        clave = 'g1__gp1__garaje_tubeado_vial__z1'
+        registro = gt.registro_garaje_desde_ficha(
+            self.OBRA, self._ficha_garaje({clave: 'X'}),
+            self._prioridades_garaje())
+        self.assertEqual(registro['estados'], {clave: 'X'})
+
+    def test_lo_no_medido_no_viaja_a_la_hoja(self):
+        """Mismo contrato que vivienda: P/?/N se quedan fuera."""
+        registro = gt.registro_garaje_desde_ficha(
+            self.OBRA,
+            self._ficha_garaje({
+                'g1__gp1__garaje_tubeado_vial__z1': 'X',
+                'g1__gp1__garaje_tubeado_vial__z2': 'P',
+                'g1__gp1__garaje_tabicado__z1': '?',
+                'g1__gp1__garaje_tabicado__z2': 'N',
+            }),
+            self._prioridades_garaje())
+        self.assertEqual(sorted(registro['estados'].values()), ['X'])
+
+    def test_sin_garajes_en_la_estructura_devuelve_none(self):
+        ficha = self._ficha_garaje()
+        ficha['estructura']['garajes'] = []
+        self.assertIsNone(gt.registro_garaje_desde_ficha(
+            self.OBRA, ficha, self._prioridades_garaje()))
+
+    def test_sin_tajos_devuelve_none(self):
+        ficha = self._ficha_garaje()
+        ficha['tajos']['detalle'] = []
+        self.assertIsNone(gt.registro_garaje_desde_ficha(
+            self.OBRA, ficha, self._prioridades_garaje()))
+
+    def test_revision_y_resumen_salen_de_prioridades_no_de_la_ficha(self):
+        registro = gt.registro_garaje_desde_ficha(
+            self.OBRA,
+            self._ficha_garaje({'g1__gp1__garaje_tubeado_vial__z1': 'X'}),
+            {'revision': '26/09/2026', 'generado': '26/09/2026 08:00',
+             'catalogo_version': '1.4',
+             'resumen': {'listos': 3, 'verificar': 1, 'bloqueados': 2}})
+        self.assertEqual(registro['revision'], '26/09/2026')
+        self.assertEqual(registro['catalogo_version'], '1.4')
+        self.assertEqual(registro['resumen']['listos'], 3)
+        self.assertEqual(registro['resumen']['verificar'], 1)
+        self.assertEqual(registro['resumen']['bloqueados'], 2)
+        self.assertEqual(registro['resumen']['zonas'], 2)
+        self.assertEqual(registro['resumen']['estados_precargados'], 1)
+
+
 if __name__ == '__main__':
     unittest.main()

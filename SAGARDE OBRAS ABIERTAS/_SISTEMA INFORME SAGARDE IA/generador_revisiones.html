@@ -431,7 +431,7 @@ let CAT = [
   {id:'casquillos',  name:'Casquillos y bombillas',  g:'Entrega',              p:'p',a:'v'},
   {id:'ilum-rell',   name:'Ilum. rellanos / ZZCC',   g:'Entrega',              p:'p',a:'z'},
 ];
-const CAT_GARAJE = [
+let CAT_GARAJE = [
   {id:'garaje_tabicado', name:'Tabicado de garaje', g:'Obra civil garaje', p:'e', a:'z'},
   {id:'garaje_lucido', name:'Lucido de garaje', g:'Obra civil garaje', p:'e', a:'z'},
   {id:'garaje_falso_techo', name:'Falso techo de garaje', g:'Obra civil garaje', p:'e', a:'z'},
@@ -476,6 +476,7 @@ const CAT_GARAJE = [
   {id:'garaje_telco_transito', name:'Telecomunicaciones de tránsito', g:'Remates garaje', p:'p', a:'z'},
 ];
 const BASE_CAT = CAT.map(t=>({...t}));
+const BASE_CAT_GARAJE = CAT_GARAJE.map(t=>({...t}));
 const BASE_SOURCE_ID = {
   rozas:'rozas_timbres','mont-elec':'montante_electrica','mont-telco':'montante_teleco',
   'mont-sscc':'montante_sscc','tube-zzcc':'tubeado_zzcc','cabl-zzcc':'cableado_zzcc',
@@ -494,6 +495,38 @@ function catalogForSource(source){
   const sourceIds=new Set(portalCatalog.map(t=>t.id));
   const missing=BASE_CAT.filter(t=>!sourceIds.has(BASE_SOURCE_ID[t.id]||t.id));
   return portalCatalog.concat(missing.map((t,index)=>({...t,orden:10000+index})));
+}
+function catalogForSourceGaraje(source){
+  // Igual que catalogForSource pero para garaje: no hace falta BASE_SOURCE_ID
+  // porque los ids de garaje no arrastran alias historicos (Fase 5). Se
+  // compara contra BASE_CAT_GARAJE (el catalogo original), no CAT_GARAJE
+  // (que puede ya venir de una obra anterior cargada en esta misma sesion).
+  const sourceCatalog=(Array.isArray(source?.catalog)?source.catalog:[]).map(t=>({...t}));
+  if(!sourceCatalog.length) return BASE_CAT_GARAJE.map(t=>({...t}));
+  const sourceIds=new Set(sourceCatalog.map(t=>t.id));
+  const missing=BASE_CAT_GARAJE.filter(t=>!sourceIds.has(t.id));
+  return sourceCatalog.concat(missing.map((t,index)=>({...t,orden:10000+index})));
+}
+function normaliseGarajeStructure(source={}){
+  // Igual que normaliseStructure pero para garaje: no hay rama "legacy" que
+  // migrar, ficha_garajes.json siempre ha usado esta forma (garajes/
+  // plantas/zonas), y sus ids ya son los canonicos que espera la hoja.
+  if(Array.isArray(source.garajes)&&source.garajes.length){
+    return source.garajes.map((garaje,gi)=>({
+      id:garaje.id||uid('g'),
+      nombre:String(garaje.nombre||`Garaje ${gi+1}`),
+      plantas:(Array.isArray(garaje.plantas)&&garaje.plantas.length?garaje.plantas:[{}]).map((planta,pi)=>({
+        id:planta.id||uid('gp'),
+        nombre:String(planta.nombre||`S-${pi+1}`),
+        zonas:(Array.isArray(planta.zonas)?planta.zonas:[]).map(zona=>{
+          const z={id:zona.id||uid('z'),nombre:String(zona.nombre||'Zona'),tipo:zona.tipo||'vial'};
+          if(zona.funcion) z.funcion=zona.funcion;
+          return z;
+        }),
+      })),
+    }));
+  }
+  return [makeGaraje(0)];
 }
 
 /* ── PAGINACIÓN A4 ──────────────────────────────────────────────────────
@@ -733,9 +766,14 @@ function installedWorks(){
   return Array.isArray(window.SAGARDE_OBRAS_REVISION)?window.SAGARDE_OBRAS_REVISION:[];
 }
 function worksWithDatabase(){
-  // Solo las obras cuya estructura sale de ficha_obra.json. Las demas dan
-  // hoja desde la ultima revision, que es justo lo que no sirve: la hoja
-  // tiene que salir de la base para reflejar el estado real de los tajos.
+  // Solo las obras cuya estructura sale de una base real: ficha_obra.json
+  // para vivienda, ficha_garajes.json para garaje (26/09/2026 -- antes el
+  // desplegable ofrecia SIEMPRE las revisiones de vivienda aunque el modo
+  // fuera Garajes, aviso real de Bixente viendo Gernika en el generador).
+  // Las demas dan hoja desde la ultima revision, que es justo lo que no
+  // sirve: la hoja tiene que salir de la base para reflejar el estado
+  // real de los tajos.
+  if(S.modo==='garaje') return installedWorks().filter(o=>o.tiene_garaje);
   return installedWorks().filter(o=>o.fuente_estructura==='ficha_obra.json');
 }
 function cloneData(value){ return JSON.parse(JSON.stringify(value)); }
@@ -761,11 +799,21 @@ function setSourceStatus(source){
     return;
   }
   if(S.modo==='garaje'){
+    const g=source.garaje;
     host.className='source-status';
-    const ambas=!!source.tiene_garaje&&source.tiene_vivienda!==false;
-    host.innerHTML=ambas
-      ? '<strong>Esta obra tiene Viviendas y Garajes.</strong> El selector superior decide qué hoja generar. La estructura de garaje se configura manualmente en esta fase.'
-      : '<strong>Obra seleccionada.</strong> La estructura de garaje se configura manualmente en esta fase; todavía no se auto-carga desde ficha_garajes.json.';
+    if(!g){
+      host.innerHTML='<strong>Obra seleccionada.</strong> No tiene base de garaje '+
+        'todavía; la estructura se configura manualmente.';
+      return;
+    }
+    const resumen=g.resumen||{};
+    const revision=g.revision||g.generado||'sin fecha';
+    const nota=source.tiene_vivienda
+      ? ' Esta obra también tiene Viviendas: el selector superior decide qué hoja generar.'
+      : '';
+    host.innerHTML=`<strong>Memoria de garaje cargada.</strong> Revisión ${escHtml(revision)} · `+
+      `${CAT_GARAJE.length} tajos disponibles · ${resumen.tajos||0} con memoria · `+
+      `${resumen.estados_precargados||0} celdas con estado previo.${nota}`;
     return;
   }
   const resumen=source.resumen||{};
@@ -779,9 +827,11 @@ function renderInstalledWorks(){
   const select=document.getElementById('f-installed');
   if(!select) return;
   const obras=worksWithDatabase();
-  select.innerHTML='<option value="">— Configuración manual —</option>'+obras.map(obra=>
-    `<option value="${escHtml(obra.id)}">${escHtml(obra.nombre)}${obra.revision?' · rev. '+escHtml(obra.revision):''}</option>`
-  ).join('');
+  const garaje=S.modo==='garaje';
+  select.innerHTML='<option value="">— Configuración manual —</option>'+obras.map(obra=>{
+    const rev=garaje?(obra.garaje&&obra.garaje.revision):obra.revision;
+    return `<option value="${escHtml(obra.id)}">${escHtml(obra.nombre)}${rev?' · rev. '+escHtml(rev):''}</option>`;
+  }).join('');
   select.value=S.sourceId||'';
   const source=obras.find(obra=>obra.id===S.sourceId)||S.sourceMeta;
   setSourceStatus(source||null);
@@ -792,6 +842,9 @@ function loadInstalledWork(id){
     if(S.modo==='vivienda'){
       CAT=BASE_CAT.map(t=>({...t}));
       S.sel=new Set(CAT.map(t=>t.id));
+    } else {
+      CAT_GARAJE=BASE_CAT_GARAJE.map(t=>({...t}));
+      S.selGaraje=new Set(CAT_GARAJE.map(t=>t.id));
     }
     S.importData=null;
     S.sourceId=null;
@@ -807,19 +860,36 @@ function loadInstalledWork(id){
     return;
   }
   if(S.modo==='garaje'){
+    // 26/09/2026: antes esta rama solo guardaba metadatos (revision,
+    // resumen) y dejaba la estructura y las celdas SIEMPRE en blanco --
+    // "la estructura de garaje se configura manualmente en esta fase;
+    // todavia no se auto-carga desde ficha_garajes.json" decia el propio
+    // mensaje. Bixente: quiere continuar de verdad desde Gernika, como ya
+    // funciona para vivienda. Mismo patron que la rama de vivienda de
+    // abajo, con la estructura garaje/planta/zona en vez de bloque/
+    // portal/planta.
+    const g=source.garaje;
+    if(!g){
+      setSourceStatus(source);
+      showToast('Esta obra no tiene base de garaje todavía');
+      return;
+    }
+    CAT_GARAJE=catalogForSourceGaraje(g);
     S.obra=source.nombre||'';
-    S.importData=null;
+    S.garajes=normaliseGarajeStructure({garajes:cloneData(g.garajes||[])});
+    S.selGaraje=new Set(CAT_GARAJE.map(t=>t.id));
+    S.importData=cloneData(g.estados||{});
     S.sourceId=source.id;
     S.sourceMeta=cloneData({
-      id:source.id,nombre:source.nombre,revision:source.revision,
-      generado:source.generado,resumen:source.resumen||{},
-      tiene_garaje:!!source.tiene_garaje,tiene_vivienda:source.tiene_vivienda!==false,
+      id:source.id,nombre:source.nombre,
+      tiene_garaje:true,tiene_vivienda:source.tiene_vivienda!==false,
+      garaje:{revision:g.revision,generado:g.generado,resumen:g.resumen||{}},
     });
     document.getElementById('f-obra').value=S.obra;
     renderInstalledWorks();
-    showToast(source.tiene_garaje
-      ? 'Obra con Viviendas y Garajes: modo Garajes seleccionado ✓'
-      : 'Obra seleccionada · configura el garaje manualmente');
+    if(S.step===2) renderGarajeStructures();
+    if(S.step===3) renderTajos();
+    showToast('Obra y memoria de garaje cargadas ✓');
     return;
   }
   CAT=catalogForSource(source);
@@ -884,8 +954,13 @@ function updateModeUI(){
   });
   const vivPreset=document.getElementById('tj-preset-viv');
   if(vivPreset) vivPreset.style.display=garaje?'none':'';
-  const source=worksWithDatabase().find(obra=>obra.id===S.sourceId)||S.sourceMeta;
-  if(source) setSourceStatus(source);
+  // renderInstalledWorks() reconstruye las <option> del desplegable segun
+  // el modo actual (worksWithDatabase() ya filtra por S.modo) y llama a
+  // setSourceStatus() por su cuenta -- antes esta funcion solo actualizaba
+  // el texto de estado sin tocar las opciones, asi que cambiar de
+  // Viviendas a Garajes dejaba el desplegable con las revisiones de
+  // vivienda de siempre (aviso real de Bixente, viendo Gernika).
+  renderInstalledWorks();
 }
 
 function setModo(modo){
@@ -2105,7 +2180,7 @@ function confirmA4Capacity(){
 
 function doDownload(){
   if(S.modo==='vivienda'&&!confirmA4Capacity()) return;
-  const html = S.modo==='garaje'?generateGarajeHTML({}):generateHTML(S.importData||{});
+  const html = S.modo==='garaje'?generateGarajeHTML(S.importData||{}):generateHTML(S.importData||{});
   const blob = new Blob([html],{type:'text/html;charset=utf-8'});
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
@@ -2119,7 +2194,7 @@ function doDownload(){
 
 function doPreview(){
   if(S.modo==='vivienda'&&!confirmA4Capacity()) return;
-  const html = S.modo==='garaje'?generateGarajeHTML({}):generateHTML(S.importData||{});
+  const html = S.modo==='garaje'?generateGarajeHTML(S.importData||{}):generateHTML(S.importData||{});
   const w = window.open('','_blank');
   w.document.write(html);
   w.document.close();
