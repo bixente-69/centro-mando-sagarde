@@ -20501,16 +20501,16 @@
     }
   },
   "documentos": {
-    "total": 127,
+    "total": 128,
     "por_categoria": {
       "Excel": 7,
       "Imágenes": 77,
-      "Otros": 9,
+      "Otros": 10,
       "PDF": 24,
       "Word": 10
     },
     "_meta": {
-      "actualizado": "24/09/2026 06:39"
+      "actualizado": "27/09/2026 12:57"
     }
   },
   "contactos": []
