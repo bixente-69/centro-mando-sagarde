@@ -1565,6 +1565,22 @@ def main(hacer_pdf=True):
                           f"porcentaje publicado sale solo de esta hoja. "
                           f"Sembrar su ficha_obra.json lo corrige.")
 
+            # Numero de revisiones REALES (del adaptador), capturado antes
+            # de que el bloque de abajo pueda añadir un punto sintetico al
+            # historial para una obra sin ninguna revision todavia. El
+            # indice/sparkline (bloque_pct) necesita saber "0 revisiones
+            # reales" para seguir diciendo "Sin revisiones" en vez de "0%
+            # MEDIDO" -- son cosas distintas (ver bloque_pct). El resto del
+            # pipeline (memoria, informe ejecutivo, panel) si puede usar el
+            # punto sintetico.
+            n_rev_real = len(historial)
+            # Ficha que usa snapshot_zonas_especiales() mas abajo: por
+            # defecto la real, solo se sustituye por la vista "?->P" en el
+            # caso especial de obra sin ninguna revision (ver el elif de
+            # abajo) para que la pagina de zonas especiales del informe
+            # ejecutivo tambien tenga algo que mostrar, igual que el resto.
+            ficha_para_zesp = ficha_actual
+
             if ficha_actual and historial:
                 fecha_ultima, snapshot_crudo = historial[-1]
                 ficha_actual, ficha_cutover_aplicada = (
@@ -1603,6 +1619,52 @@ def main(hacer_pdf=True):
                     print(f"  [AVISO FICHA] {obra['nombre']}: la ficha no "
                           f"produce ningun registro. Se sigue con los datos "
                           f"del adaptador.")
+            elif ficha_actual and not historial:
+                # Obra recien dada de alta (Olabeaga, 27/09/2026): la ficha
+                # ya tiene estructura sembrada pero ningun adaptador trajo
+                # ninguna revision todavia (hoja de alta sin marcas, a
+                # proposito ignorada como revision -- ver
+                # adaptar_revision_html.cargar_historial_html_generico,
+                # ignorar_en_blanco). Sin esto, ni el panel ni el informe
+                # ejecutivo tenian nada que mostrar (bloqueaban con "No se
+                # encontraron revisiones"): Bixente esperaba ver el informe
+                # igual, con todo pendiente. No hay snapshot_crudo del
+                # adaptador que comparar, asi que no aplica la salvaguarda
+                # de doble calculo -- la ficha es la unica fuente posible.
+                snapshot_ficha = fichas.snapshot_desde_ficha(ficha_actual)
+                if not snapshot_ficha:
+                    # snapshot_desde_ficha excluye '?' a proposito (no es
+                    # un dato medido, ver ESTADO_A_SNAPSHOT): si TODA la
+                    # obra sigue en '?' (nadie la ha revisado nunca), el
+                    # snapshot normal sale vacio y no hay nada que mostrar
+                    # en el informe. Se construye entonces una vista
+                    # puntual, solo para esta presentacion, donde '?' se
+                    # trata como P (pendiente) -- no se persiste, no toca
+                    # ficha_actual['estados'] real ni el calculo oficial
+                    # de KPIs/prioridades, que siguen usando '?' tal cual.
+                    estados_vista = {
+                        k: (dict(v, v='P') if (v or {}).get('v') == '?' else v)
+                        for k, v in (ficha_actual.get('estados') or {}).items()
+                    }
+                    ficha_para_zesp = dict(ficha_actual, estados=estados_vista)
+                    snapshot_ficha = fichas.snapshot_desde_ficha(ficha_para_zesp)
+                if snapshot_ficha:
+                    revisiones_ficha = ficha_actual.get('revisiones') or []
+                    if revisiones_ficha:
+                        # La ficha SI tiene revisiones reales aunque el
+                        # adaptador de esta pasada no trajera nada (p.ej.
+                        # un fallo transitorio de lectura): se usa esa
+                        # fecha real, nunca "sin revisar".
+                        fecha_snapshot = revisiones_ficha[-1].get('fecha') or ''
+                    else:
+                        fecha_alta = (ficha_actual.get('actualizado') or '').split(' ')[0]
+                        fecha_snapshot = (
+                            f'Sin revisar (alta {fecha_alta})' if fecha_alta
+                            else 'Sin revisar')
+                    historial = [(fecha_snapshot, snapshot_ficha)]
+                    print(f"  [FICHA] {obra['nombre']}: sin revisiones "
+                          f"todavia, se usa la estructura dada de alta "
+                          f"({len(snapshot_ficha)} registros).")
 
             # Memoria de obra: acumula tajos de todas las revisiones
             tajos_memoria = mem.calcular_memoria(historial)
@@ -1628,7 +1690,7 @@ def main(hacer_pdf=True):
             # avance. Asi nunca se suman dos veces en el KPI de vivienda.
             prioridades_zonas_especiales = (
                 extraer_prioridades_zonas_especiales(prioridades))
-            snapshot_zesp = snapshot_zonas_especiales(ficha_actual)
+            snapshot_zesp = snapshot_zonas_especiales(ficha_para_zesp)
             if prioridades_zonas_especiales is not None:
                 priorizador_trabajos.escribir_json(
                     prioridades_zonas_especiales,
@@ -1735,8 +1797,8 @@ def main(hacer_pdf=True):
             'href': os.path.relpath(salida_html, OBRAS_ABIERTAS_DIR).replace('\\', '/'),
             'pct': res['kpis'].get('pct_estricto', 0) if res['kpis'] else 0,
             'pct_ponderado': res['kpis'].get('pct_ponderado', 0) if res['kpis'] else 0,
-            'ultima': historial[-1][0] if historial else '—',
-            'n_rev': len(historial), 'n_docs': res['n_docs'],
+            'ultima': historial[-1][0] if n_rev_real else '—',
+            'n_rev': n_rev_real, 'n_docs': res['n_docs'],
             # El índice y el portal deben mostrar bloqueos reales de la base,
             # no la antigua heurística estadística de plantas rezagadas.
             'sin_cambios': res['sin_cambios'],
