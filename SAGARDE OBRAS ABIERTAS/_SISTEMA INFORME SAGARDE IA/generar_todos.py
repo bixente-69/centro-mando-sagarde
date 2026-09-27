@@ -19,6 +19,7 @@ import hashlib
 import json
 import re
 import unicodedata
+from collections import Counter
 from datetime import datetime
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -42,6 +43,117 @@ import aplicar_revision        # noqa: E402
 import trazabilidad_revisiones  # noqa: E402
 import validar_revision        # noqa: E402
 from registro_obras import OBRAS  # noqa: E402
+
+
+def extraer_prioridades_zonas_especiales(prioridades, limite=200):
+    """Deriva la vista de zonas especiales sin alterar la prioridad general.
+
+    ``priorizar_ficha`` ya ha clasificado cada celda de la ficha y su salida
+    principal debe conservarse tal cual porque alimenta los calculos
+    existentes de vivienda. Esta funcion solo filtra sus ``detalle_items``
+    por el nombre de planta confirmado en ``ficha_obra`` y reconstruye los
+    derivados con las mismas funciones que usa el priorizador.
+
+    Devuelve ``None`` cuando no hay ninguna celda de zona especial: esa es la
+    senal que usa el panel para no crear una pestana vacia.
+    """
+    if not prioridades:
+        return None
+    detalle = [
+        copy.deepcopy(item)
+        for item in prioridades.get('detalle_items') or []
+        if item.get('planta') == fichas.NOMBRE_PLANTA_ZONAS_ESPECIALES
+    ]
+    if not detalle:
+        return None
+
+    items, recortados = priorizador_trabajos._agrupar_prioridades(
+        detalle, limite=limite, con_recorte=True)
+    inventario = priorizador_trabajos._agrupar_inventario(detalle)
+
+    # Las dudas del priorizador llevan ubicaciones visibles. Se conserva una
+    # pregunta solo cuando al menos una de ellas pertenece a esta planta, y
+    # su recuento se rehace sobre ese subconjunto.
+    dudas = []
+    for duda in prioridades.get('dudas_pendientes') or []:
+        ubicaciones = [
+            copy.deepcopy(ubicacion)
+            for ubicacion in duda.get('ubicaciones') or []
+            if ubicacion.get('planta') == (
+                fichas.NOMBRE_PLANTA_ZONAS_ESPECIALES)
+        ]
+        if not ubicaciones:
+            continue
+        duda_filtrada = copy.deepcopy(duda)
+        duda_filtrada['ubicaciones'] = ubicaciones
+        duda_filtrada['n_ubicaciones'] = len(ubicaciones)
+        dudas.append(duda_filtrada)
+
+    ids_tajo = {item.get('tarea_id') for item in detalle}
+    preguntas_orden = [
+        copy.deepcopy(pregunta)
+        for pregunta in prioridades.get('preguntas_orden') or []
+        if pregunta.get('tarea_id') in ids_tajo
+    ]
+
+    listos = [item for item in items if item['situacion'] == 'LISTO']
+    verificar = [
+        item for item in items if item['situacion'] == 'VERIFICAR']
+    secciones = Counter(item['seccion'] for item in inventario)
+    resumen = {
+        'listos': len(listos), 'verificar': len(verificar),
+        'unidades_listas': sum(item['n_unidades'] for item in listos),
+        'unidades_verificar': sum(
+            item['n_unidades'] for item in verificar),
+        'bloqueados': secciones.get('BLOQUEADO', 0),
+        'otros_gremios': secciones.get('OTROS_GREMIOS', 0),
+        'dudas': secciones.get('DUDAS', 0),
+        'sin_revisar': secciones.get('SIN_REVISAR', 0),
+        'unidades_sin_revisar': sum(
+            1 for item in detalle if item['categoria'] == 'SIN_REVISAR'),
+        'terminados': secciones.get('TERMINADO', 0),
+        'inventario_total': len(inventario),
+        'detalle_total': len(detalle),
+        'preguntas_pendientes': len(dudas) + len(preguntas_orden),
+        'viviendas': sum(
+            1 for item in listos if item['ambito'] == 'vivienda'),
+        'zonas_comunes': sum(
+            1 for item in listos if item['ambito'] == 'zona_comun'),
+        'edificio': sum(
+            1 for item in listos if item['ambito'] == 'edificio'),
+    }
+
+    avisos = [
+        aviso for aviso in prioridades.get('avisos') or []
+        if not aviso.startswith('La lista se ha recortado a ')
+    ]
+    if recortados:
+        avisos.append(
+            'La lista se ha recortado a %d bloques; hay %d más sin mostrar.'
+            % (limite, recortados))
+
+    resultado = copy.deepcopy(prioridades)
+    resultado.update({
+        'resumen': resumen,
+        'items': items,
+        'detalle_items': detalle,
+        'inventario': inventario,
+        'dudas_pendientes': dudas,
+        'preguntas_orden': preguntas_orden,
+        'prevision': priorizador_trabajos.prevision_desbloqueos(detalle),
+        'avisos': avisos,
+    })
+    return resultado
+
+
+def snapshot_zonas_especiales(ficha):
+    """Filtra el snapshot principal por su ``floor`` virtual confirmado."""
+    if not ficha:
+        return []
+    return [
+        fila for fila in fichas.snapshot_desde_ficha(ficha)
+        if fila.get('floor') == fichas.NOMBRE_PLANTA_ZONAS_ESPECIALES
+    ]
 
 
 def _slug(valor):
@@ -1361,6 +1473,8 @@ def main(hacer_pdf=True):
         salida_prioridades = os.path.join(salida_dir, 'prioridades_trabajos.json')
         salida_prioridades_garaje = os.path.join(
             salida_dir, 'prioridades_trabajos_garaje.json')
+        salida_prioridades_zesp = os.path.join(
+            salida_dir, 'prioridades_trabajos_zesp.json')
         salida_dudas = os.path.join(salida_dir, 'dudas_pendientes.json')
         salida_memoria = os.path.join(salida_dir, 'memoria_obra.json')
         salida_cierre = os.path.join(salida_dir, 'cierre_expediente.json')
@@ -1492,6 +1606,20 @@ def main(hacer_pdf=True):
             else:
                 prioridades = priorizador_trabajos.sin_base(obra['nombre'])
             priorizador_trabajos.escribir_json(prioridades, salida_prioridades)
+
+            # Las zonas especiales viven dentro de la ficha y de estas
+            # prioridades generales. No se recalcula ni se recorta la salida
+            # principal: se deriva una vista filtrada adicional para su
+            # pestana propia, y un snapshot igualmente filtrado para su
+            # avance. Asi nunca se suman dos veces en el KPI de vivienda.
+            prioridades_zonas_especiales = (
+                extraer_prioridades_zonas_especiales(prioridades))
+            snapshot_zesp = snapshot_zonas_especiales(ficha_actual)
+            if prioridades_zonas_especiales is not None:
+                priorizador_trabajos.escribir_json(
+                    prioridades_zonas_especiales,
+                    salida_prioridades_zesp)
+
             priorizador_trabajos.escribir_json({
                 'version': prioridades.get('version'),
                 'catalogo_version': prioridades.get('catalogo_version'),
@@ -1515,6 +1643,9 @@ def main(hacer_pdf=True):
                 cierre=cierre_datos, cierre_avisos=cierre_avisos,
                 prioridades_garaje=prioridades_garaje,
                 snapshot_garaje=snapshot_garaje,
+                prioridades_zonas_especiales=(
+                    prioridades_zonas_especiales),
+                snapshot_zonas_especiales=snapshot_zesp,
             )
         except Exception as e:
             print(f"  [ERROR] Fallo al generar el panel: {e}")

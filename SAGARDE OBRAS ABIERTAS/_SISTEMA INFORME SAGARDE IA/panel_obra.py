@@ -23,6 +23,7 @@ from collections import OrderedDict
 from datetime import datetime
 
 import motor_informes as motor
+from ficha_obra import NOMBRE_PLANTA_ZONAS_ESPECIALES
 
 _LOGO_INFORME_OBRA_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(
@@ -1604,17 +1605,24 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
     )
 
 
-def _combinar_matriz_planta_edificio(matriz_vivienda, matriz_garaje):
+def _combinar_matriz_planta_edificio(
+        matriz_vivienda, matriz_garaje, matriz_zonas_especiales=None):
     """Funde el gráfico 'Avance por planta y edificio' del Panel: cada
-    edificio de vivienda y cada garaje pasan a ser una serie más, marcada
-    con su icono de origen (🏠/🅿️), sobre un eje de plantas combinado.
+    edificio de vivienda, sus zonas especiales y cada garaje pasan a ser
+    una serie más, marcada con su icono de origen (🏠/🔧/🅿️), sobre un eje
+    de plantas combinado.
 
     Las plantas de garaje (p.ej. 'Sótano 1') no existen para los
-    edificios de vivienda y viceversa: se usa None (no 0) en esos huecos
-    para que Chart.js deje un hueco real en la barra en vez de pintar un
-    0% falso donde ese edificio no tiene esa planta.
+    edificios de vivienda y la planta virtual de zonas especiales no es una
+    planta residencial: se usa None (no 0) en esos huecos para que Chart.js
+    deje un hueco real en la barra en vez de pintar un 0% falso.
     """
     labels = list(matriz_vivienda.get('labels') or [])
+    matriz_zonas_especiales = matriz_zonas_especiales or {
+        'labels': [], 'series': {}}
+    for planta in matriz_zonas_especiales.get('labels') or []:
+        if planta not in labels:
+            labels.append(planta)
     for planta in matriz_garaje.get('labels') or []:
         if planta not in labels:
             labels.append(planta)
@@ -1623,6 +1631,12 @@ def _combinar_matriz_planta_edificio(matriz_vivienda, matriz_garaje):
     for edificio, valores in (matriz_vivienda.get('series') or {}).items():
         indice = dict(zip(matriz_vivienda.get('labels') or [], valores))
         series['🏠 ' + edificio] = [indice.get(planta) for planta in labels]
+    for edificio, valores in (
+            matriz_zonas_especiales.get('series') or {}).items():
+        indice = dict(zip(
+            matriz_zonas_especiales.get('labels') or [], valores))
+        series['🔧 ' + edificio] = [
+            indice.get(planta) for planta in labels]
     for edificio, valores in (matriz_garaje.get('series') or {}).items():
         indice = dict(zip(matriz_garaje.get('labels') or [], valores))
         series['🅿️ ' + edificio] = [indice.get(planta) for planta in labels]
@@ -1634,7 +1648,9 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   output_path, volver_href="../../index.html", prioridades=None,
                   tajos_memoria=None, mem_resumen=None, bat_path=None,
                   cierre=None, cierre_avisos=None, prioridades_garaje=None,
-                  snapshot_garaje=None):
+                  snapshot_garaje=None,
+                  prioridades_zonas_especiales=None,
+                  snapshot_zonas_especiales=None):
     prioridades = prioridades or {}
     snapshot = historial[-1][1] if historial else []
     historial_panel = list(historial)
@@ -1642,6 +1658,22 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     if historial_confirmado and snapshot:
         snapshot = [{**registro, 'status': 'X'} for registro in snapshot]
         historial_panel[-1] = (historial_panel[-1][0], snapshot)
+
+    # El snapshot principal ya incluye las zonas especiales. Se conserva
+    # completo para todos los KPI existentes; estas dos vistas solo lo
+    # separan por origen al pintar Trabajos y la gráfica del Panel.
+    snapshot_zonas_detectadas = [
+        registro for registro in snapshot
+        if registro.get('floor') == NOMBRE_PLANTA_ZONAS_ESPECIALES
+    ]
+    if snapshot_zonas_detectadas:
+        snapshot_zonas_especiales = snapshot_zonas_detectadas
+    elif snapshot_zonas_especiales is None:
+        snapshot_zonas_especiales = []
+    snapshot_vivienda_normal = [
+        registro for registro in snapshot
+        if registro.get('floor') != NOMBRE_PLANTA_ZONAS_ESPECIALES
+    ]
 
     kpis = motor.kpis_snapshot(snapshot) if snapshot else {}
     # % de la obra completa (vivienda + garaje en una sola bolsa de celdas,
@@ -1660,24 +1692,29 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 
     # 'Todo junto' en Trabajos (Bixente, 25/09/2026: "trabajos es una cosa,
     # deberia de ir todo junto"): a diferencia de Riesgos/Prioridades (su
-    # propia seccion aparte), aqui las filas de vivienda y garaje se
-    # fusionan en las mismas tablas/grafica, cada una marcada con su
-    # icono de origen (🏠 vivienda, 🅿️ garaje) para no perder de donde
-    # viene cada una.
+    # propia seccion aparte), aqui las filas de vivienda, zonas especiales
+    # y garaje se fusionan en las mismas tablas/grafica, cada una marcada
+    # con su icono de origen (🏠 vivienda, 🔧 zona especial, 🅿️ garaje).
     por_tarea_vivienda = (
-        motor.ranking_tareas_con_memoria(snapshot, tajos_memoria)
-        if snapshot else [])
+        motor.ranking_tareas_con_memoria(
+            snapshot_vivienda_normal, tajos_memoria)
+        if snapshot_vivienda_normal else [])
+    por_tarea_zesp = (
+        motor.ranking_tareas_con_memoria(snapshot_zonas_especiales)
+        if snapshot_zonas_especiales else [])
     por_tarea_garaje = (
         motor.ranking_tareas_con_memoria(snapshot_garaje)
         if snapshot_garaje else [])
     payload = {
         'serie': motor.serie_tiempo(historial_panel) if historial_panel else [],
         'por_planta': _combinar_matriz_planta_edificio(
-            motor.matriz_planta_edificio(snapshot) if snapshot else {'labels': [], 'series': {}},
+            motor.matriz_planta_edificio(snapshot_vivienda_normal) if snapshot_vivienda_normal else {'labels': [], 'series': {}},
             motor.matriz_planta_edificio(snapshot_garaje) if snapshot_garaje else {'labels': [], 'series': {}},
+            motor.matriz_planta_edificio(snapshot_zonas_especiales) if snapshot_zonas_especiales else {'labels': [], 'series': {}},
         ),
         'por_tarea': sorted(
             [('🏠 ' + t, p, n) for t, p, n in por_tarea_vivienda]
+            + [('🔧 ' + t, p, n) for t, p, n in por_tarea_zesp]
             + [('🅿️ ' + t, p, n) for t, p, n in por_tarea_garaje],
             key=lambda fila: fila[1]),
     }
@@ -1720,10 +1757,20 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         kpi_html = '<div class="kpi"><div class="label">Avance</div><div class="value">—</div><div class="hint">Sin datos de revisión</div></div>'
 
     # ---- TRABAJOS: desviaciones + ranking + detalle (charts via JS) ----
+    bloqueos_vivienda_normal = (
+        [] if historial_confirmado else
+        (motor.detectar_bloqueos(snapshot_vivienda_normal)
+         if snapshot_vivienda_normal else []))
+    bloqueos_zesp = (
+        motor.detectar_bloqueos(snapshot_zonas_especiales)
+        if snapshot_zonas_especiales else [])
     bloqueos_garaje = (
         motor.detectar_bloqueos(snapshot_garaje) if snapshot_garaje else [])
     filas_bloq = ""
-    for icono, lista in (('🏠', bloqueos), ('🅿️', bloqueos_garaje)):
+    for icono, lista in (
+            ('🏠', bloqueos_vivienda_normal),
+            ('🔧', bloqueos_zesp),
+            ('🅿️', bloqueos_garaje)):
         for b in lista:
             badge = 'bad' if b['avance'] < 30 else 'warn'
             filas_bloq += (f"<tr><td>{icono}</td><td>{b['tipo']}</td><td>{b['edificio']}</td><td>{b['planta']}</td>"
@@ -1732,11 +1779,17 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     if not filas_bloq:
         filas_bloq = '<tr><td colspan="7" class="empty">No se detectan desviaciones de avance con la heurística actual.</td></tr>'
 
-    detalle = motor.tabla_detalle(snapshot) if snapshot else []
+    detalle = (motor.tabla_detalle(snapshot_vivienda_normal)
+               if snapshot_vivienda_normal else [])
+    detalle_zesp = (motor.tabla_detalle(snapshot_zonas_especiales)
+                    if snapshot_zonas_especiales else [])
     detalle_garaje = motor.tabla_detalle(snapshot_garaje) if snapshot_garaje else []
     filas_det = "".join(
         f"<tr><td>🏠</td><td>{r['edificio']}</td><td>{r['planta']}</td><td>{r['pct_estricto']}%</td>"
         f"<td>{r['pct_ponderado']}%</td><td>{r['n']}</td></tr>" for r in detalle
+    ) + "".join(
+        f"<tr><td>🔧</td><td>{r['edificio']}</td><td>{r['planta']}</td><td>{r['pct_estricto']}%</td>"
+        f"<td>{r['pct_ponderado']}%</td><td>{r['n']}</td></tr>" for r in detalle_zesp
     ) + "".join(
         f"<tr><td>🅿️</td><td>{r['edificio']}</td><td>{r['planta']}</td><td>{r['pct_estricto']}%</td>"
         f"<td>{r['pct_ponderado']}%</td><td>{r['n']}</td></tr>" for r in detalle_garaje
@@ -1829,6 +1882,49 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
             sin_cambios=False)
 
     cierre_html = bloque_cierre(cierre, avisos=cierre_avisos)
+
+    # Pestaña propia de zonas especiales, separada de Prioridades de
+    # vivienda. Comparte exactamente el mismo renderer, pero sus ids llevan
+    # '-zesp' y su enlace abre el JSON filtrado de esta vista. No se incorpora
+    # al informe a la carta: esa pieza queda expresamente fuera de este cambio.
+    zesp_nav_html = ''
+    zesp_seccion_html = ''
+    if prioridades_zonas_especiales is not None:
+        zesp_nav_html = (
+            '  <button data-view="v-zesp">🔧 Zonas especiales</button>\n')
+        avance_zesp_pct = None
+        if snapshot_zonas_especiales:
+            avance_zesp_pct = motor.kpis_snapshot(
+                snapshot_zonas_especiales).get('pct_ponderado')
+        partes_zesp = bloque_prioridades_partes(
+            prioridades_zonas_especiales, tareas_manual=None,
+            documentos=None, obra=obra, avance_pct=avance_zesp_pct,
+            sufijo='-zesp', incluir_script_indice=False,
+            nombre_fichero_json='prioridades_trabajos_zesp.json')
+        if isinstance(partes_zesp, str):
+            zesp_html = partes_zesp
+        else:
+            zesp_html = (
+                partes_zesp['bento_command']
+                + partes_zesp['estado_obra_html']
+                + partes_zesp['avisos_prio']
+                + partes_zesp['tareas_manual_html']
+                + partes_zesp['dudas_html']
+                + partes_zesp['ejecucion_html']
+                + partes_zesp['bloqueado_html']
+                + partes_zesp['sin_revisar_html']
+                + partes_zesp['orden_html']
+                + partes_zesp['prevision_html']
+                + partes_zesp['viable_html']
+                + partes_zesp['otros_gremios_html']
+                + partes_zesp['dudas_inventario_html']
+                + partes_zesp['terminado_html']
+            )
+        zesp_seccion_html = (
+            '<section id="v-zesp" class="view">'
+            + zesp_html
+            + '</section>\n\n'
+        )
 
     # Pestaña propia "🅿️ Garaje" = el mismo formato que Prioridades de
     # vivienda, calcado (Bixente, 25/09/2026: "prioridades es calcar el
@@ -2053,6 +2149,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
   <button data-view="v-materiales">▣ Materiales</button>
   <button data-view="v-personal">👷 Personal</button>
   <button data-view="v-prioridades">🎯 Prioridades 🏠</button>
+{zesp_nav_html}
   <button data-view="v-riesgos">⚠ Riesgos</button>
   <button data-view="v-normativa">📘 Normativa</button>
   <button data-view="v-docs">📎 Documentos</button>
@@ -2088,7 +2185,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 <section id="v-prioridades" class="view">{prioridades_html}
   <div class="card"><h3>Hitos manuales</h3>{hitos_html}</div></section>
 
-<section id="v-riesgos" class="view">{riesgos_html}{riesgos_garaje_html}</section>
+{zesp_seccion_html}<section id="v-riesgos" class="view">{riesgos_html}{riesgos_garaje_html}</section>
 
 <section id="v-normativa" class="view"><div class="card"><h3>Normativa y criterios técnicos aplicables</h3>
   <p style="font-size:12.5px;color:var(--muted);margin-bottom:8px;">Lista de referencia. No sustituye la comprobación de la versión vigente ni las instrucciones de la Dirección Facultativa.</p>
