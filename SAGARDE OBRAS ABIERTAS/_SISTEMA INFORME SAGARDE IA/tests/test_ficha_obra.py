@@ -295,6 +295,105 @@ class TestAltasSinConfirmar(unittest.TestCase):
         self.assertEqual(nombres, ['PB', '1', '2'])
 
 
+class TestZonasEspeciales(unittest.TestCase):
+
+    @staticmethod
+    def _portal(ficha):
+        return ficha['estructura']['bloques'][0]['portales'][0]
+
+    def _anadir_cubierta(self, ficha):
+        portal = self._portal(ficha)
+        portal['plantas'].append({
+            'id': 'zesp', 'nombre': 'Zonas especiales', 'orden': 999,
+            'ubicaciones': [
+                {'id': 'cub1', 'tipo': 'cubierta', 'nombre': 'Cubierta'},
+            ],
+        })
+        return portal
+
+    def test_snapshot_incluye_el_estado_de_una_zona_especial(self):
+        ficha = fixtures.ficha_minima()
+        self._anadir_cubierta(ficha)
+        ficha['estados']['p1__zesp__tubeado__cub1'] = {
+            'v': 'X', 'f': '27/09/2026', 'r': 'rev_27092026',
+        }
+
+        fila = next(
+            fila for fila in ficha_obra.snapshot_desde_ficha(ficha)
+            if fila['unidad_id'] == 'cub1' and fila['task'] == 'Tubeado'
+        )
+
+        self.assertEqual(fila['building'], 'P1')
+        self.assertEqual(fila['floor'], 'Zonas especiales')
+        self.assertEqual(fila['unit'], 'cub1')
+        self.assertEqual(fila['portal_id'], 'p1')
+        self.assertEqual(fila['planta_id'], 'zesp')
+        self.assertEqual(fila['status'], 'X')
+
+    def test_recuento_de_viviendas_excluye_las_zonas_especiales(self):
+        ficha = fixtures.ficha_minima()
+        portal = self._anadir_cubierta(ficha)
+
+        self.assertEqual(ficha_obra.contar_viviendas(ficha), 4)
+        self.assertEqual(
+            ficha_obra.zonas_especiales_portal(portal),
+            [{'id': 'cub1', 'tipo': 'cubierta', 'nombre': 'Cubierta'}],
+        )
+        self.assertEqual(
+            ficha_obra.zonas_especiales_portal({'plantas': []}), [])
+
+    def test_alta_una_zona_especial_nueva_con_clave_de_cuatro_partes(self):
+        ficha = fixtures.ficha_minima()
+        item = fixtures.item(
+            planta='Zonas especiales', unidad='zt1', estado='X')
+        item.update({
+            'portal_id': 'p1',
+            'planta_id': 'zesp',
+            'unidad_id': 'zt1',
+            'tipo_ubicacion': 'cuarto_tecnico',
+            'nombre_ubicacion': 'Centralización de contadores',
+            'funcion': 'centralizacion',
+        })
+
+        ficha, cambios = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([item], revision='27/09/2026'))
+
+        portal = self._portal(ficha)
+        planta = next(p for p in portal['plantas'] if p['id'] == 'zesp')
+        self.assertEqual(planta['nombre'], 'Zonas especiales')
+        self.assertEqual(planta['orden'], 999)
+        self.assertEqual(ficha_obra.zonas_especiales_portal(portal), [{
+            'id': 'zt1',
+            'tipo': 'cuarto_tecnico',
+            'nombre': 'Centralización de contadores',
+            'funcion': 'centralizacion',
+            'origen': 'revision_sin_confirmar',
+            'confirmado': None,
+            'visto_en': '27/09/2026',
+        }])
+        self.assertEqual(
+            ficha['estados']['p1__zesp__tubeado__zt1']['v'], 'X')
+        self.assertTrue(any(
+            'unidad zt1' in aviso for aviso in cambios['ubicaciones_nuevas']))
+
+    def test_un_tajo_de_vivienda_en_zesp_no_hace_fallar_el_backend(self):
+        ficha = fixtures.ficha_minima()
+        self._anadir_cubierta(ficha)
+        item = fixtures.item(
+            planta='Zonas especiales', unidad='cub1', tarea='tabicado',
+            trabajo='Tabicado', ambito='vivienda', estado='M')
+        item.update({
+            'portal_id': 'p1', 'planta_id': 'zesp', 'unidad_id': 'cub1',
+        })
+
+        ficha, cambios = ficha_obra.actualizar(
+            ficha, fixtures.prioridades([item], revision='27/09/2026'))
+
+        self.assertEqual(
+            ficha['estados']['p1__zesp__tabicado__cub1']['v'], 'M')
+        self.assertIn('tabicado', cambios['tajos_nuevos'])
+
+
 class TestExclusionesConfirmadas(unittest.TestCase):
     """Una ubicacion descartada a proposito no puede volver al regenerar.
 
