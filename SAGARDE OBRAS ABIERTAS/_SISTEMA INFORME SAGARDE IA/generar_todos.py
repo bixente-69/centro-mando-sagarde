@@ -249,9 +249,14 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
       - los estados salen de la ficha, que ya incorpora las correcciones
         manuales que antes se perdian
 
-    Solo se exportan X/M//. 'P' (pendiente confirmado) y '?' (desconocido)
+    Se exportan X/M///N. 'P' (pendiente confirmado) y '?' (desconocido)
     viajan como celda vacia, igual que hoy: la hoja de campo los imprime en
     blanco para rellenar. Distinguirlos en la hoja es un paso posterior.
+    'N' SI se exporta (27/09/2026, Bixente): a diferencia de P/?, no es un
+    estado por defecto que una celda vacia recupere sola -- si no se
+    precarga, cada revision nueva obliga a volver a marcar a mano las
+    mismas ubicaciones que no aplican, y una celda vacia se traduciria a P
+    en vez de conservar el N.
     """
     motivo = fichas.esta_rancia(ficha, prioridades)
     if motivo:
@@ -335,7 +340,7 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
     estados = {}
     for clave, dato in (ficha.get('estados') or {}).items():
         valor = (dato or {}).get('v')
-        if valor not in {'X', 'M', '/'}:
+        if valor not in {'X', 'M', '/', 'N'}:
             continue
         try:
             portal_f, planta_f, tajo_f, ubi_f = clave.split('__')
@@ -434,7 +439,7 @@ def crear_registro_revision(obra, prioridades):
         unidad = str(item.get('unidad') or '').strip()
         estado = str(item.get('estado_actual', item.get('estado', '')) or '').strip().upper()
         ids = ids_ubicacion.get((edificio, planta))
-        if ids and tarea_id and unidad and estado in {'X', 'M', '/'}:
+        if ids and tarea_id and unidad and estado in {'X', 'M', '/', 'N'}:
             portal_id, planta_id = ids
             estados[f'{portal_id}__{planta_id}__{tarea_id}__{unidad}'] = estado
 
@@ -537,7 +542,10 @@ def registro_garaje_desde_ficha(obra, ficha_garaje, prioridades_garaje):
     estados = {
         clave: (dato or {}).get('v')
         for clave, dato in (ficha_garaje.get('estados') or {}).items()
-        if (dato or {}).get('v') in {'X', 'M', '/'}
+        # 'N' SI se exporta (27/09/2026, ver registro_revision_desde_ficha
+        # mas arriba para el porque): si no, cada revision nueva obliga a
+        # volver a marcar a mano las ubicaciones que no aplican.
+        if (dato or {}).get('v') in {'X', 'M', '/', 'N'}
     }
 
     resumen = (prioridades_garaje or {}).get('resumen') or {}

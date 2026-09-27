@@ -258,9 +258,25 @@ class TestContratoFuenteEstructura(unittest.TestCase):
         self.assertNotEqual(registro.get('fuente_estructura'),
                             'ficha_obra.json')
 
-    def test_lo_no_medido_no_viaja_a_la_hoja(self):
-        """P (comprobado pendiente), ? (nadie lo ha mirado) y N (no aplica)
-        salen como celda en blanco para poder escribir encima a boli."""
+    def test_la_hoja_deducida_tambien_precarga_la_n(self):
+        """Mismo contrato que registro_revision_desde_ficha (27/09/2026):
+        este camino (obras sin ficha_obra.json, deducidas del historial
+        crudo) no debe quedarse atras y perder N tambien."""
+        registro = gt.crear_registro_revision(
+            self.OBRA, fixtures.prioridades([
+                fixtures.item(unidad='A', estado='X'),
+                fixtures.item(unidad='B', estado='P'),
+                fixtures.item(unidad='C', estado='N'),
+            ]))
+        self.assertIsNotNone(registro)
+        self.assertEqual(sorted(registro['estados'].values()), ['N', 'X'])
+
+    def test_lo_no_medido_no_viaja_pero_n_si(self):
+        """P (comprobado pendiente) y ? (nadie lo ha mirado) salen como
+        celda en blanco para poder escribir encima a boli -- son el estado
+        por defecto que una celda vacia ya recupera sola al aplicar. N (no
+        aplica) SI viaja (27/09/2026): no es un default, y si no se
+        precarga cada revision nueva pierde la marca y hay que rehacerla."""
         registro = gt.registro_revision_desde_ficha(
             self.OBRA,
             self._ficha({'p1__pb__tubeado__A': 'X',
@@ -269,7 +285,7 @@ class TestContratoFuenteEstructura(unittest.TestCase):
                          'p1__1__tubeado__B': 'N'}),
             fixtures.prioridades([]))
         self.assertIsNotNone(registro)
-        self.assertEqual(sorted(registro['estados'].values()), ['X'])
+        self.assertEqual(sorted(registro['estados'].values()), ['N', 'X'])
 
 
 class TestTodosLosBloquesLleganAlGenerador(unittest.TestCase):
@@ -572,8 +588,9 @@ class TestRegistroGarajeDesdeFicha(unittest.TestCase):
             self._prioridades_garaje())
         self.assertEqual(registro['estados'], {clave: 'X'})
 
-    def test_lo_no_medido_no_viaja_a_la_hoja(self):
-        """Mismo contrato que vivienda: P/?/N se quedan fuera."""
+    def test_lo_no_medido_no_viaja_pero_n_si(self):
+        """Mismo contrato que vivienda (27/09/2026): P/? se quedan fuera,
+        N viaja."""
         registro = gt.registro_garaje_desde_ficha(
             self.OBRA,
             self._ficha_garaje({
@@ -583,7 +600,7 @@ class TestRegistroGarajeDesdeFicha(unittest.TestCase):
                 'g1__gp1__garaje_tabicado__z2': 'N',
             }),
             self._prioridades_garaje())
-        self.assertEqual(sorted(registro['estados'].values()), ['X'])
+        self.assertEqual(sorted(registro['estados'].values()), ['N', 'X'])
 
     def test_sin_garajes_en_la_estructura_devuelve_none(self):
         ficha = self._ficha_garaje()
