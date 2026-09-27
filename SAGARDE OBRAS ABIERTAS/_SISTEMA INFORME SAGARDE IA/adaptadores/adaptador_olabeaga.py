@@ -324,9 +324,18 @@ def _cargar_historial_html():
               "({}); se ignoran los HTML de esta carpeta.".format(e))
         return []
 
+    import registro_obras
+    cfg = registro_obras.resolver_obra('olabeaga') or {}
+    mapa_portales = cfg.get('mapa_portales_revision_html')
+    mapa_plantas = cfg.get('mapa_plantas_revision_html')
+    mapa_tajos = cfg.get('mapa_tajos_revision_html')
+
     return adaptar_revision_html.cargar_historial_html_generico(
         'olabeaga', CARPETA_REVISIONES, ficha_actual, catalogo,
         contiene='OLABEAGA', nombre_log='adaptador_olabeaga',
+        portal_id_a_real=mapa_portales,
+        planta_id_a_real=mapa_plantas,
+        tarea_id_a_real=mapa_tajos,
     )
 
 

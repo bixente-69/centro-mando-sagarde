@@ -1,0 +1,8897 @@
+{
+  "version": 1,
+  "id": "olabeaga",
+  "modo": "nativa",
+  "fecha_entrada_digital": "27/09/2026",
+  "actualizado": "27/09/2026 20:51",
+  "identidad": {
+    "nombre": "2026 OLABEAGA",
+    "carpeta": "2026 OLABEAGA BILBAO",
+    "tipo_obra": "viviendas",
+    "_meta": {
+      "actualizado": "27/09/2026 20:51",
+      "origen": "hoja de alta REVISION 2026 OLABEAGA 27092026.html"
+    }
+  },
+  "estructura": {
+    "bloques": [
+      {
+        "id": "b1",
+        "nombre": "Bloque 1",
+        "portales": [
+          {
+            "id": "p1",
+            "nombre": "PORTAL 1",
+            "referencia": "PORTAL 1",
+            "plantas": [
+              {
+                "id": "pb",
+                "nombre": "PB",
+                "orden": 0,
+                "ubicaciones": [
+                  {
+                    "id": "L.COMER 1",
+                    "tipo": "local",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Local Comercial 1"
+                  },
+                  {
+                    "id": "L.COMER 2",
+                    "tipo": "local",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Local Comercial 2"
+                  }
+                ]
+              },
+              {
+                "id": "1",
+                "nombre": "1ª",
+                "orden": 1,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "2",
+                "nombre": "2ª",
+                "orden": 2,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "3",
+                "nombre": "3ª",
+                "orden": 3,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "4",
+                "nombre": "4ª",
+                "orden": 4,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "zesp",
+                "nombre": "Zonas especiales",
+                "orden": 999,
+                "ubicaciones": [
+                  {
+                    "id": "z_muk4v2kb_39",
+                    "tipo": "cuarto_tecnico",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Cuarto RITI / Teleco"
+                  },
+                  {
+                    "id": "z_muk4v5m3_40",
+                    "tipo": "cuarto_tecnico",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "CUADRO E/A (P1)"
+                  },
+                  {
+                    "id": "z_muk4xw6v_42",
+                    "tipo": "cuarto_tecnico",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Centralización de contadores (P1)"
+                  },
+                  {
+                    "id": "z_muk4v7wp_41",
+                    "tipo": "cuarto_ligero",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Bicicletas"
+                  },
+                  {
+                    "id": "z_muk58qhy_44",
+                    "tipo": "cubierta",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Cubierta"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "p2",
+            "nombre": "PORTAL 2",
+            "referencia": "PORTAL 2",
+            "plantas": [
+              {
+                "id": "pb",
+                "nombre": "PB",
+                "orden": 0,
+                "ubicaciones": [
+                  {
+                    "id": "TRAST 1",
+                    "tipo": "trastero",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Trastero 1"
+                  },
+                  {
+                    "id": "TRAST 2",
+                    "tipo": "trastero",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Trastero 2"
+                  },
+                  {
+                    "id": "TRAST 3",
+                    "tipo": "trastero",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Trastero 3"
+                  }
+                ]
+              },
+              {
+                "id": "1",
+                "nombre": "1ª",
+                "orden": 1,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "2",
+                "nombre": "2ª",
+                "orden": 2,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "3",
+                "nombre": "3ª",
+                "orden": 3,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "4",
+                "nombre": "4ª",
+                "orden": 4,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "duplx_atico",
+                "nombre": "DUPLX ATICO",
+                "orden": 5,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "zesp",
+                "nombre": "Zonas especiales",
+                "orden": 999,
+                "ubicaciones": [
+                  {
+                    "id": "z_muk4qj3k_33",
+                    "tipo": "cuarto_tecnico",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Centralización de contadores (P2/3)"
+                  },
+                  {
+                    "id": "z_muk4qkov_34",
+                    "tipo": "cuarto_tecnico",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Cuarto RITI / Teleco (2/3)"
+                  },
+                  {
+                    "id": "z_muk4qu6x_37",
+                    "tipo": "cuarto_tecnico",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "CUADRO E/A (P2/3)"
+                  },
+                  {
+                    "id": "z_muk51fcr_43",
+                    "tipo": "cuarto_tecnico",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Sala de calderas (P2/3)"
+                  },
+                  {
+                    "id": "z_muk4qr18_36",
+                    "tipo": "cuarto_ligero",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Bicicletas (2/3)"
+                  },
+                  {
+                    "id": "z_muk598sv_45",
+                    "tipo": "cubierta",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Cubierta"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "id": "p3",
+            "nombre": "PORTAL 3",
+            "referencia": "PORTAL 3",
+            "plantas": [
+              {
+                "id": "pb",
+                "nombre": "PB",
+                "orden": 0,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "1",
+                "nombre": "1ª",
+                "orden": 1,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "2",
+                "nombre": "2ª",
+                "orden": 2,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "3",
+                "nombre": "3ª",
+                "orden": 3,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "4",
+                "nombre": "4ª",
+                "orden": 4,
+                "ubicaciones": [
+                  {
+                    "id": "A",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  },
+                  {
+                    "id": "B",
+                    "tipo": "vivienda",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026"
+                  }
+                ]
+              },
+              {
+                "id": "zesp",
+                "nombre": "Zonas especiales",
+                "orden": 999,
+                "ubicaciones": [
+                  {
+                    "id": "z_muk5ao5z_48",
+                    "tipo": "cuarto_tecnico",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "CUADRO PISCINA"
+                  },
+                  {
+                    "id": "z_muk5aao6_47",
+                    "tipo": "cuarto_ligero",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "ASEO PISCINAS CUBIERTA"
+                  },
+                  {
+                    "id": "z_muk59b6b_46",
+                    "tipo": "cubierta",
+                    "habitaciones": null,
+                    "origen": "hoja de alta",
+                    "confirmado": "27/09/2026",
+                    "nombre": "Cubierta"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "alias_historico": {},
+    "exclusiones": [],
+    "_meta": {
+      "actualizado": "27/09/2026",
+      "origen": "hoja de alta REVISION 2026 OLABEAGA 27092026.html"
+    }
+  },
+  "tajos": {
+    "plantilla": "viviendas_v1",
+    "aplicables": [
+      "tabicado",
+      "rozas_timbres",
+      "montante_electrica",
+      "montante_teleco",
+      "montante_sscc",
+      "tubeado_zzcc",
+      "cableado_zzcc",
+      "suelo_radiante",
+      "suelo_recrecido",
+      "perfilado_pladur",
+      "primera_cara_pladur",
+      "cuadros_presentados",
+      "tubeado",
+      "cableado",
+      "telecableado",
+      "portero",
+      "termostatos",
+      "segunda_cara_pladur",
+      "doblar_cajas",
+      "embornado",
+      "telembornado",
+      "derivacion_individual",
+      "cuadro_mecanizado",
+      "techos_zzcc",
+      "techos",
+      "enchapado",
+      "pintura_primera",
+      "mecanizado",
+      "telemecanizado",
+      "pintura_segunda",
+      "placas_tapas",
+      "fachada_terminada",
+      "apliques",
+      "agujeros_iluminacion_zzcc",
+      "pintura_zzcc",
+      "casquillos_bombillas",
+      "iluminacion_rellanos",
+      "fv_paneles_instalacion",
+      "fv_paneles_cableado",
+      "fv_paneles_tierra",
+      "fv_strings_cableado",
+      "fv_equipos_protecciones",
+      "fv_puesta_marcha",
+      "cub_soporte_antena",
+      "cub_soporte_pararrayos",
+      "cub_antena_instalacion",
+      "cub_pararrayos_instalacion",
+      "cub_antena_cableado",
+      "cub_pararrayos_cableado",
+      "cub_antena_tierra",
+      "garaje_tabicado",
+      "garaje_lucido",
+      "garaje_falso_techo",
+      "garaje_tubeado_emp",
+      "garaje_cableado_emp",
+      "garaje_tubeado_visto",
+      "garaje_cableado_visto",
+      "garaje_pintura_1_recinto",
+      "garaje_alum_fijo_coloc_recinto",
+      "garaje_alum_temp_coloc_recinto",
+      "garaje_emergencia_coloc_recinto",
+      "garaje_enchufe_coloc",
+      "garaje_cuadro_tubeado_cableado",
+      "garaje_cuadro_colocacion",
+      "garaje_pintura_2_recinto",
+      "garaje_cuadro_embornado",
+      "garaje_cuadro_rotulacion",
+      "garaje_cuadro_equipo_tubeado_cableado",
+      "garaje_alum_fijo_embornado_recinto",
+      "garaje_alum_temp_embornado_recinto",
+      "garaje_emergencia_embornado_recinto",
+      "garaje_enchufe_embornado"
+    ],
+    "detalle": [
+      {
+        "id": "tabicado",
+        "nombre": "Tabicado",
+        "ambito": "vivienda",
+        "propiedad": "externo",
+        "fase": "Inicio de obra",
+        "orden": 10,
+        "deps": []
+      },
+      {
+        "id": "rozas_timbres",
+        "nombre": "Rozas de timbres",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Inicio de obra",
+        "orden": 20,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "montante_electrica",
+        "nombre": "Montante eléctrica",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Infraestructura",
+        "orden": 30,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "montante_teleco",
+        "nombre": "Montante de telecomunicaciones",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Infraestructura",
+        "orden": 40,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "montante_sscc",
+        "nombre": "Montante de servicios comunes",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Infraestructura",
+        "orden": 50,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "tubeado_zzcc",
+        "nombre": "Tubeado de zonas comunes",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Infraestructura",
+        "orden": 60,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "cableado_zzcc",
+        "nombre": "Cableado de zonas comunes",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Infraestructura",
+        "orden": 70,
+        "deps": [
+          {
+            "id": "tubeado_zzcc",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "suelo_radiante",
+        "nombre": "Suelo radiante",
+        "ambito": "vivienda",
+        "propiedad": "coordinacion",
+        "fase": "Obra previa",
+        "orden": 80,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "suelo_recrecido",
+        "nombre": "Suelo recrecido",
+        "ambito": "vivienda",
+        "propiedad": "externo",
+        "fase": "Obra previa",
+        "orden": 90,
+        "deps": [
+          {
+            "id": "suelo_radiante",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "perfilado_pladur",
+        "nombre": "Perfilado de Pladur",
+        "ambito": "vivienda",
+        "propiedad": "externo",
+        "fase": "Pladur",
+        "orden": 100,
+        "deps": [
+          {
+            "id": "suelo_recrecido",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "primera_cara_pladur",
+        "nombre": "Primeras caras de Pladur",
+        "ambito": "vivienda",
+        "propiedad": "externo",
+        "fase": "Pladur",
+        "orden": 110,
+        "deps": [
+          {
+            "id": "perfilado_pladur",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "cuadros_presentados",
+        "nombre": "Cuadros presentados",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 120,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "tubeado",
+        "nombre": "Tubeado interior",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 130,
+        "deps": [
+          {
+            "id": "primera_cara_pladur",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "cableado",
+        "nombre": "Cableado eléctrico",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 140,
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "telecableado",
+        "nombre": "Telecableado",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 150,
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "portero",
+        "nombre": "Portero / videoportero",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 160,
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "termostatos",
+        "nombre": "Termostatos",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 170,
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "segunda_cara_pladur",
+        "nombre": "Segundas caras de Pladur",
+        "ambito": "vivienda",
+        "propiedad": "externo",
+        "fase": "Pladur",
+        "orden": 180,
+        "deps": [
+          {
+            "id": "primera_cara_pladur",
+            "minimo": 1
+          },
+          {
+            "id": "cableado",
+            "minimo": 1
+          },
+          {
+            "id": "telecableado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "doblar_cajas",
+        "nombre": "Doblar cajas",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Recuperación tras Pladur",
+        "orden": 190,
+        "deps": [
+          {
+            "id": "segunda_cara_pladur",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "embornado",
+        "nombre": "Embornado eléctrico",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Conexiones",
+        "orden": 200,
+        "deps": [
+          {
+            "id": "cableado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "telembornado",
+        "nombre": "Telembornado",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Conexiones",
+        "orden": 210,
+        "deps": [
+          {
+            "id": "telecableado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "derivacion_individual",
+        "nombre": "Derivación individual",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Cierre técnico",
+        "orden": 220,
+        "deps": [
+          {
+            "id": "montante_electrica",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "cuadro_mecanizado",
+        "nombre": "Cuadro mecanizado",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Cierre técnico",
+        "orden": 230,
+        "deps": [
+          {
+            "id": "cuadros_presentados",
+            "minimo": 1
+          },
+          {
+            "id": "cableado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "techos_zzcc",
+        "nombre": "Techos de zonas comunes",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Acabados previos",
+        "orden": 237,
+        "deps": []
+      },
+      {
+        "id": "techos",
+        "nombre": "Techos",
+        "ambito": "vivienda",
+        "propiedad": "externo",
+        "fase": "Acabados previos",
+        "orden": 240,
+        "deps": [
+          {
+            "id": "segunda_cara_pladur",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "enchapado",
+        "nombre": "Enchapado",
+        "ambito": "vivienda",
+        "propiedad": "externo",
+        "fase": "Acabados previos",
+        "orden": 250,
+        "deps": [
+          {
+            "id": "segunda_cara_pladur",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "pintura_primera",
+        "nombre": "Pintura — primera mano",
+        "ambito": "dinamico",
+        "propiedad": "externo",
+        "fase": "Pintura",
+        "orden": 260,
+        "deps": [
+          {
+            "id": "techos",
+            "minimo": 1
+          },
+          {
+            "id": "enchapado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "mecanizado",
+        "nombre": "Mecanizado eléctrico",
+        "ambito": "dinamico",
+        "propiedad": "propio",
+        "fase": "Mecanismos",
+        "orden": 270,
+        "deps": [
+          {
+            "id": "doblar_cajas",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_primera",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "telemecanizado",
+        "nombre": "Telemecanizado",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Mecanismos",
+        "orden": 280,
+        "deps": [
+          {
+            "id": "doblar_cajas",
+            "minimo": 1
+          },
+          {
+            "id": "telecableado",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_primera",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "pintura_segunda",
+        "nombre": "Pintura — segunda mano",
+        "ambito": "dinamico",
+        "propiedad": "externo",
+        "fase": "Pintura final",
+        "orden": 290,
+        "deps": [
+          {
+            "id": "pintura_primera",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "placas_tapas",
+        "nombre": "Placas y tapas",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Remates finales",
+        "orden": 300,
+        "deps": [
+          {
+            "id": "pintura_segunda",
+            "minimo": 1
+          },
+          {
+            "id": "mecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "telemecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "cuadro_mecanizado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "fachada_terminada",
+        "nombre": "Fachada terminada",
+        "ambito": "edificio",
+        "propiedad": "externo",
+        "fase": "Fachada",
+        "orden": 305,
+        "deps": []
+      },
+      {
+        "id": "apliques",
+        "nombre": "Apliques y enchufes de terraza",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Remates exteriores",
+        "orden": 310,
+        "deps": [
+          {
+            "id": "fachada_terminada",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "agujeros_iluminacion_zzcc",
+        "nombre": "Agujeros de iluminación en ZZCC",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Iluminación final",
+        "orden": 315,
+        "deps": [
+          {
+            "id": "techos_zzcc",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "pintura_zzcc",
+        "nombre": "Pintura de zonas comunes",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Pintura ZZCC",
+        "orden": 318,
+        "deps": [
+          {
+            "id": "agujeros_iluminacion_zzcc",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "casquillos_bombillas",
+        "nombre": "Casquillos y bombillas",
+        "ambito": "vivienda",
+        "propiedad": "propio",
+        "fase": "Entrega",
+        "orden": 320,
+        "deps": [
+          {
+            "id": "pintura_segunda",
+            "minimo": 1
+          },
+          {
+            "id": "cuadro_mecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "derivacion_individual",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "iluminacion_rellanos",
+        "nombre": "Iluminación de rellanos / ZZCC",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Entrega",
+        "orden": 330,
+        "deps": [
+          {
+            "id": "pintura_zzcc",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "fv_paneles_instalacion",
+        "nombre": "Instalación de paneles fotovoltaicos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 400,
+        "deps": []
+      },
+      {
+        "id": "fv_paneles_cableado",
+        "nombre": "Cableado de paneles fotovoltaicos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 401,
+        "deps": [
+          {
+            "id": "fv_paneles_instalacion",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "fv_paneles_tierra",
+        "nombre": "Tierra de paneles fotovoltaicos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 402,
+        "deps": [
+          {
+            "id": "fv_paneles_cableado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "fv_strings_cableado",
+        "nombre": "Cableado de strings hasta equipos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 403,
+        "deps": [
+          {
+            "id": "fv_paneles_tierra",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "fv_equipos_protecciones",
+        "nombre": "Instalación de equipos y protecciones",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 404,
+        "deps": [
+          {
+            "id": "fv_strings_cableado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "fv_puesta_marcha",
+        "nombre": "Puesta en marcha de fotovoltaica",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 405,
+        "deps": [
+          {
+            "id": "fv_equipos_protecciones",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "cub_soporte_antena",
+        "nombre": "Colocación de soporte de antena",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 410,
+        "deps": []
+      },
+      {
+        "id": "cub_soporte_pararrayos",
+        "nombre": "Colocación de soporte de pararrayos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 411,
+        "deps": []
+      },
+      {
+        "id": "cub_antena_instalacion",
+        "nombre": "Instalación de antena",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 412,
+        "deps": [
+          {
+            "id": "cub_soporte_antena",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "cub_pararrayos_instalacion",
+        "nombre": "Instalación de pararrayos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 413,
+        "deps": [
+          {
+            "id": "cub_soporte_pararrayos",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "cub_antena_cableado",
+        "nombre": "Cableado de antena",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 414,
+        "deps": [
+          {
+            "id": "cub_antena_instalacion",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "cub_pararrayos_cableado",
+        "nombre": "Cableado de pararrayos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 415,
+        "deps": [
+          {
+            "id": "cub_pararrayos_instalacion",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "cub_antena_tierra",
+        "nombre": "Tierra de antena",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 416,
+        "deps": [
+          {
+            "id": "cub_antena_cableado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_tabicado",
+        "nombre": "Tabicado (zona común)",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Obra civil",
+        "orden": 500,
+        "deps": []
+      },
+      {
+        "id": "garaje_lucido",
+        "nombre": "Lucido",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Obra civil",
+        "orden": 505,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_falso_techo",
+        "nombre": "Falso techo",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Obra civil",
+        "orden": 510,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_tubeado_emp",
+        "nombre": "Tubeado empotrado",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 520,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_cableado_emp",
+        "nombre": "Cableado empotrado",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 525,
+        "deps": [
+          {
+            "id": "garaje_tubeado_emp",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_tubeado_visto",
+        "nombre": "Tubeado visto",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 530,
+        "deps": [
+          {
+            "id": "garaje_lucido",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_cableado_visto",
+        "nombre": "Cableado visto",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 535,
+        "deps": [
+          {
+            "id": "garaje_tubeado_visto",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_pintura_1_recinto",
+        "nombre": "Pintura (recintos) — 1ª mano",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Pintura",
+        "orden": 550,
+        "deps": [
+          {
+            "id": "garaje_lucido",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_alum_fijo_coloc_recinto",
+        "nombre": "Colocación alumbrado fijo (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 560,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_alum_temp_coloc_recinto",
+        "nombre": "Colocación alumbrado temporizado (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 562,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_emergencia_coloc_recinto",
+        "nombre": "Colocación luminarias de emergencia (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 564,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_enchufe_coloc",
+        "nombre": "Colocación de enchufe de cuarto técnico",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 566,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_cuadro_tubeado_cableado",
+        "nombre": "Tubeado y cableado hasta cuadro secundario",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Cuadros",
+        "orden": 580,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_cuadro_colocacion",
+        "nombre": "Colocación y mecanizado de cuadro propio",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Cuadros",
+        "orden": 585,
+        "deps": [
+          {
+            "id": "garaje_cuadro_tubeado_cableado",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_pintura_2_recinto",
+        "nombre": "Pintura (recintos) — 2ª mano",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Pintura",
+        "orden": 587,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_cuadro_embornado",
+        "nombre": "Embornado de cuadro propio",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Cuadros",
+        "orden": 590,
+        "deps": [
+          {
+            "id": "garaje_cuadro_colocacion",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_cuadro_rotulacion",
+        "nombre": "Rotulación de cuadro propio",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Cuadros",
+        "orden": 595,
+        "deps": [
+          {
+            "id": "garaje_cuadro_embornado",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_cuadro_equipo_tubeado_cableado",
+        "nombre": "Tubeado y cableado del cuadro al equipo que controla",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Cuadros",
+        "orden": 600,
+        "deps": [
+          {
+            "id": "garaje_cuadro_colocacion",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_alum_fijo_embornado_recinto",
+        "nombre": "Embornado alumbrado fijo (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 620,
+        "deps": [
+          {
+            "id": "garaje_alum_fijo_coloc_recinto",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_alum_temp_embornado_recinto",
+        "nombre": "Embornado alumbrado temporizado (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 622,
+        "deps": [
+          {
+            "id": "garaje_alum_temp_coloc_recinto",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_emergencia_embornado_recinto",
+        "nombre": "Embornado luminarias de emergencia (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 624,
+        "deps": [
+          {
+            "id": "garaje_emergencia_coloc_recinto",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ]
+      },
+      {
+        "id": "garaje_enchufe_embornado",
+        "nombre": "Embornado de enchufe de cuarto técnico",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 626,
+        "deps": [
+          {
+            "id": "garaje_enchufe_coloc",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ]
+      }
+    ],
+    "_meta": {
+      "actualizado": "27/09/2026",
+      "origen": "hoja de alta REVISION 2026 OLABEAGA 27092026.html"
+    }
+  },
+  "estados": {
+    "p1__pb__tabicado__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__tabicado__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__rozas_timbres__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__rozas_timbres__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__montante_electrica__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__montante_electrica__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__montante_teleco__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__montante_teleco__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__montante_sscc__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__montante_sscc__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__tubeado_zzcc__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__tubeado_zzcc__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__cableado_zzcc__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__cableado_zzcc__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__suelo_radiante__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__suelo_radiante__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__suelo_recrecido__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__suelo_recrecido__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__perfilado_pladur__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__perfilado_pladur__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__primera_cara_pladur__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__primera_cara_pladur__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__segunda_cara_pladur__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__segunda_cara_pladur__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__cuadros_presentados__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__cuadros_presentados__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__tubeado__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__tubeado__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__cableado__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__cableado__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__telecableado__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__telecableado__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__portero__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__portero__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__termostatos__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__termostatos__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__doblar_cajas__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__doblar_cajas__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__embornado__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__embornado__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__telembornado__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__telembornado__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__derivacion_individual__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__derivacion_individual__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__cuadro_mecanizado__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__cuadro_mecanizado__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__techos_zzcc__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__techos_zzcc__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__techos__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__techos__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__enchapado__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__enchapado__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__pintura_primera__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__pintura_primera__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__pintura_zzcc__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__pintura_zzcc__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__pintura_segunda__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__pintura_segunda__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__mecanizado__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__mecanizado__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__telemecanizado__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__telemecanizado__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__agujeros_iluminacion_zzcc__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__agujeros_iluminacion_zzcc__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__placas_tapas__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__placas_tapas__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__fachada_terminada__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__fachada_terminada__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__apliques__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__apliques__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__casquillos_bombillas__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__casquillos_bombillas__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__iluminacion_rellanos__L.COMER 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__pb__iluminacion_rellanos__L.COMER 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__1__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__2__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__3__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__4__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tabicado__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_lucido__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_falso_techo__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_emp__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_emp__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_visto__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_visto__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_emergencia_coloc_recinto__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_tubeado_cableado__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_colocacion__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_embornado__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_rotulacion__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_emergencia_embornado_recinto__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_muk4v2kb_39": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tabicado__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_lucido__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_falso_techo__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_emp__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_emp__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_visto__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_visto__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_emergencia_coloc_recinto__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_tubeado_cableado__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_colocacion__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_embornado__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_rotulacion__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_emergencia_embornado_recinto__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_muk4v5m3_40": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tabicado__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_lucido__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_falso_techo__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_emp__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_emp__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_visto__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_visto__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_emergencia_coloc_recinto__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_tubeado_cableado__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_colocacion__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_embornado__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_rotulacion__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_emergencia_embornado_recinto__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_muk4xw6v_42": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tabicado__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_lucido__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_emp__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_emp__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_visto__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_visto__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_emergencia_coloc_recinto__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_emergencia_embornado_recinto__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_muk4v7wp_41": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__fv_paneles_instalacion__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__fv_paneles_cableado__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__fv_paneles_tierra__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__fv_strings_cableado__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__fv_equipos_protecciones__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__fv_puesta_marcha__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__cub_soporte_antena__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__cub_soporte_pararrayos__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__cub_antena_instalacion__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__cub_pararrayos_instalacion__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__cub_antena_cableado__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__cub_pararrayos_cableado__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__cub_antena_tierra__z_muk58qhy_44": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__tabicado__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__tabicado__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__tabicado__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__rozas_timbres__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__rozas_timbres__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__rozas_timbres__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__montante_electrica__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__montante_electrica__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__montante_electrica__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__montante_teleco__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__montante_teleco__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__montante_teleco__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__montante_sscc__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__montante_sscc__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__montante_sscc__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__tubeado_zzcc__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__tubeado_zzcc__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__tubeado_zzcc__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cableado_zzcc__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cableado_zzcc__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cableado_zzcc__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__suelo_radiante__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__suelo_radiante__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__suelo_radiante__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__suelo_recrecido__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__suelo_recrecido__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__suelo_recrecido__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__perfilado_pladur__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__perfilado_pladur__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__perfilado_pladur__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__primera_cara_pladur__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__primera_cara_pladur__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__primera_cara_pladur__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__segunda_cara_pladur__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__segunda_cara_pladur__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__segunda_cara_pladur__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cuadros_presentados__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cuadros_presentados__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cuadros_presentados__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__tubeado__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__tubeado__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__tubeado__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cableado__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cableado__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cableado__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__telecableado__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__telecableado__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__telecableado__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__portero__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__portero__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__portero__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__termostatos__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__termostatos__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__termostatos__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__doblar_cajas__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__doblar_cajas__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__doblar_cajas__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__embornado__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__embornado__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__embornado__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__telembornado__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__telembornado__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__telembornado__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__derivacion_individual__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__derivacion_individual__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__derivacion_individual__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cuadro_mecanizado__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cuadro_mecanizado__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__cuadro_mecanizado__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__techos_zzcc__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__techos_zzcc__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__techos_zzcc__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__techos__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__techos__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__techos__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__enchapado__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__enchapado__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__enchapado__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__pintura_primera__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__pintura_primera__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__pintura_primera__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__pintura_zzcc__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__pintura_zzcc__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__pintura_zzcc__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__pintura_segunda__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__pintura_segunda__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__pintura_segunda__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__mecanizado__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__mecanizado__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__mecanizado__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__telemecanizado__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__telemecanizado__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__telemecanizado__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__agujeros_iluminacion_zzcc__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__agujeros_iluminacion_zzcc__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__agujeros_iluminacion_zzcc__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__placas_tapas__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__placas_tapas__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__placas_tapas__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__fachada_terminada__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__fachada_terminada__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__fachada_terminada__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__apliques__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__apliques__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__apliques__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__casquillos_bombillas__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__casquillos_bombillas__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__casquillos_bombillas__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__iluminacion_rellanos__TRAST 1": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__iluminacion_rellanos__TRAST 2": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__pb__iluminacion_rellanos__TRAST 3": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__1__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__2__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__3__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__4__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__duplx_atico__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tabicado__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_lucido__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_falso_techo__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tubeado_emp__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cableado_emp__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tubeado_visto__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cableado_visto__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_pintura_1_recinto__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_fijo_coloc_recinto__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_temp_coloc_recinto__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_emergencia_coloc_recinto__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_enchufe_coloc__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_tubeado_cableado__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_colocacion__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_pintura_2_recinto__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_embornado__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_rotulacion__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_equipo_tubeado_cableado__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_fijo_embornado_recinto__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_temp_embornado_recinto__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_emergencia_embornado_recinto__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_enchufe_embornado__z_muk4qj3k_33": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tabicado__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_lucido__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_falso_techo__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tubeado_emp__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cableado_emp__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tubeado_visto__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cableado_visto__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_pintura_1_recinto__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_fijo_coloc_recinto__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_temp_coloc_recinto__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_emergencia_coloc_recinto__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_enchufe_coloc__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_tubeado_cableado__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_colocacion__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_pintura_2_recinto__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_embornado__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_rotulacion__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_equipo_tubeado_cableado__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_fijo_embornado_recinto__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_temp_embornado_recinto__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_emergencia_embornado_recinto__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_enchufe_embornado__z_muk4qkov_34": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tabicado__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_lucido__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_falso_techo__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tubeado_emp__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cableado_emp__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tubeado_visto__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cableado_visto__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_pintura_1_recinto__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_fijo_coloc_recinto__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_temp_coloc_recinto__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_emergencia_coloc_recinto__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_enchufe_coloc__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_tubeado_cableado__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_colocacion__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_pintura_2_recinto__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_embornado__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_rotulacion__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_equipo_tubeado_cableado__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_fijo_embornado_recinto__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_temp_embornado_recinto__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_emergencia_embornado_recinto__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_enchufe_embornado__z_muk4qu6x_37": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tabicado__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_lucido__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_falso_techo__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tubeado_emp__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cableado_emp__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tubeado_visto__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cableado_visto__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_pintura_1_recinto__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_fijo_coloc_recinto__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_temp_coloc_recinto__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_emergencia_coloc_recinto__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_enchufe_coloc__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_tubeado_cableado__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_colocacion__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_pintura_2_recinto__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_embornado__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_rotulacion__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cuadro_equipo_tubeado_cableado__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_fijo_embornado_recinto__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_temp_embornado_recinto__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_emergencia_embornado_recinto__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_enchufe_embornado__z_muk51fcr_43": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tabicado__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_lucido__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tubeado_emp__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cableado_emp__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_tubeado_visto__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_cableado_visto__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_pintura_1_recinto__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_pintura_2_recinto__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_fijo_coloc_recinto__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_temp_coloc_recinto__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_emergencia_coloc_recinto__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_enchufe_coloc__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_fijo_embornado_recinto__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_alum_temp_embornado_recinto__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_emergencia_embornado_recinto__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__garaje_enchufe_embornado__z_muk4qr18_36": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__fv_paneles_instalacion__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__fv_paneles_cableado__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__fv_paneles_tierra__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__fv_strings_cableado__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__fv_equipos_protecciones__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__fv_puesta_marcha__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__cub_soporte_antena__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__cub_soporte_pararrayos__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__cub_antena_instalacion__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__cub_pararrayos_instalacion__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__cub_antena_cableado__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__cub_pararrayos_cableado__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p2__zesp__cub_antena_tierra__z_muk598sv_45": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__tabicado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__tabicado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__rozas_timbres__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__rozas_timbres__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__montante_electrica__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__montante_electrica__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__montante_teleco__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__montante_teleco__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__montante_sscc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__montante_sscc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__tubeado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__tubeado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__cableado_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__cableado_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__suelo_radiante__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__suelo_radiante__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__suelo_recrecido__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__suelo_recrecido__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__perfilado_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__perfilado_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__primera_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__primera_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__segunda_cara_pladur__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__segunda_cara_pladur__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__cuadros_presentados__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__cuadros_presentados__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__tubeado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__tubeado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__cableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__cableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__telecableado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__telecableado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__portero__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__portero__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__termostatos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__termostatos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__doblar_cajas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__doblar_cajas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__embornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__embornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__telembornado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__telembornado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__derivacion_individual__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__derivacion_individual__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__cuadro_mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__cuadro_mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__techos_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__techos_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__techos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__techos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__enchapado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__enchapado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__pintura_primera__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__pintura_primera__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__pintura_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__pintura_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__pintura_segunda__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__pintura_segunda__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__mecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__mecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__telemecanizado__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__telemecanizado__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__agujeros_iluminacion_zzcc__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__agujeros_iluminacion_zzcc__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__placas_tapas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__placas_tapas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__fachada_terminada__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__fachada_terminada__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__apliques__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__apliques__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__casquillos_bombillas__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__casquillos_bombillas__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__pb__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__1__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__2__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__3__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__iluminacion_rellanos__A": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__4__iluminacion_rellanos__B": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_tabicado__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_lucido__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_falso_techo__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_tubeado_emp__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_cableado_emp__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_tubeado_visto__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_cableado_visto__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_pintura_1_recinto__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_alum_fijo_coloc_recinto__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_alum_temp_coloc_recinto__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_emergencia_coloc_recinto__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_enchufe_coloc__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_cuadro_tubeado_cableado__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_cuadro_colocacion__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_pintura_2_recinto__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_cuadro_embornado__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_cuadro_rotulacion__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_cuadro_equipo_tubeado_cableado__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_alum_fijo_embornado_recinto__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_alum_temp_embornado_recinto__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_emergencia_embornado_recinto__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_enchufe_embornado__z_muk5ao5z_48": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_tabicado__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_lucido__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_tubeado_emp__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_cableado_emp__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_tubeado_visto__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_cableado_visto__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_pintura_1_recinto__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_pintura_2_recinto__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_alum_fijo_coloc_recinto__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_alum_temp_coloc_recinto__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_emergencia_coloc_recinto__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_enchufe_coloc__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_alum_fijo_embornado_recinto__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_alum_temp_embornado_recinto__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_emergencia_embornado_recinto__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__garaje_enchufe_embornado__z_muk5aao6_47": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__fv_paneles_instalacion__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__fv_paneles_cableado__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__fv_paneles_tierra__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__fv_strings_cableado__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__fv_equipos_protecciones__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__fv_puesta_marcha__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__cub_soporte_antena__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__cub_soporte_pararrayos__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__cub_antena_instalacion__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__cub_pararrayos_instalacion__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__cub_antena_cableado__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__cub_pararrayos_cableado__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p3__zesp__cub_antena_tierra__z_muk59b6b_46": {
+      "v": "?",
+      "f": null,
+      "r": null
+    }
+  },
+  "revisiones": [],
+  "dudas": [],
+  "materiales": {},
+  "documentos": {},
+  "contactos": []
+}

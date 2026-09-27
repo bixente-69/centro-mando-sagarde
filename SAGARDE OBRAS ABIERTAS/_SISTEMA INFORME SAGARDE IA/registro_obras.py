@@ -82,25 +82,40 @@ OBRAS = [
             'REVISIONES', 'hoja de entrega de materiales OBRA PRUEBA.xlsx'),
     },
     {
-        # Alta el 24/09/2026. Promocion de 30 viviendas con garajes y
-        # trasteros (proyecto "makia", mayo 2024). En fase de garajes; las
-        # viviendas no han arrancado. Sin numeracion de plazas en el plano
-        # (CAD sin texto extraible) y sin la ampliacion del generador de
-        # revisiones para garajes (pendiente, por Bixente): no hay de donde
-        # sacar una rejilla sin inventarla. Registrada en modo Gorliz —
-        # mismo patron probado: adaptador con revisiones JSON explicitas,
-        # sin ficha_obra.json todavia. Migra a alta nativa
-        # (alta_obra_desde_hoja.py) cuando exista esa ampliacion y/o
-        # arranque la fase de viviendas con su propia hoja en blanco.
+        # Alta nativa el 27/09/2026 desde su primera hoja de distribución HTML.
+        # Promoción de 30 viviendas con garajes y trasteros (proyecto "makia").
         'id': 'olabeaga',
         'nombre': '2026 OLABEAGA BILBAO',
         'aliases': ['OLABEAGA'],
-        'subtitulo': ('Electricidad y telecomunicaciones · 30 viviendas con '
-                       'garajes y trasteros · en fase de garajes, sin '
-                       'seguimiento estructurado todavia'),
+        'subtitulo': ('Electricidad y telecomunicaciones · 1 bloque, 3 portales, '
+                       '30 viviendas, locales comerciales y garajes'),
         'adaptador': 'adaptador_olabeaga',
         'carpeta_obra': '2026 OLABEAGA BILBAO',
-        'bloque_revision': 'Olabeaga',
+        'bloque_revision': 'Bloque 1',
+        'mapa_portales_revision_html': {
+            'p_muk0ktg3_2': 'p1',
+            'p_muk0mekn_11': 'p2',
+            'p_muk0mey7_18': 'p3',
+        },
+        'mapa_plantas_revision_html': {
+            'f_muk0ktg3_3': 'pb',
+            'f_muk0ktg3_4': '1',
+            'f_muk0ktg3_5': '2',
+            'f_muk0ktg3_6': '3',
+            'f_muk0ktg3_7': '4',
+            'f_muk0mekn_12': 'pb',
+            'f_muk0mekn_13': '1',
+            'f_muk0mekn_14': '2',
+            'f_muk0mekn_15': '3',
+            'f_muk0mekn_16': '4',
+            'f_muk0tpsy_32': 'duplx_atico',
+            'f_muk0mey7_19': 'pb',
+            'f_muk0mey7_20': '1',
+            'f_muk0mey7_21': '2',
+            'f_muk0mey7_22': '3',
+            'f_muk0mey7_23': '4',
+            'zesp': 'zesp',
+        },
         'materiales_rel': os.path.join(
             'REVISIONES', 'hoja de entrega de materiales OLABEAGA.xlsx'),
     },

@@ -410,7 +410,9 @@ def _mapa_ubicacion_nombre(ficha_actual):
 
 def cargar_historial_html_generico(
         obra_id, carpeta_revisiones, ficha_actual, catalogo,
-        contiene=None, minimo_celdas=20, nombre_log=''):
+        contiene=None, minimo_celdas=20, nombre_log='',
+        portal_id_a_real=None, planta_id_a_real=None, tarea_id_a_real=None,
+        ignorar_en_blanco=True):
     """Historial ``[(fecha_display, [registros]), ...]`` desde los HTML de
     ``carpeta_revisiones``, en el mismo esquema ``{'task','floor','building',
     'unit','status'}`` que ya devuelven las rutas PDF/Word de cada
@@ -446,11 +448,22 @@ def cargar_historial_html_generico(
         ruta = os.path.join(carpeta_revisiones, fn)
         try:
             revision = construir_revision_normalizada_html(
-                ruta, obra_id, ficha_actual, catalogo)
+                ruta, obra_id, ficha_actual, catalogo,
+                portal_id_a_real=portal_id_a_real,
+                planta_id_a_real=planta_id_a_real,
+                tarea_id_a_real=tarea_id_a_real,
+            )
         except Exception as exc:
             if nombre_log:
                 print("  [{}] AVISO: no se pudo leer '{}': {}".format(
                     nombre_log, fn, exc))
+            continue
+
+        if ignorar_en_blanco and not any(
+                c['estado_leido'] in ('X', 'M', '/') for c in revision['celdas']):
+            if nombre_log:
+                print("  [{}] '{}' ignorado como revisión (hoja en blanco sin marcas).".format(
+                    nombre_log, fn))
             continue
 
         registros = []

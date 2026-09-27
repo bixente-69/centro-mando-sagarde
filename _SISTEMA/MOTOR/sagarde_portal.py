@@ -22,7 +22,7 @@ OUTPUT = ROOT / "index.html"
 # entrada, _SISTEMA saldria en la portada como si fuera documentacion.
 # Ya no hace falta "_MOTOR_SAGARDE": el motor vive dentro de _SISTEMA.
 IGNORE_DIRS = {".git", ".memory", "__pycache__", "_PREVIEWS_WORD",
-               "_SISTEMA", "docs", "scratch"}
+               "_SISTEMA", "docs", "scratch", ".claude", ".gemini", ".agents"}
 IGNORE_NAMES = {"index.html"}
 APP_HINTS = ("app", "panel", "sagarde", "plantilla", "generador")
 DOC_EXTS = {".doc", ".docx", ".pdf", ".xls", ".xlsx", ".xlsm"}

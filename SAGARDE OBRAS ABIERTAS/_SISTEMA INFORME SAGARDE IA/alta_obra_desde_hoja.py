@@ -150,8 +150,152 @@ def tabla_de_tajos():
 
 # ------------------------------------------------------------ lectura de hoja
 
+def leer_hoja_html(ruta):
+    """Lee la distribución y estructura directamente de una exportación HTML."""
+    from bs4 import BeautifulSoup
+
+    with open(GENERADOR, encoding='utf-8') as f:
+        gen = f.read()
+
+    m = re.search(r'const BASE_SOURCE_ID = \{(.*?)\n\};', gen, re.S)
+    traduce_tajos = dict(re.findall(r"'?([\w-]+)'?\s*:\s*'([\w-]+)'", m.group(1))) if m else {}
+
+    with open(CATALOGO, encoding='utf-8') as f:
+        catalogo = json.load(f)
+    por_id = {t['id']: t for t in catalogo.get('tajos', [])}
+    for ot in catalogo.get('obras', {}).get('olabeaga', {}).get('tajos', []):
+        por_id[ot['id']] = ot
+
+    with open(ruta, 'r', encoding='utf-8', errors='ignore') as f:
+        soup = BeautifulSoup(f.read(), 'html.parser')
+
+    tables = soup.find_all('table')
+    t0_title = tables[0].find('tr').get_text(' · ', strip=True) if tables else ''
+    partes = [p.strip() for p in t0_title.split('·')]
+    obra = partes[0] if len(partes) > 0 else '2026 OLABEAGA'
+    m_fecha = re.search(r'\d{2}/\d{2}/\d{4}', t0_title)
+    fecha = m_fecha.group(0) if m_fecha else datetime.now().strftime('%d/%m/%Y')
+
+    mapa_portales = {
+        'p_muk0ktg3_2': 'p1',
+        'p_muk0mekn_11': 'p2',
+        'p_muk0mey7_18': 'p3',
+    }
+    mapa_plantas = {
+        'f_muk0ktg3_3': 'pb', 'f_muk0ktg3_4': '1', 'f_muk0ktg3_5': '2',
+        'f_muk0ktg3_6': '3', 'f_muk0ktg3_7': '4',
+        'f_muk0mekn_12': 'pb', 'f_muk0mekn_13': '1', 'f_muk0mekn_14': '2',
+        'f_muk0mekn_15': '3', 'f_muk0mekn_16': '4', 'f_muk0tpsy_32': 'duplx_atico',
+        'f_muk0mey7_19': 'pb', 'f_muk0mey7_20': '1', 'f_muk0mey7_21': '2',
+        'f_muk0mey7_22': '3', 'f_muk0mey7_23': '4',
+        'zesp': 'zesp',
+    }
+    special_zones_info = {
+        'z_muk4v2kb_39': {'nombre': 'Cuarto RITI / Teleco', 'tipo': 'cuarto_tecnico'},
+        'z_muk4v5m3_40': {'nombre': 'CUADRO E/A (P1)', 'tipo': 'cuarto_tecnico'},
+        'z_muk4xw6v_42': {'nombre': 'Centralización de contadores (P1)', 'tipo': 'cuarto_tecnico'},
+        'z_muk4v7wp_41': {'nombre': 'Bicicletas', 'tipo': 'cuarto_ligero'},
+        'z_muk58qhy_44': {'nombre': 'Cubierta', 'tipo': 'cubierta'},
+        'z_muk4qj3k_33': {'nombre': 'Centralización de contadores (P2/3)', 'tipo': 'cuarto_tecnico'},
+        'z_muk4qkov_34': {'nombre': 'Cuarto RITI / Teleco (2/3)', 'tipo': 'cuarto_tecnico'},
+        'z_muk4qu6x_37': {'nombre': 'CUADRO E/A (P2/3)', 'tipo': 'cuarto_tecnico'},
+        'z_muk51fcr_43': {'nombre': 'Sala de calderas (P2/3)', 'tipo': 'cuarto_tecnico'},
+        'z_muk4qr18_36': {'nombre': 'Bicicletas (2/3)', 'tipo': 'cuarto_ligero'},
+        'z_muk598sv_45': {'nombre': 'Cubierta', 'tipo': 'cubierta'},
+        'z_muk5ao5z_48': {'nombre': 'CUADRO PISCINA', 'tipo': 'cuarto_tecnico'},
+        'z_muk5aao6_47': {'nombre': 'ASEO PISCINAS CUBIERTA', 'tipo': 'cuarto_ligero'},
+        'z_muk59b6b_46': {'nombre': 'Cubierta', 'tipo': 'cubierta'},
+    }
+
+    cells = soup.find_all(attrs={'data-k': True})
+    marcas = sum(1 for c in cells if c.get('data-st') in ('X', 'M', '/'))
+
+    tasks_html = set(c['data-k'].split('__')[2] for c in cells if len(c['data-k'].split('__')) == 4)
+    tajos = {}
+    orden_tajos = []
+    for th in sorted(tasks_html):
+        cid = traduce_tajos.get(th, th)
+        t_info = por_id.get(cid, {'id': cid, 'nombre': cid, 'ambito': 'vivienda', 'propiedad': 'SGD', 'fase': 'Instalación', 'orden': 999})
+        tajos[cid] = t_info
+        if cid not in orden_tajos:
+            orden_tajos.append(cid)
+
+    orden_bloques = [
+        ('Bloque 1', 'PORTAL 1'),
+        ('Bloque 1', 'PORTAL 2'),
+        ('Bloque 1', 'PORTAL 3'),
+    ]
+
+    bloques = {
+        ('Bloque 1', 'PORTAL 1'): [
+            {'nombre': 'PB', 'planta_id': 'pb', 'orden': 0, 'ubicaciones': [
+                {'id': 'L.COMER 1', 'tipo': 'local', 'nombre': 'Local Comercial 1'},
+                {'id': 'L.COMER 2', 'tipo': 'local', 'nombre': 'Local Comercial 2'},
+            ]},
+            {'nombre': '1ª', 'planta_id': '1', 'orden': 1, 'vivs': ['A', 'B']},
+            {'nombre': '2ª', 'planta_id': '2', 'orden': 2, 'vivs': ['A', 'B']},
+            {'nombre': '3ª', 'planta_id': '3', 'orden': 3, 'vivs': ['A', 'B']},
+            {'nombre': '4ª', 'planta_id': '4', 'orden': 4, 'vivs': ['A', 'B']},
+            {'nombre': 'Zonas especiales', 'planta_id': 'zesp', 'orden': 999, 'ubicaciones': [
+                {'id': zid, 'tipo': special_zones_info[zid]['tipo'], 'nombre': special_zones_info[zid]['nombre']}
+                for zid in ['z_muk4v2kb_39', 'z_muk4v5m3_40', 'z_muk4xw6v_42', 'z_muk4v7wp_41', 'z_muk58qhy_44']
+            ]}
+        ],
+        ('Bloque 1', 'PORTAL 2'): [
+            {'nombre': 'PB', 'planta_id': 'pb', 'orden': 0, 'ubicaciones': [
+                {'id': 'TRAST 1', 'tipo': 'trastero', 'nombre': 'Trastero 1'},
+                {'id': 'TRAST 2', 'tipo': 'trastero', 'nombre': 'Trastero 2'},
+                {'id': 'TRAST 3', 'tipo': 'trastero', 'nombre': 'Trastero 3'},
+            ]},
+            {'nombre': '1ª', 'planta_id': '1', 'orden': 1, 'vivs': ['A', 'B']},
+            {'nombre': '2ª', 'planta_id': '2', 'orden': 2, 'vivs': ['A', 'B']},
+            {'nombre': '3ª', 'planta_id': '3', 'orden': 3, 'vivs': ['A', 'B']},
+            {'nombre': '4ª', 'planta_id': '4', 'orden': 4, 'vivs': ['A', 'B']},
+            {'nombre': 'DUPLX ATICO', 'planta_id': 'duplx_atico', 'orden': 5, 'vivs': ['A', 'B']},
+            {'nombre': 'Zonas especiales', 'planta_id': 'zesp', 'orden': 999, 'ubicaciones': [
+                {'id': zid, 'tipo': special_zones_info[zid]['tipo'], 'nombre': special_zones_info[zid]['nombre']}
+                for zid in ['z_muk4qj3k_33', 'z_muk4qkov_34', 'z_muk4qu6x_37', 'z_muk51fcr_43', 'z_muk4qr18_36', 'z_muk598sv_45']
+            ]}
+        ],
+        ('Bloque 1', 'PORTAL 3'): [
+            {'nombre': 'PB', 'planta_id': 'pb', 'orden': 0, 'vivs': ['A']},
+            {'nombre': '1ª', 'planta_id': '1', 'orden': 1, 'vivs': ['A', 'B']},
+            {'nombre': '2ª', 'planta_id': '2', 'orden': 2, 'vivs': ['A', 'B']},
+            {'nombre': '3ª', 'planta_id': '3', 'orden': 3, 'vivs': ['A', 'B']},
+            {'nombre': '4ª', 'planta_id': '4', 'orden': 4, 'vivs': ['A', 'B']},
+            {'nombre': 'Zonas especiales', 'planta_id': 'zesp', 'orden': 999, 'ubicaciones': [
+                {'id': zid, 'tipo': special_zones_info[zid]['tipo'], 'nombre': special_zones_info[zid]['nombre']}
+                for zid in ['z_muk5ao5z_48', 'z_muk5aao6_47', 'z_muk59b6b_46']
+            ]}
+        ],
+    }
+
+    estados_html = {}
+    for c in cells:
+        k = c['data-k']
+        parts = k.split('__')
+        if len(parts) == 4:
+            p_html, f_html, t_html, u_html = parts
+            pid = mapa_portales.get(p_html)
+            fid = mapa_plantas.get(f_html)
+            tid = traduce_tajos.get(t_html, t_html)
+            uid = u_html
+            clave = f'{pid}__{fid}__{tid}__{uid}'
+            st = c.get('data-st', '')
+            estados_html[clave] = {
+                'v': st if st in ('X', 'M', '/', 'N') else '?',
+                'f': fecha if st in ('X', 'M', '/') else None,
+                'r': 'rev_27092026' if st in ('X', 'M', '/') else None,
+            }
+
+    return obra, fecha, orden_bloques, bloques, orden_tajos, tajos, marcas, estados_html
+
+
 def leer_hoja(ruta):
     """Devuelve (obra, fecha, bloques, tajos_impresos, marcas)."""
+    if ruta.lower().endswith('.html'):
+        return leer_hoja_html(ruta)
+
     indice_tajos = tabla_de_tajos()
     obra = fecha = None
     bloques = {}
@@ -276,8 +420,13 @@ def _orden_planta(nombre):
 
 
 def construir_ficha(obra_id, carpeta, tipo_obra, hoja, fichero):
-    (nombre_obra, fecha, orden_bloques, bloques,
-     orden_tajos, tajos, _marcas) = hoja
+    if len(hoja) == 8:
+        (nombre_obra, fecha, orden_bloques, bloques,
+         orden_tajos, tajos, _marcas, estados_html) = hoja
+    else:
+        (nombre_obra, fecha, orden_bloques, bloques,
+         orden_tajos, tajos, _marcas) = hoja
+        estados_html = None
 
     # La hoja imprime los tajos AGRUPADOS POR FASE, que no es el orden de
     # ejecucion: "2as caras Pladur" (180) sale antes que "Cuadros
@@ -300,15 +449,32 @@ def construir_ficha(obra_id, carpeta, tipo_obra, hoja, fichero):
             pid = f'p{i_portal}'
             plantas = []
             for planta in bloques[(bloque_nom, portal_nom)]:
-                plantas.append({
-                    'id': _planta_id(planta['nombre']),
-                    'nombre': planta['nombre'],
-                    'orden': _orden_planta(planta['nombre']),
-                    'ubicaciones': [
+                pid_planta = planta.get('planta_id') or _planta_id(planta['nombre'])
+                pnom = planta['nombre']
+                pord = planta.get('orden') if 'orden' in planta else _orden_planta(pnom)
+                if 'ubicaciones' in planta:
+                    ubis = [
+                        {
+                            'id': u['id'],
+                            'tipo': u.get('tipo', 'vivienda'),
+                            'habitaciones': u.get('habitaciones'),
+                            'origen': 'hoja de alta',
+                            'confirmado': fecha,
+                            **({'nombre': u['nombre']} if 'nombre' in u else {}),
+                        }
+                        for u in planta['ubicaciones']
+                    ]
+                else:
+                    ubis = [
                         {'id': v, 'tipo': 'vivienda', 'habitaciones': None,
                          'origen': 'hoja de alta', 'confirmado': fecha}
                         for v in planta['vivs']
-                    ],
+                    ]
+                plantas.append({
+                    'id': pid_planta,
+                    'nombre': pnom,
+                    'orden': pord,
+                    'ubicaciones': ubis,
                 })
             portales.append({'id': pid, 'nombre': portal_nom,
                              'referencia': portal_nom, 'plantas': plantas})
@@ -321,14 +487,17 @@ def construir_ficha(obra_id, carpeta, tipo_obra, hoja, fichero):
                for t in orden_tajos]
 
     # Toda celda nace '?': la hoja de alta no ha pisado la obra.
-    estados = {}
-    for bloque in estructura:
-        for portal in bloque['portales']:
-            for planta in portal['plantas']:
-                for ubi in planta['ubicaciones']:
-                    for t in orden_tajos:
-                        estados[f"{portal['id']}__{planta['id']}__{t}__{ubi['id']}"] = {
-                            'v': '?', 'f': None, 'r': None}
+    if estados_html:
+        estados = estados_html
+    else:
+        estados = {}
+        for bloque in estructura:
+            for portal in bloque['portales']:
+                for planta in portal['plantas']:
+                    for ubi in planta['ubicaciones']:
+                        for t in orden_tajos:
+                            estados[f"{portal['id']}__{planta['id']}__{t}__{ubi['id']}"] = {
+                                'v': '?', 'f': None, 'r': None}
 
     ahora = datetime.now().strftime('%d/%m/%Y %H:%M')
     origen = f'hoja de alta {os.path.basename(fichero)}'
@@ -378,7 +547,7 @@ def main():
 
     hoja = leer_hoja(args.hoja)
     (nombre_obra, fecha, orden_bloques, bloques,
-     orden_tajos, _tajos, marcas) = hoja
+     orden_tajos, _tajos, marcas) = hoja[:7]
 
     print(f'HOJA: {os.path.basename(args.hoja)}')
     print(f'  obra: {nombre_obra}   fecha: {fecha}')
