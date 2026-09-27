@@ -684,6 +684,21 @@ class TestPanelGraficaPlantaGaraje(unittest.TestCase):
 
         self.assertEqual(_serie(con_garaje), _serie(sin_garaje))
 
+    def test_obra_solo_con_garaje_no_falla_por_historial_vacio(self):
+        """27/09/2026: Una obra como Olabeaga, en fase de garajes y sin
+        revisiones de vivienda todavia (historial=[]), no debe lanzar
+        IndexError en panel_obra por intentar acceder a historial[0][0]."""
+        prioridades_garaje = priorizar_ficha_garaje(
+            _ficha_garaje(estados={
+                ("z1", "garaje_tubeado_vial"): "X",
+            }),
+            obra="OBRA GARAJE PRUEBA", hoy=date(2026, 9, 24))
+        snapshot_garaje = _snapshot_garaje_desde_prioridades(prioridades_garaje)
+        html = _generar(
+            prioridades_garaje, historial=[], snapshot_garaje=snapshot_garaje)
+        self.assertIn("Garaje 24/09/2026", html)
+        self.assertIn("Solo tareas 100% terminadas · incluye garaje", html)
+
 
 if __name__ == "__main__":
     unittest.main()
