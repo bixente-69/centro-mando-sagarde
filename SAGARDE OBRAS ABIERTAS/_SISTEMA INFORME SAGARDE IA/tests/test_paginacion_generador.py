@@ -22,6 +22,7 @@ AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
 GENERADOR = os.path.join(RAIZ, 'generador_revisiones.html')
 REVISIONES_JS = os.path.join(RAIZ, 'obras_revisiones.js')
+CATALOGO = os.path.join(RAIZ, 'reglas', 'CATALOGO_TAJOS.json')
 
 NODE = shutil.which('node')
 
@@ -178,6 +179,95 @@ class HtmlEmitido(unittest.TestCase):
                                     hoja_de(obra))
                 self.assertEqual(len(claves), esperadas)
                 self.assertEqual(len(set(claves)), esperadas, 'claves repetidas')
+
+
+@unittest.skipUnless(NODE, 'node no esta instalado')
+class ZonasEspecialesVivienda(unittest.TestCase):
+
+    CUBIERTA_IDS = {
+        'fv_paneles_instalacion', 'fv_paneles_cableado',
+        'fv_paneles_tierra', 'fv_strings_cableado',
+        'fv_equipos_protecciones', 'fv_puesta_marcha',
+        'cub_soporte_antena', 'cub_soporte_pararrayos',
+        'cub_antena_instalacion', 'cub_pararrayos_instalacion',
+        'cub_antena_cableado', 'cub_pararrayos_cableado',
+        'cub_antena_tierra',
+    }
+
+    def test_perfiles_y_metadatos_salen_de_las_fuentes_reales(self):
+        datos = ejecutar_en_node(
+            '({especiales:SPECIAL_ZONE_PROFILE_TAJOS, '
+            'tecnicoGaraje:GARAGE_PROFILE_TAJOS.cuarto_tecnico, '
+            'ligeroGaraje:GARAGE_PROFILE_TAJOS.cuarto_ligero, catalogo:BASE_CAT})')
+        self.assertEqual(datos['especiales']['cuarto_tecnico'],
+                         datos['tecnicoGaraje'])
+        self.assertEqual(datos['especiales']['cuarto_ligero'],
+                         datos['ligeroGaraje'])
+        self.assertEqual(set(datos['especiales']['cubierta']), self.CUBIERTA_IDS)
+
+        ids = set(datos['especiales']['cuarto_tecnico'])
+        ids.update(datos['especiales']['cuarto_ligero'])
+        ids.update(datos['especiales']['cubierta'])
+        self.assertEqual(len(ids), 35)
+        en_generador = {t['id']: t for t in datos['catalogo'] if t['id'] in ids}
+        self.assertEqual(set(en_generador), ids)
+
+        with open(CATALOGO, encoding='utf-8') as f:
+            reales = {t['id']: t for t in json.load(f)['tajos'] if t['id'] in ids}
+        propiedad = {'propio': 'p', 'externo': 'e', 'coordinacion': 'c'}
+        ambito = {'vivienda': 'v', 'zona_comun': 'z', 'edificio': 'd'}
+        for tajo_id in sorted(ids):
+            with self.subTest(tajo=tajo_id):
+                impreso = en_generador[tajo_id]
+                real = reales[tajo_id]
+                self.assertEqual(impreso['name'], real['nombre'])
+                self.assertEqual(impreso['g'], real['fase'])
+                self.assertEqual(impreso['p'], propiedad[real['propiedad']])
+                self.assertEqual(impreso['a'], ambito[real['ambito']])
+
+    def test_alta_manual_guarda_tipo_nombre_y_funcion_en_el_portal(self):
+        zonas = ejecutar_en_node("""(()=>{
+          S.bloques=normaliseStructure({bloques:[{id:'b1',nombre:'Bloque 1',
+            portales:[{id:'p1',nombre:'Portal 1',plantas:[{id:'f1',nombre:'PB',vivs:['A']}]}]}]});
+          addPortalSpecialZone(0,0,'ct_riti');
+          addPortalSpecialZone(0,0,'cl_basuras');
+          addPortalSpecialZone(0,0,'cubierta');
+          return S.bloques[0].portales[0].zonasEspeciales;
+        })()""")
+        self.assertEqual([z['tipo'] for z in zonas],
+                         ['cuarto_tecnico', 'cuarto_ligero', 'cubierta'])
+        self.assertEqual([z['nombre'] for z in zonas],
+                         ['Cuarto RITI / Teleco', 'Basuras', 'Cubierta'])
+        self.assertEqual(zonas[0]['funcion'], 'riti')
+        self.assertEqual(zonas[1]['funcion'], 'basuras')
+        self.assertNotIn('funcion', zonas[2])
+        self.assertEqual(len({z['id'] for z in zonas}), 3)
+
+    def test_hoja_emite_tarjetas_tabla_y_claves_zesp_de_cuatro_partes(self):
+        html = ejecutar_en_node("""(()=>{
+          CAT=BASE_CAT.map(t=>({...t}));
+          const ids=[...new Set(Object.values(SPECIAL_ZONE_PROFILE_TAJOS).flat())];
+          S.sel=new Set(ids);
+          S.obra='OBRA PRUEBA ZONAS'; S.fecha='2026-09-27';
+          S.bloques=normaliseStructure({bloques:[{id:'b1',nombre:'Bloque 1',
+            portales:[{id:'p1',nombre:'Portal 1',plantas:[{id:'f1',nombre:'PB',vivs:['A']}],
+              zonasEspeciales:[
+                {id:'zt1',tipo:'cuarto_tecnico',nombre:'RITI',funcion:'riti'},
+                {id:'zl1',tipo:'cuarto_ligero',nombre:'Basuras',funcion:'basuras'},
+                {id:'zc1',tipo:'cubierta',nombre:'Cubierta'}]}]}]});
+          return generateHTML({});
+        })()""")
+        claves = re.findall(r'data-k="([^"]*__zesp__[^"]*)"', html)
+        self.assertEqual(len(claves), 51)
+        self.assertEqual(len(set(claves)), 51)
+        self.assertTrue(all(len(clave.split('__')) == 4 for clave in claves))
+        self.assertTrue(all(clave.split('__')[0:2] == ['p1', 'zesp']
+                            for clave in claves))
+        self.assertIn('data-zone-category="cuarto_tecnico"', html)
+        self.assertIn('data-zone-category="cubierta"', html)
+        self.assertIn('data-zone-category="cuarto_ligero"', html)
+        self.assertIn('class="tecnico-card"', html)
+        self.assertIn('<table class="rev-table">', html)
 
 
 def _hay_playwright():
