@@ -1092,6 +1092,8 @@ def generar_pdf_ejecutivo(
     prioridades: dict | None = None,
     snapshot_garaje: list[dict] | None = None,
     prioridades_garaje: dict | None = None,
+    snapshot_zonas_especiales: list[dict] | None = None,
+    prioridades_zonas_especiales: dict | None = None,
     cierre: dict | None = None,
     avisos_cierre: list[str] | None = None,
 ) -> Path:
@@ -1177,6 +1179,23 @@ def generar_pdf_ejecutivo(
             metadatos_por_id, metadatos_por_nombre, content_w,
         )
 
+    # 2c. Pagina de Zonas especiales (cuarto tecnico/ligero/cubierta de
+    #     vivienda), tratada igual que Garaje: un bloque mas, misma funcion
+    #     de construccion, mismo indice de metadatos (los tajos garaje_*
+    #     reutilizados y los fv_*/cub_* ya estan en el catalogo comun).
+    #     snapshot_general de arriba NO se toca: 'snapshot' (vivienda) ya
+    #     incluye estas celdas mezcladas desde el modelo de datos (planta
+    #     virtual 'zesp'), sumarlas aqui tambien las contaria dos veces.
+    if prioridades_zonas_especiales is not None and snapshot_zonas_especiales:
+        story.append(PageBreak())
+        _construir_bloque_electrico(
+            story, nombre_obra, "ZONAS ESPECIALES", fecha_rev,
+            snapshot_zonas_especiales,
+            [(fecha_rev, snapshot_zonas_especiales)], ficha,
+            prioridades_zonas_especiales,
+            metadatos_por_id, metadatos_por_nombre, content_w,
+        )
+
     # 3. Cierre de expediente: una vez, al final, sea cual sea el numero
     #    de portales/bloques de la obra.
     story.append(PageBreak())
@@ -1230,6 +1249,8 @@ def generar_para_obra(
     prioridades: dict | None = None,
     snapshot_garaje: list[dict] | None = None,
     prioridades_garaje: dict | None = None,
+    snapshot_zonas_especiales: list[dict] | None = None,
+    prioridades_zonas_especiales: dict | None = None,
     cierre: dict | None = None,
     avisos_cierre: list[str] | None = None,
 ) -> Path | None:
@@ -1297,6 +1318,8 @@ def generar_para_obra(
         prioridades=prioridades,
         snapshot_garaje=snapshot_garaje,
         prioridades_garaje=prioridades_garaje,
+        snapshot_zonas_especiales=snapshot_zonas_especiales,
+        prioridades_zonas_especiales=prioridades_zonas_especiales,
         cierre=cierre,
         avisos_cierre=avisos_cierre,
     )

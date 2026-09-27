@@ -1671,6 +1671,9 @@ def main(hacer_pdf=True):
                 prioridades=prioridades,
                 snapshot_garaje=snapshot_garaje,
                 prioridades_garaje=prioridades_garaje,
+                snapshot_zonas_especiales=snapshot_zesp,
+                prioridades_zonas_especiales=(
+                    prioridades_zonas_especiales),
                 cierre=cierre_datos,
                 avisos_cierre=cierre_avisos,
             )

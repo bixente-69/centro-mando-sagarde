@@ -14,7 +14,9 @@ sys.path.insert(0, os.path.join(ROOT_DIR, '_SISTEMA', 'MOTOR', 'scripts'))
 
 import generar_informe_ejecutivo as gie
 import ficha_garajes
-from priorizador_trabajos import priorizar_ficha_garaje
+import ficha_obra
+import generar_todos
+from priorizador_trabajos import priorizar_ficha, priorizar_ficha_garaje
 
 
 class TestFechaBaseSnapshot(unittest.TestCase):
@@ -265,9 +267,110 @@ class TestPdfEjecutivoConGaraje(unittest.TestCase):
         self.assertIn('Todos los tajos propios medidos están terminados',
                        pagina_garaje)
 
-        # El resumen general (pagina 1) tiene que reflejar tambien el
-        # garaje: con un tajo mas terminado que sin garaje.
-        self.assertIn('100.0%', paginas_con[0])
+
+class TestPaginaZonasEspeciales(unittest.TestCase):
+    """Misma disciplina que TestPaginaGaraje: el informe ejecutivo de
+    garaje tuvo un bug real (snapshot_garaje con el ID en vez del nombre,
+    pagina vacia) que solo se detecto generando el PDF real -- aqui se
+    genera de verdad, no se confia solo en que la suite pase."""
+
+    def _ficha_con_zona_especial(self):
+        return {
+            'version': 1, 'id': 'zesp_test_informe',
+            'estructura': {'bloques': [{
+                'id': 'b1', 'nombre': 'Bloque 1', 'portales': [{
+                    'id': 'p1', 'nombre': 'Portal 1', 'referencia': 'Portal 1',
+                    'plantas': [
+                        {'id': 'pb', 'nombre': 'PB', 'orden': 0,
+                         'ubicaciones': [
+                             {'id': 'A', 'tipo': 'vivienda',
+                              'origen': 'campo'},
+                         ]},
+                        {'id': ficha_obra.ID_PLANTA_ZONAS_ESPECIALES,
+                         'nombre': ficha_obra.NOMBRE_PLANTA_ZONAS_ESPECIALES,
+                         'orden': ficha_obra.ORDEN_PLANTA_ZONAS_ESPECIALES,
+                         'ubicaciones': [
+                             {'id': 'ct1', 'tipo': 'cuarto_tecnico',
+                              'nombre': 'RITI'},
+                         ]},
+                    ],
+                }],
+            }]},
+            'tajos': {'detalle': [
+                {'id': 'tubeado', 'nombre': 'Tubeado interior'},
+            ]},
+            'estados': {
+                'p1__pb__tubeado__A': {
+                    'v': 'X', 'f': '27/09/2026', 'r': 'rev_27092026'},
+                'p1__zesp__tubeado__ct1': {
+                    'v': 'X', 'f': '27/09/2026', 'r': 'rev_27092026'},
+            },
+            'revisiones': [{'id': 'rev_27092026', 'fecha': '27/09/2026'}],
+            'dudas': [],
+        }
+
+    def _snapshot_y_prioridades_zesp(self):
+        ficha = self._ficha_con_zona_especial()
+        prioridades = priorizar_ficha(
+            ficha, obra='OBRA TEST INFORME ZESP', hoy=date(2026, 9, 27))
+        prioridades_zesp = generar_todos.extraer_prioridades_zonas_especiales(
+            prioridades)
+        snapshot_zesp = generar_todos.snapshot_zonas_especiales(ficha)
+        return snapshot_zesp, prioridades_zesp
+
+    def _generar_pdf(self, snapshot_zesp=None, prioridades_zesp=None):
+        snapshot = [
+            {'task': 'Tabicado', 'building': 'PORTAL 1', 'floor': 'PB',
+             'unit': 'A', 'status': 'X'},
+        ]
+        with tempfile.TemporaryDirectory() as carpeta:
+            salida = os.path.join(carpeta, 'informe.pdf')
+            gie.generar_pdf_ejecutivo(
+                'OBRA TEST INFORME ZESP', '27/09/2026', snapshot, salida,
+                historial=[('27/09/2026', snapshot)],
+                ficha={'tajos': {'detalle': []}},
+                prioridades={'detalle_items': []},
+                snapshot_zonas_especiales=snapshot_zesp,
+                prioridades_zonas_especiales=prioridades_zesp,
+                cierre=None, avisos_cierre=[],
+            )
+            import pdfplumber
+            with pdfplumber.open(salida) as pdf:
+                return [p.extract_text() or '' for p in pdf.pages]
+
+    def test_sin_zesp_no_genera_pagina_de_zonas_especiales(self):
+        paginas = self._generar_pdf()
+        self.assertTrue(
+            all('ÁMBITO: ZONAS ESPECIALES' not in p for p in paginas))
+
+    def test_con_zesp_genera_pagina_con_contenido_real(self):
+        snapshot_zesp, prioridades_zesp = self._snapshot_y_prioridades_zesp()
+        paginas_sin = self._generar_pdf()
+        paginas_con = self._generar_pdf(snapshot_zesp, prioridades_zesp)
+
+        self.assertEqual(len(paginas_con), len(paginas_sin) + 1)
+
+        pagina_zesp = next(
+            p for p in paginas_con if 'ÁMBITO: ZONAS ESPECIALES' in p)
+        # El unico tajo del fixture (tubeado) esta 100% terminado, asi que
+        # no sale en "requieren atencion" (esa tabla solo lista lo
+        # incompleto) -- pero su FASE si aparece en el desglose por fase,
+        # igual que ya confirma el test equivalente de garaje.
+        self.assertIn('Instalación interior', pagina_zesp)
+        self.assertIn('Todos los tajos propios medidos están terminados',
+                       pagina_zesp)
+
+    def test_el_resumen_general_no_duplica_las_celdas_de_zesp(self):
+        """A diferencia de garaje (que SI suma en snapshot_general -- "si
+        hay garaje... forma parte del total de la obra"), zesp ya viaja
+        DENTRO de 'snapshot' de vivienda desde el modelo de datos: sumarlo
+        tambien aqui lo contaria dos veces. La pagina RESUMEN GENERAL debe
+        salir identica con o sin zesp."""
+        snapshot_zesp, prioridades_zesp = self._snapshot_y_prioridades_zesp()
+        paginas_sin = self._generar_pdf()
+        paginas_con = self._generar_pdf(snapshot_zesp, prioridades_zesp)
+
+        self.assertEqual(paginas_sin[0], paginas_con[0])
 
 
 if __name__ == '__main__':

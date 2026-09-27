@@ -1745,12 +1745,21 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     ) or '<tr><td class="empty">Sin ficha de obra.</td></tr>'
 
     hint_incluye_garaje = ' · incluye garaje' if snapshot_garaje else ''
+    if historial:
+        n_revs = len(historial)
+        hint_revs = f"Desde {historial[0][0]}"
+    elif prioridades_garaje and prioridades_garaje.get('revision'):
+        n_revs = 1
+        hint_revs = f"Garaje {prioridades_garaje['revision']}"
+    else:
+        n_revs = 0
+        hint_revs = "—"
     kpi_html = ""
     if kpis_obra_total:
         kpi_html = f"""
         <div class="kpi"><div class="label">Avance estricto (X)</div><div class="value">{kpis_obra_total['pct_estricto']}%</div><div class="hint">Solo tareas 100% terminadas{hint_incluye_garaje}</div></div>
         <div class="kpi"><div class="label">Avance estimado</div><div class="value">{kpis_obra_total['pct_ponderado']}%</div><div class="hint">Incluye parciales (estimación){hint_incluye_garaje}</div></div>
-        <div class="kpi"><div class="label">Revisiones</div><div class="value">{len(historial)}</div><div class="hint">Desde {historial[0][0]}</div></div>
+        <div class="kpi"><div class="label">Revisiones</div><div class="value">{n_revs}</div><div class="hint">{hint_revs}</div></div>
         <div class="kpi"><div class="label">Tajos bloqueados</div><div class="value">{n_bloqueos_base}</div><div class="hint">Sagarde · dependencias de la base</div></div>
         """
     else:
@@ -1885,13 +1894,27 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 
     # Pestaña propia de zonas especiales, separada de Prioridades de
     # vivienda. Comparte exactamente el mismo renderer, pero sus ids llevan
-    # '-zesp' y su enlace abre el JSON filtrado de esta vista. No se incorpora
-    # al informe a la carta: esa pieza queda expresamente fuera de este cambio.
+    # '-zesp' y su enlace abre el JSON filtrado de esta vista.
     zesp_nav_html = ''
     zesp_seccion_html = ''
+    zesp_informe_checkboxes_html = ''
+    secciones_prioridades_zesp = {}
     if prioridades_zonas_especiales is not None:
         zesp_nav_html = (
             '  <button data-view="v-zesp">🔧 Zonas especiales</button>\n')
+        zesp_informe_checkboxes_html = """
+    <div class="tj-group-hdr">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+        <input type="checkbox" id="cb-prioridades-zesp-all" onchange="toggleGrupoZespInforme(this)"> <b>🔧 Zonas especiales</b>
+      </label>
+    </div>
+    <div class="tj-items" style="padding-left:26px;">
+      <label><input type="checkbox" class="cb-prioridades-zesp" data-seccion="prioridades_zesp" data-sub="estado_proyecto"> Estado del proyecto</label>
+      <label><input type="checkbox" class="cb-prioridades-zesp" data-seccion="prioridades_zesp" data-sub="que_hacer_ahora"> Qué hacer ahora</label>
+      <label><input type="checkbox" class="cb-prioridades-zesp" data-seccion="prioridades_zesp" data-sub="tajos_bloqueados"> Tajos bloqueados</label>
+      <label><input type="checkbox" class="cb-prioridades-zesp" data-seccion="prioridades_zesp" data-sub="tareas_manuales"> Tareas manuales</label>
+      <label><input type="checkbox" class="cb-prioridades-zesp" data-seccion="prioridades_zesp" data-sub="sin_revisar"> Sin revisar nunca</label>
+    </div>"""
         avance_zesp_pct = None
         if snapshot_zonas_especiales:
             avance_zesp_pct = motor.kpis_snapshot(
@@ -1920,6 +1943,20 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                 + partes_zesp['dudas_inventario_html']
                 + partes_zesp['terminado_html']
             )
+            # Informe de obra a la carta: piezas de zonas especiales,
+            # mismas claves que secciones_prioridades de vivienda y de
+            # garaje (Bixente, 26/09/2026, sobre garaje pero con el mismo
+            # criterio: "es una pieza mas de las obras").
+            secciones_prioridades_zesp = {
+                'estado_proyecto': (
+                    partes_zesp['bento_command']
+                    + partes_zesp['estado_obra_html']
+                    + partes_zesp['avisos_prio']),
+                'que_hacer_ahora': partes_zesp['ejecucion_html'],
+                'tajos_bloqueados': partes_zesp['bloqueado_html'],
+                'tareas_manuales': partes_zesp['tareas_manual_html'],
+                'sin_revisar': partes_zesp['sin_revisar_html'],
+            }
         zesp_seccion_html = (
             '<section id="v-zesp" class="view">'
             + zesp_html
@@ -2077,6 +2114,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         'personal': f"<div class='card'><h3>Personal asignado</h3>{personal_html}</div>",
         'prioridades': secciones_prioridades,
         'prioridades_garaje': secciones_prioridades_garaje,
+        'prioridades_zesp': secciones_prioridades_zesp,
         'riesgos': riesgos_html,
         'normativa': (
             "<div class='card'><h3>Normativa y criterios técnicos "
@@ -2131,7 +2169,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="tajos_bloqueados"> Tajos bloqueados</label>
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="tareas_manuales"> Tareas manuales</label>
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="sin_revisar"> Sin revisar nunca</label>
-    </div>{garaje_informe_checkboxes_html}
+    </div>{garaje_informe_checkboxes_html}{zesp_informe_checkboxes_html}
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="riesgos" onchange="toggleGrupoInforme(this)"> <b>⚠ Riesgos</b></label>
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="normativa" onchange="toggleGrupoInforme(this)"> <b>📘 Normativa</b></label>
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="documentos" onchange="toggleGrupoInforme(this)"> <b>📎 Documentos</b></label>
@@ -2293,6 +2331,11 @@ function cargarSeleccionInforme(){{
     const subsGaraje = [...document.querySelectorAll('.cb-prioridades-garaje')];
     cbGarajeAll.checked = subsGaraje.length > 0 && subsGaraje.every(cb => cb.checked);
   }}
+  const cbZespAll = document.getElementById('cb-prioridades-zesp-all');
+  if (cbZespAll) {{
+    const subsZesp = [...document.querySelectorAll('.cb-prioridades-zesp')];
+    cbZespAll.checked = subsZesp.length > 0 && subsZesp.every(cb => cb.checked);
+  }}
 }}
 
 function abrirSelectorInforme(){{
@@ -2315,6 +2358,11 @@ function toggleGrupoGarajeInforme(masterCb){{
   guardarSeleccionInforme();
 }}
 
+function toggleGrupoZespInforme(masterCb){{
+  document.querySelectorAll('.cb-prioridades-zesp').forEach(cb => cb.checked = masterCb.checked);
+  guardarSeleccionInforme();
+}}
+
 function marcarTodoInforme(){{
   _checksInforme().forEach(cb => cb.checked = true);
   guardarSeleccionInforme();
@@ -2332,6 +2380,14 @@ document.querySelectorAll('.cb-prioridades-garaje').forEach(cb => {{
   cb.addEventListener('change', () => {{
     const subs = [...document.querySelectorAll('.cb-prioridades-garaje')];
     document.getElementById('cb-prioridades-garaje-all').checked = subs.every(c => c.checked);
+    guardarSeleccionInforme();
+  }});
+}});
+
+document.querySelectorAll('.cb-prioridades-zesp').forEach(cb => {{
+  cb.addEventListener('change', () => {{
+    const subs = [...document.querySelectorAll('.cb-prioridades-zesp')];
+    document.getElementById('cb-prioridades-zesp-all').checked = subs.every(c => c.checked);
     guardarSeleccionInforme();
   }});
 }});
@@ -2357,7 +2413,7 @@ function generarVistaPreviaInforme(){{
   // imprimiria dos secciones con el mismo titulo, sin forma de saber
   // cual es cual -- encontrado probando de verdad la vista previa, no
   // solo leyendo el codigo.
-  const PREFIJO_SECCION = {{prioridades_garaje: '🅿️ '}};
+  const PREFIJO_SECCION = {{prioridades_garaje: '🅿️ ', prioridades_zesp: '🔧 '}};
   let contenido = '';
   marcadas.forEach(cb => {{
     const seccion = cb.dataset.seccion;

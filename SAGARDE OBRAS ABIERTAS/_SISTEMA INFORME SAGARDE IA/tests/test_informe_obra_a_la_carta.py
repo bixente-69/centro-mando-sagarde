@@ -74,13 +74,13 @@ class TestBotonInformeObra(unittest.TestCase):
 
 class TestSeccionesEmbebidas(unittest.TestCase):
 
-    def test_el_json_tiene_las_nueve_claves_esperadas(self):
+    def test_el_json_tiene_las_diez_claves_esperadas(self):
         html = _generar()
         secciones = _extraer_secciones(html)
         self.assertEqual(set(secciones.keys()), {
             'trabajos', 'materiales', 'personal', 'prioridades',
-            'prioridades_garaje', 'riesgos', 'normativa', 'documentos',
-            'cierre',
+            'prioridades_garaje', 'prioridades_zesp', 'riesgos',
+            'normativa', 'documentos', 'cierre',
         })
 
     def test_prioridades_garaje_vacia_sin_garaje(self):
@@ -89,6 +89,13 @@ class TestSeccionesEmbebidas(unittest.TestCase):
         html = _generar()
         secciones = _extraer_secciones(html)
         self.assertEqual(secciones['prioridades_garaje'], {})
+
+    def test_prioridades_zesp_vacia_sin_zonas_especiales(self):
+        """Mismo contrato que garaje: sin zonas especiales, la clave
+        existe pero no aporta nada seleccionable."""
+        html = _generar()
+        secciones = _extraer_secciones(html)
+        self.assertEqual(secciones['prioridades_zesp'], {})
 
     def test_prioridades_tiene_los_cinco_subapartados(self):
         html = _generar(prioridades=_prioridades(
@@ -142,6 +149,41 @@ class TestSeccionesEmbebidas(unittest.TestCase):
         self.assertIn('id="cb-prioridades-garaje-all"', con_garaje)
         self.assertEqual(
             con_garaje.count('data-seccion="prioridades_garaje"'), 5)
+
+    def test_prioridades_zesp_tiene_los_cinco_subapartados(self):
+        html = _generar(
+            prioridades_zonas_especiales=_prioridades(
+                resumen={'bloqueados': 1, 'sin_revisar': 1},
+                inventario=[{
+                    'seccion': 'BLOQUEADO', 'trabajo': 'Tubeado empotrado',
+                    'propiedad': 'propio', 'orden_ejecucion': 1,
+                    'fase_nombre': 'f', 'n_ubicaciones': 1, 'ubicaciones': [],
+                    'estado_actual': '—', 'motivo': 'x', 'subtajos': [],
+                }],
+            ),
+            snapshot_zonas_especiales=[
+                {'task': 'Tubeado empotrado', 'floor': 'Zonas especiales',
+                 'building': 'P1', 'unit': 'zt1', 'status': 'X'},
+            ],
+        )
+        secciones = _extraer_secciones(html)
+        self.assertEqual(set(secciones['prioridades_zesp'].keys()), {
+            'estado_proyecto', 'que_hacer_ahora', 'tajos_bloqueados',
+            'tareas_manuales', 'sin_revisar',
+        })
+        self.assertIn(
+            'Tubeado empotrado',
+            secciones['prioridades_zesp']['tajos_bloqueados'])
+
+    def test_el_selector_ofrece_zesp_solo_cuando_la_obra_lo_tiene(self):
+        sin_zesp = _generar()
+        con_zesp = _generar(
+            prioridades_zonas_especiales=_prioridades())
+        self.assertNotIn('id="cb-prioridades-zesp-all"', sin_zesp)
+        self.assertNotIn('data-seccion="prioridades_zesp"', sin_zesp)
+        self.assertIn('id="cb-prioridades-zesp-all"', con_zesp)
+        self.assertEqual(
+            con_zesp.count('data-seccion="prioridades_zesp"'), 5)
 
     def test_el_contenido_embebido_coincide_con_la_pestana_visible(self):
         """La prueba central de esta tarea: el JSON no puede decir una cosa
