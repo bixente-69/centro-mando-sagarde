@@ -935,11 +935,25 @@ def bloque_pct(pct, n_rev, historico_pct=None, variacion_pct=None,
     pct y su propia tendencia -- son avances independientes, no se funden
     en un unico numero ni en una unica linea (pedido de Bixente 27/09/2026,
     igual que Prioridades/Trabajos ya distinguen vivienda de garaje).
+
+    Una obra puede tener garaje con revisiones reales y vivienda sin
+    ninguna todavia (Olabeaga, 27/09/2026: garaje avanzado, vivienda recien
+    dada de alta y sin marcar) -- "Sin revisiones" solo debe tapar la
+    tarjeta entera cuando NINGUNA de las dos partes tiene dato. Si el
+    garaje si tiene, la fila de vivienda se queda en "Sin revisiones" pero
+    la de garaje se pinta igual que si la obra no tuviera vivienda.
     """
-    if not n_rev:
+    if not n_rev and pct_garaje is None:
         return '<div class="pct pending">Sin revisiones</div>'
-    fila_vivienda = _fila_pct_tendencia(
-        '🏠' if pct_garaje is not None else '', pct, historico_pct, variacion_pct)
+    if not n_rev:
+        fila_vivienda = (
+            '<div style="display:flex;align-items:center">'
+            '<span style="font-size:13px;margin-right:4px">🏠</span>'
+            '<div class="pct pending">Sin revisiones</div></div>'
+        )
+    else:
+        fila_vivienda = _fila_pct_tendencia(
+            '🏠' if pct_garaje is not None else '', pct, historico_pct, variacion_pct)
     if pct_garaje is None:
         return fila_vivienda
     fila_garaje = _fila_pct_tendencia(

@@ -524,13 +524,27 @@ class TestBloquePctVivendaGaraje(unittest.TestCase):
         self.assertIn('+2.3%', bloque)
         self.assertIn('-1.1%', bloque)
 
-    def test_sin_revisiones_no_muestra_garaje(self):
+    def test_sin_revisiones_ni_garaje_tapa_la_tarjeta_entera(self):
         """Norma general de bloque_pct (una obra sin ninguna revision no
-        tiene ni siquiera '0 %'): pct_garaje no debe colarse por delante
-        de esa regla."""
-        bloque = gt.bloque_pct(0, n_rev=0, pct_garaje=52.3)
+        tiene ni siquiera '0 %'): sin dato en NINGUNA de las dos partes,
+        el mensaje ocupa toda la tarjeta."""
+        bloque = gt.bloque_pct(0, n_rev=0)
         self.assertIn('Sin revisiones', bloque)
         self.assertNotIn('🅿️', bloque)
+        self.assertNotIn('🏠', bloque)
+
+    def test_sin_revisiones_de_vivienda_pero_con_garaje_muestra_el_garaje(self):
+        """27/09/2026, caso real Olabeaga: garaje con revisiones reales,
+        vivienda recien dada de alta (estructura sembrada, 0 revisiones
+        todavia). Antes esto colapsaba TODA la tarjeta a 'Sin revisiones'
+        y escondia un garaje con dato real -- Bixente lo senalo viendo la
+        tarjeta real ('tiene dos revisiones, una de garaje y una de
+        viviendas' -- la de garaje no se veia en absoluto)."""
+        bloque = gt.bloque_pct(0, n_rev=0, pct_garaje=52.3)
+        self.assertIn('Sin revisiones', bloque)
+        self.assertIn('🏠', bloque)
+        self.assertIn('🅿️', bloque)
+        self.assertIn('52.3%', bloque)
 
 
 class TestRegistroGarajeDesdeFicha(unittest.TestCase):
