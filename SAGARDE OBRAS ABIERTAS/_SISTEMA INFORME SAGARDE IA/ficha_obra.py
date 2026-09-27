@@ -55,6 +55,12 @@ from claves_correcciones import normalizar_unidad, partir_clave
 
 VERSION = 1
 NOMBRE_FICHERO = 'ficha_obra.json'
+ID_PLANTA_ZONAS_ESPECIALES = 'zesp'
+NOMBRE_PLANTA_ZONAS_ESPECIALES = 'Zonas especiales'
+ORDEN_PLANTA_ZONAS_ESPECIALES = 999
+TIPOS_ZONA_ESPECIAL = frozenset({
+    'cuarto_tecnico', 'cuarto_ligero', 'cubierta',
+})
 
 # Estado tal y como llega del priorizador -> estado guardado en la ficha
 # Las claves están normalizadas (minúsculas). La cadena vacía sigue siendo 'P':
@@ -147,6 +153,26 @@ def asegurar_apartados(ficha):
         if isinstance(ficha.get(nombre), dict):
             ficha[nombre].setdefault('_meta', {})
     return creados
+
+
+def zonas_especiales_portal(portal):
+    """Oculta al resto del sistema que estas zonas viven en una planta virtual."""
+    for planta in (portal or {}).get('plantas') or []:
+        if planta.get('id') == ID_PLANTA_ZONAS_ESPECIALES:
+            return planta.get('ubicaciones') or []
+    return []
+
+
+def contar_viviendas(ficha):
+    """Cuenta solo viviendas reales para que las zonas nuevas no inflen el dato."""
+    return sum(
+        1
+        for bloque in (ficha.get('estructura') or {}).get('bloques') or []
+        for portal in bloque.get('portales') or []
+        for planta in portal.get('plantas') or []
+        for ubicacion in planta.get('ubicaciones') or []
+        if ubicacion.get('tipo') == 'vivienda'
+    )
 
 
 # ------------------------------------------------------ volcado de apartados
@@ -703,21 +729,61 @@ def _alta_ubicacion(ficha, item, revision, cambios, por_id, por_nombre):
     if portal is None:
         return None          # portal entero desconocido: no se inventa
 
+    planta_id_solicitada = str(item.get('planta_id') or '').strip()
+    es_zona_especial = (
+        planta_id_solicitada == ID_PLANTA_ZONAS_ESPECIALES
+        or _fold(planta_nom) == _fold(NOMBRE_PLANTA_ZONAS_ESPECIALES)
+    )
+    if es_zona_especial:
+        tipo_ubicacion = str(item.get('tipo_ubicacion') or '').strip().casefold()
+        nombre_ubicacion = str(item.get('nombre_ubicacion') or '').strip()
+        # Una revision no puede inventar que cuarto es ni como se llama. Las
+        # altas desde el futuro generador deben traer ambos datos declarados.
+        if tipo_ubicacion not in TIPOS_ZONA_ESPECIAL or not nombre_ubicacion:
+            return None
+
     planta = next((p for p in portal.get('plantas') or []
-                   if _fold(p.get('nombre')) == _fold(planta_nom)), None)
+                   if (planta_id_solicitada
+                       and p.get('id') == planta_id_solicitada)
+                   or _fold(p.get('nombre')) == _fold(planta_nom)), None)
     if planta is None:
-        planta = {'id': _planta_id(planta_nom), 'nombre': planta_nom,
-                  'orden': _clave_planta(planta_nom)[1], 'ubicaciones': [],
-                  'origen': 'revision_sin_confirmar'}
+        if es_zona_especial:
+            planta = {
+                'id': ID_PLANTA_ZONAS_ESPECIALES,
+                'nombre': NOMBRE_PLANTA_ZONAS_ESPECIALES,
+                'orden': ORDEN_PLANTA_ZONAS_ESPECIALES,
+                'ubicaciones': [],
+                'origen': 'revision_sin_confirmar',
+            }
+        else:
+            planta = {'id': _planta_id(planta_nom), 'nombre': planta_nom,
+                      'orden': _clave_planta(planta_nom)[1], 'ubicaciones': [],
+                      'origen': 'revision_sin_confirmar'}
         portal.setdefault('plantas', []).append(planta)
-        portal['plantas'].sort(key=lambda p: _clave_planta(p.get('nombre')))
+        portal['plantas'].sort(key=lambda p: (
+            p.get('id') == ID_PLANTA_ZONAS_ESPECIALES,
+            _clave_planta(p.get('nombre')),
+        ))
         cambios['ubicaciones_nuevas'].append(f'{edificio} planta {planta_nom} (planta entera)')
 
-    ambito = str(item.get('ambito') or 'vivienda').casefold()
-    nueva = {'id': unidad, 'tipo': 'zona_comun' if ambito == 'zona_comun' else
-             ('edificio' if ambito == 'edificio' else 'vivienda'),
-             'habitaciones': None, 'origen': 'revision_sin_confirmar',
-             'confirmado': None, 'visto_en': revision}
+    if es_zona_especial:
+        nueva = {
+            'id': unidad,
+            'tipo': tipo_ubicacion,
+            'nombre': nombre_ubicacion,
+            'origen': 'revision_sin_confirmar',
+            'confirmado': None,
+            'visto_en': revision,
+        }
+        funcion = str(item.get('funcion') or '').strip()
+        if funcion and tipo_ubicacion in {'cuarto_tecnico', 'cuarto_ligero'}:
+            nueva['funcion'] = funcion
+    else:
+        ambito = str(item.get('ambito') or 'vivienda').casefold()
+        nueva = {'id': unidad, 'tipo': 'zona_comun' if ambito == 'zona_comun' else
+                 ('edificio' if ambito == 'edificio' else 'vivienda'),
+                 'habitaciones': None, 'origen': 'revision_sin_confirmar',
+                 'confirmado': None, 'visto_en': revision}
     planta.setdefault('ubicaciones', []).append(nueva)
     planta['ubicaciones'].sort(key=lambda u: str(u['id']))
     cambios['ubicaciones_nuevas'].append(f'{edificio} planta {planta_nom} unidad {unidad}')
