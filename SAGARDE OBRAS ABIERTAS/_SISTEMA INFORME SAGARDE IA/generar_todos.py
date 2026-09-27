@@ -286,6 +286,12 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
             portal_id = f'src_{slug}_p{i_portal}'
             plantas = []
             for i_planta, planta in enumerate(portal.get('plantas') or [], 1):
+                # La planta virtual 'zesp' (zonas especiales: cuarto tecnico/
+                # ligero/cubierta) no son viviendas -- no viajan en el
+                # registro que alimenta el desplegable de "continuar desde"
+                # del generador. Precargarlas es una pieza futura aparte.
+                if planta.get('id') == fichas.ID_PLANTA_ZONAS_ESPECIALES:
+                    continue
                 planta_id = f'{portal_id}_f{i_planta}'
                 vivs = []
                 for ubi in planta.get('ubicaciones') or []:

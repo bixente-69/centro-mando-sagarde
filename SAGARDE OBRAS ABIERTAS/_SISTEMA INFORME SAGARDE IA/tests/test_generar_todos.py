@@ -258,6 +258,36 @@ class TestContratoFuenteEstructura(unittest.TestCase):
         self.assertNotEqual(registro.get('fuente_estructura'),
                             'ficha_obra.json')
 
+    def test_la_planta_zesp_no_viaja_al_registro_ni_infla_viviendas_planta(self):
+        """27/09/2026: la planta virtual 'zesp' (zonas especiales de
+        portal: cuarto técnico/ligero/cubierta) no son viviendas -- no
+        deben aparecer en el desplegable "continuar desde" del generador
+        (esa precarga es una pieza futura aparte) ni inflar el recuento
+        que ya usa Bixente para saber cuántas viviendas tiene la obra."""
+        ficha = self._ficha({'p1__pb__tubeado__A': 'X'})
+        ficha['estructura']['bloques'][0]['portales'][0]['plantas'].append({
+            'id': gt.fichas.ID_PLANTA_ZONAS_ESPECIALES,
+            'nombre': 'Zonas especiales', 'orden': 999,
+            'ubicaciones': [
+                {'id': 'cub1', 'tipo': 'cubierta', 'nombre': 'Cubierta'},
+            ],
+        })
+
+        registro = gt.registro_revision_desde_ficha(
+            self.OBRA, ficha, fixtures.prioridades([]))
+
+        self.assertIsNotNone(registro)
+        self.assertEqual(registro['resumen']['viviendas_planta'], 4)
+        ids_planta = {
+            planta['id']
+            for bloque in registro['bloques']
+            for portal in bloque['portales']
+            for planta in portal['plantas']
+        }
+        self.assertFalse(
+            any('zesp' in pid for pid in ids_planta),
+            f'la planta de zonas especiales no debe viajar al registro: {ids_planta}')
+
     def test_la_hoja_deducida_tambien_precarga_la_n(self):
         """Mismo contrato que registro_revision_desde_ficha (27/09/2026):
         este camino (obras sin ficha_obra.json, deducidas del historial
