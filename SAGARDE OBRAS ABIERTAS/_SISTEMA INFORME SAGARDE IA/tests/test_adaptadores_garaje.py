@@ -249,6 +249,51 @@ class TestAdaptadoresGaraje(unittest.TestCase):
         self.assertIn('ZONA DESCONOCIDA descartada', salida.getvalue())
         self.assertIn('tajo desconocido', salida.getvalue())
 
+    def test_cada_revision_acumula_un_punto_de_historico_pct(self):
+        """27/09/2026: garaje no reconstruye snapshots pasados como
+        vivienda, asi que su historico de tendencia es el que el propio
+        adaptador va guardando revision a revision (ver comentario en
+        adaptar_revision_garaje.construir_snapshot). SCORE de
+        motor_informes: X=1.0, M=0.6 -> con una celda X el pct es 100.0;
+        al anadir una segunda celda en M, el pct pasa a (1.0+0.6)/2*100=80.0."""
+        ficha_garajes.guardar(self.carpeta_obra, ficha_inicial())
+        clave_x = 'garaje_1__planta_s1__garaje_tabicado__zona_1'
+        clave_m = 'garaje_1__planta_s1__garaje_tabicado__zona_2'
+
+        hoja_1 = self._escribir(
+            'REVISION GARAJE 24092026.html',
+            html_revision([(clave_x, 'X')]))
+        ficha, *_ = adaptar_revision_garaje.adaptar_revision_garaje(
+            hoja_1, 'prueba', carpeta_obra_abs=self.carpeta_obra,
+            catalogo=CATALOGO,
+        )
+        self.assertEqual([100.0], ficha['historico_pct'])
+
+        hoja_2 = self._escribir(
+            'REVISION GARAJE 25092026.html',
+            html_revision([(clave_x, 'X'), (clave_m, 'M')]))
+        ficha, *_ = adaptar_revision_garaje.adaptar_revision_garaje(
+            hoja_2, 'prueba', carpeta_obra_abs=self.carpeta_obra,
+            catalogo=CATALOGO,
+        )
+        self.assertEqual([100.0, 80.0], ficha['historico_pct'])
+
+    def test_historico_pct_se_recorta_a_los_ultimos_seis_puntos(self):
+        ficha = ficha_inicial()
+        ficha['historico_pct'] = [10.0, 20.0, 30.0, 40.0, 50.0, 60.0]
+        ficha_garajes.guardar(self.carpeta_obra, ficha)
+        clave = 'garaje_1__planta_s1__garaje_tabicado__zona_1'
+        hoja = self._escribir(
+            'REVISION GARAJE 25092026.html', html_revision([(clave, 'X')]))
+
+        ficha, *_ = adaptar_revision_garaje.adaptar_revision_garaje(
+            hoja, 'prueba', carpeta_obra_abs=self.carpeta_obra,
+            catalogo=CATALOGO,
+        )
+
+        self.assertEqual(
+            [20.0, 30.0, 40.0, 50.0, 60.0, 100.0], ficha['historico_pct'])
+
     def test_estado_no_reconocido_no_baja_un_estado_guardado(self):
         ficha = ficha_inicial()
         clave = 'garaje_1__planta_s1__garaje_tabicado__zona_1'

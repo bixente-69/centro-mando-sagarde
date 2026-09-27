@@ -16,6 +16,7 @@ import os
 
 import ficha_garajes
 import lector_hoja_tajos_html
+import motor_informes
 import registro_obras
 import validar_revision
 
@@ -132,6 +133,17 @@ def adaptar_revision_garaje(
     ficha, cambios = ficha_garajes.actualizar_desde_snapshot(
         ficha, snapshot, fecha
     )
+    # Garaje no versiona un snapshot por revision (a diferencia de vivienda,
+    # que reconstruye su historico releyendo cada hoja pasada): el unico
+    # punto de tendencia disponible es "cuanto habia avanzado justo despues
+    # de aplicar esta revision". Se va acumulando hacia adelante desde aqui.
+    pct_actual = round(motor_informes._pct_ponderado(
+        ficha_garajes.snapshot_desde_ficha(ficha)
+    ), 1)
+    historico = ficha.setdefault('historico_pct', [])
+    if not historico or historico[-1] != pct_actual:
+        historico.append(pct_actual)
+    del historico[:-6]
     destino = ficha_garajes.guardar(carpeta_obra_abs, ficha)
 
     for aviso in avisos:

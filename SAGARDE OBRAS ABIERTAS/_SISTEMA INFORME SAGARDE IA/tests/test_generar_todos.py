@@ -439,6 +439,54 @@ class TestObraSinRevisiones(unittest.TestCase):
         self.assertIn('bad', bloque)
 
 
+class TestBloquePctVivendaGaraje(unittest.TestCase):
+    """27/09/2026: Bixente pidio ver, en la tarjeta de Obras Abiertas, el
+    mismo grafico de tendencia que ya tenia el Centro de Mando -- y, al ser
+    mas grande esa vista, con vivienda y garaje desdoblados uno encima del
+    otro en vez de fundidos en un solo numero."""
+
+    def test_sin_garaje_una_sola_fila_sin_icono(self):
+        """Una obra sin garaje no debe verse distinta a como se veia antes
+        de que existiera el parametro pct_garaje."""
+        bloque = gt.bloque_pct(79.8, n_rev=25)
+        self.assertIn('79.8%', bloque)
+        self.assertNotIn('🏠', bloque)
+        self.assertNotIn('🅿️', bloque)
+
+    def test_con_garaje_dos_filas_con_su_propio_icono_y_porcentaje(self):
+        bloque = gt.bloque_pct(89.7, n_rev=6, pct_garaje=52.3)
+        self.assertIn('🏠', bloque)
+        self.assertIn('89.7%', bloque)
+        self.assertIn('🅿️', bloque)
+        self.assertIn('52.3%', bloque)
+        self.assertLess(bloque.index('🏠'), bloque.index('🅿️'))
+
+    def test_sparkline_solo_aparece_con_dos_puntos_o_mas(self):
+        con_un_punto = gt.bloque_pct(
+            79.8, n_rev=6, pct_garaje=52.3, historico_pct_garaje=[52.3])
+        self.assertNotIn('<svg', con_un_punto)
+
+        con_dos_puntos = gt.bloque_pct(
+            79.8, n_rev=6, pct_garaje=52.3,
+            historico_pct_garaje=[45.0, 52.3])
+        self.assertIn('<svg', con_dos_puntos)
+
+    def test_variacion_positiva_y_negativa_en_cada_fila(self):
+        bloque = gt.bloque_pct(
+            79.8, n_rev=6, variacion_pct=2.3,
+            pct_garaje=52.3, variacion_pct_garaje=-1.1)
+        self.assertIn('+2.3%', bloque)
+        self.assertIn('-1.1%', bloque)
+
+    def test_sin_revisiones_no_muestra_garaje(self):
+        """Norma general de bloque_pct (una obra sin ninguna revision no
+        tiene ni siquiera '0 %'): pct_garaje no debe colarse por delante
+        de esa regla."""
+        bloque = gt.bloque_pct(0, n_rev=0, pct_garaje=52.3)
+        self.assertIn('Sin revisiones', bloque)
+        self.assertNotIn('🅿️', bloque)
+
+
 class TestRegistroGarajeDesdeFicha(unittest.TestCase):
     """26/09/2026: el desplegable 'Obra ya instalada' del generador solo
     ofrecia revisiones de VIVIENDA aunque tuviera Garajes seleccionado

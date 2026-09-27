@@ -743,17 +743,85 @@ def clase_pct(p):
     return 'ok' if p >= 70 else 'warn' if p >= 40 else 'bad'
 
 
-def bloque_pct(pct, n_rev):
-    """El numero grande de la tarjeta de la obra.
+def _render_sparkline_svg(historico, width=70, height=22):
+    """Mismo trazado que el Centro de Mando (_SISTEMA/MOTOR/sagarde_portal.py)
+    para que el mismo dato se vea igual en los dos portales."""
+    if not historico or len(historico) < 2:
+        return ''
+    min_v = min(historico)
+    max_v = max(historico)
+    rng = (max_v - min_v) if max_v > min_v else 1.0
+
+    n = len(historico)
+    pts = []
+    for i, val in enumerate(historico):
+        x = (i / (n - 1)) * (width - 8) + 4
+        y = height - 4 - ((val - min_v) / rng) * (height - 8)
+        pts.append(f'{x:.1f},{y:.1f}')
+
+    polyline_pts = ' '.join(pts)
+    is_up = historico[-1] >= historico[0]
+    color = '#2e9e5b' if is_up else '#e07b1a'
+
+    end_x, end_y = pts[-1].split(',')
+    return (
+        f'<svg width="{width}" height="{height}" style="vertical-align:middle;margin-left:6px">'
+        f'<polyline fill="none" stroke="{color}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" points="{polyline_pts}"/>'
+        f'<circle cx="{end_x}" cy="{end_y}" r="3" fill="{color}"/>'
+        f'</svg>'
+    )
+
+
+def _render_variacion_badge(var_pct):
+    if var_pct is None:
+        return ''
+    if var_pct > 0:
+        return f'<span style="display:inline-block;padding:2px 7px;border-radius:12px;font-size:11px;font-weight:700;background:#e8f6ee;color:#2e9e5b;margin-left:6px">📈 +{var_pct:.1f}%</span>'
+    elif var_pct < 0:
+        return f'<span style="display:inline-block;padding:2px 7px;border-radius:12px;font-size:11px;font-weight:700;background:#fff4e5;color:#e07b1a;margin-left:6px">📉 {var_pct:.1f}%</span>'
+    return f'<span style="display:inline-block;padding:2px 7px;border-radius:12px;font-size:11px;font-weight:700;background:#f1f5f9;color:#647184;margin-left:6px">📊 0.0%</span>'
+
+
+def _fila_pct_tendencia(icono, pct, historico, variacion):
+    """Una linea de pct + tendencia. ``icono`` distingue vivienda de garaje
+    cuando se apilan las dos (ver ``bloque_pct``)."""
+    spark = _render_sparkline_svg(historico)
+    badge = _render_variacion_badge(variacion)
+    prefijo = f'<span style="font-size:13px;margin-right:4px">{icono}</span>' if icono else ''
+    return (
+        f'<div style="display:flex;align-items:center">'
+        f'{prefijo}<div class="pct {clase_pct(pct)}">{pct}%</div>{badge}{spark}'
+        f'</div>'
+    )
+
+
+def bloque_pct(pct, n_rev, historico_pct=None, variacion_pct=None,
+                pct_garaje=None, historico_pct_garaje=None,
+                variacion_pct_garaje=None):
+    """El numero grande de la tarjeta de la obra, con su tendencia reciente.
 
     Una obra sin ninguna revision no esta al 0 %: no se sabe como esta. Pintar
     un 0 en rojo al lado de las obras medidas es sustituir un desconocido por
     cero, y ademas la lee como si fuera mal. Un 0 % MEDIDO si es un dato y se
     muestra como tal.
+
+    Cuando la obra tiene garaje, va una segunda fila debajo con su propio
+    pct y su propia tendencia -- son avances independientes, no se funden
+    en un unico numero ni en una unica linea (pedido de Bixente 27/09/2026,
+    igual que Prioridades/Trabajos ya distinguen vivienda de garaje).
     """
     if not n_rev:
         return '<div class="pct pending">Sin revisiones</div>'
-    return f'<div class="pct {clase_pct(pct)}">{pct}%</div>'
+    fila_vivienda = _fila_pct_tendencia(
+        '🏠' if pct_garaje is not None else '', pct, historico_pct, variacion_pct)
+    if pct_garaje is None:
+        return fila_vivienda
+    fila_garaje = _fila_pct_tendencia(
+        '🅿️', pct_garaje, historico_pct_garaje, variacion_pct_garaje)
+    return (
+        '<div style="display:flex;flex-direction:column;gap:3px">'
+        f'{fila_vivienda}{fila_garaje}</div>'
+    )
 
 
 def fecha_corta(timestamp):
@@ -833,7 +901,14 @@ def generar_index(resultados):
                 ('__HREF__', html.escape(r['href'], quote=True)),
                 ('__BUSCA__', html.escape(r['nombre'].lower(), quote=True)),
                 ('__NOMBRE__', html.escape(r['nombre'])),
-                ('__BLOQUE_PCT__', bloque_pct(r['pct'], r['n_rev'])),
+                ('__BLOQUE_PCT__', bloque_pct(
+                    r['pct'], r['n_rev'],
+                    historico_pct=r.get('historico_pct'),
+                    variacion_pct=r.get('variacion_pct'),
+                    pct_garaje=r.get('pct_garaje'),
+                    historico_pct_garaje=r.get('historico_pct_garaje'),
+                    variacion_pct_garaje=r.get('variacion_pct_garaje'),
+                )),
                 ('__ULTIMO_ARCHIVO__', html.escape(ultimo_archivo)),
                 ('__ULTIMA__', html.escape(str(r['ultima']))),
                 ('__NREV__', str(r['n_rev'])),
@@ -1470,6 +1545,24 @@ def main(hacer_pdf=True):
         historico_pct = [round(motor_informes._pct_ponderado(s), 1) for _, s in historial[-6:]] if historial else []
         variacion_pct = round(historico_pct[-1] - historico_pct[-2], 1) if len(historico_pct) >= 2 else 0.0
 
+        # Garaje no reconstruye snapshots pasados (ver comentario en
+        # adaptar_revision_garaje.py): su historico es el que el propio
+        # adaptador va acumulando revision a revision, leido tal cual.
+        if ficha_garaje_actual:
+            # Numero grande = estricto, igual criterio que 'pct' de vivienda
+            # (res['kpis']['pct_estricto']); el historico sigue siendo
+            # ponderado, igual que el de vivienda (linea de arriba).
+            pct_garaje = round(motor_informes._pct_estricto(snapshot_garaje), 1)
+            historico_pct_garaje = ficha_garaje_actual.get('historico_pct', [])[-6:]
+            variacion_pct_garaje = (
+                round(historico_pct_garaje[-1] - historico_pct_garaje[-2], 1)
+                if len(historico_pct_garaje) >= 2 else 0.0
+            )
+        else:
+            pct_garaje = None
+            historico_pct_garaje = []
+            variacion_pct_garaje = 0.0
+
         pdf_ejecutivo_nom = f"INFORME_EJECUTIVO_{re.sub(r'[^A-Z0-9]', '_', obra['nombre'].upper())}.pdf"
         pdf_ejecutivo_abs = os.path.join(salida_dir, pdf_ejecutivo_nom)
         pdf_ejecutivo_rel = os.path.relpath(pdf_ejecutivo_abs, OBRAS_ABIERTAS_DIR).replace('\\', '/') if os.path.isfile(pdf_ejecutivo_abs) else None
@@ -1490,6 +1583,9 @@ def main(hacer_pdf=True):
             'n_prioridades_verificar': prioridades['resumen']['verificar'],
             'historico_pct': historico_pct,
             'variacion_pct': variacion_pct,
+            'pct_garaje': pct_garaje,
+            'historico_pct_garaje': historico_pct_garaje,
+            'variacion_pct_garaje': variacion_pct_garaje,
             'pdf_ejecutivo_href': pdf_ejecutivo_rel,
         })
 
