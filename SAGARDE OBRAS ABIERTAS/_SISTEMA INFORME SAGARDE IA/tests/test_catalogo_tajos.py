@@ -111,15 +111,60 @@ class TestCatalogoTajosConfirmado(unittest.TestCase):
         self.assertNotIn('ORDEN_SIN_CONFIRMAR', codigos)
         self.assertEqual(ficha['tajos']['detalle'][0]['orden'], 310)
 
-    def test_fotovoltaica_existe_como_tajo_propio_sin_dependencia(self):
-        tajo = self.tajos.get('fotovoltaica')
-        self.assertIsNotNone(
-            tajo, "falta el tajo 'fotovoltaica' en el catálogo común")
-        self.assertEqual(tajo['propiedad'], 'propio')
-        self.assertEqual(tajo['ambito'], 'edificio')
-        self.assertEqual(tajo['orden'], 306)
-        self.assertEqual(tajo['deps'], [])
-        self.assertIn('Fotovoltaica', tajo['aliases'])
+    def test_fotovoltaica_y_cuarto_tecnico_sueltos_ya_no_existen(self):
+        """27/09/2026, Bixente: se desglosan en zonas con sub-tajos (ver
+        los dos tests siguientes) y el tajo suelto desaparece del
+        catálogo. Los datos ya guardados con estos ids en fichas antiguas
+        no se migran (decisión explícita: 'no hagas migraciones')."""
+        self.assertNotIn('fotovoltaica', self.tajos)
+        self.assertNotIn('cuarto_tecnico', self.tajos)
+
+    def test_la_cadena_de_fotovoltaica_encadena_sus_seis_pasos(self):
+        cadena = [
+            'fv_paneles_instalacion', 'fv_paneles_cableado',
+            'fv_paneles_tierra', 'fv_strings_cableado',
+            'fv_equipos_protecciones', 'fv_puesta_marcha',
+        ]
+        for tajo_id in cadena:
+            with self.subTest(tajo=tajo_id):
+                self.assertIn(tajo_id, self.tajos)
+                tajo = self.tajos[tajo_id]
+                self.assertEqual(tajo['propiedad'], 'propio')
+                self.assertEqual(tajo['ambito'], 'edificio')
+        self.assertEqual(self.tajos[cadena[0]]['deps'], [])
+        for previo, siguiente in zip(cadena, cadena[1:]):
+            deps = [d['id'] for d in self.tajos[siguiente]['deps']]
+            self.assertEqual(
+                deps, [previo],
+                f'{siguiente} debería depender solo de {previo}')
+
+    def test_soportes_de_antena_y_pararrayos_son_independientes(self):
+        """Bixente, 27/09/2026: soportes distintos para antena y
+        pararrayos (no comparten un único tajo de soporte)."""
+        self.assertIn('cub_soporte_antena', self.tajos)
+        self.assertIn('cub_soporte_pararrayos', self.tajos)
+        self.assertEqual(self.tajos['cub_soporte_antena']['deps'], [])
+        self.assertEqual(self.tajos['cub_soporte_pararrayos']['deps'], [])
+
+        deps_instalacion_antena = [
+            d['id'] for d in self.tajos['cub_antena_instalacion']['deps']]
+        self.assertEqual(deps_instalacion_antena, ['cub_soporte_antena'])
+        deps_instalacion_pararrayos = [
+            d['id']
+            for d in self.tajos['cub_pararrayos_instalacion']['deps']]
+        self.assertEqual(
+            deps_instalacion_pararrayos, ['cub_soporte_pararrayos'])
+
+    def test_pararrayos_no_lleva_tajo_de_tierra_propio(self):
+        """Bixente, 27/09/2026, textual: 'tierra de pararrayos ya es el
+        cableado del mismo, por eso lo he omitido' -- el propio conductor
+        de bajada hace de tierra. La antena sí lleva un tajo de tierra
+        aparte, distinto de su cableado."""
+        self.assertNotIn('cub_pararrayos_tierra', self.tajos)
+        self.assertIn('cub_antena_tierra', self.tajos)
+        deps_tierra_antena = [
+            d['id'] for d in self.tajos['cub_antena_tierra']['deps']]
+        self.assertEqual(deps_tierra_antena, ['cub_antena_cableado'])
 
 
 if __name__ == '__main__':

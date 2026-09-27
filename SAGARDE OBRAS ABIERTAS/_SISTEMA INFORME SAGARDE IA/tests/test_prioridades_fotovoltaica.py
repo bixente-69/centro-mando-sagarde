@@ -1,8 +1,14 @@
 # -*- coding: utf-8 -*-
-"""Fotovoltaica no lleva codigo propio en el priorizador: al ser un tajo
-'propio' sin dependencias, tiene que comportarse igual que cualquier otro
-tajo de esa forma. Esta prueba demuestra que el catalogo (Task 1) basta,
-sin tocar priorizador_trabajos.py."""
+"""Un tajo 'propio' de cubierta sin dependencias no lleva codigo propio en
+el priorizador: tiene que comportarse igual que cualquier otro tajo de esa
+forma. Esta prueba demuestra que el catalogo (Task 1) basta, sin tocar
+priorizador_trabajos.py.
+
+27/09/2026: el tajo suelto 'fotovoltaica' se desglosa en una cadena de 6
+tajos de cubierta (fv_paneles_instalacion..fv_puesta_marcha) mas los de
+antena/pararrayos -- ver reglas/CATALOGO_TAJOS.json. Se usa aqui
+'fv_paneles_instalacion' como representante porque es, igual que lo era el
+tajo suelto, 'propio'/'edificio'/sin dependencias (el primero de la cadena)."""
 import os
 import sys
 import unittest
@@ -14,15 +20,17 @@ if _BASE not in sys.path:
 import fixtures
 from priorizador_trabajos import priorizar_ficha
 
+TAJO_ID = 'fv_paneles_instalacion'
+
 
 def _ficha_con_fotovoltaica(estado):
     ficha = fixtures.ficha_minima()
-    ficha['tajos']['aplicables'].append('fotovoltaica')
+    ficha['tajos']['aplicables'].append(TAJO_ID)
     ficha['tajos']['detalle'].append({
-        'id': 'fotovoltaica', 'nombre': 'Fotovoltaica',
+        'id': TAJO_ID, 'nombre': 'Instalación de paneles fotovoltaicos',
     })
     ficha['estados'] = {
-        'p1__pb__fotovoltaica__A': {'v': estado, 'f': '15/08/2026', 'r': 1},
+        f'p1__pb__{TAJO_ID}__A': {'v': estado, 'f': '15/08/2026', 'r': 1},
     }
     ficha['revisiones'] = [{'fecha': '15/08/2026', 'numero': 1}]
     return ficha
@@ -34,7 +42,7 @@ class TestFotovoltaicaEnPriorizador(unittest.TestCase):
         ficha = _ficha_con_fotovoltaica('')
         resultado = priorizar_ficha(ficha, obra='OBRA DE PRUEBAS')
         items = [i for i in resultado['detalle_items']
-                 if i['tarea_id'] == 'fotovoltaica']
+                 if i['tarea_id'] == TAJO_ID]
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0]['categoria'], 'VIABLE')
 
@@ -42,7 +50,7 @@ class TestFotovoltaicaEnPriorizador(unittest.TestCase):
         ficha = _ficha_con_fotovoltaica('X')
         resultado = priorizar_ficha(ficha, obra='OBRA DE PRUEBAS')
         items = [i for i in resultado['detalle_items']
-                 if i['tarea_id'] == 'fotovoltaica']
+                 if i['tarea_id'] == TAJO_ID]
         self.assertEqual(len(items), 1)
         self.assertEqual(items[0]['categoria'], 'TERMINADO')
 
@@ -50,8 +58,8 @@ class TestFotovoltaicaEnPriorizador(unittest.TestCase):
         ficha = _ficha_con_fotovoltaica('')
         priorizar_ficha(ficha, obra='OBRA DE PRUEBAS')
         detalle = ficha['tajos']['detalle']
-        tajo = next(t for t in detalle if t['id'] == 'fotovoltaica')
-        self.assertEqual(tajo['orden'], 306)
+        tajo = next(t for t in detalle if t['id'] == TAJO_ID)
+        self.assertEqual(tajo['orden'], 400)
         self.assertEqual(tajo['ambito'], 'edificio')
         self.assertEqual(tajo['deps'], [])
 

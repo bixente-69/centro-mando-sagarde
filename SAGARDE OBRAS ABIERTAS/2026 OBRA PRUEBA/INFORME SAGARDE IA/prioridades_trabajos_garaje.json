@@ -8,7 +8,7 @@
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "27/09/2026 09:23",
+  "generado": "27/09/2026 10:10",
   "resumen": {
     "listos": 0,
     "verificar": 0,
@@ -31,7 +31,7 @@
   "detalle_items": [
     {
       "tarea_id": "garaje_tabicado",
-      "trabajo": "Tabicado de garaje",
+      "trabajo": "Tabicado (zona común)",
       "trabajos_originales": [
         "Tabicado de garaje"
       ],
@@ -39,7 +39,7 @@
       "ambito": "zona_comun",
       "ambito_nombre": "Zonas comunes",
       "orden_ejecucion": 500,
-      "fase_nombre": "Obra civil garaje",
+      "fase_nombre": "Obra civil",
       "display_group": "garaje_tabicado",
       "edificio": "Garaje 1",
       "planta": "S-1",
@@ -58,7 +58,7 @@
     },
     {
       "tarea_id": "garaje_tabicado",
-      "trabajo": "Tabicado de garaje",
+      "trabajo": "Tabicado (zona común)",
       "trabajos_originales": [
         "Tabicado de garaje"
       ],
@@ -66,7 +66,7 @@
       "ambito": "zona_comun",
       "ambito_nombre": "Zonas comunes",
       "orden_ejecucion": 500,
-      "fase_nombre": "Obra civil garaje",
+      "fase_nombre": "Obra civil",
       "display_group": "garaje_tabicado",
       "edificio": "Garaje 1",
       "planta": "S-1",
@@ -85,7 +85,7 @@
     },
     {
       "tarea_id": "garaje_tabicado",
-      "trabajo": "Tabicado de garaje",
+      "trabajo": "Tabicado (zona común)",
       "trabajos_originales": [
         "Tabicado de garaje"
       ],
@@ -93,7 +93,7 @@
       "ambito": "zona_comun",
       "ambito_nombre": "Zonas comunes",
       "orden_ejecucion": 500,
-      "fase_nombre": "Obra civil garaje",
+      "fase_nombre": "Obra civil",
       "display_group": "garaje_tabicado",
       "edificio": "Garaje 1",
       "planta": "S-1",
@@ -112,7 +112,7 @@
     },
     {
       "tarea_id": "garaje_tabicado",
-      "trabajo": "Tabicado de garaje",
+      "trabajo": "Tabicado (zona común)",
       "trabajos_originales": [
         "Tabicado de garaje"
       ],
@@ -120,7 +120,7 @@
       "ambito": "zona_comun",
       "ambito_nombre": "Zonas comunes",
       "orden_ejecucion": 500,
-      "fase_nombre": "Obra civil garaje",
+      "fase_nombre": "Obra civil",
       "display_group": "garaje_tabicado",
       "edificio": "Garaje 2",
       "planta": "S-1",
@@ -139,7 +139,7 @@
     },
     {
       "tarea_id": "garaje_lucido",
-      "trabajo": "Lucido de garaje",
+      "trabajo": "Lucido",
       "trabajos_originales": [
         "Lucido de garaje"
       ],
@@ -147,7 +147,7 @@
       "ambito": "zona_comun",
       "ambito_nombre": "Zonas comunes",
       "orden_ejecucion": 505,
-      "fase_nombre": "Obra civil garaje",
+      "fase_nombre": "Obra civil",
       "display_group": "garaje_lucido",
       "edificio": "Garaje 1",
       "planta": "S-1",
@@ -166,7 +166,7 @@
     },
     {
       "tarea_id": "garaje_lucido",
-      "trabajo": "Lucido de garaje",
+      "trabajo": "Lucido",
       "trabajos_originales": [
         "Lucido de garaje"
       ],
@@ -174,7 +174,7 @@
       "ambito": "zona_comun",
       "ambito_nombre": "Zonas comunes",
       "orden_ejecucion": 505,
-      "fase_nombre": "Obra civil garaje",
+      "fase_nombre": "Obra civil",
       "display_group": "garaje_lucido",
       "edificio": "Garaje 2",
       "planta": "S-1",
@@ -247,7 +247,7 @@
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
-      "trabajo": "Pintura de garaje (recintos) — 1ª mano",
+      "trabajo": "Pintura (recintos) — 1ª mano",
       "trabajos_originales": [
         "Pintura de garaje (recintos) — 1ª mano"
       ],
@@ -255,7 +255,7 @@
       "ambito": "zona_comun",
       "ambito_nombre": "Zonas comunes",
       "orden_ejecucion": 550,
-      "fase_nombre": "Pintura garaje",
+      "fase_nombre": "Pintura",
       "display_group": "garaje_pintura",
       "edificio": "Garaje 1",
       "planta": "S-1",
@@ -282,7 +282,7 @@
       "ambito": "zona_comun",
       "ambito_nombre": "Zonas comunes",
       "orden_ejecucion": 562,
-      "fase_nombre": "Equipos garaje",
+      "fase_nombre": "Equipos",
       "display_group": "garaje_alum_temp_coloc_recinto",
       "edificio": "Garaje 1",
       "planta": "S-1",
@@ -344,15 +344,15 @@
       "estado": "M",
       "estado_actual": "M",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [
-        "Pintura de garaje (recintos) — 1ª mano"
+        "Pintura (recintos) — 1ª mano"
       ],
       "dependencias_detalle": [
         {
           "id": "garaje_pintura_1_recinto",
-          "nombre": "Pintura de garaje (recintos) — 1ª mano",
+          "nombre": "Pintura (recintos) — 1ª mano",
           "estado": "Pendiente",
           "minimo": 1.0,
           "cumplida": false
@@ -390,15 +390,15 @@
       "resumen_categorias": {
         "BLOQUEADO": 1
       },
-      "motivo": "Dependencias pendientes: Pintura de garaje (recintos) — 1ª mano.",
+      "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano.",
       "orden_inventario": 1
     },
     {
       "grupo_id": "garaje_tabicado",
-      "trabajo": "Tabicado de garaje",
+      "trabajo": "Tabicado (zona común)",
       "propiedad": "externo",
       "orden_ejecucion": 500,
-      "fase_nombre": "Obra civil garaje",
+      "fase_nombre": "Obra civil",
       "ubicaciones": [
         {
           "edificio": "Garaje 1",
@@ -430,7 +430,7 @@
         }
       ],
       "subtajos": [
-        "Tabicado de garaje"
+        "Tabicado (zona común)"
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
@@ -445,10 +445,10 @@
     },
     {
       "grupo_id": "garaje_lucido",
-      "trabajo": "Lucido de garaje",
+      "trabajo": "Lucido",
       "propiedad": "externo",
       "orden_ejecucion": 505,
-      "fase_nombre": "Obra civil garaje",
+      "fase_nombre": "Obra civil",
       "ubicaciones": [
         {
           "edificio": "Garaje 1",
@@ -466,7 +466,7 @@
         }
       ],
       "subtajos": [
-        "Lucido de garaje"
+        "Lucido"
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
@@ -537,10 +537,10 @@
     },
     {
       "grupo_id": "garaje_pintura",
-      "trabajo": "Pintura de garaje (recintos) — 1ª mano",
+      "trabajo": "Pintura (recintos) — 1ª mano",
       "propiedad": "externo",
       "orden_ejecucion": 550,
-      "fase_nombre": "Pintura garaje",
+      "fase_nombre": "Pintura",
       "ubicaciones": [
         {
           "edificio": "Garaje 1",
@@ -551,7 +551,7 @@
         }
       ],
       "subtajos": [
-        "Pintura de garaje (recintos) — 1ª mano"
+        "Pintura (recintos) — 1ª mano"
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
@@ -568,7 +568,7 @@
       "trabajo": "Colocación alumbrado temporizado (recintos)",
       "propiedad": "propio",
       "orden_ejecucion": 562,
-      "fase_nombre": "Equipos garaje",
+      "fase_nombre": "Equipos",
       "ubicaciones": [
         {
           "edificio": "Garaje 1",
@@ -625,7 +625,7 @@
   "prevision": [
     {
       "tarea_id": "garaje_pintura_1_recinto",
-      "trabajo": "Pintura de garaje (recintos) — 1ª mano",
+      "trabajo": "Pintura (recintos) — 1ª mano",
       "estado_actual": "X",
       "propiedad": "externo",
       "desbloquea": 1,

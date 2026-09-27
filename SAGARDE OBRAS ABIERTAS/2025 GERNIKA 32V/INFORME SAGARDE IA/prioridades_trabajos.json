@@ -8,118 +8,26 @@
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "27/09/2026 09:22",
+  "generado": "27/09/2026 10:09",
   "resumen": {
-    "listos": 3,
+    "listos": 2,
     "verificar": 0,
-    "unidades_listas": 23,
+    "unidades_listas": 22,
     "unidades_verificar": 0,
     "bloqueados": 1,
     "otros_gremios": 2,
-    "dudas": 0,
+    "dudas": 1,
     "sin_revisar": 0,
     "unidades_sin_revisar": 0,
     "terminados": 31,
     "inventario_total": 37,
     "detalle_total": 1208,
-    "preguntas_pendientes": 0,
+    "preguntas_pendientes": 2,
     "viviendas": 2,
     "zonas_comunes": 0,
-    "edificio": 1
+    "edificio": 0
   },
   "items": [
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "situacion": "LISTO",
-      "categoria": "VIABLE",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "prioridad": "P3",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "D"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        }
-      ],
-      "n_celdas": 8,
-      "n_ubicaciones": 8,
-      "n_unidades": 1,
-      "estado_actual": "M: 8",
-      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
-      "impacto_gremios": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
-      "orden": 1
-    },
     {
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
@@ -246,7 +154,7 @@
       "estado_actual": "M: 12",
       "motivo": "Rama independiente; requiere fachada terminada.",
       "impacto_gremios": "Rama independiente; requiere fachada terminada.",
-      "orden": 2
+      "orden": 1
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -356,7 +264,7 @@
       "estado_actual": "M: 2 · /: 2 · Pendiente: 6",
       "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
       "impacto_gremios": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "orden": 3
+      "orden": 2
     }
   ],
   "detalle_items": [
@@ -20233,654 +20141,6 @@
       "ultima_fecha": "25/07/2026"
     },
     {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "D",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "D",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "D",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "D",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "C",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "D",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "PB",
-      "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "PB",
-      "unidad": "C",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuarto_tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "PB",
-      "unidad": "D",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
       "tarea_id": "techos_zzcc",
       "trabajo": "Techos de zonas comunes",
       "trabajos_originales": [
@@ -34507,6 +33767,654 @@
       "estado_actual": "X",
       "categoria": "TERMINADO",
       "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "1",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "1",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "1",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "1",
+      "unidad": "D",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "D",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "D",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "D",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "A",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "DUDAS",
+      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "B",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "DUDAS",
+      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "C",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "DUDAS",
+      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "D",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "DUDAS",
+      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "DUDAS",
+      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "DUDAS",
+      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "PB",
+      "unidad": "C",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "DUDAS",
+      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "desconocido",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "display_group": "sin_clasificar:cuarto tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "PB",
+      "unidad": "D",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "DUDAS",
+      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -34517,196 +34425,6 @@
     }
   ],
   "inventario": [
-    {
-      "grupo_id": "cuarto_tecnico",
-      "trabajo": "Cuarto técnico",
-      "propiedad": "propio",
-      "orden_ejecucion": 235,
-      "fase_nombre": "Cierre técnico",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "M",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "M",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "M",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "M",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "M",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "M",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "M",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "M",
-          "categoria": "VIABLE"
-        }
-      ],
-      "subtajos": [
-        "Cuarto técnico"
-      ],
-      "seccion": "VIABLE",
-      "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 24,
-      "estado_actual": "M: 8 · X: 16",
-      "resumen_categorias": {
-        "TERMINADO": 16,
-        "VIABLE": 8
-      },
-      "motivo": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos. Terminado según la última confirmación válida.",
-      "orden_inventario": 1
-    },
     {
       "grupo_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
@@ -34951,7 +34669,7 @@
         "TERMINADO": 20
       },
       "motivo": "Rama independiente; requiere fachada terminada. Terminado según la última confirmación válida.",
-      "orden_inventario": 2
+      "orden_inventario": 1
     },
     {
       "grupo_id": "casquillos_bombillas",
@@ -35198,7 +34916,7 @@
         "VIABLE": 10
       },
       "motivo": "Dependencias pendientes: Pintura — segunda mano. Se coloca al final para evitar robos; la tensión no es requisito de colocación. Terminado según la última confirmación válida.",
-      "orden_inventario": 3
+      "orden_inventario": 2
     },
     {
       "grupo_id": "placas_tapas",
@@ -35444,7 +35162,7 @@
         "TERMINADO": 12
       },
       "motivo": "Dependencias pendientes: Pintura — segunda mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 4
+      "orden_inventario": 3
     },
     {
       "grupo_id": "pintura",
@@ -35915,7 +35633,7 @@
         "OTROS_GREMIOS": 20
       },
       "motivo": "Condición obligatoria para placas, tapas y luminarias finales. Terminado según la última confirmación válida.",
-      "orden_inventario": 5
+      "orden_inventario": 4
     },
     {
       "grupo_id": "pintura_zzcc",
@@ -36160,6 +35878,196 @@
         "OTROS_GREMIOS": 32
       },
       "motivo": "Condición de otro gremio. Habilita la colocación de luminarias en ZZCC.",
+      "orden_inventario": 5
+    },
+    {
+      "grupo_id": "sin_clasificar:cuarto tecnico",
+      "trabajo": "Cuarto técnico",
+      "propiedad": "desconocido",
+      "orden_ejecucion": 9999,
+      "fase_nombre": "Sin clasificar",
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "M",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "M",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "M",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "M",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "M",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "M",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "M",
+          "categoria": "DUDAS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "M",
+          "categoria": "DUDAS"
+        }
+      ],
+      "subtajos": [
+        "Cuarto técnico"
+      ],
+      "seccion": "DUDAS",
+      "seccion_nombre": "Dudas pendientes",
+      "n_ubicaciones": 24,
+      "estado_actual": "M: 8 · X: 16",
+      "resumen_categorias": {
+        "TERMINADO": 16,
+        "DUDAS": 8
+      },
+      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo. Terminado según la última confirmación válida.",
       "orden_inventario": 6
     },
     {
@@ -43758,8 +43666,68 @@
       "orden_inventario": 37
     }
   ],
-  "dudas_pendientes": [],
-  "preguntas_orden": [],
+  "dudas_pendientes": [
+    {
+      "codigo": "TAJO_NUEVO",
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "pregunta": "Definir el nuevo tajo 'Cuarto técnico': significado, propiedad, posición, estados y dependencias.",
+      "n_ubicaciones": 8,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "D"
+        }
+      ]
+    }
+  ],
+  "preguntas_orden": [
+    {
+      "codigo": "TAJO_FUERA_DEL_CATALOGO",
+      "tarea_id": "cuarto_tecnico",
+      "nombre": "Cuarto técnico",
+      "parecidos": [
+        "cuadro_mecanizado",
+        "cuadros_presentados",
+        "garaje_falso_techo"
+      ]
+    }
+  ],
   "prevision": [
     {
       "tarea_id": "pintura_segunda",

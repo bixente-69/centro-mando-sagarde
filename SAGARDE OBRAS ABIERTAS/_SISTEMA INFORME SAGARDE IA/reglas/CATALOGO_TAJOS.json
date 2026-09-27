@@ -504,21 +504,6 @@
       "impacto": "No equivale a cuadros presentados ni a placas y tapas."
     },
     {
-      "id": "cuarto_tecnico",
-      "nombre": "Cuarto técnico",
-      "aliases": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "orden": 235,
-      "fase": "Cierre técnico",
-      "deps": [],
-      "estado_m": "Más del 50 % de los cuartos técnicos ejecutados",
-      "estado_x": "Cuartos técnicos terminados",
-      "impacto": "Recintos de instalaciones de la obra: RITI, RITS, RITU, centralización de contadores y similares. Se ejecutan cuando procede; no esperan a ningún otro tajo y nada espera a ellos."
-    },
-    {
       "id": "techos_zzcc",
       "nombre": "Techos de zonas comunes",
       "aliases": [
@@ -744,23 +729,6 @@
       "impacto": "Condición para remates exteriores."
     },
     {
-      "id": "fotovoltaica",
-      "nombre": "Fotovoltaica",
-      "aliases": [
-        "Fotovoltaica",
-        "FV",
-        "Placas solares"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "orden": 306,
-      "fase": "Cubierta",
-      "deps": [],
-      "estado_m": "Más del 50 %",
-      "estado_x": "Instalación fotovoltaica terminada",
-      "impacto": "Se ejecuta cuando procede la cubierta; no espera a ningún otro tajo y nada espera a él, igual que Cuarto técnico."
-    },
-    {
       "id": "agujeros_iluminacion_zzcc",
       "nombre": "Agujeros de iluminación en ZZCC",
       "aliases": [
@@ -850,14 +818,14 @@
     },
     {
       "id": "garaje_tabicado",
-      "nombre": "Tabicado de garaje",
+      "nombre": "Tabicado (zona común)",
       "aliases": [
-        "Tabicado de garaje"
+        "Tabicado (zona común)"
       ],
       "propiedad": "externo",
       "ambito": "zona_comun",
       "orden": 500,
-      "fase": "Obra civil garaje",
+      "fase": "Obra civil",
       "deps": [],
       "estado_m": "Más del 50 %",
       "estado_x": "Tabicado terminado",
@@ -865,14 +833,14 @@
     },
     {
       "id": "garaje_lucido",
-      "nombre": "Lucido de garaje",
+      "nombre": "Lucido",
       "aliases": [
-        "Lucido de garaje"
+        "Lucido"
       ],
       "propiedad": "externo",
       "ambito": "zona_comun",
       "orden": 505,
-      "fase": "Obra civil garaje",
+      "fase": "Obra civil",
       "deps": [
         {
           "id": "garaje_tabicado",
@@ -885,14 +853,14 @@
     },
     {
       "id": "garaje_falso_techo",
-      "nombre": "Falso techo de garaje",
+      "nombre": "Falso techo",
       "aliases": [
-        "Falso techo de garaje"
+        "Falso techo"
       ],
       "propiedad": "externo",
       "ambito": "zona_comun",
       "orden": 510,
-      "fase": "Obra civil garaje",
+      "fase": "Obra civil",
       "deps": [
         {
           "id": "garaje_tabicado",
@@ -920,14 +888,14 @@
     },
     {
       "id": "garaje_tubeado_emp",
-      "nombre": "Tubeado empotrado de garaje",
+      "nombre": "Tubeado empotrado",
       "aliases": [
-        "Tubeado empotrado de garaje"
+        "Tubeado empotrado"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 520,
-      "fase": "Instalación interior garaje",
+      "fase": "Instalación interior",
       "deps": [
         {
           "id": "garaje_tabicado",
@@ -940,14 +908,14 @@
     },
     {
       "id": "garaje_cableado_emp",
-      "nombre": "Cableado empotrado de garaje",
+      "nombre": "Cableado empotrado",
       "aliases": [
-        "Cableado empotrado de garaje"
+        "Cableado empotrado"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 525,
-      "fase": "Instalación interior garaje",
+      "fase": "Instalación interior",
       "deps": [
         {
           "id": "garaje_tubeado_emp",
@@ -956,18 +924,18 @@
       ],
       "estado_m": "Más del 50 %",
       "estado_x": "Cableado terminado",
-      "impacto": "Cableado de circuitos de la ruta empotrada de garaje."
+      "impacto": "Cableado de circuitos de la ruta empotrada de la zona."
     },
     {
       "id": "garaje_tubeado_visto",
-      "nombre": "Tubeado visto de garaje",
+      "nombre": "Tubeado visto",
       "aliases": [
-        "Tubeado visto de garaje"
+        "Tubeado visto"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 530,
-      "fase": "Instalación interior garaje",
+      "fase": "Instalación interior",
       "deps": [
         {
           "id": "garaje_lucido",
@@ -980,14 +948,14 @@
     },
     {
       "id": "garaje_cableado_visto",
-      "nombre": "Cableado visto de garaje",
+      "nombre": "Cableado visto",
       "aliases": [
-        "Cableado visto de garaje"
+        "Cableado visto"
       ],
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 535,
-      "fase": "Instalación interior garaje",
+      "fase": "Instalación interior",
       "deps": [
         {
           "id": "garaje_tubeado_visto",
@@ -996,7 +964,7 @@
       ],
       "estado_m": "Más del 50 %",
       "estado_x": "Cableado terminado",
-      "impacto": "Cableado de circuitos de la ruta vista de garaje."
+      "impacto": "Cableado de circuitos de la ruta vista de la zona."
     },
     {
       "id": "garaje_tubeado_vial",
@@ -1035,15 +1003,15 @@
     },
     {
       "id": "garaje_pintura_1_recinto",
-      "nombre": "Pintura de garaje (recintos) — 1ª mano",
+      "nombre": "Pintura (recintos) — 1ª mano",
       "aliases": [
-        "Pintura de garaje (recintos) — 1ª mano"
+        "Pintura (recintos) — 1ª mano"
       ],
       "propiedad": "externo",
       "ambito": "zona_comun",
       "display_group": "garaje_pintura",
       "orden": 550,
-      "fase": "Pintura garaje",
+      "fase": "Pintura",
       "deps": [
         {
           "id": "garaje_lucido",
@@ -1052,7 +1020,7 @@
       ],
       "estado_m": "Más del 50 %",
       "estado_x": "Primera mano terminada",
-      "impacto": "Primera mano de pintura en recintos de garaje; habilita colocación de equipos."
+      "impacto": "Primera mano de pintura en la zona; habilita colocación de equipos."
     },
     {
       "id": "garaje_pintura_1_vial",
@@ -1084,7 +1052,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 560,
-      "fase": "Equipos garaje",
+      "fase": "Equipos",
       "deps": [
         {
           "id": "garaje_pintura_1_recinto",
@@ -1093,7 +1061,7 @@
       ],
       "estado_m": "Más del 50 %",
       "estado_x": "Pantallas colocadas",
-      "impacto": "Colocación de pantallas de alumbrado fijo en recintos de garaje."
+      "impacto": "Colocación de pantallas de alumbrado fijo en la zona."
     },
     {
       "id": "garaje_alum_fijo_coloc_vial",
@@ -1124,7 +1092,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 562,
-      "fase": "Equipos garaje",
+      "fase": "Equipos",
       "deps": [
         {
           "id": "garaje_pintura_1_recinto",
@@ -1164,7 +1132,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 564,
-      "fase": "Equipos garaje",
+      "fase": "Equipos",
       "deps": [
         {
           "id": "garaje_pintura_1_recinto",
@@ -1173,7 +1141,7 @@
       ],
       "estado_m": "Más del 50 %",
       "estado_x": "Luminarias colocadas",
-      "impacto": "Colocación de luminarias de emergencia en recintos de garaje."
+      "impacto": "Colocación de luminarias de emergencia en la zona."
     },
     {
       "id": "garaje_emergencia_coloc_vial",
@@ -1204,7 +1172,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 566,
-      "fase": "Equipos garaje",
+      "fase": "Equipos",
       "deps": [
         {
           "id": "garaje_pintura_1_recinto",
@@ -1213,7 +1181,7 @@
       ],
       "estado_m": "Más del 50 %",
       "estado_x": "Enchufe colocado",
-      "impacto": "Colocación de base de enchufe en cuartos técnicos de garaje."
+      "impacto": "Colocación de base de enchufe en el cuarto técnico."
     },
     {
       "id": "garaje_cuadro_tubeado_cableado",
@@ -1224,7 +1192,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 580,
-      "fase": "Cuadros garaje",
+      "fase": "Cuadros",
       "deps": [
         {
           "id": "garaje_tabicado",
@@ -1233,7 +1201,7 @@
       ],
       "estado_m": "Más del 50 %",
       "estado_x": "Alimentación tendida",
-      "impacto": "Desde el Cuadro General de Garaje. Todo cuadro lo lleva, sea o no nuestro por dentro (§5.6)."
+      "impacto": "Desde el cuadro general de la zona. Todo cuadro lo lleva, sea o no nuestro por dentro."
     },
     {
       "id": "garaje_cuadro_colocacion",
@@ -1244,7 +1212,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 585,
-      "fase": "Cuadros garaje",
+      "fase": "Cuadros",
       "deps": [
         {
           "id": "garaje_cuadro_tubeado_cableado",
@@ -1268,7 +1236,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 590,
-      "fase": "Cuadros garaje",
+      "fase": "Cuadros",
       "deps": [
         {
           "id": "garaje_cuadro_colocacion",
@@ -1292,7 +1260,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 595,
-      "fase": "Cuadros garaje",
+      "fase": "Cuadros",
       "deps": [
         {
           "id": "garaje_cuadro_embornado",
@@ -1312,7 +1280,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 600,
-      "fase": "Cuadros garaje",
+      "fase": "Cuadros",
       "deps": [
         {
           "id": "garaje_cuadro_colocacion",
@@ -1325,15 +1293,15 @@
     },
     {
       "id": "garaje_pintura_2_recinto",
-      "nombre": "Pintura de garaje (recintos) — 2ª mano",
+      "nombre": "Pintura (recintos) — 2ª mano",
       "aliases": [
-        "Pintura de garaje (recintos) — 2ª mano"
+        "Pintura (recintos) — 2ª mano"
       ],
       "propiedad": "externo",
       "ambito": "zona_comun",
       "display_group": "garaje_pintura",
       "orden": 587,
-      "fase": "Pintura garaje",
+      "fase": "Pintura",
       "deps": [
         {
           "id": "garaje_pintura_1_recinto",
@@ -1342,7 +1310,7 @@
       ],
       "estado_m": "Más del 50 %",
       "estado_x": "Segunda mano terminada",
-      "impacto": "Segunda mano de pintura en recintos de garaje; remate previo a embornado."
+      "impacto": "Segunda mano de pintura en la zona; remate previo a embornado."
     },
     {
       "id": "garaje_pintura_2_vial",
@@ -1374,7 +1342,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 620,
-      "fase": "Equipos garaje",
+      "fase": "Equipos",
       "deps": [
         {
           "id": "garaje_alum_fijo_coloc_recinto",
@@ -1422,7 +1390,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 622,
-      "fase": "Equipos garaje",
+      "fase": "Equipos",
       "deps": [
         {
           "id": "garaje_alum_temp_coloc_recinto",
@@ -1470,7 +1438,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 624,
-      "fase": "Equipos garaje",
+      "fase": "Equipos",
       "deps": [
         {
           "id": "garaje_emergencia_coloc_recinto",
@@ -1518,7 +1486,7 @@
       "propiedad": "propio",
       "ambito": "zona_comun",
       "orden": 626,
-      "fase": "Equipos garaje",
+      "fase": "Equipos",
       "deps": [
         {
           "id": "garaje_enchufe_coloc",
@@ -1716,6 +1684,253 @@
       "estado_m": "Más del 50 %",
       "estado_x": "Tubo/bandeja de tránsito terminado",
       "impacto": "Solo cuando el garaje es paso entre edificios o entrada desde calle."
+    },
+    {
+      "id": "fv_paneles_instalacion",
+      "nombre": "Instalación de paneles fotovoltaicos",
+      "aliases": [
+        "Instalación de paneles fotovoltaicos",
+        "Paneles fotovoltaicos"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 400,
+      "fase": "Cubierta — Fotovoltaica",
+      "deps": [],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Paneles instalados",
+      "impacto": "Primer paso de la fotovoltaica; el resto de la cadena depende de este."
+    },
+    {
+      "id": "fv_paneles_cableado",
+      "nombre": "Cableado de paneles fotovoltaicos",
+      "aliases": [
+        "Cableado de paneles fotovoltaicos"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 401,
+      "fase": "Cubierta — Fotovoltaica",
+      "deps": [
+        {
+          "id": "fv_paneles_instalacion",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cableado terminado",
+      "impacto": "Conexionado entre paneles ya instalados."
+    },
+    {
+      "id": "fv_paneles_tierra",
+      "nombre": "Tierra de paneles fotovoltaicos",
+      "aliases": [
+        "Tierra de paneles fotovoltaicos"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 402,
+      "fase": "Cubierta — Fotovoltaica",
+      "deps": [
+        {
+          "id": "fv_paneles_cableado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tierra conectada",
+      "impacto": "Puesta a tierra de la estructura de paneles ya cableada."
+    },
+    {
+      "id": "fv_strings_cableado",
+      "nombre": "Cableado de strings hasta equipos",
+      "aliases": [
+        "Cableado de strings hasta equipos"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 403,
+      "fase": "Cubierta — Fotovoltaica",
+      "deps": [
+        {
+          "id": "fv_paneles_tierra",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Strings tendidos",
+      "impacto": "Lleva la corriente generada desde los paneles hasta donde irán los equipos."
+    },
+    {
+      "id": "fv_equipos_protecciones",
+      "nombre": "Instalación de equipos y protecciones",
+      "aliases": [
+        "Instalación de equipos y protecciones",
+        "Inversor fotovoltaico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 404,
+      "fase": "Cubierta — Fotovoltaica",
+      "deps": [
+        {
+          "id": "fv_strings_cableado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Equipos y protecciones instalados",
+      "impacto": "Inversor y protecciones; sin esto no se puede dar tensión a la instalación."
+    },
+    {
+      "id": "fv_puesta_marcha",
+      "nombre": "Puesta en marcha de fotovoltaica",
+      "aliases": [
+        "Puesta en marcha de fotovoltaica"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 405,
+      "fase": "Cubierta — Fotovoltaica",
+      "deps": [
+        {
+          "id": "fv_equipos_protecciones",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Instalación fotovoltaica en marcha",
+      "impacto": "Último paso; cierra la instalación fotovoltaica de la cubierta."
+    },
+    {
+      "id": "cub_soporte_antena",
+      "nombre": "Colocación de soporte de antena",
+      "aliases": [
+        "Colocación de soporte de antena"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 410,
+      "fase": "Cubierta — Antena/pararrayos",
+      "deps": [],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Soporte colocado",
+      "impacto": "Base física de la antena; nada de la antena avanza sin esto."
+    },
+    {
+      "id": "cub_soporte_pararrayos",
+      "nombre": "Colocación de soporte de pararrayos",
+      "aliases": [
+        "Colocación de soporte de pararrayos"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 411,
+      "fase": "Cubierta — Antena/pararrayos",
+      "deps": [],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Soporte colocado",
+      "impacto": "Base física del pararrayos; nada del pararrayos avanza sin esto."
+    },
+    {
+      "id": "cub_antena_instalacion",
+      "nombre": "Instalación de antena",
+      "aliases": [
+        "Instalación de antena"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 412,
+      "fase": "Cubierta — Antena/pararrayos",
+      "deps": [
+        {
+          "id": "cub_soporte_antena",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Antena instalada",
+      "impacto": "Montaje de la antena sobre su soporte ya colocado."
+    },
+    {
+      "id": "cub_pararrayos_instalacion",
+      "nombre": "Instalación de pararrayos",
+      "aliases": [
+        "Instalación de pararrayos"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 413,
+      "fase": "Cubierta — Antena/pararrayos",
+      "deps": [
+        {
+          "id": "cub_soporte_pararrayos",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Pararrayos instalado",
+      "impacto": "Montaje del pararrayos sobre su soporte ya colocado."
+    },
+    {
+      "id": "cub_antena_cableado",
+      "nombre": "Cableado de antena",
+      "aliases": [
+        "Cableado de antena"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 414,
+      "fase": "Cubierta — Antena/pararrayos",
+      "deps": [
+        {
+          "id": "cub_antena_instalacion",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cableado terminado",
+      "impacto": "Bajada de señal desde la antena ya instalada."
+    },
+    {
+      "id": "cub_pararrayos_cableado",
+      "nombre": "Cableado de pararrayos",
+      "aliases": [
+        "Cableado de pararrayos"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 415,
+      "fase": "Cubierta — Antena/pararrayos",
+      "deps": [
+        {
+          "id": "cub_pararrayos_instalacion",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Cableado terminado",
+      "impacto": "Bajada del pararrayos ya instalado; el propio conductor de bajada hace de tierra, no lleva tajo de tierra aparte (Bixente, 27/09/2026)."
+    },
+    {
+      "id": "cub_antena_tierra",
+      "nombre": "Tierra de antena",
+      "aliases": [
+        "Tierra de antena"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "orden": 416,
+      "fase": "Cubierta — Antena/pararrayos",
+      "deps": [
+        {
+          "id": "cub_antena_cableado",
+          "minimo": 1
+        }
+      ],
+      "estado_m": "Más del 50 %",
+      "estado_x": "Tierra conectada",
+      "impacto": "Último paso de la antena; a diferencia del pararrayos, lleva un tajo de tierra propio."
     }
   ],
   "obras": {

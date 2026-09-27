@@ -3,6 +3,55 @@
   "catalogo_version": "1.3",
   "obra": "2025 GERNIKA 32V",
   "revision": "25/09/2026",
-  "generado": "27/09/2026 09:22",
-  "dudas_pendientes": []
+  "generado": "27/09/2026 10:09",
+  "dudas_pendientes": [
+    {
+      "codigo": "TAJO_NUEVO",
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "pregunta": "Definir el nuevo tajo 'Cuarto técnico': significado, propiedad, posición, estados y dependencias.",
+      "n_ubicaciones": 8,
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "B"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "C"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "D"
+        }
+      ]
+    }
+  ]
 }

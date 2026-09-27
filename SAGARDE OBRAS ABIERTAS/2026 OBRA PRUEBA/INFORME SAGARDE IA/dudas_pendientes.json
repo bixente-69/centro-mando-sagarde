@@ -3,6 +3,115 @@
   "catalogo_version": "1.3",
   "obra": "2026 OBRA PRUEBA",
   "revision": "28/08/2026",
-  "generado": "27/09/2026 09:23",
-  "dudas_pendientes": []
+  "generado": "27/09/2026 10:10",
+  "dudas_pendientes": [
+    {
+      "codigo": "TAJO_NUEVO",
+      "tarea_id": "sin_clasificar:cuarto tecnico",
+      "pregunta": "Definir el nuevo tajo 'Cuarto técnico': significado, propiedad, posición, estados y dependencias.",
+      "n_ubicaciones": 31,
+      "ubicaciones": [
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "A"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "B"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "C"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "D"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "A"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "B"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "C"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "D"
+        },
+        {
+          "edificio": "B1 PORTAL 1",
+          "planta": "PB",
+          "unidad": "A"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "A"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "B"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "1ª",
+          "unidad": "C"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "A"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "2ª",
+          "unidad": "B"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "3ª",
+          "unidad": "A"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "3ª",
+          "unidad": "B"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "3ª",
+          "unidad": "C"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "3ª",
+          "unidad": "D"
+        },
+        {
+          "edificio": "B2 PORTAL 1",
+          "planta": "PB",
+          "unidad": "LOCALES"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1ª",
+          "unidad": "A"
+        }
+      ]
+    }
+  ]
 }

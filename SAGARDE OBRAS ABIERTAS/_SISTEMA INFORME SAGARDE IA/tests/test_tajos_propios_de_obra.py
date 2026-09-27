@@ -103,7 +103,13 @@ class TestTajosPropiosDeObra(unittest.TestCase):
                          "tabla_con_tajos_de_obra ha mutado la tabla comun.")
 
     def test_las_demas_obras_no_ganan_nombres(self):
-        """Sus tajos ya estan todos en el catalogo comun: no deben anadir nada."""
+        """Sus tajos ya estan todos en el catalogo comun: no deben anadir
+        nada MAS que 'cuarto tecnico' -- el tajo suelto que existia hasta
+        el 27/09/2026 (ver reglas/CATALOGO_TAJOS.json) y que estas cuatro
+        obras ya tenian aplicable. Bixente: se desglosa en zonas con
+        sub-tajos y el suelto desaparece del catalogo comun a proposito;
+        no se migran los datos ya guardados, asi que se queda como tajo
+        propio residual hasta que Bixente lo revise obra a obra."""
         for obra in ("2026 MUNGIA ACR NEINOR", "2026 BOLUETA ACR",
                      "2025 GERNIKA 32V"):
             ficha = _ficha(obra)
@@ -111,9 +117,10 @@ class TestTajosPropiosDeObra(unittest.TestCase):
                 continue
             extra = set(rejilla.tabla_con_tajos_de_obra(ficha, self.comun))
             self.assertEqual(
-                sorted(extra - set(self.comun)), [],
-                f"{obra} aporta nombres propios: o son tajos nuevos sin "
-                f"declarar en el catalogo comun, o hay una errata.")
+                sorted(extra - set(self.comun)), ['cuarto tecnico'],
+                f"{obra} aporta nombres propios distintos de los "
+                f"esperados: o son tajos nuevos sin declarar en el "
+                f"catalogo comun, o hay una errata.")
 
     def test_el_catalogo_comun_manda_en_caso_de_choque(self):
         """Si la ficha repite un nombre del catalogo, gana el catalogo."""
