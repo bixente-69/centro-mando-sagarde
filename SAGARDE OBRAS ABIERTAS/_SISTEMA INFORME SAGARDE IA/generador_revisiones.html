@@ -899,9 +899,11 @@ function setSourceStatus(source){
   const resumen=source.resumen||{};
   const revision=source.revision||source.generado||'sin fecha';
   host.className='source-status';
+  const nZonas=resumen.zonas_especiales||0;
+  const zonasTxt=nZonas?` · ${nZonas} zona${nZonas!==1?'s':''} especial${nZonas!==1?'es':''}`:'';
   host.innerHTML=`<strong>Memoria del portal cargada.</strong> Revisión ${escHtml(revision)} · `+
     `${CAT.length} tajos disponibles · ${resumen.tajos||0} con memoria · `+
-    `${resumen.estados_precargados||0} celdas con estado previo.`;
+    `${resumen.estados_precargados||0} celdas con estado previo${zonasTxt}.`;
 }
 function renderInstalledWorks(){
   const select=document.getElementById('f-installed');
@@ -1264,6 +1266,16 @@ function portalSpecialZoneDef(zona){
   return SPECIAL_ZONE_DEFS.find(def=>def.tipo===zona.tipo&&
     String(def.funcion||'')===String(zona.funcion||''));
 }
+/* Lista del paso 2 a la que pertenece una zona. La ficha guarda `tipo` y
+   `nombre` pero no siempre `funcion`, asi que una zona que llega de la base
+   ("continuar desde la ultima revision") puede no casar con ninguna
+   definicion por funcion: quedaria FUERA de las tres listas, contada en
+   "N zonas" pero sin chip para renombrarla ni quitarla. Sin definicion
+   exacta manda el tipo. */
+const SPECIAL_ZONE_GROUP_BY_TYPE={cuarto_tecnico:'tecnico',cuarto_ligero:'ligero',cubierta:'cubierta'};
+function portalSpecialZoneGroup(zona){
+  return portalSpecialZoneDef(zona)?.grupo||SPECIAL_ZONE_GROUP_BY_TYPE[zona.tipo];
+}
 function addPortalSpecialZone(bi,pi,key){
   const portal=portalAt(bi,pi);
   const def=SPECIAL_ZONE_BY_KEY[key];
@@ -1294,7 +1306,7 @@ function portalSpecialZoneChip(zona,bi,pi){
 }
 function portalSpecialChecklistGroup(portal,bi,pi,grupo,label){
   const defs=SPECIAL_ZONE_DEFS.filter(def=>def.grupo===grupo);
-  const zonas=portal.zonasEspeciales.filter(z=>portalSpecialZoneDef(z)?.grupo===grupo);
+  const zonas=portal.zonasEspeciales.filter(z=>portalSpecialZoneGroup(z)===grupo);
   return `<div class="garage-zone-group">
     <label class="fl">${label}</label>
     <div class="garage-zone-actions">${defs.map(def=>
@@ -1672,27 +1684,52 @@ function loadConfig(key){
   // garajes), hay que traer la version viva: si no, se generaria una hoja de
   // campo incompleta sin que nadie se entere.
   const modo=cfg.modo==='garaje'?'garaje':'vivienda';
-  const source=cfg.sourceId?worksWithDatabase().find(o=>o.id===cfg.sourceId):null;
+  // La base se busca con el filtro del modo GUARDADO, no con el de la pantalla
+  // en que estemos: worksWithDatabase() depende de S.modo, y una hoja de garaje
+  // abierta desde el inicio en modo Viviendas no encontraria su obra.
+  const viva=cfg.sourceId?installedWorks().find(o=>o.id===cfg.sourceId):null;
+  const source=viva&&(modo==='garaje'?viva.tiene_garaje
+                                     :viva.fuente_estructura==='ficha_obra.json')?viva:null;
   if(cfg.sourceId&&!source){
     // La revision guardada apunta a una obra que ya no sale de la base.
     // Se abre igual, con sus datos de entonces, pero diciendolo.
     showToast('Esa obra ya no tiene base de datos: se abre como estaba guardada');
   }
-  const refrescar=modo==='vivienda'&&source&&source.generado&&source.generado!==(cfg.sourceMeta||{}).generado;
-  CAT=refrescar?catalogForSource(source)
-               :(Array.isArray(cfg.catalog)&&cfg.catalog.length?cfg.catalog:BASE_CAT).map(t=>({...t}));
+  // 28/09/2026: antes solo se refrescaba Viviendas. Una hoja de GARAJE guardada
+  // se abria con la base del dia en que se guardo -- sin las marcas y zonas
+  // que la obra ha ido ganando desde entonces -- y nadie se enteraba.
+  const gViva=modo==='garaje'&&source?source.garaje:null;
+  const refrescarViv=modo==='vivienda'&&source&&source.generado&&source.generado!==(cfg.sourceMeta||{}).generado;
+  const refrescarGar=!!(gViva&&gViva.generado&&gViva.generado!==((cfg.sourceMeta||{}).garaje||{}).generado);
+  const refrescar=!!refrescarViv||refrescarGar;
+  // Tajos que el catalogo no tenia cuando se guardo la hoja (p. ej. los de zonas
+  // especiales): al refrescar hay que seleccionarlos, si no la hoja saldria con
+  // "zonas especiales sin tajos seleccionados" sin que nadie lo pida.
+  const idsAntes=new Set((Array.isArray(cfg.catalog)?cfg.catalog:[]).map(t=>t.id));
+  CAT=refrescarViv?catalogForSource(source)
+                  :(Array.isArray(cfg.catalog)&&cfg.catalog.length?cfg.catalog:BASE_CAT).map(t=>({...t}));
+  if(refrescarGar) CAT_GARAJE=catalogForSourceGaraje(gViva);
+  const selViv=refrescarViv&&Array.isArray(cfg.sel)
+    ?[...cfg.sel,...CAT.filter(t=>!idsAntes.has(t.id)).map(t=>t.id)]
+    :(cfg.sel||CAT.map(t=>t.id));
   S={...S,obra:cfg.obra,fecha:cfg.fecha||TODAY_ISO,resp:cfg.resp||'',modo,
-     bloques:refrescar?normaliseStructure({bloques:cloneData(source.bloques||[])})
-                      :normaliseStructure(cfg),
-     garajes:Array.isArray(cfg.garajes)&&cfg.garajes.length?cloneData(cfg.garajes):[makeGaraje(0)],
-     sel:new Set(cfg.sel||CAT.map(t=>t.id)),
-     selGaraje:new Set(cfg.selGaraje||CAT_GARAJE.map(t=>t.id)),
-     importData:refrescar?cloneData(source.estados||{})
-                         :(cfg.importData?cloneData(cfg.importData):null),
+     bloques:refrescarViv?normaliseStructure({bloques:cloneData(source.bloques||[])})
+                         :normaliseStructure(cfg),
+     garajes:refrescarGar?normaliseGarajeStructure({garajes:cloneData(gViva.garajes||[])})
+                         :(Array.isArray(cfg.garajes)&&cfg.garajes.length?cloneData(cfg.garajes):[makeGaraje(0)]),
+     sel:new Set(selViv),
+     selGaraje:new Set(refrescarGar?CAT_GARAJE.map(t=>t.id):(cfg.selGaraje||CAT_GARAJE.map(t=>t.id))),
+     importData:refrescarViv?cloneData(source.estados||{})
+               :refrescarGar?cloneData(gViva.estados||{})
+               :(cfg.importData?cloneData(cfg.importData):null),
      sourceId:cfg.sourceId||null,
-     sourceMeta:refrescar?cloneData({id:source.id,nombre:source.nombre,revision:source.revision,
-                                     generado:source.generado,resumen:source.resumen||{}})
-                         :(cfg.sourceMeta?cloneData(cfg.sourceMeta):null)};
+     sourceMeta:refrescarViv?cloneData({id:source.id,nombre:source.nombre,revision:source.revision,
+                                        generado:source.generado,resumen:source.resumen||{}})
+               :refrescarGar?cloneData({id:source.id,nombre:source.nombre,tiene_garaje:true,
+                                        tiene_vivienda:source.tiene_vivienda!==false,
+                                        garaje:{revision:gViva.revision,generado:gViva.generado,
+                                                resumen:gViva.resumen||{}}})
+               :(cfg.sourceMeta?cloneData(cfg.sourceMeta):null)};
   startWizard(false);
   if(refrescar) showToast('Estructura y estados actualizados desde el portal ✓');
 }
