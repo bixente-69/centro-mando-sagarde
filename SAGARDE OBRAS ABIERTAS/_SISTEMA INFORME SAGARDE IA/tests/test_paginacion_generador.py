@@ -168,17 +168,51 @@ class HtmlEmitido(unittest.TestCase):
         self.assertEqual(html.count('<table class="rev-table">'), 8)
         self.assertNotIn('HOJA 1 DE', html)
 
+    @staticmethod
+    def celdas_esperadas(obra):
+        """Una celda por vivienda y por tajo de la matriz que la base OFRECE.
+
+        Antes eran cifras fijas por obra (Bolueta 3686, Gernika 1216...), que
+        habia que retocar a mano cada vez que la base dejaba de ofrecer un
+        tajo. El 28/09/2026 el 'Cuarto tecnico' retirado dejo de salir cuando
+        todas sus celdas estan clasificadas (Bolueta -97, Gernika -32) y
+        volvera a moverse cuando se clasifique el de Mungia (62) y el de
+        Prueba (31). Lo que la paginacion no puede hacer es perder o duplicar
+        una celda de las que la hoja ofrece: eso es lo que se comprueba.
+        """
+        return ejecutar_en_node(
+            '(loadInstalledWork(%s), getMatrixTajos().length * '
+            'getPortalEntries().reduce((n,{portal})=>n+portal.plantas.reduce('
+            '(m,pl)=>m+pl.vivs.length,0),0))' % json.dumps(obra))
+
     def test_no_se_pierde_ni_se_duplica_ninguna_celda(self):
-        for obra, esperadas in [('mungia', 2356), ('gernika', 1216),
-                                ('bolueta', 3686), ('obisporueta', 5610),
-                                ('prueba', 1178)]:
+        for obra in ('mungia', 'gernika', 'bolueta', 'obisporueta', 'prueba'):
             if obra not in OBRAS_REGISTRADAS:
                 continue          # obra cerrada: ya no tiene hoja que emitir
             with self.subTest(obra=obra):
+                esperadas = self.celdas_esperadas(obra)
+                self.assertGreater(esperadas, 0,
+                                   'la base no ofrece celdas: la prueba no verificaba nada')
                 claves = re.findall(r'<td class="td-st[^"]*"[^>]*data-k="([^"]+)"',
                                     hoja_de(obra))
                 self.assertEqual(len(claves), esperadas)
                 self.assertEqual(len(set(claves)), esperadas, 'claves repetidas')
+
+    def test_el_tajo_retirado_y_clasificado_no_sale_en_la_hoja(self):
+        """28/09/2026: con todas sus celdas clasificadas el 'Cuarto tecnico'
+        retirado ya no se ofrece (Bolueta y Gernika). Comprobado sobre la hoja
+        emitida por el generador, no sobre el registro. Mungia y Prueba no se
+        afirman aqui: siguen ofreciendolo mientras les queden celdas por
+        clasificar y eso cambia en cuanto se marquen N; la regla en los dos
+        sentidos esta en TestTajosRetiradosDelCatalogo (test_generar_todos)."""
+        for obra, debe_salir in (('bolueta', False), ('gernika', False)):
+            if obra not in OBRAS_REGISTRADAS:
+                continue
+            with self.subTest(obra=obra):
+                claves = re.findall(r'<td class="td-st[^"]*"[^>]*data-k="([^"]+)"',
+                                    hoja_de(obra))
+                hay = any('__cuarto_tecnico__' in k for k in claves)
+                self.assertEqual(hay, debe_salir)
 
 
 @unittest.skipUnless(NODE, 'node no esta instalado')

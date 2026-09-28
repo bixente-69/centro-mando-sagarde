@@ -195,9 +195,16 @@ def derivar_mapas_ubicacion(obra_id, ficha_actual):
     return portales, plantas, ambiguos_portal, ambiguos_planta
 
 
-def derivar_mapa_tareas(obra_id, catalogo, tarea_id_a_real=None):
-    """Deriva ids HTML -> ids reales mediante relaciones exactas conocidas."""
-    ids_validos = validar_revision._ids_tajos(catalogo, obra_id)
+def derivar_mapa_tareas(obra_id, catalogo, tarea_id_a_real=None,
+                        ficha_actual=None):
+    """Deriva ids HTML -> ids reales mediante relaciones exactas conocidas.
+
+    Con `ficha_actual`, tambien son validos los tajos que la propia ficha
+    declara aunque el catalogo ya no los tenga (ver
+    `validar_revision.ids_tajos_de_la_obra`): la hoja que los ofrecio tiene
+    que poder volver a la base."""
+    ids_validos = validar_revision.ids_tajos_de_la_obra(
+        catalogo, obra_id, ficha_actual)
     mapa = {tajo_id: tajo_id for tajo_id in ids_validos}
     traducciones = dict(TAREA_ID_GENERADOR_A_CATALOGO)
     traducciones.update(TAREA_ID_EXCEPCIONES_HISTORICAS)
@@ -288,7 +295,8 @@ def construir_revision_normalizada_html(
         for clave, valor in (planta_id_a_real or {}).items()
     })
     mapa_tareas = derivar_mapa_tareas(
-        obra_id, catalogo, tarea_id_a_real=tarea_id_a_real)
+        obra_id, catalogo, tarea_id_a_real=tarea_id_a_real,
+        ficha_actual=ficha_actual)
 
     celdas = []
     avisos = []

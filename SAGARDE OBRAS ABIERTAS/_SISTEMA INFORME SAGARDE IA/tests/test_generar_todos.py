@@ -137,6 +137,61 @@ class TestCorreccionesMasRecientes(unittest.TestCase):
         self.assertIn('[AVISO FICHA]', salida.getvalue())
 
 
+    # --- 28/09/2026: la ultima revision manda ---------------------------------
+    # Norma de Bixente: "un tajo se puede revertir en cualquier momento; hay
+    # que tener en cuenta lo que este reflejado en la ultima revision". Las
+    # correcciones se aplicaban DESPUES de la ultima hoja sin mirar fechas: en
+    # Mungia una del 25/08 pisaba 6 X de las hojas del 04/09 y del 10/09.
+
+    def test_correcciones_mas_viejas_que_la_ultima_revision_no_se_reaplican(self):
+        self._escribir('REVISION 25082026.pdf.correcciones.json',
+                       json.dumps({'estados': {'p1__pb__casquillos__A': 'M'}}))
+        salida = io.StringIO()
+        with redirect_stdout(salida):
+            resultado = gt._correcciones_mas_recientes(
+                self.carpeta, fecha_ultima_revision='10/09/2026')
+        self.assertEqual(resultado, {})
+        self.assertIn('[AVISO FICHA]', salida.getvalue())
+        self.assertIn('25/08/2026', salida.getvalue())
+        self.assertIn('10/09/2026', salida.getvalue())
+
+    def test_correcciones_de_la_misma_fecha_que_la_ultima_revision_si_se_aplican(self):
+        """Son las marcas a boli sobre la hoja de ESE dia: el dato mas directo."""
+        self._escribir('REVISION 10092026.pdf.correcciones.json',
+                       json.dumps({'estados': {'p1__pb__casquillos__A': 'M'}}))
+        resultado = gt._correcciones_mas_recientes(
+            self.carpeta, fecha_ultima_revision='10/09/2026')
+        self.assertEqual(resultado, {'p1__pb__casquillos__A': 'M'})
+
+    def test_correcciones_posteriores_a_la_ultima_revision_si_se_aplican(self):
+        self._escribir('REVISION 12092026.pdf.correcciones.json',
+                       json.dumps({'estados': {'p1__pb__casquillos__A': 'M'}}))
+        salida = io.StringIO()
+        with redirect_stdout(salida):
+            resultado = gt._correcciones_mas_recientes(
+                self.carpeta, fecha_ultima_revision='10/09/2026')
+        self.assertEqual(resultado, {'p1__pb__casquillos__A': 'M'})
+        self.assertEqual(salida.getvalue(), '')
+
+    def test_sin_fecha_de_ultima_revision_todo_sigue_como_antes(self):
+        self._escribir('REVISION 25082026.pdf.correcciones.json',
+                       json.dumps({'estados': {'p1__pb__casquillos__A': 'M'}}))
+        self.assertEqual(
+            gt._correcciones_mas_recientes(self.carpeta),
+            {'p1__pb__casquillos__A': 'M'})
+        self.assertEqual(
+            gt._correcciones_mas_recientes(self.carpeta, fecha_ultima_revision=None),
+            {'p1__pb__casquillos__A': 'M'})
+
+    def test_fecha_de_ultima_revision_ilegible_no_tumba_ni_descarta_marcas(self):
+        """Ante la duda no se tiran marcas a boli: se comporta como antes."""
+        self._escribir('REVISION 25082026.pdf.correcciones.json',
+                       json.dumps({'estados': {'p1__pb__casquillos__A': 'M'}}))
+        resultado = gt._correcciones_mas_recientes(
+            self.carpeta, fecha_ultima_revision='ayer por la tarde')
+        self.assertEqual(resultado, {'p1__pb__casquillos__A': 'M'})
+
+
 class TestMapaTajosCortos(unittest.TestCase):
     """_mapa_tajos_cortos() cruza el codigo corto del adaptador con el id
     largo del catalogo. Con el mapa vacio, TODAS las correcciones manuales
@@ -513,6 +568,146 @@ class TestZonasEspecialesLleganAlGenerador(unittest.TestCase):
         self.assertEqual(len(registro['bloques'][0]['portales']), 1)
         self.assertIn('[AVISO FICHA]', salida)
         self.assertIn('SOLO ZONAS', salida)
+
+
+class TestTajosRetiradosDelCatalogo(unittest.TestCase):
+    """28/09/2026 (Bixente): "el cuarto tecnico ya no tiene sentido, pues ahora
+    hay zonas especiales que los aplican mejor. Pero si aparece, la unica forma
+    ha sido anadir una N de no computa. Si no sale, mas mejor."
+
+    El catalogo retiro `cuarto_tecnico`, pero Mungia, Bolueta y Prueba lo siguen
+    declarando con sus celdas, asi que el generador seguia ofreciendo esa fila
+    en cada hoja. Regla: un tajo retirado se sigue ofreciendo SOLO mientras le
+    queden celdas sin clasificar (P o ?); en cuanto todas son N (o tienen un
+    estado real) deja de salir. Se limpia solo, sin migrar datos.
+    """
+
+    OBRA = {'id': 'pruebas', 'nombre': 'OBRA DE PRUEBAS'}
+    CATALOGO = {'version': 'test', 'obras': {},
+                'tajos': [{'id': 'tubeado'}, {'id': 'cableado'}]}
+
+    def _ficha(self, valores_retirado, extra_tajos=()):
+        """valores_retirado: estado de cuarto_tecnico en p1/pb/A, p1/pb/B, p1/1/A, p1/1/B."""
+        ficha = fixtures.ficha_minima()
+        ficha['revisiones'] = [{'fecha': '28/09/2026'}]
+        for tajo in ('cuarto_tecnico', *extra_tajos):
+            ficha['tajos']['detalle'].append({
+                'id': tajo, 'nombre': tajo, 'ambito': 'edificio',
+                'propiedad': 'propio', 'fase': 'Cierre técnico', 'orden': 235})
+        unidades = [('pb', 'A'), ('pb', 'B'), ('1', 'A'), ('1', 'B')]
+        ficha['estados'] = {}
+        for (planta, viv), valor in zip(unidades, valores_retirado):
+            ficha['estados'][f'p1__{planta}__cuarto_tecnico__{viv}'] = {
+                'v': valor, 'f': '28/09/2026', 'r': 'rev_28092026'}
+            ficha['estados'][f'p1__{planta}__tubeado__{viv}'] = {
+                'v': 'X', 'f': '28/09/2026', 'r': 'rev_28092026'}
+        return ficha
+
+    def _registro(self, ficha, catalogo=None):
+        salida = io.StringIO()
+        with redirect_stdout(salida):
+            registro = gt.registro_revision_desde_ficha(
+                self.OBRA, ficha, fixtures.prioridades([], revision='28/09/2026'),
+                catalogo=catalogo if catalogo is not None else self.CATALOGO)
+        self.assertIsNotNone(registro)
+        return registro, salida.getvalue()
+
+    def _ids_catalogo(self, registro):
+        return [t['id'] for t in registro['catalog']]
+
+    def test_con_todas_las_celdas_clasificadas_el_tajo_retirado_deja_de_ofrecerse(self):
+        registro, salida = self._registro(self._ficha(['N', 'N', 'X', 'N']))
+        self.assertNotIn('cuarto_tecnico', self._ids_catalogo(registro))
+        self.assertFalse(any('__cuarto_tecnico__' in k for k in registro['estados']))
+        self.assertEqual(self._ids_catalogo(registro), ['tubeado', 'cableado'])
+        # No es silencioso: se dice que ya no se ofrece y por que.
+        self.assertIn('cuarto_tecnico', salida)
+        self.assertNotIn('[AVISO FICHA]', salida)
+        # ... y el resto de la base sigue igual.
+        self.assertEqual(registro['resumen']['estados_precargados'], 4)  # 4 tubeado X
+
+    def test_con_celdas_por_clasificar_sigue_ofreciendose_y_avisa(self):
+        registro, salida = self._registro(self._ficha(['N', 'P', '?', 'N']))
+        self.assertIn('cuarto_tecnico', self._ids_catalogo(registro))
+        # Las N ya puestas viajan (para no tener que repetirlas); P y ? no.
+        celdas = {k: v for k, v in registro['estados'].items()
+                  if '__cuarto_tecnico__' in k}
+        self.assertEqual(sorted(celdas.values()), ['N', 'N'])
+        self.assertIn('[AVISO FICHA]', salida)
+        self.assertIn('cuarto_tecnico', salida)
+        self.assertIn('2 celda', salida)
+
+    def test_un_tajo_del_catalogo_no_se_oculta_aunque_todas_sus_celdas_sean_N(self):
+        ficha = self._ficha(['N', 'N', 'N', 'N'])
+        for clave in list(ficha['estados']):
+            if '__tubeado__' in clave:
+                ficha['estados'][clave]['v'] = 'N'
+        registro, _ = self._registro(ficha)
+        self.assertIn('tubeado', self._ids_catalogo(registro))
+
+    def test_un_tajo_propio_de_la_obra_no_cuenta_como_retirado(self):
+        """Los tajos propios de una obra viva (los de Orueta, por ejemplo) son
+        tajos de verdad: ni el catalogo ni esta regla los retiran."""
+        catalogo = {'version': 'test', 'tajos': [{'id': 'tubeado'}, {'id': 'cableado'}],
+                    'obras': {'pruebas': {'tajos': [{'id': 'tajo_especial'}]}}}
+        ficha = self._ficha(['N', 'N', 'N', 'N'], extra_tajos=('tajo_especial',))
+        for planta, viv in (('pb', 'A'), ('pb', 'B'), ('1', 'A'), ('1', 'B')):
+            ficha['estados'][f'p1__{planta}__tajo_especial__{viv}'] = {
+                'v': 'N', 'f': '28/09/2026', 'r': 'rev_28092026'}
+        registro, _ = self._registro(ficha, catalogo)
+        self.assertIn('tajo_especial', self._ids_catalogo(registro))
+
+    def test_cuarto_tecnico_esta_retirado_por_decision_aunque_la_obra_lo_tenga_como_propio(self):
+        """Caso de Gernika: se le dejo `cuarto_tecnico` como tajo propio en el
+        catalogo para no invalidar sus 32 celdas (20 X, 4 M, 8 N). Sigue
+        siendo el tajo que las zonas especiales sustituyeron, y con todas sus
+        celdas clasificadas no debe volver a salir en las hojas."""
+        catalogo = {'version': 'test', 'tajos': [{'id': 'tubeado'}, {'id': 'cableado'}],
+                    'obras': {'pruebas': {'tajos': [{'id': 'cuarto_tecnico'}]}}}
+        registro, salida = self._registro(self._ficha(['X', 'M', 'N', 'N']), catalogo)
+        self.assertNotIn('cuarto_tecnico', self._ids_catalogo(registro))
+        self.assertFalse(any('__cuarto_tecnico__' in k for k in registro['estados']))
+        self.assertNotIn('[AVISO FICHA]', salida)
+
+    def test_cuarto_tecnico_propio_con_celdas_por_clasificar_sigue_ofreciendose(self):
+        catalogo = {'version': 'test', 'tajos': [{'id': 'tubeado'}, {'id': 'cableado'}],
+                    'obras': {'pruebas': {'tajos': [{'id': 'cuarto_tecnico'}]}}}
+        registro, salida = self._registro(self._ficha(['X', 'P', 'N', 'N']), catalogo)
+        self.assertIn('cuarto_tecnico', self._ids_catalogo(registro))
+        self.assertIn('[AVISO FICHA]', salida)
+
+    def test_fotovoltaica_tambien_esta_retirada_por_decision(self):
+        """Sustituida por los tajos de cubierta (fv_*): mismo trato, tambien
+        si una obra la conserva como tajo propio del catalogo."""
+        catalogo = {'version': 'test', 'tajos': [{'id': 'tubeado'}, {'id': 'cableado'}],
+                    'obras': {'pruebas': {'tajos': [{'id': 'fotovoltaica'}]}}}
+        ficha = self._ficha(['N', 'N', 'N', 'N'], extra_tajos=('fotovoltaica',))
+        for planta, viv in (('pb', 'A'), ('pb', 'B'), ('1', 'A'), ('1', 'B')):
+            ficha['estados'][f'p1__{planta}__fotovoltaica__{viv}'] = {
+                'v': 'N', 'f': '28/09/2026', 'r': 'rev_28092026'}
+        registro, _ = self._registro(ficha, catalogo)
+        self.assertNotIn('fotovoltaica', self._ids_catalogo(registro))
+        self.assertNotIn('cuarto_tecnico', self._ids_catalogo(registro))
+
+    def test_sin_catalogo_cargable_no_se_filtra_nada_y_se_avisa(self):
+        salida = io.StringIO()
+        with redirect_stdout(salida), patch.object(
+                gt.validar_revision, 'cargar_catalogo_tajos',
+                side_effect=OSError('sin catalogo')):
+            registro = gt.registro_revision_desde_ficha(
+                self.OBRA, self._ficha(['N', 'N', 'X', 'N']),
+                fixtures.prioridades([], revision='28/09/2026'))
+        self.assertIn('cuarto_tecnico', self._ids_catalogo(registro))
+        self.assertIn('[AVISO FICHA]', salida.getvalue())
+
+    def test_las_zonas_especiales_no_cuentan_para_clasificar_un_tajo_retirado(self):
+        """Las celdas de zona llevan su propio perfil de tajos: no deben
+        mantener viva la fila del cuarto tecnico antiguo."""
+        ficha = self._ficha(['N', 'N', 'X', 'N'])
+        ficha['estados']['p1__zesp__cuarto_tecnico__z1'] = {
+            'v': 'P', 'f': '28/09/2026', 'r': 'rev_28092026'}
+        registro, _ = self._registro(ficha)
+        self.assertNotIn('cuarto_tecnico', self._ids_catalogo(registro))
 
 
 class TestTodosLosBloquesLleganAlGenerador(unittest.TestCase):

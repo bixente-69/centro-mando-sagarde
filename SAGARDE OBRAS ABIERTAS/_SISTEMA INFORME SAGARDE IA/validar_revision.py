@@ -238,6 +238,25 @@ def _ids_tajos(catalogo, obra):
     return ids
 
 
+def ids_tajos_de_la_obra(catalogo, obra, ficha_actual=None):
+    """Tajos que una obra puede leer y escribir: los del catalogo comun, los
+    propios de la obra y los que su PROPIA ficha declara.
+
+    Los ultimos importan porque el catalogo evoluciona y las fichas no se
+    migran: `cuarto_tecnico` salio del catalogo (lo cubren mejor las zonas
+    especiales) pero las fichas siguen declarandolo con sus celdas. Sin esto,
+    una marca sobre el -- la N de "no computa", la unica forma que tiene
+    Bixente de neutralizarlo -- se descartaba en silencio (28/09/2026: 97
+    marcas de Bolueta). Lo que la ficha declara es verdad estructural de esa
+    obra; un tajo que ni el catalogo ni la ficha conocen sigue rechazado.
+    """
+    ids = set(_ids_tajos(catalogo, obra))
+    for tajo in ((ficha_actual or {}).get('tajos') or {}).get('detalle') or []:
+        if isinstance(tajo, dict) and isinstance(tajo.get('id'), str):
+            ids.add(tajo['id'])
+    return ids
+
+
 def _estado_anterior(ficha, clave):
     registro = (ficha.get('estados') or {}).get(clave)
     if isinstance(registro, dict):
@@ -343,7 +362,7 @@ def validar(revision, ficha_actual, catalogo):
         )
         return _finalizar(resultado)
 
-    ids_tajo = _ids_tajos(catalogo, revision['obra'])
+    ids_tajo = ids_tajos_de_la_obra(catalogo, revision['obra'], ficha_actual)
     hoja_usada = revision['metadata']['hoja_usada']
     # generar_todos no recibe una hoja sino la fotografia ya normalizada por
     # el adaptador. Puede incorporar una P explicita de un sidecar de tinta,
@@ -379,7 +398,7 @@ def validar(revision, ficha_actual, catalogo):
             resultado['rechazadas'].append(_rechazada(
                 indice, celda, 4,
                 f"regla 4: el tajo {tajo!r} no existe en el catalogo de "
-                f"{revision['obra']!r}"))
+                f"{revision['obra']!r} ni entre los que declara su ficha"))
             continue
 
         estado_leido = celda['estado_leido']

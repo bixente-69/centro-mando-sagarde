@@ -52,6 +52,49 @@ def _obra(obra_id, nombre):
     }
 
 
+class TestLaUltimaRevisionManda(unittest.TestCase):
+    """28/09/2026 (Bixente): "un tajo se puede revertir en cualquier momento;
+    hay que tener en cuenta lo que este reflejado en la ultima revision".
+
+    Caso real de Mungia: la ficha tenia M, las hojas del 04/09 y del 10/09
+    marcaron X, pero un fichero de correcciones del 25/08 se aplicaba DESPUES
+    de la ultima hoja ("la correccion es el valor final") y devolvia la celda
+    a M. Los dos caminos (antiguo y motor comun) lo hacian igual, asi que la
+    salvaguarda de doble calculo no podia verlo.
+    """
+
+    def _aplicar(self, fecha_correcciones, fecha_hoja='10/09/2026'):
+        import json
+        import tempfile
+        with tempfile.TemporaryDirectory() as carpeta:
+            os.makedirs(os.path.join(carpeta, 'REVISIONES', '_SISTEMA'))
+            ruta = os.path.join(
+                carpeta, 'REVISIONES', '_SISTEMA',
+                f'REVISION {fecha_correcciones}.pdf.correcciones.json')
+            with open(ruta, 'w', encoding='utf-8') as f:
+                json.dump({'estados': {CLAVE: 'M'}}, f)
+            ficha = _ficha('pruebas', estado='M')
+            with (
+                    mock.patch.object(gt, '_mapa_tajos_cortos', return_value={}),
+                    mock.patch.object(gt.fichas, 'guardar'),
+                    contextlib.redirect_stdout(io.StringIO())):
+                resultado, aplicada = gt.actualizar_ficha_con_salvaguarda(
+                    _obra('pruebas', 'OBRA CORRECCIONES'), carpeta, ficha,
+                    SNAPSHOT, fecha_hoja)
+        self.assertTrue(aplicada)
+        return resultado['estados'][CLAVE]['v']
+
+    def test_una_correccion_mas_vieja_que_la_ultima_hoja_no_la_pisa(self):
+        # SNAPSHOT dice X (hoja del 10/09); la correccion del 25/08 dice M.
+        self.assertEqual(self._aplicar('25082026'), 'X')
+
+    def test_una_correccion_de_la_fecha_de_la_hoja_sigue_siendo_el_valor_final(self):
+        self.assertEqual(self._aplicar('10092026'), 'M')
+
+    def test_una_correccion_posterior_a_la_ultima_hoja_sigue_siendo_el_valor_final(self):
+        self.assertEqual(self._aplicar('12092026'), 'M')
+
+
 class TestCutoverGenerarTodos(unittest.TestCase):
 
     def _parches_entrada(self, correcciones=None):

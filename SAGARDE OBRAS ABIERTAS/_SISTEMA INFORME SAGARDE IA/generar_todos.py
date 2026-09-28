@@ -179,10 +179,30 @@ def _clave_planta(valor):
     return (3, 0, _clave_natural(texto))
 
 
-def _correcciones_mas_recientes(carpeta_abs):
+def _como_fecha(valor):
+    """`DD/MM/AAAA` (o una fecha ya hecha) -> date; None si no se puede leer.
+    Nunca inventa: quien la usa debe comportarse como si no hubiera fecha."""
+    if isinstance(valor, datetime):
+        return valor.date()
+    if all(hasattr(valor, campo) for campo in ('year', 'month', 'day')):
+        return valor                       # ya es una date
+    try:
+        return datetime.strptime(str(valor).strip(), '%d/%m/%Y').date()
+    except (TypeError, ValueError):
+        return None
+
+
+def _correcciones_mas_recientes(carpeta_abs, fecha_ultima_revision=None):
     """Devuelve los estados del fichero *.correcciones.json mas reciente de la
     obra, o {}. Son marcas escritas a boli sobre la hoja de campo: el dato mas
-    directo que hay, y el que mas veces se ha perdido por no casar la clave."""
+    directo que hay, y el que mas veces se ha perdido por no casar la clave.
+
+    Con `fecha_ultima_revision`, las correcciones MAS VIEJAS que esa revision
+    no se devuelven: ya se aplicaron cuando se aplico su propia hoja, y
+    reaplicarlas despues de una hoja mas nueva la pisaria (28/09/2026, Mungia:
+    una del 25/08 devolvia a M seis celdas que las hojas del 04/09 y del 10/09
+    marcaban X). Manda lo que refleja la ultima revision; las de su misma
+    fecha o posteriores siguen siendo el valor final."""
     import glob
     # Norma _SISTEMA (07/08/2026): los sidecars viven en REVISIONES*/_SISTEMA/.
     # Se siguen aceptando los sueltos en REVISIONES* por si queda alguno de
@@ -225,6 +245,17 @@ def _correcciones_mas_recientes(carpeta_abs):
     fecha_reciente = max(fecha_archivo for fecha_archivo, _ in validos)
     candidatos = [ruta for fecha_archivo, ruta in validos
                   if fecha_archivo == fecha_reciente]
+
+    limite = _como_fecha(fecha_ultima_revision)
+    if limite is not None and fecha_reciente < limite:
+        print("  [AVISO FICHA] las correcciones manuales mas recientes "
+              "({}: {}) son anteriores a la ultima revision ({}): ya estaban "
+              "aplicadas y no se vuelven a aplicar para no pisarla. Manda lo "
+              "que refleja la ultima revision.".format(
+                  fecha_reciente.strftime('%d/%m/%Y'),
+                  ', '.join(sorted(os.path.basename(r) for r in candidatos)),
+                  limite.strftime('%d/%m/%Y')))
+        return {}
 
     def desempate(ruta):
         try:
@@ -383,7 +414,67 @@ def _zonas_especiales_para_registro(obra, portal):
     return zonas
 
 
-def registro_revision_desde_ficha(obra, ficha, prioridades):
+# Tajos que las zonas especiales sustituyeron (27/09/2026, catalogo v1.3):
+# `cuarto_tecnico` (ahora cada cuarto tiene su tipo y sus tajos) y `fotovoltaica`
+# (ahora los tajos de cubierta fv_*). Se consideran retirados AUNQUE una obra
+# los conserve como tajo propio en el catalogo -- Gernika lo hace para no
+# invalidar sus 32 celdas --: con sus celdas ya clasificadas no vuelven a salir.
+TAJOS_RETIRADOS_POR_DECISION = frozenset({'cuarto_tecnico', 'fotovoltaica'})
+
+
+def _tajos_retirados_a_ocultar(obra, ficha, catalogo):
+    """Tajos retirados que dejan de ofrecerse en las hojas: los que la ficha
+    declara pero el catalogo (comun + propios de la obra) ya no tiene, y los
+    retirados por decision (`TAJOS_RETIRADOS_POR_DECISION`).
+
+    Bixente (28/09/2026): "el cuarto tecnico ya no tiene sentido, pues ahora
+    hay zonas especiales que los aplican mejor; si aparece, la unica forma ha
+    sido anadir una N de no computa; si no sale, mas mejor". Un tajo retirado
+    se sigue ofreciendo SOLO mientras le queden celdas sin clasificar (P o ?):
+    hay que poder marcarlas N. En cuanto todas estan clasificadas (N, o un
+    estado real) se oculta, sin migrar ningun dato. Las celdas de zona
+    especial no cuentan: llevan su propio perfil de tajos.
+
+    Devuelve el conjunto de ids a ocultar; lo que se oculta y lo que sigue
+    ofreciendose se dice por consola, nunca en silencio.
+    """
+    conocidos = validar_revision._ids_tajos(catalogo, obra['id'])
+    retirados = [
+        tajo['id']
+        for tajo in (ficha.get('tajos') or {}).get('detalle') or []
+        if isinstance(tajo, dict) and isinstance(tajo.get('id'), str)
+        and (tajo['id'] not in conocidos
+             or tajo['id'] in TAJOS_RETIRADOS_POR_DECISION)
+    ]
+    if not retirados:
+        return set()
+
+    por_clasificar = {tajo: 0 for tajo in retirados}
+    for clave, dato in (ficha.get('estados') or {}).items():
+        partes = clave.split('__')
+        if len(partes) != 4 or partes[1] == fichas.ID_PLANTA_ZONAS_ESPECIALES:
+            continue
+        if partes[2] in por_clasificar and (dato or {}).get('v') in (None, 'P', '?'):
+            por_clasificar[partes[2]] += 1
+
+    ocultos = set()
+    for tajo in retirados:
+        pendientes = por_clasificar[tajo]
+        if pendientes:
+            print(f"  [AVISO FICHA] {obra['nombre']}: el tajo retirado del "
+                  f"catalogo {tajo!r} sigue ofreciendose en las hojas porque "
+                  f"{pendientes} celda(s) siguen sin clasificar (P o ?). "
+                  f"Marcalas N (\"no computa\") en la proxima hoja y dejara "
+                  f"de salir.")
+        else:
+            ocultos.add(tajo)
+            print(f"  [FICHA] {obra['nombre']}: el tajo retirado del catalogo "
+                  f"{tajo!r} ya no se ofrece en las hojas (todas sus celdas "
+                  f"estan clasificadas).")
+    return ocultos
+
+
+def registro_revision_desde_ficha(obra, ficha, prioridades, catalogo=None):
     """Igual que crear_registro_revision pero leyendo la estructura de la ficha.
 
     Produce EXACTAMENTE el mismo formato (mismos ids src_*, mismas claves de
@@ -416,6 +507,16 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
     if motivo:
         print(f"  [AVISO FICHA] {obra['nombre']}: {motivo}. "
               f"La hoja de campo puede salir con estados atrasados.")
+
+    if catalogo is None:
+        try:
+            catalogo = validar_revision.cargar_catalogo_tajos()
+        except (OSError, ValueError) as exc:
+            print(f"  [AVISO FICHA] {obra['nombre']}: no se pudo cargar el "
+                  f"catalogo de tajos ({exc}); la base del generador no "
+                  f"filtra los tajos retirados.")
+    tajos_ocultos = (
+        _tajos_retirados_a_ocultar(obra, ficha, catalogo) if catalogo else set())
 
     alias = (ficha.get('estructura') or {}).get('alias_historico') or {}
     bloques_ficha = (ficha.get('estructura') or {}).get('bloques') or []
@@ -493,13 +594,15 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
     if not bloques:
         return None
 
-    catalogo = []
+    catalogo_hoja = []
     for tajo in (ficha.get('tajos') or {}).get('detalle') or []:
+        if tajo['id'] in tajos_ocultos:
+            continue
         try:
             orden = float(tajo.get('orden') or 9999)
         except (TypeError, ValueError):
             orden = 9999
-        catalogo.append({
+        catalogo_hoja.append({
             'id': tajo['id'],
             'name': tajo.get('nombre') or tajo['id'],
             'g': tajo.get('fase') or 'Otros',
@@ -509,8 +612,8 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
                 str(tajo.get('ambito') or '').casefold(), 'v'),
             'orden': int(orden) if float(orden).is_integer() else orden,
         })
-    catalogo.sort(key=lambda t: (t['orden'], _clave_natural(t['name'])))
-    if not catalogo:
+    catalogo_hoja.sort(key=lambda t: (t['orden'], _clave_natural(t['name'])))
+    if not catalogo_hoja:
         return None
 
     estados = {}
@@ -521,6 +624,8 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
         try:
             portal_f, planta_f, tajo_f, ubi_f = clave.split('__')
         except ValueError:
+            continue
+        if tajo_f in tajos_ocultos:
             continue
         if planta_f == fichas.ID_PLANTA_ZONAS_ESPECIALES:
             # Marca de una zona especial: se conserva el id REAL de la zona
@@ -544,7 +649,7 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
         'catalogo_version': prioridades.get('catalogo_version'),
         'fuente_estructura': 'ficha_obra.json',
         'resumen': {
-            'tajos': len(catalogo),
+            'tajos': len(catalogo_hoja),
             'estados_precargados': len(estados),
             'viviendas_planta': sum(
                 len(planta['vivs'])
@@ -562,7 +667,7 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
             'bloqueados': resumen.get('bloqueados', 0),
         },
         'bloques': bloques,
-        'catalog': catalogo,
+        'catalog': catalogo_hoja,
         'estados': estados,
     }
 
@@ -1458,7 +1563,8 @@ def actualizar_ficha_con_salvaguarda(
         obra, carpeta_abs, ficha_actual, snapshot_crudo, fecha,
         ficha_xlsx=None, materiales=None, documentos=None):
     """Hace el cutover de una obra; una divergencia no lanza ni guarda ficha."""
-    correcciones = _correcciones_mas_recientes(carpeta_abs)
+    correcciones = _correcciones_mas_recientes(
+        carpeta_abs, fecha_ultima_revision=fecha)
     mapa_tajos_cortos = _mapa_tajos_cortos(obra['id'])
     resultado = calcular_actualizacion_ficha_con_salvaguarda(
         obra, ficha_actual, snapshot_crudo, fecha,

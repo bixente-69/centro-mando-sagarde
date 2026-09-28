@@ -261,6 +261,35 @@ class TestRegla4TajoEnCatalogo(unittest.TestCase):
             _revision([_celda(clave=clave)]), _ficha(), _catalogo())
         self.assertEqual(resultado['rechazadas'][0]['regla'], 4)
 
+    def test_regla_4_pasa_con_un_tajo_retirado_del_catalogo_que_la_ficha_aun_declara(self):
+        """28/09/2026: `cuarto_tecnico` salio del catalogo (ahora lo cubren las
+        zonas especiales) pero las fichas siguen declarandolo con sus celdas.
+        La unica forma de que "no compute" ha sido marcar N, y esa N se
+        rechazaba (o se descartaba antes, al leer la hoja) sin que nadie se
+        enterase: 97 marcas de Bolueta se perdieron asi."""
+        ficha = _ficha()
+        ficha['tajos']['detalle'].append({
+            'id': 'cuarto_tecnico', 'nombre': 'Cuarto técnico',
+            'ambito': 'edificio', 'propiedad': 'propio',
+            'fase': 'Cierre técnico', 'orden': 235})
+        resultado = validador.validar(
+            _revision([_celda(clave='p1__pb__cuarto_tecnico__a', estado='N')]),
+            ficha, _catalogo())
+        self.assertTrue(resultado['aplicable'])
+        self.assertEqual(resultado['rechazadas'], [])
+        aceptada = resultado['aceptadas'][0]
+        self.assertEqual((aceptada['antes'], aceptada['despues']), (None, 'N'))
+
+    def test_regla_4_sigue_fallando_si_la_ficha_no_declara_ese_tajo(self):
+        """Ampliar lo aceptado a lo que la ficha declara no abre la puerta a
+        errores de tecleo: un tajo que nadie declara sigue rechazado."""
+        ficha = _ficha()
+        ficha['tajos']['detalle'].append({'id': 'otro_tajo_declarado'})
+        resultado = validador.validar(
+            _revision([_celda(clave='p1__pb__cuarto_tecnico__a', estado='N')]),
+            ficha, _catalogo())
+        self.assertEqual(resultado['rechazadas'][0]['regla'], 4)
+
     def test_carga_el_catalogo_real_y_su_override_de_obra(self):
         catalogo = validador.cargar_catalogo_tajos()
         self.assertEqual(catalogo['version'], '1.3')

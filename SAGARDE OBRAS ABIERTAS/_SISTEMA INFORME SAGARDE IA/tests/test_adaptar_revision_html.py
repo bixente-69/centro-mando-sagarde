@@ -118,6 +118,58 @@ class TestAdaptarRevisionHtml(unittest.TestCase):
         self.assertEqual(resultado['resumen']['aceptadas'], 1)
         self.assertEqual(resultado['avisos'], revision['metadata']['avisos'])
 
+    def _declarar_cuarto_tecnico_en_la_ficha(self):
+        self.ficha['tajos']['detalle'].append({
+            'id': 'cuarto_tecnico', 'nombre': 'Cuarto técnico',
+            'ambito': 'edificio', 'propiedad': 'propio',
+            'fase': 'Cierre técnico', 'orden': 235})
+
+    def test_un_tajo_retirado_del_catalogo_que_la_ficha_aun_declara_si_se_lee(self):
+        """28/09/2026 (Bixente): el cuarto tecnico "ya no tiene sentido" porque
+        lo aplican mejor las zonas especiales; si aparece en una hoja, la unica
+        forma de que no compute es una N. Esa N se descartaba con "tajo
+        desconocido" (97 marcas de Bolueta): hay que tener en cuenta lo que
+        refleja la ultima revision."""
+        self._declarar_cuarto_tecnico_en_la_ficha()
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__cuarto_tecnico__A', 'N'),
+            ('src_pruebas_p1__src_pruebas_p1_f1__cuarto_tecnico__B', ''),
+        ]))
+
+        revision = self._construir(ruta)
+        resultado = validador.validar(revision, self.ficha, self.catalogo)
+
+        self.assertEqual(
+            [(c['clave'], c['estado_leido']) for c in revision['celdas']],
+            [('p1__pb__cuarto_tecnico__A', 'N'),
+             ('p1__pb__cuarto_tecnico__B', '')])
+        self.assertEqual(revision['metadata']['avisos'], [])
+        self.assertTrue(resultado['aplicable'])
+        self.assertEqual(resultado['rechazadas'], [])
+
+    def test_el_codigo_corto_antiguo_del_cuarto_tecnico_tambien_se_traduce(self):
+        """Las hojas hechas con el generador antiguo llevan `ct-tec`."""
+        self._declarar_cuarto_tecnico_en_la_ficha()
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__ct-tec__A', 'N'),
+        ]))
+        revision = self._construir(ruta)
+        self.assertEqual(
+            [c['clave'] for c in revision['celdas']],
+            ['p1__pb__cuarto_tecnico__A'])
+        self.assertEqual(revision['metadata']['avisos'], [])
+
+    def test_si_la_ficha_no_declara_el_tajo_retirado_sigue_avisando(self):
+        """Sin declaracion en la ficha no hay nada a lo que aplicar la marca:
+        se avisa (nunca se inventa)."""
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__cuarto_tecnico__A', 'N'),
+        ]))
+        revision = self._construir(ruta)
+        self.assertEqual(revision['celdas'], [])
+        self.assertTrue(any('tajo desconocido' in aviso
+                            for aviso in revision['metadata']['avisos']))
+
     def test_revision_id_es_determinista_y_reutiliza_generar_revision_id(self):
         ruta = self._escribir(_html([
             ('src_pruebas_p1__src_pruebas_p1_f1__tubeado__A', 'X'),
