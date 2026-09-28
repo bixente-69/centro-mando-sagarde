@@ -351,6 +351,38 @@ def cargar_ficha_obra(obra):
         return None
 
 
+def _zonas_especiales_para_registro(obra, portal):
+    """Zonas especiales de un portal, en la forma que el generador sabe leer.
+
+    El generador (`normaliseSpecialZones`) descarta EN SILENCIO una zona con
+    tipo desconocido o sin nombre. Si el registro se la mandara igualmente,
+    sus marcas quedarian huerfanas sin que nadie lo notara, asi que se filtra
+    aqui con el mismo criterio y se avisa de lo que se deja fuera.
+
+    Viaja solo lo que el generador necesita: `id` (el REAL de la ficha, para
+    que la hoja rellenada vuelva a casar con la misma zona), `tipo` y
+    `nombre`. `funcion` solo si la ficha la declaro; no se deduce del nombre.
+    """
+    zonas = []
+    for zona in fichas.zonas_especiales_portal(portal):
+        zona_id = str(zona.get('id') or '').strip()
+        tipo = zona.get('tipo')
+        nombre = str(zona.get('nombre') or '').strip()
+        if (not zona_id or tipo not in fichas.TIPOS_ZONA_ESPECIAL
+                or not nombre):
+            print(f"  [AVISO FICHA] {obra['nombre']}: la zona especial "
+                  f"{zona_id or '(sin id)'!r} del portal "
+                  f"{portal.get('nombre')!r} no se ofrece en la base del "
+                  f"generador (tipo={tipo!r}, nombre={nombre!r}): no sabria "
+                  f"pintarla.")
+            continue
+        entrada = {'id': zona_id, 'tipo': tipo, 'nombre': nombre}
+        if zona.get('funcion'):
+            entrada['funcion'] = zona['funcion']
+        zonas.append(entrada)
+    return zonas
+
+
 def registro_revision_desde_ficha(obra, ficha, prioridades):
     """Igual que crear_registro_revision pero leyendo la estructura de la ficha.
 
@@ -369,6 +401,16 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
     precarga, cada revision nueva obliga a volver a marcar a mano las
     mismas ubicaciones que no aplican, y una celda vacia se traduciria a P
     en vez de conservar el N.
+
+    Las zonas especiales (cuartos tecnicos, cuartos ligeros y cubierta, que
+    la ficha guarda en la planta virtual 'zesp' de cada portal) NO viajan
+    como planta -- no son viviendas ni deben inflar `viviendas_planta` --
+    sino por su propio canal, `zonasEspeciales` en cada portal, que es lo que
+    `normaliseStructure` del generador ya sabia leer. Con ellas viajan sus
+    marcas X/M///N (28/09/2026, Bixente: "coge informacion pero no toda"),
+    con la clave `{portal}__zesp__{tajo}__{zona}` que pinta la hoja y el id
+    REAL de la zona: asi la hoja rellenada vuelve a casar con la misma zona
+    de la ficha en vez de dar de alta otra con un id nuevo.
     """
     motivo = fichas.esta_rancia(ficha, prioridades)
     if motivo:
@@ -389,7 +431,7 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
     # El contador de portales es GLOBAL a proposito: dos portales de bloques
     # distintos chocarian en el mismo `src_{slug}_p1`. Con un solo bloque el
     # numero coincide con el de siempre, asi que las obras reales no se mueven.
-    bloques, mapa = [], {}
+    bloques, mapa, mapa_zonas = [], {}, {}
     i_portal = 0
     for i_bloque, bloque_ficha in enumerate(bloques_ficha, 1):
         portales = []
@@ -399,9 +441,9 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
             plantas = []
             for i_planta, planta in enumerate(portal.get('plantas') or [], 1):
                 # La planta virtual 'zesp' (zonas especiales: cuarto tecnico/
-                # ligero/cubierta) no son viviendas -- no viajan en el
-                # registro que alimenta el desplegable de "continuar desde"
-                # del generador. Precargarlas es una pieza futura aparte.
+                # ligero/cubierta) no son viviendas: no viaja como planta ni
+                # infla el recuento de viviendas. Sus zonas y marcas llegan
+                # por su propio canal (`zonasEspeciales`), mas abajo.
                 if planta.get('id') == fichas.ID_PLANTA_ZONAS_ESPECIALES:
                     continue
                 planta_id = f'{portal_id}_f{i_planta}'
@@ -418,13 +460,29 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
                     continue
                 plantas.append({'id': planta_id, 'nombre': planta.get('nombre'),
                                 'vivs': vivs})
+            zonas = _zonas_especiales_para_registro(obra, portal)
             if plantas:
-                portales.append({
+                portal_reg = {
                     'id': portal_id,
                     'nombre': portal.get('nombre'),
                     'referencia_portal': portal.get('referencia') or portal.get('nombre'),
                     'plantas': plantas,
-                })
+                }
+                # La clave solo existe si hay zonas: una obra sin ellas
+                # (Gernika, Mungia...) sale igual que antes de este cambio.
+                if zonas:
+                    portal_reg['zonasEspeciales'] = zonas
+                    for zona in zonas:
+                        mapa_zonas[(portal['id'], zona['id'])] = portal_id
+                portales.append(portal_reg)
+            elif fichas.zonas_especiales_portal(portal):
+                # Sin ninguna planta de viviendas el generador se inventaria
+                # 6 plantas por defecto para ese portal, asi que no se ofrece;
+                # pero perder sus zonas no puede pasar en silencio.
+                print(f"  [AVISO FICHA] {obra['nombre']}: el portal "
+                      f"{portal.get('nombre')!r} solo tiene zonas especiales "
+                      f"y ninguna planta de viviendas: no se ofrece en la base "
+                      f"del generador y sus zonas no llegan a la hoja nueva.")
         if portales:
             bloques.append({
                 'id': f'src_{slug}_b{i_bloque}',
@@ -464,6 +522,14 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
             portal_f, planta_f, tajo_f, ubi_f = clave.split('__')
         except ValueError:
             continue
+        if planta_f == fichas.ID_PLANTA_ZONAS_ESPECIALES:
+            # Marca de una zona especial: se conserva el id REAL de la zona
+            # (no se renumera como las plantas) y solo viaja si la zona
+            # tambien viaja, para no dejar marcas huerfanas en la hoja.
+            portal_id = mapa_zonas.get((portal_f, ubi_f))
+            if portal_id:
+                estados[f'{portal_id}__{planta_f}__{tajo_f}__{ubi_f}'] = valor
+            continue
         ids = mapa.get((portal_f, planta_f, ubi_f))
         if ids:
             portal_id, planta_id, viv = ids
@@ -485,6 +551,11 @@ def registro_revision_desde_ficha(obra, ficha, prioridades):
                 for bloque_reg in bloques
                 for portal in bloque_reg['portales']
                 for planta in portal['plantas']
+            ),
+            'zonas_especiales': sum(
+                len(portal_reg.get('zonasEspeciales') or [])
+                for bloque_reg in bloques
+                for portal_reg in bloque_reg['portales']
             ),
             'listos': resumen.get('listos', 0),
             'verificar': resumen.get('verificar', 0),

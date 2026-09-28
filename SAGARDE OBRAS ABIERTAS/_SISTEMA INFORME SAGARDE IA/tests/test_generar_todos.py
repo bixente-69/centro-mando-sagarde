@@ -261,9 +261,11 @@ class TestContratoFuenteEstructura(unittest.TestCase):
     def test_la_planta_zesp_no_viaja_al_registro_ni_infla_viviendas_planta(self):
         """27/09/2026: la planta virtual 'zesp' (zonas especiales de
         portal: cuarto técnico/ligero/cubierta) no son viviendas -- no
-        deben aparecer en el desplegable "continuar desde" del generador
-        (esa precarga es una pieza futura aparte) ni inflar el recuento
-        que ya usa Bixente para saber cuántas viviendas tiene la obra."""
+        deben aparecer COMO PLANTA en el desplegable "continuar desde" del
+        generador ni inflar el recuento que ya usa Bixente para saber
+        cuántas viviendas tiene la obra. Las zonas llegan por su propio
+        canal, `zonasEspeciales` (ver TestZonasEspecialesLleganAlGenerador,
+        28/09/2026)."""
         ficha = self._ficha({'p1__pb__tubeado__A': 'X'})
         ficha['estructura']['bloques'][0]['portales'][0]['plantas'].append({
             'id': gt.fichas.ID_PLANTA_ZONAS_ESPECIALES,
@@ -316,6 +318,201 @@ class TestContratoFuenteEstructura(unittest.TestCase):
             fixtures.prioridades([]))
         self.assertIsNotNone(registro)
         self.assertEqual(sorted(registro['estados'].values()), ['N', 'X'])
+
+
+class TestZonasEspecialesLleganAlGenerador(unittest.TestCase):
+    """28/09/2026: la base "continuar desde la ultima revision" del generador
+    llegaba SIN las zonas especiales (cuartos tecnicos, cuartos ligeros y
+    cubierta). El registro descartaba la planta virtual 'zesp' y con ella las
+    zonas y todas sus marcas: la hoja siguiente obligaba a dar de alta cada
+    zona a mano, con ids nuevos que la ficha no reconoce, y las marcas de la
+    revision anterior se perdian (Bolueta: 7 zonas y 31 marcas del 28/09).
+
+    El generador ya sabia importar `zonasEspeciales` por portal
+    (`normaliseStructure`) y pintar sus celdas con la clave
+    `portal__zesp__tajo__zona`; lo que faltaba era que el registro se las
+    diera, con los ids REALES de la ficha para que la hoja rellenada vuelva a
+    casar con las mismas zonas.
+    """
+
+    OBRA = {'id': 'pruebas', 'nombre': 'OBRA DE PRUEBAS'}
+    P1 = 'src_pruebas_p1'
+    P2 = 'src_pruebas_p2'
+
+    ZONAS = [
+        {'id': 'z_riti_1', 'tipo': 'cuarto_tecnico',
+         'nombre': 'Cuarto RITI / Teleco', 'origen': 'revision_sin_confirmar',
+         'confirmado': None, 'visto_en': '28/09/2026'},
+        {'id': 'z_cub_2', 'tipo': 'cubierta', 'nombre': 'Cubierta',
+         'origen': 'revision_sin_confirmar', 'confirmado': None,
+         'visto_en': '28/09/2026'},
+        {'id': 'z_bas_3', 'tipo': 'cuarto_ligero', 'nombre': 'Basuras',
+         'origen': 'revision_sin_confirmar', 'confirmado': None,
+         'visto_en': '28/09/2026'},
+    ]
+    ESTADOS = {
+        'p1__pb__tubeado__A': 'X',
+        'p1__zesp__garaje_tabicado__z_riti_1': 'X',
+        'p1__zesp__garaje_lucido__z_riti_1': 'N',
+        'p1__zesp__garaje_tubeado_emp__z_riti_1': 'P',
+        'p1__zesp__garaje_cableado_emp__z_riti_1': '?',
+        'p1__zesp__fv_paneles_instalacion__z_cub_2': 'M',
+        'p1__zesp__garaje_tabicado__z_bas_3': '/',
+    }
+
+    def _ficha(self, zonas=None, estados=None):
+        ficha = fixtures.ficha_minima()
+        ficha['revisiones'] = [{'fecha': '28/09/2026'}]
+        if zonas is not None:
+            ficha['estructura']['bloques'][0]['portales'][0]['plantas'].append({
+                'id': gt.fichas.ID_PLANTA_ZONAS_ESPECIALES,
+                'nombre': 'Zonas especiales', 'orden': 999,
+                'ubicaciones': [dict(z) for z in zonas],
+            })
+        ficha['estados'] = {
+            clave: {'v': valor, 'f': '28/09/2026', 'r': 'rev_28092026'}
+            for clave, valor in (estados or {}).items()
+        }
+        return ficha
+
+    def _registro(self, ficha):
+        salida = io.StringIO()
+        with redirect_stdout(salida):
+            registro = gt.registro_revision_desde_ficha(
+                self.OBRA, ficha, fixtures.prioridades([], revision='28/09/2026'))
+        self.assertIsNotNone(registro)
+        return registro, salida.getvalue()
+
+    def test_las_zonas_viajan_por_su_propio_canal_con_su_id_real(self):
+        registro, _ = self._registro(self._ficha(self.ZONAS, self.ESTADOS))
+        portal = registro['bloques'][0]['portales'][0]
+        # Solo lo que el generador necesita y sabe leer, en el orden de la
+        # ficha, con el id que ya tiene la zona (no uno nuevo).
+        self.assertEqual(portal['zonasEspeciales'], [
+            {'id': 'z_riti_1', 'tipo': 'cuarto_tecnico',
+             'nombre': 'Cuarto RITI / Teleco'},
+            {'id': 'z_cub_2', 'tipo': 'cubierta', 'nombre': 'Cubierta'},
+            {'id': 'z_bas_3', 'tipo': 'cuarto_ligero', 'nombre': 'Basuras'},
+        ])
+
+    def test_las_marcas_de_zona_llegan_con_la_clave_que_pinta_la_hoja(self):
+        """Clave = `${portal.id}__zesp__${tajo.id}__${zona.id}`, la misma con
+        la que `specialCellHTML` busca la marca. P y ? no viajan, igual que
+        en vivienda: la celda vacia ya los recupera sola."""
+        registro, _ = self._registro(self._ficha(self.ZONAS, self.ESTADOS))
+        de_zona = {k: v for k, v in registro['estados'].items()
+                   if '__zesp__' in k}
+        self.assertEqual(de_zona, {
+            f'{self.P1}__zesp__garaje_tabicado__z_riti_1': 'X',
+            f'{self.P1}__zesp__garaje_lucido__z_riti_1': 'N',
+            f'{self.P1}__zesp__fv_paneles_instalacion__z_cub_2': 'M',
+            f'{self.P1}__zesp__garaje_tabicado__z_bas_3': '/',
+        })
+
+    def test_las_viviendas_siguen_como_antes_y_zesp_no_se_cuela_como_planta(self):
+        registro, _ = self._registro(self._ficha(self.ZONAS, self.ESTADOS))
+        self.assertEqual(
+            registro['estados'][f'{self.P1}__{self.P1}_f1__tubeado__A'], 'X')
+        self.assertEqual(registro['resumen']['viviendas_planta'], 4)
+        portal = registro['bloques'][0]['portales'][0]
+        self.assertEqual([p['id'] for p in portal['plantas']],
+                         [f'{self.P1}_f1', f'{self.P1}_f2'])
+
+    def test_el_resumen_cuenta_las_zonas_y_las_celdas_precargadas(self):
+        registro, _ = self._registro(self._ficha(self.ZONAS, self.ESTADOS))
+        # 1 de vivienda + 4 de zona (X, N, M, /); P y ? no cuentan.
+        self.assertEqual(registro['resumen']['estados_precargados'], 5)
+        self.assertEqual(registro['resumen']['zonas_especiales'], 3)
+
+    def test_una_obra_sin_zonas_no_gana_ninguna_clave_nueva_por_portal(self):
+        registro, _ = self._registro(
+            self._ficha(None, {'p1__pb__tubeado__A': 'X'}))
+        portal = registro['bloques'][0]['portales'][0]
+        self.assertNotIn('zonasEspeciales', portal)
+        self.assertEqual(registro['resumen']['zonas_especiales'], 0)
+        self.assertEqual(registro['resumen']['estados_precargados'], 1)
+
+    def test_una_zona_que_el_generador_no_sabe_pintar_no_viaja_y_avisa(self):
+        """El generador descarta en silencio una zona con tipo desconocido o
+        sin nombre (`normaliseSpecialZones`). Si el registro se la mandara,
+        sus marcas quedarian huerfanas sin que nadie lo notara: se queda
+        fuera y se dice."""
+        zonas = self.ZONAS + [
+            {'id': 'z_raro_4', 'tipo': 'sotano', 'nombre': 'Sotano'},
+            {'id': 'z_sinnombre_5', 'tipo': 'cubierta', 'nombre': ''},
+        ]
+        estados = dict(self.ESTADOS)
+        estados['p1__zesp__garaje_tabicado__z_raro_4'] = 'X'
+        estados['p1__zesp__fv_paneles_instalacion__z_sinnombre_5'] = 'X'
+
+        registro, salida = self._registro(self._ficha(zonas, estados))
+
+        portal = registro['bloques'][0]['portales'][0]
+        self.assertEqual([z['id'] for z in portal['zonasEspeciales']],
+                         ['z_riti_1', 'z_cub_2', 'z_bas_3'])
+        self.assertFalse(any('z_raro_4' in k or 'z_sinnombre_5' in k
+                             for k in registro['estados']))
+        self.assertEqual(registro['resumen']['zonas_especiales'], 3)
+        self.assertIn('[AVISO FICHA]', salida)
+        self.assertIn('z_raro_4', salida)
+        self.assertIn('z_sinnombre_5', salida)
+
+    def test_la_funcion_viaja_solo_si_la_ficha_la_conoce(self):
+        """`funcion` (riti, calderas...) solo ordena las listas del paso 2 del
+        generador; la ficha la guarda unicamente cuando el alta la declaro.
+        Si esta, se respeta; si no, no se inventa a partir del nombre."""
+        zonas = [dict(self.ZONAS[0], funcion='riti'), dict(self.ZONAS[1])]
+        registro, _ = self._registro(self._ficha(zonas, {}))
+        por_id = {z['id']: z for z in
+                  registro['bloques'][0]['portales'][0]['zonasEspeciales']}
+        self.assertEqual(por_id['z_riti_1'].get('funcion'), 'riti')
+        self.assertNotIn('funcion', por_id['z_cub_2'])
+
+    def test_dos_portales_con_el_mismo_id_de_zona_no_mezclan_sus_marcas(self):
+        ficha = self._ficha(self.ZONAS, self.ESTADOS)
+        ficha['estructura']['bloques'][0]['portales'].append({
+            'id': 'p2', 'nombre': 'P2', 'referencia': 'P2',
+            'plantas': [
+                {'id': 'pb', 'nombre': 'PB', 'orden': 0, 'ubicaciones': [
+                    {'id': 'C', 'tipo': 'vivienda', 'origen': 'campo'}]},
+                {'id': gt.fichas.ID_PLANTA_ZONAS_ESPECIALES,
+                 'nombre': 'Zonas especiales', 'orden': 999, 'ubicaciones': [
+                     {'id': 'z_riti_1', 'tipo': 'cuarto_tecnico',
+                      'nombre': 'RITI del portal 2'}]},
+            ],
+        })
+        ficha['estados']['p2__zesp__garaje_tabicado__z_riti_1'] = {
+            'v': 'M', 'f': '28/09/2026', 'r': 'rev_28092026'}
+
+        registro, _ = self._registro(ficha)
+
+        self.assertEqual(
+            registro['estados'][f'{self.P1}__zesp__garaje_tabicado__z_riti_1'],
+            'X')
+        self.assertEqual(
+            registro['estados'][f'{self.P2}__zesp__garaje_tabicado__z_riti_1'],
+            'M')
+        portales = registro['bloques'][0]['portales']
+        self.assertEqual(
+            [z['nombre'] for z in portales[1]['zonasEspeciales']],
+            ['RITI del portal 2'])
+
+    def test_un_portal_que_solo_tiene_zonas_avisa_en_vez_de_perderlas_calladas(self):
+        """Un portal sin plantas de viviendas no se ofrece (el generador se
+        inventaria 6 plantas por defecto). Eso no puede ser silencioso."""
+        ficha = self._ficha(self.ZONAS, self.ESTADOS)
+        ficha['estructura']['bloques'][0]['portales'].append({
+            'id': 'p9', 'nombre': 'SOLO ZONAS', 'referencia': 'SOLO ZONAS',
+            'plantas': [
+                {'id': gt.fichas.ID_PLANTA_ZONAS_ESPECIALES,
+                 'nombre': 'Zonas especiales', 'orden': 999, 'ubicaciones': [
+                     {'id': 'z_x_9', 'tipo': 'cubierta', 'nombre': 'Cubierta'}]},
+            ],
+        })
+        registro, salida = self._registro(ficha)
+        self.assertEqual(len(registro['bloques'][0]['portales']), 1)
+        self.assertIn('[AVISO FICHA]', salida)
+        self.assertIn('SOLO ZONAS', salida)
 
 
 class TestTodosLosBloquesLleganAlGenerador(unittest.TestCase):
