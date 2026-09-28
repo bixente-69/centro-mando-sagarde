@@ -799,13 +799,25 @@ def _alta_ubicacion(ficha, item, revision, cambios, por_id, por_nombre):
 def _completar_matriz(ficha, estados, cambios):
     """Toda ubicacion debe tener una celda por cada tajo aplicable. Las que
     aun no tienen dato nacen como '?' (desconocido), nunca como pendiente:
-    que nadie las haya mirado no significa que no esten hechas."""
-    tajos = [t['id'] for t in (ficha.get('tajos') or {}).get('detalle') or []]
+    que nadie las haya mirado no significa que no esten hechas.
+
+    Las zonas especiales son la excepcion: cada cuarto/cubierta declara su
+    propio perfil de tajos y no comparte una matriz rectangular con las
+    viviendas. Tampoco se deben propagar sus tajos exclusivos a las plantas
+    residenciales.
+    """
+    tajos = [
+        t['id']
+        for t in (ficha.get('tajos') or {}).get('detalle') or []
+        if not t.get('solo_zonas_especiales')
+    ]
     if not tajos:
         return
     for bloque in (ficha.get('estructura') or {}).get('bloques') or []:
         for portal in bloque.get('portales') or []:
             for planta in portal.get('plantas') or []:
+                if planta.get('id') == ID_PLANTA_ZONAS_ESPECIALES:
+                    continue
                 for ubi in planta.get('ubicaciones') or []:
                     for tajo in tajos:
                         clave = f"{portal['id']}__{planta['id']}__{tajo}__{ubi['id']}"

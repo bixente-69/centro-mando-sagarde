@@ -393,6 +393,29 @@ class TestZonasEspeciales(unittest.TestCase):
             ficha['estados']['p1__zesp__tabicado__cub1']['v'], 'M')
         self.assertIn('tabicado', cambios['tajos_nuevos'])
 
+    def test_matriz_no_cruza_perfiles_especiales_con_viviendas(self):
+        ficha = fixtures.ficha_minima()
+        self._anadir_cubierta(ficha)
+        ficha['tajos']['detalle'].append({
+            'id': 'solo_cubierta', 'nombre': 'Tajo de cubierta',
+            'solo_zonas_especiales': True,
+        })
+        ficha['estados']['p1__zesp__solo_cubierta__cub1'] = {
+            'v': 'X', 'f': '28/09/2026', 'r': 'rev_28092026',
+        }
+        cambios = {'estados_nuevos': 0}
+
+        ficha_obra._completar_matriz(
+            ficha, ficha['estados'], cambios)
+
+        self.assertFalse(any(
+            '__solo_cubierta__' in clave and '__zesp__' not in clave
+            for clave in ficha['estados']))
+        self.assertNotIn(
+            'p1__zesp__tubeado__cub1', ficha['estados'])
+        self.assertEqual(
+            ficha['estados']['p1__zesp__solo_cubierta__cub1']['v'], 'X')
+
 
 class TestExclusionesConfirmadas(unittest.TestCase):
     """Una ubicacion descartada a proposito no puede volver al regenerar.

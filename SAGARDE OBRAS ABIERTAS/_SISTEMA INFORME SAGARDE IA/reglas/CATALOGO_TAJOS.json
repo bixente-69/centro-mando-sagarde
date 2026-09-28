@@ -1934,6 +1934,25 @@
     }
   ],
   "obras": {
+    "2025 GERNIKA 32V": {
+      "tajos": [
+        {
+          "id": "cuarto_tecnico",
+          "nombre": "Cuarto técnico",
+          "aliases": [
+            "Cuarto tecnico"
+          ],
+          "propiedad": "propio",
+          "ambito": "edificio",
+          "orden": 235,
+          "fase": "Cierre técnico",
+          "deps": [],
+          "estado_m": "Más del 50 %",
+          "estado_x": "Cuarto técnico terminado",
+          "impacto": "Partida específica de Gernika."
+        }
+      ]
+    },
     "2025 BILBAO OBISPO ORUETA": {
       "estado_obra": "Primera fase entregada; 2A FASE en curso en planta baja (viviendas A/B)",
       "forzar_historial_terminado": false,

@@ -39,6 +39,9 @@ OBRAS = [
         'carpeta_obra': '2026 BOLUETA ACR',
         'bloque_revision': 'Bolueta',
         'alias_portales_revision': {'BOLUETA': 'Portal único'},
+        # Las hojas nuevas incluyen cuartos técnicos, cuartos ligeros y
+        # cubierta bajo una planta virtual que no se deduce de B+23.
+        'mapa_plantas_revision_html': {'zesp': 'zesp'},
         'materiales_rel': os.path.join(
             'REVISIONES', 'hoja de entrega de materiales BOLUETA.xlsx'),
     },

@@ -879,6 +879,70 @@
                     "confirmado": "26/07/2026"
                   }
                 ]
+              },
+              {
+                "id": "zesp",
+                "nombre": "Zonas especiales",
+                "orden": 999,
+                "ubicaciones": [
+                  {
+                    "id": "z_mul39ejr_9",
+                    "nombre": "Centralización de contadores",
+                    "tipo": "cuarto_tecnico",
+                    "origen": "revision_sin_confirmar",
+                    "confirmado": null,
+                    "visto_en": "28/09/2026"
+                  },
+                  {
+                    "id": "z_mul39gl1_10",
+                    "nombre": "Cuarto RITI / Teleco",
+                    "tipo": "cuarto_tecnico",
+                    "origen": "revision_sin_confirmar",
+                    "confirmado": null,
+                    "visto_en": "28/09/2026"
+                  },
+                  {
+                    "id": "z_mul39rf1_11",
+                    "nombre": "Cuarto Aerotermia",
+                    "tipo": "cuarto_tecnico",
+                    "origen": "revision_sin_confirmar",
+                    "confirmado": null,
+                    "visto_en": "28/09/2026"
+                  },
+                  {
+                    "id": "z_mul39tan_12",
+                    "nombre": "Sala de calderas",
+                    "tipo": "cuarto_tecnico",
+                    "origen": "revision_sin_confirmar",
+                    "confirmado": null,
+                    "visto_en": "28/09/2026"
+                  },
+                  {
+                    "id": "z_mul39w2h_13",
+                    "nombre": "Instalaciones generales",
+                    "tipo": "cuarto_tecnico",
+                    "origen": "revision_sin_confirmar",
+                    "confirmado": null,
+                    "visto_en": "28/09/2026"
+                  },
+                  {
+                    "id": "z_mul39zw7_14",
+                    "nombre": "Cubierta",
+                    "tipo": "cubierta",
+                    "origen": "revision_sin_confirmar",
+                    "confirmado": null,
+                    "visto_en": "28/09/2026"
+                  },
+                  {
+                    "id": "z_mul3a1dd_15",
+                    "nombre": "Basuras",
+                    "tipo": "cuarto_ligero",
+                    "origen": "revision_sin_confirmar",
+                    "confirmado": null,
+                    "visto_en": "28/09/2026"
+                  }
+                ],
+                "origen": "revision_sin_confirmar"
               }
             ]
           }
@@ -980,7 +1044,7 @@
       "p1__23__D": "D"
     },
     "_meta": {
-      "actualizado": "26/07/2026",
+      "actualizado": "28/09/2026",
       "origen": "sembrado + confirmado por usuario"
     },
     "exclusiones": [
@@ -1054,7 +1118,42 @@
       "agujeros_iluminacion_zzcc",
       "pintura_zzcc",
       "casquillos_bombillas",
-      "iluminacion_rellanos"
+      "iluminacion_rellanos",
+      "fv_paneles_instalacion",
+      "fv_paneles_cableado",
+      "fv_paneles_tierra",
+      "fv_strings_cableado",
+      "fv_equipos_protecciones",
+      "fv_puesta_marcha",
+      "cub_soporte_antena",
+      "cub_soporte_pararrayos",
+      "cub_antena_instalacion",
+      "cub_pararrayos_instalacion",
+      "cub_antena_cableado",
+      "cub_pararrayos_cableado",
+      "cub_antena_tierra",
+      "garaje_tabicado",
+      "garaje_lucido",
+      "garaje_falso_techo",
+      "garaje_tubeado_emp",
+      "garaje_cableado_emp",
+      "garaje_tubeado_visto",
+      "garaje_cableado_visto",
+      "garaje_pintura_1_recinto",
+      "garaje_alum_fijo_coloc_recinto",
+      "garaje_alum_temp_coloc_recinto",
+      "garaje_emergencia_coloc_recinto",
+      "garaje_enchufe_coloc",
+      "garaje_cuadro_tubeado_cableado",
+      "garaje_cuadro_colocacion",
+      "garaje_pintura_2_recinto",
+      "garaje_cuadro_embornado",
+      "garaje_cuadro_rotulacion",
+      "garaje_cuadro_equipo_tubeado_cableado",
+      "garaje_alum_fijo_embornado_recinto",
+      "garaje_alum_temp_embornado_recinto",
+      "garaje_emergencia_embornado_recinto",
+      "garaje_enchufe_embornado"
     ],
     "detalle": [
       {
@@ -1616,18 +1715,617 @@
             "minimo": 1
           }
         ]
+      },
+      {
+        "id": "fv_paneles_instalacion",
+        "nombre": "Instalación de paneles fotovoltaicos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 400,
+        "deps": [],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "fv_paneles_cableado",
+        "nombre": "Cableado de paneles fotovoltaicos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 401,
+        "deps": [
+          {
+            "id": "fv_paneles_instalacion",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "fv_paneles_tierra",
+        "nombre": "Tierra de paneles fotovoltaicos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 402,
+        "deps": [
+          {
+            "id": "fv_paneles_cableado",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "fv_strings_cableado",
+        "nombre": "Cableado de strings hasta equipos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 403,
+        "deps": [
+          {
+            "id": "fv_paneles_tierra",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "fv_equipos_protecciones",
+        "nombre": "Instalación de equipos y protecciones",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 404,
+        "deps": [
+          {
+            "id": "fv_strings_cableado",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "fv_puesta_marcha",
+        "nombre": "Puesta en marcha de fotovoltaica",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Fotovoltaica",
+        "orden": 405,
+        "deps": [
+          {
+            "id": "fv_equipos_protecciones",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "cub_soporte_antena",
+        "nombre": "Colocación de soporte de antena",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 410,
+        "deps": [],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "cub_soporte_pararrayos",
+        "nombre": "Colocación de soporte de pararrayos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 411,
+        "deps": [],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "cub_antena_instalacion",
+        "nombre": "Instalación de antena",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 412,
+        "deps": [
+          {
+            "id": "cub_soporte_antena",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "cub_pararrayos_instalacion",
+        "nombre": "Instalación de pararrayos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 413,
+        "deps": [
+          {
+            "id": "cub_soporte_pararrayos",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "cub_antena_cableado",
+        "nombre": "Cableado de antena",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 414,
+        "deps": [
+          {
+            "id": "cub_antena_instalacion",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "cub_pararrayos_cableado",
+        "nombre": "Cableado de pararrayos",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 415,
+        "deps": [
+          {
+            "id": "cub_pararrayos_instalacion",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "cub_antena_tierra",
+        "nombre": "Tierra de antena",
+        "ambito": "edificio",
+        "propiedad": "propio",
+        "fase": "Cubierta — Antena/pararrayos",
+        "orden": 416,
+        "deps": [
+          {
+            "id": "cub_antena_cableado",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_tabicado",
+        "nombre": "Tabicado (zona común)",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Obra civil",
+        "orden": 500,
+        "deps": [],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_lucido",
+        "nombre": "Lucido",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Obra civil",
+        "orden": 505,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_falso_techo",
+        "nombre": "Falso techo",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Obra civil",
+        "orden": 510,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_tubeado_emp",
+        "nombre": "Tubeado empotrado",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 520,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_cableado_emp",
+        "nombre": "Cableado empotrado",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 525,
+        "deps": [
+          {
+            "id": "garaje_tubeado_emp",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_tubeado_visto",
+        "nombre": "Tubeado visto",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 530,
+        "deps": [
+          {
+            "id": "garaje_lucido",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_cableado_visto",
+        "nombre": "Cableado visto",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Instalación interior",
+        "orden": 535,
+        "deps": [
+          {
+            "id": "garaje_tubeado_visto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_pintura_1_recinto",
+        "nombre": "Pintura (recintos) — 1ª mano",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Pintura",
+        "orden": 550,
+        "deps": [
+          {
+            "id": "garaje_lucido",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_alum_fijo_coloc_recinto",
+        "nombre": "Colocación alumbrado fijo (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 560,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_alum_temp_coloc_recinto",
+        "nombre": "Colocación alumbrado temporizado (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 562,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_emergencia_coloc_recinto",
+        "nombre": "Colocación luminarias de emergencia (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 564,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_enchufe_coloc",
+        "nombre": "Colocación de enchufe de cuarto técnico",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 566,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_cuadro_tubeado_cableado",
+        "nombre": "Tubeado y cableado hasta cuadro secundario",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Cuadros",
+        "orden": 580,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_cuadro_colocacion",
+        "nombre": "Colocación y mecanizado de cuadro propio",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Cuadros",
+        "orden": 585,
+        "deps": [
+          {
+            "id": "garaje_cuadro_tubeado_cableado",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_pintura_2_recinto",
+        "nombre": "Pintura (recintos) — 2ª mano",
+        "ambito": "zona_comun",
+        "propiedad": "externo",
+        "fase": "Pintura",
+        "orden": 587,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_cuadro_embornado",
+        "nombre": "Embornado de cuadro propio",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Cuadros",
+        "orden": 590,
+        "deps": [
+          {
+            "id": "garaje_cuadro_colocacion",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_cuadro_rotulacion",
+        "nombre": "Rotulación de cuadro propio",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Cuadros",
+        "orden": 595,
+        "deps": [
+          {
+            "id": "garaje_cuadro_embornado",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_cuadro_equipo_tubeado_cableado",
+        "nombre": "Tubeado y cableado del cuadro al equipo que controla",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Cuadros",
+        "orden": 600,
+        "deps": [
+          {
+            "id": "garaje_cuadro_colocacion",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_alum_fijo_embornado_recinto",
+        "nombre": "Embornado alumbrado fijo (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 620,
+        "deps": [
+          {
+            "id": "garaje_alum_fijo_coloc_recinto",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_alum_temp_embornado_recinto",
+        "nombre": "Embornado alumbrado temporizado (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 622,
+        "deps": [
+          {
+            "id": "garaje_alum_temp_coloc_recinto",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_emergencia_embornado_recinto",
+        "nombre": "Embornado luminarias de emergencia (recintos)",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 624,
+        "deps": [
+          {
+            "id": "garaje_emergencia_coloc_recinto",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
+      },
+      {
+        "id": "garaje_enchufe_embornado",
+        "nombre": "Embornado de enchufe de cuarto técnico",
+        "ambito": "zona_comun",
+        "propiedad": "propio",
+        "fase": "Equipos",
+        "orden": 626,
+        "deps": [
+          {
+            "id": "garaje_enchufe_coloc",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ],
+        "solo_zonas_especiales": true,
+        "origen": "revision_zona_especial_html",
+        "visto_en": "28/09/2026"
       }
     ],
     "_meta": {
-      "actualizado": "26/07/2026",
+      "actualizado": "28/09/2026",
       "origen": "sembrado"
     }
   },
   "estados": {
     "p1__pb__tabicado__Local 1": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__rozas_timbres__Local 1": {
       "v": "?",
@@ -1645,39 +2343,39 @@
       "r": null
     },
     "p1__pb__montante_sscc__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__tubeado_zzcc__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__cableado_zzcc__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__suelo_radiante__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__suelo_recrecido__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__perfilado_pladur__Local 1": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__primera_cara_pladur__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__cuadros_presentados__Local 1": {
       "v": "?",
@@ -1685,14 +2383,14 @@
       "r": null
     },
     "p1__pb__tubeado__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__cableado__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__telecableado__Local 1": {
       "v": "?",
@@ -1700,44 +2398,44 @@
       "r": null
     },
     "p1__pb__portero__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__termostatos__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__segunda_cara_pladur__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__doblar_cajas__Local 1": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__embornado__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__telembornado__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__derivacion_individual__Local 1": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__cuadro_mecanizado__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__cuarto_tecnico__Local 1": {
       "v": "?",
@@ -1745,79 +2443,79 @@
       "r": null
     },
     "p1__pb__techos_zzcc__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__techos__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__enchapado__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__pintura_primera__Local 1": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__mecanizado__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__telemecanizado__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__pintura_segunda__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__placas_tapas__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__fachada_terminada__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__apliques__Local 1": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__agujeros_iluminacion_zzcc__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__pintura_zzcc__Local 1": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__casquillos_bombillas__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__iluminacion_rellanos__Local 1": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__tabicado__Local 2": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__rozas_timbres__Local 2": {
       "v": "?",
@@ -1835,39 +2533,39 @@
       "r": null
     },
     "p1__pb__montante_sscc__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__tubeado_zzcc__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__cableado_zzcc__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__suelo_radiante__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__suelo_recrecido__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__perfilado_pladur__Local 2": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__primera_cara_pladur__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__cuadros_presentados__Local 2": {
       "v": "?",
@@ -1875,14 +2573,14 @@
       "r": null
     },
     "p1__pb__tubeado__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__cableado__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__telecableado__Local 2": {
       "v": "?",
@@ -1890,44 +2588,44 @@
       "r": null
     },
     "p1__pb__portero__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__termostatos__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__segunda_cara_pladur__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__doblar_cajas__Local 2": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__embornado__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__telembornado__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__derivacion_individual__Local 2": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__cuadro_mecanizado__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__cuarto_tecnico__Local 2": {
       "v": "?",
@@ -1935,74 +2633,74 @@
       "r": null
     },
     "p1__pb__techos_zzcc__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__techos__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__enchapado__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__pintura_primera__Local 2": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__mecanizado__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__telemecanizado__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__pintura_segunda__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__placas_tapas__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__fachada_terminada__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__apliques__Local 2": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__agujeros_iluminacion_zzcc__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__pintura_zzcc__Local 2": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__casquillos_bombillas__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__pb__iluminacion_rellanos__Local 2": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__tabicado__Txoko": {
       "v": "X",
@@ -2016,29 +2714,29 @@
       "r": null
     },
     "p1__1__montante_electrica__Txoko": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__montante_teleco__Txoko": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__montante_sscc__Txoko": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__tubeado_zzcc__Txoko": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__cableado_zzcc__Txoko": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__suelo_radiante__Txoko": {
       "v": "X",
@@ -2068,9 +2766,9 @@
       "r": null
     },
     "p1__1__tubeado__Txoko": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "/",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__cableado__Txoko": {
       "v": "?",
@@ -2128,9 +2826,9 @@
       "r": null
     },
     "p1__1__techos_zzcc__Txoko": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__techos__Txoko": {
       "v": "?",
@@ -2209,29 +2907,29 @@
       "r": null
     },
     "p1__1__montante_electrica__Gim.": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__montante_teleco__Gim.": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__montante_sscc__Gim.": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__tubeado_zzcc__Gim.": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__cableado_zzcc__Gim.": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__suelo_radiante__Gim.": {
       "v": "X",
@@ -2261,9 +2959,9 @@
       "r": null
     },
     "p1__1__tubeado__Gim.": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "/",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__cableado__Gim.": {
       "v": "?",
@@ -2321,9 +3019,9 @@
       "r": null
     },
     "p1__1__techos_zzcc__Gim.": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__techos__Gim.": {
       "v": "?",
@@ -2402,29 +3100,29 @@
       "r": null
     },
     "p1__1__montante_electrica__Multiusos": {
-      "v": "?",
-      "f": "24/08/2026",
-      "r": null
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__montante_teleco__Multiusos": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__montante_sscc__Multiusos": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__tubeado_zzcc__Multiusos": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__cableado_zzcc__Multiusos": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__suelo_radiante__Multiusos": {
       "v": "X",
@@ -2454,9 +3152,9 @@
       "r": null
     },
     "p1__1__tubeado__Multiusos": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "/",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__cableado__Multiusos": {
       "v": "?",
@@ -2514,9 +3212,9 @@
       "r": null
     },
     "p1__1__techos_zzcc__Multiusos": {
-      "v": "?",
-      "f": null,
-      "r": null
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__techos__Multiusos": {
       "v": "?",
@@ -3219,9 +3917,9 @@
       "r": "rev_28072026"
     },
     "p1__1__cuadros_presentados__D": {
-      "v": "X",
-      "f": "28/07/2026",
-      "r": "rev_28072026"
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__1__tubeado__D": {
       "v": "X",
@@ -3535,9 +4233,9 @@
       "r": "rev_24082026"
     },
     "p1__2__casquillos_bombillas__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__2__iluminacion_rellanos__A": {
       "v": "P",
@@ -3725,9 +4423,9 @@
       "r": "rev_24082026"
     },
     "p1__2__casquillos_bombillas__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__2__iluminacion_rellanos__B": {
       "v": "P",
@@ -3915,9 +4613,9 @@
       "r": "rev_24082026"
     },
     "p1__2__casquillos_bombillas__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__2__iluminacion_rellanos__C": {
       "v": "P",
@@ -4105,9 +4803,9 @@
       "r": "rev_24082026"
     },
     "p1__2__casquillos_bombillas__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__2__iluminacion_rellanos__D": {
       "v": "P",
@@ -4295,9 +4993,9 @@
       "r": "rev_26072026"
     },
     "p1__3__casquillos_bombillas__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__3__iluminacion_rellanos__A": {
       "v": "P",
@@ -4645,9 +5343,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__3__pintura_segunda__C": {
-      "v": "/",
-      "f": "17/09/2026",
-      "r": "bolueta__17/09/2026__html_digital__33014d60"
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__3__placas_tapas__C": {
       "v": "P",
@@ -4675,9 +5373,9 @@
       "r": "rev_26072026"
     },
     "p1__3__casquillos_bombillas__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__3__iluminacion_rellanos__C": {
       "v": "P",
@@ -4835,9 +5533,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__3__pintura_segunda__D": {
-      "v": "/",
-      "f": "17/09/2026",
-      "r": "bolueta__17/09/2026__html_digital__33014d60"
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__3__placas_tapas__D": {
       "v": "P",
@@ -4865,9 +5563,9 @@
       "r": "rev_26072026"
     },
     "p1__3__casquillos_bombillas__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__3__iluminacion_rellanos__D": {
       "v": "P",
@@ -5025,9 +5723,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__4__pintura_segunda__A": {
-      "v": "M",
-      "f": "23/09/2026",
-      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__4__placas_tapas__A": {
       "v": "P",
@@ -5055,9 +5753,9 @@
       "r": "rev_24082026"
     },
     "p1__4__casquillos_bombillas__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__4__iluminacion_rellanos__A": {
       "v": "P",
@@ -5215,9 +5913,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__4__pintura_segunda__B": {
-      "v": "/",
-      "f": "23/09/2026",
-      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__4__placas_tapas__B": {
       "v": "P",
@@ -5245,9 +5943,9 @@
       "r": "rev_24082026"
     },
     "p1__4__casquillos_bombillas__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__4__iluminacion_rellanos__B": {
       "v": "P",
@@ -5405,9 +6103,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__4__pintura_segunda__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__4__placas_tapas__C": {
       "v": "P",
@@ -5435,9 +6133,9 @@
       "r": "rev_24082026"
     },
     "p1__4__casquillos_bombillas__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__4__iluminacion_rellanos__C": {
       "v": "P",
@@ -5595,9 +6293,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__4__pintura_segunda__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__4__placas_tapas__D": {
       "v": "P",
@@ -5625,9 +6323,9 @@
       "r": "rev_24082026"
     },
     "p1__4__casquillos_bombillas__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__4__iluminacion_rellanos__D": {
       "v": "P",
@@ -5815,9 +6513,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__5__casquillos_bombillas__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__5__iluminacion_rellanos__A": {
       "v": "P",
@@ -6738,9 +7436,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__6__pintura_segunda__B": {
-      "v": "X",
-      "f": "31/08/2026",
-      "r": "bolueta__31/08/2026__html_digital__2102809f"
+      "v": "/",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__6__placas_tapas__B": {
       "v": "P",
@@ -6930,9 +7628,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__6__pintura_segunda__C": {
-      "v": "X",
-      "f": "31/08/2026",
-      "r": "bolueta__31/08/2026__html_digital__2102809f"
+      "v": "/",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__6__placas_tapas__C": {
       "v": "P",
@@ -7122,9 +7820,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__6__pintura_segunda__D": {
-      "v": "X",
-      "f": "31/08/2026",
-      "r": "bolueta__31/08/2026__html_digital__2102809f"
+      "v": "/",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__6__placas_tapas__D": {
       "v": "P",
@@ -11133,9 +11831,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__12__embornado__A": {
-      "v": "M",
-      "f": "23/09/2026",
-      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__12__telembornado__A": {
       "v": "P",
@@ -11327,9 +12025,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__12__embornado__B": {
-      "v": "M",
-      "f": "23/09/2026",
-      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__12__telembornado__B": {
       "v": "P",
@@ -11914,9 +12612,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__13__embornado__A": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__13__telembornado__A": {
       "v": "P",
@@ -12109,9 +12807,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__13__embornado__B": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__13__telembornado__B": {
       "v": "P",
@@ -12304,9 +13002,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__13__embornado__C": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__13__telembornado__C": {
       "v": "P",
@@ -12319,9 +13017,9 @@
       "r": "rev_26072026"
     },
     "p1__13__cuadro_mecanizado__C": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__13__cuarto_tecnico__C": {
       "v": "P",
@@ -12499,9 +13197,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__13__embornado__D": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__13__telembornado__D": {
       "v": "P",
@@ -12514,9 +13212,9 @@
       "r": "rev_26072026"
     },
     "p1__13__cuadro_mecanizado__D": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__13__cuarto_tecnico__D": {
       "v": "P",
@@ -12694,9 +13392,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__14__embornado__A": {
-      "v": "M",
-      "f": "17/09/2026",
-      "r": "bolueta__17/09/2026__html_digital__33014d60"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__14__telembornado__A": {
       "v": "P",
@@ -12890,9 +13588,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__14__embornado__B": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__14__telembornado__B": {
       "v": "P",
@@ -13086,9 +13784,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__14__embornado__C": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__14__telembornado__C": {
       "v": "P",
@@ -13282,9 +13980,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__14__embornado__D": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__14__telembornado__D": {
       "v": "P",
@@ -13477,9 +14175,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__15__embornado__A": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__15__telembornado__A": {
       "v": "P",
@@ -13670,9 +14368,9 @@
       "r": "bolueta__17/09/2026__html_digital__33014d60"
     },
     "p1__15__embornado__B": {
-      "v": "M",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__15__telembornado__B": {
       "v": "P",
@@ -13862,9 +14560,9 @@
       "r": "bolueta__17/09/2026__html_digital__33014d60"
     },
     "p1__15__embornado__C": {
-      "v": "M",
-      "f": "17/09/2026",
-      "r": "bolueta__17/09/2026__html_digital__33014d60"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__15__telembornado__C": {
       "v": "P",
@@ -14055,9 +14753,9 @@
       "r": "bolueta__17/09/2026__html_digital__33014d60"
     },
     "p1__15__embornado__D": {
-      "v": "M",
-      "f": "17/09/2026",
-      "r": "bolueta__17/09/2026__html_digital__33014d60"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__15__telembornado__D": {
       "v": "P",
@@ -14325,9 +15023,9 @@
       "r": "rev_26072026"
     },
     "p1__16__agujeros_iluminacion_zzcc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__16__pintura_zzcc__A": {
       "v": "P",
@@ -14520,9 +15218,9 @@
       "r": "rev_26072026"
     },
     "p1__16__agujeros_iluminacion_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__16__pintura_zzcc__B": {
       "v": "P",
@@ -14714,9 +15412,9 @@
       "r": "rev_26072026"
     },
     "p1__16__agujeros_iluminacion_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__16__pintura_zzcc__C": {
       "v": "P",
@@ -14908,9 +15606,9 @@
       "r": "rev_26072026"
     },
     "p1__16__agujeros_iluminacion_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__16__pintura_zzcc__D": {
       "v": "P",
@@ -15022,14 +15720,14 @@
       "r": "rev_28072026"
     },
     "p1__17__doblar_cajas__A": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__embornado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__telembornado__A": {
       "v": "P",
@@ -15103,9 +15801,9 @@
       "r": "rev_26072026"
     },
     "p1__17__agujeros_iluminacion_zzcc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__pintura_zzcc__A": {
       "v": "P",
@@ -15217,14 +15915,14 @@
       "r": "rev_28072026"
     },
     "p1__17__doblar_cajas__B": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__embornado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__telembornado__B": {
       "v": "P",
@@ -15298,9 +15996,9 @@
       "r": "rev_26072026"
     },
     "p1__17__agujeros_iluminacion_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__pintura_zzcc__B": {
       "v": "P",
@@ -15412,14 +16110,14 @@
       "r": "rev_28072026"
     },
     "p1__17__doblar_cajas__C": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__embornado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__telembornado__C": {
       "v": "P",
@@ -15493,9 +16191,9 @@
       "r": "rev_26072026"
     },
     "p1__17__agujeros_iluminacion_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__pintura_zzcc__C": {
       "v": "P",
@@ -15607,14 +16305,14 @@
       "r": "rev_28072026"
     },
     "p1__17__doblar_cajas__D": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__embornado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__telembornado__D": {
       "v": "P",
@@ -15688,9 +16386,9 @@
       "r": "rev_26072026"
     },
     "p1__17__agujeros_iluminacion_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__17__pintura_zzcc__D": {
       "v": "P",
@@ -15801,9 +16499,9 @@
       "r": "rev_28072026"
     },
     "p1__18__doblar_cajas__A": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__18__embornado__A": {
       "v": "P",
@@ -15881,9 +16579,9 @@
       "r": "rev_26072026"
     },
     "p1__18__agujeros_iluminacion_zzcc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__18__pintura_zzcc__A": {
       "v": "P",
@@ -15994,9 +16692,9 @@
       "r": "rev_28072026"
     },
     "p1__18__doblar_cajas__B": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__18__embornado__B": {
       "v": "P",
@@ -16074,9 +16772,9 @@
       "r": "rev_26072026"
     },
     "p1__18__agujeros_iluminacion_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__18__pintura_zzcc__B": {
       "v": "P",
@@ -16187,9 +16885,9 @@
       "r": "rev_28072026"
     },
     "p1__18__doblar_cajas__C": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__18__embornado__C": {
       "v": "P",
@@ -16267,9 +16965,9 @@
       "r": "rev_26072026"
     },
     "p1__18__agujeros_iluminacion_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__18__pintura_zzcc__C": {
       "v": "P",
@@ -16380,9 +17078,9 @@
       "r": "rev_28072026"
     },
     "p1__18__doblar_cajas__D": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__18__embornado__D": {
       "v": "P",
@@ -16460,9 +17158,9 @@
       "r": "rev_26072026"
     },
     "p1__18__agujeros_iluminacion_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__18__pintura_zzcc__D": {
       "v": "P",
@@ -16573,9 +17271,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__doblar_cajas__A": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__19__embornado__A": {
       "v": "P",
@@ -16653,9 +17351,9 @@
       "r": "rev_26072026"
     },
     "p1__19__agujeros_iluminacion_zzcc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__19__pintura_zzcc__A": {
       "v": "P",
@@ -16766,9 +17464,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__doblar_cajas__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__19__embornado__B": {
       "v": "P",
@@ -16846,9 +17544,9 @@
       "r": "rev_26072026"
     },
     "p1__19__agujeros_iluminacion_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__19__pintura_zzcc__B": {
       "v": "P",
@@ -16959,9 +17657,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__doblar_cajas__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__19__embornado__C": {
       "v": "P",
@@ -17039,9 +17737,9 @@
       "r": "rev_26072026"
     },
     "p1__19__agujeros_iluminacion_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__19__pintura_zzcc__C": {
       "v": "P",
@@ -17152,9 +17850,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__doblar_cajas__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__19__embornado__D": {
       "v": "P",
@@ -17232,9 +17930,9 @@
       "r": "rev_26072026"
     },
     "p1__19__agujeros_iluminacion_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__19__pintura_zzcc__D": {
       "v": "P",
@@ -17350,9 +18048,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__20__doblar_cajas__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__20__embornado__A": {
       "v": "P",
@@ -17385,9 +18083,9 @@
       "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__20__techos__A": {
-      "v": "/",
-      "f": "17/09/2026",
-      "r": "bolueta__17/09/2026__html_digital__33014d60"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__20__enchapado__A": {
       "v": "X",
@@ -17430,9 +18128,9 @@
       "r": "rev_26072026"
     },
     "p1__20__agujeros_iluminacion_zzcc__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__20__pintura_zzcc__A": {
       "v": "P",
@@ -17548,9 +18246,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__20__doblar_cajas__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__20__embornado__B": {
       "v": "P",
@@ -17628,9 +18326,9 @@
       "r": "rev_26072026"
     },
     "p1__20__agujeros_iluminacion_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__20__pintura_zzcc__B": {
       "v": "P",
@@ -17744,9 +18442,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__20__doblar_cajas__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__20__embornado__C": {
       "v": "P",
@@ -17779,9 +18477,9 @@
       "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__20__techos__C": {
-      "v": "/",
-      "f": "17/09/2026",
-      "r": "bolueta__17/09/2026__html_digital__33014d60"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__20__enchapado__C": {
       "v": "X",
@@ -17824,9 +18522,9 @@
       "r": "rev_26072026"
     },
     "p1__20__agujeros_iluminacion_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__20__pintura_zzcc__C": {
       "v": "P",
@@ -17940,9 +18638,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__20__doblar_cajas__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__20__embornado__D": {
       "v": "P",
@@ -18020,9 +18718,9 @@
       "r": "rev_26072026"
     },
     "p1__20__agujeros_iluminacion_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__20__pintura_zzcc__D": {
       "v": "P",
@@ -18139,9 +18837,9 @@
       "r": "bolueta__09/09/2026__html_digital__435f5ab1"
     },
     "p1__21__doblar_cajas__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__21__embornado__A": {
       "v": "P",
@@ -19562,9 +20260,9 @@
       "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__22__techos__D": {
-      "v": "M",
-      "f": "17/09/2026",
-      "r": "bolueta__17/09/2026__html_digital__33014d60"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__22__enchapado__D": {
       "v": "X",
@@ -19718,9 +20416,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__23__segunda_cara_pladur__A": {
-      "v": "M",
-      "f": "23/09/2026",
-      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__23__doblar_cajas__A": {
       "v": "P",
@@ -19914,9 +20612,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__23__segunda_cara_pladur__B": {
-      "v": "M",
-      "f": "23/09/2026",
-      "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__23__doblar_cajas__B": {
       "v": "P",
@@ -20110,9 +20808,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__23__segunda_cara_pladur__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__23__doblar_cajas__C": {
       "v": "P",
@@ -20306,9 +21004,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__23__segunda_cara_pladur__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__23__doblar_cajas__D": {
       "v": "P",
@@ -20409,6 +21107,809 @@
       "v": "P",
       "f": "26/07/2026",
       "r": "rev_26072026"
+    },
+    "p1__zesp__garaje_tabicado__z_mul39ejr_9": {
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_lucido__z_mul39ejr_9": {
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_tubeado_visto__z_mul39ejr_9": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_cableado_visto__z_mul39ejr_9": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_mul39ejr_9": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_cuadro_colocacion__z_mul39ejr_9": {
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_mul39ejr_9": {
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_mul39ejr_9": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_tabicado__z_mul39gl1_10": {
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_lucido__z_mul39gl1_10": {
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_tubeado_emp__z_mul39gl1_10": {
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_mul39gl1_10": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_mul39gl1_10": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_tabicado__z_mul39tan_12": {
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_lucido__z_mul39tan_12": {
+      "v": "X",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_tubeado_emp__z_mul39tan_12": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_cableado_emp__z_mul39tan_12": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_mul39tan_12": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_mul39tan_12": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_mul39tan_12": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_cuadro_embornado__z_mul39tan_12": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_cuadro_rotulacion__z_mul39tan_12": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_mul39tan_12": {
+      "v": "M",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__fv_paneles_instalacion__z_mul39zw7_14": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__fv_paneles_cableado__z_mul39zw7_14": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__fv_paneles_tierra__z_mul39zw7_14": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__fv_strings_cableado__z_mul39zw7_14": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__fv_equipos_protecciones__z_mul39zw7_14": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__fv_puesta_marcha__z_mul39zw7_14": {
+      "v": "N",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__cub_soporte_antena__z_mul39zw7_14": {
+      "v": "/",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__cub_soporte_pararrayos__z_mul39zw7_14": {
+      "v": "/",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_falso_techo__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tubeado_emp__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cableado_emp__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_coloc_recinto__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_tubeado_cableado__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_embornado__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_rotulacion__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_embornado_recinto__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_mul39ejr_9": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_falso_techo__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cableado_emp__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tubeado_visto__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cableado_visto__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_coloc_recinto__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_tubeado_cableado__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_colocacion__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_embornado__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_rotulacion__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_embornado_recinto__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_mul39gl1_10": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tabicado__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_lucido__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_falso_techo__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tubeado_emp__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cableado_emp__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tubeado_visto__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cableado_visto__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_coloc_recinto__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_tubeado_cableado__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_colocacion__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_embornado__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_rotulacion__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_embornado_recinto__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_mul39rf1_11": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_falso_techo__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tubeado_visto__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cableado_visto__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_coloc_recinto__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_tubeado_cableado__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_colocacion__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_embornado_recinto__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_mul39tan_12": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tabicado__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_lucido__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_falso_techo__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tubeado_emp__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cableado_emp__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tubeado_visto__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cableado_visto__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_coloc_recinto__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_tubeado_cableado__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_colocacion__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_embornado__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_rotulacion__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_embornado_recinto__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_mul39w2h_13": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tabicado__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_lucido__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tubeado_emp__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cableado_emp__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_tubeado_visto__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_cableado_visto__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_coloc_recinto__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_emergencia_embornado_recinto__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_mul3a1dd_15": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__cub_antena_instalacion__z_mul39zw7_14": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__cub_pararrayos_instalacion__z_mul39zw7_14": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__cub_antena_cableado__z_mul39zw7_14": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__cub_pararrayos_cableado__z_mul39zw7_14": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__cub_antena_tierra__z_mul39zw7_14": {
+      "v": "P",
+      "f": "28/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "origen": "alta_zona_especial_desde_revision"
     }
   },
   "revisiones": [
@@ -20480,6 +21981,20 @@
       "procesada": "24/09/2026 06:39",
       "celdas": 3686,
       "cambios": 90
+    },
+    {
+      "id": "bolueta__28/09/2026__html_digital__d8fa6959",
+      "fecha": "28/09/2026",
+      "origen": "hoja generada rellenada digitalmente, leida por la IA",
+      "celdas_medidas": 2447,
+      "celdas_cambiadas": 202
+    },
+    {
+      "id": "rev_28092026",
+      "fecha": "28/09/2026",
+      "procesada": "28/09/2026 14:34",
+      "celdas": 3646,
+      "cambios": 0
     }
   ],
   "dudas": [],
@@ -20501,16 +22016,16 @@
     }
   },
   "documentos": {
-    "total": 128,
+    "total": 129,
     "por_categoria": {
       "Excel": 7,
       "Imágenes": 77,
-      "Otros": 10,
+      "Otros": 11,
       "PDF": 24,
       "Word": 10
     },
     "_meta": {
-      "actualizado": "27/09/2026 12:57"
+      "actualizado": "28/09/2026 14:34"
     }
   },
   "contactos": []

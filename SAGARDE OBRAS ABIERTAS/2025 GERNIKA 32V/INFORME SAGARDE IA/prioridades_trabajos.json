@@ -2,32 +2,88 @@
   "version": "4.3",
   "catalogo_version": "1.3",
   "obra": "2025 GERNIKA 32V",
-  "revision": "25/09/2026",
+  "revision": "28/09/2026",
   "sin_base": false,
-  "edad_revision_dias": 2,
+  "edad_revision_dias": 0,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "27/09/2026 22:11",
+  "generado": "28/09/2026 16:14",
   "resumen": {
-    "listos": 2,
+    "listos": 3,
     "verificar": 0,
-    "unidades_listas": 22,
+    "unidades_listas": 26,
     "unidades_verificar": 0,
     "bloqueados": 1,
     "otros_gremios": 2,
-    "dudas": 1,
+    "dudas": 0,
     "sin_revisar": 0,
     "unidades_sin_revisar": 0,
     "terminados": 31,
     "inventario_total": 37,
     "detalle_total": 1208,
-    "preguntas_pendientes": 2,
+    "preguntas_pendientes": 0,
     "viviendas": 2,
     "zonas_comunes": 0,
-    "edificio": 0
+    "edificio": 1
   },
   "items": [
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "situacion": "LISTO",
+      "categoria": "VIABLE",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "prioridad": "P3",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        }
+      ],
+      "n_celdas": 4,
+      "n_ubicaciones": 4,
+      "n_unidades": 1,
+      "estado_actual": "M: 4",
+      "motivo": "Partida específica de Gernika.",
+      "impacto_gremios": "Partida específica de Gernika.",
+      "orden": 1
+    },
     {
       "tarea_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
@@ -61,34 +117,7 @@
           "edificio": "PORTAL 1",
           "planta": "PB",
           "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidades": [
             "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidades": [
-            "D"
           ],
           "n_unidades": 1,
           "estado_actual": "M"
@@ -107,54 +136,18 @@
           "planta": "2",
           "unidades": [
             "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidades": [
-            "D"
           ],
           "n_unidades": 1,
           "estado_actual": "M"
         }
       ],
-      "n_celdas": 12,
-      "n_ubicaciones": 12,
-      "n_unidades": 12,
-      "estado_actual": "M: 12",
+      "n_celdas": 5,
+      "n_ubicaciones": 5,
+      "n_unidades": 5,
+      "estado_actual": "M: 5",
       "motivo": "Rama independiente; requiere fachada terminada.",
       "impacto_gremios": "Rama independiente; requiere fachada terminada.",
-      "orden": 1
+      "orden": 2
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -168,6 +161,69 @@
       "fase_nombre": "Entrega",
       "ubicaciones": [
         {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "/"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "/"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "/"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
           "edificio": "PORTAL 2",
           "planta": "1",
           "unidades": [
@@ -224,6 +280,33 @@
         {
           "edificio": "PORTAL 2",
           "planta": "2",
+          "unidades": [
+            "D"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3",
           "unidades": [
             "D"
           ],
@@ -258,13 +341,13 @@
           "estado_actual": "/"
         }
       ],
-      "n_celdas": 10,
-      "n_ubicaciones": 10,
-      "n_unidades": 10,
-      "estado_actual": "M: 2 · /: 2 · Pendiente: 6",
+      "n_celdas": 20,
+      "n_ubicaciones": 20,
+      "n_unidades": 20,
+      "estado_actual": "M: 3 · /: 5 · Pendiente: 12",
       "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
       "impacto_gremios": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "orden": 2
+      "orden": 3
     }
   ],
   "detalle_items": [
@@ -20141,6 +20224,654 @@
       "ultima_fecha": "25/07/2026"
     },
     {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "1",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "1",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "1",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "1",
+      "unidad": "D",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "D",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "D",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "D",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "D",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Partida específica de Gernika.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Partida específica de Gernika.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "PB",
+      "unidad": "C",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Partida específica de Gernika.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
+      "tarea_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "trabajos_originales": [
+        "Cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "edificio",
+      "ambito_nombre": "Edificio general",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "display_group": "cuarto_tecnico",
+      "edificio": "PORTAL 2",
+      "planta": "PB",
+      "unidad": "D",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Partida específica de Gernika.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/09/2026"
+    },
+    {
       "tarea_id": "techos_zzcc",
       "trabajo": "Techos de zonas comunes",
       "trabajos_originales": [
@@ -25447,17 +26178,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -25474,17 +26205,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -25501,17 +26232,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -25528,17 +26259,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -25555,17 +26286,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -25582,17 +26313,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -25609,17 +26340,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -25636,17 +26367,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -25987,17 +26718,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "A",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -26014,17 +26745,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "B",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -26041,17 +26772,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -26068,17 +26799,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "pintura_segunda",
@@ -26203,52 +26934,17 @@
       "edificio": "PORTAL 1",
       "planta": "1",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -26265,52 +26961,17 @@
       "edificio": "PORTAL 1",
       "planta": "1",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -26327,52 +26988,17 @@
       "edificio": "PORTAL 1",
       "planta": "1",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -26389,52 +27015,17 @@
       "edificio": "PORTAL 1",
       "planta": "1",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -26451,52 +27042,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -26513,52 +27069,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -26575,52 +27096,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -26637,52 +27123,17 @@
       "edificio": "PORTAL 1",
       "planta": "2",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -26699,52 +27150,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -26761,52 +27177,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -26823,52 +27204,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -26885,52 +27231,17 @@
       "edificio": "PORTAL 1",
       "planta": "3",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -27411,52 +27722,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "/",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -27473,52 +27749,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "/",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -27535,52 +27776,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -27597,52 +27803,17 @@
       "edificio": "PORTAL 2",
       "planta": "3",
       "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Mecanizado eléctrico",
-        "Telemecanizado",
-        "Cuadro mecanizado"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "mecanizado",
-          "nombre": "Mecanizado eléctrico",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "telemecanizado",
-          "nombre": "Telemecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "placas_tapas",
@@ -28975,27 +29146,17 @@
       "edificio": "PORTAL 1",
       "planta": "PB",
       "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Rama independiente; requiere fachada terminada.",
-      "dependencias_cumplidas": [
-        "Fachada terminada"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "fachada_terminada",
-          "nombre": "Fachada terminada",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "apliques",
@@ -29012,27 +29173,17 @@
       "edificio": "PORTAL 1",
       "planta": "PB",
       "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Rama independiente; requiere fachada terminada.",
-      "dependencias_cumplidas": [
-        "Fachada terminada"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "fachada_terminada",
-          "nombre": "Fachada terminada",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "apliques",
@@ -29086,27 +29237,17 @@
       "edificio": "PORTAL 1",
       "planta": "PB",
       "unidad": "D",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Rama independiente; requiere fachada terminada.",
-      "dependencias_cumplidas": [
-        "Fachada terminada"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "fachada_terminada",
-          "nombre": "Fachada terminada",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "apliques",
@@ -29467,27 +29608,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Rama independiente; requiere fachada terminada.",
-      "dependencias_cumplidas": [
-        "Fachada terminada"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "fachada_terminada",
-          "nombre": "Fachada terminada",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "apliques",
@@ -29504,27 +29635,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Rama independiente; requiere fachada terminada.",
-      "dependencias_cumplidas": [
-        "Fachada terminada"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "fachada_terminada",
-          "nombre": "Fachada terminada",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "apliques",
@@ -29541,27 +29662,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "C",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Rama independiente; requiere fachada terminada.",
-      "dependencias_cumplidas": [
-        "Fachada terminada"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "fachada_terminada",
-          "nombre": "Fachada terminada",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "apliques",
@@ -29578,27 +29689,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "D",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Rama independiente; requiere fachada terminada.",
-      "dependencias_cumplidas": [
-        "Fachada terminada"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "fachada_terminada",
-          "nombre": "Fachada terminada",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
+      "ultima_fecha": "28/09/2026"
     },
     {
       "tarea_id": "agujeros_iluminacion_zzcc",
@@ -31530,813 +31631,6 @@
       "fase_nombre": "Entrega",
       "display_group": "casquillos_bombillas",
       "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "A",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "B",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "A",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "D",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
-      "dependencias_cumplidas": [
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "11/09/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "D",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
-      "dependencias_cumplidas": [
-        "Pintura — segunda mano",
-        "Cuadro mecanizado",
-        "Derivación individual"
-      ],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "pintura_segunda",
-          "nombre": "Pintura — segunda mano",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "cuadro_mecanizado",
-          "nombre": "Cuadro mecanizado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        },
-        {
-          "id": "derivacion_individual",
-          "nombre": "Derivación individual",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 2",
       "planta": "2",
       "unidad": "A",
       "estado": "/",
@@ -32389,6 +31683,806 @@
       "orden_ejecucion": 320,
       "fase_nombre": "Entrega",
       "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "B",
+      "estado": "/",
+      "estado_actual": "/",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
+      "dependencias_cumplidas": [
+        "Pintura — segunda mano",
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "11/09/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "C",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
+      "dependencias_cumplidas": [
+        "Pintura — segunda mano",
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "2",
+      "unidad": "D",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
+      "dependencias_cumplidas": [
+        "Pintura — segunda mano",
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "A",
+      "estado": "/",
+      "estado_actual": "/",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
+      "dependencias_cumplidas": [
+        "Pintura — segunda mano",
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "11/09/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "11/09/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "C",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
+      "dependencias_cumplidas": [
+        "Pintura — segunda mano",
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "3",
+      "unidad": "D",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
+      "dependencias_cumplidas": [
+        "Pintura — segunda mano",
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "11/09/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "C",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "D",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "dependencias_cumplidas": [
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [
+        "Pintura — segunda mano"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "11/09/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "B",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
+      "dependencias_cumplidas": [
+        "Pintura — segunda mano",
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "11/09/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "C",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
+      "dependencias_cumplidas": [
+        "Pintura — segunda mano",
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 2",
+      "planta": "1",
+      "unidad": "D",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
+      "dependencias_cumplidas": [
+        "Pintura — segunda mano",
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "25/07/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
+      "edificio": "PORTAL 2",
+      "planta": "2",
+      "unidad": "A",
+      "estado": "/",
+      "estado_actual": "/",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
+      "dependencias_cumplidas": [
+        "Pintura — segunda mano",
+        "Cuadro mecanizado",
+        "Derivación individual"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "pintura_segunda",
+          "nombre": "Pintura — segunda mano",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "cuadro_mecanizado",
+          "nombre": "Cuadro mecanizado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        },
+        {
+          "id": "derivacion_individual",
+          "nombre": "Derivación individual",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "11/09/2026"
+    },
+    {
+      "tarea_id": "casquillos_bombillas",
+      "trabajo": "Casquillos y bombillas",
+      "trabajos_originales": [
+        "Casquillos y bombillas"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 320,
+      "fase_nombre": "Entrega",
+      "display_group": "casquillos_bombillas",
       "edificio": "PORTAL 2",
       "planta": "2",
       "unidad": "B",
@@ -32580,22 +32674,21 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
       "dependencias_cumplidas": [
+        "Pintura — segunda mano",
         "Cuadro mecanizado",
         "Derivación individual"
       ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "pintura_segunda",
           "nombre": "Pintura — segunda mano",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         },
         {
           "id": "cuadro_mecanizado",
@@ -32634,22 +32727,21 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
       "dependencias_cumplidas": [
+        "Pintura — segunda mano",
         "Cuadro mecanizado",
         "Derivación individual"
       ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "pintura_segunda",
           "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         },
         {
           "id": "cuadro_mecanizado",
@@ -32688,22 +32780,21 @@
       "unidad": "D",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura — segunda mano.",
+      "categoria": "VIABLE",
+      "motivo": "Se coloca al final para evitar robos; la tensión no es requisito de colocación.",
       "dependencias_cumplidas": [
+        "Pintura — segunda mano",
         "Cuadro mecanizado",
         "Derivación individual"
       ],
-      "dependencias_bloqueantes": [
-        "Pintura — segunda mano"
-      ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "pintura_segunda",
           "nombre": "Pintura — segunda mano",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         },
         {
           "id": "cuadro_mecanizado",
@@ -33767,654 +33858,6 @@
       "estado_actual": "X",
       "categoria": "TERMINADO",
       "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "1",
-      "unidad": "D",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "2",
-      "unidad": "D",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "3",
-      "unidad": "D",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "D",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/07/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "DUDAS",
-      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "DUDAS",
-      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "C",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "DUDAS",
-      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "1",
-      "unidad": "D",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "DUDAS",
-      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "DUDAS",
-      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "PB",
-      "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "DUDAS",
-      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "PB",
-      "unidad": "C",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "DUDAS",
-      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "25/09/2026"
-    },
-    {
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "trabajos_originales": [
-        "Cuarto técnico"
-      ],
-      "propiedad": "desconocido",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "display_group": "sin_clasificar:cuarto tecnico",
-      "edificio": "PORTAL 2",
-      "planta": "PB",
-      "unidad": "D",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "DUDAS",
-      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
@@ -34425,6 +33868,196 @@
     }
   ],
   "inventario": [
+    {
+      "grupo_id": "cuarto_tecnico",
+      "trabajo": "Cuarto técnico",
+      "propiedad": "propio",
+      "orden_ejecucion": 235,
+      "fase_nombre": "Cierre técnico",
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "C",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1",
+          "unidad": "D",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "M",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "M",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "C",
+          "estado": "M",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "D",
+          "estado": "M",
+          "categoria": "VIABLE"
+        }
+      ],
+      "subtajos": [
+        "Cuarto técnico"
+      ],
+      "seccion": "VIABLE",
+      "seccion_nombre": "Tajos viables",
+      "n_ubicaciones": 24,
+      "estado_actual": "M: 4 · X: 20",
+      "resumen_categorias": {
+        "TERMINADO": 20,
+        "VIABLE": 4
+      },
+      "motivo": "Partida específica de Gernika. Terminado según la última confirmación válida.",
+      "orden_inventario": 1
+    },
     {
       "grupo_id": "apliques",
       "trabajo": "Apliques y enchufes de terraza",
@@ -34520,29 +34153,29 @@
           "edificio": "PORTAL 1",
           "planta": "PB",
           "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "C",
           "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "PB",
-          "unidad": "B",
-          "estado": "M",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "M",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
           "unidad": "D",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -34632,29 +34265,29 @@
           "edificio": "PORTAL 2",
           "planta": "PB",
           "unidad": "A",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "PB",
           "unidad": "B",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "PB",
           "unidad": "C",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "PB",
           "unidad": "D",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -34663,13 +34296,13 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 32,
-      "estado_actual": "M: 12 · X: 20",
+      "estado_actual": "M: 5 · X: 27",
       "resumen_categorias": {
-        "VIABLE": 12,
-        "TERMINADO": 20
+        "VIABLE": 5,
+        "TERMINADO": 27
       },
       "motivo": "Rama independiente; requiere fachada terminada. Terminado según la última confirmación válida.",
-      "orden_inventario": 1
+      "orden_inventario": 2
     },
     {
       "grupo_id": "casquillos_bombillas",
@@ -34711,35 +34344,35 @@
           "planta": "2",
           "unidad": "A",
           "estado": "/",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2",
           "unidad": "B",
           "estado": "/",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3",
           "unidad": "A",
           "estado": "/",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
@@ -34753,14 +34386,14 @@
           "planta": "3",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3",
           "unidad": "D",
           "estado": "M",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
@@ -34858,21 +34491,21 @@
           "planta": "3",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "3",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "3",
           "unidad": "D",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -34911,12 +34544,12 @@
       "n_ubicaciones": 32,
       "estado_actual": "M: 3 · /: 5 · Pendiente: 19 · X: 5",
       "resumen_categorias": {
-        "BLOQUEADO": 17,
+        "BLOQUEADO": 7,
         "TERMINADO": 5,
-        "VIABLE": 10
+        "VIABLE": 20
       },
       "motivo": "Dependencias pendientes: Pintura — segunda mano. Se coloca al final para evitar robos; la tensión no es requisito de colocación. Terminado según la última confirmación válida.",
-      "orden_inventario": 2
+      "orden_inventario": 3
     },
     {
       "grupo_id": "placas_tapas",
@@ -34929,85 +34562,85 @@
           "edificio": "PORTAL 1",
           "planta": "1",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1",
           "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2",
           "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3",
           "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -35097,29 +34730,29 @@
           "edificio": "PORTAL 2",
           "planta": "3",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "3",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "3",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "3",
           "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -35156,13 +34789,13 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 20 · X: 12",
+      "estado_actual": "Pendiente: 4 · X: 28",
       "resumen_categorias": {
-        "BLOQUEADO": 20,
-        "TERMINADO": 12
+        "TERMINADO": 28,
+        "BLOQUEADO": 4
       },
       "motivo": "Dependencias pendientes: Pintura — segunda mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 3
+      "orden_inventario": 4
     },
     {
       "grupo_id": "pintura",
@@ -35238,8 +34871,8 @@
           "edificio": "PORTAL 1",
           "planta": "2",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -35252,8 +34885,8 @@
           "edificio": "PORTAL 1",
           "planta": "2",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -35266,8 +34899,8 @@
           "edificio": "PORTAL 1",
           "planta": "2",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -35280,8 +34913,8 @@
           "edificio": "PORTAL 1",
           "planta": "2",
           "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -35294,8 +34927,8 @@
           "edificio": "PORTAL 1",
           "planta": "3",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -35308,8 +34941,8 @@
           "edificio": "PORTAL 1",
           "planta": "3",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -35322,8 +34955,8 @@
           "edificio": "PORTAL 1",
           "planta": "3",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -35336,8 +34969,8 @@
           "edificio": "PORTAL 1",
           "planta": "3",
           "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -35518,8 +35151,8 @@
           "edificio": "PORTAL 2",
           "planta": "3",
           "unidad": "A",
-          "estado": "/",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -35532,8 +35165,8 @@
           "edificio": "PORTAL 2",
           "planta": "3",
           "unidad": "B",
-          "estado": "/",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -35546,8 +35179,8 @@
           "edificio": "PORTAL 2",
           "planta": "3",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -35560,8 +35193,8 @@
           "edificio": "PORTAL 2",
           "planta": "3",
           "unidad": "D",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -35627,13 +35260,13 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 64,
-      "estado_actual": "/: 2 · Pendiente: 18 · X: 44",
+      "estado_actual": "Pendiente: 8 · X: 56",
       "resumen_categorias": {
-        "TERMINADO": 44,
-        "OTROS_GREMIOS": 20
+        "TERMINADO": 56,
+        "OTROS_GREMIOS": 8
       },
       "motivo": "Condición obligatoria para placas, tapas y luminarias finales. Terminado según la última confirmación válida.",
-      "orden_inventario": 4
+      "orden_inventario": 5
     },
     {
       "grupo_id": "pintura_zzcc",
@@ -35878,196 +35511,6 @@
         "OTROS_GREMIOS": 32
       },
       "motivo": "Condición de otro gremio. Habilita la colocación de luminarias en ZZCC.",
-      "orden_inventario": 5
-    },
-    {
-      "grupo_id": "sin_clasificar:cuarto tecnico",
-      "trabajo": "Cuarto técnico",
-      "propiedad": "desconocido",
-      "orden_ejecucion": 9999,
-      "fase_nombre": "Sin clasificar",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "A",
-          "estado": "M",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "B",
-          "estado": "M",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "C",
-          "estado": "M",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "D",
-          "estado": "M",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "M",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "B",
-          "estado": "M",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "C",
-          "estado": "M",
-          "categoria": "DUDAS"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "D",
-          "estado": "M",
-          "categoria": "DUDAS"
-        }
-      ],
-      "subtajos": [
-        "Cuarto técnico"
-      ],
-      "seccion": "DUDAS",
-      "seccion_nombre": "Dudas pendientes",
-      "n_ubicaciones": 24,
-      "estado_actual": "M: 8 · X: 16",
-      "resumen_categorias": {
-        "TERMINADO": 16,
-        "DUDAS": 8
-      },
-      "motivo": "Nombre no reconocido; no se prioriza hasta definirlo. Terminado según la última confirmación válida.",
       "orden_inventario": 6
     },
     {
@@ -43666,75 +43109,15 @@
       "orden_inventario": 37
     }
   ],
-  "dudas_pendientes": [
-    {
-      "codigo": "TAJO_NUEVO",
-      "tarea_id": "sin_clasificar:cuarto tecnico",
-      "pregunta": "Definir el nuevo tajo 'Cuarto técnico': significado, propiedad, posición, estados y dependencias.",
-      "n_ubicaciones": 8,
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "C"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1",
-          "unidad": "D"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "A"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "B"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "C"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "D"
-        }
-      ]
-    }
-  ],
-  "preguntas_orden": [
-    {
-      "codigo": "TAJO_FUERA_DEL_CATALOGO",
-      "tarea_id": "cuarto_tecnico",
-      "nombre": "Cuarto técnico",
-      "parecidos": [
-        "cuadro_mecanizado",
-        "cuadros_presentados",
-        "garaje_falso_techo"
-      ]
-    }
-  ],
+  "dudas_pendientes": [],
+  "preguntas_orden": [],
   "prevision": [
     {
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "estado_actual": "Pendiente",
       "propiedad": "externo",
-      "desbloquea": 37,
+      "desbloquea": 11,
       "tajos_afectados": [
         "Casquillos y bombillas",
         "Placas y tapas"

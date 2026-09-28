@@ -419,6 +419,11 @@ def _cargar_historial_html():
     return adaptar_revision_html.cargar_historial_html_generico(
         'bolueta', CARPETA_REVISIONES, ficha_actual, catalogo,
         contiene='BOLUETA', nombre_log='adaptador_bolueta',
+        # Desde la hoja del 28/09/2026 Bolueta incluye la planta virtual
+        # ``zesp`` (cuartos tecnicos, cuartos ligeros y cubierta). No forma
+        # parte de la numeracion natural de plantas, por lo que se declara
+        # de forma explicita igual que en el resto del sistema.
+        planta_id_a_real={'zesp': _fichas.ID_PLANTA_ZONAS_ESPECIALES},
     )
 
 

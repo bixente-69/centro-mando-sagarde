@@ -1453,7 +1453,27 @@ def intentar_pdf(html_path, pdf_path):
     try:
         from playwright.sync_api import sync_playwright
         with sync_playwright() as p:
-            b = p.chromium.launch()
+            try:
+                b = p.chromium.launch()
+            except Exception:
+                # Playwright puede estar instalado sin su Chromium propio.
+                # En los equipos de oficina ya hay Chrome/Edge: reutilizarlo
+                # evita dejar el informe movil antiguo por ese unico motivo.
+                candidatos = [
+                    os.path.join(os.environ.get('ProgramFiles(x86)', ''),
+                                 'Google', 'Chrome', 'Application', 'chrome.exe'),
+                    os.path.join(os.environ.get('ProgramFiles', ''),
+                                 'Google', 'Chrome', 'Application', 'chrome.exe'),
+                    os.path.join(os.environ.get('ProgramFiles(x86)', ''),
+                                 'Microsoft', 'Edge', 'Application', 'msedge.exe'),
+                    os.path.join(os.environ.get('ProgramFiles', ''),
+                                 'Microsoft', 'Edge', 'Application', 'msedge.exe'),
+                ]
+                navegador = next(
+                    (ruta for ruta in candidatos if os.path.isfile(ruta)), None)
+                if navegador is None:
+                    raise
+                b = p.chromium.launch(executable_path=navegador)
             pg = b.new_page()
             pg.goto('file://' + html_path)
             pg.wait_for_timeout(1500)
