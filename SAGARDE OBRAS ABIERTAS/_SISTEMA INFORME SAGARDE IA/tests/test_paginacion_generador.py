@@ -216,6 +216,70 @@ class HtmlEmitido(unittest.TestCase):
 
 
 @unittest.skipUnless(NODE, 'node no esta instalado')
+class PerfilDeTrasteroDeGaraje(unittest.TestCase):
+    """28/09/2026 (Bixente, viendo la hoja real de Bolueta): "Los trasteros no
+    llevan ni emergencia ni temporizado. Solo alumbrado fijo" -- confirmado
+    "no solo en Bolueta, en TODAS las obras": el perfil `GARAGE_PROFILE_TAJOS`
+    es una unica lista compartida por el generador entero, asi que la
+    correccion vale para las 4 obras con garaje (Gernika, Bolueta, Prueba,
+    Olabeaga) sin tocar ninguna por separado.
+
+    Antes del arreglo el perfil tenia justo lo contrario de lo correcto:
+    ofrecia temporizado + emergencia (coloc y embornado) y NUNCA ofrecio
+    fijo -- confirmado con datos reales: las 4 obras con trasteros ya tienen
+    esas celdas de temp/emergencia medidas (N o P segun la obra) y NINGUNA
+    tiene siquiera creada la clave de alumbrado fijo."""
+
+    ESPERADO = [
+        'garaje_tabicado', 'garaje_lucido', 'garaje_falso_techo',
+        'garaje_tubeado_emp', 'garaje_cableado_emp',
+        'garaje_tubeado_visto', 'garaje_cableado_visto',
+        'garaje_pintura_1_recinto', 'garaje_pintura_2_recinto',
+        'garaje_alum_fijo_coloc_recinto', 'garaje_alum_fijo_embornado_recinto',
+    ]
+
+    def test_el_perfil_es_solo_fijo_sin_temporizado_ni_emergencia(self):
+        perfil = ejecutar_en_node('GARAGE_PROFILE_TAJOS.trastero')
+        self.assertEqual(perfil, self.ESPERADO)
+        self.assertFalse(any('temp' in t or 'emergencia' in t for t in perfil),
+                         f'se colo temporizado o emergencia: {perfil}')
+
+    def test_los_ids_del_perfil_existen_en_el_catalogo_real(self):
+        with open(CATALOGO, encoding='utf-8') as f:
+            reales = {t['id'] for t in json.load(f)['tajos']}
+        faltan = [t for t in self.ESPERADO if t not in reales]
+        self.assertEqual(faltan, [], f'ids que no existen en el catalogo: {faltan}')
+
+    def test_los_demas_perfiles_de_recinto_no_se_han_tocado(self):
+        """Guarda contra efecto colateral: escalera/rellano/cuarto_tecnico/
+        cuarto_ligero deben seguir con fijo+temp+emergencia -- solo trastero
+        cambia."""
+        otros = ejecutar_en_node(
+            '({escalera:GARAGE_PROFILE_TAJOS.escalera, '
+            'rellano:GARAGE_PROFILE_TAJOS.rellano})')
+        for perfil in ('escalera', 'rellano'):
+            with self.subTest(perfil=perfil):
+                self.assertIn('garaje_alum_fijo_coloc_recinto', otros[perfil])
+                self.assertIn('garaje_alum_temp_coloc_recinto', otros[perfil])
+                self.assertIn('garaje_emergencia_coloc_recinto', otros[perfil])
+
+    def test_la_hoja_de_una_zona_trastero_pinta_solo_las_11_celdas_de_fijo(self):
+        html = ejecutar_en_node("""(()=>{
+          CAT_GARAJE=BASE_CAT_GARAJE.map(t=>({...t}));
+          S.selGaraje=new Set(CAT_GARAJE.map(t=>t.id));
+          S.obra='OBRA PRUEBA TRASTERO'; S.fecha='2026-09-28';
+          S.garajes=[{id:'g1',nombre:'Garaje 1',plantas:[{id:'s1',nombre:'S-1',
+            zonas:[{id:'z1',nombre:'Trastero 1',tipo:'trastero'}]}]}];
+          return generateGarajeHTML({});
+        })()""")
+        claves = re.findall(r'data-k="(g1__s1__[^"]+__z1)"', html)
+        tajos = sorted({k.split('__')[2] for k in claves})
+        self.assertEqual(tajos, sorted(self.ESPERADO))
+        self.assertEqual(len(claves), len(set(claves)), 'claves repetidas')
+        self.assertFalse(any('temp' in t or 'emergencia' in t for t in tajos))
+
+
+@unittest.skipUnless(NODE, 'node no esta instalado')
 class ZonasEspecialesVivienda(unittest.TestCase):
 
     CUBIERTA_IDS = {
