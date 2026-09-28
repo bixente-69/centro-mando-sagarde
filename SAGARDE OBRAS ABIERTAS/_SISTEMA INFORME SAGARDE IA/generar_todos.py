@@ -414,18 +414,14 @@ def _zonas_especiales_para_registro(obra, portal):
     return zonas
 
 
-# Tajos que las zonas especiales sustituyeron (27/09/2026, catalogo v1.3):
-# `cuarto_tecnico` (ahora cada cuarto tiene su tipo y sus tajos) y `fotovoltaica`
-# (ahora los tajos de cubierta fv_*). Se consideran retirados AUNQUE una obra
-# los conserve como tajo propio en el catalogo -- Gernika lo hace para no
-# invalidar sus 32 celdas --: con sus celdas ya clasificadas no vuelven a salir.
-TAJOS_RETIRADOS_POR_DECISION = frozenset({'cuarto_tecnico', 'fotovoltaica'})
-
-
 def _tajos_retirados_a_ocultar(obra, ficha, catalogo):
     """Tajos retirados que dejan de ofrecerse en las hojas: los que la ficha
     declara pero el catalogo (comun + propios de la obra) ya no tiene, y los
-    retirados por decision (`TAJOS_RETIRADOS_POR_DECISION`).
+    retirados por decision (`fichas.TAJOS_RETIRADOS_POR_DECISION`).
+
+    Se consideran retirados AUNQUE una obra los conserve como tajo propio en
+    el catalogo -- Gernika lo hace para no invalidar sus 32 celdas de
+    `cuarto_tecnico` --: con sus celdas ya clasificadas no vuelven a salir.
 
     Bixente (28/09/2026): "el cuarto tecnico ya no tiene sentido, pues ahora
     hay zonas especiales que los aplican mejor; si aparece, la unica forma ha
@@ -444,7 +440,7 @@ def _tajos_retirados_a_ocultar(obra, ficha, catalogo):
         for tajo in (ficha.get('tajos') or {}).get('detalle') or []
         if isinstance(tajo, dict) and isinstance(tajo.get('id'), str)
         and (tajo['id'] not in conocidos
-             or tajo['id'] in TAJOS_RETIRADOS_POR_DECISION)
+             or tajo['id'] in fichas.TAJOS_RETIRADOS_POR_DECISION)
     ]
     if not retirados:
         return set()

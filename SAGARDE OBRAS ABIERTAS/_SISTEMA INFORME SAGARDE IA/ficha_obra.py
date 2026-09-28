@@ -62,6 +62,16 @@ TIPOS_ZONA_ESPECIAL = frozenset({
     'cuarto_tecnico', 'cuarto_ligero', 'cubierta',
 })
 
+# Tajos SUELTOS que las zonas especiales sustituyeron (27/09/2026, catalogo
+# v1.3): 'cuarto_tecnico' (cada cuarto tiene ya su tipo y sus tajos propios) y
+# 'fotovoltaica' (los tajos de cubierta fv_*). No son "vocabulario que el
+# catalogo no conoce todavia" (eso es legitimo: Obispo Orueta tiene 18 tajos
+# propios reales) sino tajos retirados A PROPOSITO. Fuente unica para todo el
+# sistema: quien de de alta o siembre una obra nueva, o regenere la base del
+# generador para una existente, los trata igual -- ninguno debe inventarlos de
+# nuevo ni dejarlos colarse como si fueran vocabulario propio genuino.
+TAJOS_RETIRADOS_POR_DECISION = frozenset({'cuarto_tecnico', 'fotovoltaica'})
+
 # Estado tal y como llega del priorizador -> estado guardado en la ficha
 # Las claves están normalizadas (minúsculas). La cadena vacía sigue siendo 'P':
 # una casilla vacía en hoja validada es un dato que confirma "no está hecho".

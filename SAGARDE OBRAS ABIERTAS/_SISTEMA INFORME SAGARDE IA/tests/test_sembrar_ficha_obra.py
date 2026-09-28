@@ -79,6 +79,82 @@ class TestEstadosDesdeHistorial(unittest.TestCase):
         self.assertNotIn(('1', 'C', 'tabicado'), est)
 
 
+class TestTajosRetiradosNoSeSiembranEnObraNueva(unittest.TestCase):
+    """28/09/2026 (Bixente): "lo importante es que no salgan mas en nuevas
+    obras". `cuarto_tecnico`/`fotovoltaica` ya no estan en el catalogo comun,
+    asi que una obra sembrada desde CERO no puede traerlos. Pero una obra
+    sembrada desde su HISTORIAL (fuente='historial', el camino de Obispo
+    Orueta) resuelve vocabulario no reconocido como "tajo propio nuevo" -- y
+    si ese historial usa literalmente el texto 'Cuarto tecnico' (los tres
+    adaptadores viejos -- Bolueta, Gernika, Mungia -- aun traducen el codigo
+    corto 'ct-tec' a exactamente ese texto para leer sus hojas antiguas), se
+    coleria de vuelta con un id nuevo "propio de la obra", exactamente lo que
+    se quiere evitar. Un tajo retirado por decision no es "vocabulario propio
+    legitimo que el catalogo aun no conoce" (eso es Orueta de verdad, con
+    'Ventilacion'/'Techos WC'): es un tajo que YA se conocio y se retiro."""
+
+    def _hist_con(self, tarea, extra=()):
+        return [('01/01/2025', [
+            {'floor': '1', 'unit': 'A', 'task': tarea, 'status': 'X'},
+            {'floor': '1', 'unit': 'B', 'task': tarea, 'status': 'N'},
+            *extra,
+        ])]
+
+    def test_cuarto_tecnico_no_se_siembra_como_tajo_propio_nuevo(self):
+        est = sfo.estados_desde_historial(
+            self._hist_con('Cuarto técnico'), sfo.resolver_tajo({}))
+        self.assertFalse(
+            any(clave[2] == 'cuarto_tecnico' for clave in est),
+            f'se colo cuarto_tecnico: {est}')
+
+    def test_las_dos_grafias_historicas_se_descartan_igual(self):
+        """Los adaptadores viejos usan 'Cuarto técnico' (con tilde, Bolueta) y
+        'Cuarto tecnico' (sin tilde, Gernika/Mungia): ambas normalizan al
+        mismo id retirado y deben descartarse igual."""
+        for tarea in ('Cuarto técnico', 'Cuarto tecnico', 'CUARTO TECNICO'):
+            with self.subTest(tarea=tarea):
+                est = sfo.estados_desde_historial(
+                    self._hist_con(tarea), sfo.resolver_tajo({}))
+                self.assertFalse(any(clave[2] == 'cuarto_tecnico' for clave in est))
+
+    def test_fotovoltaica_tampoco_se_siembra(self):
+        est = sfo.estados_desde_historial(
+            self._hist_con('Fotovoltaica'), sfo.resolver_tajo({}))
+        self.assertFalse(any(clave[2] == 'fotovoltaica' for clave in est))
+
+    def test_avisa_por_consola_de_lo_que_descarta(self):
+        import contextlib
+        import io
+        salida = io.StringIO()
+        with contextlib.redirect_stdout(salida):
+            sfo.estados_desde_historial(
+                self._hist_con('Cuarto técnico'), sfo.resolver_tajo({}))
+        self.assertIn('cuarto_tecnico', salida.getvalue())
+        self.assertIn('2', salida.getvalue())  # las 2 celdas descartadas
+
+    def test_un_vocabulario_propio_de_verdad_se_sigue_sembrando(self):
+        """No es una prohibicion de 'nombre desconocido': Orueta sigue
+        pudiendo tener a 'Ventilacion' como tajo propio nuevo."""
+        est = sfo.estados_desde_historial(
+            self._hist_con('Ventilacion'), sfo.resolver_tajo({}))
+        self.assertIn(('1', 'A', 'ventilacion'), est)
+
+    def test_un_nombre_parecido_pero_distinto_no_es_falso_positivo(self):
+        """'Cuarto de instalaciones' no es 'Cuarto tecnico': no se descarta
+        por contener la palabra 'cuarto'."""
+        est = sfo.estados_desde_historial(
+            self._hist_con('Cuarto de instalaciones'), sfo.resolver_tajo({}))
+        self.assertIn(('1', 'A', 'cuarto_de_instalaciones'), est)
+
+    def test_no_llega_al_detalle_que_alimenta_la_ficha_nueva(self):
+        """Integracion de nivel superior: _detalle_desde_historial es lo que
+        de verdad consume `sembrar()` para construir la ficha."""
+        detalle = sfo._detalle_desde_historial(
+            self._hist_con('Cuarto técnico'), 'pruebas', sfo.resolver_tajo({}))
+        self.assertFalse(
+            any(item['tarea_id'] == 'cuarto_tecnico' for item in detalle))
+
+
 class TestNoAplica(unittest.TestCase):
     """La hoja declara que tajos tiene cada ubicacion imprimiendo su fila.
 

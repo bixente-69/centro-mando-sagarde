@@ -23,6 +23,8 @@ from collections import defaultdict, Counter
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, AQUI)
+import ficha_obra  # noqa: E402
 RAIZ = r'D:\Nueva carpeta\OneDrive\COPIA SEGURIDAD SAGARDE'
 OBRAS_DIR = os.path.join(RAIZ, 'SAGARDE OBRAS ABIERTAS')
 SISTEMA = os.path.join(OBRAS_DIR, '_SISTEMA INFORME SAGARDE IA')
@@ -120,15 +122,32 @@ def estados_desde_historial(hist, resolver):
     Una casilla en blanco NO pisa lo anterior: en blanco significa 'no se
     leyo', no 'se comprobo y no esta'. Confundir esas dos cosas es la
     diferencia entre ? y P, y es lo que mas dano ha hecho en este proyecto.
-    """
+
+    Un tajo retirado por decision (`ficha_obra.TAJOS_RETIRADOS_POR_DECISION`)
+    no se siembra aunque el historico lo mencione. `resolver()` no lo
+    distingue de vocabulario propio genuino (Orueta: 'Ventilacion', 'Techos
+    WC') porque para el es igual de "no reconocido" -- los tres adaptadores
+    viejos (Bolueta/Gernika/Mungia) aun traducen su codigo corto historico
+    'ct-tec' a exactamente el texto 'Cuarto tecnico'/'Cuarto técnico', asi
+    que sin este filtro una obra sembrada desde el HISTORIAL (Bixente,
+    28/09/2026: "lo importante es que no salgan mas en nuevas obras") lo
+    resucitaria como tajo propio nuevo de esa obra."""
     ultimo = {}
+    descartados = Counter()
     for fecha, snap in hist:
         for reg in snap or []:
             estado = str(reg.get('status') or '').strip()
             if not estado:
                 continue
             tid, _propio = resolver(reg.get('task'))
+            if tid in ficha_obra.TAJOS_RETIRADOS_POR_DECISION:
+                descartados[tid] += 1
+                continue
             ultimo[(reg.get('floor'), reg.get('unit'), tid)] = (estado, fecha)
+    for tid, n in sorted(descartados.items()):
+        print(f'   [TAJOS RETIRADOS] {n} celda(s) de {tid!r} en el historico: '
+              f'sustituido por zonas especiales, no se siembra en la ficha '
+              f'nueva.')
     return ultimo
 
 
