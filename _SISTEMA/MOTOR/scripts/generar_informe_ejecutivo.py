@@ -318,6 +318,69 @@ def _bloqueadores_sagarde(
         ),
     )
 
+
+def _nombres_ubicacion_por_id(ficha: dict | None) -> dict:
+    """id de ubicacion (estructura de ficha_obra.json) -> nombre real.
+
+    Cubre cualquier planta, no solo zesp: los ids que genera el alta de obra
+    son unicos en toda la ficha, asi que no hace falta filtrar por planta
+    para resolverlos sin ambiguedad.
+    """
+    salida = {}
+    for bloque in (ficha or {}).get('estructura', {}).get('bloques') or []:
+        for portal in bloque.get('portales') or []:
+            for planta in portal.get('plantas') or []:
+                for ubi in planta.get('ubicaciones') or []:
+                    salida[ubi['id']] = ubi.get('nombre') or ubi['id']
+    return salida
+
+
+def _zonas_con_nombre(
+    prioridades: dict | None,
+    ficha: dict | None,
+    resolver_nombre: bool,
+    referencias: set[str] | None = None,
+) -> list[dict]:
+    """Agrupa 'detalle_items' propios por zona/ubicacion con nombre real.
+
+    Usa 'detalle_items' (no el snapshot ya filtrado) porque necesita el
+    TOTAL de celdas aplicables de cada zona, incluidas las no medidas
+    todavia -- si no, una zona recien dada de alta y sin ninguna celda
+    medida no aparaceria con 0%, sencillamente no aparaceria.
+
+    En Garaje, 'unidad' ya es el nombre legible (viene de
+    priorizador_trabajos via ficha_garajes, ver generar_todos.py). En Zonas
+    Especiales 'unidad' es el id interno de la ubicacion (ver
+    ficha_obra.snapshot_desde_ficha) y hay que resolverlo contra la
+    estructura de `ficha` -- de ahi el flag `resolver_nombre`.
+    """
+    nombres_por_id = _nombres_ubicacion_por_id(ficha) if resolver_nombre else {}
+    grupos: dict[str, dict] = {}
+    for fila in (prioridades or {}).get('detalle_items') or []:
+        if fila.get('propiedad') != 'propio':
+            continue
+        if not _fila_en_alcance(fila, referencias):
+            continue
+        clave = fila.get('unidad')
+        if not clave:
+            continue
+        nombre = nombres_por_id.get(clave, clave) if resolver_nombre else clave
+        grupo = grupos.setdefault(clave, {'nombre': nombre, 'recs': []})
+        grupo['recs'].append({'status': fila.get('estado') or ''})
+
+    salida = []
+    for grupo in grupos.values():
+        recs = grupo['recs']
+        salida.append({
+            'nombre': grupo['nombre'],
+            'pct': motor_informes._pct_ponderado(recs),
+            'x': sum(1 for r in recs if r['status'] == 'X'),
+            'total': len(recs),
+        })
+    salida.sort(key=lambda z: (z['pct'], _fold(z['nombre'])))
+    return salida
+
+
 # ─── Identidad Visual Sagarde ──────────────────────────────────────────────
 PAGE_W, PAGE_H = A4
 MARGIN_X = 12 * mm
@@ -643,6 +706,45 @@ def _tabla_tajos_atencion(tajos: list[dict], content_w: float) -> Table | Paragr
     return tabla
 
 
+def _tabla_detalle_zona(zonas: list[dict], content_w: float) -> Table | Paragraph:
+    """Detalle por zona/ubicacion con nombre propio (Garaje, Zonas Especiales).
+
+    Sin truncar (a diferencia de `_tabla_tajos_atencion`, que solo muestra
+    las primeras 8): el volumen aqui es pequeno -- unas pocas decenas de
+    zonas como mucho -- y omitir una escondería justo la que alguien
+    buscaba."""
+    if not zonas:
+        return Paragraph('<i>Sin zonas con nombre propio en este ambito.</i>',
+                         _style('sin_zonas', 7.5, color=COL_MUTED))
+    filas = [[
+        Paragraph('<b>Zona</b>', _style('zh_nombre', 7, True, color=colors.white)),
+        Paragraph('<b>Avance</b>', _style('zh_avance', 7, True, align=TA_CENTER, color=colors.white)),
+        Paragraph('<b>Hecho</b>', _style('zh_hecho', 7, True, align=TA_CENTER, color=colors.white)),
+        Paragraph('<b>Pendiente</b>', _style('zh_pendiente', 7, True, align=TA_CENTER, color=colors.white)),
+    ]]
+    for zona in zonas:
+        pct = zona['pct']
+        filas.append([
+            Paragraph('<b>{}</b>'.format(_texto(zona['nombre'])), _style('zd_nombre', 7)),
+            Paragraph('<font color={}><b>{:.0f}%</b></font>'.format(
+                _color_estado(pct).hexval(), pct),
+                _style('zd_avance', 7, align=TA_CENTER)),
+            Paragraph('{}/{}'.format(zona['x'], zona['total']),
+                      _style('zd_hecho', 7, align=TA_CENTER)),
+            Paragraph(str(zona['total'] - zona['x']), _style('zd_pendiente', 7, align=TA_CENTER)),
+        ])
+    tabla = Table(filas, colWidths=[content_w - 3 * 25 * mm, 25 * mm, 25 * mm, 25 * mm])
+    tabla.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), COL_NAVY),
+        ('GRID', (0, 0), (-1, -1), .3, COL_LINE),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, COL_LIGHT]),
+        ('TOPPADDING', (0, 0), (-1, -1), 2.1),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 2.1),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+    ]))
+    return tabla
+
+
 def _tabla_frentes(frentes: list[dict], ancho: float) -> Table | Paragraph:
     if not frentes:
         return Paragraph('<i>No hay frentes propios clasificados como listos.</i>',
@@ -873,9 +975,31 @@ def _construir_bloque_electrico(
     story.append(Spacer(1, .6 * mm))
     story.append(_tabla_tajos_atencion(tajos, content_w))
     story.append(Spacer(1, 2 * mm))
-    story.append(_tabla_operativa(frentes, bloqueadores, content_w))
-    story.append(Spacer(1, 2 * mm))
-    story.append(_pie_electrico(fecha_rev, content_w))
+
+    # Detalle por zona: solo Garaje y Zonas Especiales tienen un numero
+    # pequeno de ubicaciones con nombre propio (unas pocas decenas como
+    # mucho). En vivienda hay demasiadas unidades por portal para que quepa
+    # una fila por cada una -- ahi se sigue viendo solo el agregado por
+    # fase/tajo de mas arriba.
+    if sub_titulo in ('GARAJE', 'ZONAS ESPECIALES'):
+        zonas = _zonas_con_nombre(
+            prioridades, ficha, resolver_nombre=(sub_titulo == 'ZONAS ESPECIALES'),
+            referencias=referencias,
+        )
+        story.append(Paragraph('<b>DETALLE POR ZONA</b>',
+                               _style('sec_zonas', 8.5, True, color=COL_NAVY)))
+        story.append(Paragraph(
+            'Avance ponderado y celdas de cada zona con nombre propio de esta obra.',
+            _style('nota_zonas', 6.6, color=COL_MUTED)))
+        story.append(Spacer(1, .6 * mm))
+        story.append(_tabla_detalle_zona(zonas, content_w))
+        story.append(Spacer(1, 2 * mm))
+
+    story.append(KeepTogether([
+        _tabla_operativa(frentes, bloqueadores, content_w),
+        Spacer(1, 2 * mm),
+        _pie_electrico(fecha_rev, content_w),
+    ]))
 
 
 # ─── Generación de cada bloque de 1 página A4 ─────────────────────────────
