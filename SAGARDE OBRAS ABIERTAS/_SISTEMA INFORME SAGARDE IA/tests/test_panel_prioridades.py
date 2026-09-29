@@ -783,3 +783,76 @@ class TestBloquePrioridadesPartes(unittest.TestCase):
             + partes['terminado_html']
         )
         self.assertEqual(html_directo, html_reconstruido)
+
+
+class TestRenderHiloConductor(unittest.TestCase):
+
+    TAREA = {
+        'Tarea': 'Resolver consulta', 'Origen': 'Correo',
+        'Fecha': '29/09/2026', 'Archivo': 'consulta.txt',
+        'Estado': 'Pendiente',
+    }
+
+    HILO = {
+        'mensajes': [
+            {'lado': 'Egurrola', 'fecha': '2026-09-29', 'hora': '09:10',
+             'de_a': 'Amets → Vicente', 'texto': 'Mensaje primero'},
+            {'lado': 'Sagarde', 'fecha': '2026-09-29', 'hora': '09:20',
+             'de_a': 'Vicente → Amets', 'texto': 'Mensaje segundo'},
+            {'lado': 'Citado', 'fecha': '2026-09-24', 'hora': '',
+             'de_a': 'Amets → Iker', 'texto': 'Mensaje citado'},
+            {'lado': 'Hueco', 'fecha': '', 'hora': '', 'de_a': '',
+             'texto': 'Faltan mensajes'},
+        ],
+        'avisos': [],
+    }
+
+    def test_sin_hilos_el_html_es_identico_al_camino_anterior(self):
+        omitido = panel_obra._tabla_tareas_manuales([self.TAREA], [])
+        none_explicito = panel_obra._tabla_tareas_manuales(
+            [self.TAREA], [], hilos=None)
+        diccionario_vacio = panel_obra._tabla_tareas_manuales(
+            [self.TAREA], [], hilos={})
+
+        self.assertEqual(omitido, none_explicito)
+        self.assertEqual(omitido, diccionario_vacio)
+        self.assertNotIn('cadena-hilo', omitido)
+
+    def test_con_hilo_pinta_details_cerrado_resumen_orden_y_lados(self):
+        html = panel_obra._tabla_tareas_manuales(
+            [self.TAREA], [], hilos={'consulta.txt': self.HILO})
+
+        self.assertIn("<details class='cadena-hilo'>", html)
+        self.assertNotIn("<details class='cadena-hilo' open", html)
+        self.assertIn('Ver el hilo conductor', html)
+        self.assertIn('4 mensajes · último: Hueco', html)
+        for clase in ('lado-egurrola', 'lado-sagarde', 'lado-citado',
+                      'lado-hueco'):
+            self.assertIn(clase, html)
+        self.assertLess(html.index('Mensaje primero'),
+                        html.index('Mensaje segundo'))
+        self.assertLess(html.index('Mensaje segundo'),
+                        html.index('Mensaje citado'))
+        self.assertLess(html.index('Mensaje citado'),
+                        html.index('Faltan mensajes'))
+
+    def test_bloque_prioridades_propaga_hilos_hasta_la_tabla(self):
+        html = panel_obra.bloque_prioridades(
+            _prioridades(), tareas_manual=[self.TAREA], documentos=[],
+            hilos={'consulta.txt': self.HILO})
+
+        self.assertIn('Ver el hilo conductor', html)
+        self.assertIn('Mensaje primero', html)
+
+    def test_css_del_hilo_usa_variables_y_tiene_ajuste_movil(self):
+        estilo = panel_obra.ESTILOS
+        self.assertIn('.cadena-hilo{', estilo)
+        self.assertIn('.lado-egurrola', estilo)
+        self.assertIn('.lado-sagarde', estilo)
+        self.assertIn('.lado-citado', estilo)
+        self.assertIn('.lado-hueco', estilo)
+        self.assertIn('var(--muted)', estilo)
+        self.assertRegex(
+            estilo,
+            r'@media\(max-width:\d+px\)\{[^}]*\.cadena-hilo',
+        )

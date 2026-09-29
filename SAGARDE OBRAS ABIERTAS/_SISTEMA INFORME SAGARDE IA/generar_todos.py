@@ -32,6 +32,7 @@ sys.path.insert(0, os.path.join(BASE_DIR, "adaptadores"))
 sys.path.insert(0, os.path.join(ROOT_DIR, "_SISTEMA", "MOTOR", "scripts"))
 
 import panel_obra  # noqa: E402
+import hilos_notas  # noqa: E402
 import lectores    # noqa: E402
 import priorizador_trabajos  # noqa: E402
 import cierre_expediente  # noqa: E402
@@ -1693,6 +1694,12 @@ def main(hacer_pdf=True):
             materiales = lectores.leer_materiales(os.path.join(carpeta_abs, obra['materiales_rel']))
             ficha = lectores.leer_ficha(os.path.join(carpeta_abs, 'FICHA DE OBRA.xlsx'))
             documentos = lectores.listar_documentos(carpeta_abs, salida_dir)
+            hilos_tareas, avisos_hilos = hilos_notas.leer_hilos_de_tareas(
+                carpeta_abs, ficha.get('tareas', []))
+            ficha = dict(ficha)
+            ficha['hilos_tareas'] = hilos_tareas
+            for aviso_hilo in avisos_hilos:
+                print(f"  [AVISO HILOS] {aviso_hilo}")
 
             # ── INVERSION DEL FLUJO ──────────────────────────────────────
             # La ficha se alimenta del snapshot crudo y, a partir de aqui,

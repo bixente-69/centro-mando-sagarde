@@ -24,6 +24,7 @@ from datetime import datetime
 
 import motor_informes as motor
 from ficha_obra import NOMBRE_PLANTA_ZONAS_ESPECIALES
+from hilos_notas import sanear_texto
 
 _LOGO_INFORME_OBRA_PATH = os.path.join(
     os.path.dirname(os.path.dirname(os.path.dirname(
@@ -86,6 +87,14 @@ table.data tbody tr:hover{background:#f8f9fb;}
 .doc a{color:var(--accent2);text-decoration:none;}.doc a:hover{text-decoration:underline;}
 .norm li{margin:6px 0 6px 18px;font-size:13.5px;}
 .footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 0;}
+.cadena-hilo{margin-top:7px;font-size:12px;color:var(--text);}
+.cadena-hilo>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;color:var(--accent2);font-weight:700;list-style:none;}
+.cadena-hilo>summary::-webkit-details-marker{display:none;}.cadena-hilo>summary::before{content:'▸';color:var(--muted);}.cadena-hilo[open]>summary::before{content:'▾';}
+.cadena-hilo-resumen{margin-left:auto;color:var(--muted);font-size:10.5px;font-weight:600;text-align:right;}
+.cadena-hilo-linea{--lado-hilo:var(--muted);position:relative;margin:8px 0 0 5px;padding:8px 10px 8px 13px;border-left:3px solid var(--lado-hilo);border-radius:0 7px 7px 0;background:color-mix(in srgb,var(--lado-hilo) 7%,var(--card));}
+.cadena-hilo-meta{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:10.5px;}.cadena-hilo-lado{color:var(--lado-hilo);font-weight:800;text-transform:uppercase;letter-spacing:.35px;}
+.cadena-hilo-de-a{margin-top:2px;color:var(--muted);font-size:11px;}.cadena-hilo-texto{margin-top:3px;color:var(--text);line-height:1.4;overflow-wrap:anywhere;}
+.lado-egurrola{--lado-hilo:var(--warn);}.lado-sagarde{--lado-hilo:var(--accent2);}.lado-citado{--lado-hilo:var(--muted);}.lado-hueco{--lado-hilo:var(--bad);}
 .seccion-plegable{cursor:default;}
 .seccion-plegable>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;font-weight:700;padding:2px 0;}
 .seccion-plegable>summary::-webkit-details-marker{display:none;}
@@ -193,6 +202,8 @@ table.data tbody tr:hover{background:#f8f9fb;}
 }
 @media(max-width:980px){.bento-legend{grid-template-columns:repeat(3,minmax(0,1fr));}.bento-hero{grid-column:span 12;}.bento-small,.bento-third{grid-column:span 6;}}
 @media(max-width:640px){.bento-health-top,.bento-hero-head{flex-direction:column;}.bento-health-side{width:100%;flex-direction:column;}.bento-stat{text-align:left;border-left:0;border-top:1px solid color-mix(in srgb,var(--muted) 24%,transparent);padding:9px 0 0;}.bento-attention{max-width:none;}.bento-legend{grid-template-columns:repeat(2,minmax(0,1fr));}.bento-small,.bento-third{grid-column:span 12;}.bento-breakdown{grid-template-columns:1fr;}.bento-hero-total{text-align:left;}}
+@media(max-width:640px){.cadena-hilo>summary{align-items:flex-start;flex-direction:column;gap:2px;}.cadena-hilo-resumen{margin-left:0;text-align:left;}.cadena-hilo-linea{margin-left:0;padding:7px 8px 7px 10px;}}
+@media(prefers-color-scheme:dark){.cadena-hilo-linea{background:var(--header);color:var(--card);}.cadena-hilo-texto{color:var(--card);}.cadena-hilo-linea .cadena-hilo-meta,.cadena-hilo-linea .cadena-hilo-de-a{color:color-mix(in srgb,var(--card) 75%,var(--muted));}}
 @media(prefers-reduced-motion:reduce){.task-card,.chevron,.bento-card,.bento-chip{transition:none;}}
 .tj-group-hdr{display:flex;align-items:center;gap:8px;padding:8px 4px;border-bottom:1px solid #eef0f4;cursor:pointer;font-size:14px;}
 .tj-items{display:flex;flex-direction:column;gap:6px;padding:6px 4px 10px;}
@@ -1052,7 +1063,7 @@ document.querySelectorAll('.marcar-tarea-hecha').forEach(casilla => {
 </script>"""
 
 
-def _tabla_tareas_manuales(tareas, documentos, obra=''):
+def _tabla_tareas_manuales(tareas, documentos, obra='', hilos=None):
     """Pinta las tareas de la ficha y enlaza su documento cuando existe."""
     tareas = tareas or []
     if not tareas:
@@ -1077,6 +1088,75 @@ def _tabla_tareas_manuales(tareas, documentos, obra=''):
             return _e(archivo)
         return f'<a href="{_e(href)}">{_e(archivo)}</a>'
 
+    def hilo_html(tarea):
+        archivo = str(tarea.get('Archivo') or '').strip()
+        if not hilos or archivo not in hilos:
+            return ''
+        hilo = hilos.get(archivo) or {}
+        mensajes = hilo.get('mensajes') or []
+
+        def texto_publico(valor):
+            return _e(sanear_texto(valor))
+
+        n_mensajes = len(mensajes)
+        etiqueta = 'mensaje' if n_mensajes == 1 else 'mensajes'
+        resumen = f'{n_mensajes} {etiqueta}'
+        if mensajes:
+            ultimo = mensajes[-1] or {}
+            ultimo_txt = ' '.join(
+                parte for parte in (
+                    str(ultimo.get('lado') or '').strip(),
+                    str(ultimo.get('fecha') or '').strip(),
+                ) if parte
+            )
+            if ultimo_txt:
+                resumen += f' · último: {ultimo_txt}'
+
+        clases_lado = {
+            'egurrola': 'lado-egurrola',
+            'externo': 'lado-egurrola',
+            'sagarde': 'lado-sagarde',
+            'citado': 'lado-citado',
+            'hueco': 'lado-hueco',
+        }
+        lineas = []
+        for mensaje in mensajes:
+            mensaje = mensaje or {}
+            lado = str(mensaje.get('lado') or '').strip()
+            clase = clases_lado.get(lado.casefold(), 'lado-citado')
+            fecha_hora = ' '.join(
+                parte for parte in (
+                    str(mensaje.get('fecha') or '').strip(),
+                    str(mensaje.get('hora') or '').strip(),
+                ) if parte
+            )
+            meta = (
+                f"<span class='cadena-hilo-lado'>{texto_publico(lado)}</span>"
+            )
+            if fecha_hora:
+                meta += f'<span>{texto_publico(fecha_hora)}</span>'
+            de_a = str(mensaje.get('de_a') or '').strip()
+            de_a_html = (
+                f"<div class='cadena-hilo-de-a'>{texto_publico(de_a)}</div>"
+                if de_a else '')
+            lineas.append(
+                f"<div class='cadena-hilo-linea {clase}'>"
+                f"<div class='cadena-hilo-meta'>{meta}</div>{de_a_html}"
+                f"<div class='cadena-hilo-texto'>"
+                f"{texto_publico(mensaje.get('texto'))}</div></div>"
+            )
+        if lineas:
+            contenido = ''.join(lineas)
+        else:
+            contenido = (
+                "<p class='empty'>El bloque no contiene mensajes válidos.</p>")
+        return (
+            "<details class='cadena-hilo'><summary>"
+            "<span>Ver el hilo conductor</span>"
+            f"<span class='cadena-hilo-resumen'>{texto_publico(resumen)}</span>"
+            f"</summary>{contenido}</details>"
+        )
+
     def fila(tarea, hecha=False):
         estado = tarea.get('Estado') or 'Sin estado'
         estilo = (" style='color:var(--muted);text-decoration:line-through;'"
@@ -1099,9 +1179,10 @@ def _tabla_tareas_manuales(tareas, documentos, obra=''):
             )
         else:
             casilla = '<td></td>'
+        tarea_html = f"<b>{_e(tarea.get('Tarea'))}</b>{hilo_html(tarea)}"
         return (
             f"<tr{estilo}><td><span class='badge {clase}'>{_e(estado)}</span></td>"
-            f"<td><b>{_e(tarea.get('Tarea'))}</b></td>"
+            f"<td>{tarea_html}</td>"
             f"<td>{_e(tarea.get('Origen'))}</td>"
             f"<td style='white-space:nowrap;'>{_e(tarea.get('Fecha'))}</td>"
             f"<td>{archivo_html(tarea)}</td>{casilla}</tr>"
@@ -1159,7 +1240,8 @@ _ID_SEC_EJECUCION = 'sec-ejecucion'
 def bloque_prioridades_partes(prioridades, tareas_manual=None,
                               documentos=None, obra='', avance_pct=None,
                               sufijo='', incluir_script_indice=True,
-                              nombre_fichero_json='prioridades_trabajos.json'):
+                              nombre_fichero_json='prioridades_trabajos.json',
+                              hilos=None):
     """Calcula las piezas de Prioridades por separado, sin concatenarlas.
 
     Usada por bloque_prioridades() (reconstruye el HTML de siempre) y por
@@ -1192,7 +1274,7 @@ def bloque_prioridades_partes(prioridades, tareas_manual=None,
 
     e = _e
     tareas_manual_html = _tabla_tareas_manuales(
-        tareas_manual, documentos, obra=obra)
+        tareas_manual, documentos, obra=obra, hilos=hilos)
     resumen_prio = prioridades.get('resumen', {})
     items_prio = prioridades.get('items', [])
     inventario_prio = prioridades.get('inventario', [])
@@ -1572,7 +1654,8 @@ def bloque_prioridades_partes(prioridades, tareas_manual=None,
 def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
                        obra='', avance_pct=None, sufijo='',
                        incluir_script_indice=True,
-                       nombre_fichero_json='prioridades_trabajos.json'):
+                       nombre_fichero_json='prioridades_trabajos.json',
+                       hilos=None):
     """HTML de la pestana Prioridades — envoltorio sobre
     bloque_prioridades_partes() que reconstruye el string de siempre.
 
@@ -1583,7 +1666,7 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
         prioridades, tareas_manual=tareas_manual, documentos=documentos,
         obra=obra, avance_pct=avance_pct, sufijo=sufijo,
         incluir_script_indice=incluir_script_indice,
-        nombre_fichero_json=nombre_fichero_json)
+        nombre_fichero_json=nombre_fichero_json, hilos=hilos)
     if isinstance(partes, str):
         return partes
     return (
@@ -1650,7 +1733,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   cierre=None, cierre_avisos=None, prioridades_garaje=None,
                   snapshot_garaje=None,
                   prioridades_zonas_especiales=None,
-                  snapshot_zonas_especiales=None):
+                  snapshot_zonas_especiales=None, hilos=None):
     prioridades = prioridades or {}
     snapshot = historial[-1][1] if historial else []
     historial_panel = list(historial)
@@ -1846,7 +1929,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     partes_prioridades = bloque_prioridades_partes(
         prioridades, tareas_manual=ficha.get('tareas', []),
         documentos=documentos, obra=obra,
-        avance_pct=kpis.get('pct_ponderado'))
+        avance_pct=kpis.get('pct_ponderado'),
+        hilos=(ficha.get('hilos_tareas') if hilos is None else hilos))
     if isinstance(partes_prioridades, str):
         prioridades_html = partes_prioridades
         secciones_prioridades = {}
