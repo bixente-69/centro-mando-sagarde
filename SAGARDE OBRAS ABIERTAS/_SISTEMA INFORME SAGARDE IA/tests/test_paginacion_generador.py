@@ -280,6 +280,96 @@ class PerfilDeTrasteroDeGaraje(unittest.TestCase):
 
 
 @unittest.skipUnless(NODE, 'node no esta instalado')
+class PerfilDeCuartosDeGaraje(unittest.TestCase):
+    """29/09/2026 (Bixente, viendo la hoja real de Bolueta): los cuartos
+    tecnicos y ligeros, como los trasteros, solo llevan alumbrado fijo. Las
+    zonas de circulacion (vial, escalera y rellano) conservan fijo,
+    temporizado y emergencia."""
+
+    ESPERADO_CUARTO_TECNICO = [
+        'garaje_tabicado', 'garaje_lucido', 'garaje_falso_techo',
+        'garaje_tubeado_emp', 'garaje_cableado_emp',
+        'garaje_tubeado_visto', 'garaje_cableado_visto',
+        'garaje_pintura_1_recinto', 'garaje_pintura_2_recinto',
+        'garaje_alum_fijo_coloc_recinto', 'garaje_alum_fijo_embornado_recinto',
+        'garaje_enchufe_coloc', 'garaje_enchufe_embornado',
+        'garaje_cuadro_tubeado_cableado', 'garaje_cuadro_colocacion',
+        'garaje_cuadro_embornado', 'garaje_cuadro_rotulacion',
+        'garaje_cuadro_equipo_tubeado_cableado',
+    ]
+
+    ESPERADO_CUARTO_LIGERO = [
+        'garaje_tabicado', 'garaje_lucido',
+        'garaje_tubeado_emp', 'garaje_cableado_emp',
+        'garaje_tubeado_visto', 'garaje_cableado_visto',
+        'garaje_pintura_1_recinto', 'garaje_pintura_2_recinto',
+        'garaje_alum_fijo_coloc_recinto', 'garaje_alum_fijo_embornado_recinto',
+        'garaje_enchufe_coloc', 'garaje_enchufe_embornado',
+    ]
+
+    def test_el_perfil_de_cuarto_tecnico_es_solo_fijo_sin_temporizado_ni_emergencia(self):
+        perfil = ejecutar_en_node('GARAGE_PROFILE_TAJOS.cuarto_tecnico')
+        self.assertEqual(perfil, self.ESPERADO_CUARTO_TECNICO)
+        self.assertFalse(any('temp' in t or 'emergencia' in t for t in perfil),
+                         f'se colo temporizado o emergencia: {perfil}')
+
+    def test_el_perfil_de_cuarto_ligero_es_solo_fijo_sin_temporizado_ni_emergencia(self):
+        perfil = ejecutar_en_node('GARAGE_PROFILE_TAJOS.cuarto_ligero')
+        self.assertEqual(perfil, self.ESPERADO_CUARTO_LIGERO)
+        self.assertFalse(any('temp' in t or 'emergencia' in t for t in perfil),
+                         f'se colo temporizado o emergencia: {perfil}')
+
+    def test_los_ids_de_ambos_perfiles_existen_en_el_catalogo_real(self):
+        with open(CATALOGO, encoding='utf-8') as f:
+            reales = {t['id'] for t in json.load(f)['tajos']}
+        esperados = self.ESPERADO_CUARTO_TECNICO + self.ESPERADO_CUARTO_LIGERO
+        faltan = [t for t in esperados if t not in reales]
+        self.assertEqual(faltan, [], f'ids que no existen en el catalogo: {faltan}')
+
+    def test_los_perfiles_de_circulacion_no_se_han_tocado(self):
+        perfiles = ejecutar_en_node(
+            '({vial:GARAGE_PROFILE_TAJOS.vial, '
+            'escalera:GARAGE_PROFILE_TAJOS.escalera, '
+            'rellano:GARAGE_PROFILE_TAJOS.rellano})')
+        for perfil in ('vial', 'escalera', 'rellano'):
+            sufijo = 'vial' if perfil == 'vial' else 'recinto'
+            esperados = []
+            for fase in ('coloc', 'embornado'):
+                esperados.extend([
+                    f'garaje_alum_fijo_{fase}_{sufijo}',
+                    f'garaje_alum_temp_{fase}_{sufijo}',
+                    f'garaje_emergencia_{fase}_{sufijo}',
+                ])
+            with self.subTest(perfil=perfil):
+                for tajo in esperados:
+                    self.assertIn(tajo, perfiles[perfil])
+
+    def test_la_hoja_de_cada_tipo_de_cuarto_pinta_solo_sus_claves_esperadas(self):
+        html = ejecutar_en_node("""(()=>{
+          CAT_GARAJE=BASE_CAT_GARAJE.map(t=>({...t}));
+          S.selGaraje=new Set(CAT_GARAJE.map(t=>t.id));
+          S.obra='OBRA PRUEBA CUARTOS'; S.fecha='2026-09-29';
+          S.garajes=[{id:'g1',nombre:'Garaje 1',plantas:[{id:'s1',nombre:'S-1',
+            zonas:[
+              {id:'z1',nombre:'Cuarto tecnico',tipo:'cuarto_tecnico',funcion:'generales'},
+              {id:'z2',nombre:'Cuarto ligero',tipo:'cuarto_ligero',funcion:'basuras'},
+            ]}]}];
+          return generateGarajeHTML({});
+        })()""")
+        casos = {
+            'z1': self.ESPERADO_CUARTO_TECNICO + ['garaje_tierras_derivacion'],
+            'z2': self.ESPERADO_CUARTO_LIGERO,
+        }
+        for zona, esperados in casos.items():
+            claves = re.findall(r'data-k="(g1__s1__[^"]+__%s)"' % zona, html)
+            tajos = sorted({k.split('__')[2] for k in claves})
+            with self.subTest(zona=zona):
+                self.assertEqual(tajos, sorted(esperados))
+                self.assertEqual(len(claves), len(set(claves)), 'claves repetidas')
+                self.assertFalse(any('temp' in t or 'emergencia' in t for t in tajos))
+
+
+@unittest.skipUnless(NODE, 'node no esta instalado')
 class ZonasEspecialesVivienda(unittest.TestCase):
 
     CUBIERTA_IDS = {
@@ -306,7 +396,7 @@ class ZonasEspecialesVivienda(unittest.TestCase):
         ids = set(datos['especiales']['cuarto_tecnico'])
         ids.update(datos['especiales']['cuarto_ligero'])
         ids.update(datos['especiales']['cubierta'])
-        self.assertEqual(len(ids), 35)
+        self.assertEqual(len(ids), 31)
         en_generador = {t['id']: t for t in datos['catalogo'] if t['id'] in ids}
         self.assertEqual(set(en_generador), ids)
 
@@ -356,8 +446,8 @@ class ZonasEspecialesVivienda(unittest.TestCase):
           return generateHTML({});
         })()""")
         claves = re.findall(r'data-k="([^"]*__zesp__[^"]*)"', html)
-        self.assertEqual(len(claves), 51)
-        self.assertEqual(len(set(claves)), 51)
+        self.assertEqual(len(claves), 43)
+        self.assertEqual(len(set(claves)), 43)
         self.assertTrue(all(len(clave.split('__')) == 4 for clave in claves))
         self.assertTrue(all(clave.split('__')[0:2] == ['p1', 'zesp']
                             for clave in claves))

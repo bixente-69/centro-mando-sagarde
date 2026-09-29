@@ -667,12 +667,14 @@ const GARAGE_PROFILE_TAJOS = {
     'garaje_alum_fijo_coloc_recinto','garaje_alum_temp_coloc_recinto','garaje_emergencia_coloc_recinto',
     'garaje_alum_fijo_embornado_recinto','garaje_alum_temp_embornado_recinto','garaje_emergencia_embornado_recinto',
   ],
+  // 29/09/2026 (Bixente, viendo la hoja real de Bolueta): los cuartos
+  // tecnicos y ligeros, como los trasteros, solo llevan alumbrado FIJO.
   cuarto_tecnico:[
     'garaje_tabicado','garaje_lucido','garaje_falso_techo',
     'garaje_tubeado_emp','garaje_cableado_emp','garaje_tubeado_visto','garaje_cableado_visto',
     'garaje_pintura_1_recinto','garaje_pintura_2_recinto',
-    'garaje_alum_fijo_coloc_recinto','garaje_alum_temp_coloc_recinto','garaje_emergencia_coloc_recinto',
-    'garaje_alum_fijo_embornado_recinto','garaje_alum_temp_embornado_recinto','garaje_emergencia_embornado_recinto',
+    'garaje_alum_fijo_coloc_recinto',
+    'garaje_alum_fijo_embornado_recinto',
     'garaje_enchufe_coloc','garaje_enchufe_embornado',
     'garaje_cuadro_tubeado_cableado','garaje_cuadro_colocacion','garaje_cuadro_embornado',
     'garaje_cuadro_rotulacion','garaje_cuadro_equipo_tubeado_cableado',
@@ -681,8 +683,8 @@ const GARAGE_PROFILE_TAJOS = {
     'garaje_tabicado','garaje_lucido','garaje_tubeado_emp','garaje_cableado_emp',
     'garaje_tubeado_visto','garaje_cableado_visto',
     'garaje_pintura_1_recinto','garaje_pintura_2_recinto',
-    'garaje_alum_fijo_coloc_recinto','garaje_alum_temp_coloc_recinto','garaje_emergencia_coloc_recinto',
-    'garaje_alum_fijo_embornado_recinto','garaje_alum_temp_embornado_recinto','garaje_emergencia_embornado_recinto',
+    'garaje_alum_fijo_coloc_recinto',
+    'garaje_alum_fijo_embornado_recinto',
     'garaje_enchufe_coloc','garaje_enchufe_embornado',
   ],
 };
@@ -722,7 +724,13 @@ const SPECIAL_ZONE_PROFILE_TAJOS = {
     'cub_pararrayos_cableado','cub_antena_tierra',
   ],
 };
-const SPECIAL_ZONE_TAJO_IDS = new Set(Object.values(SPECIAL_ZONE_PROFILE_TAJOS).flat());
+const SPECIAL_ZONE_TAJO_IDS = new Set([
+  ...Object.values(SPECIAL_ZONE_PROFILE_TAJOS).flat(),
+  // Siguen siendo tajos de zona comun aunque ya no se impriman en cuartos:
+  // nunca deben caer en la matriz de cada vivienda.
+  'garaje_alum_temp_coloc_recinto','garaje_emergencia_coloc_recinto',
+  'garaje_alum_temp_embornado_recinto','garaje_emergencia_embornado_recinto',
+]);
 const SPECIAL_ZONE_SECTIONS = [
   {tipo:'cuarto_tecnico',label:'Cuartos técnicos',presentacion:'tarjetas'},
   {tipo:'cuarto_ligero',label:'Cuartos ligeros',presentacion:'tabla'},
