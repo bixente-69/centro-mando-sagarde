@@ -48,6 +48,14 @@ table.data tbody tr:hover{background:#f8f9fb;}
 .doc a{color:var(--accent2);text-decoration:none;}.doc a:hover{text-decoration:underline;}
 .norm li{margin:6px 0 6px 18px;font-size:13.5px;}
 .footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 0;}
+.cadena-hilo{margin-top:7px;font-size:12px;color:var(--text);}
+.cadena-hilo>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;color:var(--accent2);font-weight:700;list-style:none;}
+.cadena-hilo>summary::-webkit-details-marker{display:none;}.cadena-hilo>summary::before{content:'▸';color:var(--muted);}.cadena-hilo[open]>summary::before{content:'▾';}
+.cadena-hilo-resumen{margin-left:auto;color:var(--muted);font-size:10.5px;font-weight:600;text-align:right;}
+.cadena-hilo-linea{--lado-hilo:var(--muted);position:relative;margin:8px 0 0 5px;padding:8px 10px 8px 13px;border-left:3px solid var(--lado-hilo);border-radius:0 7px 7px 0;background:color-mix(in srgb,var(--lado-hilo) 7%,var(--card));}
+.cadena-hilo-meta{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:10.5px;}.cadena-hilo-lado{color:var(--lado-hilo);font-weight:800;text-transform:uppercase;letter-spacing:.35px;}
+.cadena-hilo-de-a{margin-top:2px;color:var(--muted);font-size:11px;}.cadena-hilo-texto{margin-top:3px;color:var(--text);line-height:1.4;overflow-wrap:anywhere;}
+.lado-egurrola{--lado-hilo:var(--warn);}.lado-sagarde{--lado-hilo:var(--accent2);}.lado-citado{--lado-hilo:var(--muted);}.lado-hueco{--lado-hilo:var(--bad);}
 .seccion-plegable{cursor:default;}
 .seccion-plegable>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;font-weight:700;padding:2px 0;}
 .seccion-plegable>summary::-webkit-details-marker{display:none;}
@@ -155,6 +163,8 @@ table.data tbody tr:hover{background:#f8f9fb;}
 }
 @media(max-width:980px){.bento-legend{grid-template-columns:repeat(3,minmax(0,1fr));}.bento-hero{grid-column:span 12;}.bento-small,.bento-third{grid-column:span 6;}}
 @media(max-width:640px){.bento-health-top,.bento-hero-head{flex-direction:column;}.bento-health-side{width:100%;flex-direction:column;}.bento-stat{text-align:left;border-left:0;border-top:1px solid color-mix(in srgb,var(--muted) 24%,transparent);padding:9px 0 0;}.bento-attention{max-width:none;}.bento-legend{grid-template-columns:repeat(2,minmax(0,1fr));}.bento-small,.bento-third{grid-column:span 12;}.bento-breakdown{grid-template-columns:1fr;}.bento-hero-total{text-align:left;}}
+@media(max-width:640px){.cadena-hilo>summary{align-items:flex-start;flex-direction:column;gap:2px;}.cadena-hilo-resumen{margin-left:0;text-align:left;}.cadena-hilo-linea{margin-left:0;padding:7px 8px 7px 10px;}}
+@media(prefers-color-scheme:dark){.cadena-hilo-linea{background:var(--header);color:var(--card);}.cadena-hilo-texto{color:var(--card);}.cadena-hilo-linea .cadena-hilo-meta,.cadena-hilo-linea .cadena-hilo-de-a{color:color-mix(in srgb,var(--card) 75%,var(--muted));}}
 @media(prefers-reduced-motion:reduce){.task-card,.chevron,.bento-card,.bento-chip{transition:none;}}
 .tj-group-hdr{display:flex;align-items:center;gap:8px;padding:8px 4px;border-bottom:1px solid #eef0f4;cursor:pointer;font-size:14px;}
 .tj-items{display:flex;flex-direction:column;gap:6px;padding:6px 4px 10px;}
@@ -162,7 +172,7 @@ table.data tbody tr:hover{background:#f8f9fb;}
 </style></head><body><div class="wrap">
 <div class="header">
   <div><div class="brand">Informe Sagarde IA · Panel de obra</div><h1>2026 MUNGIA ACR NEINOR</h1><div class="sub">Electricidad y telecomunicaciones · Edificios ZR1.1 / ZR1.2</div></div>
-  <div class="meta">Generado: 29/09/2026 18:12<br>
+  <div class="meta">Generado: 29/09/2026 21:40<br>
   Última revisión: 10/09/2026<br>
   <a class="volver" href="../../index.html">← Todas las obras</a>
   <a class="volver" href="INFORME_EJECUTIVO_2026_MUNGIA_ACR_NEINOR.pdf" target="_blank" style="background:var(--bad);border-color:var(--bad);margin-left:6px;">📄 Informe Ejecutivo PDF</a>
@@ -520,7 +530,7 @@ if (document.readyState === 'loading') {
 
 <section id="v-actualizar" class="view"><div class="card">
   <h3>↻ Actualizar panel</h3>
-  <p style="font-size:13px;">Este panel es un fichero HTML estático. Se actualizó el <b>29/09/2026 18:12</b>.
+  <p style="font-size:13px;">Este panel es un fichero HTML estático. Se actualizó el <b>29/09/2026 21:40</b>.
   Para reflejarlo con los últimos archivos de revisión hay que regenerarlo.</p>
   <div style="margin-top:18px;background:#f0f4ff;border:1px solid #c0cfe8;border-radius:8px;padding:14px 18px;">
     <b style="font-size:13px;">Paso 1 &mdash; Haz doble clic en este archivo:</b><br>
@@ -796,6 +806,14 @@ table.data tbody tr:hover{background:#f8f9fb;}
 .doc a{color:var(--accent2);text-decoration:none;}.doc a:hover{text-decoration:underline;}
 .norm li{margin:6px 0 6px 18px;font-size:13.5px;}
 .footer{text-align:center;font-size:11.5px;color:var(--muted);padding:16px 0;}
+.cadena-hilo{margin-top:7px;font-size:12px;color:var(--text);}
+.cadena-hilo>summary{display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;color:var(--accent2);font-weight:700;list-style:none;}
+.cadena-hilo>summary::-webkit-details-marker{display:none;}.cadena-hilo>summary::before{content:'▸';color:var(--muted);}.cadena-hilo[open]>summary::before{content:'▾';}
+.cadena-hilo-resumen{margin-left:auto;color:var(--muted);font-size:10.5px;font-weight:600;text-align:right;}
+.cadena-hilo-linea{--lado-hilo:var(--muted);position:relative;margin:8px 0 0 5px;padding:8px 10px 8px 13px;border-left:3px solid var(--lado-hilo);border-radius:0 7px 7px 0;background:color-mix(in srgb,var(--lado-hilo) 7%,var(--card));}
+.cadena-hilo-meta{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap;color:var(--muted);font-size:10.5px;}.cadena-hilo-lado{color:var(--lado-hilo);font-weight:800;text-transform:uppercase;letter-spacing:.35px;}
+.cadena-hilo-de-a{margin-top:2px;color:var(--muted);font-size:11px;}.cadena-hilo-texto{margin-top:3px;color:var(--text);line-height:1.4;overflow-wrap:anywhere;}
+.lado-egurrola{--lado-hilo:var(--warn);}.lado-sagarde{--lado-hilo:var(--accent2);}.lado-citado{--lado-hilo:var(--muted);}.lado-hueco{--lado-hilo:var(--bad);}
 .seccion-plegable{cursor:default;}
 .seccion-plegable>summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:14px;font-weight:700;padding:2px 0;}
 .seccion-plegable>summary::-webkit-details-marker{display:none;}
@@ -903,6 +921,8 @@ table.data tbody tr:hover{background:#f8f9fb;}
 }
 @media(max-width:980px){.bento-legend{grid-template-columns:repeat(3,minmax(0,1fr));}.bento-hero{grid-column:span 12;}.bento-small,.bento-third{grid-column:span 6;}}
 @media(max-width:640px){.bento-health-top,.bento-hero-head{flex-direction:column;}.bento-health-side{width:100%;flex-direction:column;}.bento-stat{text-align:left;border-left:0;border-top:1px solid color-mix(in srgb,var(--muted) 24%,transparent);padding:9px 0 0;}.bento-attention{max-width:none;}.bento-legend{grid-template-columns:repeat(2,minmax(0,1fr));}.bento-small,.bento-third{grid-column:span 12;}.bento-breakdown{grid-template-columns:1fr;}.bento-hero-total{text-align:left;}}
+@media(max-width:640px){.cadena-hilo>summary{align-items:flex-start;flex-direction:column;gap:2px;}.cadena-hilo-resumen{margin-left:0;text-align:left;}.cadena-hilo-linea{margin-left:0;padding:7px 8px 7px 10px;}}
+@media(prefers-color-scheme:dark){.cadena-hilo-linea{background:var(--header);color:var(--card);}.cadena-hilo-texto{color:var(--card);}.cadena-hilo-linea .cadena-hilo-meta,.cadena-hilo-linea .cadena-hilo-de-a{color:color-mix(in srgb,var(--card) 75%,var(--muted));}}
 @media(prefers-reduced-motion:reduce){.task-card,.chevron,.bento-card,.bento-chip{transition:none;}}
 .tj-group-hdr{display:flex;align-items:center;gap:8px;padding:8px 4px;border-bottom:1px solid #eef0f4;cursor:pointer;font-size:14px;}
 .tj-items{display:flex;flex-direction:column;gap:6px;padding:6px 4px 10px;}
