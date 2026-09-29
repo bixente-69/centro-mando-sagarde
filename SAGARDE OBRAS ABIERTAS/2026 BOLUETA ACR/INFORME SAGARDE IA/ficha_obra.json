@@ -21939,6 +21939,176 @@
       "v": "N",
       "f": "29/09/2026",
       "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_tabicado__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_lucido__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_falso_techo__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_emp__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_emp__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_visto__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_visto__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_tubeado_cableado__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_colocacion__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_embornado__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_rotulacion__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_mum61yi2_11": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_lucido__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_falso_techo__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_emp__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_emp__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_tubeado_visto__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cableado_visto__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_1_recinto__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_pintura_2_recinto__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_fijo_coloc_recinto__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_coloc__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_enchufe_embornado__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_tubeado_cableado__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_colocacion__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_embornado__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_rotulacion__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
+    },
+    "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_mum620d4_12": {
+      "v": "?",
+      "f": null,
+      "r": null
     }
   },
   "revisiones": [

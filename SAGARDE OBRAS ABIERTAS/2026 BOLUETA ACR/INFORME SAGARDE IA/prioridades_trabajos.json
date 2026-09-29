@@ -8,7 +8,7 @@
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "29/09/2026 17:00",
+  "generado": "29/09/2026 18:13",
   "resumen": {
     "listos": 22,
     "verificar": 0,
@@ -18,10 +18,10 @@
     "otros_gremios": 13,
     "dudas": 0,
     "sin_revisar": 4,
-    "unidades_sin_revisar": 91,
+    "unidades_sin_revisar": 125,
     "terminados": 4,
     "inventario_total": 64,
-    "detalle_total": 3642,
+    "detalle_total": 3676,
     "preguntas_pendientes": 1,
     "viviendas": 10,
     "zonas_comunes": 7,
@@ -113179,6 +113179,33 @@
       "display_group": "garaje_tabicado",
       "edificio": "BOLUETA",
       "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_tabicado",
+      "trabajo": "Tabicado (zona común)",
+      "trabajos_originales": [
+        "Tabicado (zona común)"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 500,
+      "fase_nombre": "Obra civil",
+      "display_group": "garaje_tabicado",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
       "unidad": "z_mum620d4_12",
       "estado": "X",
       "estado_actual": "X",
@@ -113355,6 +113382,60 @@
       "ultima_fecha": "28/09/2026"
     },
     {
+      "tarea_id": "garaje_lucido",
+      "trabajo": "Lucido",
+      "trabajos_originales": [
+        "Lucido"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 505,
+      "fase_nombre": "Obra civil",
+      "display_group": "garaje_lucido",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_lucido",
+      "trabajo": "Lucido",
+      "trabajos_originales": [
+        "Lucido"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 505,
+      "fase_nombre": "Obra civil",
+      "display_group": "garaje_lucido",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
       "tarea_id": "garaje_falso_techo",
       "trabajo": "Falso techo",
       "trabajos_originales": [
@@ -113488,6 +113569,60 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "garaje_falso_techo",
+      "trabajo": "Falso techo",
+      "trabajos_originales": [
+        "Falso techo"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 510,
+      "fase_nombre": "Obra civil",
+      "display_group": "garaje_falso_techo",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_falso_techo",
+      "trabajo": "Falso techo",
+      "trabajos_originales": [
+        "Falso techo"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 510,
+      "fase_nombre": "Obra civil",
+      "display_group": "garaje_falso_techo",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
     },
     {
       "tarea_id": "garaje_tubeado_emp",
@@ -113675,6 +113810,60 @@
       "ultima_fecha": "28/09/2026"
     },
     {
+      "tarea_id": "garaje_tubeado_emp",
+      "trabajo": "Tubeado empotrado",
+      "trabajos_originales": [
+        "Tubeado empotrado"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 520,
+      "fase_nombre": "Instalación interior",
+      "display_group": "garaje_tubeado_emp",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_tubeado_emp",
+      "trabajo": "Tubeado empotrado",
+      "trabajos_originales": [
+        "Tubeado empotrado"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 520,
+      "fase_nombre": "Instalación interior",
+      "display_group": "garaje_tubeado_emp",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
       "tarea_id": "garaje_cableado_emp",
       "trabajo": "Cableado empotrado",
       "trabajos_originales": [
@@ -113858,6 +114047,60 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "garaje_cableado_emp",
+      "trabajo": "Cableado empotrado",
+      "trabajos_originales": [
+        "Cableado empotrado"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 525,
+      "fase_nombre": "Instalación interior",
+      "display_group": "garaje_cableado_emp",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_cableado_emp",
+      "trabajo": "Cableado empotrado",
+      "trabajos_originales": [
+        "Cableado empotrado"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 525,
+      "fase_nombre": "Instalación interior",
+      "display_group": "garaje_cableado_emp",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -114008,6 +114251,60 @@
       "ultima_fecha": "28/09/2026"
     },
     {
+      "tarea_id": "garaje_tubeado_visto",
+      "trabajo": "Tubeado visto",
+      "trabajos_originales": [
+        "Tubeado visto"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 530,
+      "fase_nombre": "Instalación interior",
+      "display_group": "garaje_tubeado_visto",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_tubeado_visto",
+      "trabajo": "Tubeado visto",
+      "trabajos_originales": [
+        "Tubeado visto"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 530,
+      "fase_nombre": "Instalación interior",
+      "display_group": "garaje_tubeado_visto",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
       "tarea_id": "garaje_cableado_visto",
       "trabajo": "Cableado visto",
       "trabajos_originales": [
@@ -114156,6 +114453,60 @@
       "ultima_fecha": "28/09/2026"
     },
     {
+      "tarea_id": "garaje_cableado_visto",
+      "trabajo": "Cableado visto",
+      "trabajos_originales": [
+        "Cableado visto"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 535,
+      "fase_nombre": "Instalación interior",
+      "display_group": "garaje_cableado_visto",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_cableado_visto",
+      "trabajo": "Cableado visto",
+      "trabajos_originales": [
+        "Cableado visto"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 535,
+      "fase_nombre": "Instalación interior",
+      "display_group": "garaje_cableado_visto",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
       "tarea_id": "garaje_pintura_1_recinto",
       "trabajo": "Pintura (recintos) — 1ª mano",
       "trabajos_originales": [
@@ -114289,6 +114640,60 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "garaje_pintura_1_recinto",
+      "trabajo": "Pintura (recintos) — 1ª mano",
+      "trabajos_originales": [
+        "Pintura (recintos) — 1ª mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 550,
+      "fase_nombre": "Pintura",
+      "display_group": "garaje_pintura",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_pintura_1_recinto",
+      "trabajo": "Pintura (recintos) — 1ª mano",
+      "trabajos_originales": [
+        "Pintura (recintos) — 1ª mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 550,
+      "fase_nombre": "Pintura",
+      "display_group": "garaje_pintura",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -114511,6 +114916,60 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_coloc_recinto",
+      "trabajo": "Colocación alumbrado fijo (recintos)",
+      "trabajos_originales": [
+        "Colocación alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 560,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_alum_fijo_coloc_recinto",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_coloc_recinto",
+      "trabajo": "Colocación alumbrado fijo (recintos)",
+      "trabajos_originales": [
+        "Colocación alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 560,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_alum_fijo_coloc_recinto",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -115029,6 +115488,60 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "garaje_enchufe_coloc",
+      "trabajo": "Colocación de enchufe de cuarto técnico",
+      "trabajos_originales": [
+        "Colocación de enchufe de cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 566,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_enchufe_coloc",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_enchufe_coloc",
+      "trabajo": "Colocación de enchufe de cuarto técnico",
+      "trabajos_originales": [
+        "Colocación de enchufe de cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 566,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_enchufe_coloc",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
     },
     {
       "tarea_id": "garaje_cuadro_tubeado_cableado",
@@ -115214,6 +115727,60 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "garaje_cuadro_tubeado_cableado",
+      "trabajo": "Tubeado y cableado hasta cuadro secundario",
+      "trabajos_originales": [
+        "Tubeado y cableado hasta cuadro secundario"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 580,
+      "fase_nombre": "Cuadros",
+      "display_group": "garaje_cuadro_tubeado_cableado",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_cuadro_tubeado_cableado",
+      "trabajo": "Tubeado y cableado hasta cuadro secundario",
+      "trabajos_originales": [
+        "Tubeado y cableado hasta cuadro secundario"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 580,
+      "fase_nombre": "Cuadros",
+      "display_group": "garaje_cuadro_tubeado_cableado",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
     },
     {
       "tarea_id": "garaje_cuadro_colocacion",
@@ -115423,6 +115990,60 @@
       "ultima_fecha": "28/09/2026"
     },
     {
+      "tarea_id": "garaje_cuadro_colocacion",
+      "trabajo": "Colocación y mecanizado de cuadro propio",
+      "trabajos_originales": [
+        "Colocación y mecanizado de cuadro propio"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 585,
+      "fase_nombre": "Cuadros",
+      "display_group": "garaje_cuadro_colocacion",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_cuadro_colocacion",
+      "trabajo": "Colocación y mecanizado de cuadro propio",
+      "trabajos_originales": [
+        "Colocación y mecanizado de cuadro propio"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 585,
+      "fase_nombre": "Cuadros",
+      "display_group": "garaje_cuadro_colocacion",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
       "tarea_id": "garaje_pintura_2_recinto",
       "trabajo": "Pintura (recintos) — 2ª mano",
       "trabajos_originales": [
@@ -115556,6 +116177,60 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "garaje_pintura_2_recinto",
+      "trabajo": "Pintura (recintos) — 2ª mano",
+      "trabajos_originales": [
+        "Pintura (recintos) — 2ª mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 587,
+      "fase_nombre": "Pintura",
+      "display_group": "garaje_pintura",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_pintura_2_recinto",
+      "trabajo": "Pintura (recintos) — 2ª mano",
+      "trabajos_originales": [
+        "Pintura (recintos) — 2ª mano"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 587,
+      "fase_nombre": "Pintura",
+      "display_group": "garaje_pintura",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
     },
     {
       "tarea_id": "garaje_cuadro_embornado",
@@ -115739,6 +116414,60 @@
       "ultima_fecha": "28/09/2026"
     },
     {
+      "tarea_id": "garaje_cuadro_embornado",
+      "trabajo": "Embornado de cuadro propio",
+      "trabajos_originales": [
+        "Embornado de cuadro propio"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 590,
+      "fase_nombre": "Cuadros",
+      "display_group": "garaje_cuadro_embornado",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_cuadro_embornado",
+      "trabajo": "Embornado de cuadro propio",
+      "trabajos_originales": [
+        "Embornado de cuadro propio"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 590,
+      "fase_nombre": "Cuadros",
+      "display_group": "garaje_cuadro_embornado",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
       "tarea_id": "garaje_cuadro_rotulacion",
       "trabajo": "Rotulación de cuadro propio",
       "trabajos_originales": [
@@ -115885,6 +116614,60 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "garaje_cuadro_rotulacion",
+      "trabajo": "Rotulación de cuadro propio",
+      "trabajos_originales": [
+        "Rotulación de cuadro propio"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 595,
+      "fase_nombre": "Cuadros",
+      "display_group": "garaje_cuadro_rotulacion",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_cuadro_rotulacion",
+      "trabajo": "Rotulación de cuadro propio",
+      "trabajos_originales": [
+        "Rotulación de cuadro propio"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 595,
+      "fase_nombre": "Cuadros",
+      "display_group": "garaje_cuadro_rotulacion",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
     },
     {
       "tarea_id": "garaje_cuadro_equipo_tubeado_cableado",
@@ -116072,6 +116855,60 @@
       "ultima_fecha": "28/09/2026"
     },
     {
+      "tarea_id": "garaje_cuadro_equipo_tubeado_cableado",
+      "trabajo": "Tubeado y cableado del cuadro al equipo que controla",
+      "trabajos_originales": [
+        "Tubeado y cableado del cuadro al equipo que controla"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 600,
+      "fase_nombre": "Cuadros",
+      "display_group": "garaje_cuadro_equipo_tubeado_cableado",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_cuadro_equipo_tubeado_cableado",
+      "trabajo": "Tubeado y cableado del cuadro al equipo que controla",
+      "trabajos_originales": [
+        "Tubeado y cableado del cuadro al equipo que controla"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 600,
+      "fase_nombre": "Cuadros",
+      "display_group": "garaje_cuadro_equipo_tubeado_cableado",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
       "trabajo": "Embornado alumbrado fijo (recintos)",
       "trabajos_originales": [
@@ -116340,6 +117177,33 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_embornado_recinto",
+      "trabajo": "Embornado alumbrado fijo (recintos)",
+      "trabajos_originales": [
+        "Embornado alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 620,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_alum_fijo_embornado_recinto",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -116970,6 +117834,60 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "28/09/2026"
+    },
+    {
+      "tarea_id": "garaje_enchufe_embornado",
+      "trabajo": "Embornado de enchufe de cuarto técnico",
+      "trabajos_originales": [
+        "Embornado de enchufe de cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 626,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_enchufe_embornado",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum61yi2_11",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
+    },
+    {
+      "tarea_id": "garaje_enchufe_embornado",
+      "trabajo": "Embornado de enchufe de cuarto técnico",
+      "trabajos_originales": [
+        "Embornado de enchufe de cuarto técnico"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 626,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_enchufe_embornado",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "SIN_REVISAR",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": null
     }
   ],
   "inventario": [
@@ -128122,6 +129040,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -128129,13 +129061,14 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 5,
-      "estado_actual": "M: 1 · Pendiente: 4",
+      "n_ubicaciones": 7,
+      "estado_actual": "M: 1 · Pendiente: 6",
       "resumen_categorias": {
         "BLOQUEADO": 3,
-        "VIABLE": 2
+        "VIABLE": 2,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Tabicado (zona común). Ruta empotrada: va antes que el lucido en obra real, pero no depende de él (§4.1).",
+      "motivo": "Dependencias pendientes: Tabicado (zona común). Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Ruta empotrada: va antes que el lucido en obra real, pero no depende de él (§4.1).",
       "orden_inventario": 19
     },
     {
@@ -128172,6 +129105,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -128179,13 +129126,14 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 4,
-      "estado_actual": "Pendiente: 4",
+      "n_ubicaciones": 6,
+      "estado_actual": "Pendiente: 6",
       "resumen_categorias": {
         "BLOQUEADO": 3,
-        "VIABLE": 1
+        "VIABLE": 1,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Lucido. Ruta vista: aquí sí depende del lucido — el tubo de superficie se monta sobre la pared ya acabada.",
+      "motivo": "Dependencias pendientes: Lucido. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Ruta vista: aquí sí depende del lucido — el tubo de superficie se monta sobre la pared ya acabada.",
       "orden_inventario": 20
     },
     {
@@ -128229,6 +129177,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -128236,13 +129198,14 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 5,
-      "estado_actual": "Pendiente: 5",
+      "n_ubicaciones": 7,
+      "estado_actual": "Pendiente: 7",
       "resumen_categorias": {
         "VIABLE": 3,
-        "BLOQUEADO": 2
+        "BLOQUEADO": 2,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Tabicado (zona común). Desde el cuadro general de la zona. Todo cuadro lo lleva, sea o no nuestro por dentro.",
+      "motivo": "Dependencias pendientes: Tabicado (zona común). Desde el cuadro general de la zona. Todo cuadro lo lleva, sea o no nuestro por dentro. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 21
     },
     {
@@ -128286,6 +129249,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -128293,13 +129270,14 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 5,
-      "estado_actual": "M: 3 · Pendiente: 2",
+      "n_ubicaciones": 7,
+      "estado_actual": "M: 3 · Pendiente: 4",
       "resumen_categorias": {
         "VIABLE": 1,
-        "BLOQUEADO": 4
+        "BLOQUEADO": 4,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio. Solo cuando el cuadro es nuestro por dentro (bomba, ventilador...); no aplica a Ventilación/Bombas/Aerotermia/CO2/PCI/Ascensor con cuadro ajeno.",
+      "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Solo cuando el cuadro es nuestro por dentro (bomba, ventilador...); no aplica a Ventilación/Bombas/Aerotermia/CO2/PCI/Ascensor con cuadro ajeno.",
       "orden_inventario": 22
     },
     {
@@ -130545,6 +131523,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -130552,12 +131544,13 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 5,
-      "estado_actual": "Pendiente: 5",
+      "n_ubicaciones": 7,
+      "estado_actual": "Pendiente: 7",
       "resumen_categorias": {
-        "BLOQUEADO": 5
+        "BLOQUEADO": 5,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Tubeado empotrado.",
+      "motivo": "Dependencias pendientes: Tubeado empotrado. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 31
     },
     {
@@ -130594,6 +131587,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -130601,12 +131608,13 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 4,
-      "estado_actual": "Pendiente: 4",
+      "n_ubicaciones": 6,
+      "estado_actual": "Pendiente: 6",
       "resumen_categorias": {
-        "BLOQUEADO": 4
+        "BLOQUEADO": 4,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Tubeado visto.",
+      "motivo": "Dependencias pendientes: Tubeado visto. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 32
     },
     {
@@ -130657,6 +131665,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -130664,12 +131686,13 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 6,
-      "estado_actual": "Pendiente: 6",
+      "n_ubicaciones": 8,
+      "estado_actual": "Pendiente: 8",
       "resumen_categorias": {
-        "BLOQUEADO": 6
+        "BLOQUEADO": 6,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano.",
+      "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 33
     },
     {
@@ -130818,6 +131841,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -130825,12 +131862,13 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 6,
-      "estado_actual": "Pendiente: 6",
+      "n_ubicaciones": 8,
+      "estado_actual": "Pendiente: 8",
       "resumen_categorias": {
-        "BLOQUEADO": 6
+        "BLOQUEADO": 6,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano.",
+      "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 36
     },
     {
@@ -130874,6 +131912,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -130881,13 +131933,14 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 5,
-      "estado_actual": "Pendiente: 4 · X: 1",
+      "n_ubicaciones": 7,
+      "estado_actual": "Pendiente: 6 · X: 1",
       "resumen_categorias": {
         "TERMINADO": 1,
-        "BLOQUEADO": 4
+        "BLOQUEADO": 4,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Tubeado y cableado hasta cuadro secundario, Pintura (recintos) — 1ª mano. Terminado según la última confirmación válida.",
+      "motivo": "Dependencias pendientes: Tubeado y cableado hasta cuadro secundario, Pintura (recintos) — 1ª mano. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
       "orden_inventario": 37
     },
     {
@@ -130924,6 +131977,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -130931,12 +131998,13 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 4,
-      "estado_actual": "Pendiente: 4",
+      "n_ubicaciones": 6,
+      "estado_actual": "Pendiente: 6",
       "resumen_categorias": {
-        "BLOQUEADO": 4
+        "BLOQUEADO": 4,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio, Pintura (recintos) — 2ª mano. Dependencias pendientes: Pintura (recintos) — 2ª mano.",
+      "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio, Pintura (recintos) — 2ª mano. Dependencias pendientes: Pintura (recintos) — 2ª mano. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 38
     },
     {
@@ -130973,6 +132041,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -130980,12 +132062,13 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 4,
-      "estado_actual": "Pendiente: 4",
+      "n_ubicaciones": 6,
+      "estado_actual": "Pendiente: 6",
       "resumen_categorias": {
-        "BLOQUEADO": 4
+        "BLOQUEADO": 4,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Embornado de cuadro propio.",
+      "motivo": "Dependencias pendientes: Embornado de cuadro propio. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 39
     },
     {
@@ -131036,6 +132119,13 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -131043,12 +132133,13 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 6,
-      "estado_actual": "Pendiente: 6",
+      "n_ubicaciones": 7,
+      "estado_actual": "Pendiente: 7",
       "resumen_categorias": {
-        "BLOQUEADO": 6
+        "BLOQUEADO": 6,
+        "SIN_REVISAR": 1
       },
-      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura (recintos) — 2ª mano.",
+      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura (recintos) — 2ª mano. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 40
     },
     {
@@ -131197,6 +132288,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -131204,12 +132309,13 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 6,
-      "estado_actual": "Pendiente: 6",
+      "n_ubicaciones": 8,
+      "estado_actual": "Pendiente: 8",
       "resumen_categorias": {
-        "BLOQUEADO": 6
+        "BLOQUEADO": 6,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Dependencias pendientes: Colocación de enchufe de cuarto técnico, Pintura (recintos) — 2ª mano.",
+      "motivo": "Dependencias pendientes: Colocación de enchufe de cuarto técnico, Pintura (recintos) — 2ª mano. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 43
     },
     {
@@ -138111,6 +139217,13 @@
         {
           "edificio": "BOLUETA",
           "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
           "unidad": "z_mum620d4_12",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -138121,13 +139234,14 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 7,
-      "estado_actual": "M: 1 · Pendiente: 2 · X: 4",
+      "n_ubicaciones": 8,
+      "estado_actual": "M: 1 · Pendiente: 3 · X: 4",
       "resumen_categorias": {
         "OTROS_GREMIOS": 3,
-        "TERMINADO": 4
+        "TERMINADO": 4,
+        "SIN_REVISAR": 1
       },
-      "motivo": "Sin separaciones no se inicia nada del resto en esa zona. Terminado según la última confirmación válida.",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Sin separaciones no se inicia nada del resto en esa zona. Terminado según la última confirmación válida.",
       "orden_inventario": 53
     },
     {
@@ -138178,6 +139292,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -138185,13 +139313,14 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 6,
-      "estado_actual": "Pendiente: 3 · X: 3",
+      "n_ubicaciones": 8,
+      "estado_actual": "Pendiente: 5 · X: 3",
       "resumen_categorias": {
         "OTROS_GREMIOS": 3,
-        "TERMINADO": 3
+        "TERMINADO": 3,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1). Terminado según la última confirmación válida.",
+      "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1). Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
       "orden_inventario": 54
     },
     {
@@ -138235,6 +139364,20 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -138242,12 +139385,13 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 5,
-      "estado_actual": "Pendiente: 5",
+      "n_ubicaciones": 7,
+      "estado_actual": "Pendiente: 7",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 5
+        "OTROS_GREMIOS": 5,
+        "SIN_REVISAR": 2
       },
-      "motivo": "Si aplica en esa zona (trasteros/cuartos técnicos/rellano); rama independiente de lucido.",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Si aplica en esa zona (trasteros/cuartos técnicos/rellano); rama independiente de lucido.",
       "orden_inventario": 55
     },
     {
@@ -138326,6 +139470,34 @@
           "unidad": "z_mul39w2h_13",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum61yi2_11",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -138334,12 +139506,13 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 10,
-      "estado_actual": "Pendiente: 10",
+      "n_ubicaciones": 14,
+      "estado_actual": "Pendiente: 14",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 10
+        "OTROS_GREMIOS": 10,
+        "SIN_REVISAR": 4
       },
-      "motivo": "Primera mano de pintura en la zona; habilita colocación de equipos. Segunda mano de pintura en la zona; remate previo a embornado.",
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Primera mano de pintura en la zona; habilita colocación de equipos. Segunda mano de pintura en la zona; remate previo a embornado.",
       "orden_inventario": 56
     },
     {
@@ -144217,7 +145390,7 @@
     }
   ],
   "avisos": [
-    "La base no es una rejilla completa: 3829 celdas encontradas frente a 7738 esperadas (106 ubicaciones x 73 tajos). Los tajos que falten no se pueden priorizar.",
+    "La base no es una rejilla completa: 3863 celdas encontradas frente a 7738 esperadas (106 ubicaciones x 73 tajos). Los tajos que falten no se pueden priorizar.",
     "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmación.",
     "El orden sigue la secuencia lógica definida en CATALOGO_TAJOS.json."
