@@ -89,13 +89,12 @@ class TestTareasManuales(unittest.TestCase):
 
         html = panel_obra.bloque_prioridades(
             _prioridades(), tareas_manual=[], documentos=[])
-        # La tarjeta del centro de mando sigue apareciendo (igual que el
-        # resto de tarjetas, muestra 0 en vez de desaparecer), pero su
-        # enlace tiene que apuntar a una seccion real: sin lista de tareas
-        # no se deja un enlace muerto a un id que no existe.
-        self.assertIn("id='sec-tareas'", html)
-        self.assertIn(
-            'No hay tareas manuales declaradas en la ficha.', html)
+        # La tarjeta-resumen del centro de mando sigue mostrando 0, pero
+        # la sección real vive ahora en v-tareas y nunca se duplica dentro
+        # del bloque de Prioridades.
+        self.assertIn('<h3>Tareas manuales</h3>', html)
+        self.assertIn('data-activa-view="v-tareas"', html)
+        self.assertNotIn("id='sec-tareas'", html)
         self.assertNotIn('marcar-tarea-hecha', html)
 
     def test_archivo_sin_coincidencia_se_muestra_sin_enlace(self):
@@ -108,7 +107,7 @@ class TestTareasManuales(unittest.TestCase):
         self.assertIn('acta-inexistente.pdf', html)
         self.assertNotIn('<a ', html)
 
-    def test_tarjeta_esta_entre_estado_de_obra_y_dudas(self):
+    def test_tarjeta_ya_no_se_pinta_entre_estado_de_obra_y_dudas(self):
         html = panel_obra.bloque_prioridades(
             _prioridades(
                 estado_obra='En ejecución',
@@ -118,13 +117,10 @@ class TestTareasManuales(unittest.TestCase):
                 }]),
             tareas_manual=self.TAREAS, documentos=[])
 
-        # 'Tareas manuales' ya no es un ancla univoca: el centro de mando
-        # tambien la nombra, antes de 'Estado de la obra'. Se comprueba el
-        # orden real de las secciones por su id, no por texto ambiguo.
-        self.assertLess(html.index('Estado de la obra'),
-                        html.index("id='sec-tareas'"))
-        self.assertLess(html.index("id='sec-tareas'"),
-                        html.index("id='sec-dudas'"))
+        self.assertIn('Estado de la obra', html)
+        self.assertIn("id='sec-dudas'", html)
+        self.assertNotIn("id='sec-tareas'", html)
+        self.assertNotIn('marcar-tarea-hecha', html)
 
     def test_generar_panel_pasa_tareas_y_documentos(self):
         ficha = {
@@ -150,6 +146,9 @@ class TestTareasManuales(unittest.TestCase):
             '<a href="../DOCUMENTOS/pedido-20-08.pdf">pedido-20-08.pdf</a>',
             html)
         self.assertIn("data-obra='Obra de prueba'", html)
+        inicio_tareas = html.index('<section id="v-tareas"')
+        inicio_prioridades = html.index('<section id="v-prioridades"')
+        self.assertGreater(inicio_tareas, inicio_prioridades)
 
     def test_escapa_el_contenido_de_la_ficha(self):
         html = panel_obra._tabla_tareas_manuales([{
@@ -208,10 +207,11 @@ class TestTareasManuales(unittest.TestCase):
             [self.TAREAS[1]], [], obra='2026 OBRA PRUEBA')
 
         self.assertIn("class='marcar-tarea-hecha' checked", html)
+        self.assertIn('>Deshacer</span>', html)
         self.assertIn('data-tarea=', html)
         self.assertIn('<script>', html)
         self.assertIn(
-            'Marcada de nuevo como pendiente. Recuerda ejecutar '
+            'Deshacer completado: la tarea vuelve a pendiente. Recuerda ejecutar '
             'Actualizar_Sagarde.bat para publicar este cambio.', html)
 
     def test_fila_sin_estado_reconocido_no_tiene_casilla(self):
@@ -609,11 +609,12 @@ class TestCentroDeMandoConectado(unittest.TestCase):
         """Bixente: 'si ya tengo arriba enlace, no necesito debajo' — un
         enlace bento + la seccion real duplicando la misma cabecera visible
         alargaba la pagina. Se comprueba que la regla CSS que las oculta
-        por defecto sigue cubriendo las once secciones reales, para que
+        por defecto sigue cubriendo las diez secciones reales que permanecen
+        dentro de Prioridades, para que
         nadie la borre sin darse cuenta y resucite la duplicidad."""
         estilo = panel_obra.ESTILOS
         for id_seccion in (
-            'sec-tareas', 'sec-dudas', 'sec-ejecucion', 'sec-inv-bloqueado',
+            'sec-dudas', 'sec-ejecucion', 'sec-inv-bloqueado',
             'sec-inv-sin_revisar', 'sec-inv-viable', 'sec-inv-otros_gremios',
             'sec-inv-dudas', 'sec-inv-terminado', 'sec-preguntas-catalogo',
             'sec-prevision',
@@ -625,7 +626,7 @@ class TestCentroDeMandoConectado(unittest.TestCase):
     def test_el_centro_de_mando_va_antes_que_todas_las_secciones_plegables(self):
         html = self._html_obra_completa()
         posicion_bento = html.index('class="bento-command"')
-        for id_seccion in ('sec-tareas', 'sec-dudas', 'sec-ejecucion',
+        for id_seccion in ('sec-dudas', 'sec-ejecucion',
                             'sec-inv-bloqueado', 'sec-inv-sin_revisar'):
             self.assertLess(
                 posicion_bento, html.index(f"id='{id_seccion}'"),
@@ -775,8 +776,8 @@ class TestBloquePrioridadesPartes(unittest.TestCase):
         html_reconstruido = (
             partes['bento_command'] + partes['estado_obra_html']
             + partes['avisos_prio'] + partes['script_indice']
-            + partes['tareas_manual_html'] + partes['dudas_html']
-            + partes['ejecucion_html'] + partes['bloqueado_html']
+            + partes['dudas_html'] + partes['ejecucion_html']
+            + partes['bloqueado_html']
             + partes['sin_revisar_html'] + partes['orden_html']
             + partes['prevision_html'] + partes['viable_html']
             + partes['otros_gremios_html'] + partes['dudas_inventario_html']
@@ -836,13 +837,18 @@ class TestRenderHiloConductor(unittest.TestCase):
         self.assertLess(html.index('Mensaje citado'),
                         html.index('Faltan mensajes'))
 
-    def test_bloque_prioridades_propaga_hilos_hasta_la_tabla(self):
+    def test_partes_propaga_hilos_pero_prioridades_no_pinta_la_tabla(self):
+        partes = panel_obra.bloque_prioridades_partes(
+            _prioridades(), tareas_manual=[self.TAREA], documentos=[],
+            hilos={'consulta.txt': self.HILO})
         html = panel_obra.bloque_prioridades(
             _prioridades(), tareas_manual=[self.TAREA], documentos=[],
             hilos={'consulta.txt': self.HILO})
 
-        self.assertIn('Ver el hilo conductor', html)
-        self.assertIn('Mensaje primero', html)
+        self.assertIn('Ver el hilo conductor', partes['tareas_manual_html'])
+        self.assertIn('Mensaje primero', partes['tareas_manual_html'])
+        self.assertNotIn('Ver el hilo conductor', html)
+        self.assertNotIn("id='sec-tareas'", html)
 
     def test_css_del_hilo_usa_variables_y_tiene_ajuste_movil(self):
         estilo = panel_obra.ESTILOS

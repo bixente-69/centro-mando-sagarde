@@ -74,11 +74,11 @@ class TestBotonInformeObra(unittest.TestCase):
 
 class TestSeccionesEmbebidas(unittest.TestCase):
 
-    def test_el_json_tiene_las_diez_claves_esperadas(self):
+    def test_el_json_tiene_las_once_claves_esperadas(self):
         html = _generar()
         secciones = _extraer_secciones(html)
         self.assertEqual(set(secciones.keys()), {
-            'trabajos', 'materiales', 'personal', 'prioridades',
+            'trabajos', 'materiales', 'personal', 'tareas', 'prioridades',
             'prioridades_garaje', 'prioridades_zesp', 'riesgos',
             'normativa', 'documentos', 'cierre',
         })
@@ -97,7 +97,7 @@ class TestSeccionesEmbebidas(unittest.TestCase):
         secciones = _extraer_secciones(html)
         self.assertEqual(secciones['prioridades_zesp'], {})
 
-    def test_prioridades_tiene_los_cinco_subapartados(self):
+    def test_prioridades_tiene_los_cuatro_subapartados(self):
         html = _generar(prioridades=_prioridades(
             resumen={'bloqueados': 1, 'sin_revisar': 1},
             inventario=[{
@@ -110,14 +110,15 @@ class TestSeccionesEmbebidas(unittest.TestCase):
         secciones = _extraer_secciones(html)
         self.assertEqual(set(secciones['prioridades'].keys()), {
             'estado_proyecto', 'que_hacer_ahora', 'tajos_bloqueados',
-            'tareas_manuales', 'sin_revisar',
+            'sin_revisar',
         })
         self.assertIn('Tajos bloqueados', secciones['prioridades']['tajos_bloqueados'])
 
-    def test_prioridades_garaje_tiene_los_cinco_subapartados(self):
+    def test_prioridades_garaje_tiene_los_cuatro_subapartados(self):
         """Bixente, 26/09/2026, textual: "por supuesto que debe inclir
         garaje, es una pieza mas de las obras y muchas veces una obra en
-        si solo" -- mismas cinco claves que vivienda, mismo contrato."""
+        si solo" -- mismas cuatro claves de prioridades que vivienda; las
+        tareas manuales son solo de la obra y viven en su grupo propio."""
         html = _generar(prioridades_garaje=_prioridades(
             resumen={'bloqueados': 1, 'sin_revisar': 1},
             inventario=[{
@@ -130,7 +131,7 @@ class TestSeccionesEmbebidas(unittest.TestCase):
         secciones = _extraer_secciones(html)
         self.assertEqual(set(secciones['prioridades_garaje'].keys()), {
             'estado_proyecto', 'que_hacer_ahora', 'tajos_bloqueados',
-            'tareas_manuales', 'sin_revisar',
+            'sin_revisar',
         })
         self.assertIn(
             'Tubeado de viales',
@@ -148,9 +149,9 @@ class TestSeccionesEmbebidas(unittest.TestCase):
             'data-seccion="prioridades_garaje"', sin_garaje)
         self.assertIn('id="cb-prioridades-garaje-all"', con_garaje)
         self.assertEqual(
-            con_garaje.count('data-seccion="prioridades_garaje"'), 5)
+            con_garaje.count('data-seccion="prioridades_garaje"'), 4)
 
-    def test_prioridades_zesp_tiene_los_cinco_subapartados(self):
+    def test_prioridades_zesp_tiene_los_cuatro_subapartados(self):
         html = _generar(
             prioridades_zonas_especiales=_prioridades(
                 resumen={'bloqueados': 1, 'sin_revisar': 1},
@@ -169,7 +170,7 @@ class TestSeccionesEmbebidas(unittest.TestCase):
         secciones = _extraer_secciones(html)
         self.assertEqual(set(secciones['prioridades_zesp'].keys()), {
             'estado_proyecto', 'que_hacer_ahora', 'tajos_bloqueados',
-            'tareas_manuales', 'sin_revisar',
+            'sin_revisar',
         })
         self.assertIn(
             'Tubeado empotrado',
@@ -183,7 +184,26 @@ class TestSeccionesEmbebidas(unittest.TestCase):
         self.assertNotIn('data-seccion="prioridades_zesp"', sin_zesp)
         self.assertIn('id="cb-prioridades-zesp-all"', con_zesp)
         self.assertEqual(
-            con_zesp.count('data-seccion="prioridades_zesp"'), 5)
+            con_zesp.count('data-seccion="prioridades_zesp"'), 4)
+
+    def test_tareas_es_un_grupo_propio_con_la_misma_tarjeta_del_panel(self):
+        ficha = {
+            '_disponible': True, 'datos': {}, 'personal': [], 'hitos': [],
+            'riesgos': [], 'plan': [], 'tareas': [{
+                'Tarea': 'Resolver consulta', 'Origen': 'Correo',
+                'Fecha': '29/09/2026', 'Archivo': 'consulta.txt',
+                'Estado': 'Pendiente',
+            }],
+        }
+        html = _generar(ficha=ficha)
+        secciones = _extraer_secciones(html)
+        vista_tareas = html[
+            html.index('<section id="v-tareas"'):
+            html.index('<section id="v-riesgos"')]
+        self.assertIsInstance(secciones['tareas'], str)
+        self.assertIn("id='sec-tareas'", secciones['tareas'])
+        self.assertIn(secciones['tareas'], vista_tareas)
+        self.assertNotIn('tareas_manuales', secciones['prioridades'])
 
     def test_el_contenido_embebido_coincide_con_la_pestana_visible(self):
         """La prueba central de esta tarea: el JSON no puede decir una cosa
@@ -214,18 +234,38 @@ class TestMenuDeSeleccion(unittest.TestCase):
 
     def test_las_ocho_secciones_simples_tienen_checkbox_con_data_seccion(self):
         html = _generar()
-        for seccion in ('trabajos', 'materiales', 'personal', 'riesgos',
+        for seccion in ('trabajos', 'materiales', 'personal', 'tareas', 'riesgos',
                         'normativa', 'documentos', 'cierre'):
             self.assertIn(f'data-seccion="{seccion}"', html)
 
-    def test_los_cinco_subapartados_de_prioridades_tienen_data_sub(self):
+    def test_los_cuatro_subapartados_de_prioridades_tienen_data_sub(self):
         html = _generar()
         for sub in ('estado_proyecto', 'que_hacer_ahora', 'tajos_bloqueados',
-                    'tareas_manuales', 'sin_revisar'):
+                    'sin_revisar'):
             self.assertIn(f'data-sub="{sub}"', html)
+        self.assertNotIn('data-sub="tareas_manuales"', html)
 
 
 class TestLogicaSelectorJS(unittest.TestCase):
+
+    def test_tareas_marcado_se_incluye_como_seccion_simple(self):
+        html = _generar()
+        self.assertIn(
+            'class="grp-cb" data-seccion="tareas" '
+            'onchange="toggleGrupoInforme(this)"', html)
+        self.assertIn("tareas: '☑ Tareas'", html)
+        self.assertIn(
+            "typeof SECCIONES_INFORME[seccion] === 'string'", html)
+
+    def test_tareas_desmarcado_no_entra_en_el_informe(self):
+        html = _generar()
+        inicio = html.index('function generarVistaPreviaInforme()')
+        fin = html.index('const NOMBRES =', inicio)
+        seleccion = html[inicio:fin]
+        self.assertIn(
+            'const marcadas = _checksInforme().filter(cb => cb.checked);',
+            seleccion)
+        self.assertNotIn('SECCIONES_INFORME', seleccion)
 
     def test_incluye_las_funciones_clave(self):
         html = _generar()

@@ -3,7 +3,7 @@
 PANEL DE OBRA — 9 secciones (capa 3)
 -------------------------------------
 Genera un panel HTML por obra con navegacion de pestanas:
-  Panel · Trabajos · Materiales · Personal · Prioridades · Riesgos · Normativa · Documentos · Actualizar
+  Panel · Trabajos · Materiales · Personal · Prioridades · Tareas · Riesgos · Normativa · Documentos · Actualizar
 
 Consume datos ya normalizados:
   historial   -> de motor_informes (avance/bloqueos)
@@ -59,8 +59,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;b
 .header a.volver{color:#fff;text-decoration:none;font-size:12.5px;border:1px solid rgba(255,255,255,.35);padding:5px 11px;border-radius:6px;display:inline-block;margin-top:6px;}
 .header a.volver:hover{background:rgba(255,255,255,.12);}
 .nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;}
-.nav button{border:none;background:#fff;color:var(--text);padding:9px 15px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.07);}
+.nav button{border:none;background:#fff;color:var(--text);padding:9px 15px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.07);display:inline-flex;align-items:center;gap:6px;}
 .nav button.active{background:var(--header);color:#fff;}
+.nav-contador{display:inline-grid;place-items:center;min-width:19px;height:19px;padding:0 5px;border-radius:10px;background:var(--accent);color:#1c2733;font-size:10.5px;font-weight:800;line-height:1;}
 .view{display:none;}
 .view.active{display:block;}
 .banner{background:#fff4e5;border:1px solid var(--accent);color:#7a4c00;border-radius:var(--radius);padding:11px 16px;margin-bottom:14px;font-size:13px;}
@@ -101,7 +102,7 @@ table.data tbody tr:hover{background:#f8f9fb;}
 .seccion-plegable>summary::after{content:'▸';color:var(--muted);font-size:12px;flex-shrink:0;}
 .seccion-plegable[open]>summary::after{content:'▾';}
 .seccion-plegable>.seccion-contenido{margin-top:12px;}
-#sec-tareas,#sec-dudas,#sec-ejecucion,#sec-inv-bloqueado,#sec-inv-sin_revisar,
+#sec-dudas,#sec-ejecucion,#sec-inv-bloqueado,#sec-inv-sin_revisar,
 #sec-inv-viable,#sec-inv-otros_gremios,#sec-inv-dudas,#sec-inv-terminado,
 #sec-preguntas-catalogo,#sec-prevision{display:none;}
 .indice-nav{background:linear-gradient(120deg,var(--header),var(--header2));border-radius:var(--radius);padding:9px 14px;margin-bottom:var(--gap);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
@@ -550,7 +551,7 @@ function _iniciarNavPrioridades() {
   // navegador aplica cuando el fragmento de la URL apunta dentro de un
   // <details>): sin el mirror, open pasaba a true pero la seccion seguia
   // con display:none de la hoja de estilos, invisible pese a estar abierta.
-  document.querySelectorAll('details.seccion-plegable').forEach(function(el) {
+  document.querySelectorAll('details.seccion-plegable:not(#sec-tareas)').forEach(function(el) {
     el.addEventListener('toggle', function() {
       if (!el.open) { el.style.display = 'none'; } else { el.style.display = 'block'; }
     });
@@ -988,6 +989,70 @@ def _tareas_pendientes(tareas):
 
 
 _SCRIPT_MARCAR_TAREA = """<script>
+function asegurarBloquePendientes(tarjeta) {
+  let bloque = tarjeta.querySelector('.tareas-pendientes');
+  if (!bloque) {
+    bloque = document.createElement('div');
+    bloque.className = 'tareas-pendientes';
+    bloque.innerHTML = '<div class="table-scroll"><table class="data">'
+      + '<thead><tr><th>Estado</th><th>Tarea</th><th>Origen</th>'
+      + '<th>Fecha</th><th>Archivo</th><th>Acción</th></tr></thead>'
+      + '<tbody></tbody></table></div>';
+    const vacio = tarjeta.querySelector('.tareas-sin-pendientes');
+    if (vacio) {
+      vacio.replaceWith(bloque);
+    } else {
+      const referencia = tarjeta.querySelector('.tareas-hechas')
+        || tarjeta.querySelector('.tarea-resultado');
+      referencia.before(bloque);
+    }
+  }
+  return bloque.querySelector('tbody');
+}
+
+function asegurarBloqueHechas(tarjeta) {
+  let bloque = tarjeta.querySelector('.tareas-hechas');
+  if (!bloque) {
+    bloque = document.createElement('div');
+    bloque.className = 'tareas-hechas';
+    bloque.style.marginTop = '16px';
+    bloque.style.color = 'var(--muted)';
+    bloque.innerHTML = '<h4 style="font-size:12px;margin-bottom:6px;">Hechas</h4>'
+      + '<div class="table-scroll"><table class="data"><tbody></tbody>'
+      + '</table></div>';
+    tarjeta.querySelector('.tarea-resultado').before(bloque);
+  }
+  return bloque.querySelector('tbody');
+}
+
+function actualizarContadoresTareas(tarjeta, restantes) {
+  const contador = tarjeta.querySelector('.tareas-pendientes-contador');
+  contador.dataset.pendientes = restantes;
+  contador.textContent = restantes + ' '
+    + (restantes === 1 ? 'pendiente' : 'pendientes');
+
+  document.querySelectorAll('.bento-tareas-contador').forEach(elemento => {
+    elemento.dataset.pendientes = restantes;
+    elemento.textContent = restantes;
+  });
+
+  const botonTareas = document.querySelector(
+    '.nav button[data-view="v-tareas"]');
+  if (!botonTareas) return;
+  let contadorNav = botonTareas.querySelector('.nav-contador');
+  if (restantes > 0) {
+    if (!contadorNav) {
+      contadorNav = document.createElement('span');
+      contadorNav.className = 'nav-contador';
+      botonTareas.appendChild(contadorNav);
+    }
+    contadorNav.dataset.pendientes = restantes;
+    contadorNav.textContent = restantes;
+  } else if (contadorNav) {
+    contadorNav.remove();
+  }
+}
+
 document.querySelectorAll('.marcar-tarea-hecha').forEach(casilla => {
   casilla.addEventListener('change', async () => {
     const objetivo = casilla.checked ? 'Hecho' : 'Pendiente';
@@ -1025,19 +1090,38 @@ document.querySelectorAll('.marcar-tarea-hecha').forEach(casilla => {
         const marcandoHecha = objetivo === 'Hecho';
         fila.style.color = marcandoHecha ? 'var(--muted)' : '';
         fila.style.textDecoration = marcandoHecha ? 'line-through' : '';
+        fila.classList.toggle('tarea-hecha', marcandoHecha);
         const estado = fila.querySelector('.badge');
         estado.textContent = objetivo;
         estado.classList.toggle('f3', marcandoHecha);
         estado.classList.toggle('warn', !marcandoHecha);
+        fila.querySelector('.tarea-accion-texto').textContent =
+          marcandoHecha ? 'Deshacer' : 'Hecho';
+
+        if (marcandoHecha) {
+          asegurarBloqueHechas(tarjeta).appendChild(fila);
+          const bloquePendientes = tarjeta.querySelector('.tareas-pendientes');
+          if (!bloquePendientes.querySelector('tbody').children.length) {
+            const vacio = document.createElement('p');
+            vacio.className = 'empty tareas-sin-pendientes';
+            vacio.textContent = 'Sin tareas pendientes.';
+            bloquePendientes.replaceWith(vacio);
+          }
+        } else {
+          asegurarBloquePendientes(tarjeta).appendChild(fila);
+          const bloqueHechas = tarjeta.querySelector('.tareas-hechas');
+          if (!bloqueHechas.querySelector('tbody').children.length) {
+            bloqueHechas.remove();
+          }
+        }
+
         const delta = marcandoHecha ? -1 : 1;
         const restantes = Math.max(
           0, parseInt(contador.dataset.pendientes, 10) + delta);
-        contador.dataset.pendientes = restantes;
-        contador.textContent = restantes + ' '
-          + (restantes === 1 ? 'pendiente' : 'pendientes');
+        actualizarContadoresTareas(tarjeta, restantes);
         avisar(marcandoHecha
           ? 'Marcada como hecha. Recuerda ejecutar Actualizar_Sagarde.bat para publicar este cambio.'
-          : 'Marcada de nuevo como pendiente. Recuerda ejecutar Actualizar_Sagarde.bat para publicar este cambio.',
+          : 'Deshacer completado: la tarea vuelve a pendiente. Recuerda ejecutar Actualizar_Sagarde.bat para publicar este cambio.',
           false);
         casilla.disabled = false;
       } else if (respuesta.status === 404) {
@@ -1166,6 +1250,7 @@ def _tabla_tareas_manuales(tareas, documentos, obra='', hilos=None):
         # Pendiente o Hecho: un valor ambiguo no dice en qué sentido cambiar,
         # y no se adivina.
         if hecha or _tarea_pendiente(tarea):
+            texto_accion = 'Deshacer' if hecha else 'Hecho'
             casilla = (
                 "<td><label style='white-space:nowrap;cursor:pointer;'>"
                 "<input type='checkbox' class='marcar-tarea-hecha'"
@@ -1174,14 +1259,16 @@ def _tabla_tareas_manuales(tareas, documentos, obra='', hilos=None):
                 f" data-tarea='{_e_atributo(tarea.get('Tarea'))}'"
                 f" data-origen='{_e_atributo(tarea.get('Origen'))}'"
                 f" data-fecha='{_e_atributo(tarea.get('Fecha'))}'"
-                f" data-archivo='{_e_atributo(tarea.get('Archivo'))}'> Hecho"
+                f" data-archivo='{_e_atributo(tarea.get('Archivo'))}'> "
+                f"<span class='tarea-accion-texto'>{texto_accion}</span>"
                 "</label></td>"
             )
         else:
             casilla = '<td></td>'
         tarea_html = f"<b>{_e(tarea.get('Tarea'))}</b>{hilo_html(tarea)}"
+        clases_fila = 'tarea-fila tarea-hecha' if hecha else 'tarea-fila'
         return (
-            f"<tr{estilo}><td><span class='badge {clase}'>{_e(estado)}</span></td>"
+            f"<tr class='{clases_fila}'{estilo}><td><span class='badge {clase}'>{_e(estado)}</span></td>"
             f"<td>{tarea_html}</td>"
             f"<td>{_e(tarea.get('Origen'))}</td>"
             f"<td style='white-space:nowrap;'>{_e(tarea.get('Fecha'))}</td>"
@@ -1198,7 +1285,9 @@ def _tabla_tareas_manuales(tareas, documentos, obra='', hilos=None):
             f"<tbody>{filas_pendientes}</tbody></table></div></div>"
         )
     else:
-        bloque_pendientes = '<p class="empty">Sin tareas pendientes.</p>'
+        bloque_pendientes = (
+            '<p class="empty tareas-sin-pendientes">'
+            'Sin tareas pendientes.</p>')
 
     bloque_hechas = ''
     if hechas:
@@ -1417,21 +1506,6 @@ def bloque_prioridades_partes(prioridades, tareas_manual=None,
         color_borde='var(--ok)')
 
     secciones_indice = []
-    if tareas_manual_html:
-        secciones_indice.append({
-            'id': _ID_SEC_TAREAS,
-            'etiqueta': (f"Tareas manuales — "
-                        f"{n_tareas_pendientes} pendientes"),
-            'grupo': 'actuar', 'color': 'var(--accent2)',
-        })
-    else:
-        # La tarjeta del centro de mando enlaza siempre a #sec-tareas: sin
-        # esto, una obra sin tareas manuales dejaria ese enlace apuntando a
-        # una seccion que no existe en la pagina.
-        tareas_manual_html = _envolver_plegable(
-            _ID_SEC_TAREAS, 'Tareas manuales',
-            '<p style="color:var(--muted);font-size:13px;">No hay tareas '
-            'manuales declaradas en la ficha.</p>')
     secciones_indice.append({
         'id': _ID_SEC_DUDAS,
         'etiqueta': f"Preguntas pendientes antes de decidir — {len(dudas_prio)}",
@@ -1548,7 +1622,7 @@ def bloque_prioridades_partes(prioridades, tareas_manual=None,
     avance_html = '—' if avance_pct is None else f'{e(avance_pct)}%'
 
     grupo_actuar_html = (
-        tareas_manual_html + dudas_html + ejecucion_html
+        dudas_html + ejecucion_html
         + inventario_por_codigo['BLOQUEADO']['html']
         + inventario_por_codigo['SIN_REVISAR']['html']
     )
@@ -1559,6 +1633,15 @@ def bloque_prioridades_partes(prioridades, tareas_manual=None,
         + inventario_por_codigo['DUDAS']['html']
         + inventario_por_codigo['TERMINADO']['html']
     )
+
+    # Solo la instancia principal de Prioridades muestra el acceso a las
+    # tareas de la obra. Garaje y Zonas especiales siguen sin tareas.
+    bento_tareas_html = '' if sufijo else f"""
+        <a class="bento-link bento-card bento-third" style="--bento-color:var(--accent2);" href="#v-tareas" data-activa-view="v-tareas" data-abre="{_ID_SEC_TAREAS}">
+          <div class="bento-card-kicker"><span class="bento-dot"></span>Manual</div><h3>Tareas manuales</h3>
+          <div class="bento-number bento-tareas-contador" data-pendientes="{n_tareas_pendientes}">{n_tareas_pendientes}</div><div class="bento-number-label">pendientes declaradas en la ficha</div>
+        </a>
+"""
 
     bento_command = f"""
     <section class="bento-command" aria-label="Centro de mando de prioridades">
@@ -1603,10 +1686,7 @@ def bloque_prioridades_partes(prioridades, tareas_manual=None,
           <div class="bento-number">{e(n_bloqueados)}</div><div class="bento-number-label">tajos propios con dependencias</div>
         </a>
 
-        <a class="bento-link bento-card bento-third indice-nav-link" style="--bento-color:var(--accent2);" href="#{_ID_SEC_TAREAS}" data-abre="{_ID_SEC_TAREAS}">
-          <div class="bento-card-kicker"><span class="bento-dot"></span>Manual</div><h3>Tareas manuales</h3>
-          <div class="bento-number">{n_tareas_pendientes}</div><div class="bento-number-label">pendientes declaradas en la ficha</div>
-        </a>
+{bento_tareas_html}
 
         <a class="bento-link bento-card bento-third indice-nav-link" style="--bento-color:var(--bad);" href="#{inventario_por_codigo['SIN_REVISAR']['id']}" data-abre="{inventario_por_codigo['SIN_REVISAR']['id']}">
           <div class="bento-card-kicker"><span class="bento-dot"></span>Revisar</div><h3>Sin revisar nunca</h3>
@@ -1674,7 +1754,6 @@ def bloque_prioridades(prioridades, tareas_manual=None, documentos=None,
         + partes['estado_obra_html']
         + partes['avisos_prio']
         + partes['script_indice']
-        + partes['tareas_manual_html']
         + partes['dudas_html']
         + partes['ejecucion_html']
         + partes['bloqueado_html']
@@ -1925,12 +2004,28 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     personal_html = tabla_ficha(ficha.get('personal', []))
     hitos_html = tabla_ficha(ficha.get('hitos', []))
 
+    # ---- TAREAS MANUALES: pestaña propia, reutilizada por el informe ----
+    tareas_manual = ficha.get('tareas', [])
+    hilos_tareas = ficha.get('hilos_tareas') if hilos is None else hilos
+    tareas_manual_html = _tabla_tareas_manuales(
+        tareas_manual, documentos, obra=obra, hilos=hilos_tareas)
+    if tareas_manual_html:
+        tareas_vista_html = tareas_manual_html
+    else:
+        tareas_vista_html = (
+            '<div class="card"><h3>Tareas manuales</h3>'
+            '<p class="empty">Esta obra no tiene tareas manuales.</p></div>')
+    n_tareas_pendientes = len(_tareas_pendientes(tareas_manual))
+    nav_tareas_contador_html = (
+        f'<span class="nav-contador" data-pendientes="{n_tareas_pendientes}">'
+        f'{n_tareas_pendientes}</span>' if n_tareas_pendientes else '')
+
     # ---- PRIORIDADES E INVENTARIO COMPLETO DE TAJOS (motor v4) ----
     partes_prioridades = bloque_prioridades_partes(
-        prioridades, tareas_manual=ficha.get('tareas', []),
+        prioridades, tareas_manual=tareas_manual,
         documentos=documentos, obra=obra,
         avance_pct=kpis.get('pct_ponderado'),
-        hilos=(ficha.get('hilos_tareas') if hilos is None else hilos))
+        hilos=hilos_tareas)
     if isinstance(partes_prioridades, str):
         prioridades_html = partes_prioridades
         secciones_prioridades = {}
@@ -1940,7 +2035,6 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
             + partes_prioridades['estado_obra_html']
             + partes_prioridades['avisos_prio']
             + partes_prioridades['script_indice']
-            + partes_prioridades['tareas_manual_html']
             + partes_prioridades['dudas_html']
             + partes_prioridades['ejecucion_html']
             + partes_prioridades['bloqueado_html']
@@ -1959,7 +2053,6 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                 + partes_prioridades['avisos_prio']),
             'que_hacer_ahora': partes_prioridades['ejecucion_html'],
             'tajos_bloqueados': partes_prioridades['bloqueado_html'],
-            'tareas_manuales': partes_prioridades['tareas_manual_html'],
             'sin_revisar': partes_prioridades['sin_revisar_html'],
         }
 
@@ -1996,7 +2089,6 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
       <label><input type="checkbox" class="cb-prioridades-zesp" data-seccion="prioridades_zesp" data-sub="estado_proyecto"> Estado del proyecto</label>
       <label><input type="checkbox" class="cb-prioridades-zesp" data-seccion="prioridades_zesp" data-sub="que_hacer_ahora"> Qué hacer ahora</label>
       <label><input type="checkbox" class="cb-prioridades-zesp" data-seccion="prioridades_zesp" data-sub="tajos_bloqueados"> Tajos bloqueados</label>
-      <label><input type="checkbox" class="cb-prioridades-zesp" data-seccion="prioridades_zesp" data-sub="tareas_manuales"> Tareas manuales</label>
       <label><input type="checkbox" class="cb-prioridades-zesp" data-seccion="prioridades_zesp" data-sub="sin_revisar"> Sin revisar nunca</label>
     </div>"""
         avance_zesp_pct = None
@@ -2015,7 +2107,6 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                 partes_zesp['bento_command']
                 + partes_zesp['estado_obra_html']
                 + partes_zesp['avisos_prio']
-                + partes_zesp['tareas_manual_html']
                 + partes_zesp['dudas_html']
                 + partes_zesp['ejecucion_html']
                 + partes_zesp['bloqueado_html']
@@ -2038,7 +2129,6 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                     + partes_zesp['avisos_prio']),
                 'que_hacer_ahora': partes_zesp['ejecucion_html'],
                 'tajos_bloqueados': partes_zesp['bloqueado_html'],
-                'tareas_manuales': partes_zesp['tareas_manual_html'],
                 'sin_revisar': partes_zesp['sin_revisar_html'],
             }
         zesp_seccion_html = (
@@ -2075,7 +2165,6 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
       <label><input type="checkbox" class="cb-prioridades-garaje" data-seccion="prioridades_garaje" data-sub="estado_proyecto"> Estado del proyecto</label>
       <label><input type="checkbox" class="cb-prioridades-garaje" data-seccion="prioridades_garaje" data-sub="que_hacer_ahora"> Qué hacer ahora</label>
       <label><input type="checkbox" class="cb-prioridades-garaje" data-seccion="prioridades_garaje" data-sub="tajos_bloqueados"> Tajos bloqueados</label>
-      <label><input type="checkbox" class="cb-prioridades-garaje" data-seccion="prioridades_garaje" data-sub="tareas_manuales"> Tareas manuales</label>
       <label><input type="checkbox" class="cb-prioridades-garaje" data-seccion="prioridades_garaje" data-sub="sin_revisar"> Sin revisar nunca</label>
     </div>"""
         avance_garaje_pct = None
@@ -2093,7 +2182,6 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                 partes_garaje['bento_command']
                 + partes_garaje['estado_obra_html']
                 + partes_garaje['avisos_prio']
-                + partes_garaje['tareas_manual_html']
                 + partes_garaje['dudas_html']
                 + partes_garaje['ejecucion_html']
                 + partes_garaje['bloqueado_html']
@@ -2116,7 +2204,6 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                     + partes_garaje['avisos_prio']),
                 'que_hacer_ahora': partes_garaje['ejecucion_html'],
                 'tajos_bloqueados': partes_garaje['bloqueado_html'],
-                'tareas_manuales': partes_garaje['tareas_manual_html'],
                 'sin_revisar': partes_garaje['sin_revisar_html'],
             }
         garaje_seccion_html = (
@@ -2196,6 +2283,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         ),
         'materiales': materiales_html,
         'personal': f"<div class='card'><h3>Personal asignado</h3>{personal_html}</div>",
+        'tareas': tareas_vista_html,
         'prioridades': secciones_prioridades,
         'prioridades_garaje': secciones_prioridades_garaje,
         'prioridades_zesp': secciones_prioridades_zesp,
@@ -2251,9 +2339,10 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="estado_proyecto"> Estado del proyecto</label>
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="que_hacer_ahora"> Qué hacer ahora</label>
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="tajos_bloqueados"> Tajos bloqueados</label>
-      <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="tareas_manuales"> Tareas manuales</label>
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="sin_revisar"> Sin revisar nunca</label>
-    </div>{garaje_informe_checkboxes_html}{zesp_informe_checkboxes_html}
+    </div>
+    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="tareas" onchange="toggleGrupoInforme(this)"> <b>☑ Tareas</b></label>
+{garaje_informe_checkboxes_html}{zesp_informe_checkboxes_html}
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="riesgos" onchange="toggleGrupoInforme(this)"> <b>⚠ Riesgos</b></label>
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="normativa" onchange="toggleGrupoInforme(this)"> <b>📘 Normativa</b></label>
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="documentos" onchange="toggleGrupoInforme(this)"> <b>📎 Documentos</b></label>
@@ -2271,6 +2360,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
   <button data-view="v-materiales">▣ Materiales</button>
   <button data-view="v-personal">👷 Personal</button>
   <button data-view="v-prioridades">🎯 Prioridades 🏠</button>
+  <button data-view="v-tareas">☑ Tareas{nav_tareas_contador_html}</button>
 {zesp_nav_html}
   <button data-view="v-riesgos">⚠ Riesgos</button>
   <button data-view="v-normativa">📘 Normativa</button>
@@ -2307,6 +2397,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 <section id="v-prioridades" class="view">{prioridades_html}
   <div class="card"><h3>Hitos manuales</h3>{hitos_html}</div></section>
 
+<section id="v-tareas" class="view">{tareas_vista_html}</section>
+
 {zesp_seccion_html}<section id="v-riesgos" class="view">{riesgos_html}{riesgos_garaje_html}</section>
 
 <section id="v-normativa" class="view"><div class="card"><h3>Normativa y criterios técnicos aplicables</h3>
@@ -2328,12 +2420,31 @@ const DATA = {data_json};
 const OBRA_NOMBRE = {json.dumps(obra, ensure_ascii=False)};
 const LOGO_INFORME_OBRA = {json.dumps(_logo_informe_obra_data_uri())};
 const SECCIONES_INFORME = JSON.parse(document.getElementById('secciones-informe').textContent);
-document.querySelectorAll('.nav button').forEach(btn=>btn.addEventListener('click',()=>{{
+function activarVista(viewId) {{
   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById(btn.dataset.view).classList.add('active');
-}}));
+  const boton = [...document.querySelectorAll('.nav button')]
+    .find(b => b.dataset.view === viewId);
+  const vista = document.getElementById(viewId);
+  if (boton) boton.classList.add('active');
+  if (vista) vista.classList.add('active');
+}}
+document.querySelectorAll('.nav button').forEach(btn =>
+  btn.addEventListener('click', () => activarVista(btn.dataset.view)));
+document.querySelectorAll('[data-activa-view]').forEach(enlace => {{
+  enlace.addEventListener('click', evento => {{
+    const botonVista = [...document.querySelectorAll('.nav button')]
+      .find(b => b.dataset.view === enlace.dataset.activaView);
+    if (!botonVista) return;
+    evento.preventDefault();
+    botonVista.click();
+    const destino = document.getElementById(enlace.dataset.abre);
+    if (destino) {{
+      destino.open = true;
+      destino.scrollIntoView({{behavior: 'smooth', block: 'start'}});
+    }}
+  }});
+}});
 function pctColor(p){{return p<40?'#d9483c':p<70?'#e07b1a':'#2e9e5b';}}
 if(DATA.serie.length) new Chart(document.getElementById('chartSerie'),{{type:'line',
   data:{{labels:DATA.serie.map(d=>d.fecha),datasets:[
@@ -2484,13 +2595,12 @@ function generarVistaPreviaInforme(){{
   }}
   const NOMBRES = {{
     trabajos: '✓ Trabajos', materiales: '▣ Materiales', personal: '👷 Personal',
-    riesgos: '⚠ Riesgos', normativa: '📘 Normativa', documentos: '📎 Documentos',
-    cierre: '📋 Cierre',
+    tareas: '☑ Tareas', riesgos: '⚠ Riesgos', normativa: '📘 Normativa',
+    documentos: '📎 Documentos', cierre: '📋 Cierre',
   }};
   const NOMBRES_SUB = {{
     estado_proyecto: 'Estado del proyecto', que_hacer_ahora: 'Qué hacer ahora',
-    tajos_bloqueados: 'Tajos bloqueados', tareas_manuales: 'Tareas manuales',
-    sin_revisar: 'Sin revisar nunca',
+    tajos_bloqueados: 'Tajos bloqueados', sin_revisar: 'Sin revisar nunca',
   }};
   // Vivienda y garaje comparten las mismas claves de data-sub (arriba):
   // sin este prefijo, marcar "Qué hacer ahora" de las dos a la vez
