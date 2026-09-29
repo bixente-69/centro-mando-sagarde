@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "hoja": "REVISION 2026 BOLUETA ACR 28092026.html",
+  "obra": "bolueta",
+  "fecha": "28/09/2026",
+  "revision": "bolueta__28/09/2026__html_digital__b54126ad",
+  "origen": "hoja generada rellenada digitalmente (paso 4, sin tinta)",
+  "estados": {
+    "p1__zesp__garaje_tubeado_visto__z_mul39gl1_10": "N",
+    "p1__zesp__garaje_cableado_visto__z_mul39gl1_10": "N",
+    "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_mul39gl1_10": "M",
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_mul39tan_12": "N",
+    "p1__zesp__garaje_tabicado__z_mul39w2h_13": "M",
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_mul39w2h_13": "N",
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_mul39w2h_13": "N"
+  }
+}

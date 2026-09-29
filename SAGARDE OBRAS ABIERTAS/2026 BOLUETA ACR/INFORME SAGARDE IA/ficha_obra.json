@@ -21360,16 +21360,14 @@
       "origen": "alta_zona_especial_desde_revision"
     },
     "p1__zesp__garaje_tubeado_visto__z_mul39gl1_10": {
-      "v": "P",
+      "v": "N",
       "f": "28/09/2026",
-      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
-      "origen": "alta_zona_especial_desde_revision"
+      "r": "bolueta__28/09/2026__html_digital__b54126ad"
     },
     "p1__zesp__garaje_cableado_visto__z_mul39gl1_10": {
-      "v": "P",
+      "v": "N",
       "f": "28/09/2026",
-      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
-      "origen": "alta_zona_especial_desde_revision"
+      "r": "bolueta__28/09/2026__html_digital__b54126ad"
     },
     "p1__zesp__garaje_pintura_1_recinto__z_mul39gl1_10": {
       "v": "P",
@@ -21426,10 +21424,9 @@
       "origen": "alta_zona_especial_desde_revision"
     },
     "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_mul39gl1_10": {
-      "v": "P",
+      "v": "M",
       "f": "28/09/2026",
-      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
-      "origen": "alta_zona_especial_desde_revision"
+      "r": "bolueta__28/09/2026__html_digital__b54126ad"
     },
     "p1__zesp__garaje_alum_fijo_embornado_recinto__z_mul39gl1_10": {
       "v": "P",
@@ -21636,10 +21633,9 @@
       "origen": "alta_zona_especial_desde_revision"
     },
     "p1__zesp__garaje_alum_temp_embornado_recinto__z_mul39tan_12": {
-      "v": "P",
+      "v": "N",
       "f": "28/09/2026",
-      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
-      "origen": "alta_zona_especial_desde_revision"
+      "r": "bolueta__28/09/2026__html_digital__b54126ad"
     },
     "p1__zesp__garaje_emergencia_embornado_recinto__z_mul39tan_12": {
       "v": "P",
@@ -21654,10 +21650,9 @@
       "origen": "alta_zona_especial_desde_revision"
     },
     "p1__zesp__garaje_tabicado__z_mul39w2h_13": {
-      "v": "P",
+      "v": "M",
       "f": "28/09/2026",
-      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
-      "origen": "alta_zona_especial_desde_revision"
+      "r": "bolueta__28/09/2026__html_digital__b54126ad"
     },
     "p1__zesp__garaje_lucido__z_mul39w2h_13": {
       "v": "P",
@@ -21708,10 +21703,9 @@
       "origen": "alta_zona_especial_desde_revision"
     },
     "p1__zesp__garaje_alum_temp_coloc_recinto__z_mul39w2h_13": {
-      "v": "P",
+      "v": "N",
       "f": "28/09/2026",
-      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
-      "origen": "alta_zona_especial_desde_revision"
+      "r": "bolueta__28/09/2026__html_digital__b54126ad"
     },
     "p1__zesp__garaje_emergencia_coloc_recinto__z_mul39w2h_13": {
       "v": "P",
@@ -21768,10 +21762,9 @@
       "origen": "alta_zona_especial_desde_revision"
     },
     "p1__zesp__garaje_alum_temp_embornado_recinto__z_mul39w2h_13": {
-      "v": "P",
+      "v": "N",
       "f": "28/09/2026",
-      "r": "bolueta__28/09/2026__html_digital__d8fa6959",
-      "origen": "alta_zona_especial_desde_revision"
+      "r": "bolueta__28/09/2026__html_digital__b54126ad"
     },
     "p1__zesp__garaje_emergencia_embornado_recinto__z_mul39w2h_13": {
       "v": "P",
@@ -21996,6 +21989,13 @@
       "celdas_medidas": 2447,
       "celdas_cambiadas": 299,
       "nota": "reaplicada el 28/09/2026 tras aceptar los tajos retirados del catalogo que la ficha aun declara: +97 N de cuarto_tecnico (92 desde P, 5 desde ?); 202 + 97 = 299"
+    },
+    {
+      "id": "bolueta__28/09/2026__html_digital__b54126ad",
+      "fecha": "28/09/2026",
+      "origen": "hoja generada rellenada digitalmente, leida por la IA",
+      "celdas_medidas": 2453,
+      "celdas_cambiadas": 7
     }
   ],
   "dudas": [],
@@ -22017,16 +22017,16 @@
     }
   },
   "documentos": {
-    "total": 129,
+    "total": 130,
     "por_categoria": {
       "Excel": 7,
       "Imágenes": 77,
-      "Otros": 11,
+      "Otros": 12,
       "PDF": 24,
       "Word": 10
     },
     "_meta": {
-      "actualizado": "28/09/2026 14:34"
+      "actualizado": "29/09/2026 06:57"
     }
   },
   "contactos": []
