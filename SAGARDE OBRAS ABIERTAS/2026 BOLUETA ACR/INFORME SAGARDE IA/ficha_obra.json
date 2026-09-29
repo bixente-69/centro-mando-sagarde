@@ -940,6 +940,22 @@
                     "origen": "revision_sin_confirmar",
                     "confirmado": null,
                     "visto_en": "28/09/2026"
+                  },
+                  {
+                    "id": "z_mum61yi2_11",
+                    "tipo": "cuarto_tecnico",
+                    "nombre": "Centralización de contadores P24",
+                    "origen": "revision_sin_confirmar",
+                    "confirmado": null,
+                    "visto_en": "29/09/2026"
+                  },
+                  {
+                    "id": "z_mum620d4_12",
+                    "tipo": "cuarto_tecnico",
+                    "nombre": "Cuarto RITS P24",
+                    "origen": "revision_sin_confirmar",
+                    "confirmado": null,
+                    "visto_en": "29/09/2026"
                   }
                 ],
                 "origen": "revision_sin_confirmar"
@@ -21903,6 +21919,26 @@
       "f": "28/09/2026",
       "r": "bolueta__28/09/2026__html_digital__d8fa6959",
       "origen": "alta_zona_especial_desde_revision"
+    },
+    "p1__zesp__garaje_alum_fijo_embornado_recinto__z_mum61yi2_11": {
+      "v": "N",
+      "f": "29/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_tabicado__z_mum620d4_12": {
+      "v": "X",
+      "f": "29/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_alum_temp_coloc_recinto__z_mum620d4_12": {
+      "v": "N",
+      "f": "29/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
+    },
+    "p1__zesp__garaje_alum_temp_embornado_recinto__z_mum620d4_12": {
+      "v": "N",
+      "f": "29/09/2026",
+      "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     }
   },
   "revisiones": [
@@ -21996,6 +22032,13 @@
       "origen": "hoja generada rellenada digitalmente, leida por la IA",
       "celdas_medidas": 2453,
       "celdas_cambiadas": 7
+    },
+    {
+      "id": "bolueta__29/09/2026__alta_manual_zonas_zesp",
+      "fecha": "29/09/2026",
+      "origen": "alta manual de 2 zonas de garaje-en-vivienda nuevas (Centralización de contadores P24, Cuarto RITS P24) confirmadas por Bixente, con sus 4 celdas medidas en la hoja del 28/09/2026",
+      "celdas_medidas": 4,
+      "celdas_cambiadas": 4
     }
   ],
   "dudas": [],

@@ -2,13 +2,13 @@
   "version": "4.3",
   "catalogo_version": "1.3",
   "obra": "2026 BOLUETA ACR",
-  "revision": "28/09/2026",
+  "revision": "29/09/2026",
   "sin_base": false,
-  "edad_revision_dias": 1,
+  "edad_revision_dias": 0,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "29/09/2026 06:57",
+  "generado": "29/09/2026 17:00",
   "resumen": {
     "listos": 22,
     "verificar": 0,
@@ -21,7 +21,7 @@
     "unidades_sin_revisar": 91,
     "terminados": 4,
     "inventario_total": 64,
-    "detalle_total": 3641,
+    "detalle_total": 3642,
     "preguntas_pendientes": 1,
     "viviendas": 10,
     "zonas_comunes": 7,
@@ -113166,6 +113166,33 @@
       "ultima_fecha": "28/09/2026"
     },
     {
+      "tarea_id": "garaje_tabicado",
+      "trabajo": "Tabicado (zona común)",
+      "trabajos_originales": [
+        "Tabicado (zona común)"
+      ],
+      "propiedad": "externo",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 500,
+      "fase_nombre": "Obra civil",
+      "display_group": "garaje_tabicado",
+      "edificio": "BOLUETA",
+      "planta": "Zonas especiales",
+      "unidad": "z_mum620d4_12",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "29/09/2026"
+    },
+    {
       "tarea_id": "garaje_lucido",
       "trabajo": "Lucido",
       "trabajos_originales": [
@@ -138080,6 +138107,13 @@
           "unidad": "z_mul39w2h_13",
           "estado": "M",
           "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "BOLUETA",
+          "planta": "Zonas especiales",
+          "unidad": "z_mum620d4_12",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -138087,11 +138121,11 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 6,
-      "estado_actual": "M: 1 · Pendiente: 2 · X: 3",
+      "n_ubicaciones": 7,
+      "estado_actual": "M: 1 · Pendiente: 2 · X: 4",
       "resumen_categorias": {
         "OTROS_GREMIOS": 3,
-        "TERMINADO": 3
+        "TERMINADO": 4
       },
       "motivo": "Sin separaciones no se inicia nada del resto en esa zona. Terminado según la última confirmación válida.",
       "orden_inventario": 53
@@ -144183,7 +144217,7 @@
     }
   ],
   "avisos": [
-    "La base no es una rejilla completa: 3825 celdas encontradas frente a 7592 esperadas (104 ubicaciones x 73 tajos). Los tajos que falten no se pueden priorizar.",
+    "La base no es una rejilla completa: 3829 celdas encontradas frente a 7738 esperadas (106 ubicaciones x 73 tajos). Los tajos que falten no se pueden priorizar.",
     "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmación.",
     "El orden sigue la secuencia lógica definida en CATALOGO_TAJOS.json."
