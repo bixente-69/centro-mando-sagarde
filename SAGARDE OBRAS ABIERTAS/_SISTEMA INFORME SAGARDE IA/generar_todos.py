@@ -1891,6 +1891,16 @@ def main(hacer_pdf=True):
             prioridades_zonas_especiales = (
                 extraer_prioridades_zonas_especiales(prioridades))
             snapshot_zesp = snapshot_zonas_especiales(ficha_para_zesp)
+            historial_zesp = []
+            if n_rev_real:
+                for fecha_hist, snapshot_hist in historial:
+                    zonas_hist = [
+                        fila for fila in snapshot_hist
+                        if fila.get('floor') == (
+                            fichas.NOMBRE_PLANTA_ZONAS_ESPECIALES)
+                    ]
+                    if zonas_hist:
+                        historial_zesp.append((fecha_hist, zonas_hist))
             if prioridades_zonas_especiales is not None:
                 priorizador_trabajos.escribir_json(
                     prioridades_zonas_especiales,
@@ -1944,12 +1954,14 @@ def main(hacer_pdf=True):
                 obra['nombre'],
                 historial=historial,
                 ficha=ficha_actual,
+                ficha_garaje=ficha_garaje_actual,
                 prioridades=prioridades,
                 snapshot_garaje=snapshot_garaje,
                 prioridades_garaje=prioridades_garaje,
                 snapshot_zonas_especiales=snapshot_zesp,
                 prioridades_zonas_especiales=(
                     prioridades_zonas_especiales),
+                historial_zonas_especiales=historial_zesp,
                 cierre=cierre_datos,
                 avisos_cierre=cierre_avisos,
             )

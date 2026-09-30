@@ -152,6 +152,18 @@ def _historial(snapshot):
     return historial
 
 
+def _ficha_garaje_historica(n_puntos):
+    fechas = ('01/08/2026', '08/08/2026', '15/08/2026', '22/08/2026')
+    porcentajes = (12.5, 25.0, 37.5, 50.0)
+    return {
+        'revisiones': [
+            {'id': 'rev_' + fecha.replace('/', ''), 'fecha': fecha}
+            for fecha in fechas[:n_puntos]
+        ],
+        'historico_pct': list(porcentajes[:n_puntos]),
+    }
+
+
 def _prioridades_principales(snapshot):
     detalle = []
     for indice in range(1, 8):
@@ -468,7 +480,7 @@ class TestMinimosTipograficosPorCategoria(unittest.TestCase):
         gie._registrar_fuentes()
 
     def test_notas_secciones_y_cuerpo_respetan_minimos_a_escala_090(self):
-        self.assertGreaterEqual(gie._nota('Nota', .90).style.fontSize, 8.0)
+        self.assertGreaterEqual(gie._nota('Nota', .90).style.fontSize, 8.5)
         self.assertGreaterEqual(gie._seccion('Seccion', .90).style.fontSize, 10.0)
 
         tabla = gie._tabla_tajos_atencion([
@@ -498,7 +510,7 @@ class TestMinimosTipograficosPorCategoria(unittest.TestCase):
         ]
         self.assertTrue(cuerpo)
         self.assertGreaterEqual(min(cuerpo), 8.5)
-        self.assertGreaterEqual(gie._nota('Nota', .85).style.fontSize, 8.0)
+        self.assertGreaterEqual(gie._nota('Nota', .85).style.fontSize, 8.5)
 
     def test_etiquetas_del_grafico_no_bajan_de_8_5(self):
         dibujo = gie._grafico_tendencia([
@@ -622,6 +634,96 @@ class TestContenidoNumericoYRecortes(unittest.TestCase):
                         'faltan tokens: ' + repr(sorted(esperados - encontrados)))
 
 
+class TestEvolucionPorApartado(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        try:
+            import pdfplumber  # noqa: F401
+        except ImportError:
+            raise unittest.SkipTest('pdfplumber no esta instalado')
+        cls.fx = _fixture_completo()
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.pdf_cuatro = Path(cls.tmp.name) / 'evolucion_cuatro.pdf'
+        cls.pdf_tres = Path(cls.tmp.name) / 'evolucion_tres.pdf'
+        comunes = {
+            'ficha': cls.fx['ficha'],
+            'prioridades': cls.fx['prioridades'],
+            'snapshot_garaje': cls.fx['garaje'],
+            'prioridades_garaje': cls.fx['prioridades_garaje'],
+            'snapshot_zonas_especiales': cls.fx['zesp'],
+            'prioridades_zonas_especiales': cls.fx['prioridades_zesp'],
+        }
+        gie.generar_pdf_ejecutivo(
+            'OBRA DENSIDAD', '22/09/2026', cls.fx['snapshot'], cls.pdf_cuatro,
+            historial=cls.fx['historial'],
+            ficha_garaje=_ficha_garaje_historica(4), **comunes)
+        gie.generar_pdf_ejecutivo(
+            'OBRA DENSIDAD', '15/09/2026', cls.fx['snapshot'], cls.pdf_tres,
+            historial=cls.fx['historial'][:3],
+            ficha_garaje=_ficha_garaje_historica(3), **comunes)
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def _textos(self, ruta):
+        import pdfplumber
+        with pdfplumber.open(str(ruta)) as pdf:
+            return [pagina.extract_text() or '' for pagina in pdf.pages]
+
+    def _pagina(self, textos, ambito):
+        candidatas = [
+            texto for texto in textos
+            if 'AMBITO {}'.format(ambito) in gie._fold(texto).upper()
+        ]
+        self.assertEqual(len(candidatas), 1, (ambito, textos))
+        return candidatas[0]
+
+    def test_con_cuatro_puntos_reales_garaje_y_zonas_muestran_evolucion(self):
+        textos = self._textos(self.pdf_cuatro)
+        for ambito in ('GARAJE', 'ZONAS ESPECIALES'):
+            pagina = self._pagina(textos, ambito)
+            self.assertIn('EVOLUCION', gie._fold(pagina).upper(), ambito)
+
+    def test_con_tres_puntos_garaje_y_zonas_conservan_el_diseno_actual(self):
+        textos = self._textos(self.pdf_tres)
+        for ambito in ('GARAJE', 'ZONAS ESPECIALES'):
+            pagina = self._pagina(textos, ambito)
+            normalizada = gie._fold(pagina).upper()
+            self.assertNotIn('EVOLUCION', normalizada, ambito)
+            self.assertIn('ESTADO ACTUAL DEL ALCANCE SAGARDE', normalizada,
+                          ambito)
+
+    def test_la_serie_de_garaje_solo_usa_fechas_y_porcentajes_de_garaje(self):
+        serie = gie._serie_avance_garaje(_ficha_garaje_historica(4))
+        self.assertEqual(
+            serie,
+            [
+                {'fecha': '01/08/2026', 'pct': 12.5},
+                {'fecha': '08/08/2026', 'pct': 25.0},
+                {'fecha': '15/08/2026', 'pct': 37.5},
+                {'fecha': '22/08/2026', 'pct': 50.0},
+            ])
+        por_nombre = gie._indice_metadatos_tajos(self.fx['ficha'])[1]
+        serie_vivienda = gie._serie_avance_sagarde(
+            self.fx['historial'], por_nombre)
+        self.assertTrue(serie_vivienda)
+        self.assertTrue(
+            {punto['fecha'] for punto in serie}.isdisjoint(
+                punto['fecha'] for punto in serie_vivienda))
+
+    def test_garaje_sin_fecha_por_cada_porcentaje_no_inventa_la_serie(self):
+        ficha = _ficha_garaje_historica(4)
+        ficha['revisiones'].pop()
+        salida = io.StringIO()
+        with redirect_stdout(salida):
+            serie = gie._serie_avance_garaje(ficha)
+        self.assertEqual(serie, [])
+        self.assertIn('no se pueden emparejar sin inventar fechas',
+                      salida.getvalue())
+
+
 class TestPdfDensoDeFixture(unittest.TestCase):
 
     @classmethod
@@ -685,7 +787,7 @@ class TestPdfDensoDeFixture(unittest.TestCase):
 
     def test_evolucion_distingue_viviendas_del_total_de_obra(self):
         serie = gie._serie_avance_sagarde(
-            self.fx['historial'],
+            gie._historial_sin_zonas_especiales(self.fx['historial']),
             gie._indice_metadatos_tajos(self.fx['ficha'])[1])
         total = gie._filtrar_snapshot_sagarde(
             self.fx['snapshot'] + self.fx['garaje'],
@@ -727,7 +829,7 @@ class TestPdfDensoDeFixture(unittest.TestCase):
             for numero, pagina in enumerate(pdf.pages, 1):
                 minimo = min(float(c['size']) for c in pagina.chars)
                 self.assertGreaterEqual(
-                    minimo + .01, 8.0,
+                    minimo + .01, 8.5,
                     f'pagina {numero}: fuente minima {minimo:.2f} pt')
 
             pagina = pdf.pages[0]
@@ -817,7 +919,7 @@ class TestPdfDeEstres(unittest.TestCase):
             for numero, pagina in enumerate(pdf.pages, 1):
                 minimo = min(float(c['size']) for c in pagina.chars)
                 self.assertGreaterEqual(
-                    minimo + .01, 8.0,
+                    minimo + .01, 8.5,
                     f'pagina {numero}: fuente minima {minimo:.2f} pt')
             palabras = pdf.pages[0].extract_words(extra_attrs=['size'])
         coincidencias = [p for p in palabras if p['text'] == token]

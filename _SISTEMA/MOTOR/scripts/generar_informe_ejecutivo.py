@@ -16,6 +16,7 @@ from pathlib import Path
 import argparse
 import importlib
 import json
+import math
 import re
 import sys
 import unicodedata
@@ -89,6 +90,7 @@ if str(MOTOR_IA_DIR) not in sys.path:
 
 import motor_informes
 import ficha_obra as fichas
+import ficha_garajes as fichas_garajes
 import priorizador_trabajos
 import cierre_expediente
 from registro_obras import OBRAS, resolver_obra
@@ -245,6 +247,76 @@ def _serie_avance_sagarde(
             'estricto': round(motor_informes._pct_estricto(propios), 1),
             'total': len(propios),
         })
+    return salida
+
+
+def _es_zona_especial(registro: dict) -> bool:
+    return _fold(registro.get('floor')) == _fold(
+        fichas.NOMBRE_PLANTA_ZONAS_ESPECIALES)
+
+
+def _historial_sin_zonas_especiales(historial: list | None) -> list:
+    """Separa vivienda de zonas sin fabricar revisiones ni celdas."""
+    return [
+        (fecha, [fila for fila in snapshot if not _es_zona_especial(fila)])
+        for fecha, snapshot in historial or []
+    ]
+
+
+def _historial_zonas_especiales(historial: list | None) -> list:
+    """Conserva solo revisiones reales que contienen celdas de zonas."""
+    salida = []
+    for fecha, snapshot in historial or []:
+        zonas = [fila for fila in snapshot if _es_zona_especial(fila)]
+        if zonas:
+            salida.append((fecha, zonas))
+    return salida
+
+
+def _serie_avance_garaje(ficha_garaje: dict | None) -> list[dict]:
+    """Empareja el porcentaje persistido de cada revision con su fecha.
+
+    ``historico_pct`` no guarda la fecha dentro de cada punto. Solo es una
+    fuente utilizable cuando conserva una correspondencia uno a uno con
+    ``revisiones``; ante cualquier ambiguedad se descarta entero y se avisa,
+    en vez de asignar fechas por posicion sin respaldo.
+    """
+    if not ficha_garaje:
+        return []
+    revisiones = ficha_garaje.get('revisiones') or []
+    porcentajes = ficha_garaje.get('historico_pct') or []
+    if not revisiones and not porcentajes:
+        return []
+    if len(revisiones) != len(porcentajes):
+        print(
+            '[AVISO INFORME EJECUTIVO] Historico de garaje descartado: '
+            '{} revisiones y {} porcentajes no se pueden emparejar sin '
+            'inventar fechas.'.format(len(revisiones), len(porcentajes)))
+        return []
+
+    salida = []
+    fecha_anterior = None
+    fechas_vistas = set()
+    for indice, (revision, porcentaje) in enumerate(
+            zip(revisiones, porcentajes), 1):
+        fecha = revision.get('fecha') if isinstance(revision, dict) else None
+        fecha_ordenable = _fecha_ordenable(fecha)
+        try:
+            pct = float(porcentaje)
+        except (TypeError, ValueError):
+            pct = math.nan
+        if (fecha_ordenable is None or fecha in fechas_vistas
+                or (fecha_anterior is not None
+                    and fecha_ordenable <= fecha_anterior)
+                or not math.isfinite(pct) or not 0 <= pct <= 100):
+            print(
+                '[AVISO INFORME EJECUTIVO] Historico de garaje descartado: '
+                'el punto {} no tiene fecha unica y cronologica o porcentaje '
+                'ponderado valido.'.format(indice))
+            return []
+        fechas_vistas.add(fecha)
+        fecha_anterior = fecha_ordenable
+        salida.append({'fecha': fecha, 'pct': round(pct, 1)})
     return salida
 
 
@@ -487,7 +559,7 @@ def _color_estado(pct: float):
 
 def _leyenda_tramos(ancho: float, escala: float = 1.0) -> Drawing:
     '''Leyenda de la escala de color, en una linea bajo el titulo de fases.'''
-    tam = _fuente_escalada(8.4, escala, 8)
+    tam = _fuente_escalada(8.4, escala, 8.5)
     alto = max(4.2 * mm, 4.4 * mm * escala)
     dibujo = Drawing(ancho, alto)
     base = (alto - tam * .72) / 2
@@ -1311,7 +1383,7 @@ def _nota(texto: str, escala: float) -> Paragraph:
     return Paragraph(
         _texto(texto),
         _estilo_maqueta('nota_' + str(abs(hash(texto))), 8.4, escala,
-                        minimo=8, color=COL_MUTED, factor_leading=1.18))
+                        minimo=8.5, color=COL_MUTED, factor_leading=1.18))
 
 
 def _cabecera_electrica(
@@ -1995,7 +2067,7 @@ def _chips_cierre(cierre: dict, avisos: list[str] | None,
             '<b>{}</b><br/><font color={}>{}</font>'.format(
                 _texto(nombre), color.hexval(), _texto(estado.upper())),
             _estilo_maqueta('chip_cierre_{}'.format(indice), 8.3, escala,
-                            minimo=8, color=COL_NAVY,
+                            minimo=8.5, color=COL_NAVY,
                             factor_leading=1.1))]], colWidths=[ancho / 2 - 2 * mm])
         chip.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, -1), fondo),
@@ -2018,7 +2090,7 @@ def _chips_cierre(cierre: dict, avisos: list[str] | None,
         salida.append(Paragraph(
             '\u26a0 {}'.format(_texto(aviso)),
             _estilo_maqueta('aviso_cierre_chip_{}'.format(indice), 8.1,
-                            escala, minimo=8, color=COL_WARN)))
+                            escala, minimo=8.5, color=COL_WARN)))
     return salida
 
 
@@ -2055,11 +2127,11 @@ def _pie_electrico(fecha_rev: str, content_w: float,
         Paragraph(
             texto,
             _estilo_maqueta('pie_fuente_ajustado', 8.1, escala,
-                            minimo=8, color=COL_MUTED)),
+                            minimo=8.5, color=COL_MUTED)),
         Paragraph(
             '<b>Montajes El\u00e9ctricos Sagarde, S.L.</b>',
             _estilo_maqueta('pie_marca_ajustado', 8.2, escala,
-                            minimo=8, bold=True, align=TA_RIGHT,
+                            minimo=8.5, bold=True, align=TA_RIGHT,
                             color=COL_NAVY)),
     ]], colWidths=[128 * mm, content_w - 128 * mm])
     tabla.setStyle(TableStyle([
@@ -2079,12 +2151,17 @@ def _datos_pagina_electrica(
     metadatos_por_id: dict,
     metadatos_por_nombre: dict,
     referencias: set[str] | None = None,
+    serie_avance: list[dict] | None = None,
 ) -> dict:
     """Calcula solo con helpers vigentes; la maqueta consume este resultado."""
     return {
         'kpis': motor_informes.kpis_snapshot(snapshot_propio),
-        'serie': _serie_avance_sagarde(
-            historial, metadatos_por_nombre, referencias),
+        'serie': (
+            _serie_avance_sagarde(
+                historial, metadatos_por_nombre, referencias)
+            if serie_avance is None else [dict(punto) for punto in serie_avance]
+        ),
+        'serie_precalculada': serie_avance is not None,
         'fases': _resumen_fases_sagarde(snapshot_propio, metadatos_por_nombre),
         'tajos': _resumen_tajos_sagarde(snapshot_propio, metadatos_por_nombre),
         'frentes': _frentes_sagarde(
@@ -2110,7 +2187,7 @@ def _panel_superior(
     ancho_der = content_w - ancho_izq - 4 * mm
     serie = [dict(punto) for punto in datos['serie']]
     total_actual = None
-    if serie and not hay_garaje:
+    if serie and not hay_garaje and not datos.get('serie_precalculada'):
         # Sin garaje, la ultima etiqueta representa el mismo snapshot actual
         # que el KPI. No se altera el historial de entrada, solo su rotulo.
         serie[-1]['pct'] = datos['kpis']['pct_ponderado']
@@ -2226,10 +2303,11 @@ def _crear_pagina_electrica(
     hay_garaje: bool = False,
     zonas: list[dict] | None = None,
     limites: dict | None = None,
+    serie_avance: list[dict] | None = None,
 ) -> list:
     datos = _datos_pagina_electrica(
         snapshot_propio, historial, prioridades, metadatos_por_id,
-        metadatos_por_nombre, referencias)
+        metadatos_por_nombre, referencias, serie_avance=serie_avance)
     hueco = lambda base: Spacer(1, max(.7 * mm, base * mm * escala))
     pagina = [
         _cabecera_electrica(
@@ -2371,6 +2449,7 @@ def _construir_bloque_electrico(
     titulo_componentes: str = 'Avance por bloque',
     hay_garaje: bool = False,
     zonas: list[dict] | None = None,
+    serie_avance: list[dict] | None = None,
 ) -> dict:
     propios = _filtrar_snapshot_sagarde(
         snapshot, metadatos_por_nombre, referencias)
@@ -2390,7 +2469,7 @@ def _construir_bloque_electrico(
             content_w, referencias=referencias, cierre=cierre,
             avisos_cierre=avisos_cierre, componentes=componentes,
             titulo_componentes=titulo_componentes, hay_garaje=hay_garaje,
-            zonas=zonas, limites=limites),
+            zonas=zonas, limites=limites, serie_avance=serie_avance),
         content_w, alto_disponible,
         '{} \u00b7 {}'.format(nombre_obra, sub_titulo),
         planes=planes_recorte, ocupacion_max=.96)
@@ -2477,11 +2556,13 @@ def generar_pdf_ejecutivo(
     output_pdf: Path,
     historial: list | None = None,
     ficha: dict | None = None,
+    ficha_garaje: dict | None = None,
     prioridades: dict | None = None,
     snapshot_garaje: list[dict] | None = None,
     prioridades_garaje: dict | None = None,
     snapshot_zonas_especiales: list[dict] | None = None,
     prioridades_zonas_especiales: dict | None = None,
+    historial_zonas_especiales: list | None = None,
     cierre: dict | None = None,
     avisos_cierre: list[str] | None = None,
 ) -> Path:
@@ -2504,6 +2585,12 @@ def generar_pdf_ejecutivo(
     meta = meta_obras.get(nombre_obra)
 
     portal_items = _portales_del_informe(meta, snapshot)
+    historial_viviendas = _historial_sin_zonas_especiales(historial)
+    serie_viviendas = _serie_avance_sagarde(
+        historial_viviendas, metadatos_por_nombre)
+    serie_garaje = _serie_avance_garaje(ficha_garaje)
+    if historial_zonas_especiales is None:
+        historial_zonas_especiales = _historial_zonas_especiales(historial)
 
     # 1. Página General de la Obra. Si la obra tiene garaje, el resumen
     #    general cuenta vivienda+garaje juntos (decision de Bixente
@@ -2544,14 +2631,16 @@ def generar_pdf_ejecutivo(
                 'nombre': 'ZONAS ESPECIALES', 'snapshot': propios_zesp})
     sub_tit_gen = f"RESUMEN GENERAL ({len(portal_items)} PORTALES/BLOQUES)" if len(portal_items) >= 2 else "RESUMEN GENERAL"
     _construir_bloque_electrico(
-        story, nombre_obra, sub_tit_gen, fecha_rev, snapshot_general, historial,
+        story, nombre_obra, sub_tit_gen, fecha_rev, snapshot_general,
+        historial_viviendas,
         ficha, prioridades, metadatos_por_id, metadatos_por_nombre, content_w,
         alto_util=doc.height - 12,
         cierre=cierre,
         avisos_cierre=avisos_cierre,
         componentes=componentes_generales,
         titulo_componentes='Avance por bloque',
-        hay_garaje=bool(snapshot_garaje),
+        hay_garaje=bool(snapshot_garaje or snapshot_zonas_especiales),
+        serie_avance=serie_viviendas,
     )
 
     # 2. Páginas Desglosadas por Bloque / Portal (si hay 2 o más subdivisiones)
@@ -2561,7 +2650,8 @@ def generar_pdf_ejecutivo(
             if snap_portal:
                 story.append(PageBreak())
                 _construir_bloque_electrico(
-                    story, nombre_obra, lbl, fecha_rev, snap_portal, historial,
+                    story, nombre_obra, lbl, fecha_rev, snap_portal,
+                    historial_viviendas,
                     ficha, prioridades, metadatos_por_id, metadatos_por_nombre,
                     content_w, referencias={ref, p_nom},
                     alto_util=doc.height - 12,
@@ -2569,6 +2659,11 @@ def generar_pdf_ejecutivo(
                         _filtrar_snapshot_sagarde(
                             snap_portal, metadatos_por_nombre), 'floor'),
                     titulo_componentes='Avance por planta',
+                    hay_garaje=any(
+                        _es_zona_especial(fila) for fila in snap_portal),
+                    serie_avance=_serie_avance_sagarde(
+                        historial_viviendas, metadatos_por_nombre,
+                        {ref, p_nom}),
                 )
 
     # 2b. Página de Garaje, tratada como un bloque más (decision de
@@ -2584,11 +2679,12 @@ def generar_pdf_ejecutivo(
         story.append(PageBreak())
         _construir_bloque_electrico(
             story, nombre_obra, "GARAJE", fecha_rev, snapshot_garaje,
-            [(fecha_rev, snapshot_garaje)], ficha, prioridades_garaje,
+            None, ficha, prioridades_garaje,
             metadatos_por_id, metadatos_por_nombre, content_w,
             alto_util=doc.height - 12,
             zonas=_zonas_con_nombre(
                 prioridades_garaje, ficha, resolver_nombre=False),
+            serie_avance=serie_garaje,
         )
 
     # 2c. Pagina de Zonas especiales (cuarto tecnico/ligero/cubierta de
@@ -2603,7 +2699,7 @@ def generar_pdf_ejecutivo(
         _construir_bloque_electrico(
             story, nombre_obra, "ZONAS ESPECIALES", fecha_rev,
             snapshot_zonas_especiales,
-            [(fecha_rev, snapshot_zonas_especiales)], ficha,
+            historial_zonas_especiales, ficha,
             prioridades_zonas_especiales,
             metadatos_por_id, metadatos_por_nombre, content_w,
             alto_util=doc.height - 12,
@@ -2653,11 +2749,13 @@ def generar_para_obra(
     nombre_obra: str,
     historial: list | None = None,
     ficha: dict | None = None,
+    ficha_garaje: dict | None = None,
     prioridades: dict | None = None,
     snapshot_garaje: list[dict] | None = None,
     prioridades_garaje: dict | None = None,
     snapshot_zonas_especiales: list[dict] | None = None,
     prioridades_zonas_especiales: dict | None = None,
+    historial_zonas_especiales: list | None = None,
     cierre: dict | None = None,
     avisos_cierre: list[str] | None = None,
 ) -> Path | None:
@@ -2672,6 +2770,8 @@ def generar_para_obra(
     # para la gráfica y sustituye el último snapshot por la ficha consolidada.
     if ficha is None and historial is None:
         ficha = fichas.cargar(str(carpeta_obra))
+    if ficha_garaje is None:
+        ficha_garaje = fichas_garajes.cargar(str(carpeta_obra))
 
     if historial is None:
         adaptador = ADAPTADORES[nombre_oficial]
@@ -2722,11 +2822,13 @@ def generar_para_obra(
         output_pdf,
         historial=historial,
         ficha=ficha,
+        ficha_garaje=ficha_garaje,
         prioridades=prioridades,
         snapshot_garaje=snapshot_garaje,
         prioridades_garaje=prioridades_garaje,
         snapshot_zonas_especiales=snapshot_zonas_especiales,
         prioridades_zonas_especiales=prioridades_zonas_especiales,
+        historial_zonas_especiales=historial_zonas_especiales,
         cierre=cierre,
         avisos_cierre=avisos_cierre,
     )
