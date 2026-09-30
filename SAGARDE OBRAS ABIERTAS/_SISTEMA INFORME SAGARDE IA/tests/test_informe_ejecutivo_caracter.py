@@ -184,16 +184,28 @@ class TestColorDescriptivo(unittest.TestCase):
     '''
 
     def test_terminado_es_verde(self):
-        self.assertEqual(gie._color_estado(100), gie.COL_OK)
+        # Escala de 4 tramos (30/09/2026): el 100 % es un verde oscuro.
+        self.assertEqual(gie._color_estado(100), gie.COL_TRAMO_4)
+        self.assertGreater(gie.COL_TRAMO_4.green, gie.COL_TRAMO_4.blue)
+        self.assertGreater(gie.COL_TRAMO_4.green, gie.COL_TRAMO_4.red)
 
-    def test_sin_empezar_es_gris_no_rojo(self):
-        self.assertEqual(gie._color_estado(0), gie.COL_GRIS)
+    def test_sin_empezar_no_es_rojo(self):
+        # Antes era gris; con la escala de 4 tramos el 0 % es el azul
+        # corporativo. Lo que se conserva es lo esencial: nunca rojo.
+        self.assertEqual(gie._color_estado(0), gie.COL_TRAMO_1)
         self.assertNotEqual(gie._color_estado(0), gie.COL_WARN)
+        self.assertNotEqual(gie._color_estado(0), gie.COL_BRAND)
 
-    def test_en_marcha_es_azul_sea_alto_o_bajo(self):
-        for pct in (1, 22, 59, 92, 99):
-            self.assertEqual(gie._color_estado(pct), gie.COL_ACCENT,
-                             'el %d %% deberia ser azul' % pct)
+    def test_en_marcha_nunca_es_rojo_ni_es_el_verde_de_terminado(self):
+        esperado = {1: gie.COL_TRAMO_1, 22: gie.COL_TRAMO_1,
+                    59: gie.COL_TRAMO_2, 92: gie.COL_TRAMO_3,
+                    99: gie.COL_TRAMO_3}
+        for pct, color in esperado.items():
+            self.assertEqual(gie._color_estado(pct), color,
+                             'el %d %% cae en otro tramo' % pct)
+            self.assertNotEqual(gie._color_estado(pct), gie.COL_TRAMO_4,
+                                'el %d %% no esta terminado' % pct)
+            self.assertNotIn(gie._color_estado(pct), (gie.COL_WARN, gie.COL_BRAND))
 
     def test_la_barra_mini_no_tiene_su_propia_regla(self):
         '''La regla estaba escrita dos veces: en _color_pct y copiada a mano

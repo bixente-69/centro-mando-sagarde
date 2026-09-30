@@ -445,23 +445,66 @@ def _make_mini_bar(pct: float, w_mm: float = 34) -> Table:
     return t
 
 
-def _color_estado(pct: float):
-    '''El color describe el estado; no lo juzga.
+# Escala de avance en CUATRO tramos: del azul corporativo a un verde oscuro,
+# pasando por dos tonos intermedios apagados. Sobria a proposito (nada de
+# semaforo ni de arcoiris en un informe): el verde queda reservado para lo
+# terminado y se reconoce de un vistazo que fases o porcentajes van mas
+# avanzados. Ningun tono lleva rojo; el rojo sigue siendo solo para la tabla de
+# condicionantes.
+COL_TRAMO_1 = colors.HexColor('#123A63')   # menos de 50 %: azul corporativo
+COL_TRAMO_2 = colors.HexColor('#164F5C')   # 50 a 79 %
+COL_TRAMO_3 = colors.HexColor('#1B6554')   # 80 a 99 %
+COL_TRAMO_4 = colors.HexColor('#1F7A4D')   # 100 %: verde oscuro
+TRAMOS_AVANCE = (
+    (50.0, COL_TRAMO_1, 'menos de 50 %'),
+    (80.0, COL_TRAMO_2, '50 a 79 %'),
+    (99.95, COL_TRAMO_3, '80 a 99 %'),
+    (None, COL_TRAMO_4, '100 %'),
+)
 
-    Verde terminado, azul en marcha, gris todavia sin empezar. El rojo se
-    reserva para la tabla de condicionantes, que es donde hay un problema de
-    verdad: un tajo al 0 % que es del final de obra no va mal, es que aun no
-    toca, y pintarlo de rojo afirmaba algo falso sobre la obra.
+
+def _color_estado(pct: float):
+    '''Color del porcentaje: escala de cuatro tramos (ver TRAMOS_AVANCE).
+
+    El color describe el estado; no lo juzga. Un tajo al 0 % que es del final
+    de obra no va mal, es que aun no toca, y pintarlo de rojo afirmaba algo
+    falso sobre la obra: por eso la escala va de azul a verde y sin rojo.
 
     Esta funcion es la UNICA regla de color por porcentaje del informe. Habia
     una copia a mano dentro de _make_mini_bar, y cambiar solo una de las dos
-    dejaba media pagina con el criterio viejo.
+    dejaba media pagina con el criterio viejo. El 100 % se decide con el
+    mismo redondeo a un decimal con que se imprime (99.95 o mas se ve 100.0 %).
     '''
-    if pct >= 100:
-        return COL_OK
-    if pct <= 0:
-        return COL_GRIS
-    return COL_ACCENT
+    try:
+        valor = float(pct)
+    except (TypeError, ValueError):
+        return COL_TRAMO_1
+    for limite, color, _etiqueta in TRAMOS_AVANCE:
+        if limite is None or valor < limite:
+            return color
+    return COL_TRAMO_4
+
+
+def _leyenda_tramos(ancho: float, escala: float = 1.0) -> Drawing:
+    '''Leyenda de la escala de color, en una linea bajo el titulo de fases.'''
+    tam = _fuente_escalada(8.4, escala, 8)
+    alto = max(4.2 * mm, 4.4 * mm * escala)
+    dibujo = Drawing(ancho, alto)
+    base = (alto - tam * .72) / 2
+    x = 0.0
+    rotulo = 'Color según avance:'
+    dibujo.add(String(x, base, rotulo, fontName=FUENTE, fontSize=tam,
+                      fillColor=COL_MUTED))
+    x += pdfmetrics.stringWidth(rotulo, FUENTE, tam) + 2.2 * mm
+    lado = 3 * mm
+    for _limite, color, etiqueta in TRAMOS_AVANCE:
+        dibujo.add(Rect(x, (alto - lado) / 2, lado, lado, fillColor=color,
+                        strokeColor=None))
+        x += lado + 1.2 * mm
+        dibujo.add(String(x, base, etiqueta, fontName=FUENTE, fontSize=tam,
+                          fillColor=COL_MUTED))
+        x += pdfmetrics.stringWidth(etiqueta, FUENTE, tam) + 3.2 * mm
+    return dibujo
 
 
 def _grafico_tendencia(serie: list[dict], ancho: float) -> Drawing:
@@ -1342,8 +1385,10 @@ def _tabla_kpis_electricos(
     for bloqueo in bloqueadores:
         objetivos_bloqueados.update(bloqueo['tajos_sagarde'])
     tarjetas = [
-        ('{:.1f}%'.format(kpis['pct_ponderado']), 'Avance estimado', COL_ACCENT),
-        ('{:.1f}%'.format(kpis['pct_estricto']), 'Terminado estricto', COL_NAVY),
+        ('{:.1f}%'.format(kpis['pct_ponderado']), 'Avance estimado',
+         _color_estado(kpis['pct_ponderado'])),
+        ('{:.1f}%'.format(kpis['pct_estricto']), 'Terminado estricto',
+         _color_estado(kpis['pct_estricto'])),
         ('{}/{}'.format(kpis['x'], kpis['total']), 'Celdas terminadas', COL_NAVY),
         (str(len(frentes)), 'Tajos listos', COL_ACCENT),
         (str(len(objetivos_bloqueados)), 'Tajos condicionados',
@@ -1630,11 +1675,12 @@ def _dibujo_barra_linea(nombre: str, pct: float, x: int, total: int,
     y = (alto - grosor) / 2
     dibujo.add(Rect(x0, y, ancho_barra, grosor,
                     fillColor=colors.HexColor('#E8EDF3'), strokeColor=None))
+    color = _color_estado(pct)
     dibujo.add(Rect(x0, y, ancho_barra * max(0, min(100, pct)) / 100, grosor,
-                    fillColor=COL_ACCENT, strokeColor=None))
+                    fillColor=color, strokeColor=None))
     dibujo.add(String(ancho, base, valor, fontName=FUENTE_BOLD,
                       fontSize=font_size, textAnchor='end',
-                      fillColor=COL_ACCENT))
+                      fillColor=color))
     return dibujo
 
 
@@ -1666,14 +1712,15 @@ def _dibujo_barra_resumen(nombre: str, pct: float, x: int, total: int,
     if mostrar_nombre:
         dibujo.add(String(0, alto - font_size, etiqueta, fontName=FUENTE_BOLD,
                           fontSize=tam_nombre, fillColor=COL_NAVY))
+    color = _color_estado(pct)
     dibujo.add(String(ancho, alto - font_size, valor, fontName=FUENTE_BOLD,
                       fontSize=font_size, textAnchor='end',
-                      fillColor=COL_ACCENT))
+                      fillColor=color))
     y = 1.2 * mm
     dibujo.add(Rect(0, y, ancho, 2.4 * mm, fillColor=colors.HexColor('#E8EDF3'),
                     strokeColor=None))
     dibujo.add(Rect(0, y, ancho * max(0, min(100, pct)) / 100, 2.4 * mm,
-                    fillColor=COL_ACCENT, strokeColor=None))
+                    fillColor=color, strokeColor=None))
     return dibujo
 
 
@@ -1764,7 +1811,8 @@ def _tabla_tajos_atencion(tajos: list[dict], content_w: float,
         filas.append([
             Paragraph('<b>{}</b><br/><font color=#475467>{}</font>'.format(
                 _texto(tajo['nombre']), _texto(tajo['fase'])), estilo),
-            Paragraph('<b>{:.0f}%</b>'.format(tajo['pct']), centro),
+            Paragraph('<font color={}><b>{:.0f}%</b></font>'.format(
+                _color_estado(tajo['pct']).hexval(), tajo['pct']), centro),
             Paragraph('{}/{}'.format(tajo['x'], tajo['total']), centro),
             Paragraph(str(tajo['pendiente']), centro),
         ])
@@ -1895,8 +1943,9 @@ def _tabla_detalle_zona(zonas: list[dict], content_w: float,
     mitad = (content_w - 2 * mm) / 2
     celdas = []
     for indice, zona in enumerate(visibles):
-        texto = '<b>{}</b><br/>{:.0f}% \u00b7 {}/{}'.format(
-            _texto(zona['nombre']), zona['pct'], zona['x'], zona['total'])
+        texto = '<b>{}</b><br/><font color={}><b>{:.0f}%</b></font> \u00b7 {}/{}'.format(
+            _texto(zona['nombre']), _color_estado(zona['pct']).hexval(),
+            zona['pct'], zona['x'], zona['total'])
         celda = Table([[Paragraph(
             texto,
             _estilo_maqueta('zona_{}'.format(indice), 8.6, escala,
@@ -2201,6 +2250,7 @@ def _crear_pagina_electrica(
         _seccion('Fases de producci\u00f3n', escala),
         _nota('Porcentaje ponderado y celdas terminadas sobre el total '
               'medido de cada fase.', escala),
+        _leyenda_tramos(content_w, escala),
         _tabla_fases_doble(datos['fases'], content_w, escala),
         hueco(1.2),
         _panel_inferior(datos, content_w, escala, limites=limites),

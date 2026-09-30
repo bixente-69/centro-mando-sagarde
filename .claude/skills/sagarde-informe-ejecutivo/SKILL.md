@@ -53,6 +53,12 @@ en `exit 0` con la mitad del informe ausente. Por cada obra que interese:
    la altura` significa que ni con el recorte máximo cabe: revisar. Una hoja
    casi vacía o un PDF con fecha vieja tras la generación indica un fallo real
    (antes el `KeepTogether` final la provocaba; ya no existe).
+   **Color de los porcentajes (30/09/2026):** una sola regla, `_color_estado`,
+   con cuatro tramos del azul corporativo a un verde oscuro (menos de 50 %,
+   50-79 %, 80-99 %, 100 %) y una leyenda bajo el título de fases. Sin rojo y
+   sin arcoíris: el rojo es solo de la tabla de condicionantes. El verde
+   intenso es únicamente lo terminado (>= 99,95 %, lo que se imprime «100.0%»).
+   Si un porcentaje sale con otro color que su tramo, hay una regla duplicada.
 4. Recalcular los KPI de cabecera de forma independiente en vez de fiarte
    del propio PDF: `motor_informes.kpis_snapshot(snapshot)` sobre el mismo
    snapshot que usó el generador, comparado contra el % que muestra la

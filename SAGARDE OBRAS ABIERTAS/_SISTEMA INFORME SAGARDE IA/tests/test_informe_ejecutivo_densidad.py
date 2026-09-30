@@ -909,6 +909,104 @@ class TestPdfDeEstres(unittest.TestCase):
             self.assertIn(f'{valor:.1f}%', texto)
 
 
+class TestEscalaDeColorPorAvance(unittest.TestCase):
+    """Cuatro tramos del azul corporativo a un verde oscuro, sin semaforo ni
+    arcoiris: se ve de un vistazo que fases o porcentajes van mas avanzados."""
+
+    @classmethod
+    def setUpClass(cls):
+        gie._registrar_fuentes()
+
+    def test_los_limites_de_los_cuatro_tramos(self):
+        esperado = [
+            (0, gie.COL_TRAMO_1), (49.9, gie.COL_TRAMO_1),
+            (50, gie.COL_TRAMO_2), (79.9, gie.COL_TRAMO_2),
+            (80, gie.COL_TRAMO_3), (99.9, gie.COL_TRAMO_3),
+            (99.95, gie.COL_TRAMO_4), (100, gie.COL_TRAMO_4),
+        ]
+        for pct, color in esperado:
+            self.assertEqual(gie._color_estado(pct).hexval(), color.hexval(),
+                             'pct {}'.format(pct))
+
+    def test_el_verde_solo_se_reserva_para_lo_que_se_imprime_como_100(self):
+        # 99,9 % se imprime "99.9%": no puede pintarse como terminado.
+        self.assertNotEqual(gie._color_estado(99.9).hexval(),
+                            gie.COL_TRAMO_4.hexval())
+        self.assertEqual(gie._color_estado(99.96).hexval(),
+                         gie.COL_TRAMO_4.hexval())
+
+    def test_la_escala_es_sobria_azul_corporativo_a_verde_oscuro(self):
+        colores = [gie.COL_TRAMO_1, gie.COL_TRAMO_2, gie.COL_TRAMO_3,
+                   gie.COL_TRAMO_4]
+        self.assertEqual(len({c.hexval() for c in colores}), 4)
+        self.assertEqual(gie.COL_TRAMO_1.hexval(), gie.COL_ACCENT.hexval())
+        for c in colores:
+            # Nada de colores calidos ni vivos: el rojo casi ausente y todos oscuros.
+            self.assertLess(c.red, .16)
+            self.assertLess(max(c.red, c.green, c.blue), .55)
+        # El primero es azul y el ultimo es verde.
+        self.assertGreater(gie.COL_TRAMO_1.blue, gie.COL_TRAMO_1.green)
+        self.assertGreater(gie.COL_TRAMO_4.green, gie.COL_TRAMO_4.blue)
+        # El verde va ganando terreno tramo a tramo.
+        verdes = [c.green for c in colores]
+        self.assertEqual(verdes, sorted(verdes))
+
+    def test_la_barra_en_linea_y_su_valor_llevan_el_color_de_su_tramo(self):
+        for pct, esperado in ((100.0, gie.COL_TRAMO_4), (88.0, gie.COL_TRAMO_3),
+                              (63.0, gie.COL_TRAMO_2), (30.0, gie.COL_TRAMO_1)):
+            dibujo = gie._dibujo_barra_linea(
+                'Fase', pct, 5, 10, 90 * mm, 1.0, 30 * mm)
+            colores_rect = [
+                s.fillColor.hexval() for s in dibujo.contents
+                if s.__class__.__name__ == 'Rect' and s.fillColor is not None]
+            self.assertIn(esperado.hexval(), colores_rect, 'pct {}'.format(pct))
+            valor = next(s for s in dibujo.contents
+                         if isinstance(s, String) and s.text.startswith(
+                             '{:.1f}%'.format(pct)))
+            self.assertEqual(valor.fillColor.hexval(), esperado.hexval())
+
+    def test_la_barra_de_bloque_tambien_usa_la_escala(self):
+        dibujo = gie._dibujo_barra_resumen('PORTAL 1', 95.5, 379, 400,
+                                           90 * mm, 1.0)
+        valor = next(s for s in dibujo.contents
+                     if isinstance(s, String) and '95.5%' in s.text)
+        self.assertEqual(valor.fillColor.hexval(), gie.COL_TRAMO_3.hexval())
+
+    def test_la_tabla_de_tajos_pinta_el_porcentaje_con_su_tramo(self):
+        tajo = {'nombre': 'Placas y tapas', 'fase': 'Remates finales',
+                'pct': 88.0, 'x': 28, 'total': 32, 'pendiente': 4, 'orden': 1}
+        tabla = gie._tabla_tajos_atencion([tajo], 190 * mm)
+        marcas = [getattr(c, 'text', '') for fila in tabla._cellvalues
+                  for c in fila]
+        self.assertTrue(
+            any(gie.COL_TRAMO_3.hexval() in m and '88%' in m for m in marcas),
+            marcas)
+
+    def test_los_indicadores_de_cabecera_colorean_sus_dos_porcentajes(self):
+        snapshot = _snapshot_vivienda()
+        kpis = motor_informes.kpis_snapshot(snapshot)
+        tabla = gie._tabla_kpis_electricos(snapshot, [], [], 190 * mm)
+        marcas = []
+        for celda in tabla._cellvalues[0]:
+            for elemento in (celda if isinstance(celda, list) else [celda]):
+                marcas.append(getattr(elemento, 'text', ''))
+        for clave in ('pct_ponderado', 'pct_estricto'):
+            esperado = gie._color_estado(kpis[clave]).hexval()
+            self.assertTrue(
+                any(esperado in m and '{:.1f}%'.format(kpis[clave]) in m
+                    for m in marcas), (clave, marcas))
+
+    def test_la_leyenda_muestra_los_cuatro_tramos_con_sus_colores(self):
+        dibujo = gie._leyenda_tramos(190 * mm, 1.0)
+        colores = [s.fillColor.hexval() for s in dibujo.contents
+                   if s.__class__.__name__ == 'Rect']
+        self.assertEqual(colores, [c.hexval() for _l, c, _e in gie.TRAMOS_AVANCE])
+        textos = ' '.join(s.text for s in dibujo.contents
+                          if isinstance(s, String))
+        for etiqueta in ('menos de 50 %', '50 a 79 %', '80 a 99 %', '100 %'):
+            self.assertIn(etiqueta, textos)
+
+
 class TestTextoDelResumenEjecutivo(unittest.TestCase):
     KPIS = {'pct_ponderado': 95.4, 'pct_estricto': 94.5}
     SERIE = [{'pct': 92.8}, {'pct': 95.4}]
