@@ -1812,9 +1812,11 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   cierre=None, cierre_avisos=None, prioridades_garaje=None,
                   snapshot_garaje=None,
                   prioridades_zonas_especiales=None,
-                  snapshot_zonas_especiales=None, hilos=None):
+                  snapshot_zonas_especiales=None, hilos=None,
+                  fecha_datos=None):
     prioridades = prioridades or {}
     snapshot = historial[-1][1] if historial else []
+    fecha_datos = fecha_datos or (historial[-1][0] if historial else '—')
     historial_panel = list(historial)
     historial_confirmado = bool(prioridades.get('historial_confirmado_terminado'))
     if historial_confirmado and snapshot:
@@ -1868,6 +1870,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         motor.ranking_tareas_con_memoria(snapshot_garaje)
         if snapshot_garaje else [])
     payload = {
+        'fecha_datos': fecha_datos,
         'serie': motor.serie_tiempo(historial_panel) if historial_panel else [],
         'por_planta': _combinar_matriz_planta_edificio(
             motor.matriz_planta_edificio(snapshot_vivienda_normal) if snapshot_vivienda_normal else {'labels': [], 'series': {}},
@@ -2313,7 +2316,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 <div class="header">
   <div><div class="brand">Informe Sagarde IA · Panel de obra</div><h1>{obra}</h1><div class="sub">{subtitulo}</div></div>
   <div class="meta">Generado: {datetime.now().strftime('%d/%m/%Y %H:%M')}<br>
-  Última revisión: {historial[-1][0] if historial else '—'}<br>
+  Última revisión: {fecha_datos}<br>
   <a class="volver" href="{volver_href}">← Todas las obras</a>
   <a class="volver" href="{pdf_ejecutivo_nombre}" target="_blank" style="background:var(--bad);border-color:var(--bad);margin-left:6px;">📄 Informe Ejecutivo PDF</a>
   <a class="volver" id="btn-informe-obra" href="#panel-informe-obra" style="background:var(--accent);border-color:var(--accent);color:#1c2733;margin-left:6px;" onclick="abrirSelectorInforme();return true;">📋 Informe de obra</a></div>
@@ -2633,7 +2636,7 @@ function generarVistaPreviaInforme(){{
   // verdad, no una suposicion.
   contenido = contenido.replace(/<details(?![a-zA-Z-])/g, '<details open');
   const fecha = new Date().toLocaleDateString('es-ES');
-  const ultimaRevision = (DATA.serie.length
+  const ultimaRevision = DATA.fecha_datos || (DATA.serie.length
     ? DATA.serie[DATA.serie.length - 1].fecha : '—');
   // Mismo CSS que ya usa este panel (ESTILOS): la vista previa tiene que
   // verse tal cual se ve al pinchar en cada pestaña, no un diseño aparte.
@@ -2757,7 +2760,6 @@ ${{contenido}}
         'materiales_aviso': materiales.get('aviso'),
         'prioridades': prioridades,
     }
-
 
 
 

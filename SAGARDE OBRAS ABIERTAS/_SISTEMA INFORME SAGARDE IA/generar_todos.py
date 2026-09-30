@@ -1906,6 +1906,18 @@ def main(hacer_pdf=True):
                     prioridades_zonas_especiales,
                     salida_prioridades_zesp)
 
+            import generar_informe_ejecutivo
+            fecha_datos_real = generar_informe_ejecutivo._fecha_datos_obra(
+                historial_vivienda=historial,
+                ficha=ficha_actual,
+                ficha_garaje=ficha_garaje_actual,
+                historial_zonas_especiales=historial_zesp,
+            )
+            fecha_datos = (
+                fecha_datos_real
+                or (historial[-1][0] if historial else 'Sin revisar')
+            )
+
             priorizador_trabajos.escribir_json({
                 'version': prioridades.get('version'),
                 'catalogo_version': prioridades.get('catalogo_version'),
@@ -1932,6 +1944,7 @@ def main(hacer_pdf=True):
                 prioridades_zonas_especiales=(
                     prioridades_zonas_especiales),
                 snapshot_zonas_especiales=snapshot_zesp,
+                fecha_datos=fecha_datos,
             )
         except Exception as e:
             print(f"  [ERROR] Fallo al generar el panel: {e}")
@@ -1946,7 +1959,6 @@ def main(hacer_pdf=True):
               f"{prioridades['resumen']['bloqueados']} bloqueadas")
 
         try:
-            import generar_informe_ejecutivo
             # Usa exactamente el mismo historial que panel, memoria, KPI y
             # prioridades. Si existe ficha_obra.json, ``historial`` ya lleva
             # sus correcciones y no debe releerse el PDF crudo.
@@ -1964,6 +1976,7 @@ def main(hacer_pdf=True):
                 historial_zonas_especiales=historial_zesp,
                 cierre=cierre_datos,
                 avisos_cierre=cierre_avisos,
+                fecha_datos=fecha_datos,
             )
         except Exception as e_exec:
             print(f"  [AVISO INFORME EJECUTIVO] {e_exec}")
@@ -2009,7 +2022,7 @@ def main(hacer_pdf=True):
             'href': os.path.relpath(salida_html, OBRAS_ABIERTAS_DIR).replace('\\', '/'),
             'pct': res['kpis'].get('pct_estricto', 0) if res['kpis'] else 0,
             'pct_ponderado': res['kpis'].get('pct_ponderado', 0) if res['kpis'] else 0,
-            'ultima': historial[-1][0] if n_rev_real else '—',
+            'ultima': fecha_datos_real or '—',
             'n_rev': n_rev_real, 'n_docs': res['n_docs'],
             # El índice y el portal deben mostrar bloqueos reales de la base,
             # no la antigua heurística estadística de plantas rezagadas.

@@ -2724,6 +2724,43 @@ def _fecha_ordenable(fecha_ddmmaaaa):
         return None
 
 
+def _fecha_datos_obra(
+    historial_vivienda: list | None = None,
+    ficha: dict | None = None,
+    ficha_garaje: dict | None = None,
+    historial_zonas_especiales: list | None = None,
+) -> str:
+    """Revision real mas reciente de cualquier apartado de la obra.
+
+    La cabecera, el pie, el panel, el resumen y el portal describen el estado
+    conjunto de la obra. Por tanto no pueden tomar la fecha solo del historial
+    de vivienda: una revision posterior de garaje o zonas especiales tambien
+    actualiza esos datos. Se ignoran etiquetas sinteticas como ``Sin revisar``
+    y solo compiten fechas ``DD/MM/AAAA`` validas.
+    """
+    candidatas = []
+
+    for fecha, _snapshot in historial_vivienda or []:
+        candidatas.append(fecha)
+    for revision in (ficha or {}).get('revisiones') or []:
+        if isinstance(revision, dict):
+            candidatas.append(revision.get('fecha'))
+    for revision in (ficha_garaje or {}).get('revisiones') or []:
+        if isinstance(revision, dict):
+            candidatas.append(revision.get('fecha'))
+    for fecha, _snapshot in historial_zonas_especiales or []:
+        candidatas.append(fecha)
+
+    fechas_validas = []
+    for fecha in candidatas:
+        ordenable = _fecha_ordenable(fecha)
+        if ordenable is not None:
+            fechas_validas.append((ordenable, fecha))
+    if not fechas_validas:
+        return ''
+    return max(fechas_validas, key=lambda item: item[0])[1]
+
+
 def _fecha_base_snapshot(fecha_historial_adaptador, fecha_ficha):
     """Fecha que describe de verdad el snapshot actual de la ficha.
 
@@ -2758,6 +2795,7 @@ def generar_para_obra(
     historial_zonas_especiales: list | None = None,
     cierre: dict | None = None,
     avisos_cierre: list[str] | None = None,
+    fecha_datos: str | None = None,
 ) -> Path | None:
     obra = resolver_obra(nombre_obra)
     if obra is None:
@@ -2800,7 +2838,13 @@ def generar_para_obra(
         print(f"[ERROR] No se encontraron revisiones para '{nombre_oficial}'.")
         return None
 
-    fecha_rev, snapshot = historial[-1]
+    fecha_snapshot, snapshot = historial[-1]
+    fecha_rev = _fecha_datos_obra(
+        historial_vivienda=historial,
+        ficha=ficha,
+        ficha_garaje=ficha_garaje,
+        historial_zonas_especiales=historial_zonas_especiales,
+    ) or fecha_datos or fecha_snapshot
     print(f"      Ultima revision: {fecha_rev} ({len(snapshot)} registros)")
 
     # Ruta de salida PDF

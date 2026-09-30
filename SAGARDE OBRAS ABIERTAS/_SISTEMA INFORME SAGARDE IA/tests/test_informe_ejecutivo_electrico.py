@@ -89,6 +89,53 @@ class TestFechaBaseSnapshot(unittest.TestCase):
             gie._fecha_base_snapshot('', '09/09/2026'), '09/09/2026')
 
 
+class TestFechaDatosTodosLosApartados(unittest.TestCase):
+    """La fecha visible describe toda la obra, no solo las viviendas."""
+
+    def test_manda_la_revision_real_mas_reciente_de_vivienda_garaje_o_zonas(self):
+        ficha = {
+            'revisiones': [{'fecha': '27/09/2026'}],
+        }
+        ficha_garaje = {
+            'revisiones': [
+                {'fecha': '28/09/2026'},
+                {'fecha': '30/09/2026'},
+            ],
+        }
+        historial_zonas = [('29/09/2026', [{'status': 'X'}])]
+
+        self.assertEqual(
+            gie._fecha_datos_obra(
+                ficha=ficha,
+                ficha_garaje=ficha_garaje,
+                historial_zonas_especiales=historial_zonas,
+            ),
+            '30/09/2026',
+        )
+
+    def test_compara_como_fecha_y_no_como_texto(self):
+        self.assertEqual(
+            gie._fecha_datos_obra(
+                historial_vivienda=[('30/09/2026', [])],
+                ficha_garaje={
+                    'revisiones': [{'fecha': '01/10/2026'}],
+                },
+            ),
+            '01/10/2026',
+        )
+
+    def test_sin_ninguna_revision_real_no_inventa_una_fecha(self):
+        self.assertEqual(
+            gie._fecha_datos_obra(
+                historial_vivienda=[('Sin revisar (alta 27/09/2026)', [])],
+                ficha={'actualizado': '27/09/2026 20:51', 'revisiones': []},
+                ficha_garaje={'revisiones': []},
+                historial_zonas_especiales=[],
+            ),
+            '',
+        )
+
+
 class TestAlcanceSagarde(unittest.TestCase):
 
     def setUp(self):

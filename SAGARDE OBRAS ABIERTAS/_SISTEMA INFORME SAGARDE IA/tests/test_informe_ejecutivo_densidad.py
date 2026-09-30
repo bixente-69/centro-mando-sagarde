@@ -785,6 +785,17 @@ class TestPdfDensoDeFixture(unittest.TestCase):
         self.assertIn('instrumentales', textos[0])
         self.assertIn('Libro del Edificio', textos[0])
 
+    def test_la_fecha_de_datos_aparece_en_cabecera_y_pie_de_cada_hoja(self):
+        with self._abrir() as pdf:
+            textos = [p.extract_text() or '' for p in pdf.pages]
+        for numero, texto in enumerate(textos, 1):
+            self.assertIn('Datos: 22/09/2026', texto,
+                          'cabecera de hoja {}'.format(numero))
+            pie = texto.rsplit('Fuente:', 1)[-1]
+            self.assertIn('Datos', pie, 'pie de hoja {}'.format(numero))
+            self.assertIn('22/09/2026', pie,
+                          'pie de hoja {}'.format(numero))
+
     def test_evolucion_distingue_viviendas_del_total_de_obra(self):
         serie = gie._serie_avance_sagarde(
             gie._historial_sin_zonas_especiales(self.fx['historial']),

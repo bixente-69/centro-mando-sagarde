@@ -846,6 +846,29 @@ class TestFuenteInformeEjecutivo(unittest.TestCase):
         self.assertIs(generar_pdf.call_args.kwargs['historial'][-1][1],
                       snapshot_base)
 
+    def test_el_pdf_usa_la_fecha_del_garaje_si_es_la_revision_mas_reciente(self):
+        nombre_obra = '2026 MUNGIA ACR NEINOR'
+        snapshot = [{
+            'task': 'Tubeado', 'floor': '1', 'building': 'ZR1.1',
+            'unit': 'A2', 'status': 'M',
+        }]
+        historial = [('27/09/2026', snapshot)]
+        ficha = {'revisiones': [{'fecha': '27/09/2026'}]}
+        ficha_garaje = {
+            'revisiones': [{'fecha': '30/09/2026'}],
+        }
+
+        with patch.object(gie, 'generar_pdf_ejecutivo') as generar_pdf:
+            gie.generar_para_obra(
+                nombre_obra,
+                historial=historial,
+                ficha=ficha,
+                ficha_garaje=ficha_garaje,
+                prioridades={'detalle_items': []},
+            )
+
+        self.assertEqual(generar_pdf.call_args.args[1], '30/09/2026')
+
 
 class TestObraSinRevisiones(unittest.TestCase):
     """Una obra sin medir no es una obra al 0 %.

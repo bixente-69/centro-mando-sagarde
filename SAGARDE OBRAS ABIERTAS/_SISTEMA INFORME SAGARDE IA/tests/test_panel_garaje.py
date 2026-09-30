@@ -85,7 +85,8 @@ class _DatetimeFijo(datetime):
         return instante if tz is None else instante.replace(tzinfo=tz)
 
 
-def _generar(prioridades_garaje, historial=None, snapshot_garaje=None):
+def _generar(prioridades_garaje, historial=None, snapshot_garaje=None,
+             fecha_datos=None):
     ficha = {
         "_disponible": True,
         "datos": {},
@@ -108,10 +109,24 @@ def _generar(prioridades_garaje, historial=None, snapshot_garaje=None):
                 prioridades=_prioridades_vivienda(),
                 prioridades_garaje=prioridades_garaje,
                 snapshot_garaje=snapshot_garaje,
+                fecha_datos=fecha_datos,
                 output_path=salida,
             )
         with open(salida, encoding="utf-8") as fichero:
             return fichero.read()
+
+
+class TestFechaDatosPanel(unittest.TestCase):
+
+    def test_la_cabecera_y_el_informe_a_la_carta_usan_la_fecha_comun(self):
+        html = _generar(
+            prioridades_garaje=None,
+            historial=[('Sin revisar (alta 27/09/2026)', [])],
+            fecha_datos='30/09/2026',
+        )
+        self.assertIn('Última revisión: 30/09/2026', html)
+        self.assertIn('"fecha_datos": "30/09/2026"', html)
+        self.assertIn('DATA.fecha_datos ||', html)
 
 
 def _snapshot_garaje_desde_prioridades(prioridades_garaje):
