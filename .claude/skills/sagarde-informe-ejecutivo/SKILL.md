@@ -38,17 +38,21 @@ en `exit 0` con la mitad del informe ausente. Por cada obra que interese:
 
 1. Leer el PDF con `Read` (sin `pages=`: así se extrae el texto de todas las
    páginas en una sola llamada).
-2. Contar páginas reales contra las esperadas: 1 (Resumen General) + 1 por
-   cada portal/bloque si la obra tiene 2 o más + 1 si tiene
-   `ficha_garajes.json` con zonas + 1 si alguna ubicación vive en la planta
-   `zesp` de `ficha_obra.json` + 1 (Cierre de Expediente). Si no coincide,
-   algo se generó a medias — no reportar éxito todavía.
-3. Ojo a una página con solo el pie o casi en blanco ("un par de líneas
-   sueltas"): es indicio de que el bloque `KeepTogether` del pie de página
-   (`_SISTEMA/MOTOR/scripts/generar_informe_ejecutivo.py`,
-   `_construir_bloque_electrico`) no está absorbiendo el desbordamiento. No
-   debería reaparecer tras el fix del 29/09/2026 — si aparece, es un bug
-   real, no ruido de maquetación.
+2. Contar páginas reales contra las esperadas (diseño denso, 30/09/2026): 1
+   (Resumen General, que YA lleva el Cierre de Expediente integrado: no hay
+   página de cierre aparte) + 1 por cada portal/bloque si la obra tiene 2 o
+   más + 1 si tiene `ficha_garajes.json` con zonas + 1 si alguna ubicación
+   vive en la planta `zesp` de `ficha_obra.json`. Cada parte es UNA hoja
+   condensada. Si no coincide, algo se generó a medias — no reportar éxito.
+3. Medir cada hoja, no fiarse del ojo: ocupación del área útil >= 75 % (lo
+   normal es 82-95 %), letra mínima >= 8,5 pt en cuerpo (8,0 pt solo en
+   notas) y ningún nombre de fase o bloque cortado con «…». El ajuste a la
+   página (`_ajustar_pagina`, escala 0,90-1,50) nunca aborta: si no cabe,
+   recorta filas de forma VISIBLE con una fila «+N más» y lo avisa en el log
+   como `[AVISO INFORME EJECUTIVO] Recorte visible`. Un `[AVISO ...] excede
+   la altura` significa que ni con el recorte máximo cabe: revisar. Una hoja
+   casi vacía o un PDF con fecha vieja tras la generación indica un fallo real
+   (antes el `KeepTogether` final la provocaba; ya no existe).
 4. Recalcular los KPI de cabecera de forma independiente en vez de fiarte
    del propio PDF: `motor_informes.kpis_snapshot(snapshot)` sobre el mismo
    snapshot que usó el generador, comparado contra el % que muestra la

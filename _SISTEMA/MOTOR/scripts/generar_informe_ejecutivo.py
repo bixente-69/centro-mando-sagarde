@@ -125,6 +125,10 @@ def _valor_ejecutivo(valor: object, limite: int = 105) -> str:
     if not texto or texto.startswith('['):
         return ''
     texto = texto.split(' [', 1)[0].strip()
+    # Algunas fichas anaden las coordenadas tras la direccion; en la cabecera
+    # solo estorban y hacian que el texto se cortara con puntos suspensivos.
+    texto = re.split(r'[.;]?\s*Coordenadas\b', texto, maxsplit=1,
+                     flags=re.IGNORECASE)[0].strip().rstrip('.;,')
     return texto if len(texto) <= limite else texto[:limite - 1].rstrip() + '…'
 
 
@@ -635,20 +639,28 @@ def _tabla_kpis_electricos(
     return tabla
 
 
-def _resumen_ejecutivo_electrico(
-    snapshot: list[dict],
-    serie: list[dict],
-    frentes: list[dict],
-    bloqueadores: list[dict],
-) -> Table:
-    kpis = motor_informes.kpis_snapshot(snapshot)
+def _texto_resumen_ejecutivo(kpis: dict, serie: list[dict],
+                             frentes: list[dict], bloqueadores: list[dict],
+                             solo_viviendas: bool = False) -> str:
+    """Frase de situacion de la hoja: es la esencia narrativa del informe.
+
+    Con garaje sumado en los indicadores, la serie historica sigue siendo solo
+    de vivienda (no hay forma honesta de fusionar las dos series), asi que la
+    frase lo dice en lugar de atribuir a toda la obra el avance de las viviendas.
+    """
     if len(serie) >= 2:
         delta = serie[-1]['pct'] - serie[-2]['pct']
-        evolucion = 'avance de {:+.1f} puntos frente a la revisión anterior'.format(delta)
+        if solo_viviendas:
+            evolucion = ('las viviendas avanzan {:+.1f} puntos frente a la '
+                         'revisión anterior').format(delta)
+        else:
+            evolucion = ('avance de {:+.1f} puntos frente a la revisión '
+                         'anterior').format(delta)
     else:
         evolucion = 'sin comparación histórica suficiente'
-    externos = [b for b in bloqueadores if b['propiedad'] in ('externo', 'coordinacion')]
-    texto = (
+    externos = [b for b in bloqueadores
+                if b['propiedad'] in ('externo', 'coordinacion')]
+    return (
         '<b>Situación eléctrica:</b> Sagarde alcanza un <b>{:.1f}%</b> de avance '
         'estimado y un <b>{:.1f}%</b> terminado; {}. '
         '<b>Producción:</b> {} tajos propios tienen frente disponible. '
@@ -656,6 +668,39 @@ def _resumen_ejecutivo_electrico(
         'producción Sagarde.'
     ).format(kpis['pct_ponderado'], kpis['pct_estricto'], evolucion,
              len(frentes), len(externos))
+
+
+def _resumen_ejecutivo_pagina(datos: dict, content_w: float, escala: float,
+                              solo_viviendas: bool = False) -> Table:
+    """Resumen ejecutivo de la hoja densa: misma frase, letra >= 8,5 pt y
+    a lo ancho del contenido (la hoja se ajusta a la pagina con `escala`)."""
+    texto = _texto_resumen_ejecutivo(
+        datos['kpis'], datos['serie'], datos['frentes'], datos['bloqueadores'],
+        solo_viviendas=solo_viviendas)
+    tabla = Table(
+        [[Paragraph(texto, _estilo_maqueta(
+            'resumen_ejecutivo_pagina', 8.9, escala, minimo=8.5,
+            color=COL_NAVY, factor_leading=1.22))]],
+        colWidths=[content_w])
+    tabla.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), COL_CARD),
+        ('BOX', (0, 0), (-1, -1), .7, colors.HexColor('#B8C7DA')),
+        ('LEFTPADDING', (0, 0), (-1, -1), 7),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 7),
+        ('TOPPADDING', (0, 0), (-1, -1), 4),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 4),
+    ]))
+    return tabla
+
+
+def _resumen_ejecutivo_electrico(
+    snapshot: list[dict],
+    serie: list[dict],
+    frentes: list[dict],
+    bloqueadores: list[dict],
+) -> Table:
+    kpis = motor_informes.kpis_snapshot(snapshot)
+    texto = _texto_resumen_ejecutivo(kpis, serie, frentes, bloqueadores)
     tabla = Table([[Paragraph(texto, _style('resumen_ejecutivo', 8.2, leading=10.4,
                                              color=COL_NAVY))]],
                   colWidths=[PAGE_W - 2 * MARGIN_X])
@@ -1190,6 +1235,1138 @@ def _construir_bloque_ejecutivo(story: list, nombre_obra: str, sub_titulo: str, 
     story.append(footer_tbl)
 
 
+# ---------------------------------------------------------------------------
+# Maquetacion compacta, medible y ajustada pagina a pagina
+# ---------------------------------------------------------------------------
+
+def _fuente_escalada(base: float, escala: float, minimo: float,
+                     maximo: float | None = None) -> float:
+    valor = max(minimo, base * escala)
+    if maximo is not None:
+        valor = min(maximo, valor)
+    return round(valor, 2)
+
+
+def _estilo_maqueta(nombre: str, base: float, escala: float,
+                    minimo: float = 8.5, bold: bool = False,
+                    align: int = TA_LEFT, color=colors.black,
+                    factor_leading: float = 1.16) -> ParagraphStyle:
+    size = _fuente_escalada(base, escala, minimo)
+    return _style(
+        nombre, size, bold=bold, align=align, color=color,
+        leading=size * factor_leading)
+
+
+def _seccion(texto: str, escala: float, color=COL_NAVY) -> Paragraph:
+    return Paragraph(
+        '<b>{}</b>'.format(_texto(texto.upper())),
+        _estilo_maqueta('seccion_' + _fold(texto).replace(' ', '_'),
+                        10.5, escala, minimo=10, bold=True, color=color))
+
+
+def _nota(texto: str, escala: float) -> Paragraph:
+    return Paragraph(
+        _texto(texto),
+        _estilo_maqueta('nota_' + str(abs(hash(texto))), 8.4, escala,
+                        minimo=8, color=COL_MUTED, factor_leading=1.18))
+
+
+def _cabecera_electrica(
+    nombre_obra: str,
+    sub_titulo: str,
+    fecha_rev: str,
+    ficha: dict | None,
+    content_w: float,
+    escala: float = 1.0,
+) -> Table:
+    """Cabecera corporativa unica para todas las hojas del informe."""
+    logo = _logo_flowable(43)
+    titulo = [
+        Paragraph(
+            '<b>INFORME EJECUTIVO EL\u00c9CTRICO</b>',
+            _estilo_maqueta('titulo_electrico_ajustado', 14.2, escala,
+                            minimo=12.5, bold=True, color=COL_NAVY)),
+        Paragraph(
+            '<b>OBRA:</b> {} &nbsp;|&nbsp; <b>\u00c1MBITO:</b> {}'.format(
+                _texto(nombre_obra), _texto(sub_titulo or 'RESUMEN GENERAL')),
+            _estilo_maqueta('subtitulo_electrico_ajustado', 9.1, escala,
+                            minimo=8.5, color=COL_MUTED)),
+        Paragraph(
+            '<b>Datos:</b> {} &nbsp;|&nbsp; Alcance: tajos propios de Sagarde'.format(
+                _texto(fecha_rev)),
+            _estilo_maqueta('fuente_electrica_ajustada', 8.7, escala,
+                            minimo=8.5, color=COL_MUTED)),
+    ]
+    identidad = (ficha or {}).get('identidad') or {}
+    cliente = _valor_ejecutivo(identidad.get('cliente'), 70)
+    direccion = _valor_ejecutivo(identidad.get('direccion'), 85)
+    if cliente or direccion:
+        titulo.append(Paragraph(
+            _texto(' \u00b7 '.join(x for x in (cliente, direccion) if x)),
+            _estilo_maqueta('identidad_electrica_ajustada', 8.5, escala,
+                            minimo=8.5, color=COL_MUTED)))
+    tabla = Table([[logo, titulo]], colWidths=[47 * mm, content_w - 47 * mm])
+    tabla.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('ALIGN', (1, 0), (1, 0), 'RIGHT'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 0),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 0),
+        ('TOPPADDING', (0, 0), (-1, -1), 0),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 1.5 * mm),
+        ('LINEBELOW', (0, 0), (-1, -1), .8, COL_LINE),
+    ]))
+    return tabla
+
+
+def _conteo_cierre(cierre: dict | None) -> tuple[int, int]:
+    hitos = (cierre or {}).get('hitos') or {}
+    if not hitos:
+        return 0, 0
+    hechos = sum(
+        1 for hito_id in cierre_expediente.HITOS_ORDEN
+        if (hitos.get(hito_id) or {}).get('estado') in ('hecho', 'favorable'))
+    return hechos, len(cierre_expediente.HITOS_ORDEN)
+
+
+def _tabla_kpis_electricos(
+    snapshot: list[dict],
+    frentes: list[dict],
+    bloqueadores: list[dict],
+    content_w: float,
+    cierre: dict | None = None,
+    incluir_cierre: bool = False,
+    escala: float = 1.0,
+) -> Table:
+    kpis = motor_informes.kpis_snapshot(snapshot)
+    objetivos_bloqueados = set()
+    for bloqueo in bloqueadores:
+        objetivos_bloqueados.update(bloqueo['tajos_sagarde'])
+    tarjetas = [
+        ('{:.1f}%'.format(kpis['pct_ponderado']), 'Avance estimado', COL_ACCENT),
+        ('{:.1f}%'.format(kpis['pct_estricto']), 'Terminado estricto', COL_NAVY),
+        ('{}/{}'.format(kpis['x'], kpis['total']), 'Celdas terminadas', COL_NAVY),
+        (str(len(frentes)), 'Tajos listos', COL_ACCENT),
+        (str(len(objetivos_bloqueados)), 'Tajos condicionados',
+         COL_WARN if objetivos_bloqueados else COL_ACCENT),
+    ]
+    hechos, total_hitos = _conteo_cierre(cierre)
+    if incluir_cierre and total_hitos:
+        tarjetas.append(('{}/{}'.format(hechos, total_hitos),
+                         'Cierre de expediente', COL_NAVY))
+
+    # La razon X/total es el unico valor que crece con el volumen de obra.
+    # Se le reserva mas anchura que a los contadores de una o dos cifras;
+    # el reparto sigue sumando exactamente el ancho disponible.
+    pesos_base = [1.0, 1.0, 1.30, .82, .93, .95]
+    pesos = pesos_base[:len(tarjetas)]
+    unidad = content_w / sum(pesos)
+    anchos = [unidad * peso for peso in pesos]
+    celdas = []
+    for indice, ((valor, etiqueta, color), ancho_celda) in enumerate(
+            zip(tarjetas, anchos)):
+        size_valor = _fuente_escalada(22, escala, 20, 24)
+        ancho_util = ancho_celda - 4.5
+        ancho_a_1pt = pdfmetrics.stringWidth(valor, FUENTE_BOLD, 1)
+        if ancho_a_1pt:
+            size_valor = max(16, min(size_valor, ancho_util / ancho_a_1pt))
+        estilo_valor = _style(
+            'kpi_valor_{}'.format(indice), size_valor, True,
+            align=TA_CENTER, leading=size_valor * 1.02)
+        # ReportLab considera la barra una oportunidad de salto. Aunque la
+        # cifra quepa, sin esta guarda puede partir 1309/1547 en dos lineas.
+        estilo_valor.splitLongWords = 0
+        celdas.append([
+            Paragraph(
+                '<nobr><font color={}><b>{}</b></font></nobr>'.format(
+                    color.hexval(), _texto(valor)),
+                estilo_valor),
+            Spacer(1, max(.4 * mm, .8 * mm * escala)),
+            Paragraph(
+                _texto(etiqueta),
+                _estilo_maqueta('kpi_etiqueta_{}'.format(indice), 8.8,
+                                escala, minimo=8.5, align=TA_CENTER,
+                                color=COL_MUTED, factor_leading=1.08)),
+        ])
+    tabla = Table([celdas], colWidths=anchos)
+    tabla.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), COL_LIGHT),
+        ('BOX', (0, 0), (-1, -1), .7, COL_LINE),
+        ('INNERGRID', (0, 0), (-1, -1), .35, COL_LINE),
+        ('TOPPADDING', (0, 0), (-1, -1), max(2.5, 3.4 * escala)),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), max(2.5, 3.4 * escala)),
+        ('LEFTPADDING', (0, 0), (-1, -1), 1.2),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 1.2),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+    ]))
+    return tabla
+
+
+def _grafico_tendencia(
+    serie: list[dict],
+    ancho: float,
+    escala: float = 1.0,
+    total_actual: float | None = None,
+) -> Drawing:
+    """Evolucion vectorial con etiquetas seleccionadas por espacio real."""
+    datos = serie[-12:]
+    alto = max(45 * mm, 55 * mm * escala)
+    dibujo = Drawing(ancho, alto)
+    x0, y0 = 16 * mm, 12 * mm
+    plot_w, plot_h = ancho - 21 * mm, alto - 20 * mm
+    fuente_eje = _fuente_escalada(8.8, escala, 8.5)
+
+    cajas_ocupadas = []
+
+    def caja_texto(x, y, texto, ancla='middle'):
+        ancho_texto = pdfmetrics.stringWidth(texto, FUENTE_BOLD, fuente_eje)
+        if ancla == 'start':
+            izquierda = x
+        elif ancla == 'end':
+            izquierda = x - ancho_texto
+        else:
+            izquierda = x - ancho_texto / 2
+        return (izquierda, y - fuente_eje * .25,
+                izquierda + ancho_texto, y + fuente_eje * .9)
+
+    def solapa(caja):
+        return any(
+            max(caja[0], otra[0]) < min(caja[2], otra[2])
+            and max(caja[1], otra[1]) < min(caja[3], otra[3])
+            for otra in cajas_ocupadas)
+
+    for valor in (0, 25, 50, 75, 100):
+        y = y0 + plot_h * valor / 100
+        dibujo.add(Line(x0, y, x0 + plot_w, y, strokeColor=COL_LINE,
+                        strokeWidth=.45))
+        texto_eje = '{}%'.format(valor)
+        dibujo.add(String(
+            x0 - 2 * mm, y - 1.5, texto_eje, fontName=FUENTE,
+            fontSize=fuente_eje, textAnchor='end', fillColor=COL_MUTED))
+        ancho_eje = pdfmetrics.stringWidth(texto_eje, FUENTE, fuente_eje)
+        cajas_ocupadas.append((
+            x0 - 2 * mm - ancho_eje, y - 1.5 - fuente_eje * .25,
+            x0 - 2 * mm, y - 1.5 + fuente_eje * .9))
+
+    if not datos:
+        dibujo.add(String(
+            ancho / 2, alto / 2, 'Sin historial comparable',
+            fontName=FUENTE_ITALIC, fontSize=fuente_eje,
+            textAnchor='middle', fillColor=COL_MUTED))
+        return dibujo
+
+    if len(datos) == 1:
+        puntos = [(x0 + plot_w / 2,
+                   y0 + plot_h * datos[0]['pct'] / 100)]
+    else:
+        puntos = [
+            (x0 + i * plot_w / (len(datos) - 1),
+             y0 + plot_h * dato['pct'] / 100)
+            for i, dato in enumerate(datos)
+        ]
+    if len(puntos) >= 2:
+        dibujo.add(PolyLine(puntos, strokeColor=COL_ACCENT,
+                            strokeWidth=2, fillColor=None))
+    for x, y in puntos:
+        dibujo.add(Circle(x, y, 2.2, fillColor=colors.white,
+                          strokeColor=COL_ACCENT, strokeWidth=1.2))
+
+    obligatorios = {
+        0, len(datos) - 1,
+        min(range(len(datos)), key=lambda i: datos[i]['pct']),
+        max(range(len(datos)), key=lambda i: datos[i]['pct']),
+    }
+    indices_valor = set(obligatorios)
+    for indice, (x, _y) in enumerate(puntos):
+        if indice in indices_valor:
+            continue
+        if all(abs(x - puntos[otro][0]) >= 11 * mm
+               for otro in indices_valor):
+            indices_valor.add(indice)
+
+    cajas_valores = {}
+    for orden, indice in enumerate(sorted(indices_valor)):
+        x, y = puntos[indice]
+        dato = datos[indice]
+        texto_valor = '{:.1f}%'.format(dato['pct'])
+        if indice == 0:
+            x_etiqueta, ancla = x + 2.5 * mm, 'start'
+        elif indice == len(datos) - 1:
+            x_etiqueta, ancla = x - 2.5 * mm, 'end'
+        else:
+            x_etiqueta, ancla = x, 'middle'
+        preferidos = ((6, -12, 15, -22, 25, -31)
+                      if orden % 2 == 0 else
+                      (-12, 6, -22, 15, -31, 25))
+        y_etiqueta = None
+        caja = None
+        for desplazamiento in preferidos:
+            candidato_y = min(
+                y0 + plot_h + 8,
+                max(y0 + fuente_eje * .35, y + desplazamiento))
+            candidato = caja_texto(
+                x_etiqueta, candidato_y, texto_valor, ancla)
+            if not solapa(candidato):
+                y_etiqueta, caja = candidato_y, candidato
+                break
+        if y_etiqueta is None:
+            y_etiqueta = min(y0 + plot_h + 8, y + 6)
+            caja = caja_texto(x_etiqueta, y_etiqueta, texto_valor, ancla)
+        dibujo.add(String(
+            x_etiqueta, y_etiqueta, texto_valor,
+            fontName=FUENTE_BOLD, fontSize=fuente_eje,
+            textAnchor=ancla, fillColor=COL_ACCENT))
+        cajas_ocupadas.append(caja)
+        cajas_valores[indice] = caja
+
+    indices_fecha = [0]
+    if len(puntos) > 1:
+        for indice in range(1, len(puntos) - 1):
+            x = puntos[indice][0]
+            if (x - puntos[indices_fecha[-1]][0] >= 14 * mm
+                    and puntos[-1][0] - x >= 14 * mm):
+                indices_fecha.append(indice)
+        indices_fecha.append(len(puntos) - 1)
+    for indice in indices_fecha:
+        x = puntos[indice][0]
+        dato = datos[indice]
+        dibujo.add(String(
+            x, 3.2 * mm, str(dato['fecha'])[:5], fontName=FUENTE,
+            fontSize=fuente_eje, textAnchor='middle', fillColor=COL_MUTED))
+
+    if total_actual is not None:
+        x = puntos[-1][0]
+        y = y0 + plot_h * max(0, min(100, total_actual)) / 100
+        dibujo.add(Circle(x, y, 3.4, fillColor=COL_NAVY,
+                          strokeColor=colors.white, strokeWidth=1.1))
+        ancla = 'end' if x > ancho * .72 else 'start'
+        dx = -3 * mm if ancla == 'end' else 3 * mm
+        texto_total = 'Total obra {:.1f}%'.format(total_actual)
+        x_total = x + dx
+        y_total = None
+        caja_total = None
+        for desplazamiento in (-14, 8, -24, 18, -33, 27):
+            candidato_y = min(
+                y0 + plot_h + 10,
+                max(y0 + fuente_eje * .35, y + desplazamiento))
+            candidato = caja_texto(
+                x_total, candidato_y, texto_total, ancla)
+            if not solapa(candidato):
+                y_total, caja_total = candidato_y, candidato
+                break
+        if y_total is None:
+            y_total = max(y0 + fuente_eje * .35, y - 14)
+        dibujo.add(String(
+            x_total, y_total, texto_total,
+            fontName=FUENTE_BOLD, fontSize=fuente_eje,
+            textAnchor=ancla, fillColor=COL_NAVY))
+    return dibujo
+
+
+def _grafico_distribucion(snapshot: list[dict], ancho: float,
+                          escala: float = 1.0) -> Drawing:
+    alto = max(42 * mm, 52 * mm * escala)
+    dibujo = Drawing(ancho, alto)
+    total = max(1, len(snapshot))
+    segmentos = [
+        ('Terminado X', sum(r.get('status') == 'X' for r in snapshot), COL_ACCENT),
+        ('En marcha M', sum(r.get('status') == 'M' for r in snapshot),
+         colors.HexColor('#5B8DB8')),
+        ('Iniciado /', sum(r.get('status') == '/' for r in snapshot),
+         colors.HexColor('#8FB3D9')),
+        ('Pendiente', sum(r.get('status') == '' for r in snapshot), COL_LINE),
+    ]
+    x0, y0, barra_w, barra_h = 2 * mm, alto * .55, ancho - 4 * mm, 8 * mm
+    cursor = x0
+    for _etiqueta, n, color in segmentos:
+        w = barra_w * n / total
+        if w > 0:
+            dibujo.add(Rect(cursor, y0, w, barra_h, fillColor=color,
+                            strokeColor=colors.white, strokeWidth=.4))
+            cursor += w
+    font_size = _fuente_escalada(8.7, escala, 8.5)
+    mitad = ancho / 2
+    for indice, (etiqueta, n, color) in enumerate(segmentos):
+        col = indice % 2
+        fila = indice // 2
+        x = 2 * mm + col * mitad
+        y = 8 * mm + (1 - fila) * 8 * mm
+        dibujo.add(Rect(x, y, 3.2 * mm, 3.2 * mm,
+                        fillColor=color, strokeColor=color))
+        dibujo.add(String(
+            x + 4.3 * mm, y + .2 * mm, '{}: {}'.format(etiqueta, n),
+            fontName=FUENTE, fontSize=font_size, fillColor=COL_MUTED))
+    return dibujo
+
+
+def _dibujo_barra_linea(nombre: str, pct: float, x: int, total: int,
+                        ancho: float, escala: float,
+                        ancho_nombre: float) -> Drawing:
+    """Fase en una sola linea: rotulo, barra y valor. Cuesta ~5,6 mm por fase
+    en vez de los ~8,5 mm de la variante con el rotulo encima de la barra, y
+    ese espacio se dedica a mostrar mas filas de las tablas de la hoja."""
+    alto = max(5.2 * mm, 5.6 * mm * escala)
+    dibujo = Drawing(ancho, alto)
+    font_size = _fuente_escalada(8.7, escala, 8.5)
+    valor = '{:.1f}%  {}/{}'.format(pct, x, total)
+    ancho_valor = pdfmetrics.stringWidth(valor, FUENTE_BOLD, font_size)
+    etiqueta = str(nombre)
+    # La variante en linea solo se elige cuando el nombre cabe entero
+    # (ver _tabla_fases_doble); este recorte es una red de seguridad.
+    if pdfmetrics.stringWidth(etiqueta, FUENTE, font_size) > ancho_nombre:
+        recortada = etiqueta
+        while (recortada
+               and pdfmetrics.stringWidth(
+                   recortada.rstrip() + '…', FUENTE, font_size)
+               > ancho_nombre):
+            recortada = recortada[:-1]
+        etiqueta = recortada.rstrip() + '…'
+    base = (alto - font_size * .72) / 2
+    dibujo.add(String(0, base, etiqueta, fontName=FUENTE,
+                      fontSize=font_size, fillColor=COL_NAVY))
+    x0 = ancho_nombre + 1.5 * mm
+    ancho_barra = max(8 * mm, ancho - ancho_valor - 1.5 * mm - x0)
+    grosor = 2.8 * mm
+    y = (alto - grosor) / 2
+    dibujo.add(Rect(x0, y, ancho_barra, grosor,
+                    fillColor=colors.HexColor('#E8EDF3'), strokeColor=None))
+    dibujo.add(Rect(x0, y, ancho_barra * max(0, min(100, pct)) / 100, grosor,
+                    fillColor=COL_ACCENT, strokeColor=None))
+    dibujo.add(String(ancho, base, valor, fontName=FUENTE_BOLD,
+                      fontSize=font_size, textAnchor='end',
+                      fillColor=COL_ACCENT))
+    return dibujo
+
+
+def _dibujo_barra_resumen(nombre: str, pct: float, x: int, total: int,
+                          ancho: float, escala: float,
+                          mostrar_nombre: bool = True) -> Drawing:
+    alto = max(8 * mm, 8.5 * mm * escala)
+    dibujo = Drawing(ancho, alto)
+    font_size = _fuente_escalada(8.7, escala, 8.5)
+    etiqueta = str(nombre)
+    valor = '{:.1f}%  {}/{}'.format(pct, x, total)
+    ancho_valor = pdfmetrics.stringWidth(valor, FUENTE_BOLD, font_size)
+    ancho_nombre = max(10 * mm, ancho - ancho_valor - 3 * mm)
+    # Antes de recortar un nombre con puntos suspensivos se reduce su letra
+    # hasta el minimo de 8,5 pt: un nombre cortado no se distingue de otro.
+    tam_nombre = font_size
+    while (tam_nombre > 8.5
+           and pdfmetrics.stringWidth(etiqueta, FUENTE_BOLD, tam_nombre)
+           > ancho_nombre):
+        tam_nombre = max(8.5, tam_nombre - .25)
+    if pdfmetrics.stringWidth(etiqueta, FUENTE_BOLD, tam_nombre) > ancho_nombre:
+        recortada = etiqueta
+        while (recortada
+               and pdfmetrics.stringWidth(
+                   recortada.rstrip() + '\u2026', FUENTE_BOLD, tam_nombre)
+               > ancho_nombre):
+            recortada = recortada[:-1]
+        etiqueta = recortada.rstrip() + '\u2026'
+    if mostrar_nombre:
+        dibujo.add(String(0, alto - font_size, etiqueta, fontName=FUENTE_BOLD,
+                          fontSize=tam_nombre, fillColor=COL_NAVY))
+    dibujo.add(String(ancho, alto - font_size, valor, fontName=FUENTE_BOLD,
+                      fontSize=font_size, textAnchor='end',
+                      fillColor=COL_ACCENT))
+    y = 1.2 * mm
+    dibujo.add(Rect(0, y, ancho, 2.4 * mm, fillColor=colors.HexColor('#E8EDF3'),
+                    strokeColor=None))
+    dibujo.add(Rect(0, y, ancho * max(0, min(100, pct)) / 100, 2.4 * mm,
+                    fillColor=COL_ACCENT, strokeColor=None))
+    return dibujo
+
+
+def _tabla_fases_doble(fases: list[dict], content_w: float,
+                        escala: float = 1.0) -> Table | Paragraph:
+    if not fases:
+        return Paragraph(
+            '<i>Sin fases propias medidas en este \u00e1mbito.</i>',
+            _estilo_maqueta('sin_fases', 8.7, escala, minimo=8.5,
+                            color=COL_MUTED))
+    mitad = (content_w - 4 * mm) / 2
+    ancho_celda = mitad - 3 * mm
+    font_size = _fuente_escalada(8.7, escala, 8.5)
+    # Linea unica (rotulo, barra y valor) solo si NINGUN nombre se corta y la
+    # barra conserva al menos 17 mm; si no, la variante con el rotulo encima.
+    # Un nombre cortado es peor que una barra mas alta.
+    ancho_nombre = max(
+        pdfmetrics.stringWidth(str(f['fase']), FUENTE, font_size)
+        for f in fases) + .8 * mm
+    ancho_valor_max = max(
+        pdfmetrics.stringWidth('{:.1f}%  {}/{}'.format(
+            f['pct'], f['x'], f['total']), FUENTE_BOLD, font_size)
+        for f in fases)
+    barra_disponible = ancho_celda - ancho_nombre - ancho_valor_max - 3 * mm
+    if barra_disponible >= 17 * mm:
+        celdas = [
+            _dibujo_barra_linea(
+                fase['fase'], fase['pct'], fase['x'], fase['total'],
+                ancho_celda, escala, ancho_nombre)
+            for fase in fases
+        ]
+    else:
+        celdas = [
+            _dibujo_barra_resumen(
+                fase['fase'], fase['pct'], fase['x'], fase['total'],
+                ancho_celda, escala)
+            for fase in fases
+        ]
+    filas = []
+    for indice in range(0, len(celdas), 2):
+        filas.append([celdas[indice],
+                      celdas[indice + 1] if indice + 1 < len(celdas) else ''])
+    alto_dibujo = celdas[0].height
+    # Una sola fase no debe reservar media pagina vacia; con muchas fases
+    # manda la altura natural de cada dibujo.
+    alto_total_minimo = 12 * mm * escala
+    alto_fila = max(alto_dibujo + .8 * mm,
+                    alto_total_minimo / max(1, len(filas)))
+    tabla = Table(filas, colWidths=[mitad, mitad],
+                  rowHeights=[alto_fila] * len(filas))
+    tabla.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('LEFTPADDING', (0, 0), (0, -1), 0),
+        ('RIGHTPADDING', (0, 0), (0, -1), 2 * mm),
+        ('LEFTPADDING', (1, 0), (1, -1), 2 * mm),
+        ('RIGHTPADDING', (1, 0), (1, -1), 0),
+        ('TOPPADDING', (0, 0), (-1, -1), 0),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
+    ]))
+    return tabla
+
+
+def _tabla_tajos_atencion(tajos: list[dict], content_w: float,
+                           escala: float = 1.0,
+                           max_filas: int = 10) -> Table | Paragraph:
+    pendientes = [t for t in tajos if t['pct'] < 99.9]
+    pendientes.sort(key=lambda t: (t['orden'], t['pct'], _fold(t['nombre'])))
+    if not pendientes:
+        return Paragraph(
+            '<i>Todos los tajos propios medidos est\u00e1n terminados.</i>',
+            _estilo_maqueta('tajos_completos_ajustado', 8.7, escala,
+                            minimo=8.5, color=COL_ACCENT))
+    th = lambda n: _estilo_maqueta(n, 8.6, escala, minimo=8.5,
+                                   bold=True, color=colors.white,
+                                   align=TA_CENTER)
+    filas = [[
+        Paragraph('<b>Tajo Sagarde / fase</b>', th('th_tajo_ajustado')),
+        Paragraph('<b>Avance</b>', th('th_avance_ajustado')),
+        Paragraph('<b>Hecho</b>', th('th_hecho_ajustado')),
+        Paragraph('<b>Pend.</b>', th('th_pend_ajustado')),
+    ]]
+    for indice, tajo in enumerate(pendientes[:max_filas]):
+        estilo = _estilo_maqueta('td_tajo_{}'.format(indice), 8.6, escala,
+                                 minimo=8.5, factor_leading=1.08)
+        centro = _estilo_maqueta('td_centro_{}'.format(indice), 8.6, escala,
+                                 minimo=8.5, align=TA_CENTER,
+                                 factor_leading=1.08)
+        filas.append([
+            Paragraph('<b>{}</b><br/><font color=#475467>{}</font>'.format(
+                _texto(tajo['nombre']), _texto(tajo['fase'])), estilo),
+            Paragraph('<b>{:.0f}%</b>'.format(tajo['pct']), centro),
+            Paragraph('{}/{}'.format(tajo['x'], tajo['total']), centro),
+            Paragraph(str(tajo['pendiente']), centro),
+        ])
+    restantes = len(pendientes) - max_filas
+    if restantes > 0:
+        filas.append([
+            Paragraph(
+                '<b>+{} m\u00e1s</b> \u00b7 contin\u00faan en el mismo orden de ejecuci\u00f3n'.format(
+                    restantes),
+                _estilo_maqueta('tajos_mas', 8.6, escala, minimo=8.5,
+                                bold=True, color=COL_MUTED)), '', '', '',
+        ])
+    tabla = Table(
+        filas,
+        colWidths=[content_w * .58, content_w * .15,
+                   content_w * .14, content_w * .13])
+    estilos = [
+        ('BACKGROUND', (0, 0), (-1, 0), COL_NAVY),
+        ('GRID', (0, 0), (-1, -1), .3, COL_LINE),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1), [colors.white, COL_LIGHT]),
+        ('TOPPADDING', (0, 0), (-1, -1), max(1.4, 1.8 * escala)),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), max(1.4, 1.8 * escala)),
+        ('LEFTPADDING', (0, 0), (-1, -1), 2.2),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 2.2),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+    ]
+    if restantes > 0:
+        estilos.append(('SPAN', (0, -1), (-1, -1)))
+    tabla.setStyle(TableStyle(estilos))
+    return tabla
+
+
+def _tabla_lista_compacta(items: list[dict], ancho: float, escala: float,
+                           tipo: str, max_filas: int = 4):
+    es_bloqueo = tipo == 'bloqueo'
+    if not items:
+        texto = ('No hay dependencias activas que frenen producci\u00f3n Sagarde.'
+                 if es_bloqueo else
+                 'No hay frentes propios clasificados como listos.')
+        return Paragraph(
+            '<i>{}</i>'.format(_texto(texto)),
+            _estilo_maqueta('lista_vacia_' + tipo, 8.6, escala,
+                            minimo=8.5, color=COL_MUTED))
+    cabecera = 'Condicionante' if es_bloqueo else 'Pr\u00f3ximo tajo Sagarde'
+    auxiliar = 'Afecta' if es_bloqueo else 'Uds.'
+    estilo_h = _estilo_maqueta('lista_h_' + tipo, 8.6, escala,
+                               minimo=8.5, bold=True, color=colors.white)
+    filas = [[
+        Paragraph('<b>{}</b>'.format(cabecera), estilo_h),
+        Paragraph('<b>{}</b>'.format(auxiliar),
+                  _estilo_maqueta('lista_hc_' + tipo, 8.6, escala,
+                                  minimo=8.5, bold=True, color=colors.white,
+                                  align=TA_CENTER)),
+    ]]
+    for indice, item in enumerate(items[:max_filas]):
+        if es_bloqueo:
+            objetivos = ', '.join(sorted(str(x) for x in item['tajos_sagarde']))
+            if len(objetivos) > 42:
+                objetivos = objetivos[:41].rstrip() + '\u2026'
+            principal = item['trabajo']
+            secundario = objetivos
+            numero = item['afecta_celdas']
+        else:
+            principal = item['trabajo']
+            secundario = item['fase']
+            numero = item['unidades']
+        filas.append([
+            Paragraph(
+                '<b>{}</b><br/><font color=#475467>{}</font>'.format(
+                    _texto(principal), _texto(secundario)),
+                _estilo_maqueta('lista_d_{}_{}'.format(tipo, indice),
+                                8.5, escala, minimo=8.5,
+                                factor_leading=1.08)),
+            Paragraph(
+                str(numero),
+                _estilo_maqueta('lista_n_{}_{}'.format(tipo, indice),
+                                8.7, escala, minimo=8.5, bold=True,
+                                align=TA_CENTER,
+                                color=COL_WARN if es_bloqueo else COL_NAVY)),
+        ])
+    restantes = len(items) - max_filas
+    if restantes > 0:
+        filas.append([
+            Paragraph(
+                '<b>+{} m\u00e1s</b>'.format(restantes),
+                _estilo_maqueta('lista_mas_' + tipo, 8.6, escala,
+                                minimo=8.5, bold=True, color=COL_MUTED)), '',
+        ])
+    tabla = Table(filas, colWidths=[ancho - 17 * mm, 17 * mm])
+    estilos = [
+        ('BACKGROUND', (0, 0), (-1, 0), COL_WARN if es_bloqueo else COL_ACCENT),
+        ('GRID', (0, 0), (-1, -1), .3, COL_LINE),
+        ('ROWBACKGROUNDS', (0, 1), (-1, -1),
+         [colors.white, colors.HexColor('#FFF8F6') if es_bloqueo else COL_LIGHT]),
+        ('TOPPADDING', (0, 0), (-1, -1), max(1.3, 1.7 * escala)),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), max(1.3, 1.7 * escala)),
+        ('LEFTPADDING', (0, 0), (-1, -1), 2.2),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 2.2),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+    ]
+    if restantes > 0:
+        estilos.append(('SPAN', (0, -1), (-1, -1)))
+    tabla.setStyle(TableStyle(estilos))
+    return tabla
+
+
+def _tabla_frentes(frentes: list[dict], ancho: float,
+                    escala: float = 1.0, max_filas: int = 4):
+    return _tabla_lista_compacta(frentes, ancho, escala, 'frente', max_filas)
+
+
+def _tabla_bloqueadores(bloqueadores: list[dict], ancho: float,
+                         escala: float = 1.0, max_filas: int = 4):
+    return _tabla_lista_compacta(
+        bloqueadores, ancho, escala, 'bloqueo', max_filas)
+
+
+def _tabla_detalle_zona(zonas: list[dict], content_w: float,
+                         escala: float = 1.0,
+                         max_zonas: int = 12) -> Table | Paragraph:
+    if not zonas:
+        return Paragraph(
+            '<i>Sin zonas con nombre propio en este \u00e1mbito.</i>',
+            _estilo_maqueta('sin_zonas_ajustado', 8.6, escala,
+                            minimo=8.5, color=COL_MUTED))
+    visibles = zonas[:max_zonas]
+    restantes = len(zonas) - len(visibles)
+    mitad = (content_w - 2 * mm) / 2
+    celdas = []
+    for indice, zona in enumerate(visibles):
+        texto = '<b>{}</b><br/>{:.0f}% \u00b7 {}/{}'.format(
+            _texto(zona['nombre']), zona['pct'], zona['x'], zona['total'])
+        celda = Table([[Paragraph(
+            texto,
+            _estilo_maqueta('zona_{}'.format(indice), 8.6, escala,
+                            minimo=8.5, color=COL_NAVY,
+                            factor_leading=1.12))]], colWidths=[mitad - 2 * mm])
+        celda.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, -1), COL_LIGHT),
+            ('BOX', (0, 0), (-1, -1), .35, COL_LINE),
+            ('TOPPADDING', (0, 0), (-1, -1), 2),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 2),
+        ]))
+        celdas.append(celda)
+    if restantes > 0:
+        celdas.append(Paragraph(
+            '<b>+{} m\u00e1s</b>'.format(restantes),
+            _estilo_maqueta('zonas_mas', 8.6, escala, minimo=8.5,
+                            bold=True, color=COL_MUTED)))
+    filas = []
+    for indice in range(0, len(celdas), 2):
+        filas.append([celdas[indice],
+                      celdas[indice + 1] if indice + 1 < len(celdas) else ''])
+    tabla = Table(filas, colWidths=[mitad, mitad])
+    tabla.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('LEFTPADDING', (0, 0), (0, -1), 0),
+        ('RIGHTPADDING', (0, 0), (0, -1), 1 * mm),
+        ('LEFTPADDING', (1, 0), (1, -1), 1 * mm),
+        ('RIGHTPADDING', (1, 0), (1, -1), 0),
+        ('TOPPADDING', (0, 0), (-1, -1), .7 * mm),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), .7 * mm),
+    ]))
+    return tabla
+
+
+def _chips_cierre(cierre: dict, avisos: list[str] | None,
+                  ancho: float, escala: float) -> list:
+    hitos = cierre.get('hitos') or {}
+    celdas = []
+    for indice, hito_id in enumerate(cierre_expediente.HITOS_ORDEN):
+        datos = hitos.get(hito_id) or {'estado': 'pendiente'}
+        estado = datos.get('estado') or 'pendiente'
+        nombre = cierre_expediente.HITOS_NOMBRE.get(hito_id, hito_id)
+        fondo = (colors.HexColor('#FFF1F0')
+                 if estado in ('condicionada', 'negativa') else COL_CARD)
+        color = COL_WARN if estado in ('condicionada', 'negativa') else COL_NAVY
+        chip = Table([[Paragraph(
+            '<b>{}</b><br/><font color={}>{}</font>'.format(
+                _texto(nombre), color.hexval(), _texto(estado.upper())),
+            _estilo_maqueta('chip_cierre_{}'.format(indice), 8.3, escala,
+                            minimo=8, color=COL_NAVY,
+                            factor_leading=1.1))]], colWidths=[ancho / 2 - 2 * mm])
+        chip.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, -1), fondo),
+            ('BOX', (0, 0), (-1, -1), .45, COL_LINE),
+            ('TOPPADDING', (0, 0), (-1, -1), 2.2),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 2.2),
+        ]))
+        celdas.append(chip)
+    filas = [[celdas[0], celdas[1]], [celdas[2], celdas[3]]]
+    tabla = Table(filas, colWidths=[ancho / 2, ancho / 2])
+    tabla.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 1),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 1),
+        ('TOPPADDING', (0, 0), (-1, -1), 1),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 1),
+    ]))
+    salida = [tabla]
+    for indice, aviso in enumerate(avisos or []):
+        salida.append(Paragraph(
+            '\u26a0 {}'.format(_texto(aviso)),
+            _estilo_maqueta('aviso_cierre_chip_{}'.format(indice), 8.1,
+                            escala, minimo=8, color=COL_WARN)))
+    return salida
+
+
+def _tabla_avance_componentes(componentes: list[dict], ancho: float,
+                               escala: float,
+                               max_filas: int = 10):
+    if not componentes:
+        return [Paragraph(
+            '<i>Sin subdivisiones adicionales.</i>',
+            _estilo_maqueta('sin_componentes', 8.6, escala,
+                            minimo=8.5, color=COL_MUTED))]
+    visibles = componentes[:max_filas]
+    dibujos = []
+    for componente in visibles:
+        kpis = motor_informes.kpis_snapshot(componente['snapshot'])
+        dibujos.append(_dibujo_barra_resumen(
+            componente['nombre'], kpis['pct_ponderado'], kpis['x'],
+            kpis['total'], ancho, escala))
+    restantes = len(componentes) - len(visibles)
+    if restantes > 0:
+        dibujos.append(Paragraph(
+            '<b>+{} m\u00e1s</b>'.format(restantes),
+            _estilo_maqueta('componentes_mas', 8.6, escala,
+                            minimo=8.5, bold=True, color=COL_MUTED)))
+    return dibujos
+
+
+def _pie_electrico(fecha_rev: str, content_w: float,
+                   escala: float = 1.0) -> Table:
+    generado = datetime.now().strftime('%d/%m/%Y %H:%M')
+    texto = ('Fuente: base viva de la obra + cat\u00e1logo de tajos y dependencias \u00b7 '
+             'Datos {} \u00b7 Generado {}').format(_texto(fecha_rev), generado)
+    tabla = Table([[
+        Paragraph(
+            texto,
+            _estilo_maqueta('pie_fuente_ajustado', 8.1, escala,
+                            minimo=8, color=COL_MUTED)),
+        Paragraph(
+            '<b>Montajes El\u00e9ctricos Sagarde, S.L.</b>',
+            _estilo_maqueta('pie_marca_ajustado', 8.2, escala,
+                            minimo=8, bold=True, align=TA_RIGHT,
+                            color=COL_NAVY)),
+    ]], colWidths=[128 * mm, content_w - 128 * mm])
+    tabla.setStyle(TableStyle([
+        ('LINEABOVE', (0, 0), (-1, -1), .5, COL_LINE),
+        ('TOPPADDING', (0, 0), (-1, -1), 2.4),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
+        ('LEFTPADDING', (0, 0), (-1, -1), 0),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 0),
+    ]))
+    return tabla
+
+
+def _datos_pagina_electrica(
+    snapshot_propio: list[dict],
+    historial: list | None,
+    prioridades: dict | None,
+    metadatos_por_id: dict,
+    metadatos_por_nombre: dict,
+    referencias: set[str] | None = None,
+) -> dict:
+    """Calcula solo con helpers vigentes; la maqueta consume este resultado."""
+    return {
+        'kpis': motor_informes.kpis_snapshot(snapshot_propio),
+        'serie': _serie_avance_sagarde(
+            historial, metadatos_por_nombre, referencias),
+        'fases': _resumen_fases_sagarde(snapshot_propio, metadatos_por_nombre),
+        'tajos': _resumen_tajos_sagarde(snapshot_propio, metadatos_por_nombre),
+        'frentes': _frentes_sagarde(
+            prioridades, metadatos_por_id, referencias),
+        'bloqueadores': _bloqueadores_sagarde(
+            prioridades, metadatos_por_id, referencias),
+    }
+
+
+def _panel_superior(
+    datos: dict,
+    snapshot_propio: list[dict],
+    content_w: float,
+    escala: float,
+    componentes: list[dict] | None,
+    titulo_componentes: str,
+    cierre: dict | None,
+    avisos_cierre: list[str] | None,
+    hay_garaje: bool,
+    zonas: list[dict] | None,
+) -> Table:
+    ancho_izq = content_w * .59
+    ancho_der = content_w - ancho_izq - 4 * mm
+    serie = [dict(punto) for punto in datos['serie']]
+    total_actual = None
+    if serie and not hay_garaje:
+        # Sin garaje, la ultima etiqueta representa el mismo snapshot actual
+        # que el KPI. No se altera el historial de entrada, solo su rotulo.
+        serie[-1]['pct'] = datos['kpis']['pct_ponderado']
+    elif hay_garaje:
+        total_actual = datos['kpis']['pct_ponderado']
+
+    izquierda = []
+    if len(serie) >= 4:
+        izquierda.extend([
+            _seccion('Evoluci\u00f3n (viviendas)' if hay_garaje else
+                     'Evoluci\u00f3n del avance', escala),
+            _nota('Cada punto muestra el avance ponderado de la revisi\u00f3n; '
+                  'el marcador final distingue el total de obra cuando '
+                  'existe garaje.', escala),
+            _grafico_tendencia(
+                serie, ancho_izq - 2 * mm, escala, total_actual=total_actual),
+        ])
+    else:
+        izquierda.extend([
+            _seccion('Estado actual del alcance Sagarde', escala),
+            _nota('Sin cuatro revisiones comparables; composici\u00f3n del '
+                  '\u00faltimo estado medido.', escala),
+            _grafico_distribucion(snapshot_propio, ancho_izq - 2 * mm, escala),
+        ])
+
+    derecha = []
+    if zonas is not None:
+        derecha.extend([
+            _seccion('Detalle por zona', escala),
+            _tabla_detalle_zona(zonas, ancho_der, escala),
+        ])
+    else:
+        derecha.append(_seccion(titulo_componentes, escala))
+        derecha.extend(_tabla_avance_componentes(
+            componentes or [], ancho_der, escala))
+        if cierre is not None and (cierre.get('hitos') or {}):
+            derecha.extend([
+                Spacer(1, max(.8 * mm, 1.2 * mm * escala)),
+                _seccion('Cierre de expediente', escala),
+                *_chips_cierre(cierre, avisos_cierre, ancho_der, escala),
+            ])
+
+    tabla = Table([[izquierda, derecha]],
+                  colWidths=[ancho_izq, ancho_der])
+    tabla.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('LEFTPADDING', (0, 0), (0, 0), 0),
+        ('RIGHTPADDING', (0, 0), (0, 0), 2 * mm),
+        ('LEFTPADDING', (1, 0), (1, 0), 2 * mm),
+        ('RIGHTPADDING', (1, 0), (1, 0), 0),
+        ('TOPPADDING', (0, 0), (-1, -1), 0),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
+    ]))
+    return tabla
+
+
+def _panel_inferior(datos: dict, content_w: float, escala: float,
+                    limites: dict | None = None) -> Table:
+    limites = limites or {'tajos': 10, 'frentes': 4, 'bloqueadores': 4}
+    ancho_izq = content_w * .61
+    ancho_der = content_w - ancho_izq - 4 * mm
+    izquierda = [
+        _seccion('Tajos que requieren atenci\u00f3n', escala),
+        _nota('Hasta {} filas, en el orden de ejecuci\u00f3n de la base.'.format(
+            limites['tajos']), escala),
+        _tabla_tajos_atencion(
+            datos['tajos'], ancho_izq, escala=escala,
+            max_filas=limites['tajos']),
+    ]
+    derecha = [
+        _seccion('Condicionantes', escala,
+                 color=COL_WARN if datos['bloqueadores'] else COL_NAVY),
+        _tabla_bloqueadores(
+            datos['bloqueadores'], ancho_der, escala=escala,
+            max_filas=limites['bloqueadores']),
+        Spacer(1, max(.8 * mm, 1.2 * mm * escala)),
+        _seccion('Pr\u00f3ximos frentes', escala),
+        _tabla_frentes(
+            datos['frentes'], ancho_der, escala=escala,
+            max_filas=limites['frentes']),
+    ]
+    tabla = Table([[izquierda, derecha]],
+                  colWidths=[ancho_izq, ancho_der])
+    tabla.setStyle(TableStyle([
+        ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+        ('LEFTPADDING', (0, 0), (0, 0), 0),
+        ('RIGHTPADDING', (0, 0), (0, 0), 2 * mm),
+        ('LEFTPADDING', (1, 0), (1, 0), 2 * mm),
+        ('RIGHTPADDING', (1, 0), (1, 0), 0),
+        ('TOPPADDING', (0, 0), (-1, -1), 0),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
+    ]))
+    return tabla
+
+
+def _crear_pagina_electrica(
+    escala: float,
+    nombre_obra: str,
+    sub_titulo: str,
+    fecha_rev: str,
+    snapshot_propio: list[dict],
+    historial: list | None,
+    ficha: dict | None,
+    prioridades: dict | None,
+    metadatos_por_id: dict,
+    metadatos_por_nombre: dict,
+    content_w: float,
+    referencias: set[str] | None = None,
+    cierre: dict | None = None,
+    avisos_cierre: list[str] | None = None,
+    componentes: list[dict] | None = None,
+    titulo_componentes: str = 'Avance por bloque',
+    hay_garaje: bool = False,
+    zonas: list[dict] | None = None,
+    limites: dict | None = None,
+) -> list:
+    datos = _datos_pagina_electrica(
+        snapshot_propio, historial, prioridades, metadatos_por_id,
+        metadatos_por_nombre, referencias)
+    hueco = lambda base: Spacer(1, max(.7 * mm, base * mm * escala))
+    pagina = [
+        _cabecera_electrica(
+            nombre_obra, sub_titulo, fecha_rev, ficha, content_w, escala),
+        hueco(1.2),
+        _tabla_kpis_electricos(
+            snapshot_propio, datos['frentes'], datos['bloqueadores'],
+            content_w, cierre=cierre, incluir_cierre=cierre is not None,
+            escala=escala),
+        hueco(1.2),
+        _resumen_ejecutivo_pagina(
+            datos, content_w, escala, solo_viviendas=hay_garaje),
+        hueco(1.2),
+        _panel_superior(
+            datos, snapshot_propio, content_w, escala, componentes,
+            titulo_componentes, cierre, avisos_cierre, hay_garaje, zonas),
+        hueco(1.2),
+        _seccion('Fases de producci\u00f3n', escala),
+        _nota('Porcentaje ponderado y celdas terminadas sobre el total '
+              'medido de cada fase.', escala),
+        _tabla_fases_doble(datos['fases'], content_w, escala),
+        hueco(1.2),
+        _panel_inferior(datos, content_w, escala, limites=limites),
+        hueco(1.1),
+        _pie_electrico(fecha_rev, content_w, escala),
+    ]
+    return pagina
+
+
+def _medir_flowables(flowables: list, ancho: float) -> float:
+    alto = 0.0
+    for flowable in flowables:
+        _w, h = flowable.wrap(ancho, 1000 * mm)
+        alto += h
+    return alto
+
+
+def _ajustar_pagina(fabrica, ancho: float, alto: float,
+                    etiqueta: str, planes: list[dict] | None = None,
+                    ocupacion_max: float = 1.0) -> dict:
+    """Ajusta sin abortar: recorta con trazabilidad y usa 0.85 al final."""
+    candidatos = [round(.90 + paso * .05, 2) for paso in range(13)]
+    planes_efectivos = planes or [None]
+    limite_alto = alto * ocupacion_max
+
+    def construir(escala, limites):
+        return fabrica(escala) if limites is None else fabrica(escala, limites)
+
+    def resultado(flowables, escala, alto_natural, limites, indice_plan,
+                  forzado=False):
+        return {
+            'flowables': flowables,
+            'escala': escala,
+            'alto': alto_natural,
+            'ocupacion': alto_natural / alto if alto else 0,
+            'limites': dict(limites) if limites is not None else None,
+            'recortado': indice_plan > 0,
+            'forzado': forzado,
+        }
+
+    for indice_plan, limites in enumerate(planes_efectivos):
+        for escala in reversed(candidatos):
+            flowables = construir(escala, limites)
+            alto_natural = _medir_flowables(flowables, ancho)
+            if alto_natural > limite_alto + .01:
+                continue
+
+            limites_finales = dict(limites) if limites is not None else None
+            # La columna izquierda suele mandar la altura. Mientras no crezca
+            # la pagina se aprovecha ese hueco con mas filas a la derecha.
+            if limites_finales is not None:
+                for clave in ('bloqueadores', 'frentes'):
+                    while limites_finales[clave] < 12:
+                        ampliados = dict(limites_finales)
+                        ampliados[clave] += 1
+                        prueba = construir(escala, ampliados)
+                        alto_prueba = _medir_flowables(prueba, ancho)
+                        if alto_prueba > limite_alto + .01:
+                            break
+                        limites_finales = ampliados
+                        flowables, alto_natural = prueba, alto_prueba
+
+            if indice_plan > 0:
+                print(
+                    '[AVISO INFORME EJECUTIVO] Recorte visible para {!r}: '
+                    'tajos={}, condicionantes={}, frentes={}; las tablas '
+                    'declaran lo omitido con "+N m\u00e1s".'.format(
+                        etiqueta, limites_finales['tajos'],
+                        limites_finales['bloqueadores'],
+                        limites_finales['frentes']))
+            return resultado(
+                flowables, escala, alto_natural, limites_finales, indice_plan)
+
+    limites_finales = planes_efectivos[-1]
+    flowables = construir(.85, limites_finales)
+    alto_minimo = _medir_flowables(flowables, ancho)
+    if alto_minimo <= limite_alto + .01:
+        if limites_finales is not None:
+            print(
+                '[AVISO INFORME EJECUTIVO] Recorte visible y escala 0.85 '
+                'para {!r}: tajos={}, condicionantes={}, frentes={}; las '
+                'tablas declaran lo omitido con "+N m\u00e1s".'.format(
+                    etiqueta, limites_finales['tajos'],
+                    limites_finales['bloqueadores'],
+                    limites_finales['frentes']))
+        return resultado(
+            flowables, .85, alto_minimo, limites_finales,
+            len(planes_efectivos) - 1)
+
+    print(
+        '[AVISO INFORME EJECUTIVO] {!r} excede la altura incluso con el '
+        'recorte maximo y escala 0.85: {:.1f} mm necesarios y {:.1f} mm '
+        'disponibles. Se genera igualmente; no se conserva un PDF antiguo '
+        'en silencio.'.format(
+            etiqueta, alto_minimo / mm, alto / mm))
+    return resultado(
+        flowables, .85, alto_minimo, limites_finales,
+        len(planes_efectivos) - 1, forzado=True)
+
+
+def _construir_bloque_electrico(
+    story: list,
+    nombre_obra: str,
+    sub_titulo: str,
+    fecha_rev: str,
+    snapshot: list[dict],
+    historial: list | None,
+    ficha: dict | None,
+    prioridades: dict | None,
+    metadatos_por_id: dict,
+    metadatos_por_nombre: dict,
+    content_w: float,
+    referencias: set[str] | None = None,
+    alto_util: float | None = None,
+    cierre: dict | None = None,
+    avisos_cierre: list[str] | None = None,
+    componentes: list[dict] | None = None,
+    titulo_componentes: str = 'Avance por bloque',
+    hay_garaje: bool = False,
+    zonas: list[dict] | None = None,
+) -> dict:
+    propios = _filtrar_snapshot_sagarde(
+        snapshot, metadatos_por_nombre, referencias)
+    alto_disponible = (alto_util if alto_util is not None
+                       else PAGE_H - 2 * MARGIN_Y - 4 * mm)
+    planes_recorte = [
+        {'tajos': 10, 'bloqueadores': 4, 'frentes': 4},
+        {'tajos': 8, 'bloqueadores': 4, 'frentes': 4},
+        {'tajos': 6, 'bloqueadores': 4, 'frentes': 4},
+        {'tajos': 6, 'bloqueadores': 3, 'frentes': 3},
+        {'tajos': 6, 'bloqueadores': 2, 'frentes': 2},
+    ]
+    ajuste = _ajustar_pagina(
+        lambda escala, limites: _crear_pagina_electrica(
+            escala, nombre_obra, sub_titulo, fecha_rev, propios, historial,
+            ficha, prioridades, metadatos_por_id, metadatos_por_nombre,
+            content_w, referencias=referencias, cierre=cierre,
+            avisos_cierre=avisos_cierre, componentes=componentes,
+            titulo_componentes=titulo_componentes, hay_garaje=hay_garaje,
+            zonas=zonas, limites=limites),
+        content_w, alto_disponible,
+        '{} \u00b7 {}'.format(nombre_obra, sub_titulo),
+        planes=planes_recorte, ocupacion_max=.96)
+    story.extend(ajuste['flowables'])
+    return ajuste
+
+
+def _componentes_por_campo(snapshot: list[dict], campo: str) -> list[dict]:
+    grupos = motor_informes._agrupar(snapshot, campo) if snapshot else {}
+    return [
+        {'nombre': str(nombre), 'snapshot': registros}
+        for nombre, registros in sorted(
+            grupos.items(), key=lambda item: _fold(item[0]))
+    ]
+
+
+def _clave_registro(registro: dict) -> tuple:
+    return tuple(registro.get(campo) for campo in
+                 ('task', 'building', 'floor', 'unit', 'status'))
+
+
+def _sin_subsnapshot(snapshot: list[dict], subsnapshot: list[dict] | None) -> list[dict]:
+    claves = {_clave_registro(r) for r in (subsnapshot or [])}
+    return [r for r in snapshot if _clave_registro(r) not in claves]
+
+
 def _cargar_meta_obras() -> dict:
     js_path = MOTOR_IA_DIR / "obras_revisiones.js"
     if not js_path.is_file():
@@ -1203,6 +2380,43 @@ def _cargar_meta_obras() -> dict:
         return {o["nombre"]: o for o in obras}
     except Exception:
         return {}
+
+
+def _portales_del_informe(meta: dict | None,
+                          snapshot: list[dict]) -> list[tuple[str, str, str]]:
+    """Devuelve referencia, rotulo corto unico y nombre real de cada portal."""
+    entradas = []
+    for bloque in (meta or {}).get('bloques') or []:
+        bloque_nombre = str(bloque.get('nombre') or '').strip()
+        for portal in bloque.get('portales') or []:
+            portal_nombre = str(portal.get('nombre') or '').strip()
+            referencia = (portal.get('referencia_portal')
+                          or portal.get('referencia') or portal_nombre)
+            entradas.append((referencia, portal_nombre, bloque_nombre))
+
+    if not entradas:
+        return [
+            (nombre, str(nombre), str(nombre))
+            for nombre in sorted(
+                {r.get('building') for r in snapshot if r.get('building')},
+                key=_fold)
+        ]
+
+    repeticiones = defaultdict(int)
+    for _referencia, portal_nombre, _bloque_nombre in entradas:
+        repeticiones[_fold(portal_nombre)] += 1
+
+    salida = []
+    for referencia, portal_nombre, bloque_nombre in entradas:
+        es_unico = _fold(portal_nombre) in ('portal unico', '')
+        if es_unico:
+            rotulo = bloque_nombre or portal_nombre or str(referencia)
+        elif repeticiones[_fold(portal_nombre)] > 1 and bloque_nombre:
+            rotulo = '{} \u00b7 {}'.format(bloque_nombre, portal_nombre)
+        else:
+            rotulo = portal_nombre
+        salida.append((referencia, rotulo, portal_nombre or str(referencia)))
+    return salida
 
 
 # ─── Generación del PDF ───────────────────────────────────────────────────
@@ -1229,6 +2443,7 @@ def generar_pdf_ejecutivo(
         rightMargin=MARGIN_X,
         topMargin=MARGIN_Y,
         bottomMargin=MARGIN_Y,
+        allowSplitting=0,
     )
 
     story = []
@@ -1238,25 +2453,7 @@ def generar_pdf_ejecutivo(
     meta_obras = _cargar_meta_obras()
     meta = meta_obras.get(nombre_obra)
 
-    portal_items = []
-    if meta and meta.get("bloques"):
-        for b in meta["bloques"]:
-            b_nom = b.get("nombre", "")
-            for p in b.get("portales", []):
-                p_nom = p.get("nombre", "")
-                p_ref = p.get("referencia_portal", p_nom)
-                if p_nom.lower() == "portal único" or p_nom.lower() == "portal unico":
-                    lbl = f"BLOQUE: {b_nom}" if b_nom else "PORTAL ÚNICO"
-                elif b_nom and b_nom.lower() not in p_nom.lower() and p_nom.lower() not in b_nom.lower():
-                    lbl = f"BLOQUE: {b_nom} — PORTAL: {p_nom}"
-                else:
-                    lbl = f"PORTAL: {p_nom}"
-                portal_items.append((p_ref, lbl, p_nom))
-    
-    if not portal_items:
-        raw_buildings = sorted(set(r.get('building') for r in snapshot if r.get('building')))
-        for b in raw_buildings:
-            portal_items.append((b, f"SUBDIVISIÓN: {b}", b))
+    portal_items = _portales_del_informe(meta, snapshot)
 
     # 1. Página General de la Obra. Si la obra tiene garaje, el resumen
     #    general cuenta vivienda+garaje juntos (decision de Bixente
@@ -1268,10 +2465,43 @@ def generar_pdf_ejecutivo(
     #    independientes), y los frentes/bloqueadores de garaje ya tienen su
     #    propia pagina completa mas abajo.
     snapshot_general = snapshot + (snapshot_garaje or [])
+    snapshot_viviendas = _sin_subsnapshot(
+        snapshot, snapshot_zonas_especiales)
+    componentes_generales = []
+    for ref, lbl, p_nom in portal_items:
+        snap_componente = [
+            r for r in snapshot_viviendas
+            if r.get('building') == ref or r.get('building') == p_nom
+        ]
+        propios_componente = _filtrar_snapshot_sagarde(
+            snap_componente, metadatos_por_nombre)
+        if propios_componente:
+            componentes_generales.append({
+                'nombre': lbl,
+                'snapshot': propios_componente,
+            })
+    if snapshot_garaje:
+        propios_garaje = _filtrar_snapshot_sagarde(
+            snapshot_garaje, metadatos_por_nombre)
+        if propios_garaje:
+            componentes_generales.append({
+                'nombre': 'GARAJE', 'snapshot': propios_garaje})
+    if snapshot_zonas_especiales:
+        propios_zesp = _filtrar_snapshot_sagarde(
+            snapshot_zonas_especiales, metadatos_por_nombre)
+        if propios_zesp:
+            componentes_generales.append({
+                'nombre': 'ZONAS ESPECIALES', 'snapshot': propios_zesp})
     sub_tit_gen = f"RESUMEN GENERAL ({len(portal_items)} PORTALES/BLOQUES)" if len(portal_items) >= 2 else "RESUMEN GENERAL"
     _construir_bloque_electrico(
         story, nombre_obra, sub_tit_gen, fecha_rev, snapshot_general, historial,
         ficha, prioridades, metadatos_por_id, metadatos_por_nombre, content_w,
+        alto_util=doc.height - 12,
+        cierre=cierre,
+        avisos_cierre=avisos_cierre,
+        componentes=componentes_generales,
+        titulo_componentes='Avance por bloque',
+        hay_garaje=bool(snapshot_garaje),
     )
 
     # 2. Páginas Desglosadas por Bloque / Portal (si hay 2 o más subdivisiones)
@@ -1284,6 +2514,11 @@ def generar_pdf_ejecutivo(
                     story, nombre_obra, lbl, fecha_rev, snap_portal, historial,
                     ficha, prioridades, metadatos_por_id, metadatos_por_nombre,
                     content_w, referencias={ref, p_nom},
+                    alto_util=doc.height - 12,
+                    componentes=_componentes_por_campo(
+                        _filtrar_snapshot_sagarde(
+                            snap_portal, metadatos_por_nombre), 'floor'),
+                    titulo_componentes='Avance por planta',
                 )
 
     # 2b. Página de Garaje, tratada como un bloque más (decision de
@@ -1301,6 +2536,9 @@ def generar_pdf_ejecutivo(
             story, nombre_obra, "GARAJE", fecha_rev, snapshot_garaje,
             [(fecha_rev, snapshot_garaje)], ficha, prioridades_garaje,
             metadatos_por_id, metadatos_por_nombre, content_w,
+            alto_util=doc.height - 12,
+            zonas=_zonas_con_nombre(
+                prioridades_garaje, ficha, resolver_nombre=False),
         )
 
     # 2c. Pagina de Zonas especiales (cuarto tecnico/ligero/cubierta de
@@ -1318,15 +2556,10 @@ def generar_pdf_ejecutivo(
             [(fecha_rev, snapshot_zonas_especiales)], ficha,
             prioridades_zonas_especiales,
             metadatos_por_id, metadatos_por_nombre, content_w,
+            alto_util=doc.height - 12,
+            zonas=_zonas_con_nombre(
+                prioridades_zonas_especiales, ficha, resolver_nombre=True),
         )
-
-    # 3. Cierre de expediente: una vez, al final, sea cual sea el numero
-    #    de portales/bloques de la obra.
-    story.append(PageBreak())
-    story.append(Paragraph(
-        'CIERRE DE EXPEDIENTE', _style('cierre_titulo', 13, True, color=COL_NAVY)))
-    story.append(Spacer(1, 3 * mm))
-    story.append(_tabla_cierre_expediente(cierre, avisos_cierre, content_w))
 
     doc.build(story)
     return output_pdf
