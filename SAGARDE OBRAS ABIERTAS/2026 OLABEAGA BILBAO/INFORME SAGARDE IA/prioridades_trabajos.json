@@ -4,11 +4,11 @@
   "obra": "2026 OLABEAGA BILBAO",
   "revision": null,
   "sin_base": false,
-  "edad_revision_dias": 739888,
+  "edad_revision_dias": 739889,
   "revision_caducada": true,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "30/09/2026 22:38",
+  "generado": "01/10/2026 06:22",
   "resumen": {
     "listos": 0,
     "verificar": 0,
@@ -50710,6 +50710,6 @@
     "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmación.",
     "El orden sigue la secuencia lógica definida en CATALOGO_TAJOS.json.",
-    "La revisión es del None (739888 días). Los tajos conservan su clasificación; confirmar en obra antes de ejecutar."
+    "La revisión es del None (739889 días). Los tajos conservan su clasificación; confirmar en obra antes de ejecutar."
   ]
 }
