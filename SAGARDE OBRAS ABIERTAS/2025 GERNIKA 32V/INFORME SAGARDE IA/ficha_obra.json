@@ -7113,18 +7113,18 @@
   "dudas": [],
   "materiales": {},
   "documentos": {
-    "total": 200,
+    "total": 203,
     "por_categoria": {
       "Comprimidos": 3,
       "Excel": 2,
       "Imágenes": 21,
-      "Otros": 32,
+      "Otros": 34,
       "PDF": 136,
-      "Planos y gráfica": 4,
+      "Planos y gráfica": 5,
       "Word": 2
     },
     "_meta": {
-      "actualizado": "30/09/2026 21:47"
+      "actualizado": "02/10/2026 13:54"
     }
   },
   "contactos": []
