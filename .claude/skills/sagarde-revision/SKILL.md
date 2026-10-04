@@ -123,12 +123,18 @@ python leer_hoja_marcada.py "<ruta/hoja.pdf>" <id_obra> --digital --fecha DD/MM/
 python generar_todos.py --no-pdf
 ```
 
-**Decisión de Bixente (24/08/2026): una celda que sale en blanco en esta
-lectura NO se toca.** A diferencia de la hoja de papel (donde Bixente ha
-tenido la hoja entera delante y un blanco es "no ha empezado" → `P`), una
-exportación digital no garantiza que él haya mirado esa celda. Solo se
-aplican las que imprimen marca explícita (`X`/`M`//). No hay
-`--sin-marca` en este flujo por eso mismo.
+**Decisión de Bixente (04/10/2026, sustituye a la del 24/08/2026): en una hoja
+digital se revisan todos los tajos, así que una casilla en blanco significa
+"ese tajo no ha empezado" → `P`, igual que en la hoja de papel.** La decisión
+anterior (un blanco digital no se tocaba) dejaba las celdas en `?`, y el panel
+las contaba como «Sin revisar nunca»: en Olabeaga, 1.411 celdas, y las rozas de
+timbres no se ofrecían ni con el tabique hecho. Reglas: solo asciende `?`→`P`
+(un blanco **nunca** baja una `X`, `M` o `/`), y solo si la hoja trae al menos
+una marca real (una hoja exportada sin marcar nada no cambia nada). Si una hoja
+no cubre toda la obra, usa `--sin-marca desconocido` y los blancos se dejan como
+estaban. Las marcas que la hoja trae y la ficha no reconoce (p. ej. una vivienda
+que la ficha no tiene) NO se aplican y el lector las avisa una a una: hay que
+resolverlas antes de dar la revisión por aplicada.
 
 ## Qué mirar en cada recorte (solo Flujo A)
 
