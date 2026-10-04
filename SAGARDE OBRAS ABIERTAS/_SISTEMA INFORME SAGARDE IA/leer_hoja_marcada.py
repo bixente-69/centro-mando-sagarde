@@ -58,8 +58,10 @@ import argparse
 import io
 import json
 import os
+import shutil
 import sys
 from collections import Counter, defaultdict
+from datetime import datetime
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 OBRAS_DIR = os.path.dirname(AQUI)
@@ -830,6 +832,52 @@ def main():
                 print(f"  celdas nuevas en '?': "
                       f"{len(informe_estructura['celdas_creadas'])}")
 
+        # La otra mitad de la misma norma: la ultima hoja manda tambien para
+        # QUITAR. Lo que la hoja ya no trae (una vivienda que desaparece, un
+        # tajo que no imprime para una unidad) no existe: se retira de la base
+        # y queda una exclusion para que ninguna regeneracion lo resucite. La
+        # copia anterior queda en git y en un .bak. Si lo retirado guarda
+        # avance medido (X/M//) no se retira NADA y, al escribir, se aborta.
+        informe_baja = None
+        if os.path.isfile(ruta_html_hoja) and not args.forzar_pdf:
+            import adaptar_revision_html
+            ausentes = adaptar_revision_html.estructura_ausente_en_hoja(
+                ruta_html_hoja, obra['id'], ficha, catalogo,
+                fecha=args.fecha)
+            if ausentes['no_fiable']:
+                print(f"  [AVISO] {ausentes['no_fiable']}")
+            elif ausentes['unidades'] or ausentes['tajos']:
+                id_baja = validar_revision.generar_revision_id(
+                    obra['id'], args.fecha, 'html_digital',
+                    os.path.abspath(ruta_html_hoja))
+                ficha_baja, informe_baja = (
+                    fichas.retirar_estructura_ausente_en_hoja(
+                        ficha, ausentes, args.fecha, id_baja))
+                print('ESTRUCTURA QUE YA NO ESTA EN LA HOJA (la ultima hoja '
+                      'manda; se retira de la base):')
+                for u in ausentes['unidades']:
+                    print(f"  - {u['edificio']} / {u['planta']} / unidad "
+                          f"{u['unidad']} ({u.get('tipo')}"
+                          f"{', ' + str(u['nombre']) if u.get('nombre') else ''}"
+                          f"): {len(u['celdas'])} celdas")
+                por_tajo = Counter(t['tajo'] for t in ausentes['tajos'])
+                for tajo, n in sorted(por_tajo.items()):
+                    print(f"  - tajo {tajo}: la hoja no lo imprime en {n} "
+                          f"unidad(es)")
+                if informe_baja['con_avance']:
+                    print(f"  [NO SE RETIRA NADA] {len(informe_baja['con_avance'])}"
+                          f" celda(s) a retirar guardan avance medido "
+                          f"(X/M//): {informe_baja['con_avance'][:5]}")
+                    if args.escribir:
+                        raise SystemExit(
+                            '\n[ABORTADO] La hoja quita estructura con avance '
+                            'medido. Es una decision de obra: confirmarla con '
+                            'Bixente antes de escribir.')
+                else:
+                    ficha = ficha_baja
+                    print(f"  celdas retiradas: "
+                          f"{len(informe_baja['celdas_retiradas'])}")
+
         revision = _construir_revision_digital(
             args.hoja, obra['id'], ficha, args.fecha, catalogo,
             forzar_pdf=args.forzar_pdf,
@@ -953,8 +1001,21 @@ def main():
             'origen': 'hoja generada rellenada digitalmente, leida por la IA',
             'celdas_medidas': len(impresos), 'celdas_cambiadas': len(cambios),
             'ubicaciones_nuevas': len(
-                (informe_estructura or {}).get('anadidas') or [])})
+                (informe_estructura or {}).get('anadidas') or []),
+            'ubicaciones_retiradas': len(
+                (informe_baja or {}).get('unidades_retiradas') or []),
+            'celdas_retiradas': len(
+                (informe_baja or {}).get('celdas_retiradas') or [])})
         ficha_nueva['revisiones'] = revisiones
+        # Copia de la base tal como estaba ANTES de esta hoja: la ultima hoja
+        # manda, pero lo anterior se conserva por si hay que volver atras.
+        ruta_actual = fichas.ruta_ficha(carpeta)
+        if os.path.isfile(ruta_actual):
+            copia = (f"{ruta_actual}.antes_hoja_"
+                     f"{args.fecha.replace('/', '')}_"
+                     f"{datetime.now():%H%M%S}.bak")
+            shutil.copy2(ruta_actual, copia)
+            print(f'  copia de la base anterior: {copia}')
         fichas.guardar(carpeta, ficha_nueva)
         trazabilidad_revisiones.registrar_trazabilidad(
             aplicacion,

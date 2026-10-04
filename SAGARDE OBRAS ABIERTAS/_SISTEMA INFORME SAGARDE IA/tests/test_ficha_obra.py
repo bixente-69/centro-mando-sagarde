@@ -1078,5 +1078,72 @@ class TestAlfabetoDeEstados(unittest.TestCase):
             ficha_obra.MAPA_ESTADO[ficha_obra._normalizar_estado('P')])
 
 
+class TestRetirarEstructuraAusenteEnHoja(unittest.TestCase):
+    """04/10/2026: la ultima hoja manda tambien para quitar."""
+
+    def _ficha(self, estado_b='?'):
+        ficha = fixtures.ficha_minima()
+        ficha['estados'] = {
+            'p1__pb__tubeado__A': {'v': '?', 'f': None, 'r': None},
+            'p1__pb__tubeado__B': {'v': estado_b, 'f': None, 'r': None},
+            'p1__pb__cableado__A': {'v': 'P', 'f': None, 'r': None},
+        }
+        return ficha
+
+    def _ausentes(self, ficha):
+        return {
+            'no_fiable': None,
+            'unidades': [{
+                'portal_id': 'p1', 'planta_id': 'pb', 'unidad': 'B',
+                'edificio': 'P1', 'planta': 'PB', 'tipo': 'vivienda',
+                'nombre': None,
+                'celdas': {'p1__pb__tubeado__B': ficha['estados'][
+                    'p1__pb__tubeado__B']['v']}}],
+            'tajos': [{'portal_id': 'p1', 'planta_id': 'pb', 'unidad': 'A',
+                       'tajo': 'cableado', 'clave': 'p1__pb__cableado__A',
+                       'estado': 'P'}],
+        }
+
+    def test_retira_unidad_y_tajo_y_deja_exclusion(self):
+        original = self._ficha()
+        nueva, informe = ficha_obra.retirar_estructura_ausente_en_hoja(
+            original, self._ausentes(original), '04/10/2026', 'rev_x')
+
+        self.assertTrue(informe['retirado'])
+        self.assertEqual(set(nueva['estados']), {'p1__pb__tubeado__A'})
+        pb = nueva['estructura']['bloques'][0]['portales'][0]['plantas'][0]
+        self.assertEqual([u['id'] for u in pb['ubicaciones']], ['A'])
+        self.assertEqual(nueva['estructura']['exclusiones'][0]['unidad'], 'B')
+        self.assertIsNotNone(ficha_obra._esta_excluida(nueva, 'P1', 'PB', 'B'))
+        # Control: lo que la hoja SI trae, intacto; la original no se muta.
+        self.assertEqual(len(original['estados']), 3)
+        self.assertNotIn('exclusiones', original['estructura'])
+
+    def test_si_lo_retirado_guarda_avance_no_se_retira_nada(self):
+        for estado in ('X', 'M', '/'):
+            with self.subTest(estado=estado):
+                original = self._ficha(estado_b=estado)
+                nueva, informe = ficha_obra.retirar_estructura_ausente_en_hoja(
+                    original, self._ausentes(original), '04/10/2026', 'rev_x')
+
+                self.assertFalse(informe['retirado'])
+                self.assertEqual(informe['con_avance'],
+                                 ['p1__pb__tubeado__B'])
+                self.assertEqual(nueva['estados'], original['estados'])
+                self.assertEqual(nueva['estructura'], original['estructura'])
+
+    def test_una_planta_que_se_queda_sin_unidades_desaparece(self):
+        original = self._ficha()
+        ausentes = {'no_fiable': None, 'tajos': [], 'unidades': [
+            {'portal_id': 'p1', 'planta_id': 'pb', 'unidad': u,
+             'edificio': 'P1', 'planta': 'PB', 'tipo': 'vivienda',
+             'nombre': None, 'celdas': {}} for u in ('A', 'B')]}
+        nueva, _ = ficha_obra.retirar_estructura_ausente_en_hoja(
+            original, ausentes, '04/10/2026', 'rev_x')
+
+        plantas = nueva['estructura']['bloques'][0]['portales'][0]['plantas']
+        self.assertEqual([p['id'] for p in plantas], ['1'])
+
+
 if __name__ == '__main__':
     unittest.main()

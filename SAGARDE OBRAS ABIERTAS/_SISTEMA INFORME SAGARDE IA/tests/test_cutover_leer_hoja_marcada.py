@@ -170,7 +170,9 @@ class TestCutoverLeerHojaMarcada(unittest.TestCase):
 
         self.assertIn(f'usando el HTML gemelo: {html}', salida)
         self.assertIn('[SALVAGUARDA]', salida)
-        adaptar_html.assert_called_once()
+        # Dos llamadas por diseno: una detecta lo que la hoja ya no trae,
+        # la otra lee las marcas.
+        self.assertEqual(adaptar_html.call_count, 2)
         adaptar_pdf.assert_not_called()
         guardar.assert_called_once()
         self.assertEqual(
@@ -198,7 +200,9 @@ class TestCutoverLeerHojaMarcada(unittest.TestCase):
                 '--escribir'], _ficha('P'))
 
         impresos.assert_not_called()
-        adaptar_html.assert_called_once()
+        # Dos llamadas por diseno: una detecta lo que la hoja ya no trae,
+        # la otra lee las marcas.
+        self.assertEqual(adaptar_html.call_count, 2)
         self.assertIn('sin PDF real que releer', salida)
         self.assertIn('[SALVAGUARDA OMITIDA]', salida)
         self.assertNotIn('[SALVAGUARDA]', salida)
@@ -483,6 +487,125 @@ class TestDigitalEstructuraYBlancos(unittest.TestCase):
 
         self.assertIn('[MARCA SIN APLICAR]', salida)
         guardar.assert_called_once()
+
+
+class TestDigitalLaUltimaHojaTambienQuita(unittest.TestCase):
+    """04/10/2026: la ultima hoja manda tambien para QUITAR. Lo que ya no
+    trae (una vivienda que desaparece, un tajo que no imprime) se retira de
+    la base y deja una exclusion para que no lo resucite una regeneracion."""
+
+    setUp = TestCutoverLeerHojaMarcada.setUp
+    tearDown = TestCutoverLeerHojaMarcada.tearDown
+    _ejecutar = TestCutoverLeerHojaMarcada._ejecutar
+
+    A = 'p1__pb__tubeado__A'
+    B = 'p1__pb__tubeado__B'
+    PB = 'src_pruebas_p1__src_pruebas_p1_f1__'
+    P1 = 'src_pruebas_p1__src_pruebas_p1_f2__'
+
+    def _ficha(self, estado_b='?'):
+        ficha = fixtures.ficha_minima()
+        ficha['estados'] = {
+            'p1__pb__tubeado__A': {'v': '?', 'f': None, 'r': None},
+            'p1__pb__tubeado__B': {'v': estado_b, 'f': None, 'r': None},
+            'p1__pb__cableado__A': {'v': '?', 'f': None, 'r': None},
+            'p1__1__tubeado__A': {'v': '?', 'f': None, 'r': None},
+            'p1__1__tubeado__B': {'v': '?', 'f': None, 'r': None},
+        }
+        return ficha
+
+    def _html(self, celdas):
+        html = self.pdf.with_suffix('.html')
+        html.write_text(''.join(
+            f'<td data-k="{k}" data-st="{s}"></td>' for k, s in celdas),
+            encoding='utf-8')
+
+    def _correr(self, extra, ficha):
+        # El PDF gemelo imprime la misma unica marca explicita que el HTML.
+        with mock.patch.object(
+                lector, 'estados_impresos', return_value={self.A: 'X'}):
+            return self._ejecutar([
+                self.pdf, 'pruebas', '--digital', '--fecha', FECHA,
+                *extra], ficha)
+
+    def _hoja_sin_la_B_de_pb(self):
+        # Control positivo: la hoja trae la A de PB y las dos de la planta 1.
+        self._html([
+            (self.PB + 'tube-viv__A', 'X'), (self.PB + 'cabl-elec__A', ''),
+            (self.P1 + 'tube-viv__A', ''), (self.P1 + 'tube-viv__B', ''),
+        ])
+
+    def test_unidad_que_la_hoja_ya_no_trae_se_retira_con_su_exclusion(self):
+        self._hoja_sin_la_B_de_pb()
+        salida, guardar = self._correr(['--escribir'], self._ficha())
+
+        guardada = guardar.call_args.args[1]
+        self.assertIn('YA NO ESTA EN LA HOJA', salida)
+        pb = guardada['estructura']['bloques'][0]['portales'][0]['plantas'][0]
+        self.assertEqual([u['id'] for u in pb['ubicaciones']], ['A'])
+        self.assertNotIn(self.B, guardada['estados'])
+        self.assertEqual(
+            [(e['portal'], e['planta'], e['unidad'])
+             for e in guardada['estructura']['exclusiones']],
+            [('P1', 'PB', 'B')])
+        # Control: lo que la hoja SI trae sigue ahi.
+        self.assertIn(self.A, guardada['estados'])
+        self.assertIn('p1__1__tubeado__B', guardada['estados'])
+        self.assertEqual(guardada['revisiones'][-1]['ubicaciones_retiradas'], 1)
+
+    def test_tajo_que_la_hoja_no_imprime_para_una_unidad_se_retira(self):
+        # La hoja imprime tubeado pero no cableado para la A de PB.
+        self._html([
+            (self.PB + 'tube-viv__A', 'X'), (self.PB + 'tube-viv__B', ''),
+            (self.P1 + 'tube-viv__A', ''), (self.P1 + 'tube-viv__B', ''),
+        ])
+        salida, guardar = self._correr(['--escribir'], self._ficha())
+
+        estados = guardar.call_args.args[1]['estados']
+        self.assertNotIn('p1__pb__cableado__A', estados)
+        self.assertIn(self.A, estados)
+        self.assertIn(self.B, estados)
+
+    def test_no_se_retira_nada_si_lo_retirado_guarda_avance_medido(self):
+        self._hoja_sin_la_B_de_pb()
+        with self.assertRaises(SystemExit) as ctx:
+            self._correr(['--escribir'], self._ficha(estado_b='X'))
+        self.assertIn('ABORTADO', str(ctx.exception))
+
+    def test_simulacion_lista_lo_que_se_retira_y_no_guarda(self):
+        self._hoja_sin_la_B_de_pb()
+        salida, guardar = self._correr([], self._ficha())
+
+        self.assertIn('YA NO ESTA EN LA HOJA', salida)
+        self.assertIn('unidad B', salida)
+        guardar.assert_not_called()
+
+    def test_un_portal_que_la_hoja_no_cubre_no_se_toca(self):
+        ficha = self._ficha()
+        portal2 = {'id': 'p2', 'nombre': 'P2', 'referencia': 'P2', 'plantas': [
+            {'id': 'pb', 'nombre': 'PB', 'orden': 0, 'ubicaciones': [
+                {'id': 'A', 'tipo': 'vivienda', 'origen': 'campo'}]}]}
+        ficha['estructura']['bloques'][0]['portales'].append(portal2)
+        ficha['estados']['p2__pb__tubeado__A'] = {'v': '?', 'f': None, 'r': None}
+        self._hoja_sin_la_B_de_pb()
+        salida, guardar = self._correr(['--escribir'], ficha)
+
+        guardada = guardar.call_args.args[1]
+        self.assertIn('p2__pb__tubeado__A', guardada['estados'])
+        self.assertEqual(len(guardada['estructura']['bloques'][0]['portales']), 2)
+
+    def test_hoja_con_claves_sin_resolver_no_retira_nada(self):
+        # Una clave de planta desconocida: la base no puede saber si la B
+        # falta de verdad o si es un alias que no entiende. No se quita nada.
+        self._html([
+            (self.PB + 'tube-viv__A', 'X'),
+            ('src_pruebas_p1__src_pruebas_p1_f9__tube-viv__A', ''),
+            (self.P1 + 'tube-viv__A', ''), (self.P1 + 'tube-viv__B', ''),
+        ])
+        salida, guardar = self._correr(['--escribir'], self._ficha())
+
+        self.assertIn('no se retira nada de la base', salida)
+        self.assertIn(self.B, guardar.call_args.args[1]['estados'])
 
 
 if __name__ == '__main__':

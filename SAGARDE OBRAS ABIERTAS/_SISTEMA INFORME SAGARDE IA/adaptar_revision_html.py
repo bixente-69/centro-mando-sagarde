@@ -326,6 +326,80 @@ def estructura_nueva_en_hoja(
     ))
 
 
+def estructura_ausente_en_hoja(ruta_html, obra_id, ficha_actual, catalogo,
+                               fecha=None):
+    """Ubicaciones y tajos que la ficha tiene y la hoja ya NO imprime.
+
+    Norma de Bixente (04/10/2026): la ULTIMA hoja manda, tambien para quitar.
+    Una vivienda que desaparece de la hoja no existe (Olabeaga, PB del portal
+    3); un tajo que la hoja no imprime para una unidad no aplica a ella
+    (alumbrado temporizado en recintos).
+
+    Solo se compara dentro de los portales que la hoja imprime (una hoja que
+    no cubre un portal entero no lo borra) y solo si TODA clave de la hoja se
+    ha podido resolver: con una clave sin resolver una unidad podria parecer
+    ausente por un alias no entendido, y quitarla seria perder datos. En ese
+    caso se devuelve ``no_fiable`` con el motivo y no se propone quitar nada.
+    No modifica nada.
+    """
+    revision = construir_revision_normalizada_html(
+        ruta_html, obra_id, ficha_actual, catalogo, sin_marca='pendiente',
+        fecha=fecha)
+    ausentes = {'unidades': [], 'tajos': [], 'no_fiable': None}
+    if revision['metadata']['avisos']:
+        ausentes['no_fiable'] = (
+            f"{len(revision['metadata']['avisos'])} clave(s) de la hoja sin "
+            'resolver: no se retira nada de la base')
+        return ausentes
+
+    impresas = set()
+    unidades_impresas = set()
+    portales_cubiertos = set()
+    for celda in revision['celdas']:
+        portal, planta, _tajo, unidad = celda['clave'].split('__')
+        impresas.add(celda['clave'])
+        unidades_impresas.add((portal, planta, unidad))
+        portales_cubiertos.add(portal)
+
+    estados = ficha_actual.get('estados') or {}
+    for portal in _portales_en_estructura(ficha_actual):
+        portal_id = _id_real(portal.get('id'))
+        if portal_id not in portales_cubiertos:
+            continue
+        for planta in portal.get('plantas') or []:
+            if not isinstance(planta, dict):
+                continue
+            planta_id = _id_real(planta.get('id'))
+            for ubicacion in _ubicaciones(planta):
+                unidad = str(ubicacion.get('id'))
+                prefijo = f'{portal_id}__{planta_id}__'
+                sufijo = f'__{unidad}'
+                celdas = {
+                    clave: (valor or {}).get('v')
+                    for clave, valor in estados.items()
+                    if clave.startswith(prefijo) and clave.endswith(sufijo)
+                    and len(clave.split('__')) == 4
+                }
+                if (portal_id, planta_id, unidad) not in unidades_impresas:
+                    ausentes['unidades'].append({
+                        'portal_id': portal_id, 'planta_id': planta_id,
+                        'unidad': unidad,
+                        'edificio': _referencia_portal(portal),
+                        'planta': _referencia_planta(planta),
+                        'tipo': ubicacion.get('tipo'),
+                        'nombre': ubicacion.get('nombre'),
+                        'celdas': celdas,
+                    })
+                    continue
+                for clave, estado in sorted(celdas.items()):
+                    if clave not in impresas:
+                        ausentes['tajos'].append({
+                            'portal_id': portal_id, 'planta_id': planta_id,
+                            'unidad': unidad, 'tajo': clave.split('__')[2],
+                            'clave': clave, 'estado': estado})
+    return ausentes
+
+
 def _fecha_html(ruta_html):
     # Se reutiliza exactamente el extractor empleado por
     # listar_revisiones_html; no se mantiene una segunda regex DDMMAAAA.

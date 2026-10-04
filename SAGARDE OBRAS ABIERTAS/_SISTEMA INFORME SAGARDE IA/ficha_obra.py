@@ -913,6 +913,77 @@ def ampliar_estructura_desde_hoja(
     return ficha_nueva, informe
 
 
+ESTADOS_CON_AVANCE = frozenset({'X', 'M', '/'})
+
+
+def retirar_estructura_ausente_en_hoja(ficha, ausentes, fecha, revision_id):
+    """Quita de la base lo que la ULTIMA hoja ya no trae (norma 04/10/2026).
+
+    ``ausentes`` es lo que devuelve ``adaptar_revision_html.
+    estructura_ausente_en_hoja``. Trabaja sobre una copia profunda y devuelve
+    ``(ficha_nueva, informe)``.
+
+    Todo o nada: si alguna celda a retirar guarda avance medido (X, M o /) no
+    se quita NADA y el informe lo dice en ``con_avance``; quitar una unidad con
+    trabajo hecho es una decision de obra, no de lectura de hoja. Las celdas
+    en ``?``, ``P`` o ``N`` no pierden ningun dato medido.
+
+    Cada unidad retirada deja una entrada en ``estructura.exclusiones``: es el
+    mecanismo que ya impide que una regeneracion la vuelva a dar de alta desde
+    un historial antiguo ('manda la ultima'; lo anterior queda en git y en la
+    copia de seguridad que escribe el lector).
+    """
+    ficha_nueva = copy.deepcopy(ficha)
+    informe = {'unidades_retiradas': [], 'celdas_retiradas': [],
+               'con_avance': [], 'retirado': False}
+    ausentes = ausentes or {}
+    unidades = list(ausentes.get('unidades') or [])
+    tajos = list(ausentes.get('tajos') or [])
+    estados = ficha_nueva.setdefault('estados', {})
+
+    claves = []
+    for u in unidades:
+        claves.extend(u.get('celdas') or {})
+    claves.extend(t['clave'] for t in tajos)
+    con_avance = sorted(
+        c for c in set(claves)
+        if (estados.get(c) or {}).get('v') in ESTADOS_CON_AVANCE)
+    if con_avance:
+        informe['con_avance'] = con_avance
+        return ficha_nueva, informe
+
+    for clave in sorted(set(claves)):
+        if clave in estados:
+            del estados[clave]
+            informe['celdas_retiradas'].append(clave)
+
+    exclusiones = ficha_nueva.setdefault('estructura', {}).setdefault(
+        'exclusiones', [])
+    for u in unidades:
+        for bloque in ficha_nueva['estructura'].get('bloques') or []:
+            for portal in bloque.get('portales') or []:
+                if str(portal.get('id')).lower() != u['portal_id']:
+                    continue
+                for planta in portal.get('plantas') or []:
+                    if str(planta.get('id')).lower() != u['planta_id']:
+                        continue
+                    planta['ubicaciones'] = [
+                        x for x in planta.get('ubicaciones') or []
+                        if str(x.get('id')) != u['unidad']]
+                portal['plantas'] = [
+                    p for p in portal.get('plantas') or []
+                    if p.get('ubicaciones')
+                    or str(p.get('id')).lower() != u['planta_id']]
+        exclusiones.append({
+            'portal': u['edificio'], 'planta': u['planta'],
+            'unidad': u['unidad'],
+            'motivo': f'no figura en la hoja del {fecha}',
+            'fecha': fecha, 'revision': revision_id})
+        informe['unidades_retiradas'].append(u)
+    informe['retirado'] = bool(unidades or informe['celdas_retiradas'])
+    return ficha_nueva, informe
+
+
 def _reclamar_correcciones(estados, correcciones, mapa_cortos, ficha,
                            revision, rev_id, cambios):
     """Aplica las correcciones manuales que la revision no llego a recoger.
