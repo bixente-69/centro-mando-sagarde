@@ -11,7 +11,9 @@ aqui: lo que no se declara en el JSON, no existe para este adaptador.
 """
 import os
 import sys
+import tempfile
 import unittest
+from unittest import mock
 
 _BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _BASE not in sys.path:
@@ -24,8 +26,12 @@ class TestCarpetaSinRevisiones(unittest.TestCase):
     """Sin JSON de revision todavia: historial vacio, nunca un error."""
 
     def test_historial_vacio_si_no_hay_carpeta_ia(self):
-        # La obra real aun no tiene 'INFORME SAGARDE IA' con revisiones.
-        self.assertEqual(ao.cargar_historial(), [])
+        with tempfile.TemporaryDirectory() as temporal:
+            carpeta_ia = os.path.join(
+                temporal, 'OBRA AISLADA', 'INFORME SAGARDE IA')
+            self.assertFalse(os.path.exists(carpeta_ia))
+            with mock.patch.object(ao, '_cargar_historial_html', return_value=[]):
+                self.assertEqual(ao.cargar_historial(carpeta_ia), [])
 
 
 class TestParseoRegistrosExplicitos(unittest.TestCase):

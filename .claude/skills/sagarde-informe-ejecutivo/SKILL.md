@@ -16,7 +16,20 @@ tiempo y tokens.
 
 ## 1. Generar — un único camino válido
 
-Siempre desde `SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA`:
+**Una sola obra (lo habitual — corregido el 04/10/2026):**
+
+```bash
+py -3.11 _SISTEMA/MOTOR/scripts/regenerar_obra.py <id_obra>
+```
+
+Desde la raíz del repo. Llama a `generar_todos.main()` con la lista de obras
+reducida a esa, así que arma bien los snapshots de garaje y zonas especiales
+y deja el PDF completo sin tocar otras obras (medido con Olabeaga: 6 páginas,
+ningún fichero de otra obra modificado). Ver también la skill
+`sagarde-actualizar-obra`.
+
+**Todas las obras — solo si Bixente lo pide expresamente**, desde
+`SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA`:
 
 ```bash
 python generar_todos.py --no-pdf
@@ -25,9 +38,8 @@ python generar_todos.py --no-pdf
 `--no-pdf` es un nombre heredado que ya no evita nada: el generador actual
 regenera igualmente los PDF ejecutivos de todas las obras con revisiones
 (confirmado en el log: `[OK] Informe ejecutivo creado con exito` por obra).
-No existe un atajo seguro para "solo una obra": el pipeline completo es el
-único camino que arma bien los snapshots de garaje y zonas especiales antes
-de llamar a `generar_pdf_ejecutivo`. No usar el script
+Antes de 04/10/2026 esta skill decía que no existía atajo para «solo una
+obra»; era falso y obligaba a recorrerlas todas. No usar el script
 `generar_informe_ejecutivo.py` suelto salvo para depuración puntual, sabiendo
 que el resultado será parcial.
 

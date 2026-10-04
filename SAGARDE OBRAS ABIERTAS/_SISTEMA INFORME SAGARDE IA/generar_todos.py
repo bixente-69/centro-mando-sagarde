@@ -157,6 +157,41 @@ def snapshot_zonas_especiales(ficha):
     ]
 
 
+def snapshot_zonas_especiales_para_informe(ficha, snapshot_real=None):
+    """Presenta zesp sin medir como pendiente solo en el informe.
+
+    La ficha real conserva ``?`` y ``N``. Si ya existe cualquier dato medido
+    de zesp, se devuelve su snapshot real sin completar los desconocidos. El
+    fallback solo se activa cuando ese snapshot esta vacio y la matriz de la
+    ficha contiene celdas de la planta virtual ``zesp``.
+    """
+    if snapshot_real is None:
+        snapshot_real = snapshot_zonas_especiales(ficha)
+    if snapshot_real or not ficha:
+        return snapshot_real
+
+    estados = ficha.get('estados') or {}
+    claves_zesp = {
+        clave for clave in estados
+        if len(str(clave).split('__', 3)) == 4
+        and str(clave).split('__', 3)[1] == (
+            fichas.ID_PLANTA_ZONAS_ESPECIALES)
+    }
+    if not claves_zesp:
+        return []
+
+    estados_vista = {
+        clave: (
+            dict(dato, v='P')
+            if clave in claves_zesp and (dato or {}).get('v') == '?'
+            else dato
+        )
+        for clave, dato in estados.items()
+    }
+    ficha_vista = dict(ficha, estados=estados_vista)
+    return snapshot_zonas_especiales(ficha_vista)
+
+
 def _slug(valor):
     texto = unicodedata.normalize('NFKD', str(valor or ''))
     texto = ''.join(c for c in texto if not unicodedata.combining(c))
@@ -1891,6 +1926,8 @@ def main(hacer_pdf=True):
             prioridades_zonas_especiales = (
                 extraer_prioridades_zonas_especiales(prioridades))
             snapshot_zesp = snapshot_zonas_especiales(ficha_para_zesp)
+            snapshot_zesp_informe = snapshot_zonas_especiales_para_informe(
+                ficha_actual, snapshot_real=snapshot_zesp)
             historial_zesp = []
             if n_rev_real:
                 for fecha_hist, snapshot_hist in historial:
@@ -1970,7 +2007,7 @@ def main(hacer_pdf=True):
                 prioridades=prioridades,
                 snapshot_garaje=snapshot_garaje,
                 prioridades_garaje=prioridades_garaje,
-                snapshot_zonas_especiales=snapshot_zesp,
+                snapshot_zonas_especiales=snapshot_zesp_informe,
                 prioridades_zonas_especiales=(
                     prioridades_zonas_especiales),
                 historial_zonas_especiales=historial_zesp,
