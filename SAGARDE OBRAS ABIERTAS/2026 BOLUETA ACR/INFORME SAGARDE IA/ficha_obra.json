@@ -22230,16 +22230,16 @@
     }
   },
   "documentos": {
-    "total": 130,
+    "total": 132,
     "por_categoria": {
       "Excel": 7,
       "Imágenes": 77,
-      "Otros": 12,
+      "Otros": 14,
       "PDF": 24,
       "Word": 10
     },
     "_meta": {
-      "actualizado": "29/09/2026 06:57"
+      "actualizado": "04/10/2026 15:16"
     }
   },
   "contactos": []
