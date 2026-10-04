@@ -295,6 +295,87 @@ class TestAltasSinConfirmar(unittest.TestCase):
         self.assertEqual(nombres, ['PB', '1', '2'])
 
 
+class TestAmpliarEstructuraDesdeHoja(unittest.TestCase):
+
+    @staticmethod
+    def _ubicacion(unidad, tajos=('tubeado', 'cableado')):
+        ubicacion = {
+            'edificio': 'P1', 'planta': 'PB',
+            'planta_id': 'pb', 'portal_id': 'p1', 'unidad': unidad,
+        }
+        if tajos is not None:
+            ubicacion['tajos'] = list(tajos)
+        return ubicacion
+
+    def test_anade_confirmada_solo_con_sus_tajos_sin_tocar_unidades_previas(self):
+        original = fixtures.ficha_minima()
+        antes = copy.deepcopy(original)
+        claves_antes = set(original['estados'])
+        ubicacion_c = self._ubicacion(
+            'C', ('tubeado', 'cableado', 'montante_electrica'))
+
+        ampliada, informe = ficha_obra.ampliar_estructura_desde_hoja(
+            original, [ubicacion_c],
+            '04/10/2026', 'rev_olabeaga_04102026')
+
+        self.assertEqual(original, antes)
+        pb = ampliada['estructura']['bloques'][0]['portales'][0][
+            'plantas'][0]
+        self.assertEqual([u['id'] for u in pb['ubicaciones']],
+                         ['A', 'B', 'C'])
+        nueva = next(u for u in pb['ubicaciones'] if u['id'] == 'C')
+        self.assertEqual(nueva['origen'], 'hoja digital')
+        self.assertEqual(nueva['confirmado'], '04/10/2026')
+        self.assertEqual(nueva['visto_en'], 'rev_olabeaga_04102026')
+        claves_c = {
+            'p1__pb__tubeado__C',
+            'p1__pb__cableado__C',
+            'p1__pb__montante_electrica__C',
+        }
+        self.assertEqual(set(ampliada['estados']) - claves_antes, claves_c)
+        self.assertEqual(
+            {clave: ampliada['estados'][clave] for clave in claves_c},
+            {clave: {'v': '?', 'f': None, 'r': None}
+             for clave in claves_c},
+        )
+        self.assertEqual(informe['anadidas'], [ubicacion_c])
+        self.assertEqual(set(informe['celdas_creadas']), claves_c)
+        self.assertEqual(informe['excluidas'], [])
+        self.assertEqual(informe['sin_tajos'], [])
+
+    def test_alta_sin_tajos_no_crea_celdas_y_queda_en_el_informe(self):
+        for tajos in (None, ()):
+            with self.subTest(tajos=tajos):
+                original = fixtures.ficha_minima()
+                ubicacion = self._ubicacion('C', tajos=tajos)
+
+                ampliada, informe = ficha_obra.ampliar_estructura_desde_hoja(
+                    original, [ubicacion],
+                    '04/10/2026', 'rev_olabeaga_04102026')
+
+                self.assertEqual(ampliada['estados'], original['estados'])
+                self.assertEqual(informe['celdas_creadas'], [])
+                self.assertEqual(informe['sin_tajos'], [ubicacion])
+
+    def test_respeta_exclusion_y_mantiene_abierta_un_alta_valida(self):
+        original = fixtures.ficha_minima()
+        original['estructura']['exclusiones'] = [{
+            'portal': 'P1', 'planta': 'PB', 'unidad': 'C',
+            'motivo': 'no existe', 'confirmado': '04/10/2026',
+        }]
+
+        ampliada, informe = ficha_obra.ampliar_estructura_desde_hoja(
+            original, [self._ubicacion('C'), self._ubicacion('D')],
+            '04/10/2026', 'rev_olabeaga_04102026')
+
+        pb = ampliada['estructura']['bloques'][0]['portales'][0][
+            'plantas'][0]
+        self.assertNotIn('C', [u['id'] for u in pb['ubicaciones']])
+        self.assertIn('D', [u['id'] for u in pb['ubicaciones']])
+        self.assertEqual(informe['excluidas'], [self._ubicacion('C')])
+        self.assertEqual(informe['anadidas'], [self._ubicacion('D')])
+
+
 class TestZonasEspeciales(unittest.TestCase):
 
     @staticmethod

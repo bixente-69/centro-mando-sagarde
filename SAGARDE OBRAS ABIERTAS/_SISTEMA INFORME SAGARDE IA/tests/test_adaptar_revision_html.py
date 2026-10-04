@@ -11,6 +11,7 @@ from unittest.mock import patch
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import adaptar_revision_html as adaptador
+import ficha_obra
 import fixtures
 import validar_revision as validador
 
@@ -189,6 +190,157 @@ class TestAdaptarRevisionHtml(unittest.TestCase):
             [('A', 'X'), ('B', '')],
         )
 
+    def test_estructura_nueva_detecta_una_vivienda_y_no_repite_la_existente(self):
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tubeado__A', ''),
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__C', 'X'),
+            ('src_pruebas_p1__src_pruebas_p1_f1__cableado__C', 'M'),
+            ('src_pruebas_p1__src_pruebas_p1_f1__mont-elec__C', ''),
+            ('src_pruebas_p1__src_pruebas_p1_f1__tajo-html-nuevo__C', ''),
+        ]))
+
+        nuevas = adaptador.estructura_nueva_en_hoja(
+            ruta, 'pruebas', self.ficha, self.catalogo)
+
+        self.assertEqual(nuevas, [{
+            'edificio': 'P1', 'planta': 'PB',
+            'planta_id': 'pb', 'portal_id': 'p1', 'unidad': 'C',
+            'tajos': ['tubeado', 'cableado', 'montante_electrica'],
+            'tajos_sin_traducir': ['tajo-html-nuevo'],
+        }])
+        ficha_con_c = copy.deepcopy(self.ficha)
+        ficha_con_c['estructura']['bloques'][0]['portales'][0][
+            'plantas'][0]['ubicaciones'].append({
+                'id': 'C', 'tipo': 'vivienda', 'origen': 'campo',
+            })
+        self.assertEqual(
+            adaptador.estructura_nueva_en_hoja(
+                ruta, 'pruebas', ficha_con_c, self.catalogo),
+            [],
+        )
+
+    def test_vivienda_ampliada_recibe_solo_los_tres_tajos_de_su_hoja(self):
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tubeado__C', 'X'),
+            ('src_pruebas_p1__src_pruebas_p1_f1__cableado__C', ''),
+            ('src_pruebas_p1__src_pruebas_p1_f1__mont-elec__C', ''),
+        ]))
+        claves_antes = set(self.ficha['estados'])
+        ubicaciones = adaptador.estructura_nueva_en_hoja(
+            ruta, 'pruebas', self.ficha, self.catalogo)
+        ficha_ampliada, informe = ficha_obra.ampliar_estructura_desde_hoja(
+            self.ficha, ubicaciones, '25/08/2026', 'rev_pruebas_25082026')
+
+        esperadas = {
+            'p1__pb__tubeado__C',
+            'p1__pb__cableado__C',
+            'p1__pb__montante_electrica__C',
+        }
+        self.assertEqual(set(ficha_ampliada['estados']) - claves_antes,
+                         esperadas)
+        self.assertEqual(set(informe['celdas_creadas']), esperadas)
+        revision = self._construir(ruta, ficha=ficha_ampliada)
+
+        self.assertEqual(
+            [(celda['clave'], celda['estado_leido'])
+             for celda in revision['celdas']],
+            [('p1__pb__tubeado__C', 'X'),
+             ('p1__pb__cableado__C', ''),
+             ('p1__pb__montante_electrica__C', '')],
+        )
+        self.assertEqual(revision['metadata']['avisos'], [])
+
+    def test_estructura_nueva_reutiliza_alias_y_no_duplica_su_canonica(self):
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tubeado__A2', 'X'),
+        ]))
+        self.assertEqual(
+            adaptador.estructura_nueva_en_hoja(
+                ruta, 'pruebas', self.ficha, self.catalogo)[0]['unidad'],
+            'A2',
+        )
+        ficha_alias = copy.deepcopy(self.ficha)
+        ficha_alias['estructura']['alias_historico'] = {
+            'p1__pb__A': 'A2',
+        }
+
+        self.assertEqual(
+            adaptador.estructura_nueva_en_hoja(
+                ruta, 'pruebas', ficha_alias, self.catalogo),
+            [],
+        )
+
+    def test_zesp_resuelve_solo_unidades_declaradas_y_avisa_las_demas(self):
+        ficha = copy.deepcopy(self.ficha)
+        ficha['estructura']['bloques'][0]['portales'][0]['plantas'].append({
+            'id': 'zesp', 'nombre': 'Zonas especiales', 'orden': 999,
+            'ubicaciones': [
+                {'id': 'cub1', 'tipo': 'cubierta', 'nombre': 'Cubierta'},
+            ],
+        })
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__zesp__tubeado__cub1', 'N'),
+            ('src_pruebas_p1__zesp__tubeado__fantasma', 'N'),
+        ]))
+
+        revision = self._construir(ruta, ficha=ficha)
+
+        self.assertEqual(
+            [(celda['clave'], celda['estado_leido'])
+             for celda in revision['celdas']],
+            [('p1__zesp__tubeado__cub1', 'N')],
+        )
+        self.assertEqual(len(revision['metadata']['avisos']), 1)
+        self.assertTrue(revision['metadata']['avisos'][0].startswith(
+            'MARCA SIN APLICAR: clave HTML sin resolver '))
+        self.assertIn('vivienda desconocida',
+                      revision['metadata']['avisos'][0])
+        self.assertEqual(
+            adaptador.estructura_nueva_en_hoja(
+                ruta, 'pruebas', ficha, self.catalogo),
+            [],
+        )
+
+    def test_historial_generico_excluye_zesp_y_conserva_la_vivienda_control(self):
+        ficha = copy.deepcopy(self.ficha)
+        ficha['estructura']['bloques'][0]['portales'][0]['plantas'].append({
+            'id': 'zesp', 'nombre': 'Zonas especiales', 'orden': 999,
+            'ubicaciones': [
+                {'id': 'cub1', 'tipo': 'cubierta', 'nombre': 'Cubierta'},
+            ],
+        })
+        catalogo = copy.deepcopy(self.catalogo)
+        for tajo in catalogo['tajos']:
+            tajo['nombre'] = tajo['id']
+        self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tubeado__A', 'X'),
+            ('src_pruebas_p1__zesp__tubeado__cub1', 'M'),
+        ]))
+
+        historial = adaptador.cargar_historial_html_generico(
+            'pruebas', self.temporal.name, ficha, catalogo,
+            minimo_celdas=1,
+        )
+
+        self.assertEqual(len(historial), 1)
+        self.assertEqual(
+            [(registro['floor'], registro['unit'])
+             for registro in historial[0][1]],
+            [('PB', 'A')],
+        )
+
+        self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tubeado__A', ''),
+            ('src_pruebas_p1__zesp__tubeado__cub1', 'M'),
+        ]))
+        self.assertEqual(
+            adaptador.cargar_historial_html_generico(
+                'pruebas', self.temporal.name, ficha, catalogo,
+                minimo_celdas=1,
+            ),
+            [],
+        )
+
     def test_ids_largos_y_cortos_del_generador_resuelven_al_catalogo(self):
         ruta = self._escribir(_html([
             ('src_pruebas_p1__src_pruebas_p1_f1__montante_electrica__A', 'X'),
@@ -354,6 +506,9 @@ class TestAdaptarRevisionHtml(unittest.TestCase):
 
         self.assertEqual(sin_mapa['celdas'], [])
         self.assertIn('portal ambiguo', sin_mapa['metadata']['avisos'][0])
+        self.assertEqual(
+            adaptador.estructura_nueva_en_hoja(
+                ruta, 'pruebas', ficha, self.catalogo), [])
         self.assertEqual(
             con_mapa['celdas'][0]['clave'], 'p2__pb__tubeado__A')
 

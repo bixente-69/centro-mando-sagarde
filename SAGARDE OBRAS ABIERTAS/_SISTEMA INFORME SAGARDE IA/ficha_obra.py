@@ -45,6 +45,7 @@ NO se guardan BLOQUEADO / DUDAS / VIABLE / OTROS_GREMIOS: son categorias que
 calcula el priorizador desde las dependencias. Regla de la casa: se guarda lo
 MEDIDO, se recalcula lo DERIVADO.
 """
+import copy
 import json
 import os
 import re
@@ -834,6 +835,82 @@ def _completar_matriz(ficha, estados, cambios):
                         if clave not in estados:
                             estados[clave] = {'v': '?', 'f': None, 'r': None}
                             cambios['estados_nuevos'] += 1
+
+
+def ampliar_estructura_desde_hoja(
+        ficha, ubicaciones_nuevas, fecha, revision_id):
+    """Incorpora estructura residencial confirmada por una hoja digital.
+
+    Trabaja siempre sobre una copia profunda. Reutiliza las guardas de alta,
+    pero crea solo las celdas de los tajos que la propia hoja imprimio para la
+    nueva unidad. La ultima hoja entregada es la autoridad estructural.
+    """
+    ficha_nueva = copy.deepcopy(ficha)
+    informe = {
+        'anadidas': [],
+        'celdas_creadas': [],
+        'excluidas': [],
+        'sin_tajos': [],
+    }
+    cambios = {
+        'ubicaciones_nuevas': [],
+        'ubicaciones_excluidas': [],
+        'estados_nuevos': 0,
+    }
+    por_id, por_nombre = _indice_ubicaciones(ficha_nueva)
+
+    for ubicacion in ubicaciones_nuevas or []:
+        if not isinstance(ubicacion, dict):
+            continue
+        item = copy.deepcopy(ubicacion)
+        if str(item.get('planta_id') or '') == ID_PLANTA_ZONAS_ESPECIALES:
+            continue
+
+        trio_id = (item.get('portal_id'), item.get('planta_id'),
+                   item.get('unidad'))
+        if all(trio_id) and trio_id in por_id:
+            continue
+        if _localizar(por_nombre, item.get('edificio'), item.get('planta'),
+                      item.get('unidad')) is not None:
+            continue
+
+        exclusiones_antes = len(cambios['ubicaciones_excluidas'])
+        trio = _alta_ubicacion(
+            ficha_nueva, item, fecha, cambios, por_id, por_nombre)
+        if trio is None:
+            if len(cambios['ubicaciones_excluidas']) > exclusiones_antes:
+                informe['excluidas'].append(item)
+            continue
+
+        nueva = por_id[trio]
+        nueva['origen'] = 'hoja digital'
+        nueva['confirmado'] = fecha
+        nueva['visto_en'] = revision_id
+        informe['anadidas'].append(item)
+
+        estados = ficha_nueva.setdefault('estados', {})
+        tajos = item.get('tajos')
+        if not isinstance(tajos, list):
+            tajos = []
+        tajos = list(dict.fromkeys(
+            str(tajo).strip() for tajo in tajos if str(tajo).strip()
+        ))
+        if not tajos:
+            informe['sin_tajos'].append(item)
+            continue
+
+        portal_id, planta_id, unidad_id = trio
+        for tajo_id in tajos:
+            clave = f'{portal_id}__{planta_id}__{tajo_id}__{unidad_id}'
+            if clave in estados:
+                continue
+            estados[clave] = {'v': '?', 'f': None, 'r': None}
+            cambios['estados_nuevos'] += 1
+            informe['celdas_creadas'].append(clave)
+
+    informe['celdas_creadas'].sort()
+
+    return ficha_nueva, informe
 
 
 def _reclamar_correcciones(estados, correcciones, mapa_cortos, ficha,

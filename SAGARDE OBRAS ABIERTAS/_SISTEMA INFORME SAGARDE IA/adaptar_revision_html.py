@@ -250,6 +250,82 @@ def _resolver_unidad(ficha_actual, portal_id, planta_id, unidad_html):
     return None, 'vivienda desconocida en la planta traducida'
 
 
+def estructura_nueva_en_hoja(
+        ruta_html, obra_id, ficha_actual, catalogo=None,
+        tarea_id_a_real=None):
+    """Lista ubicaciones residenciales impresas que la ficha aun no conoce.
+
+    Solo se aceptan portales y plantas que los mapas seguros existentes
+    resuelven sin ambiguedad. Las zonas especiales quedan fuera: su alta
+    requiere un tipo y un nombre que una celda HTML no declara. Cada alta
+    incluye exactamente los tajos que la hoja imprime para esa unidad,
+    traducidos con el mismo mapa exacto que usa el adaptador de revision.
+    """
+    ruta_html = os.path.abspath(os.fspath(ruta_html))
+    if catalogo is None:
+        catalogo = validar_revision.cargar_catalogo_tajos()
+    (mapa_portales, mapa_plantas,
+     ambiguos_portal, ambiguos_planta) = derivar_mapas_ubicacion(
+         obra_id, ficha_actual)
+    mapa_tareas = derivar_mapa_tareas(
+        obra_id, catalogo, tarea_id_a_real=tarea_id_a_real,
+        ficha_actual=ficha_actual)
+    plantas = _indice_plantas(ficha_actual)
+    portales = {
+        _id_real(portal.get('id')): portal
+        for portal in _portales_en_estructura(ficha_actual)
+    }
+
+    nuevas = {}
+    for data_k_crudo, _ in lector_hoja_tajos_html.extraer_pares(ruta_html):
+        data_k = html.unescape(data_k_crudo)
+        partes = data_k.split('__')
+        if len(partes) != 4 or not all(partes):
+            continue
+        portal_html, planta_html, tarea_html, unidad_html = partes
+        if planta_html == 'zesp':
+            continue
+        if portal_html in ambiguos_portal or planta_html in ambiguos_planta:
+            continue
+        portal_id = mapa_portales.get(portal_html)
+        planta_id = mapa_plantas.get(planta_html)
+        if portal_id is None or planta_id is None:
+            continue
+        portal = portales.get(portal_id)
+        planta = plantas.get((portal_id, planta_id))
+        if portal is None or planta is None:
+            continue
+
+        _, error_unidad = _resolver_unidad(
+            ficha_actual, portal_id, planta_id, unidad_html)
+        if error_unidad != 'vivienda desconocida en la planta traducida':
+            continue
+
+        clave = (portal_id, planta_id, unidad_html)
+        nueva = nuevas.setdefault(clave, {
+            'edificio': _referencia_portal(portal),
+            'planta': _referencia_planta(planta),
+            'planta_id': planta_id,
+            'portal_id': portal_id,
+            'unidad': unidad_html,
+            'tajos': [],
+            'tajos_sin_traducir': [],
+        })
+        tarea_id = mapa_tareas.get(tarea_html)
+        destino = ('tajos' if tarea_id is not None
+                   else 'tajos_sin_traducir')
+        valor = tarea_id if tarea_id is not None else tarea_html
+        if valor not in nueva[destino]:
+            nueva[destino].append(valor)
+
+    return sorted(nuevas.values(), key=lambda item: (
+        _clave_natural(item['edificio']),
+        _clave_planta(item['planta']),
+        _clave_natural(item['unidad']),
+        item['portal_id'], item['planta_id'], item['unidad'],
+    ))
+
+
 def _fecha_html(ruta_html):
     # Se reutiliza exactamente el extractor empleado por
     # listar_revisiones_html; no se mantiene una segunda regex DDMMAAAA.
@@ -336,7 +412,12 @@ def construir_revision_normalizada_html(
             avisos.append(_aviso_clave_no_resuelta(data_k, motivo, estado))
             continue
 
-        planta_id = mapa_plantas.get(planta_html)
+        if planta_html == 'zesp':
+            planta_id = ('zesp'
+                         if (portal_id, 'zesp') in _indice_plantas(ficha_actual)
+                         else None)
+        else:
+            planta_id = mapa_plantas.get(planta_html)
         if planta_id is None:
             if planta_html in ambiguos_planta:
                 motivo = ('planta ambigua entre '
@@ -483,19 +564,23 @@ def cargar_historial_html_generico(
                     nombre_log, fn, exc))
             continue
 
+        celdas_historial = [
+            celda for celda in revision['celdas']
+            if celda['clave'].split('__')[1] != 'zesp'
+        ]
         if ignorar_en_blanco and not any(
-                c['estado_leido'] in ('X', 'M', '/') for c in revision['celdas']):
+                c['estado_leido'] in ('X', 'M', '/') for c in celdas_historial):
             if nombre_log:
                 print("  [{}] '{}' ignorado como revisión (hoja en blanco sin marcas).".format(
                     nombre_log, fn))
             continue
 
         registros = []
-        for celda in revision['celdas']:
+        for celda in celdas_historial:
             estado = celda['estado_leido']
+            portal_id, planta_id, tajo_id, unidad = celda['clave'].split('__')
             if estado == 'N':
                 continue
-            portal_id, planta_id, tajo_id, unidad = celda['clave'].split('__')
             nombres = nombre_ubicacion.get((portal_id, planta_id))
             task = nombre_tajo.get(tajo_id)
             if not (nombres and task):
