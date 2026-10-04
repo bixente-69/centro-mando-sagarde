@@ -575,7 +575,7 @@ def _ruta_html_gemelo(ruta_pdf):
 def _construir_revision_digital(
         ruta_pdf, obra_id, ficha, fecha, catalogo, forzar_pdf=False,
         portal_id_a_real=None, planta_id_a_real=None,
-        tarea_id_a_real=None):
+        tarea_id_a_real=None, sin_marca='pendiente'):
     """Elige HTML gemelo o PDF y devuelve la revision normalizada."""
     import adaptar_revision_html
     import adaptar_revision_pdf_digital
@@ -588,7 +588,7 @@ def _construir_revision_digital(
             portal_id_a_real=portal_id_a_real,
             planta_id_a_real=planta_id_a_real,
             tarea_id_a_real=tarea_id_a_real,
-            fecha=fecha)
+            fecha=fecha, sin_marca=sin_marca)
 
     if os.path.isfile(ruta_html) and forzar_pdf:
         print('HTML gemelo ignorado por --forzar-pdf; '
@@ -746,9 +746,15 @@ def main():
     p.add_argument('--digital', action='store_true',
                    help='la hoja se relleno en la propia app del generador y '
                         'se exporto sin pasar por papel ni tinta: lee el '
-                        'texto ya impreso en vez de anotaciones. Solo aplica '
-                        'las celdas con marca explicita; una celda en '
-                        'blanco no se toca.')
+                        'texto ya impreso en vez de anotaciones. Una casilla '
+                        'en blanco de una hoja con marcas significa "tajo no '
+                        'empezado" (P), como en papel; ver --sin-marca. Si '
+                        'la hoja trae estructura que la base no tiene '
+                        '(viviendas nuevas), se incorpora a la base.')
+    p.add_argument('--permitir-marcas-sin-aplicar', action='store_true',
+                   help='en --digital, escribir aunque la hoja traiga marcas '
+                        'que la base no sabe colocar. Por defecto se aborta: '
+                        'una marca perdida en silencio es el peor fallo.')
     p.add_argument('--forzar-pdf', action='store_true',
                    help='en --digital, ignora el HTML gemelo aunque exista y '
                         'fuerza la lectura geometrica del PDF')
@@ -789,6 +795,67 @@ def main():
             raise SystemExit(
                 'Falta --fecha. La fecha de la revision no se deduce de la '
                 'hoja: la de la cabecera es la de generacion.')
+        import validar_revision
+        catalogo = validar_revision.cargar_catalogo_tajos()
+
+        # NORMA (Bixente, 04/10/2026): la ULTIMA hoja entregada manda, tambien
+        # en su estructura. Si trae viviendas que la base no tiene (Olabeaga:
+        # la C de las 4 plantas del portal 3), entran en la base ANTES de leer
+        # las marcas; si no, esas marcas se perdian sin que nada lo dijera.
+        # Solo se anade, nunca se quita; en simulacion no se guarda nada.
+        informe_estructura = None
+        ruta_html_hoja = _ruta_html_gemelo(args.hoja)
+        if os.path.isfile(ruta_html_hoja) and not args.forzar_pdf:
+            import adaptar_revision_html
+            nuevas = adaptar_revision_html.estructura_nueva_en_hoja(
+                ruta_html_hoja, obra['id'], ficha)
+            if nuevas:
+                id_ampliacion = validar_revision.generar_revision_id(
+                    obra['id'], args.fecha, 'html_digital',
+                    os.path.abspath(ruta_html_hoja))
+                ficha, informe_estructura = fichas.ampliar_estructura_desde_hoja(
+                    ficha, nuevas, args.fecha, id_ampliacion)
+                print('ESTRUCTURA NUEVA EN LA HOJA (se incorpora a la base):')
+                for item in informe_estructura['anadidas']:
+                    print(f"  + {item['edificio']} / planta {item['planta']} / "
+                          f"unidad {item['unidad']}  "
+                          f"({len(item.get('tajos') or [])} tajos)")
+                for item in informe_estructura['excluidas']:
+                    print(f"  [EXCLUIDA A PROPOSITO] {item['edificio']} / "
+                          f"planta {item['planta']} / unidad {item['unidad']}")
+                for item in informe_estructura['sin_tajos']:
+                    print(f"  [SIN TAJOS] {item['edificio']} / planta "
+                          f"{item['planta']} / unidad {item['unidad']}: "
+                          f"la hoja no imprime ningun tajo; no se crean celdas")
+                print(f"  celdas nuevas en '?': "
+                      f"{len(informe_estructura['celdas_creadas'])}")
+
+        revision = _construir_revision_digital(
+            args.hoja, obra['id'], ficha, args.fecha, catalogo,
+            forzar_pdf=args.forzar_pdf,
+            portal_id_a_real=obra.get('mapa_portales_revision_html'),
+            planta_id_a_real=obra.get('mapa_plantas_revision_html'),
+            tarea_id_a_real=obra.get('mapa_tajos_revision_html'),
+            sin_marca=args.sin_marca)
+
+        # Una marca que la hoja trae y la base no sabe colocar NO puede
+        # perderse en silencio: se lista entera y, al escribir, se aborta.
+        marcas_sin_aplicar = [
+            a for a in revision['metadata']['avisos']
+            if a.startswith('MARCA SIN APLICAR')]
+        for aviso in marcas_sin_aplicar:
+            print('  [MARCA SIN APLICAR]'
+                  + aviso[len('MARCA SIN APLICAR:'):])
+        if marcas_sin_aplicar:
+            print(f'  {len(marcas_sin_aplicar)} marca(s) de la hoja NO se '
+                  f'pueden aplicar a la base.')
+            if args.escribir and not args.permitir_marcas_sin_aplicar:
+                raise SystemExit(
+                    '\n[ABORTADO] La hoja trae marcas que la base no '
+                    'reconoce. Resuelve la estructura (o el tajo) antes de '
+                    'darla por aplicada. Solo con '
+                    '--permitir-marcas-sin-aplicar se escribe igualmente.')
+
         rev_id_antiguo = 'rev_' + args.fecha.replace('/', '')
         estados_antiguos = None
         cambios_antiguos = None
@@ -810,17 +877,24 @@ def main():
                   'comprobacion cruzada geometrica de la salvaguarda; se '
                   'escribe apoyandose solo en el motor comun ya validado.')
 
-        import validar_revision
-        catalogo = validar_revision.cargar_catalogo_tajos()
-        revision = _construir_revision_digital(
-            args.hoja, obra['id'], ficha, args.fecha, catalogo,
-            forzar_pdf=args.forzar_pdf,
-            portal_id_a_real=obra.get('mapa_portales_revision_html'),
-            planta_id_a_real=obra.get('mapa_plantas_revision_html'),
-            tarea_id_a_real=obra.get('mapa_tajos_revision_html'))
+        if (estados_antiguos is not None and args.sin_marca == 'pendiente'
+                and revision['metadata']['hoja_usada']):
+            # El camino antiguo solo conocia las marcas explicitas. La norma
+            # del 04/10/2026 (un blanco de hoja usada es "tajo no empezado")
+            # se la aplica la misma funcion que usa la hoja de tinta, sobre
+            # los blancos que la hoja imprime, para que la comparacion siga
+            # comparando lo mismo.
+            blancos = [c['clave'] for c in revision['celdas']
+                       if c['estado_leido'] == '']
+            marcar_no_empezados(
+                estados_antiguos, blancos, set(), args.fecha, rev_id_antiguo)
+
         validacion, aplicacion = _ejecutar_motor_comun(
             revision, ficha, catalogo, args.escribir)
         cambios = _cambios_de_validacion(validacion)
+        en_blanco = [
+            celda for celda in validacion['aceptadas']
+            if celda['accion'] == 'actualizar' and celda['estado_leido'] == '']
         impresos = {
             celda['clave']: celda['estado_leido']
             for celda in revision['celdas']
@@ -832,6 +906,8 @@ def main():
               f'fecha: {args.fecha}   (rellenada en el generador, sin tinta)')
         print(f'  celdas impresas con marca: {len(impresos)}   '
               f'cambios: {len(cambios)}')
+        print(f'  de ellos, casillas en blanco -> tajo no empezado (P): '
+              f'{len(en_blanco)}')
         print(f'  por valor: {dict(conteo)}')
         de_a = Counter((a, n) for _k, a, n in cambios)
         for (antes, nuevo), n in sorted(de_a.items(), key=lambda x: -x[1]):
@@ -875,7 +951,9 @@ def main():
         revisiones.append({
             'id': revision['revision_id'], 'fecha': args.fecha,
             'origen': 'hoja generada rellenada digitalmente, leida por la IA',
-            'celdas_medidas': len(impresos), 'celdas_cambiadas': len(cambios)})
+            'celdas_medidas': len(impresos), 'celdas_cambiadas': len(cambios),
+            'ubicaciones_nuevas': len(
+                (informe_estructura or {}).get('anadidas') or [])})
         ficha_nueva['revisiones'] = revisiones
         fichas.guardar(carpeta, ficha_nueva)
         trazabilidad_revisiones.registrar_trazabilidad(

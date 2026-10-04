@@ -371,5 +371,119 @@ class TestCutoverLeerHojaMarcada(unittest.TestCase):
         self.assertFalse(sidecar.exists())
 
 
+class TestDigitalEstructuraYBlancos(unittest.TestCase):
+    """04/10/2026: la ultima hoja manda, tambien en su estructura, y un
+    blanco de hoja usada es "tajo no empezado" (P), no "sin revisar" (?)."""
+
+    # Mismo montaje que la clase de arriba, sin heredar sus pruebas.
+    setUp = TestCutoverLeerHojaMarcada.setUp
+    tearDown = TestCutoverLeerHojaMarcada.tearDown
+    _ejecutar = TestCutoverLeerHojaMarcada._ejecutar
+
+    A = 'p1__pb__tubeado__A'
+    B = 'p1__pb__tubeado__B'
+    C = 'p1__pb__tubeado__C'
+    PORTAL = 'src_pruebas_p1__src_pruebas_p1_f1__tube-viv__'
+
+    def _ficha_ab(self):
+        ficha = fixtures.ficha_minima()
+        ficha['estados'] = {
+            self.A: {'v': '?', 'f': None, 'r': None},
+            self.B: {'v': '?', 'f': None, 'r': None},
+        }
+        return ficha
+
+    def _html(self, celdas):
+        html = self.pdf.with_suffix('.html')
+        html.write_text(''.join(
+            f'<td data-k="{k}" data-st="{s}"></td>' for k, s in celdas),
+            encoding='utf-8')
+        return html
+
+    def _correr(self, extra, ficha=None, impresos=None):
+        with mock.patch.object(
+                lector, 'estados_impresos', return_value=impresos or {}):
+            return self._ejecutar([
+                self.pdf, 'pruebas', '--digital', '--fecha', FECHA,
+                *extra], ficha or self._ficha_ab())
+
+    def test_blanco_de_hoja_usada_pasa_a_P_y_la_marca_se_aplica(self):
+        self._html([(self.PORTAL + 'A', 'X'), (self.PORTAL + 'B', '')])
+        salida, guardar = self._correr(
+            ['--escribir'], impresos={self.A: 'X'})
+
+        estados = guardar.call_args.args[1]['estados']
+        self.assertEqual(estados[self.A]['v'], 'X')
+        self.assertEqual(estados[self.B]['v'], 'P')
+        self.assertIn('tajo no empezado (P): 1', salida)
+
+    def test_sin_marca_desconocido_deja_el_blanco_como_estaba(self):
+        self._html([(self.PORTAL + 'A', 'X'), (self.PORTAL + 'B', '')])
+        salida, guardar = self._correr(
+            ['--escribir', '--sin-marca', 'desconocido'],
+            impresos={self.A: 'X'})
+
+        estados = guardar.call_args.args[1]['estados']
+        self.assertEqual(estados[self.A]['v'], 'X')
+        self.assertEqual(estados[self.B]['v'], '?')
+
+    def test_hoja_sin_ninguna_marca_no_cambia_nada(self):
+        self._html([(self.PORTAL + 'A', ''), (self.PORTAL + 'B', '')])
+        salida, guardar = self._correr(['--escribir'])
+
+        estados = guardar.call_args.args[1]['estados']
+        self.assertEqual(estados[self.A]['v'], '?')
+        self.assertEqual(estados[self.B]['v'], '?')
+
+    def test_vivienda_nueva_de_la_hoja_entra_en_la_base_y_su_marca_se_aplica(
+            self):
+        self._html([(self.PORTAL + 'A', ''), (self.PORTAL + 'B', ''),
+                    (self.PORTAL + 'C', 'X')])
+        salida, guardar = self._correr(
+            ['--escribir'], impresos={self.C: 'X'})
+
+        guardada = guardar.call_args.args[1]
+        self.assertIn('ESTRUCTURA NUEVA EN LA HOJA', salida)
+        self.assertEqual(guardada['estados'][self.C]['v'], 'X')
+        unidades = [u['id'] for u in guardada['estructura']['bloques'][0][
+            'portales'][0]['plantas'][0]['ubicaciones']]
+        self.assertEqual(unidades, ['A', 'B', 'C'])
+        self.assertEqual(guardada['revisiones'][-1]['ubicaciones_nuevas'], 1)
+
+    def test_simulacion_muestra_la_estructura_nueva_y_no_guarda(self):
+        self._html([(self.PORTAL + 'A', ''), (self.PORTAL + 'C', 'X')])
+        salida, guardar = self._correr([])
+
+        self.assertIn('ESTRUCTURA NUEVA EN LA HOJA', salida)
+        self.assertIn('unidad C', salida)
+        guardar.assert_not_called()
+
+    def test_marca_que_la_base_no_reconoce_aborta_al_escribir(self):
+        # Control: la misma hoja con una planta que la ficha SI tiene escribe.
+        self._html([(self.PORTAL + 'A', 'X'),
+                    ('src_pruebas_p1__src_pruebas_p1_f9__tube-viv__A', 'X')])
+        with self.assertRaises(SystemExit) as ctx:
+            self._correr(['--escribir'], impresos={self.A: 'X'})
+        self.assertIn('ABORTADO', str(ctx.exception))
+
+    def test_marca_sin_aplicar_se_lista_en_simulacion_y_no_aborta(self):
+        self._html([(self.PORTAL + 'A', 'X'),
+                    ('src_pruebas_p1__src_pruebas_p1_f9__tube-viv__A', 'X')])
+        salida, guardar = self._correr([])
+
+        self.assertIn('[MARCA SIN APLICAR]', salida)
+        guardar.assert_not_called()
+
+    def test_permitir_marcas_sin_aplicar_escribe_igualmente(self):
+        self._html([(self.PORTAL + 'A', 'X'),
+                    ('src_pruebas_p1__src_pruebas_p1_f9__tube-viv__A', 'X')])
+        salida, guardar = self._correr(
+            ['--escribir', '--permitir-marcas-sin-aplicar'],
+            impresos={self.A: 'X'})
+
+        self.assertIn('[MARCA SIN APLICAR]', salida)
+        guardar.assert_called_once()
+
+
 if __name__ == '__main__':
     unittest.main()
