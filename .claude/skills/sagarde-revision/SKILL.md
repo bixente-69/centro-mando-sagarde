@@ -132,9 +132,7 @@ timbres no se ofrecían ni con el tabique hecho. Reglas: solo asciende `?`→`P`
 (un blanco **nunca** baja una `X`, `M` o `/`), y solo si la hoja trae al menos
 una marca real (una hoja exportada sin marcar nada no cambia nada). Si una hoja
 no cubre toda la obra, usa `--sin-marca desconocido` y los blancos se dejan como
-estaban. Las marcas que la hoja trae y la ficha no reconoce (p. ej. una vivienda
-que la ficha no tiene) NO se aplican y el lector las avisa una a una: hay que
-resolverlas antes de dar la revisión por aplicada.
+estaban. Si la hoja trae estructura que la base no tiene (viviendas nuevas), el lector la incorpora a la base antes de leer las marcas y lo anuncia con `ESTRUCTURA NUEVA EN LA HOJA`: la última hoja entregada manda, también en su estructura, y hay que leer esa sección entera en la simulación. Las marcas que aun así no se puedan colocar salen como `[MARCA SIN APLICAR]` y con `--escribir` el lector aborta: no se da la revisión por aplicada hasta resolverlas.
 
 ## Qué mirar en cada recorte (solo Flujo A)
 

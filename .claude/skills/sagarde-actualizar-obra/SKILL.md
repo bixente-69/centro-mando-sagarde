@@ -73,6 +73,12 @@ regenerador en `_SISTEMA/MOTOR/scripts/regenerar_obra.py` (raíz del repo).
    Con HTML sin PDF gemelo la salvaguarda geométrica se omite (lo dice); queda
    el motor común. Aviso `[ABORTADO]` → parar, no forzar. Hoja a boli → skill
    `sagarde-revision` (flujo A).
+
+   > **REGLA DE ORO (Bixente, 04/10/2026, no negociable): leer BIEN la última hoja entregada e incorporar TODO lo que trae a la base de la obra, estructura incluida.** A veces una hoja nueva trae cambios de estructura (viviendas, plantas, portales generados después de la hoja anterior). Lo que la hoja trae manda; lo que la base no recoge se pierde y no se puede volver atrás. Por eso, en la **simulación** hay que leer entera la salida y comprobar:
+   > - **`ESTRUCTURA NUEVA EN LA HOJA`**: lista las viviendas nuevas que se incorporan a la base (solo se añade, nunca se quita). Contrastarlas con lo que Bixente haya dicho de la obra; si algo no cuadra, preguntar antes de escribir.
+   > - **`[MARCA SIN APLICAR]`**: una marca de la hoja que la base no sabe colocar. Con `--escribir` el lector **aborta**. NO se usa `--permitir-marcas-sin-aplicar` para saltarse el aborto: se resuelve la causa (estructura, tajo) y se vuelve a simular. Cero marcas sin aplicar es la única salida aceptable.
+   > - **«casillas en blanco -> tajo no empezado (P)»**: un blanco en una hoja entregada NO es «sin revisar»: significa que ese tajo no ha empezado o que esa ubicación aún no existe. Pasa a `P`; nunca baja una `X`, `M` o `/`. Con `--sin-marca desconocido` se dejan como estaban, solo si la hoja no cubre toda la obra.
+   > - Después de escribir, comprobar con una comparación completa (todas las ubicaciones y tajos que imprime la hoja frente a la base) que **no queda nada de la hoja sin reflejar**, y que el registro del generador (`obras_revisiones.js`) saca la estructura nueva para la próxima hoja.
 4. **Garaje (HTML).** Solo si la fecha no está aplicada ya (no hay simulación):
    `py -3.11 adaptar_revision_garaje.py "<hoja_garaje.html>" <id_obra> --fecha DD/MM/AAAA`
 5. **Regenerar solo esa obra** (panel, prioridades, PDF ejecutivo):
@@ -125,3 +131,4 @@ Objetivo suyo (04/10/2026): tras actualizar la obra, el informe que pida sale
   `ficha_obra.json` de las demás obras no cambian (mismo SHA-256 antes y después).
 - Hacer la actualización de una obra no es motivo para ejecutar `git checkout --`
   ni `git restore` sobre otros ficheros: preservar y preguntar.
+- **Olabeaga 04/10/2026: la hoja traía la vivienda C en las 4 plantas del portal 3 y la base solo A y B.** 5 marcas (tabicado, suelo radiante, recrecido) y 148 casillas se perdieron sin aviso, y 1.411 celdas quedaron en `?` («sin revisar nunca») en vez de `P`, de modo que las rozas de timbres no se ofrecían ni con el tabique hecho. Ya está corregido en el lector (`ESTRUCTURA NUEVA EN LA HOJA`, aborto por `[MARCA SIN APLICAR]`, blanco → `P`); no relajar esas guardas.
