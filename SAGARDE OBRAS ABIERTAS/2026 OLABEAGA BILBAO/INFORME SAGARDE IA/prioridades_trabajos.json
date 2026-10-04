@@ -2,26 +2,26 @@
   "version": "4.3",
   "catalogo_version": "1.3",
   "obra": "2026 OLABEAGA BILBAO",
-  "revision": null,
+  "revision": "04/10/2026",
   "sin_base": false,
-  "edad_revision_dias": 739890,
-  "revision_caducada": true,
+  "edad_revision_dias": 0,
+  "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "02/10/2026 13:56",
+  "generado": "04/10/2026 11:47",
   "resumen": {
     "listos": 0,
     "verificar": 0,
     "unidades_listas": 0,
     "unidades_verificar": 0,
     "bloqueados": 0,
-    "otros_gremios": 0,
+    "otros_gremios": 3,
     "dudas": 0,
-    "sin_revisar": 70,
-    "unidades_sin_revisar": 1447,
+    "sin_revisar": 67,
+    "unidades_sin_revisar": 1411,
     "terminados": 0,
     "inventario_total": 70,
-    "detalle_total": 1447,
+    "detalle_total": 1441,
     "preguntas_pendientes": 0,
     "viviendas": 0,
     "zonas_comunes": 0,
@@ -44,17 +44,17 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -71,17 +71,17 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -98,17 +98,17 @@
       "edificio": "PORTAL 1",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -125,17 +125,17 @@
       "edificio": "PORTAL 1",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -314,17 +314,17 @@
       "edificio": "PORTAL 2",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -341,17 +341,17 @@
       "edificio": "PORTAL 2",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -368,17 +368,17 @@
       "edificio": "PORTAL 2",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -395,17 +395,17 @@
       "edificio": "PORTAL 2",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -665,17 +665,17 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -692,17 +692,17 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -719,17 +719,17 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -746,17 +746,17 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -6092,17 +6092,17 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6119,17 +6119,17 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6146,17 +6146,17 @@
       "edificio": "PORTAL 1",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6173,17 +6173,17 @@
       "edificio": "PORTAL 1",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6362,17 +6362,17 @@
       "edificio": "PORTAL 2",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6389,17 +6389,17 @@
       "edificio": "PORTAL 2",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6416,17 +6416,17 @@
       "edificio": "PORTAL 2",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6443,17 +6443,17 @@
       "edificio": "PORTAL 2",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6713,17 +6713,17 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6740,17 +6740,17 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6767,17 +6767,17 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6794,17 +6794,17 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -6956,17 +6956,17 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -6983,17 +6983,17 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -7226,17 +7226,17 @@
       "edificio": "PORTAL 2",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -7253,17 +7253,17 @@
       "edificio": "PORTAL 2",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -7577,17 +7577,17 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -7604,17 +7604,17 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": null
+      "ultima_fecha": "04/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -32012,33 +32012,6 @@
       "edificio": "PORTAL 1",
       "planta": "Zonas especiales",
       "unidad": "z_muk58qhy_44",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "fv_paneles_instalacion",
-      "trabajo": "Instalación de paneles fotovoltaicos",
-      "trabajos_originales": [
-        "Instalación de paneles fotovoltaicos"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 400,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_paneles_instalacion",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk598sv_45",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "SIN_REVISAR",
@@ -32117,33 +32090,6 @@
       "orden_ejecucion": 401,
       "fase_nombre": "Cubierta — Fotovoltaica",
       "display_group": "fv_paneles_cableado",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk598sv_45",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "fv_paneles_cableado",
-      "trabajo": "Cableado de paneles fotovoltaicos",
-      "trabajos_originales": [
-        "Cableado de paneles fotovoltaicos"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 401,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_paneles_cableado",
       "edificio": "PORTAL 3",
       "planta": "Zonas especiales",
       "unidad": "z_muk59b6b_46",
@@ -32174,33 +32120,6 @@
       "edificio": "PORTAL 1",
       "planta": "Zonas especiales",
       "unidad": "z_muk58qhy_44",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "fv_paneles_tierra",
-      "trabajo": "Tierra de paneles fotovoltaicos",
-      "trabajos_originales": [
-        "Tierra de paneles fotovoltaicos"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 402,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_paneles_tierra",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk598sv_45",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "SIN_REVISAR",
@@ -32255,33 +32174,6 @@
       "edificio": "PORTAL 1",
       "planta": "Zonas especiales",
       "unidad": "z_muk58qhy_44",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "fv_strings_cableado",
-      "trabajo": "Cableado de strings hasta equipos",
-      "trabajos_originales": [
-        "Cableado de strings hasta equipos"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 403,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_strings_cableado",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk598sv_45",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "SIN_REVISAR",
@@ -32336,33 +32228,6 @@
       "edificio": "PORTAL 1",
       "planta": "Zonas especiales",
       "unidad": "z_muk58qhy_44",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "fv_equipos_protecciones",
-      "trabajo": "Instalación de equipos y protecciones",
-      "trabajos_originales": [
-        "Instalación de equipos y protecciones"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 404,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_equipos_protecciones",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk598sv_45",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "SIN_REVISAR",
@@ -32417,33 +32282,6 @@
       "edificio": "PORTAL 1",
       "planta": "Zonas especiales",
       "unidad": "z_muk58qhy_44",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "fv_puesta_marcha",
-      "trabajo": "Puesta en marcha de fotovoltaica",
-      "trabajos_originales": [
-        "Puesta en marcha de fotovoltaica"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 405,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_puesta_marcha",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk598sv_45",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "SIN_REVISAR",
@@ -39111,15 +38949,508 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2ª",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2ª",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3ª",
+          "unidad": "A",
           "estado": "Pendiente",
           "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "4ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "4ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "L.COMER 1",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "L.COMER 2",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1ª",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1ª",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2ª",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2ª",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "DUPLX ATICO",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "DUPLX ATICO",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "TRAST 1",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "TRAST 2",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "TRAST 3",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "2ª",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "2ª",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "4ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "4ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        }
+      ],
+      "subtajos": [
+        "Tabicado"
+      ],
+      "seccion": "OTROS_GREMIOS",
+      "seccion_nombre": "Otros gremios e interferencias",
+      "n_ubicaciones": 32,
+      "estado_actual": "Pendiente: 20 · X: 12",
+      "resumen_categorias": {
+        "TERMINADO": 12,
+        "SIN_REVISAR": 20
+      },
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
+      "orden_inventario": 1
+    },
+    {
+      "grupo_id": "suelo_radiante",
+      "trabajo": "Suelo radiante",
+      "propiedad": "coordinacion",
+      "orden_ejecucion": 80,
+      "fase_nombre": "Obra previa",
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1ª",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1ª",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2ª",
+          "unidad": "A",
+          "estado": "M",
+          "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2ª",
+          "unidad": "B",
+          "estado": "M",
+          "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "4ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "4ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "L.COMER 1",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "PB",
+          "unidad": "L.COMER 2",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1ª",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1ª",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2ª",
+          "unidad": "A",
+          "estado": "M",
+          "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2ª",
+          "unidad": "B",
+          "estado": "M",
+          "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "DUPLX ATICO",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "DUPLX ATICO",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "TRAST 1",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "TRAST 2",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidad": "TRAST 3",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "2ª",
+          "unidad": "A",
+          "estado": "M",
+          "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "2ª",
+          "unidad": "B",
+          "estado": "M",
+          "categoria": "OTROS_GREMIOS"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "4ª",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "4ª",
+          "unidad": "B",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "PB",
+          "unidad": "A",
+          "estado": "Pendiente",
+          "categoria": "SIN_REVISAR"
+        }
+      ],
+      "subtajos": [
+        "Suelo radiante"
+      ],
+      "seccion": "OTROS_GREMIOS",
+      "seccion_nombre": "Otros gremios e interferencias",
+      "n_ubicaciones": 32,
+      "estado_actual": "M: 6 · Pendiente: 20 · X: 6",
+      "resumen_categorias": {
+        "TERMINADO": 6,
+        "OTROS_GREMIOS": 6,
+        "SIN_REVISAR": 20
+      },
+      "motivo": "Condición de coordinación, no producción Sagarde. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
+      "orden_inventario": 2
+    },
+    {
+      "grupo_id": "suelo_recrecido",
+      "trabajo": "Suelo recrecido",
+      "propiedad": "externo",
+      "orden_ejecucion": 90,
+      "fase_nombre": "Obra previa",
+      "ubicaciones": [
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1ª",
+          "unidad": "A",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "1ª",
+          "unidad": "B",
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -39181,15 +39512,15 @@
           "edificio": "PORTAL 2",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -39272,15 +39603,15 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
@@ -39333,17 +39664,18 @@
         }
       ],
       "subtajos": [
-        "Tabicado"
+        "Suelo recrecido"
       ],
-      "seccion": "SIN_REVISAR",
-      "seccion_nombre": "Sin revisar nunca",
+      "seccion": "OTROS_GREMIOS",
+      "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 32",
+      "estado_actual": "Pendiente: 26 · X: 6",
       "resumen_categorias": {
-        "SIN_REVISAR": 32
+        "TERMINADO": 6,
+        "SIN_REVISAR": 26
       },
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 1
+      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
+      "orden_inventario": 3
     },
     {
       "grupo_id": "rozas_timbres",
@@ -39588,7 +39920,7 @@
         "SIN_REVISAR": 32
       },
       "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 2
+      "orden_inventario": 4
     },
     {
       "grupo_id": "montante_electrica",
@@ -39833,7 +40165,7 @@
         "SIN_REVISAR": 32
       },
       "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 3
+      "orden_inventario": 5
     },
     {
       "grupo_id": "montante_teleco",
@@ -40078,7 +40410,7 @@
         "SIN_REVISAR": 32
       },
       "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 4
+      "orden_inventario": 6
     },
     {
       "grupo_id": "montante_sscc",
@@ -40323,7 +40655,7 @@
         "SIN_REVISAR": 32
       },
       "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 5
+      "orden_inventario": 7
     },
     {
       "grupo_id": "tubeado_zzcc",
@@ -40568,7 +40900,7 @@
         "SIN_REVISAR": 32
       },
       "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 6
+      "orden_inventario": 8
     },
     {
       "grupo_id": "cableado_zzcc",
@@ -40804,496 +41136,6 @@
       ],
       "subtajos": [
         "Cableado de zonas comunes"
-      ],
-      "seccion": "SIN_REVISAR",
-      "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 32",
-      "resumen_categorias": {
-        "SIN_REVISAR": 32
-      },
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 7
-    },
-    {
-      "grupo_id": "suelo_radiante",
-      "trabajo": "Suelo radiante",
-      "propiedad": "coordinacion",
-      "orden_ejecucion": 80,
-      "fase_nombre": "Obra previa",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "4ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "4ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "L.COMER 1",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "L.COMER 2",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "4ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "4ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "DUPLX ATICO",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "DUPLX ATICO",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "TRAST 1",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "TRAST 2",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "TRAST 3",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "1ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "1ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "2ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "2ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "3ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "3ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "4ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "4ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        }
-      ],
-      "subtajos": [
-        "Suelo radiante"
-      ],
-      "seccion": "SIN_REVISAR",
-      "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 32",
-      "resumen_categorias": {
-        "SIN_REVISAR": 32
-      },
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 8
-    },
-    {
-      "grupo_id": "suelo_recrecido",
-      "trabajo": "Suelo recrecido",
-      "propiedad": "externo",
-      "orden_ejecucion": 90,
-      "fase_nombre": "Obra previa",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "2ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "3ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "4ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "4ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "L.COMER 1",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "L.COMER 2",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "1ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "2ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "3ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "4ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "4ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "DUPLX ATICO",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "DUPLX ATICO",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "TRAST 1",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "TRAST 2",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "TRAST 3",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "1ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "1ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "2ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "2ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "3ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "3ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "4ª",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "4ª",
-          "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        }
-      ],
-      "subtajos": [
-        "Suelo recrecido"
       ],
       "seccion": "SIN_REVISAR",
       "seccion_nombre": "Sin revisar nunca",
@@ -48160,13 +48002,6 @@
           "categoria": "SIN_REVISAR"
         },
         {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk598sv_45",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
           "edificio": "PORTAL 3",
           "planta": "Zonas especiales",
           "unidad": "z_muk59b6b_46",
@@ -48179,10 +48014,10 @@
       ],
       "seccion": "SIN_REVISAR",
       "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "SIN_REVISAR": 3
+        "SIN_REVISAR": 2
       },
       "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 37
@@ -48202,13 +48037,6 @@
           "categoria": "SIN_REVISAR"
         },
         {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk598sv_45",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
           "edificio": "PORTAL 3",
           "planta": "Zonas especiales",
           "unidad": "z_muk59b6b_46",
@@ -48221,10 +48049,10 @@
       ],
       "seccion": "SIN_REVISAR",
       "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "SIN_REVISAR": 3
+        "SIN_REVISAR": 2
       },
       "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 38
@@ -48244,13 +48072,6 @@
           "categoria": "SIN_REVISAR"
         },
         {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk598sv_45",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
           "edificio": "PORTAL 3",
           "planta": "Zonas especiales",
           "unidad": "z_muk59b6b_46",
@@ -48263,10 +48084,10 @@
       ],
       "seccion": "SIN_REVISAR",
       "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "SIN_REVISAR": 3
+        "SIN_REVISAR": 2
       },
       "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 39
@@ -48286,13 +48107,6 @@
           "categoria": "SIN_REVISAR"
         },
         {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk598sv_45",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
           "edificio": "PORTAL 3",
           "planta": "Zonas especiales",
           "unidad": "z_muk59b6b_46",
@@ -48305,10 +48119,10 @@
       ],
       "seccion": "SIN_REVISAR",
       "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "SIN_REVISAR": 3
+        "SIN_REVISAR": 2
       },
       "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 40
@@ -48328,13 +48142,6 @@
           "categoria": "SIN_REVISAR"
         },
         {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk598sv_45",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
           "edificio": "PORTAL 3",
           "planta": "Zonas especiales",
           "unidad": "z_muk59b6b_46",
@@ -48347,10 +48154,10 @@
       ],
       "seccion": "SIN_REVISAR",
       "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "SIN_REVISAR": 3
+        "SIN_REVISAR": 2
       },
       "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 41
@@ -48370,13 +48177,6 @@
           "categoria": "SIN_REVISAR"
         },
         {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk598sv_45",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
           "edificio": "PORTAL 3",
           "planta": "Zonas especiales",
           "unidad": "z_muk59b6b_46",
@@ -48389,10 +48189,10 @@
       ],
       "seccion": "SIN_REVISAR",
       "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "SIN_REVISAR": 3
+        "SIN_REVISAR": 2
       },
       "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
       "orden_inventario": 42
@@ -50709,7 +50509,6 @@
     "La base no es una rejilla completa: 1447 celdas encontradas frente a 3312 esperadas (46 ubicaciones x 72 tajos). Los tajos que falten no se pueden priorizar.",
     "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmación.",
-    "El orden sigue la secuencia lógica definida en CATALOGO_TAJOS.json.",
-    "La revisión es del None (739890 días). Los tajos conservan su clasificación; confirmar en obra antes de ejecutar."
+    "El orden sigue la secuencia lógica definida en CATALOGO_TAJOS.json."
   ]
 }
