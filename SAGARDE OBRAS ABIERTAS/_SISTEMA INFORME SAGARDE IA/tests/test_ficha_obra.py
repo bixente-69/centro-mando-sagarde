@@ -1132,7 +1132,8 @@ class TestRetirarEstructuraAusenteEnHoja(unittest.TestCase):
                 self.assertEqual(nueva['estados'], original['estados'])
                 self.assertEqual(nueva['estructura'], original['estructura'])
 
-    def test_una_planta_que_se_queda_sin_unidades_desaparece(self):
+    def test_una_planta_que_se_queda_sin_unidades_se_conserva_vacia_y_marcada(
+            self):
         original = self._ficha()
         ausentes = {'no_fiable': None, 'tajos': [], 'unidades': [
             {'portal_id': 'p1', 'planta_id': 'pb', 'unidad': u,
@@ -1141,8 +1142,14 @@ class TestRetirarEstructuraAusenteEnHoja(unittest.TestCase):
         nueva, _ = ficha_obra.retirar_estructura_ausente_en_hoja(
             original, ausentes, '04/10/2026', 'rev_x')
 
+        # Las hojas numeran las plantas por posicion: borrarla correria la
+        # numeracion y pasaria las marcas de una hoja entregada a la planta
+        # de al lado. Se conserva vacia y marcada como retirada.
         plantas = nueva['estructura']['bloques'][0]['portales'][0]['plantas']
-        self.assertEqual([p['id'] for p in plantas], ['1'])
+        self.assertEqual([p['id'] for p in plantas], ['pb', '1'])
+        self.assertEqual(plantas[0]['ubicaciones'], [])
+        self.assertEqual(plantas[0]['retirada'], '04/10/2026')
+        self.assertTrue(plantas[1]['ubicaciones'])
 
 
 if __name__ == '__main__':

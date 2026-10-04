@@ -838,6 +838,11 @@ def main():
         # y queda una exclusion para que ninguna regeneracion lo resucite. La
         # copia anterior queda en git y en un .bak. Si lo retirado guarda
         # avance medido (X/M//) no se retira NADA y, al escribir, se aborta.
+        # IMPORTANTE: las marcas se leen con la estructura de ANTES de
+        # retirar (`ficha_lectura`): los ids de planta de la hoja son
+        # posicionales y se descodifican contra la estructura con la que se
+        # genero. Despues se aplican sobre la base ya reducida (`ficha`).
+        ficha_lectura = ficha
         informe_baja = None
         if os.path.isfile(ruta_html_hoja) and not args.forzar_pdf:
             import adaptar_revision_html
@@ -879,7 +884,7 @@ def main():
                           f"{len(informe_baja['celdas_retiradas'])}")
 
         revision = _construir_revision_digital(
-            args.hoja, obra['id'], ficha, args.fecha, catalogo,
+            args.hoja, obra['id'], ficha_lectura, args.fecha, catalogo,
             forzar_pdf=args.forzar_pdf,
             portal_id_a_real=obra.get('mapa_portales_revision_html'),
             planta_id_a_real=obra.get('mapa_plantas_revision_html'),
@@ -917,7 +922,8 @@ def main():
         if args.escribir and hay_pdf_real:
             # Salvaguarda del primer cutover: reproduce primero, integramente
             # y solo en memoria, el camino anterior basado en el PDF.
-            impresos_antiguos = estados_impresos(args.hoja, obra, ficha)
+            impresos_antiguos = estados_impresos(
+                args.hoja, obra, ficha_lectura)
             estados_antiguos, cambios_antiguos = aplicar_digital(
                 ficha, impresos_antiguos, args.fecha, rev_id_antiguo)
         elif args.escribir:

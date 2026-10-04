@@ -580,6 +580,30 @@ class TestDigitalLaUltimaHojaTambienQuita(unittest.TestCase):
         self.assertIn('unidad B', salida)
         guardar.assert_not_called()
 
+
+    def test_planta_retirada_no_corre_la_numeracion_de_las_siguientes(self):
+        """Caso real de Olabeaga (04/10/2026): la hoja ya no trae la PB del
+        portal 3 pero numera la planta 1 como f2. Si al retirar la PB se
+        borrara la planta, f2 dejaria de existir (o, peor, caeria en la planta
+        de al lado). La marca de f2 debe aplicarse a la planta 1."""
+        self._html([(self.P1 + 'tube-viv__A', 'X'),
+                    (self.P1 + 'tube-viv__B', '')])
+        with mock.patch.object(
+                lector, 'estados_impresos',
+                return_value={'p1__1__tubeado__A': 'X'}):
+            salida, guardar = self._ejecutar([
+                self.pdf, 'pruebas', '--digital', '--fecha', FECHA,
+                '--escribir'], self._ficha())
+
+        guardada = guardar.call_args.args[1]
+        self.assertEqual(guardada['estados']['p1__1__tubeado__A']['v'], 'X')
+        self.assertEqual(guardada['estados']['p1__1__tubeado__B']['v'], 'P')
+        plantas = guardada['estructura']['bloques'][0]['portales'][0]['plantas']
+        self.assertEqual(plantas[0]['id'], 'pb')
+        self.assertEqual(plantas[0]['ubicaciones'], [])
+        self.assertTrue(plantas[0]['retirada'])
+        self.assertNotIn('MARCA SIN APLICAR', salida)
+
     def test_un_portal_que_la_hoja_no_cubre_no_se_toca(self):
         ficha = self._ficha()
         portal2 = {'id': 'p2', 'nombre': 'P2', 'referencia': 'P2', 'plantas': [

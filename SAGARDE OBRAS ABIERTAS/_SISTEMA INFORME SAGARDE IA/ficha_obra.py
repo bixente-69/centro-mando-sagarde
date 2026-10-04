@@ -970,10 +970,13 @@ def retirar_estructura_ausente_en_hoja(ficha, ausentes, fecha, revision_id):
                     planta['ubicaciones'] = [
                         x for x in planta.get('ubicaciones') or []
                         if str(x.get('id')) != u['unidad']]
-                portal['plantas'] = [
-                    p for p in portal.get('plantas') or []
-                    if p.get('ubicaciones')
-                    or str(p.get('id')).lower() != u['planta_id']]
+                    # Una planta que se queda vacia NO se borra: las hojas
+                    # numeran las plantas por posicion (f1, f2...) y el
+                    # generador cuenta tambien las vacias. Borrarla corre la
+                    # numeracion y una hoja ya entregada pasaria sus marcas a
+                    # la planta de al lado (comprobado en Olabeaga, 04/10).
+                    if not planta['ubicaciones']:
+                        planta['retirada'] = fecha
         exclusiones.append({
             'portal': u['edificio'], 'planta': u['planta'],
             'unidad': u['unidad'],

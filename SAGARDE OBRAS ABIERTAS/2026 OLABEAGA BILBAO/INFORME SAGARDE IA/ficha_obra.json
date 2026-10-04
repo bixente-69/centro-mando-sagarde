@@ -388,15 +388,8 @@
                 "id": "pb",
                 "nombre": "PB",
                 "orden": 0,
-                "ubicaciones": [
-                  {
-                    "id": "A",
-                    "tipo": "vivienda",
-                    "habitaciones": null,
-                    "origen": "hoja de alta",
-                    "confirmado": "27/09/2026"
-                  }
-                ]
+                "ubicaciones": [],
+                "retirada": "04/10/2026"
               },
               {
                 "id": "1",
@@ -534,14 +527,6 @@
                     "origen": "hoja de alta",
                     "confirmado": "27/09/2026",
                     "nombre": "ASEO PISCINAS CUBIERTA"
-                  },
-                  {
-                    "id": "z_muk59b6b_46",
-                    "tipo": "cubierta",
-                    "habitaciones": null,
-                    "origen": "hoja de alta",
-                    "confirmado": "27/09/2026",
-                    "nombre": "Cubierta"
                   }
                 ]
               }
@@ -551,7 +536,24 @@
       }
     ],
     "alias_historico": {},
-    "exclusiones": [],
+    "exclusiones": [
+      {
+        "portal": "PORTAL 3",
+        "planta": "PB",
+        "unidad": "A",
+        "motivo": "no figura en la hoja del 04/10/2026",
+        "fecha": "04/10/2026",
+        "revision": "olabeaga__04/10/2026__html_digital__b404d424"
+      },
+      {
+        "portal": "PORTAL 3",
+        "planta": "Zonas especiales",
+        "unidad": "z_muk59b6b_46",
+        "motivo": "no figura en la hoja del 04/10/2026",
+        "fecha": "04/10/2026",
+        "revision": "olabeaga__04/10/2026__html_digital__b404d424"
+      }
+    ],
     "_meta": {
       "actualizado": "04/10/2026",
       "origen": "hoja de alta REVISION 2026 OLABEAGA 27092026.html"
@@ -3581,16 +3583,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p1__zesp__garaje_alum_temp_coloc_recinto__z_muk4v2kb_39": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p1__zesp__garaje_emergencia_coloc_recinto__z_muk4v2kb_39": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p1__zesp__garaje_enchufe_coloc__z_muk4v2kb_39": {
       "v": "P",
       "f": "04/10/2026",
@@ -3630,16 +3622,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p1__zesp__garaje_alum_temp_embornado_recinto__z_muk4v2kb_39": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p1__zesp__garaje_emergencia_embornado_recinto__z_muk4v2kb_39": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p1__zesp__garaje_enchufe_embornado__z_muk4v2kb_39": {
       "v": "P",
@@ -3691,16 +3673,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p1__zesp__garaje_alum_temp_coloc_recinto__z_muk4v5m3_40": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p1__zesp__garaje_emergencia_coloc_recinto__z_muk4v5m3_40": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p1__zesp__garaje_enchufe_coloc__z_muk4v5m3_40": {
       "v": "P",
       "f": "04/10/2026",
@@ -3740,16 +3712,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p1__zesp__garaje_alum_temp_embornado_recinto__z_muk4v5m3_40": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p1__zesp__garaje_emergencia_embornado_recinto__z_muk4v5m3_40": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p1__zesp__garaje_enchufe_embornado__z_muk4v5m3_40": {
       "v": "P",
@@ -3801,16 +3763,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p1__zesp__garaje_alum_temp_coloc_recinto__z_muk4xw6v_42": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p1__zesp__garaje_emergencia_coloc_recinto__z_muk4xw6v_42": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p1__zesp__garaje_enchufe_coloc__z_muk4xw6v_42": {
       "v": "P",
       "f": "04/10/2026",
@@ -3850,16 +3802,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p1__zesp__garaje_alum_temp_embornado_recinto__z_muk4xw6v_42": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p1__zesp__garaje_emergencia_embornado_recinto__z_muk4xw6v_42": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p1__zesp__garaje_enchufe_embornado__z_muk4xw6v_42": {
       "v": "P",
@@ -3911,16 +3853,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p1__zesp__garaje_alum_temp_coloc_recinto__z_muk4v7wp_41": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p1__zesp__garaje_emergencia_coloc_recinto__z_muk4v7wp_41": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p1__zesp__garaje_enchufe_coloc__z_muk4v7wp_41": {
       "v": "P",
       "f": "04/10/2026",
@@ -3930,16 +3862,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p1__zesp__garaje_alum_temp_embornado_recinto__z_muk4v7wp_41": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p1__zesp__garaje_emergencia_embornado_recinto__z_muk4v7wp_41": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p1__zesp__garaje_enchufe_embornado__z_muk4v7wp_41": {
       "v": "P",
@@ -6461,16 +6383,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p2__zesp__garaje_alum_temp_coloc_recinto__z_muk4qj3k_33": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p2__zesp__garaje_emergencia_coloc_recinto__z_muk4qj3k_33": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p2__zesp__garaje_enchufe_coloc__z_muk4qj3k_33": {
       "v": "P",
       "f": "04/10/2026",
@@ -6510,16 +6422,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p2__zesp__garaje_alum_temp_embornado_recinto__z_muk4qj3k_33": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p2__zesp__garaje_emergencia_embornado_recinto__z_muk4qj3k_33": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p2__zesp__garaje_enchufe_embornado__z_muk4qj3k_33": {
       "v": "P",
@@ -6571,16 +6473,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p2__zesp__garaje_alum_temp_coloc_recinto__z_muk4qkov_34": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p2__zesp__garaje_emergencia_coloc_recinto__z_muk4qkov_34": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p2__zesp__garaje_enchufe_coloc__z_muk4qkov_34": {
       "v": "P",
       "f": "04/10/2026",
@@ -6620,16 +6512,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p2__zesp__garaje_alum_temp_embornado_recinto__z_muk4qkov_34": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p2__zesp__garaje_emergencia_embornado_recinto__z_muk4qkov_34": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p2__zesp__garaje_enchufe_embornado__z_muk4qkov_34": {
       "v": "P",
@@ -6681,16 +6563,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p2__zesp__garaje_alum_temp_coloc_recinto__z_muk4qu6x_37": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p2__zesp__garaje_emergencia_coloc_recinto__z_muk4qu6x_37": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p2__zesp__garaje_enchufe_coloc__z_muk4qu6x_37": {
       "v": "P",
       "f": "04/10/2026",
@@ -6730,16 +6602,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p2__zesp__garaje_alum_temp_embornado_recinto__z_muk4qu6x_37": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p2__zesp__garaje_emergencia_embornado_recinto__z_muk4qu6x_37": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p2__zesp__garaje_enchufe_embornado__z_muk4qu6x_37": {
       "v": "P",
@@ -6791,16 +6653,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p2__zesp__garaje_alum_temp_coloc_recinto__z_muk51fcr_43": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p2__zesp__garaje_emergencia_coloc_recinto__z_muk51fcr_43": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p2__zesp__garaje_enchufe_coloc__z_muk51fcr_43": {
       "v": "P",
       "f": "04/10/2026",
@@ -6840,16 +6692,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p2__zesp__garaje_alum_temp_embornado_recinto__z_muk51fcr_43": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p2__zesp__garaje_emergencia_embornado_recinto__z_muk51fcr_43": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p2__zesp__garaje_enchufe_embornado__z_muk51fcr_43": {
       "v": "P",
@@ -6901,16 +6743,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p2__zesp__garaje_alum_temp_coloc_recinto__z_muk4qr18_36": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p2__zesp__garaje_emergencia_coloc_recinto__z_muk4qr18_36": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p2__zesp__garaje_enchufe_coloc__z_muk4qr18_36": {
       "v": "P",
       "f": "04/10/2026",
@@ -6920,16 +6752,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p2__zesp__garaje_alum_temp_embornado_recinto__z_muk4qr18_36": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p2__zesp__garaje_emergencia_embornado_recinto__z_muk4qr18_36": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p2__zesp__garaje_enchufe_embornado__z_muk4qr18_36": {
       "v": "P",
@@ -7001,11 +6823,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__tabicado__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__tabicado__A": {
       "v": "X",
       "f": "04/10/2026",
@@ -7045,11 +6862,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__rozas_timbres__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__rozas_timbres__A": {
       "v": "P",
@@ -7091,11 +6903,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__montante_electrica__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__montante_electrica__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -7135,11 +6942,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__montante_teleco__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__montante_teleco__A": {
       "v": "P",
@@ -7181,11 +6983,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__montante_sscc__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__montante_sscc__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -7225,11 +7022,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__tubeado_zzcc__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__tubeado_zzcc__A": {
       "v": "P",
@@ -7271,11 +7063,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__cableado_zzcc__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__cableado_zzcc__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -7315,11 +7102,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__suelo_radiante__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__suelo_radiante__A": {
       "v": "X",
@@ -7361,11 +7143,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__suelo_recrecido__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__suelo_recrecido__A": {
       "v": "X",
       "f": "04/10/2026",
@@ -7405,11 +7182,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__perfilado_pladur__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__perfilado_pladur__A": {
       "v": "P",
@@ -7451,11 +7223,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__primera_cara_pladur__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__primera_cara_pladur__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -7495,11 +7262,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__segunda_cara_pladur__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__segunda_cara_pladur__A": {
       "v": "P",
@@ -7541,11 +7303,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__cuadros_presentados__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__cuadros_presentados__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -7585,11 +7342,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__tubeado__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__tubeado__A": {
       "v": "P",
@@ -7631,11 +7383,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__cableado__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__cableado__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -7675,11 +7422,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__telecableado__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__telecableado__A": {
       "v": "P",
@@ -7721,11 +7463,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__portero__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__portero__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -7765,11 +7502,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__termostatos__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__termostatos__A": {
       "v": "P",
@@ -7811,11 +7543,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__doblar_cajas__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__doblar_cajas__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -7855,11 +7582,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__embornado__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__embornado__A": {
       "v": "P",
@@ -7901,11 +7623,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__telembornado__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__telembornado__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -7945,11 +7662,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__derivacion_individual__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__derivacion_individual__A": {
       "v": "P",
@@ -7991,11 +7703,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__cuadro_mecanizado__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__cuadro_mecanizado__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -8035,11 +7742,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__techos_zzcc__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__techos_zzcc__A": {
       "v": "P",
@@ -8081,11 +7783,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__techos__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__techos__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -8125,11 +7822,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__enchapado__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__enchapado__A": {
       "v": "P",
@@ -8171,11 +7863,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__pintura_primera__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__pintura_primera__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -8215,11 +7902,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__pintura_zzcc__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__pintura_zzcc__A": {
       "v": "P",
@@ -8261,11 +7943,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__pintura_segunda__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__pintura_segunda__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -8305,11 +7982,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__mecanizado__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__mecanizado__A": {
       "v": "P",
@@ -8351,11 +8023,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__telemecanizado__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__telemecanizado__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -8395,11 +8062,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__agujeros_iluminacion_zzcc__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__agujeros_iluminacion_zzcc__A": {
       "v": "P",
@@ -8441,11 +8103,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__placas_tapas__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__placas_tapas__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -8485,11 +8142,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__fachada_terminada__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__fachada_terminada__A": {
       "v": "P",
@@ -8531,11 +8183,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__apliques__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__apliques__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -8576,11 +8223,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__pb__casquillos_bombillas__A": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__1__casquillos_bombillas__A": {
       "v": "P",
       "f": "04/10/2026",
@@ -8620,11 +8262,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__pb__iluminacion_rellanos__A": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__iluminacion_rellanos__A": {
       "v": "P",
@@ -8711,16 +8348,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__zesp__garaje_alum_temp_coloc_recinto__z_muk5ao5z_48": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__garaje_emergencia_coloc_recinto__z_muk5ao5z_48": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__zesp__garaje_enchufe_coloc__z_muk5ao5z_48": {
       "v": "P",
       "f": "04/10/2026",
@@ -8760,16 +8387,6 @@
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__zesp__garaje_alum_temp_embornado_recinto__z_muk5ao5z_48": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__garaje_emergencia_embornado_recinto__z_muk5ao5z_48": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__zesp__garaje_enchufe_embornado__z_muk5ao5z_48": {
       "v": "P",
@@ -8821,16 +8438,6 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__zesp__garaje_alum_temp_coloc_recinto__z_muk5aao6_47": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__garaje_emergencia_coloc_recinto__z_muk5aao6_47": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__zesp__garaje_enchufe_coloc__z_muk5aao6_47": {
       "v": "P",
       "f": "04/10/2026",
@@ -8841,85 +8448,10 @@
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
-    "p3__zesp__garaje_alum_temp_embornado_recinto__z_muk5aao6_47": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__garaje_emergencia_embornado_recinto__z_muk5aao6_47": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
     "p3__zesp__garaje_enchufe_embornado__z_muk5aao6_47": {
       "v": "P",
       "f": "04/10/2026",
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
-    },
-    "p3__zesp__fv_paneles_instalacion__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__fv_paneles_cableado__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__fv_paneles_tierra__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__fv_strings_cableado__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__fv_equipos_protecciones__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__fv_puesta_marcha__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__cub_soporte_antena__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__cub_soporte_pararrayos__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__cub_antena_instalacion__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__cub_pararrayos_instalacion__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__cub_antena_cableado__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__cub_pararrayos_cableado__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
-    },
-    "p3__zesp__cub_antena_tierra__z_muk59b6b_46": {
-      "v": "?",
-      "f": null,
-      "r": null
     },
     "p3__1__tabicado__C": {
       "v": "X",
@@ -9668,8 +9200,10 @@
       "fecha": "04/10/2026",
       "origen": "hoja generada rellenada digitalmente, leida por la IA",
       "celdas_medidas": 35,
-      "celdas_cambiadas": 1465,
-      "ubicaciones_nuevas": 4
+      "celdas_cambiadas": 0,
+      "ubicaciones_nuevas": 0,
+      "ubicaciones_retiradas": 2,
+      "celdas_retiradas": 94
     }
   ],
   "dudas": [],

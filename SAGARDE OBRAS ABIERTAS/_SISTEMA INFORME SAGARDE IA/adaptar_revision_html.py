@@ -95,6 +95,17 @@ def _ubicaciones(planta):
     ]
 
 
+def _plantas_a_numerar(portal):
+    """Plantas que ocupan numero de posicion en una hoja: las que tienen
+    ubicaciones y las retiradas (vacias a proposito, ver
+    ``ficha_obra.retirar_estructura_ausente_en_hoja``)."""
+    return [
+        planta for planta in (portal.get('plantas') or [])
+        if isinstance(planta, dict)
+        and (_ubicaciones(planta) or planta.get('retirada'))
+    ]
+
+
 def _plantas_con_ubicaciones(portal):
     return [
         planta for planta in (portal.get('plantas') or [])
@@ -131,7 +142,7 @@ def _mapas_orden_natural(obra_id, ficha_actual):
         portal_html = f'src_{slug}_p{indice_portal}'
         mapa_portales[portal_html] = _id_real(portal.get('id'))
         plantas = sorted(
-            _plantas_con_ubicaciones(portal),
+            _plantas_a_numerar(portal),
             key=lambda planta: _clave_planta(_referencia_planta(planta)),
         )
         for indice_planta, planta in enumerate(plantas, 1):

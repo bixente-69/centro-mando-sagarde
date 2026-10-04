@@ -8,7 +8,7 @@
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "04/10/2026 13:34",
+  "generado": "04/10/2026 13:49",
   "resumen": {
     "listos": 9,
     "verificar": 0,
@@ -17,11 +17,11 @@
     "bloqueados": 41,
     "otros_gremios": 16,
     "dudas": 0,
-    "sin_revisar": 4,
-    "unidades_sin_revisar": 94,
+    "sin_revisar": 0,
+    "unidades_sin_revisar": 0,
     "terminados": 0,
-    "inventario_total": 70,
-    "detalle_total": 1589,
+    "inventario_total": 66,
+    "detalle_total": 1495,
     "preguntas_pendientes": 0,
     "viviendas": 2,
     "zonas_comunes": 1,
@@ -1957,33 +1957,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "tabicado",
-      "trabajo": "Tabicado",
-      "trabajos_originales": [
-        "Tabicado"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 10,
-      "fase_nombre": "Inicio de obra",
-      "display_group": "tabicado",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "rozas_timbres",
       "trabajo": "Rozas de timbres",
       "trabajos_originales": [
@@ -3277,33 +3250,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "rozas_timbres",
-      "trabajo": "Rozas de timbres",
-      "trabajos_originales": [
-        "Rozas de timbres"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 20,
-      "fase_nombre": "Inicio de obra",
-      "display_group": "rozas_timbres",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "montante_electrica",
@@ -4601,33 +4547,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "montante_electrica",
-      "trabajo": "Montante eléctrica",
-      "trabajos_originales": [
-        "Montante eléctrica"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 30,
-      "fase_nombre": "Infraestructura",
-      "display_group": "montante_electrica",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "montante_teleco",
       "trabajo": "Montante de telecomunicaciones",
       "trabajos_originales": [
@@ -5921,33 +5840,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "montante_teleco",
-      "trabajo": "Montante de telecomunicaciones",
-      "trabajos_originales": [
-        "Montante de telecomunicaciones"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 40,
-      "fase_nombre": "Infraestructura",
-      "display_group": "montante_teleco",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "montante_sscc",
@@ -7245,33 +7137,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "montante_sscc",
-      "trabajo": "Montante de servicios comunes",
-      "trabajos_originales": [
-        "Montante de servicios comunes"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 50,
-      "fase_nombre": "Infraestructura",
-      "display_group": "montante_sscc",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "tubeado_zzcc",
       "trabajo": "Tubeado de zonas comunes",
       "trabajos_originales": [
@@ -8567,33 +8432,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "tubeado_zzcc",
-      "trabajo": "Tubeado de zonas comunes",
-      "trabajos_originales": [
-        "Tubeado de zonas comunes"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 60,
-      "fase_nombre": "Infraestructura",
-      "display_group": "tubeado_zzcc",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "cableado_zzcc",
       "trabajo": "Cableado de zonas comunes",
       "trabajos_originales": [
@@ -9887,33 +9725,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "cableado_zzcc",
-      "trabajo": "Cableado de zonas comunes",
-      "trabajos_originales": [
-        "Cableado de zonas comunes"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 70,
-      "fase_nombre": "Infraestructura",
-      "display_group": "cableado_zzcc",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "suelo_radiante",
@@ -10861,33 +10672,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "suelo_radiante",
-      "trabajo": "Suelo radiante",
-      "trabajos_originales": [
-        "Suelo radiante"
-      ],
-      "propiedad": "coordinacion",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 80,
-      "fase_nombre": "Obra previa",
-      "display_group": "suelo_radiante",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "suelo_recrecido",
       "trabajo": "Suelo recrecido",
       "trabajos_originales": [
@@ -11833,33 +11617,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "suelo_recrecido",
-      "trabajo": "Suelo recrecido",
-      "trabajos_originales": [
-        "Suelo recrecido"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 90,
-      "fase_nombre": "Obra previa",
-      "display_group": "suelo_recrecido",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "perfilado_pladur",
       "trabajo": "Perfilado de Pladur",
       "trabajos_originales": [
@@ -12805,33 +12562,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "perfilado_pladur",
-      "trabajo": "Perfilado de Pladur",
-      "trabajos_originales": [
-        "Perfilado de Pladur"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 100,
-      "fase_nombre": "Pladur",
-      "display_group": "perfilado_pladur",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "primera_cara_pladur",
       "trabajo": "Primeras caras de Pladur",
       "trabajos_originales": [
@@ -13775,33 +13505,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "primera_cara_pladur",
-      "trabajo": "Primeras caras de Pladur",
-      "trabajos_originales": [
-        "Primeras caras de Pladur"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 110,
-      "fase_nombre": "Pladur",
-      "display_group": "primera_cara_pladur",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "cuadros_presentados",
@@ -15099,33 +14802,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "cuadros_presentados",
-      "trabajo": "Cuadros presentados",
-      "trabajos_originales": [
-        "Cuadros presentados"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 120,
-      "fase_nombre": "Instalación interior",
-      "display_group": "cuadros_presentados",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "tubeado",
       "trabajo": "Tubeado interior",
       "trabajos_originales": [
@@ -16419,33 +16095,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "tubeado",
-      "trabajo": "Tubeado interior",
-      "trabajos_originales": [
-        "Tubeado interior"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 130,
-      "fase_nombre": "Instalación interior",
-      "display_group": "tubeado",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "cableado",
@@ -17743,33 +17392,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "cableado",
-      "trabajo": "Cableado eléctrico",
-      "trabajos_originales": [
-        "Cableado eléctrico"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 140,
-      "fase_nombre": "Instalación interior",
-      "display_group": "cableado",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "telecableado",
       "trabajo": "Telecableado",
       "trabajos_originales": [
@@ -19063,33 +18685,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "telecableado",
-      "trabajo": "Telecableado",
-      "trabajos_originales": [
-        "Telecableado"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 150,
-      "fase_nombre": "Instalación interior",
-      "display_group": "telecableado",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "portero",
@@ -20387,33 +19982,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "termostatos",
       "trabajo": "Termostatos",
       "trabajos_originales": [
@@ -21709,33 +21277,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "segunda_cara_pladur",
       "trabajo": "Segundas caras de Pladur",
       "trabajos_originales": [
@@ -22679,33 +22220,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "segunda_cara_pladur",
-      "trabajo": "Segundas caras de Pladur",
-      "trabajos_originales": [
-        "Segundas caras de Pladur"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 180,
-      "fase_nombre": "Pladur",
-      "display_group": "segunda_cara_pladur",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "doblar_cajas",
@@ -24003,33 +23517,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "doblar_cajas",
-      "trabajo": "Doblar cajas",
-      "trabajos_originales": [
-        "Doblar cajas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 190,
-      "fase_nombre": "Recuperación tras Pladur",
-      "display_group": "doblar_cajas",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "embornado",
       "trabajo": "Embornado eléctrico",
       "trabajos_originales": [
@@ -25323,33 +24810,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "embornado",
-      "trabajo": "Embornado eléctrico",
-      "trabajos_originales": [
-        "Embornado eléctrico"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 200,
-      "fase_nombre": "Conexiones",
-      "display_group": "embornado",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "telembornado",
@@ -26647,33 +26107,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "telembornado",
-      "trabajo": "Telembornado",
-      "trabajos_originales": [
-        "Telembornado"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 210,
-      "fase_nombre": "Conexiones",
-      "display_group": "telembornado",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "derivacion_individual",
       "trabajo": "Derivación individual",
       "trabajos_originales": [
@@ -27967,33 +27400,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "derivacion_individual",
-      "trabajo": "Derivación individual",
-      "trabajos_originales": [
-        "Derivación individual"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 220,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "derivacion_individual",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "cuadro_mecanizado",
@@ -29571,33 +28977,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "cuadro_mecanizado",
-      "trabajo": "Cuadro mecanizado",
-      "trabajos_originales": [
-        "Cuadro mecanizado"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 230,
-      "fase_nombre": "Cierre técnico",
-      "display_group": "cuadro_mecanizado",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "techos_zzcc",
       "trabajo": "Techos de zonas comunes",
       "trabajos_originales": [
@@ -30541,33 +29920,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "techos_zzcc",
-      "trabajo": "Techos de zonas comunes",
-      "trabajos_originales": [
-        "Techos de zonas comunes"
-      ],
-      "propiedad": "externo",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 237,
-      "fase_nombre": "Acabados previos",
-      "display_group": "techos_zzcc",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "techos",
@@ -31515,33 +30867,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "techos",
-      "trabajo": "Techos",
-      "trabajos_originales": [
-        "Techos"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 240,
-      "fase_nombre": "Acabados previos",
-      "display_group": "techos",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "enchapado",
       "trabajo": "Enchapado",
       "trabajos_originales": [
@@ -32487,33 +31812,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "enchapado",
-      "trabajo": "Enchapado",
-      "trabajos_originales": [
-        "Enchapado"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 250,
-      "fase_nombre": "Acabados previos",
-      "display_group": "enchapado",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "pintura_primera",
       "trabajo": "Pintura — primera mano",
       "trabajos_originales": [
@@ -33457,33 +32755,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "pintura_primera",
-      "trabajo": "Pintura — primera mano",
-      "trabajos_originales": [
-        "Pintura — primera mano"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 260,
-      "fase_nombre": "Pintura",
-      "display_group": "pintura",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "mecanizado",
@@ -35059,33 +34330,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "mecanizado",
-      "trabajo": "Mecanizado eléctrico",
-      "trabajos_originales": [
-        "Mecanizado eléctrico"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 270,
-      "fase_nombre": "Mecanismos",
-      "display_group": "mecanizado",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "telemecanizado",
@@ -36943,33 +36187,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "telemecanizado",
-      "trabajo": "Telemecanizado",
-      "trabajos_originales": [
-        "Telemecanizado"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 280,
-      "fase_nombre": "Mecanismos",
-      "display_group": "telemecanizado",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "pintura_segunda",
       "trabajo": "Pintura — segunda mano",
       "trabajos_originales": [
@@ -37913,33 +37130,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "pintura_segunda",
-      "trabajo": "Pintura — segunda mano",
-      "trabajos_originales": [
-        "Pintura — segunda mano"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 290,
-      "fase_nombre": "Pintura final",
-      "display_group": "pintura",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "placas_tapas",
@@ -40077,33 +39267,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "placas_tapas",
-      "trabajo": "Placas y tapas",
-      "trabajos_originales": [
-        "Placas y tapas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 300,
-      "fase_nombre": "Remates finales",
-      "display_group": "placas_tapas",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "fachada_terminada",
       "trabajo": "Fachada terminada",
       "trabajos_originales": [
@@ -41047,33 +40210,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "fachada_terminada",
-      "trabajo": "Fachada terminada",
-      "trabajos_originales": [
-        "Fachada terminada"
-      ],
-      "propiedad": "externo",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 305,
-      "fase_nombre": "Fachada",
-      "display_group": "fachada_terminada",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "apliques",
@@ -42371,33 +41507,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "apliques",
-      "trabajo": "Apliques y enchufes de terraza",
-      "trabajos_originales": [
-        "Apliques y enchufes de terraza"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 310,
-      "fase_nombre": "Remates exteriores",
-      "display_group": "apliques",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "agujeros_iluminacion_zzcc",
       "trabajo": "Agujeros de iluminación en ZZCC",
       "trabajos_originales": [
@@ -43693,33 +42802,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "agujeros_iluminacion_zzcc",
-      "trabajo": "Agujeros de iluminación en ZZCC",
-      "trabajos_originales": [
-        "Agujeros de iluminación en ZZCC"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 315,
-      "fase_nombre": "Iluminación final",
-      "display_group": "agujeros_iluminacion_zzcc",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "pintura_zzcc",
       "trabajo": "Pintura de zonas comunes",
       "trabajos_originales": [
@@ -44663,33 +43745,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "pintura_zzcc",
-      "trabajo": "Pintura de zonas comunes",
-      "trabajos_originales": [
-        "Pintura de zonas comunes"
-      ],
-      "propiedad": "externo",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 318,
-      "fase_nombre": "Pintura ZZCC",
-      "display_group": "pintura_zzcc",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "casquillos_bombillas",
@@ -46547,33 +45602,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "casquillos_bombillas",
-      "trabajo": "Casquillos y bombillas",
-      "trabajos_originales": [
-        "Casquillos y bombillas"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 320,
-      "fase_nombre": "Entrega",
-      "display_group": "casquillos_bombillas",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "iluminacion_rellanos",
       "trabajo": "Iluminación de rellanos / ZZCC",
       "trabajos_originales": [
@@ -47867,33 +46895,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "iluminacion_rellanos",
-      "trabajo": "Iluminación de rellanos / ZZCC",
-      "trabajos_originales": [
-        "Iluminación de rellanos / ZZCC"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 330,
-      "fase_nombre": "Entrega",
-      "display_group": "iluminacion_rellanos",
-      "edificio": "PORTAL 3",
-      "planta": "PB",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "fv_paneles_instalacion",
@@ -47921,33 +46922,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "fv_paneles_instalacion",
-      "trabajo": "Instalación de paneles fotovoltaicos",
-      "trabajos_originales": [
-        "Instalación de paneles fotovoltaicos"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 400,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_paneles_instalacion",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "fv_paneles_cableado",
@@ -47987,33 +46961,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "fv_paneles_cableado",
-      "trabajo": "Cableado de paneles fotovoltaicos",
-      "trabajos_originales": [
-        "Cableado de paneles fotovoltaicos"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 401,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_paneles_cableado",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "fv_paneles_tierra",
       "trabajo": "Tierra de paneles fotovoltaicos",
       "trabajos_originales": [
@@ -48049,33 +46996,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "fv_paneles_tierra",
-      "trabajo": "Tierra de paneles fotovoltaicos",
-      "trabajos_originales": [
-        "Tierra de paneles fotovoltaicos"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 402,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_paneles_tierra",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "fv_strings_cableado",
@@ -48115,33 +47035,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "fv_strings_cableado",
-      "trabajo": "Cableado de strings hasta equipos",
-      "trabajos_originales": [
-        "Cableado de strings hasta equipos"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 403,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_strings_cableado",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "fv_equipos_protecciones",
       "trabajo": "Instalación de equipos y protecciones",
       "trabajos_originales": [
@@ -48177,33 +47070,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "fv_equipos_protecciones",
-      "trabajo": "Instalación de equipos y protecciones",
-      "trabajos_originales": [
-        "Instalación de equipos y protecciones"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 404,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_equipos_protecciones",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "fv_puesta_marcha",
@@ -48243,33 +47109,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "fv_puesta_marcha",
-      "trabajo": "Puesta en marcha de fotovoltaica",
-      "trabajos_originales": [
-        "Puesta en marcha de fotovoltaica"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 405,
-      "fase_nombre": "Cubierta — Fotovoltaica",
-      "display_group": "fv_puesta_marcha",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "cub_soporte_antena",
       "trabajo": "Colocación de soporte de antena",
       "trabajos_originales": [
@@ -48324,33 +47163,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "cub_soporte_antena",
-      "trabajo": "Colocación de soporte de antena",
-      "trabajos_originales": [
-        "Colocación de soporte de antena"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 410,
-      "fase_nombre": "Cubierta — Antena/pararrayos",
-      "display_group": "cub_soporte_antena",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "cub_soporte_pararrayos",
       "trabajo": "Colocación de soporte de pararrayos",
       "trabajos_originales": [
@@ -48403,33 +47215,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "cub_soporte_pararrayos",
-      "trabajo": "Colocación de soporte de pararrayos",
-      "trabajos_originales": [
-        "Colocación de soporte de pararrayos"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 411,
-      "fase_nombre": "Cubierta — Antena/pararrayos",
-      "display_group": "cub_soporte_pararrayos",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "cub_antena_instalacion",
@@ -48506,33 +47291,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "cub_antena_instalacion",
-      "trabajo": "Instalación de antena",
-      "trabajos_originales": [
-        "Instalación de antena"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 412,
-      "fase_nombre": "Cubierta — Antena/pararrayos",
-      "display_group": "cub_antena_instalacion",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "cub_pararrayos_instalacion",
       "trabajo": "Instalación de pararrayos",
       "trabajos_originales": [
@@ -48605,33 +47363,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "cub_pararrayos_instalacion",
-      "trabajo": "Instalación de pararrayos",
-      "trabajos_originales": [
-        "Instalación de pararrayos"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 413,
-      "fase_nombre": "Cubierta — Antena/pararrayos",
-      "display_group": "cub_pararrayos_instalacion",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "cub_antena_cableado",
@@ -48708,33 +47439,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "cub_antena_cableado",
-      "trabajo": "Cableado de antena",
-      "trabajos_originales": [
-        "Cableado de antena"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 414,
-      "fase_nombre": "Cubierta — Antena/pararrayos",
-      "display_group": "cub_antena_cableado",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "cub_pararrayos_cableado",
       "trabajo": "Cableado de pararrayos",
       "trabajos_originales": [
@@ -48807,33 +47511,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "cub_pararrayos_cableado",
-      "trabajo": "Cableado de pararrayos",
-      "trabajos_originales": [
-        "Cableado de pararrayos"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 415,
-      "fase_nombre": "Cubierta — Antena/pararrayos",
-      "display_group": "cub_pararrayos_cableado",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "cub_antena_tierra",
@@ -48910,33 +47587,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "cub_antena_tierra",
-      "trabajo": "Tierra de antena",
-      "trabajos_originales": [
-        "Tierra de antena"
-      ],
-      "propiedad": "propio",
-      "ambito": "edificio",
-      "ambito_nombre": "Edificio general",
-      "orden_ejecucion": 416,
-      "fase_nombre": "Cubierta — Antena/pararrayos",
-      "display_group": "cub_antena_tierra",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk59b6b_46",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "garaje_tabicado",
       "trabajo": "Tabicado (zona común)",
       "trabajos_originales": [
@@ -52079,600 +50729,6 @@
       "ultima_fecha": "04/10/2026"
     },
     {
-      "tarea_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_coloc_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v2kb_39",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_coloc_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v5m3_40",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_coloc_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v7wp_41",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_coloc_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4xw6v_42",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_coloc_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qj3k_33",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_coloc_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qkov_34",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_coloc_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qr18_36",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_coloc_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qu6x_37",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_coloc_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk51fcr_43",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_coloc_recinto",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk5aao6_47",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_coloc_recinto",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk5ao5z_48",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_coloc_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v2kb_39",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_coloc_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v5m3_40",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_coloc_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v7wp_41",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_coloc_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4xw6v_42",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_coloc_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qj3k_33",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_coloc_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qkov_34",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_coloc_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qr18_36",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_coloc_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qu6x_37",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_coloc_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk51fcr_43",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_coloc_recinto",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk5aao6_47",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_coloc_recinto",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk5ao5z_48",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
       "tarea_id": "garaje_enchufe_coloc",
       "trabajo": "Colocación de enchufe de cuarto técnico",
       "trabajos_originales": [
@@ -55478,600 +53534,6 @@
       "omitido_ultima": false,
       "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_embornado_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v2kb_39",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_embornado_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v5m3_40",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_embornado_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v7wp_41",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_embornado_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4xw6v_42",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_embornado_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qj3k_33",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_embornado_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qkov_34",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_embornado_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qr18_36",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_embornado_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qu6x_37",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_embornado_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk51fcr_43",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_embornado_recinto",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk5aao6_47",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "trabajos_originales": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_alum_temp_embornado_recinto",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk5ao5z_48",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_embornado_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v2kb_39",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_embornado_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v5m3_40",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_embornado_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4v7wp_41",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_embornado_recinto",
-      "edificio": "PORTAL 1",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4xw6v_42",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_embornado_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qj3k_33",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_embornado_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qkov_34",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_embornado_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qr18_36",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_embornado_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk4qu6x_37",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_embornado_recinto",
-      "edificio": "PORTAL 2",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk51fcr_43",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_embornado_recinto",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk5aao6_47",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
-    },
-    {
-      "tarea_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "trabajos_originales": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "display_group": "garaje_emergencia_embornado_recinto",
-      "edificio": "PORTAL 3",
-      "planta": "Zonas especiales",
-      "unidad": "z_muk5ao5z_48",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "SIN_REVISAR",
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": null
     },
     {
       "tarea_id": "garaje_enchufe_embornado",
@@ -56821,13 +54283,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -56835,14 +54290,13 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
         "VIABLE": 14,
-        "BLOQUEADO": 21,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 21
       },
-      "motivo": "Abre el frente inicial de instalaciones. Dependencias pendientes: Tabicado. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Abre el frente inicial de instalaciones. Dependencias pendientes: Tabicado.",
       "orden_inventario": 1
     },
     {
@@ -57096,13 +54550,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -57110,14 +54557,13 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
         "VIABLE": 14,
-        "BLOQUEADO": 21,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 21
       },
-      "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical eléctrica. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical eléctrica.",
       "orden_inventario": 2
     },
     {
@@ -57371,13 +54817,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -57385,14 +54824,13 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
         "VIABLE": 14,
-        "BLOQUEADO": 21,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 21
       },
-      "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de telecomunicaciones. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de telecomunicaciones.",
       "orden_inventario": 3
     },
     {
@@ -57646,13 +55084,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -57660,14 +55091,13 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
         "VIABLE": 14,
-        "BLOQUEADO": 21,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 21
       },
-      "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de servicios comunes. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de servicios comunes.",
       "orden_inventario": 4
     },
     {
@@ -57921,13 +55351,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -57935,14 +55358,13 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
         "VIABLE": 14,
-        "BLOQUEADO": 21,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 21
       },
-      "motivo": "Abre el frente de zonas comunes. Dependencias pendientes: Tabicado. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Abre el frente de zonas comunes. Dependencias pendientes: Tabicado.",
       "orden_inventario": 5
     },
     {
@@ -58196,13 +55618,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -58210,14 +55625,13 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
         "VIABLE": 14,
-        "BLOQUEADO": 21,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 21
       },
-      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado. Dependencias pendientes: Tabicado. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado. Dependencias pendientes: Tabicado.",
       "orden_inventario": 6
     },
     {
@@ -58233,13 +55647,6 @@
           "unidad": "z_muk58qhy_44",
           "estado": "Pendiente",
           "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -58247,13 +55654,12 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "n_ubicaciones": 1,
+      "estado_actual": "Pendiente: 1",
       "resumen_categorias": {
-        "VIABLE": 1,
-        "SIN_REVISAR": 1
+        "VIABLE": 1
       },
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Primer paso de la fotovoltaica; el resto de la cadena depende de este.",
+      "motivo": "Primer paso de la fotovoltaica; el resto de la cadena depende de este.",
       "orden_inventario": 7
     },
     {
@@ -58276,13 +55682,6 @@
           "unidad": "z_muk598sv_45",
           "estado": "Pendiente",
           "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -58290,13 +55689,12 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "VIABLE": 2,
-        "SIN_REVISAR": 1
+        "VIABLE": 2
       },
-      "motivo": "Base física de la antena; nada de la antena avanza sin esto. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Base física de la antena; nada de la antena avanza sin esto.",
       "orden_inventario": 8
     },
     {
@@ -58319,13 +55717,6 @@
           "unidad": "z_muk598sv_45",
           "estado": "Pendiente",
           "categoria": "VIABLE"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -58333,13 +55724,12 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "VIABLE": 2,
-        "SIN_REVISAR": 1
+        "VIABLE": 2
       },
-      "motivo": "Base física del pararrayos; nada del pararrayos avanza sin esto. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Base física del pararrayos; nada del pararrayos avanza sin esto.",
       "orden_inventario": 9
     },
     {
@@ -58593,13 +55983,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -58607,13 +55990,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Tubeado de zonas comunes. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Tubeado de zonas comunes.",
       "orden_inventario": 10
     },
     {
@@ -58867,13 +56249,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -58881,13 +56256,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Primeras caras de Pladur. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
       "orden_inventario": 11
     },
     {
@@ -59141,13 +56515,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -59155,13 +56522,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Tubeado interior. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
       "orden_inventario": 12
     },
     {
@@ -59415,13 +56781,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -59429,13 +56788,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Tubeado interior. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
       "orden_inventario": 13
     },
     {
@@ -59689,13 +57047,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -59703,13 +57054,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Tubeado interior. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
       "orden_inventario": 14
     },
     {
@@ -59963,13 +57313,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -59977,13 +57320,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Tubeado interior. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
       "orden_inventario": 15
     },
     {
@@ -60237,13 +57579,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -60251,13 +57586,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Segundas caras de Pladur. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Segundas caras de Pladur.",
       "orden_inventario": 16
     },
     {
@@ -60511,13 +57845,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -60525,13 +57852,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Cableado eléctrico. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Cableado eléctrico.",
       "orden_inventario": 17
     },
     {
@@ -60785,13 +58111,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -60799,13 +58118,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Telecableado. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Telecableado.",
       "orden_inventario": 18
     },
     {
@@ -61059,13 +58377,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -61073,13 +58384,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Montante eléctrica. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Montante eléctrica.",
       "orden_inventario": 19
     },
     {
@@ -61333,13 +58643,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -61347,13 +58650,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Cuadros presentados, Cableado eléctrico. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Cuadros presentados, Cableado eléctrico.",
       "orden_inventario": 20
     },
     {
@@ -61607,13 +58909,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -61621,13 +58916,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano.",
       "orden_inventario": 21
     },
     {
@@ -61881,13 +59175,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -61895,13 +59182,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Doblar cajas, Telecableado, Pintura — primera mano. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Doblar cajas, Telecableado, Pintura — primera mano.",
       "orden_inventario": 22
     },
     {
@@ -62155,13 +59441,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -62169,13 +59448,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Pintura — segunda mano, Mecanizado eléctrico, Telemecanizado, Cuadro mecanizado. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano, Mecanizado eléctrico, Telemecanizado, Cuadro mecanizado.",
       "orden_inventario": 23
     },
     {
@@ -62429,13 +59707,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -62443,13 +59714,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Fachada terminada. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Fachada terminada.",
       "orden_inventario": 24
     },
     {
@@ -62703,13 +59973,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -62717,13 +59980,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Techos de zonas comunes. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Techos de zonas comunes.",
       "orden_inventario": 25
     },
     {
@@ -62977,13 +60239,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -62991,13 +60246,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Pintura — segunda mano, Cuadro mecanizado, Derivación individual. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Pintura — segunda mano, Cuadro mecanizado, Derivación individual.",
       "orden_inventario": 26
     },
     {
@@ -63251,13 +60505,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -63265,13 +60512,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 35,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 35
       },
-      "motivo": "Dependencias pendientes: Pintura de zonas comunes. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Pintura de zonas comunes.",
       "orden_inventario": 27
     },
     {
@@ -63287,13 +60533,6 @@
           "unidad": "z_muk58qhy_44",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -63301,13 +60540,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "n_ubicaciones": 1,
+      "estado_actual": "Pendiente: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 1,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 1
       },
-      "motivo": "Dependencias pendientes: Instalación de paneles fotovoltaicos. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Instalación de paneles fotovoltaicos.",
       "orden_inventario": 28
     },
     {
@@ -63323,13 +60561,6 @@
           "unidad": "z_muk58qhy_44",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -63337,13 +60568,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "n_ubicaciones": 1,
+      "estado_actual": "Pendiente: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 1,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 1
       },
-      "motivo": "Dependencias pendientes: Cableado de paneles fotovoltaicos. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Cableado de paneles fotovoltaicos.",
       "orden_inventario": 29
     },
     {
@@ -63359,13 +60589,6 @@
           "unidad": "z_muk58qhy_44",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -63373,13 +60596,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "n_ubicaciones": 1,
+      "estado_actual": "Pendiente: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 1,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 1
       },
-      "motivo": "Dependencias pendientes: Tierra de paneles fotovoltaicos. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Tierra de paneles fotovoltaicos.",
       "orden_inventario": 30
     },
     {
@@ -63395,13 +60617,6 @@
           "unidad": "z_muk58qhy_44",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -63409,13 +60624,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "n_ubicaciones": 1,
+      "estado_actual": "Pendiente: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 1,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 1
       },
-      "motivo": "Dependencias pendientes: Cableado de strings hasta equipos. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Cableado de strings hasta equipos.",
       "orden_inventario": 31
     },
     {
@@ -63431,13 +60645,6 @@
           "unidad": "z_muk58qhy_44",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -63445,13 +60652,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "n_ubicaciones": 1,
+      "estado_actual": "Pendiente: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 1,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 1
       },
-      "motivo": "Dependencias pendientes: Instalación de equipos y protecciones. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Instalación de equipos y protecciones.",
       "orden_inventario": 32
     },
     {
@@ -63474,13 +60680,6 @@
           "unidad": "z_muk598sv_45",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -63488,13 +60687,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "BLOQUEADO": 2,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 2
       },
-      "motivo": "Dependencias pendientes: Colocación de soporte de antena. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Colocación de soporte de antena.",
       "orden_inventario": 33
     },
     {
@@ -63517,13 +60715,6 @@
           "unidad": "z_muk598sv_45",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -63531,13 +60722,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "BLOQUEADO": 2,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 2
       },
-      "motivo": "Dependencias pendientes: Colocación de soporte de pararrayos. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Colocación de soporte de pararrayos.",
       "orden_inventario": 34
     },
     {
@@ -63560,13 +60750,6 @@
           "unidad": "z_muk598sv_45",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -63574,13 +60757,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "BLOQUEADO": 2,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 2
       },
-      "motivo": "Dependencias pendientes: Instalación de antena. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Instalación de antena.",
       "orden_inventario": 35
     },
     {
@@ -63603,13 +60785,6 @@
           "unidad": "z_muk598sv_45",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -63617,13 +60792,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "BLOQUEADO": 2,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 2
       },
-      "motivo": "Dependencias pendientes: Instalación de pararrayos. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Instalación de pararrayos.",
       "orden_inventario": 36
     },
     {
@@ -63646,13 +60820,6 @@
           "unidad": "z_muk598sv_45",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk59b6b_46",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -63660,13 +60827,12 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 3,
-      "estado_actual": "Pendiente: 3",
+      "n_ubicaciones": 2,
+      "estado_actual": "Pendiente: 2",
       "resumen_categorias": {
-        "BLOQUEADO": 2,
-        "SIN_REVISAR": 1
+        "BLOQUEADO": 2
       },
-      "motivo": "Dependencias pendientes: Cableado de antena. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Dependencias pendientes: Cableado de antena.",
       "orden_inventario": 37
     },
     {
@@ -65089,13 +62255,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -65103,14 +62262,13 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 22 · X: 14",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 21 · X: 14",
       "resumen_categorias": {
         "TERMINADO": 14,
-        "OTROS_GREMIOS": 21,
-        "SIN_REVISAR": 1
+        "OTROS_GREMIOS": 21
       },
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Sin separaciones de vivienda no se inicia la instalación interior. Terminado según la última confirmación válida.",
+      "motivo": "Sin separaciones de vivienda no se inicia la instalación interior. Terminado según la última confirmación válida.",
       "orden_inventario": 51
     },
     {
@@ -65364,13 +62522,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -65378,14 +62529,13 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 36,
-      "estado_actual": "M: 7 · Pendiente: 22 · X: 7",
+      "n_ubicaciones": 35,
+      "estado_actual": "M: 7 · Pendiente: 21 · X: 7",
       "resumen_categorias": {
         "TERMINADO": 7,
-        "OTROS_GREMIOS": 28,
-        "SIN_REVISAR": 1
+        "OTROS_GREMIOS": 28
       },
-      "motivo": "Condición de coordinación, no producción Sagarde. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
+      "motivo": "Condición de coordinación, no producción Sagarde. Terminado según la última confirmación válida.",
       "orden_inventario": 52
     },
     {
@@ -65639,13 +62789,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -65653,14 +62796,13 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 29 · X: 7",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 28 · X: 7",
       "resumen_categorias": {
         "TERMINADO": 7,
-        "OTROS_GREMIOS": 28,
-        "SIN_REVISAR": 1
+        "OTROS_GREMIOS": 28
       },
-      "motivo": "Condición de otro gremio. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Terminado según la última confirmación válida.",
+      "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
       "orden_inventario": 53
     },
     {
@@ -65914,13 +63056,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -65928,13 +63063,12 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 35,
-        "SIN_REVISAR": 1
+        "OTROS_GREMIOS": 35
       },
-      "motivo": "Condición de otro gremio. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Condición de otro gremio.",
       "orden_inventario": 54
     },
     {
@@ -66188,13 +63322,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -66202,13 +63329,12 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 35,
-        "SIN_REVISAR": 1
+        "OTROS_GREMIOS": 35
       },
-      "motivo": "Habilita trabajos interiores. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Habilita trabajos interiores.",
       "orden_inventario": 55
     },
     {
@@ -66462,13 +63588,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -66476,13 +63595,12 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 35,
-        "SIN_REVISAR": 1
+        "OTROS_GREMIOS": 35
       },
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Trabajo externo. Es recomendable completar cableados antes, pero no es una dependencia obligatoria para Pladur.",
+      "motivo": "Trabajo externo. Es recomendable completar cableados antes, pero no es una dependencia obligatoria para Pladur.",
       "orden_inventario": 56
     },
     {
@@ -66736,13 +63854,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -66750,13 +63861,12 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 35,
-        "SIN_REVISAR": 1
+        "OTROS_GREMIOS": 35
       },
-      "motivo": "Condición de otro gremio. Habilita los agujeros de iluminación en ZZCC. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Condición de otro gremio. Habilita los agujeros de iluminación en ZZCC.",
       "orden_inventario": 57
     },
     {
@@ -67010,13 +64120,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -67024,13 +64127,12 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 35,
-        "SIN_REVISAR": 1
+        "OTROS_GREMIOS": 35
       },
-      "motivo": "Condición de otro gremio. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Condición de otro gremio.",
       "orden_inventario": 58
     },
     {
@@ -67284,13 +64386,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -67298,13 +64393,12 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 35,
-        "SIN_REVISAR": 1
+        "OTROS_GREMIOS": 35
       },
-      "motivo": "Condición de otro gremio. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Condición de otro gremio.",
       "orden_inventario": 59
     },
     {
@@ -67803,20 +64897,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -67825,13 +64905,12 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 72,
-      "estado_actual": "Pendiente: 72",
+      "n_ubicaciones": 70,
+      "estado_actual": "Pendiente: 70",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 70,
-        "SIN_REVISAR": 2
+        "OTROS_GREMIOS": 70
       },
-      "motivo": "Condición obligatoria para placas, tapas y luminarias finales. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir. Permite iniciar mecanizado y telemecanizado.",
+      "motivo": "Condición obligatoria para placas, tapas y luminarias finales. Permite iniciar mecanizado y telemecanizado.",
       "orden_inventario": 60
     },
     {
@@ -68085,13 +65164,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -68099,13 +65171,12 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 35,
-        "SIN_REVISAR": 1
+        "OTROS_GREMIOS": 35
       },
-      "motivo": "Condición para remates exteriores. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Condición para remates exteriores.",
       "orden_inventario": 61
     },
     {
@@ -68359,13 +65430,6 @@
           "unidad": "C",
           "estado": "Pendiente",
           "categoria": "OTROS_GREMIOS"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "PB",
-          "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
         }
       ],
       "subtajos": [
@@ -68373,13 +65437,12 @@
       ],
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
-      "n_ubicaciones": 36,
-      "estado_actual": "Pendiente: 36",
+      "n_ubicaciones": 35,
+      "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "OTROS_GREMIOS": 35,
-        "SIN_REVISAR": 1
+        "OTROS_GREMIOS": 35
       },
-      "motivo": "Condición de otro gremio. Habilita la colocación de luminarias en ZZCC. Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
+      "motivo": "Condición de otro gremio. Habilita la colocación de luminarias en ZZCC.",
       "orden_inventario": 62
     },
     {
@@ -68830,398 +65893,6 @@
       },
       "motivo": "Primera mano de pintura en la zona; habilita colocación de equipos. Segunda mano de pintura en la zona; remate previo a embornado.",
       "orden_inventario": 66
-    },
-    {
-      "grupo_id": "garaje_alum_temp_coloc_recinto",
-      "trabajo": "Colocación alumbrado temporizado (recintos)",
-      "propiedad": "propio",
-      "orden_ejecucion": 562,
-      "fase_nombre": "Equipos",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v2kb_39",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v5m3_40",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v7wp_41",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4xw6v_42",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qj3k_33",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qkov_34",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qr18_36",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qu6x_37",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk51fcr_43",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk5aao6_47",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk5ao5z_48",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        }
-      ],
-      "subtajos": [
-        "Colocación alumbrado temporizado (recintos)"
-      ],
-      "seccion": "SIN_REVISAR",
-      "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 11,
-      "estado_actual": "Pendiente: 11",
-      "resumen_categorias": {
-        "SIN_REVISAR": 11
-      },
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 67
-    },
-    {
-      "grupo_id": "garaje_emergencia_coloc_recinto",
-      "trabajo": "Colocación luminarias de emergencia (recintos)",
-      "propiedad": "propio",
-      "orden_ejecucion": 564,
-      "fase_nombre": "Equipos",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v2kb_39",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v5m3_40",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v7wp_41",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4xw6v_42",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qj3k_33",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qkov_34",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qr18_36",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qu6x_37",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk51fcr_43",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk5aao6_47",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk5ao5z_48",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        }
-      ],
-      "subtajos": [
-        "Colocación luminarias de emergencia (recintos)"
-      ],
-      "seccion": "SIN_REVISAR",
-      "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 11,
-      "estado_actual": "Pendiente: 11",
-      "resumen_categorias": {
-        "SIN_REVISAR": 11
-      },
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 68
-    },
-    {
-      "grupo_id": "garaje_alum_temp_embornado_recinto",
-      "trabajo": "Embornado alumbrado temporizado (recintos)",
-      "propiedad": "propio",
-      "orden_ejecucion": 622,
-      "fase_nombre": "Equipos",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v2kb_39",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v5m3_40",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v7wp_41",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4xw6v_42",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qj3k_33",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qkov_34",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qr18_36",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qu6x_37",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk51fcr_43",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk5aao6_47",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk5ao5z_48",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        }
-      ],
-      "subtajos": [
-        "Embornado alumbrado temporizado (recintos)"
-      ],
-      "seccion": "SIN_REVISAR",
-      "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 11,
-      "estado_actual": "Pendiente: 11",
-      "resumen_categorias": {
-        "SIN_REVISAR": 11
-      },
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 69
-    },
-    {
-      "grupo_id": "garaje_emergencia_embornado_recinto",
-      "trabajo": "Embornado luminarias de emergencia (recintos)",
-      "propiedad": "propio",
-      "orden_ejecucion": 624,
-      "fase_nombre": "Equipos",
-      "ubicaciones": [
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v2kb_39",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v5m3_40",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4v7wp_41",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4xw6v_42",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qj3k_33",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qkov_34",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qr18_36",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk4qu6x_37",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 2",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk51fcr_43",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk5aao6_47",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "Zonas especiales",
-          "unidad": "z_muk5ao5z_48",
-          "estado": "Pendiente",
-          "categoria": "SIN_REVISAR"
-        }
-      ],
-      "subtajos": [
-        "Embornado luminarias de emergencia (recintos)"
-      ],
-      "seccion": "SIN_REVISAR",
-      "seccion_nombre": "Sin revisar nunca",
-      "n_ubicaciones": 11,
-      "estado_actual": "Pendiente: 11",
-      "resumen_categorias": {
-        "SIN_REVISAR": 11
-      },
-      "motivo": "Nadie lo ha mirado nunca. Hay que ir a comprobarlo antes de poder decidir.",
-      "orden_inventario": 70
     }
   ],
   "dudas_pendientes": [],
@@ -69649,7 +66320,7 @@
     }
   ],
   "avisos": [
-    "La base no es una rejilla completa: 1595 celdas encontradas frente a 3600 esperadas (50 ubicaciones x 72 tajos). Los tajos que falten no se pueden priorizar.",
+    "La base no es una rejilla completa: 1501 celdas encontradas frente a 3456 esperadas (48 ubicaciones x 72 tajos). Los tajos que falten no se pueden priorizar.",
     "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmación.",
     "El orden sigue la secuencia lógica definida en CATALOGO_TAJOS.json."
