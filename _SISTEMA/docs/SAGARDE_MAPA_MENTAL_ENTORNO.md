@@ -28,9 +28,9 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 30/09/2026 16:09. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 04/10/2026 12:19. No editar a mano.*
 
-**24** carpetas de obra abiertas · **6** en el registro único · **6** con panel · **5** con ficha. En todo el árbol, **332** `.py` y **9** `.bat`.
+**24** carpetas de obra abiertas · **6** en el registro único · **6** con panel · **5** con ficha. En todo el árbol, **333** `.py` y **9** `.bat`.
 
 | Obra | Ubic. | Tajos | Celdas | X | M | / | P | ? | N | % |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -38,7 +38,7 @@ el criterio de quien la escribió.
 | 2026 BOLUETA ACR | 106 | 73 | 3863 | 2272 | 122 | 62 | 1095 | 125 | 187 | 65.7 |
 | 2026 MUNGIA ACR NEINOR | 62 | 38 | 2356 | 2011 | 54 | 21 | 265 | 5 | – | 87.1 |
 | 2026 OBRA PRUEBA | 31 | 38 | 1178 | 161 | 36 | 5 | 976 | – | – | 16.3 |
-| 2026 OLABEAGA BILBAO | 46 | 72 | 1447 | – | – | – | – | 1447 | – | 0.2 |
+| 2026 OLABEAGA BILBAO | 46 | 72 | 1447 | 24 | 6 | – | – | 1411 | 6 | 9.2 |
 
 `X` terminado · `M` mas del 50 % · `/` iniciado · `P` pendiente confirmado · `?` sin mirar · `N` no aplica.
 <!-- /AUTO:estado -->
@@ -52,7 +52,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 30/09/2026 16:09).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 04/10/2026 12:19).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
