@@ -81,6 +81,114 @@ class TestAdaptarRevisionHtml(unittest.TestCase):
         self.assertTrue(revision['metadata']['hoja_usada'])
         self.assertEqual(revision['origen'], 'html_digital')
 
+    def test_hoja_con_marca_esta_usada_y_emite_los_blancos(self):
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__A', 'X'),
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__B', ''),
+        ]))
+
+        revision = self._construir(ruta)
+
+        self.assertTrue(revision['metadata']['hoja_usada'])
+        self.assertEqual(
+            [celda['estado_leido'] for celda in revision['celdas']],
+            ['X', ''],
+        )
+
+    def test_hoja_sin_ninguna_marca_no_esta_usada_pero_emite_los_blancos(self):
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__A', ''),
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__B', ''),
+        ]))
+
+        revision = self._construir(ruta)
+
+        self.assertFalse(revision['metadata']['hoja_usada'])
+        self.assertEqual(
+            [celda['estado_leido'] for celda in revision['celdas']],
+            ['', ''],
+        )
+
+    def test_sin_marca_desconocido_omite_solo_las_celdas_en_blanco(self):
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__A', 'X'),
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__B', ''),
+        ]))
+
+        control = self._construir(ruta)
+        revision = self._construir(ruta, sin_marca='desconocido')
+
+        self.assertEqual(
+            [celda['estado_leido'] for celda in control['celdas']],
+            ['X', ''],
+        )
+        self.assertEqual(
+            [celda['estado_leido'] for celda in revision['celdas']],
+            ['X'],
+        )
+        self.assertTrue(revision['metadata']['hoja_usada'])
+
+    def test_sin_marca_invalido_falla_sin_alterar_un_fixture_valido(self):
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__A', 'X'),
+        ]))
+        self.assertEqual(len(self._construir(ruta)['celdas']), 1)
+
+        with self.assertRaisesRegex(ValueError, 'sin_marca'):
+            self._construir(ruta, sin_marca='inventado')
+
+    def test_marca_no_resuelta_avisa_con_prefijo_y_no_oculta_la_valida(self):
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__A', 'X'),
+            ('src_pruebas_p9__src_pruebas_p1_f1__tube-viv__A', 'M'),
+        ]))
+
+        revision = self._construir(ruta)
+
+        self.assertEqual(
+            [(celda['clave'], celda['estado_leido'])
+             for celda in revision['celdas']],
+            [('p1__pb__tubeado__A', 'X')],
+        )
+        self.assertEqual(len(revision['metadata']['avisos']), 1)
+        self.assertTrue(revision['metadata']['avisos'][0].startswith(
+            'MARCA SIN APLICAR: clave HTML sin resolver '))
+        self.assertIn('portal desconocido', revision['metadata']['avisos'][0])
+
+    def test_blanco_no_resuelto_conserva_el_aviso_sin_prefijo(self):
+        ruta = self._escribir(_html([
+            ('src_pruebas_p9__src_pruebas_p1_f1__tube-viv__A', ''),
+        ]))
+
+        revision = self._construir(ruta)
+
+        self.assertEqual(len(revision['metadata']['avisos']), 1)
+        self.assertTrue(revision['metadata']['avisos'][0].startswith(
+            'clave HTML sin resolver '))
+        self.assertNotIn('MARCA SIN APLICAR',
+                         revision['metadata']['avisos'][0])
+
+    def test_historial_generico_sigue_incluyendo_blancos_si_hay_marca(self):
+        self.catalogo = copy.deepcopy(self.catalogo)
+        for tajo in self.catalogo['tajos']:
+            tajo['nombre'] = tajo['id']
+        self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__A', 'X'),
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__B', ''),
+        ]))
+
+        historial = adaptador.cargar_historial_html_generico(
+            'pruebas', self.temporal.name, self.ficha, self.catalogo,
+            minimo_celdas=1,
+        )
+
+        self.assertEqual(len(historial), 1)
+        self.assertEqual(
+            [(registro['unit'], registro['status'])
+             for registro in historial[0][1]],
+            [('A', 'X'), ('B', '')],
+        )
+
     def test_ids_largos_y_cortos_del_generador_resuelven_al_catalogo(self):
         ruta = self._escribir(_html([
             ('src_pruebas_p1__src_pruebas_p1_f1__montante_electrica__A', 'X'),

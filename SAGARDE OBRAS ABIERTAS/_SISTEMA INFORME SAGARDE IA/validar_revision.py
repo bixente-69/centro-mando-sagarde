@@ -428,8 +428,13 @@ def validar(revision, ficha_actual, catalogo):
                 'resuelto o descartado la lectura antes de aplicar')
 
         if estado_leido == '':
-            if revision['origen'] in {
-                    'pdf_digital', 'html_digital', 'historial_consolidado'}:
+            if revision['origen'] == 'historial_consolidado':
+                resultado['aceptadas'].append(_aceptada(
+                    indice, celda, antes, antes, 'conservar',
+                    'regla 6: un blanco digital no toca la celda'))
+                continue
+            if (revision['origen'] in {'pdf_digital', 'html_digital'}
+                    and not hoja_usada):
                 resultado['aceptadas'].append(_aceptada(
                     indice, celda, antes, antes, 'conservar',
                     'regla 6: un blanco digital no toca la celda'))
@@ -447,9 +452,14 @@ def validar(revision, ficha_actual, catalogo):
                     'regla 7: un blanco no baja un estado conocido'))
                 continue
             despues = MAPA_ESTADO['']
+            motivo = (
+                'regla 6: blanco de hoja digital usada se traduce a P'
+                if revision['origen'] in {'pdf_digital', 'html_digital'}
+                else 'regla 6: blanco de hoja de tinta usada se traduce a P'
+            )
             resultado['aceptadas'].append(_aceptada(
                 indice, celda, antes, despues, 'actualizar',
-                'regla 6: blanco de hoja de tinta usada se traduce a P'))
+                motivo))
             continue
 
         # Reglas 6 y 8: una marca explicita usa MAPA_ESTADO y manda aunque

@@ -265,10 +265,17 @@ def _aviso_clave(data_k, motivo):
     return f'clave HTML sin resolver {data_k!r}: {motivo}'
 
 
+def _aviso_clave_no_resuelta(data_k, motivo, estado):
+    aviso = _aviso_clave(data_k, motivo)
+    if estado in ('X', 'M', '/', 'N'):
+        return 'MARCA SIN APLICAR: ' + aviso
+    return aviso
+
+
 def construir_revision_normalizada_html(
         ruta_html, obra_id, ficha_actual, catalogo,
         portal_id_a_real=None, planta_id_a_real=None,
-        tarea_id_a_real=None, fecha=None):
+        tarea_id_a_real=None, fecha=None, sin_marca='pendiente'):
     """Construye una ``REVISION_NORMALIZADA`` desde un HTML exportado.
 
     Los tres mapas opcionales son traducciones explicitas ``id HTML -> id
@@ -277,7 +284,11 @@ def construir_revision_normalizada_html(
     ``--fecha`` como autoridad; si se omite, se mantiene el comportamiento de
     historiales y se extrae del nombre. Las claves no resueltas se omiten como
     celdas y se conservan en ``metadata.avisos``; nunca bloquean las demas.
+    ``sin_marca='pendiente'`` conserva los blancos para que una hoja usada los
+    traduzca a P; ``sin_marca='desconocido'`` no los emite.
     """
+    if sin_marca not in ('pendiente', 'desconocido'):
+        raise ValueError("sin_marca debe ser 'pendiente' o 'desconocido'")
     ruta_html = os.path.abspath(os.fspath(ruta_html))
     if fecha is None:
         fecha = _fecha_html(ruta_html)
@@ -306,8 +317,8 @@ def construir_revision_normalizada_html(
         estado = html.unescape(data_st_crudo)
         partes = data_k.split('__')
         if len(partes) != 4 or not all(partes):
-            avisos.append(_aviso_clave(
-                data_k, 'se esperaban cuatro segmentos no vacios'))
+            avisos.append(_aviso_clave_no_resuelta(
+                data_k, 'se esperaban cuatro segmentos no vacios', estado))
             continue
         if estado not in validar_revision.ALFABETOS_HOJA[ORIGEN]:
             avisos.append(_aviso_clave(
@@ -322,7 +333,7 @@ def construir_revision_normalizada_html(
                           f'{ambiguos_portal[portal_html]!r}; requiere mapa explicito')
             else:
                 motivo = f'portal desconocido {portal_html!r}'
-            avisos.append(_aviso_clave(data_k, motivo))
+            avisos.append(_aviso_clave_no_resuelta(data_k, motivo, estado))
             continue
 
         planta_id = mapa_plantas.get(planta_html)
@@ -332,19 +343,23 @@ def construir_revision_normalizada_html(
                           f'{ambiguos_planta[planta_html]!r}; requiere mapa explicito')
             else:
                 motivo = f'planta desconocida {planta_html!r}'
-            avisos.append(_aviso_clave(data_k, motivo))
+            avisos.append(_aviso_clave_no_resuelta(data_k, motivo, estado))
             continue
 
         tarea_id = mapa_tareas.get(tarea_html)
         if tarea_id is None:
-            avisos.append(_aviso_clave(
-                data_k, f'tajo desconocido {tarea_html!r}'))
+            avisos.append(_aviso_clave_no_resuelta(
+                data_k, f'tajo desconocido {tarea_html!r}', estado))
             continue
 
         unidad_id, error_unidad = _resolver_unidad(
             ficha_actual, portal_id, planta_id, unidad_html)
         if error_unidad:
-            avisos.append(_aviso_clave(data_k, error_unidad))
+            avisos.append(_aviso_clave_no_resuelta(
+                data_k, error_unidad, estado))
+            continue
+
+        if estado == '' and sin_marca == 'desconocido':
             continue
 
         celdas.append(validar_revision.crear_revision_celda(
@@ -359,7 +374,8 @@ def construir_revision_normalizada_html(
         'generado_por': GENERADO_POR,
         'generado_en': datetime.now().astimezone().isoformat(timespec='seconds'),
         'avisos': avisos,
-        'hoja_usada': True,
+        'hoja_usada': any(
+            celda['estado_leido'] in ('X', 'M', '/') for celda in celdas),
     }
     return validar_revision.crear_revision_normalizada(
         revision_id=revision_id,

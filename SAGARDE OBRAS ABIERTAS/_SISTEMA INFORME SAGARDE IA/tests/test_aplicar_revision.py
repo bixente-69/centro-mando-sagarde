@@ -187,6 +187,19 @@ class TestParidadConFlujoDigital(unittest.TestCase):
             _estado_resultante(resultado, CLAVE_B),
             estados_legacy[CLAVE_LEGACY_B]['v'])
 
+    def test_blanco_digital_usado_sobre_interrogacion_aplica_P(self):
+        resultado = aplicar_revision.apply_revision(
+            _revision([_celda(estado='')], origen='html_digital',
+                      hoja_usada=True, fecha='04/10/2026',
+                      revision_id='rev_04102026'),
+            _ficha_normalizada({CLAVE_A: '?'}), _catalogo(), dry_run=False)
+
+        self.assertTrue(resultado['aplicable'], resultado)
+        self.assertTrue(resultado['escrito'], resultado)
+        self.assertEqual(_estado_resultante(resultado, CLAVE_A), 'P')
+        self.assertEqual(resultado['ficha_actualizada']['estados'][CLAVE_A], {
+            'v': 'P', 'f': '04/10/2026', 'r': 'rev_04102026'})
+
 
 class TestParidadConFichaObra(unittest.TestCase):
 

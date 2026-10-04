@@ -401,7 +401,51 @@ class TestRegla6TraduccionSegunOrigen(unittest.TestCase):
         self.assertEqual((aceptada['antes'], aceptada['despues']), ('?', 'P'))
         self.assertEqual(aceptada['accion'], 'actualizar')
 
-    def test_regla_6_blanco_digital_no_toca_para_ningun_origen_digital(self):
+    def test_regla_6_blanco_digital_usado_convierte_interrogacion_en_P(self):
+        for origen in ('pdf_digital', 'html_digital'):
+            with self.subTest(origen=origen):
+                resultado = validador.validar(
+                    _revision([_celda(estado='')], origen=origen,
+                              hoja_usada=True),
+                    _ficha('?'), _catalogo())
+                aceptada = _una_aceptada(resultado)
+                self.assertEqual((aceptada['antes'], aceptada['despues']),
+                                 ('?', 'P'))
+                self.assertEqual(aceptada['accion'], 'actualizar')
+                self.assertEqual(
+                    aceptada['motivo'],
+                    'regla 6: blanco de hoja digital usada se traduce a P')
+
+    def test_regla_6_blanco_digital_usado_sin_celda_previa_produce_P(self):
+        for origen in ('pdf_digital', 'html_digital'):
+            with self.subTest(origen=origen):
+                resultado = validador.validar(
+                    _revision([_celda(estado='')], origen=origen,
+                              hoja_usada=True),
+                    _ficha('sin_celda'), _catalogo())
+                aceptada = _una_aceptada(resultado)
+                self.assertEqual((aceptada['antes'], aceptada['despues']),
+                                 (None, 'P'))
+                self.assertEqual(aceptada['accion'], 'actualizar')
+
+    def test_regla_7_blanco_digital_usado_no_baja_estado_conocido(self):
+        for origen in ('pdf_digital', 'html_digital'):
+            for estado in ('X', 'M', '/', 'P', 'N'):
+                with self.subTest(origen=origen, estado=estado):
+                    resultado = validador.validar(
+                        _revision([_celda(estado='')], origen=origen,
+                                  hoja_usada=True),
+                        _ficha(estado), _catalogo())
+                    aceptada = _una_aceptada(resultado)
+                    self.assertEqual(
+                        (aceptada['antes'], aceptada['despues']),
+                        (estado, estado))
+                    self.assertEqual(aceptada['accion'], 'conservar')
+                    self.assertEqual(
+                        aceptada['motivo'],
+                        'regla 7: un blanco no baja un estado conocido')
+
+    def test_regla_6_blanco_digital_no_usado_no_toca_la_celda(self):
         for origen in ('pdf_digital', 'html_digital'):
             with self.subTest(origen=origen):
                 resultado = validador.validar(
@@ -412,6 +456,16 @@ class TestRegla6TraduccionSegunOrigen(unittest.TestCase):
                 self.assertEqual((aceptada['antes'], aceptada['despues']),
                                  ('?', '?'))
                 self.assertEqual(aceptada['accion'], 'conservar')
+
+    def test_regla_6_historial_consolidado_conserva_interrogacion(self):
+        resultado = validador.validar(
+            _revision([_celda(estado='')], origen='historial_consolidado',
+                      hoja_usada=True),
+            _ficha('?'), _catalogo())
+
+        aceptada = _una_aceptada(resultado)
+        self.assertEqual((aceptada['antes'], aceptada['despues']), ('?', '?'))
+        self.assertEqual(aceptada['accion'], 'conservar')
 
     def test_regla_6_N_es_una_marca_explicita_que_se_guarda(self):
         resultado = validador.validar(
