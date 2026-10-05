@@ -122,6 +122,23 @@ OBRAS = [
         'materiales_rel': os.path.join(
             'REVISIONES', 'hoja de entrega de materiales OLABEAGA.xlsx'),
     },
+    {
+        # Alta el 05/10/2026 en modo Gorliz (sin ficha_obra.json): solo existe el
+        # proyecto de ejecucion (REBT, ICT, fotovoltaica), no hay hoja de
+        # distribucion ni estado de obra. Bloque 1 de la UE-12 Rontegui.
+        # La estructura propuesta esta en INFORME_TECNICO_OBRA_BARAKALDO.md;
+        # los mapas de ids de la hoja HTML se declaran el dia que llegue la hoja.
+        'id': 'barakaldo',
+        'nombre': '2026 BARAKALDO 104V OBRAS ESPECIALES',
+        'aliases': ['BARAKALDO', 'BARAKALDO 104V'],
+        'subtitulo': ('Electricidad y telecomunicaciones · 1 bloque, 2 portales, '
+                       '104 viviendas VPO y garaje de 3 sotanos'),
+        'adaptador': 'adaptador_barakaldo',
+        'carpeta_obra': '2026 BARAKALDO 104V OBRAS ESPECIALES',
+        'bloque_revision': 'Bloque 1',
+        'materiales_rel': os.path.join(
+            'REVISIONES', 'hoja de entrega de materiales BARAKALDO.xlsx'),
+    },
 ]
 
 

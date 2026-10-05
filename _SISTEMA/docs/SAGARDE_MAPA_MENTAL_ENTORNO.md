@@ -92,7 +92,7 @@ Las capas confirmadas son:
 
 1. **Fuentes documentales**: las carpetas de obras abiertas (cuenta viva en «Estado de hoy»), 128 obras cerradas publicadas, 31 contratos de postventa y 4 contratos de mantenimiento en sus resúmenes actuales.
 2. **Normalización**: siete adaptadores de obra y lectores genéricos PDF/HTML/XLSX. Solo cinco adaptadores de obra están registrados; dos apuntan a obras ya cerradas y sus rutas bajo obras abiertas no existen. Desde el 26/08/2026 hay además tres adaptadores de revisión —tinta, PDF digital y HTML digital— que producen el mismo contrato `REVISION_NORMALIZADA`; el HTML sirve para cualquier obra y es la vía digital preferente cuando existe el gemelo del PDF.
-3. **Estado persistente**: un `ficha_obra.json` por obra registrada —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Tras cada aplicación real que supera la salvaguarda se intenta añadir además una entrada no bloqueante a `revisiones_aplicadas.jsonl`. Gorliz está registrado pero sin revisión ni base. Olabeaga (alta 24/09/2026: 30 viviendas con garajes y trasteros, en fase de garajes) se registró con el mismo patrón — adaptador con revisiones JSON explícitas, sin `ficha_obra.json` todavía — porque el plano de garaje no trae plazas numeradas y la ampliación del generador de revisiones para garajes sigue pendiente.
+3. **Estado persistente**: un `ficha_obra.json` por obra registrada —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Tras cada aplicación real que supera la salvaguarda se intenta añadir además una entrada no bloqueante a `revisiones_aplicadas.jsonl`. Gorliz está registrado pero sin revisión ni base. Olabeaga (alta 24/09/2026: 30 viviendas con garajes y trasteros, en fase de garajes) se registró con el mismo patrón — adaptador con revisiones JSON explícitas, sin `ficha_obra.json` todavía — porque el plano de garaje no trae plazas numeradas y la ampliación del generador de revisiones para garajes sigue pendiente. **Barakaldo** (`2026 BARAKALDO 104V OBRAS ESPECIALES`, alta 05/10/2026: Bloque 1 de la UE-12 Rontegui, 104 VPO en 2 portales y garaje de 3 sótanos) entró en **modo adaptador, sin `ficha_obra.json`**, porque solo existe el proyecto de ejecución y no hay hoja del generador ni estado de obra; su mapa de proyecto es `2026 BARAKALDO 104V OBRAS ESPECIALES/INFORME_TECNICO_OBRA_BARAKALDO.md` (5 anexos: REBT, ICT, FV, ahorro de energía y alumbrado exterior) y lleva propuesta de estructura para la alta nativa cuando llegue la hoja.
 
    **Las cifras de cada base están en «Estado de hoy»**, al principio de este
    documento, con su desglose de estados. Aquí había una segunda copia de esa
@@ -418,6 +418,7 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 | `adaptador_egurrola.py` | idem | Python | 3 DOCX | directo/import potencial | ninguna referencia | ruta abierta inexistente | historial | docx | Huérfano; obra en OLD |
 | `adaptador_gernika.py` | idem | Python | JSON + HTML | import | registro | IA/REVISIONES | historial | lector HTML | Activo |
 | `adaptador_gorliz.py` | idem | Python | JSON estricto/vacío | import/directo | registro | IA JSON | historial/plantilla | stdlib | Activo sin revisión |
+| `adaptador_barakaldo.py` | idem | Python | Revisiones JSON explícitas + HTML gemelo vía `ficha_obra.json` si existe; historial vacío mientras no haya | import/directo | registro (`barakaldo`) | `revision_barakaldo_DDMMAAAA.json`, `REVISIONES/*.html` | historial/plantilla | `adaptar_revision_html`, `ficha_obra` | Activo sin revisión desde 05/10/2026; 11 pruebas en `tests/test_adaptador_barakaldo.py` |
 | `adaptador_mungia.py` | idem | Python | DOCX + PDF | import | registro | REVISIONES | historial | docx/lector PDF | Activo |
 | `adaptador_obisporueta.py` | `SAGARDE (OLD)/OBRAS CERRADAS/2025 BILBAO OBISPO ORUETA/_SISTEMA/` | Python | DOCX + PDF especial | ya no se importa | — | REVISIONES SAGARDE | historial | docx/lector PDF | **Archivado con su obra el 13/08/2026**; no es un huérfano |
 | `adaptador_zorrozaure.py` | idem | Python | 1 DOCX | directo/import potencial | ninguna referencia | ruta abierta inexistente | historial | docx | Huérfano; obra en OLD |
@@ -761,6 +762,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | Gernika/Mungia/Bolueta/PRUEBA | Operativo con ficha | ver «Estado de hoy» |
 | Obispo Orueta | **Cerrada el 13/08/2026** | archivada con su `cierre.json`; sus 18 tajos propios siguen en el catálogo |
 | Gorliz | En desarrollo | registro/panel 0%; sin revisión |
+| Barakaldo 104V | En desarrollo | alta 05/10/2026, modo adaptador (sin ficha); solo proyecto de ejecución; panel a 0, sin PDF ejecutivo hasta tener una revisión |
 | Olabeaga | En desarrollo | alta 24/09/2026, modo adaptador (sin ficha); en fase de garajes, sin revisión |
 | Otras 16 abiertas | Sin uso confirmado | resumen sin panel |
 | Motor/priorizador | Operativo | salidas/tests/memoria |
@@ -814,6 +816,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | ¿Automatizar las otras 16 obras? | No registradas | registro/resumen/roadmap | decisión por obra | alcance real |
 | ¿Crear ficha para Obispo? | panel/JS sin ficha | adaptador/prioridades/memoria/JS | estructura definitiva | generador/KPI |
 | ¿Primera revisión de Gorliz? | historial vacío | adaptador/registro/JS | archivo oficial | hoja/KPI |
+| ¿Alta nativa de Barakaldo 104V? | registrada sin hoja ni estado de obra | `INFORME_TECNICO_OBRA_BARAKALDO.md`, adaptador, registro | primera hoja del generador de Bixente (portales 1–14 y 1–12, garaje de 3 sótanos: verificar contra el proyecto) | ficha + mapas HTML en registro |
 | ¿Ampliación del generador para garajes? | Olabeaga en fase de garajes sin rejilla (plano sin plazas numeradas) | plan pendiente, por Bixente | diseño de la ampliación | alta nativa de Olabeaga |
 | ¿Conservar adaptadores OLD? | rutas rotas | adaptadores/árbol | intención | deuda técnica |
 | ¿Qué índice de mantenimiento manda? | 2 escritores | BAT/Python/HTML | decisión | salida variable |
