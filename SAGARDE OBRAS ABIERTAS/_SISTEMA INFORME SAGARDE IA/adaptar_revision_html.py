@@ -21,7 +21,12 @@ from datetime import datetime
 
 import lector_hoja_tajos_html
 import validar_revision
-from generar_todos import _clave_natural, _clave_planta, _slug
+from generar_todos import (
+    _clave_natural,
+    _clave_planta,
+    _slug,
+    _tajos_retirados_a_ocultar,
+)
 
 
 ORIGEN = 'html_digital'
@@ -373,6 +378,14 @@ def estructura_ausente_en_hoja(ruta_html, obra_id, ficha_actual, catalogo,
         portales_cubiertos.add(portal)
 
     estados = ficha_actual.get('estados') or {}
+    # El generador deja de imprimir los tajos retirados cuando todas sus
+    # celdas ya estan clasificadas (N o un estado real), pero conserva sus
+    # datos historicos en la ficha. Esa ausencia deliberada no es una baja de
+    # estructura. Usar exactamente la misma decision que el generador evita
+    # que, por ejemplo, el ``cuarto_tecnico`` cerrado de Gernika se interprete
+    # como 32 celdas eliminadas al leer la hoja siguiente.
+    tajos_ocultos = _tajos_retirados_a_ocultar(
+        {'id': obra_id, 'nombre': obra_id}, ficha_actual, catalogo)
     for portal in _portales_en_estructura(ficha_actual):
         portal_id = _id_real(portal.get('id'))
         if portal_id not in portales_cubiertos:
@@ -403,10 +416,11 @@ def estructura_ausente_en_hoja(ruta_html, obra_id, ficha_actual, catalogo,
                     })
                     continue
                 for clave, estado in sorted(celdas.items()):
-                    if clave not in impresas:
+                    tajo = clave.split('__')[2]
+                    if clave not in impresas and tajo not in tajos_ocultos:
                         ausentes['tajos'].append({
                             'portal_id': portal_id, 'planta_id': planta_id,
-                            'unidad': unidad, 'tajo': clave.split('__')[2],
+                            'unidad': unidad, 'tajo': tajo,
                             'clave': clave, 'estado': estado})
     return ausentes
 

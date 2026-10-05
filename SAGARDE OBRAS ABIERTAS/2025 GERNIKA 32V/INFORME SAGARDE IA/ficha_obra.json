@@ -1128,9 +1128,9 @@
       "r": "rev_25072026"
     },
     "p1__pb__placas_tapas__A": {
-      "v": "P",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "M",
+      "f": "05/10/2026",
+      "r": "gernika__05/10/2026__html_digital__b0872952"
     },
     "p1__pb__fachada_terminada__A": {
       "v": "X",
@@ -1318,9 +1318,9 @@
       "r": "rev_25072026"
     },
     "p1__pb__placas_tapas__B": {
-      "v": "P",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "X",
+      "f": "05/10/2026",
+      "r": "gernika__05/10/2026__html_digital__b0872952"
     },
     "p1__pb__fachada_terminada__B": {
       "v": "X",
@@ -1508,9 +1508,9 @@
       "r": "rev_25072026"
     },
     "p1__pb__placas_tapas__C": {
-      "v": "P",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "X",
+      "f": "05/10/2026",
+      "r": "gernika__05/10/2026__html_digital__b0872952"
     },
     "p1__pb__fachada_terminada__C": {
       "v": "X",
@@ -1698,9 +1698,9 @@
       "r": "rev_25072026"
     },
     "p1__pb__placas_tapas__D": {
-      "v": "P",
-      "f": "25/07/2026",
-      "r": "rev_25072026"
+      "v": "X",
+      "f": "05/10/2026",
+      "r": "gernika__05/10/2026__html_digital__b0872952"
     },
     "p1__pb__fachada_terminada__D": {
       "v": "X",
@@ -7108,23 +7108,40 @@
       "procesada": "28/09/2026 14:29",
       "celdas": 1208,
       "cambios": 0
+    },
+    {
+      "id": "gernika__05/10/2026__html_digital__b0872952",
+      "fecha": "05/10/2026",
+      "origen": "hoja generada rellenada digitalmente, leida por la IA",
+      "celdas_medidas": 1125,
+      "celdas_cambiadas": 4,
+      "ubicaciones_nuevas": 0,
+      "ubicaciones_retiradas": 0,
+      "celdas_retiradas": 0
+    },
+    {
+      "id": "rev_05102026",
+      "fecha": "05/10/2026",
+      "procesada": "05/10/2026 19:29",
+      "celdas": 1184,
+      "cambios": 0
     }
   ],
   "dudas": [],
   "materiales": {},
   "documentos": {
-    "total": 203,
+    "total": 205,
     "por_categoria": {
       "Comprimidos": 3,
       "Excel": 2,
       "Imágenes": 21,
-      "Otros": 34,
+      "Otros": 36,
       "PDF": 136,
       "Planos y gráfica": 5,
       "Word": 2
     },
     "_meta": {
-      "actualizado": "02/10/2026 13:54"
+      "actualizado": "05/10/2026 19:29"
     }
   },
   "contactos": []

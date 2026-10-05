@@ -129,6 +129,40 @@ class TestAdaptarRevisionHtml(unittest.TestCase):
         )
         self.assertTrue(revision['metadata']['hoja_usada'])
 
+    def test_tajo_retirado_clasificado_y_oculto_no_es_baja_estructural(self):
+        """La ausencia deliberada de ``cuarto_tecnico`` conserva su historia.
+
+        El generador deja de ofrecer un tajo retirado cuando todas sus celdas
+        son N o tienen avance real. La hoja siguiente no debe convertir ese
+        ocultamiento en una propuesta de borrado.
+        """
+        self.ficha['tajos']['detalle'].append({
+            'id': 'cuarto_tecnico', 'nombre': 'Cuarto tecnico',
+            'ambito': 'edificio', 'propiedad': 'propio',
+            'fase': 'Cierre tecnico', 'orden': 235,
+        })
+        for (planta, unidad), estado in zip(
+                (('pb', 'A'), ('pb', 'B'), ('1', 'A'), ('1', 'B')),
+                ('X', 'M', 'N', 'N')):
+            self.ficha['estados'][
+                f'p1__{planta}__cuarto_tecnico__{unidad}'] = {
+                    'v': estado, 'f': '28/09/2026', 'r': 'rev_28092026'}
+
+        ruta = self._escribir(_html([
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__A', 'X'),
+            ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__B', 'X'),
+            ('src_pruebas_p1__src_pruebas_p1_f2__tube-viv__A', 'X'),
+            ('src_pruebas_p1__src_pruebas_p1_f2__tube-viv__B', 'X'),
+        ]))
+
+        ausentes = adaptador.estructura_ausente_en_hoja(
+            ruta, 'pruebas', self.ficha, self.catalogo,
+            fecha='25/08/2026')
+
+        self.assertEqual(ausentes['no_fiable'], None)
+        self.assertEqual(ausentes['unidades'], [])
+        self.assertEqual(ausentes['tajos'], [])
+
     def test_sin_marca_invalido_falla_sin_alterar_un_fixture_valido(self):
         ruta = self._escribir(_html([
             ('src_pruebas_p1__src_pruebas_p1_f1__tube-viv__A', 'X'),

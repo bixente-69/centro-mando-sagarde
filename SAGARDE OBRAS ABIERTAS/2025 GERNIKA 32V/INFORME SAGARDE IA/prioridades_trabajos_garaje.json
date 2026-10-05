@@ -2,29 +2,29 @@
   "version": "4.3",
   "catalogo_version": "1.3",
   "obra": "2025 GERNIKA 32V",
-  "revision": "28/09/2026",
+  "revision": "05/10/2026",
   "sin_base": false,
-  "edad_revision_dias": 6,
+  "edad_revision_dias": 0,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "04/10/2026 19:14",
+  "generado": "05/10/2026 19:29",
   "resumen": {
-    "listos": 4,
+    "listos": 3,
     "verificar": 0,
-    "unidades_listas": 5,
+    "unidades_listas": 3,
     "unidades_verificar": 0,
     "bloqueados": 0,
     "otros_gremios": 1,
     "dudas": 0,
     "sin_revisar": 0,
     "unidades_sin_revisar": 0,
-    "terminados": 28,
+    "terminados": 29,
     "inventario_total": 33,
-    "detalle_total": 94,
+    "detalle_total": 98,
     "preguntas_pendientes": 0,
     "viviendas": 0,
-    "zonas_comunes": 4,
+    "zonas_comunes": 3,
     "edificio": 0
   },
   "items": [
@@ -114,44 +114,6 @@
       "motivo": "Solo si el cuadro es nuestro por dentro.",
       "impacto_gremios": "Solo si el cuadro es nuestro por dentro.",
       "orden": 3
-    },
-    {
-      "tarea_id": "garaje_puerta_alimentacion",
-      "trabajo": "Alimentación de cuadro de puerta de acceso",
-      "situacion": "LISTO",
-      "categoria": "VIABLE",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "prioridad": "P2",
-      "orden_ejecucion": 670,
-      "fase_nombre": "Remates garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidades": [
-            "Vial / portal 1"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidades": [
-            "Vial /portal 2"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        }
-      ],
-      "n_celdas": 2,
-      "n_ubicaciones": 2,
-      "n_unidades": 2,
-      "estado_actual": "Pendiente: 2",
-      "motivo": "Vive en la zona Rampa (ruta de vial). Siempre nuestra.",
-      "impacto_gremios": "Vive en la zona Rampa (ruta de vial). Siempre nuestra.",
-      "orden": 4
     }
   ],
   "detalle_items": [
@@ -180,7 +142,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -207,7 +169,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -234,7 +196,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -261,7 +223,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -288,7 +250,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -315,7 +277,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -342,7 +304,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -369,7 +331,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -396,7 +358,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -423,7 +385,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -450,7 +412,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -467,8 +429,8 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo1 / Portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Si aplica en esa zona (trasteros/cuartos técnicos/rellano); rama independiente de lucido.",
       "dependencias_cumplidas": [],
@@ -477,7 +439,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -494,8 +456,8 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo / Portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Si aplica en esa zona (trasteros/cuartos técnicos/rellano); rama independiente de lucido.",
       "dependencias_cumplidas": [],
@@ -504,7 +466,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -521,8 +483,8 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vestibulo trasteros / Portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Si aplica en esa zona (trasteros/cuartos técnicos/rellano); rama independiente de lucido.",
       "dependencias_cumplidas": [],
@@ -531,7 +493,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_emp",
@@ -558,7 +520,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_emp",
@@ -585,7 +547,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -612,7 +574,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -639,7 +601,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -666,7 +628,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -693,7 +655,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -720,7 +682,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -747,7 +709,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -774,7 +736,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -801,7 +763,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -828,7 +790,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -855,7 +817,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -882,7 +844,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -909,7 +871,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -936,7 +898,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -963,7 +925,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -990,7 +952,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -1017,7 +979,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -1044,7 +1006,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -1071,7 +1033,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -1098,7 +1060,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -1135,7 +1097,61 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_coloc_recinto",
+      "trabajo": "Colocación alumbrado fijo (recintos)",
+      "trabajos_originales": [
+        "Colocación alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 560,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_alum_fijo_coloc_recinto",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Trasteros portal 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/10/2026"
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_coloc_recinto",
+      "trabajo": "Colocación alumbrado fijo (recintos)",
+      "trabajos_originales": [
+        "Colocación alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 560,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_alum_fijo_coloc_recinto",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Trasteros portal 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -1172,7 +1188,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -1209,7 +1225,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -1246,7 +1262,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -1273,7 +1289,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -1300,7 +1316,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -1327,7 +1343,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -1354,7 +1370,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -1381,7 +1397,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -1408,7 +1424,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -1462,7 +1478,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -1526,7 +1542,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -1553,7 +1569,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -1580,7 +1596,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -1607,7 +1623,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -1634,7 +1650,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -1661,7 +1677,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_enchufe_coloc",
@@ -1688,7 +1704,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_tubeado_cableado",
@@ -1715,7 +1731,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_tubeado_cableado",
@@ -1742,7 +1758,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_colocacion",
@@ -1769,7 +1785,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -1796,7 +1812,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -1823,7 +1839,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -1850,7 +1866,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_embornado",
@@ -1877,7 +1893,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_rotulacion",
@@ -1914,7 +1930,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_equipo_tubeado_cableado",
@@ -1941,7 +1957,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -1968,7 +1984,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -1995,7 +2011,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -2022,7 +2038,61 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_embornado_recinto",
+      "trabajo": "Embornado alumbrado fijo (recintos)",
+      "trabajos_originales": [
+        "Embornado alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 620,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_alum_fijo_embornado_recinto",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Trasteros portal 1",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/10/2026"
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_embornado_recinto",
+      "trabajo": "Embornado alumbrado fijo (recintos)",
+      "trabajos_originales": [
+        "Embornado alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 620,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_alum_fijo_embornado_recinto",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Trasteros portal 2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -2049,7 +2119,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -2076,7 +2146,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -2103,7 +2173,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -2130,7 +2200,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -2157,7 +2227,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -2184,7 +2254,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -2211,7 +2281,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -2238,7 +2308,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -2265,7 +2335,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -2319,7 +2389,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -2373,7 +2443,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -2400,7 +2470,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -2427,7 +2497,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -2454,7 +2524,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -2481,7 +2551,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -2508,7 +2578,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_enchufe_embornado",
@@ -2535,7 +2605,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tierras_derivacion",
@@ -2562,7 +2632,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_tierras_derivacion",
@@ -2589,7 +2659,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_puerta_alimentacion",
@@ -2606,27 +2676,17 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vial / portal 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Vive en la zona Rampa (ruta de vial). Siempre nuestra.",
-      "dependencias_cumplidas": [
-        "Tubeado de viales"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_vial",
-          "nombre": "Tubeado de viales",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_puerta_alimentacion",
@@ -2643,27 +2703,17 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Vial /portal 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Vive en la zona Rampa (ruta de vial). Siempre nuestra.",
-      "dependencias_cumplidas": [
-        "Tubeado de viales"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_vial",
-          "nombre": "Tubeado de viales",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -2690,7 +2740,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -2717,7 +2767,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_telco_transito",
@@ -2744,7 +2794,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     },
     {
       "tarea_id": "garaje_telco_transito",
@@ -2771,7 +2821,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "28/09/2026"
+      "ultima_fecha": "05/10/2026"
     }
   ],
   "inventario": [
@@ -2806,6 +2856,20 @@
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
+          "unidad": "Trasteros portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
           "unidad": "Vestibulo1 / Portal 2",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
@@ -2830,10 +2894,10 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 6,
-      "estado_actual": "Pendiente: 4 · X: 2",
+      "n_ubicaciones": 8,
+      "estado_actual": "Pendiente: 4 · X: 4",
       "resumen_categorias": {
-        "TERMINADO": 2,
+        "TERMINADO": 4,
         "VIABLE": 1,
         "BLOQUEADO": 3
       },
@@ -2940,41 +3004,6 @@
       "orden_inventario": 3
     },
     {
-      "grupo_id": "garaje_puerta_alimentacion",
-      "trabajo": "Alimentación de cuadro de puerta de acceso",
-      "propiedad": "propio",
-      "orden_ejecucion": 670,
-      "fase_nombre": "Remates garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vial / portal 1",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "Vial /portal 2",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
-        }
-      ],
-      "subtajos": [
-        "Alimentación de cuadro de puerta de acceso"
-      ],
-      "seccion": "VIABLE",
-      "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
-      "resumen_categorias": {
-        "VIABLE": 2
-      },
-      "motivo": "Vive en la zona Rampa (ruta de vial). Siempre nuestra.",
-      "orden_inventario": 4
-    },
-    {
       "grupo_id": "garaje_falso_techo",
       "trabajo": "Falso techo",
       "propiedad": "externo",
@@ -2992,21 +3021,21 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo1 / Portal 2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo / Portal 1",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Vestibulo trasteros / Portal 2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         }
       ],
@@ -3016,12 +3045,12 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 4,
-      "estado_actual": "Pendiente: 4",
+      "estado_actual": "M: 1 · /: 2 · Pendiente: 1",
       "resumen_categorias": {
         "OTROS_GREMIOS": 4
       },
       "motivo": "Si aplica en esa zona (trasteros/cuartos técnicos/rellano); rama independiente de lucido.",
-      "orden_inventario": 5
+      "orden_inventario": 4
     },
     {
       "grupo_id": "garaje_tabicado",
@@ -3070,7 +3099,7 @@
         "TERMINADO": 4
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 6
+      "orden_inventario": 5
     },
     {
       "grupo_id": "garaje_lucido",
@@ -3133,7 +3162,7 @@
         "TERMINADO": 6
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 7
+      "orden_inventario": 6
     },
     {
       "grupo_id": "garaje_tubeado_emp",
@@ -3161,7 +3190,7 @@
         "TERMINADO": 1
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 8
+      "orden_inventario": 7
     },
     {
       "grupo_id": "garaje_cableado_emp",
@@ -3189,7 +3218,7 @@
         "TERMINADO": 1
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 9
+      "orden_inventario": 8
     },
     {
       "grupo_id": "garaje_tubeado_visto",
@@ -3245,7 +3274,7 @@
         "TERMINADO": 5
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 10
+      "orden_inventario": 9
     },
     {
       "grupo_id": "garaje_cableado_visto",
@@ -3301,7 +3330,7 @@
         "TERMINADO": 5
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 11
+      "orden_inventario": 10
     },
     {
       "grupo_id": "garaje_tubeado_vial",
@@ -3336,7 +3365,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 12
+      "orden_inventario": 11
     },
     {
       "grupo_id": "garaje_cableado_vial",
@@ -3371,7 +3400,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 13
+      "orden_inventario": 12
     },
     {
       "grupo_id": "garaje_pintura",
@@ -3435,7 +3464,7 @@
         "TERMINADO": 6
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 14
+      "orden_inventario": 13
     },
     {
       "grupo_id": "garaje_alum_fijo_coloc_vial",
@@ -3470,7 +3499,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 15
+      "orden_inventario": 14
     },
     {
       "grupo_id": "garaje_alum_temp_coloc_recinto",
@@ -3505,7 +3534,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 16
+      "orden_inventario": 15
     },
     {
       "grupo_id": "garaje_alum_temp_coloc_vial",
@@ -3540,7 +3569,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 17
+      "orden_inventario": 16
     },
     {
       "grupo_id": "garaje_emergencia_coloc_vial",
@@ -3575,7 +3604,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 18
+      "orden_inventario": 17
     },
     {
       "grupo_id": "garaje_enchufe_coloc",
@@ -3603,7 +3632,7 @@
         "TERMINADO": 1
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 19
+      "orden_inventario": 18
     },
     {
       "grupo_id": "garaje_cuadro_tubeado_cableado",
@@ -3638,7 +3667,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 20
+      "orden_inventario": 19
     },
     {
       "grupo_id": "garaje_cuadro_colocacion",
@@ -3666,7 +3695,7 @@
         "TERMINADO": 1
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 21
+      "orden_inventario": 20
     },
     {
       "grupo_id": "garaje_cuadro_embornado",
@@ -3694,7 +3723,7 @@
         "TERMINADO": 1
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 22
+      "orden_inventario": 21
     },
     {
       "grupo_id": "garaje_cuadro_equipo_tubeado_cableado",
@@ -3722,7 +3751,7 @@
         "TERMINADO": 1
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 23
+      "orden_inventario": 22
     },
     {
       "grupo_id": "garaje_alum_fijo_embornado_recinto",
@@ -3755,6 +3784,20 @@
         {
           "edificio": "Garaje 1",
           "planta": "S-1",
+          "unidad": "Trasteros portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros portal 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
           "unidad": "Vestibulo1 / Portal 2",
           "estado": "X",
           "categoria": "TERMINADO"
@@ -3779,13 +3822,13 @@
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
-      "n_ubicaciones": 6,
-      "estado_actual": "X: 6",
+      "n_ubicaciones": 8,
+      "estado_actual": "X: 8",
       "resumen_categorias": {
-        "TERMINADO": 6
+        "TERMINADO": 8
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 24
+      "orden_inventario": 23
     },
     {
       "grupo_id": "garaje_alum_fijo_embornado_vial",
@@ -3820,7 +3863,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 25
+      "orden_inventario": 24
     },
     {
       "grupo_id": "garaje_alum_temp_embornado_recinto",
@@ -3855,7 +3898,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 26
+      "orden_inventario": 25
     },
     {
       "grupo_id": "garaje_alum_temp_embornado_vial",
@@ -3890,7 +3933,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 27
+      "orden_inventario": 26
     },
     {
       "grupo_id": "garaje_emergencia_embornado_recinto",
@@ -3960,7 +4003,7 @@
         "TERMINADO": 7
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 28
+      "orden_inventario": 27
     },
     {
       "grupo_id": "garaje_emergencia_embornado_vial",
@@ -3995,7 +4038,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 29
+      "orden_inventario": 28
     },
     {
       "grupo_id": "garaje_enchufe_embornado",
@@ -4023,7 +4066,7 @@
         "TERMINADO": 1
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 30
+      "orden_inventario": 29
     },
     {
       "grupo_id": "garaje_tierras_derivacion",
@@ -4049,6 +4092,41 @@
       ],
       "subtajos": [
         "Derivación de tierra de cuarto técnico"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 30
+    },
+    {
+      "grupo_id": "garaje_puerta_alimentacion",
+      "trabajo": "Alimentación de cuadro de puerta de acceso",
+      "propiedad": "propio",
+      "orden_ejecucion": 670,
+      "fase_nombre": "Remates garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vial / portal 1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Vial /portal 2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Alimentación de cuadro de puerta de acceso"
       ],
       "seccion": "TERMINADO",
       "seccion_nombre": "Tajos terminados",
