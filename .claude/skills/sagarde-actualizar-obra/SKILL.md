@@ -120,6 +120,17 @@ Objetivo suyo (04/10/2026): tras actualizar la obra, el informe que pida sale
 
 ## Trampas ya vistas
 
+- **`--finalizar` puede degradar las tarjetas de OTRAS obras (05/10/2026).** Reconstruye
+  `index.html` y `resumen_obras.json` desde `_cache_resultados_regen.json`, que solo se
+  refresca para la obra regenerada: las demás entradas pueden estar desfasadas. Con Olabeaga
+  dejó Mungia en 83.8 % / 28 revisiones / última 04/09 (real: 85.5 % / 29 / 10/09) y OBRA
+  PRUEBA en 5.9 % (real 14.2 %). La afirmación de arriba «solo cambió Olabeaga» se midió el
+  04/10 con la caché al día; **no es una garantía**. Tras `--finalizar`, comparar el diff de
+  `index.html` tarjeta a tarjeta: solo debe cambiar la obra tocada (y lo que sea real en
+  disco: obras nuevas, hora de «último archivo»). Si otra tarjeta retrocede, restaurar esa
+  tarjeta desde `git show HEAD:` y avisar; `resumen_obras.json` (ignorado por git) queda
+  igualmente desfasado hasta la próxima actualización completa.
+
 - **Obra «sin medir» que pasa a medida**: mientras TODA la obra está en `?`,
   `generar_todos.py` presenta `?` como pendiente en el PDF; con la primera
   hoja real esa vista se apagaba y desaparecía la página de Zonas Especiales
