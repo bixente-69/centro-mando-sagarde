@@ -28,17 +28,17 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 04/10/2026 19:18. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 05/10/2026 22:52. No editar a mano.*
 
-**21** carpetas de obra abiertas · **6** en el registro único · **6** con panel · **5** con ficha. En todo el árbol, **333** `.py` y **9** `.bat`.
+**22** carpetas de obra abiertas · **7** en el registro único · **7** con panel · **5** con ficha. En todo el árbol, **335** `.py` y **9** `.bat`.
 
 | Obra | Ubic. | Tajos | Celdas | X | M | / | P | ? | N | % |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 2025 GERNIKA 32V | 32 | 38 | 1216 | 1128 | 12 | 5 | 63 | – | 8 | 93.6 |
+| 2025 GERNIKA 32V | 32 | 38 | 1216 | 1131 | 13 | 5 | 59 | – | 8 | 94.1 |
 | 2026 BOLUETA ACR | 106 | 73 | 3863 | 2272 | 122 | 62 | 1095 | 125 | 187 | 65.7 |
 | 2026 MUNGIA ACR NEINOR | 62 | 38 | 2356 | 2011 | 54 | 21 | 265 | 5 | – | 87.1 |
 | 2026 OBRA PRUEBA | 31 | 38 | 1178 | 161 | 36 | 5 | 976 | – | – | 16.3 |
-| 2026 OLABEAGA BILBAO | 48 | 72 | 1501 | 28 | 7 | – | 1460 | – | 6 | 2.0 |
+| 2026 OLABEAGA BILBAO | 48 | 72 | 1501 | 58 | 8 | 2 | 1427 | – | 6 | 3.7 |
 
 `X` terminado · `M` mas del 50 % · `/` iniciado · `P` pendiente confirmado · `?` sin mirar · `N` no aplica.
 <!-- /AUTO:estado -->
@@ -52,7 +52,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 04/10/2026 19:18).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 05/10/2026 22:52).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
