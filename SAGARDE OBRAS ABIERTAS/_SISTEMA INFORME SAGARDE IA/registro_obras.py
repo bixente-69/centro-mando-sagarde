@@ -132,7 +132,7 @@ OBRAS = [
         'nombre': '2026 BARAKALDO 104V OBRAS ESPECIALES',
         'aliases': ['BARAKALDO', 'BARAKALDO 104V'],
         'subtitulo': ('Electricidad y telecomunicaciones · 1 bloque, 2 portales, '
-                       '104 viviendas VPO y garaje de 3 sotanos'),
+                       '104 viviendas (78 tasadas + 26 alquiler) y garaje de 3 sotanos'),
         'adaptador': 'adaptador_barakaldo',
         'carpeta_obra': '2026 BARAKALDO 104V OBRAS ESPECIALES',
         'bloque_revision': 'Bloque 1',
