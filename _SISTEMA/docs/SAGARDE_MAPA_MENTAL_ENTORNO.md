@@ -28,17 +28,18 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 06/10/2026 13:29. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 08/10/2026 20:28. No editar a mano.*
 
-**23** carpetas de obra abiertas · **7** en el registro único · **7** con panel · **5** con ficha. En todo el árbol, **335** `.py` y **9** `.bat`.
+**23** carpetas de obra abiertas · **7** en el registro único · **7** con panel · **6** con ficha. En todo el árbol, **338** `.py` y **9** `.bat`.
 
 | Obra | Ubic. | Tajos | Celdas | X | M | / | P | ? | N | % |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2025 GERNIKA 32V | 32 | 38 | 1216 | 1131 | 13 | 5 | 59 | – | 8 | 94.1 |
-| 2026 BOLUETA ACR | 106 | 73 | 3863 | 2272 | 122 | 62 | 1095 | 125 | 187 | 65.7 |
+| 2026 BARAKALDO 104V OBRAS ESPECIALES | 120 | 68 | 4140 | – | – | 10 | 4130 | – | – | 0.1 |
+| 2026 BOLUETA ACR | 106 | 73 | 3837 | 2437 | 135 | 31 | 1056 | – | 178 | 68.2 |
 | 2026 MUNGIA ACR NEINOR | 62 | 38 | 2356 | 2011 | 54 | 21 | 265 | 5 | – | 87.1 |
 | 2026 OBRA PRUEBA | 31 | 38 | 1178 | 161 | 36 | 5 | 976 | – | – | 16.3 |
-| 2026 OLABEAGA BILBAO | 48 | 72 | 1501 | 58 | 8 | 2 | 1427 | – | 6 | 3.7 |
+| 2026 OLABEAGA BILBAO | 48 | 72 | 1501 | 68 | 12 | 39 | 1376 | – | 6 | 5.0 |
 
 `X` terminado · `M` mas del 50 % · `/` iniciado · `P` pendiente confirmado · `?` sin mirar · `N` no aplica.
 <!-- /AUTO:estado -->
@@ -52,7 +53,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 06/10/2026 13:29).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 08/10/2026 20:28).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
@@ -383,7 +384,8 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 | `generar_informe_ejecutivo.py` | `_SISTEMA/MOTOR/scripts/generar_informe_ejecutivo.py` | Python | PDF A4 eléctrico; una hoja densa por parte (general con cierre integrado, portales, garaje, zonas especiales) con ajuste a la página y recorte visible «+N más» (diseño de 30/09/2026) | `--obra`/import | orquestador | ficha/historial/prioridades + `assets/fonts/*.ttf` | PDF por obra y portal | ReportLab/catálogo | Activo; solo tajos propios Sagarde. Desde 14/08/2026 usa IBM Plex Sans y **falla si falta la fuente o el logo**, en vez de degradarse en silencio |
 | `test_informe_ejecutivo_caracter.py` | `_SISTEMA.../tests` | Python | 21 casos: activos publicados, registro de fuente, tipografía dentro del PDF, regla de color y logo | unittest | manual | informe/`.gitignore`/logo | resultado | unittest, pdfplumber, PIL | En verde el 14/08/2026 |
 | `generar_parte_incidencia.py` | `_SISTEMA/MOTOR/scripts/generar_parte_incidencia.py` | Python | Partes PDF | `--data --output`/import | skill parte | JSON/logo | PDF | ReportLab | Sin llamada real |
-| `regenerar_obra.py` | `_SISTEMA/MOTOR/scripts/regenerar_obra.py` | Python | Obra aislada/agregados | `<id> [--finalizar]` | skills/planes | fuentes/caché | salidas/caché | motor | Activo; sin finalizar no publica JS |
+| `regenerar_obra.py` | `_SISTEMA/MOTOR/scripts/regenerar_obra.py` | Python | Obra aislada/agregados | `<id> [--finalizar]` | skills/planes | fuentes/caché | salidas/caché | motor | Activo; sin finalizar no publica JS; `--finalizar` degrada las tarjetas de las obras no tocadas (caché desfasada, visto 05/10 y 08/10/2026; arreglo de raíz pendiente) |
+| `restaurar_tarjetas_index.py` | `_SISTEMA/MOTOR/scripts/restaurar_tarjetas_index.py` | Python | Parche provisional tras `--finalizar` | `"<obra tocada>" ...` | skill `sagarde-actualizar-obra` paso 6 | `index.html`, `git show HEAD:index.html` | `index.html` (solo tarjetas ajenas) | stdlib, git | Activo desde 08/10/2026; idempotente; se retira cuando `--finalizar` se arregle |
 | `validar_revision_pdf.py` | `_SISTEMA/MOTOR/scripts/validar_revision_pdf.py` | Python | Diagnóstico PDF | `<id> <pdf>` | skill revisión | PDF/adaptador | consola | lector PDF | Activo |
 | `test_avisos.py` | `_SISTEMA/MOTOR/tests/test_avisos.py` | Python | 8 tests | unittest | manual | módulos | temporales de test | unittest | No ejecutado |
 | `test_mapa_mental.py` | `_SISTEMA/MOTOR/tests/test_mapa_mental.py` | Python | 36 casos: extracción de rutas, bloques generados, estado de obras y trinquete sobre este mapa | unittest | manual | este mapa, actualizador | resultado | unittest | Mecanismo activo; ejecutado en verde el 26/08/2026 |
@@ -418,7 +420,7 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 | `adaptador_egurrola.py` | idem | Python | 3 DOCX | directo/import potencial | ninguna referencia | ruta abierta inexistente | historial | docx | Huérfano; obra en OLD |
 | `adaptador_gernika.py` | idem | Python | JSON + HTML | import | registro | IA/REVISIONES | historial | lector HTML | Activo |
 | `adaptador_gorliz.py` | idem | Python | JSON estricto/vacío | import/directo | registro | IA JSON | historial/plantilla | stdlib | Activo sin revisión |
-| `adaptador_barakaldo.py` | idem | Python | Revisiones JSON explícitas + HTML gemelo vía `ficha_obra.json` si existe; historial vacío mientras no haya | import/directo | registro (`barakaldo`) | `revision_barakaldo_DDMMAAAA.json`, `REVISIONES/*.html` | historial/plantilla | `adaptar_revision_html`, `ficha_obra` | Activo sin revisión desde 05/10/2026; 11 pruebas en `tests/test_adaptador_barakaldo.py` |
+| `adaptador_barakaldo.py` | idem | Python | Revisiones JSON explícitas + HTML gemelo vía `ficha_obra.json` si existe; historial vacío mientras no haya | import/directo | registro (`barakaldo`) | `revision_barakaldo_DDMMAAAA.json`, `REVISIONES/*.html` | historial/plantilla | `adaptar_revision_html`, `ficha_obra` | Activo; alta nativa y primera revisión el 08/10/2026 (con `ficha_obra.json` lee los HTML con los mapas del registro); 11 pruebas en `tests/test_adaptador_barakaldo.py` |
 | `adaptador_mungia.py` | idem | Python | DOCX + PDF | import | registro | REVISIONES | historial | docx/lector PDF | Activo |
 | `adaptador_obisporueta.py` | `SAGARDE (OLD)/OBRAS CERRADAS/2025 BILBAO OBISPO ORUETA/_SISTEMA/` | Python | DOCX + PDF especial | ya no se importa | — | REVISIONES SAGARDE | historial | docx/lector PDF | **Archivado con su obra el 13/08/2026**; no es un huérfano |
 | `adaptador_zorrozaure.py` | idem | Python | 1 DOCX | directo/import potencial | ninguna referencia | ruta abierta inexistente | historial | docx | Huérfano; obra en OLD |
@@ -762,7 +764,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | Gernika/Mungia/Bolueta/PRUEBA | Operativo con ficha | ver «Estado de hoy» |
 | Obispo Orueta | **Cerrada el 13/08/2026** | archivada con su `cierre.json`; sus 18 tajos propios siguen en el catálogo |
 | Gorliz | En desarrollo | registro/panel 0%; sin revisión |
-| Barakaldo 104V | En desarrollo | alta 05/10/2026, modo adaptador (sin ficha); solo proyecto de ejecución; panel a 0, sin PDF ejecutivo hasta tener una revisión |
+| Barakaldo 104V | Operativa con ficha | alta 05/10/2026 en modo adaptador; **alta nativa 08/10/2026** desde su primera hoja (2 portales, 106 viviendas, 14 zonas especiales, 68 tajos, 4.140 celdas; sin garaje todavía); primera revisión aplicada el 08/10/2026 (10 celdas iniciadas, 0,1 % ponderado); PDF ejecutivo de 4 páginas |
 | Olabeaga | Operativa con ficha | alta nativa 27/09/2026; `ficha_obra.json` + `ficha_garajes.json`; revisiones aplicadas 04/10 y 05/10/2026; PDF ejecutivo de 6 páginas |
 | Otras 16 abiertas | Sin uso confirmado | resumen sin panel |
 | Motor/priorizador | Operativo | salidas/tests/memoria |
@@ -816,7 +818,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | ¿Automatizar las otras 16 obras? | No registradas | registro/resumen/roadmap | decisión por obra | alcance real |
 | ¿Crear ficha para Obispo? | panel/JS sin ficha | adaptador/prioridades/memoria/JS | estructura definitiva | generador/KPI |
 | ¿Primera revisión de Gorliz? | historial vacío | adaptador/registro/JS | archivo oficial | hoja/KPI |
-| ¿Alta nativa de Barakaldo 104V? | registrada sin hoja ni estado de obra | `INFORME_TECNICO_OBRA_BARAKALDO.md`, adaptador, registro | primera hoja del generador de Bixente (portales 1–14 y 1–12, garaje de 3 sótanos: verificar contra el proyecto) | ficha + mapas HTML en registro |
+| ¿Alta nativa de Barakaldo 104V? | **Resuelta** (08/10/2026): ficha nativa desde la hoja; el Portal 2 trae 13 plantas (28 viviendas) frente a las 12 (26) del proyecto — Bixente: manda la hoja, la próxima revisión lo corrige sola | `INFORME_TECNICO_OBRA_BARAKALDO.md` (apartado 13), `alta_obra_desde_hoja.py` (lector HTML genérico), `registro_obras.py` | falta la hoja de garaje (3 sótanos) | – |
 | ¿Ampliación del generador para garajes? | **Resuelta** (26-27/09/2026): garajes con `ficha_garajes.json`, hoja propia y alta nativa de Olabeaga | `ficha_garajes.json`, hojas `_garaje.html` | – | – |
 | ¿Conservar adaptadores OLD? | rutas rotas | adaptadores/árbol | intención | deuda técnica |
 | ¿Qué índice de mantenimiento manda? | 2 escritores | BAT/Python/HTML | decisión | salida variable |

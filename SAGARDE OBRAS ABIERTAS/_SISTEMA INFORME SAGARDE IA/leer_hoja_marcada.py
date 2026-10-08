@@ -810,7 +810,9 @@ def main():
         if os.path.isfile(ruta_html_hoja) and not args.forzar_pdf:
             import adaptar_revision_html
             nuevas = adaptar_revision_html.estructura_nueva_en_hoja(
-                ruta_html_hoja, obra['id'], ficha)
+                ruta_html_hoja, obra['id'], ficha,
+                portal_id_a_real=obra.get('mapa_portales_revision_html'),
+                planta_id_a_real=obra.get('mapa_plantas_revision_html'))
             if nuevas:
                 id_ampliacion = validar_revision.generar_revision_id(
                     obra['id'], args.fecha, 'html_digital',
@@ -848,7 +850,10 @@ def main():
             import adaptar_revision_html
             ausentes = adaptar_revision_html.estructura_ausente_en_hoja(
                 ruta_html_hoja, obra['id'], ficha, catalogo,
-                fecha=args.fecha)
+                fecha=args.fecha,
+                portal_id_a_real=obra.get('mapa_portales_revision_html'),
+                planta_id_a_real=obra.get('mapa_plantas_revision_html'),
+                tarea_id_a_real=obra.get('mapa_tajos_revision_html'))
             if ausentes['no_fiable']:
                 print(f"  [AVISO] {ausentes['no_fiable']}")
             elif ausentes['unidades'] or ausentes['tajos']:

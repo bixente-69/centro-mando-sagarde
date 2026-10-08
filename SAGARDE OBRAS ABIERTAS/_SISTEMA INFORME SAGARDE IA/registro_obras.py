@@ -123,11 +123,9 @@ OBRAS = [
             'REVISIONES', 'hoja de entrega de materiales OLABEAGA.xlsx'),
     },
     {
-        # Alta el 05/10/2026 en modo Gorliz (sin ficha_obra.json): solo existe el
-        # proyecto de ejecucion (REBT, ICT, fotovoltaica), no hay hoja de
-        # distribucion ni estado de obra. Bloque 1 de la UE-12 Rontegui.
-        # La estructura propuesta esta en INFORME_TECNICO_OBRA_BARAKALDO.md;
-        # los mapas de ids de la hoja HTML se declaran el dia que llegue la hoja.
+        # Alta nativa el 08/10/2026 desde la primera hoja HTML del generador.
+        # La hoja manda la estructura: Bloque 1, dos portales, plantas 1.1-1.14
+        # y 2.1-2.13, mas siete zonas especiales por portal.
         'id': 'barakaldo',
         'nombre': '2026 BARAKALDO 104V OBRAS ESPECIALES',
         'aliases': ['BARAKALDO', 'BARAKALDO 104V'],
@@ -136,6 +134,40 @@ OBRAS = [
         'adaptador': 'adaptador_barakaldo',
         'carpeta_obra': '2026 BARAKALDO 104V OBRAS ESPECIALES',
         'bloque_revision': 'Bloque 1',
+        'mapa_portales_revision_html': {
+            'p_muzj1jjp_2': 'p1',
+            'p_muzj2fvo_9': 'p2',
+        },
+        'mapa_plantas_revision_html': {
+            'f_muzj1jjp_3': '1.1',
+            'f_muzj54b6_16': '1.2',
+            'f_muzj54b6_17': '1.3',
+            'f_muzj54b6_18': '1.4',
+            'f_muzj54b6_19': '1.5',
+            'f_muzj54b6_20': '1.6',
+            'f_muzj54b6_21': '1.7',
+            'f_muzj54b6_22': '1.8',
+            'f_muzj54b6_23': '1.9',
+            'f_muzj54b6_24': '1.10',
+            'f_muzj54b6_25': '1.11',
+            'f_muzj54b6_26': '1.12',
+            'f_muzj54b6_27': '1.13',
+            'f_muzj54b6_28': '1.14',
+            'f_muzj2fvo_10': '2.1',
+            'f_muzj2fvo_11': '2.2',
+            'f_muzj2fvo_12': '2.3',
+            'f_muzj2fvo_13': '2.4',
+            'f_muzj2fvo_14': '2.5',
+            'f_muzj2fvo_15': '2.6',
+            'f_muzjscxe_43': '2.7',
+            'f_muzjscxe_44': '2.8',
+            'f_muzjscxe_45': '2.9',
+            'f_muzjscxe_46': '2.10',
+            'f_muzjscxe_47': '2.11',
+            'f_muzjscxe_48': '2.12',
+            'f_muzjscxe_49': '2.13',
+            'zesp': 'zesp',
+        },
         'materiales_rel': os.path.join(
             'REVISIONES', 'hoja de entrega de materiales BARAKALDO.xlsx'),
     },

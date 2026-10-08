@@ -268,7 +268,8 @@ def _resolver_unidad(ficha_actual, portal_id, planta_id, unidad_html):
 
 def estructura_nueva_en_hoja(
         ruta_html, obra_id, ficha_actual, catalogo=None,
-        tarea_id_a_real=None):
+        tarea_id_a_real=None, portal_id_a_real=None,
+        planta_id_a_real=None):
     """Lista ubicaciones residenciales impresas que la ficha aun no conoce.
 
     Solo se aceptan portales y plantas que los mapas seguros existentes
@@ -283,6 +284,20 @@ def estructura_nueva_en_hoja(
     (mapa_portales, mapa_plantas,
      ambiguos_portal, ambiguos_planta) = derivar_mapas_ubicacion(
          obra_id, ficha_actual)
+    portales_explicitos = {
+        str(clave): _id_real(valor)
+        for clave, valor in (portal_id_a_real or {}).items()
+    }
+    plantas_explicitas = {
+        str(clave): _id_real(valor)
+        for clave, valor in (planta_id_a_real or {}).items()
+    }
+    mapa_portales.update(portales_explicitos)
+    mapa_plantas.update(plantas_explicitas)
+    for clave in portales_explicitos:
+        ambiguos_portal.pop(clave, None)
+    for clave in plantas_explicitas:
+        ambiguos_planta.pop(clave, None)
     mapa_tareas = derivar_mapa_tareas(
         obra_id, catalogo, tarea_id_a_real=tarea_id_a_real,
         ficha_actual=ficha_actual)
@@ -342,8 +357,10 @@ def estructura_nueva_en_hoja(
     ))
 
 
-def estructura_ausente_en_hoja(ruta_html, obra_id, ficha_actual, catalogo,
-                               fecha=None):
+def estructura_ausente_en_hoja(
+        ruta_html, obra_id, ficha_actual, catalogo, fecha=None,
+        portal_id_a_real=None, planta_id_a_real=None,
+        tarea_id_a_real=None):
     """Ubicaciones y tajos que la ficha tiene y la hoja ya NO imprime.
 
     Norma de Bixente (04/10/2026): la ULTIMA hoja manda, tambien para quitar.
@@ -360,6 +377,9 @@ def estructura_ausente_en_hoja(ruta_html, obra_id, ficha_actual, catalogo,
     """
     revision = construir_revision_normalizada_html(
         ruta_html, obra_id, ficha_actual, catalogo, sin_marca='pendiente',
+        portal_id_a_real=portal_id_a_real,
+        planta_id_a_real=planta_id_a_real,
+        tarea_id_a_real=tarea_id_a_real,
         fecha=fecha)
     ausentes = {'unidades': [], 'tajos': [], 'no_fiable': None}
     if revision['metadata']['avisos']:

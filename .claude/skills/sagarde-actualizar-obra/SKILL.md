@@ -63,8 +63,13 @@ regenerador en `_SISTEMA/MOTOR/scripts/regenerar_obra.py` (raíz del repo).
    cambios ajenos a esta obra, no son basura: es otra sesión; parar y avisar.
 2. **Qué hojas hay nuevas.** Listar `<obra>/REVISIONES/`. Una hoja está
    aplicada si su fecha ya figura en `ficha_obra.json['revisiones']`
-   (vivienda) o si `ficha_garajes.json` tiene esa fecha en su `actualizado`
-   (garaje). Sin hoja nueva → no hay nada que hacer: decirlo y parar.
+   (vivienda) o en `ficha_garajes.json['revisiones']` (garaje; id
+   `rev_DDMMAAAA`). **`actualizado` NO sirve para esto: es la hora a la que se
+   escribió el fichero, no la fecha de la hoja** (el 08/10/2026 una
+   comprobación sobre `actualizado` hizo parar a un worker sin motivo). Una
+   hoja con el mismo tamaño/contenido que otra ya aplicada (OneDrive la
+   re-sincroniza con otra hora) no es nueva: `cmp` antes de aplicar. Sin hoja
+   nueva → no hay nada que hacer: decirlo y parar.
 3. **Vivienda (HTML del generador).** Simular y luego escribir:
    ```bash
    py -3.11 leer_hoja_marcada.py "<hoja.html>" <id_obra> --digital --fecha DD/MM/AAAA
@@ -82,6 +87,8 @@ regenerador en `_SISTEMA/MOTOR/scripts/regenerar_obra.py` (raíz del repo).
    > - Después de escribir, comprobar con una comparación completa (todas las ubicaciones y tajos que imprime la hoja frente a la base) que **no queda nada de la hoja sin reflejar**, y que el registro del generador (`obras_revisiones.js`) saca la estructura nueva para la próxima hoja.
 4. **Garaje (HTML).** Solo si la fecha no está aplicada ya (no hay simulación):
    `py -3.11 adaptar_revision_garaje.py "<hoja_garaje.html>" <id_obra> --fecha DD/MM/AAAA`
+   Comprobar después que `ficha_garajes.json['revisiones'][-1]['fecha']` es la
+   de la hoja (no `actualizado`).
 5. **Regenerar solo esa obra** (panel, prioridades, PDF ejecutivo):
    ```bash
    py -3.11 _SISTEMA/MOTOR/scripts/regenerar_obra.py <id_obra>
@@ -89,6 +96,12 @@ regenerador en `_SISTEMA/MOTOR/scripts/regenerar_obra.py` (raíz del repo).
 6. **Agregados globales** (tarjeta del índice + registro del generador):
    `py -3.11 _SISTEMA/MOTOR/scripts/regenerar_obra.py --finalizar`
    Es lo único que sale del perímetro de la obra; hacerlo y decirlo.
+   **Inmediatamente después, SIEMPRE (parche hasta que `--finalizar` se
+   arregle de raíz; pasó el 05/10 y el 08/10/2026):**
+   `py -3.11 _SISTEMA/MOTOR/scripts/restaurar_tarjetas_index.py "<obra 1 tocada>" "<obra 2 tocada>"`
+   (nombre oficial de la carpeta de cada obra actualizada). Deja la tarjeta
+   nueva solo de esas obras y devuelve las demás a `HEAD`. Es idempotente. Si ya
+   se arregló `--finalizar` (mirar «Trampas ya vistas»), no hace falta.
 7. **Verificar** (un `exit 0` no certifica nada):
    - PDF con PyMuPDF: páginas = 1 resumen + 1 por portal (si ≥2) + 1 garaje
      (si hay `ficha_garajes.json` con zonas) + 1 zonas especiales (si hay
@@ -131,6 +144,35 @@ Objetivo suyo (04/10/2026): tras actualizar la obra, el informe que pida sale
   tarjeta desde `git show HEAD:` y avisar; `resumen_obras.json` (ignorado por git) queda
   igualmente desfasado hasta la próxima actualización completa.
 
+- **Repetido el 08/10/2026 (Olabeaga+Bolueta+Barakaldo): `--finalizar` volvió a degradar
+  Mungia (85,5→83,8 %), OBRA PRUEBA (14,2→5,9 %) y Gernika (93,3→92,9 %, una revisión
+  menos).** Es un FALLO DE PROGRAMACIÓN (la caché solo se refresca para la obra que se
+  regenera), no un asunto de datos. Mientras no se arregle de raíz (tarea pendiente
+  abierta el 08/10/2026), el paso 6 incluye `restaurar_tarjetas_index.py`. Cuando se
+  arregle, borrar este aviso y ese paso. `resumen_obras.json` (ignorado por git) queda
+  desfasado para las obras no tocadas hasta la próxima actualización completa; solo lo
+  usa el Portal móvil, y el `.bat` lo rehace.
+- **El «AVISO CUTOVER FICHA ... difieren en N clave(s)» es ruido conocido, no un fallo.**
+  Sale siempre en las obras con ficha nativa y sin adaptador histórico (Olabeaga: 1.225
+  claves; Barakaldo: 3.286): el camino antiguo rellena celdas fantasma con todos los
+  tajos en todas las unidades; la salvaguarda bloquea esa escritura y la ficha no se
+  toca (comprobado por SHA). No perder tiempo investigándolo; sí si N cambia mucho.
+- **Avisos de «recorte visible» / «excede la altura» del PDF ejecutivo** (Olabeaga,
+  Barakaldo, Bolueta): el PDF se genera igualmente y las tablas declaran lo omitido
+  con «+N más». Verificar páginas y la cabecera «Datos: DD/MM/AAAA», no alarmarse.
+- **Tras un alta nativa, regenerar la obra ENSEGUIDA** (`regenerar_obra.py <id>`): la
+  prueba `test_priorizador_garaje::test_todas_las_obras_registradas_conservan_sus_bytes`
+  compara `prioridades_trabajos.json` de cada obra registrada con lo recalculado, y
+  falla para una obra recién dada de alta hasta que se regenera. No es un bug.
+- **Repartir con workers (Codex/agy) — lo aprendido el 08/10/2026:** (1) las comprobaciones
+  que se les piden deben ser comprobables: un criterio equivocado (p. ej. `actualizado`)
+  los hace parar a media tarea; (2) un worker puede dar «OK» con 0 errores y haber dejado
+  celdas fantasma o desactivada una guarda: la verificación independiente (celdas de la
+  ficha frente a las que imprime la hoja, simulaciones con y sin el cambio) es de Claude;
+  (3) Codex puede quedarse sin cuota a mitad: leer `git status`/`git diff` de lo que dejó,
+  ejecutar las pruebas uno mismo (`py -3.11 -m unittest discover -s tests` desde el
+  motor; los módulos sueltos solo funcionan con `discover -s tests -p "..."`, no con
+  `tests.modulo`) y rematar.
 - **Obra «sin medir» que pasa a medida**: mientras TODA la obra está en `?`,
   `generar_todos.py` presenta `?` como pendiente en el PDF; con la primera
   hoja real esa vista se apagaba y desaparecía la página de Zonas Especiales

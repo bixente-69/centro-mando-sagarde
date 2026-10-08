@@ -2,17 +2,17 @@
   "version": "4.3",
   "catalogo_version": "1.3",
   "obra": "2026 OLABEAGA BILBAO",
-  "revision": "05/10/2026",
+  "revision": "07/10/2026",
   "sin_base": false,
   "edad_revision_dias": 1,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "06/10/2026 13:25",
+  "generado": "08/10/2026 20:25",
   "resumen": {
     "listos": 9,
     "verificar": 0,
-    "unidades_listas": 68,
+    "unidades_listas": 73,
     "unidades_verificar": 0,
     "bloqueados": 41,
     "otros_gremios": 16,
@@ -166,6 +166,24 @@
           "estado_actual": "Pendiente"
         },
         {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidades": [
@@ -238,10 +256,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 22,
-      "n_ubicaciones": 22,
-      "n_unidades": 22,
-      "estado_actual": "Pendiente: 22",
+      "n_celdas": 24,
+      "n_ubicaciones": 24,
+      "n_unidades": 24,
+      "estado_actual": "Pendiente: 24",
       "motivo": "Abre el frente inicial de instalaciones.",
       "impacto_gremios": "Abre el frente inicial de instalaciones.",
       "orden": 1
@@ -264,7 +282,7 @@
             "A"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "/"
         },
         {
           "edificio": "PORTAL 1",
@@ -273,7 +291,7 @@
             "B"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "/"
         },
         {
           "edificio": "PORTAL 1",
@@ -384,8 +402,8 @@
           "estado_actual": "Pendiente"
         },
         {
-          "edificio": "PORTAL 3",
-          "planta": "1ª",
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
           "unidades": [
             "A"
           ],
@@ -393,8 +411,8 @@
           "estado_actual": "Pendiente"
         },
         {
-          "edificio": "PORTAL 3",
-          "planta": "1ª",
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
           "unidades": [
             "B"
           ],
@@ -405,10 +423,28 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "/"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "/"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidades": [
             "C"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "/"
         },
         {
           "edificio": "PORTAL 3",
@@ -417,7 +453,7 @@
             "A"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "/"
         },
         {
           "edificio": "PORTAL 3",
@@ -426,7 +462,7 @@
             "B"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "/"
         },
         {
           "edificio": "PORTAL 3",
@@ -435,7 +471,7 @@
             "C"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "/"
         },
         {
           "edificio": "PORTAL 3",
@@ -456,10 +492,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 22,
-      "n_ubicaciones": 22,
+      "n_celdas": 24,
+      "n_ubicaciones": 24,
       "n_unidades": 3,
-      "estado_actual": "Pendiente: 22",
+      "estado_actual": "/: 8 · Pendiente: 16",
       "motivo": "Infraestructura vertical eléctrica.",
       "impacto_gremios": "Infraestructura vertical eléctrica.",
       "orden": 2
@@ -602,8 +638,8 @@
           "estado_actual": "Pendiente"
         },
         {
-          "edificio": "PORTAL 3",
-          "planta": "1ª",
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
           "unidades": [
             "A"
           ],
@@ -611,8 +647,8 @@
           "estado_actual": "Pendiente"
         },
         {
-          "edificio": "PORTAL 3",
-          "planta": "1ª",
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
           "unidades": [
             "B"
           ],
@@ -623,10 +659,28 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidades": [
             "C"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "PORTAL 3",
@@ -635,7 +689,7 @@
             "A"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "PORTAL 3",
@@ -644,7 +698,7 @@
             "B"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "PORTAL 3",
@@ -653,7 +707,7 @@
             "C"
           ],
           "n_unidades": 1,
-          "estado_actual": "Pendiente"
+          "estado_actual": "M"
         },
         {
           "edificio": "PORTAL 3",
@@ -674,10 +728,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 22,
-      "n_ubicaciones": 22,
+      "n_celdas": 24,
+      "n_ubicaciones": 24,
       "n_unidades": 3,
-      "estado_actual": "Pendiente: 22",
+      "estado_actual": "M: 6 · Pendiente: 18",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
       "impacto_gremios": "Infraestructura vertical de telecomunicaciones.",
       "orden": 3
@@ -820,6 +874,24 @@
           "estado_actual": "Pendiente"
         },
         {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidades": [
@@ -892,10 +964,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 22,
-      "n_ubicaciones": 22,
+      "n_celdas": 24,
+      "n_ubicaciones": 24,
       "n_unidades": 3,
-      "estado_actual": "Pendiente: 22",
+      "estado_actual": "Pendiente: 24",
       "motivo": "Infraestructura vertical de servicios comunes.",
       "impacto_gremios": "Infraestructura vertical de servicios comunes.",
       "orden": 4
@@ -1038,6 +1110,24 @@
           "estado_actual": "Pendiente"
         },
         {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidades": [
@@ -1110,10 +1200,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 22,
-      "n_ubicaciones": 22,
-      "n_unidades": 10,
-      "estado_actual": "Pendiente: 22",
+      "n_celdas": 24,
+      "n_ubicaciones": 24,
+      "n_unidades": 11,
+      "estado_actual": "Pendiente: 24",
       "motivo": "Abre el frente de zonas comunes.",
       "impacto_gremios": "Abre el frente de zonas comunes.",
       "orden": 5
@@ -1256,6 +1346,24 @@
           "estado_actual": "Pendiente"
         },
         {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidades": [
@@ -1328,10 +1436,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 22,
-      "n_ubicaciones": 22,
-      "n_unidades": 22,
-      "estado_actual": "Pendiente: 22",
+      "n_celdas": 24,
+      "n_ubicaciones": 24,
+      "n_unidades": 24,
+      "estado_actual": "Pendiente: 24",
       "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
       "impacto_gremios": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
       "orden": 6
@@ -1890,17 +1998,17 @@
       "edificio": "PORTAL 2",
       "planta": "4ª",
       "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "05/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -1917,17 +2025,17 @@
       "edificio": "PORTAL 2",
       "planta": "4ª",
       "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "05/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -2240,87 +2348,6 @@
       "display_group": "tabicado",
       "edificio": "PORTAL 3",
       "planta": "3ª",
-      "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "05/10/2026"
-    },
-    {
-      "tarea_id": "tabicado",
-      "trabajo": "Tabicado",
-      "trabajos_originales": [
-        "Tabicado"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 10,
-      "fase_nombre": "Inicio de obra",
-      "display_group": "tabicado",
-      "edificio": "PORTAL 3",
-      "planta": "3ª",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "05/10/2026"
-    },
-    {
-      "tarea_id": "tabicado",
-      "trabajo": "Tabicado",
-      "trabajos_originales": [
-        "Tabicado"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 10,
-      "fase_nombre": "Inicio de obra",
-      "display_group": "tabicado",
-      "edificio": "PORTAL 3",
-      "planta": "3ª",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "05/10/2026"
-    },
-    {
-      "tarea_id": "tabicado",
-      "trabajo": "Tabicado",
-      "trabajos_originales": [
-        "Tabicado"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 10,
-      "fase_nombre": "Inicio de obra",
-      "display_group": "tabicado",
-      "edificio": "PORTAL 3",
-      "planta": "4ª",
       "unidad": "A",
       "estado": "M",
       "estado_actual": "M",
@@ -2347,6 +2374,87 @@
       "fase_nombre": "Inicio de obra",
       "display_group": "tabicado",
       "edificio": "PORTAL 3",
+      "planta": "3ª",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/10/2026"
+    },
+    {
+      "tarea_id": "tabicado",
+      "trabajo": "Tabicado",
+      "trabajos_originales": [
+        "Tabicado"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 10,
+      "fase_nombre": "Inicio de obra",
+      "display_group": "tabicado",
+      "edificio": "PORTAL 3",
+      "planta": "3ª",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/10/2026"
+    },
+    {
+      "tarea_id": "tabicado",
+      "trabajo": "Tabicado",
+      "trabajos_originales": [
+        "Tabicado"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 10,
+      "fase_nombre": "Inicio de obra",
+      "display_group": "tabicado",
+      "edificio": "PORTAL 3",
+      "planta": "4ª",
+      "unidad": "A",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/10/2026"
+    },
+    {
+      "tarea_id": "tabicado",
+      "trabajo": "Tabicado",
+      "trabajos_originales": [
+        "Tabicado"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 10,
+      "fase_nombre": "Inicio de obra",
+      "display_group": "tabicado",
+      "edificio": "PORTAL 3",
       "planta": "4ª",
       "unidad": "B",
       "estado": "M",
@@ -2997,19 +3105,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Abre el frente inicial de instalaciones.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -3034,19 +3142,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Abre el frente inicial de instalaciones.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -3698,8 +3806,8 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
       "dependencias_cumplidas": [
@@ -3718,7 +3826,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_electrica",
@@ -3735,8 +3843,8 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
       "dependencias_cumplidas": [
@@ -3755,7 +3863,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_electrica",
@@ -4292,19 +4400,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical eléctrica.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -4329,19 +4437,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical eléctrica.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -4549,8 +4657,8 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
       "dependencias_cumplidas": [
@@ -4569,7 +4677,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_electrica",
@@ -4586,8 +4694,8 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
       "dependencias_cumplidas": [
@@ -4606,7 +4714,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_electrica",
@@ -4623,8 +4731,8 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
       "dependencias_cumplidas": [
@@ -4643,7 +4751,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_electrica",
@@ -4660,8 +4768,8 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
       "dependencias_cumplidas": [
@@ -4680,7 +4788,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_electrica",
@@ -4697,8 +4805,8 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
       "dependencias_cumplidas": [
@@ -4717,7 +4825,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_electrica",
@@ -4734,8 +4842,8 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical eléctrica.",
       "dependencias_cumplidas": [
@@ -4754,7 +4862,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_electrica",
@@ -5587,19 +5695,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical de telecomunicaciones.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -5624,19 +5732,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical de telecomunicaciones.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -5844,8 +5952,8 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -5864,7 +5972,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_teleco",
@@ -5881,8 +5989,8 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -5901,7 +6009,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_teleco",
@@ -5918,8 +6026,8 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -5938,7 +6046,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_teleco",
@@ -5955,8 +6063,8 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -5975,7 +6083,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_teleco",
@@ -5992,8 +6100,8 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -6012,7 +6120,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_teleco",
@@ -6029,8 +6137,8 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "VIABLE",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -6049,7 +6157,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "montante_teleco",
@@ -6882,19 +6990,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical de servicios comunes.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -6919,19 +7027,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical de servicios comunes.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -8177,19 +8285,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Abre el frente de zonas comunes.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -8214,19 +8322,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Abre el frente de zonas comunes.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -10335,8 +10443,8 @@
       "edificio": "PORTAL 1",
       "planta": "4ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
@@ -10345,7 +10453,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -10362,8 +10470,8 @@
       "edificio": "PORTAL 1",
       "planta": "4ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
@@ -10372,7 +10480,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -10605,8 +10713,8 @@
       "edificio": "PORTAL 2",
       "planta": "4ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
@@ -10615,7 +10723,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -10632,8 +10740,8 @@
       "edificio": "PORTAL 2",
       "planta": "4ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
@@ -10642,7 +10750,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -10713,33 +10821,6 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "TRAST 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de coordinación, no producción Sagarde.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "suelo_radiante",
-      "trabajo": "Suelo radiante",
-      "trabajos_originales": [
-        "Suelo radiante"
-      ],
-      "propiedad": "coordinacion",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 80,
-      "fase_nombre": "Obra previa",
-      "display_group": "suelo_radiante",
-      "edificio": "PORTAL 2",
-      "planta": "PB",
-      "unidad": "TRAST 2",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "OTROS_GREMIOS",
@@ -10766,6 +10847,33 @@
       "display_group": "suelo_radiante",
       "edificio": "PORTAL 2",
       "planta": "PB",
+      "unidad": "TRAST 2",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "OTROS_GREMIOS",
+      "motivo": "Condición de coordinación, no producción Sagarde.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "suelo_radiante",
+      "trabajo": "Suelo radiante",
+      "trabajos_originales": [
+        "Suelo radiante"
+      ],
+      "propiedad": "coordinacion",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 80,
+      "fase_nombre": "Obra previa",
+      "display_group": "suelo_radiante",
+      "edificio": "PORTAL 2",
+      "planta": "PB",
       "unidad": "TRAST 3",
       "estado": "",
       "estado_actual": "Pendiente",
@@ -11037,8 +11145,8 @@
       "edificio": "PORTAL 3",
       "planta": "4ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
@@ -11047,7 +11155,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -11064,8 +11172,8 @@
       "edificio": "PORTAL 3",
       "planta": "4ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
@@ -11074,7 +11182,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_radiante",
@@ -11091,8 +11199,8 @@
       "edificio": "PORTAL 3",
       "planta": "4ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de coordinación, no producción Sagarde.",
       "dependencias_cumplidas": [],
@@ -11101,7 +11209,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -11226,17 +11334,17 @@
       "edificio": "PORTAL 1",
       "planta": "3ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -11253,17 +11361,17 @@
       "edificio": "PORTAL 1",
       "planta": "3ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -11442,17 +11550,17 @@
       "edificio": "PORTAL 2",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -11469,17 +11577,17 @@
       "edificio": "PORTAL 2",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -11496,17 +11604,17 @@
       "edificio": "PORTAL 2",
       "planta": "3ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -11523,17 +11631,17 @@
       "edificio": "PORTAL 2",
       "planta": "3ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -11820,33 +11928,6 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "05/10/2026"
-    },
-    {
-      "tarea_id": "suelo_recrecido",
-      "trabajo": "Suelo recrecido",
-      "trabajos_originales": [
-        "Suelo recrecido"
-      ],
-      "propiedad": "externo",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 90,
-      "fase_nombre": "Obra previa",
-      "display_group": "suelo_recrecido",
-      "edificio": "PORTAL 3",
-      "planta": "2ª",
-      "unidad": "B",
       "estado": "X",
       "estado_actual": "X",
       "categoria": "TERMINADO",
@@ -11873,6 +11954,33 @@
       "display_group": "suelo_recrecido",
       "edificio": "PORTAL 3",
       "planta": "2ª",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/10/2026"
+    },
+    {
+      "tarea_id": "suelo_recrecido",
+      "trabajo": "Suelo recrecido",
+      "trabajos_originales": [
+        "Suelo recrecido"
+      ],
+      "propiedad": "externo",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 90,
+      "fase_nombre": "Obra previa",
+      "display_group": "suelo_recrecido",
+      "edificio": "PORTAL 3",
+      "planta": "2ª",
       "unidad": "C",
       "estado": "X",
       "estado_actual": "X",
@@ -11901,17 +12009,17 @@
       "edificio": "PORTAL 3",
       "planta": "3ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -11955,17 +12063,17 @@
       "edificio": "PORTAL 3",
       "planta": "3ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "suelo_recrecido",
@@ -12063,8 +12171,8 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12073,7 +12181,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12090,8 +12198,8 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12100,7 +12208,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12117,8 +12225,8 @@
       "edificio": "PORTAL 1",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12127,7 +12235,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12144,8 +12252,8 @@
       "edificio": "PORTAL 1",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12154,7 +12262,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12171,8 +12279,8 @@
       "edificio": "PORTAL 1",
       "planta": "3ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12181,7 +12289,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12198,8 +12306,8 @@
       "edificio": "PORTAL 1",
       "planta": "3ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12208,7 +12316,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12495,8 +12603,8 @@
       "edificio": "PORTAL 2",
       "planta": "4ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12505,7 +12613,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12522,8 +12630,8 @@
       "edificio": "PORTAL 2",
       "planta": "4ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12532,7 +12640,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12549,8 +12657,8 @@
       "edificio": "PORTAL 2",
       "planta": "DUPLX ATICO",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12559,7 +12667,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12576,8 +12684,8 @@
       "edificio": "PORTAL 2",
       "planta": "DUPLX ATICO",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12586,7 +12694,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12684,8 +12792,8 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12694,7 +12802,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12711,8 +12819,8 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12721,7 +12829,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12738,8 +12846,8 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12748,7 +12856,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12765,8 +12873,8 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12775,7 +12883,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12792,8 +12900,8 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12802,7 +12910,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12819,8 +12927,8 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12829,7 +12937,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12846,8 +12954,8 @@
       "edificio": "PORTAL 3",
       "planta": "3ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12856,7 +12964,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12873,8 +12981,8 @@
       "edificio": "PORTAL 3",
       "planta": "3ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12883,7 +12991,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12900,8 +13008,8 @@
       "edificio": "PORTAL 3",
       "planta": "3ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12910,7 +13018,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12927,8 +13035,8 @@
       "edificio": "PORTAL 3",
       "planta": "4ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12937,7 +13045,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12954,8 +13062,8 @@
       "edificio": "PORTAL 3",
       "planta": "4ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12964,7 +13072,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12981,8 +13089,8 @@
       "edificio": "PORTAL 3",
       "planta": "4ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Condición de otro gremio.",
       "dependencias_cumplidas": [],
@@ -12991,7 +13099,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "07/10/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -14547,19 +14655,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -14584,19 +14692,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -15025,117 +15133,6 @@
       "display_group": "cuadros_presentados",
       "edificio": "PORTAL 3",
       "planta": "3ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "M",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "cuadros_presentados",
-      "trabajo": "Cuadros presentados",
-      "trabajos_originales": [
-        "Cuadros presentados"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 120,
-      "fase_nombre": "Instalación interior",
-      "display_group": "cuadros_presentados",
-      "edificio": "PORTAL 3",
-      "planta": "3ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Tabicado"
-      ],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "cuadros_presentados",
-      "trabajo": "Cuadros presentados",
-      "trabajos_originales": [
-        "Cuadros presentados"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 120,
-      "fase_nombre": "Instalación interior",
-      "display_group": "cuadros_presentados",
-      "edificio": "PORTAL 3",
-      "planta": "3ª",
-      "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Tabicado"
-      ],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "cuadros_presentados",
-      "trabajo": "Cuadros presentados",
-      "trabajos_originales": [
-        "Cuadros presentados"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 120,
-      "fase_nombre": "Instalación interior",
-      "display_group": "cuadros_presentados",
-      "edificio": "PORTAL 3",
-      "planta": "4ª",
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
@@ -15172,6 +15169,117 @@
       "fase_nombre": "Instalación interior",
       "display_group": "cuadros_presentados",
       "edificio": "PORTAL 3",
+      "planta": "3ª",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "VIABLE",
+      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "cuadros_presentados",
+      "trabajo": "Cuadros presentados",
+      "trabajos_originales": [
+        "Cuadros presentados"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 120,
+      "fase_nombre": "Instalación interior",
+      "display_group": "cuadros_presentados",
+      "edificio": "PORTAL 3",
+      "planta": "3ª",
+      "unidad": "C",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "VIABLE",
+      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
+      "dependencias_cumplidas": [
+        "Tabicado"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "cuadros_presentados",
+      "trabajo": "Cuadros presentados",
+      "trabajos_originales": [
+        "Cuadros presentados"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 120,
+      "fase_nombre": "Instalación interior",
+      "display_group": "cuadros_presentados",
+      "edificio": "PORTAL 3",
+      "planta": "4ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tabicado.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tabicado"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tabicado",
+          "nombre": "Tabicado",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "cuadros_presentados",
+      "trabajo": "Cuadros presentados",
+      "trabajos_originales": [
+        "Cuadros presentados"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 120,
+      "fase_nombre": "Instalación interior",
+      "display_group": "cuadros_presentados",
+      "edificio": "PORTAL 3",
       "planta": "4ª",
       "unidad": "B",
       "estado": "",
@@ -26565,7 +26673,7 @@
         {
           "id": "montante_electrica",
           "nombre": "Montante eléctrica",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -26602,7 +26710,7 @@
         {
           "id": "montante_electrica",
           "nombre": "Montante eléctrica",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -27416,7 +27524,7 @@
         {
           "id": "montante_electrica",
           "nombre": "Montante eléctrica",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -27453,7 +27561,7 @@
         {
           "id": "montante_electrica",
           "nombre": "Montante eléctrica",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -27490,7 +27598,7 @@
         {
           "id": "montante_electrica",
           "nombre": "Montante eléctrica",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -27527,7 +27635,7 @@
         {
           "id": "montante_electrica",
           "nombre": "Montante eléctrica",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -27564,7 +27672,7 @@
         {
           "id": "montante_electrica",
           "nombre": "Montante eléctrica",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -27601,7 +27709,7 @@
         {
           "id": "montante_electrica",
           "nombre": "Montante eléctrica",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -54588,14 +54696,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -54725,8 +54833,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "VIABLE": 22,
-        "BLOQUEADO": 13
+        "VIABLE": 24,
+        "BLOQUEADO": 11
       },
       "motivo": "Abre el frente inicial de instalaciones. Dependencias pendientes: Tabicado.",
       "orden_inventario": 1
@@ -54742,14 +54850,14 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "VIABLE"
         },
         {
@@ -54855,14 +54963,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -54903,42 +55011,42 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "VIABLE"
         },
         {
@@ -54990,10 +55098,10 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 35,
-      "estado_actual": "Pendiente: 35",
+      "estado_actual": "/: 8 · Pendiente: 27",
       "resumen_categorias": {
-        "VIABLE": 22,
-        "BLOQUEADO": 13
+        "VIABLE": 24,
+        "BLOQUEADO": 11
       },
       "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical eléctrica.",
       "orden_inventario": 2
@@ -55122,14 +55230,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -55170,42 +55278,42 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
@@ -55257,10 +55365,10 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 35,
-      "estado_actual": "Pendiente: 35",
+      "estado_actual": "M: 6 · Pendiente: 29",
       "resumen_categorias": {
-        "VIABLE": 22,
-        "BLOQUEADO": 13
+        "VIABLE": 24,
+        "BLOQUEADO": 11
       },
       "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de telecomunicaciones.",
       "orden_inventario": 3
@@ -55389,14 +55497,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -55526,8 +55634,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "VIABLE": 22,
-        "BLOQUEADO": 13
+        "VIABLE": 24,
+        "BLOQUEADO": 11
       },
       "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de servicios comunes.",
       "orden_inventario": 4
@@ -55656,14 +55764,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -55793,8 +55901,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "VIABLE": 22,
-        "BLOQUEADO": 13
+        "VIABLE": 24,
+        "BLOQUEADO": 11
       },
       "motivo": "Abre el frente de zonas comunes. Dependencias pendientes: Tabicado.",
       "orden_inventario": 5
@@ -55923,14 +56031,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -56060,8 +56168,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "VIABLE": 22,
-        "BLOQUEADO": 13
+        "VIABLE": 24,
+        "BLOQUEADO": 11
       },
       "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado. Dependencias pendientes: Tabicado.",
       "orden_inventario": 6
@@ -62559,15 +62667,15 @@
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "A",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -62695,10 +62803,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 35,
-      "estado_actual": "M: 8 · Pendiente: 5 · X: 22",
+      "estado_actual": "M: 6 · Pendiente: 5 · X: 24",
       "resumen_categorias": {
-        "TERMINADO": 22,
-        "OTROS_GREMIOS": 13
+        "TERMINADO": 24,
+        "OTROS_GREMIOS": 11
       },
       "motivo": "Sin separaciones de vivienda no se inicia la instalación interior. Terminado según la última confirmación válida.",
       "orden_inventario": 51
@@ -62756,14 +62864,14 @@
           "edificio": "PORTAL 1",
           "planta": "4ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "4ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -62826,14 +62934,14 @@
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -62938,21 +63046,21 @@
           "edificio": "PORTAL 3",
           "planta": "4ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "4ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "4ª",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         }
       ],
@@ -62962,7 +63070,7 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 35,
-      "estado_actual": "Pendiente: 12 · X: 23",
+      "estado_actual": "/: 7 · Pendiente: 5 · X: 23",
       "resumen_categorias": {
         "TERMINADO": 23,
         "OTROS_GREMIOS": 12
@@ -63009,15 +63117,15 @@
           "edificio": "PORTAL 1",
           "planta": "3ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -63065,29 +63173,29 @@
           "edificio": "PORTAL 2",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "3ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "3ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -63184,8 +63292,8 @@
           "edificio": "PORTAL 3",
           "planta": "3ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
@@ -63198,8 +63306,8 @@
           "edificio": "PORTAL 3",
           "planta": "3ª",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
@@ -63229,10 +63337,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 35,
-      "estado_actual": "Pendiente: 22 · X: 13",
+      "estado_actual": "Pendiente: 14 · X: 21",
       "resumen_categorias": {
-        "TERMINADO": 13,
-        "OTROS_GREMIOS": 22
+        "TERMINADO": 21,
+        "OTROS_GREMIOS": 14
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
       "orden_inventario": 53
@@ -63248,42 +63356,42 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -63360,28 +63468,28 @@
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "DUPLX ATICO",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "DUPLX ATICO",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -63409,84 +63517,84 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "3ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "3ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "3ª",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "4ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "4ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "4ª",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         }
       ],
@@ -63496,7 +63604,7 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 35,
-      "estado_actual": "Pendiente: 35",
+      "estado_actual": "/: 22 · Pendiente: 13",
       "resumen_categorias": {
         "OTROS_GREMIOS": 35
       },
@@ -66414,7 +66522,7 @@
       "trabajo": "Tabicado",
       "estado_actual": "X",
       "propiedad": "externo",
-      "desbloquea": 41,
+      "desbloquea": 36,
       "tajos_afectados": [
         "Cuadros presentados",
         "Montante de servicios comunes",
@@ -66467,7 +66575,7 @@
     {
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
-      "estado_actual": "Pendiente",
+      "estado_actual": "/",
       "propiedad": "propio",
       "desbloquea": 35,
       "tajos_afectados": [

@@ -5,22 +5,18 @@ ADAPTADOR - 2026 BARAKALDO 104V OBRAS ESPECIALES
 Lee revisiones de la obra y devuelve el historial normalizado que
 consumen motor_informes.py, priorizador_trabajos.py y panel_obra.py.
 
-Barakaldo es el Bloque 1 de la UE-12 Rontegui: 104 viviendas de proteccion
-oficial en 2 portales, con garaje de 3 sotanos (125 plazas). A fecha de alta
-(05/10/2026) solo se dispone del proyecto de ejecucion (REBT, ICT,
-fotovoltaica y alumbrado exterior; ver INFORME_TECNICO_OBRA_BARAKALDO.md):
-no hay hoja de distribucion del generador ni estado de obra. Por ese motivo
-este adaptador sigue el mismo patron que adaptador_gorliz.py y
-adaptador_barakaldo.py: NO deduce avance desde planos, mediciones o fechas de
-fichero, solo incorpora revisiones explicitas guardadas como:
+Barakaldo es el Bloque 1 de la UE-12 Rontegui, con 2 portales y garaje de 3
+sotanos (125 plazas). Desde el 08/10/2026 tiene alta nativa en
+ficha_obra.json, construida desde su primera hoja HTML del generador. El
+adaptador no deduce avance desde planos, mediciones o fechas de fichero: lee
+los HTML de REVISIONES mediante el lector generico y conserva tambien el
+formato explicito guardado como:
 
     INFORME SAGARDE IA/revision_barakaldo_DDMMAAAA.json
 
-En cuanto Bixente entregue la primera hoja en blanco del generador, la obra
-se da de alta nativa con alta_obra_desde_hoja.py (igual que Olabeaga el
-27/09/2026); este adaptador pasa entonces a leer los HTML de REVISIONES
-traducidos con los mapas de registro_obras.py (mapa_portales_revision_html,
-mapa_plantas_revision_html), que habra que declarar ese dia.
+Los ids de portal y planta de los HTML se traducen con los mapas explicitos de
+registro_obras.py (mapa_portales_revision_html y
+mapa_plantas_revision_html), igual que en Olabeaga.
 
 Admite dos formatos de JSON.
 

@@ -179,8 +179,42 @@ python alta_obra_desde_hoja.py "<hoja_en_blanco.pdf>" <id_obra> "<CARPETA>" --es
 ```
 
 **Manda la hoja**: si trae 15 bloques, se registran 15. La herramienta se
-planta si la hoja lleva marcas — leerlas es trabajo del otro camino. Después
-hay que añadir la obra a `registro_obras.py` y darle un adaptador.
+planta si la hoja lleva marcas — leerlas es trabajo del otro camino (o usa
+`--estructura-con-marcas`, ver abajo). Después hay que añadir la obra a
+`registro_obras.py` y darle un adaptador.
+
+### Receta completa de alta nativa desde una hoja HTML (probada con Barakaldo, 08/10/2026)
+
+Obra ya registrada en `registro_obras.py` (con adaptador, copia de
+`adaptador_barakaldo.py`) y primera hoja `.html` del generador en `REVISIONES/`.
+Desde `SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA`:
+
+1. **Simular el alta** (la hoja puede traer ya marcas):
+   `py -3.11 alta_obra_desde_hoja.py "<hoja.html>" <id> "<CARPETA>" --estructura-con-marcas`
+   Contrastar con lo que dice la hoja: portales, plantas, viviendas por planta,
+   zonas especiales (nombre y tipo), nº de tajos y `celdas`. **Las celdas de la
+   ficha tienen que ser EXACTAMENTE las que imprime la hoja** (`data-k` de 4
+   partes): si salen más, hay celdas fantasma (unidad × tajo no impreso). Repetir
+   con `--escribir`. Sin el flag, una hoja con marcas aborta (el alta solo fija la
+   distribución; las marcas las lee el lector).
+   Obra `olabeaga` usa su lector antiguo (a mano); cualquier otra, el genérico.
+2. **Declarar en `registro_obras.py`** `mapa_portales_revision_html` y
+   `mapa_plantas_revision_html` (id del HTML → id de la ficha; las plantas de la
+   ficha se llaman como las imprime la hoja, p. ej. `1.1`; añadir `'zesp': 'zesp'`).
+   Los ids salen de los `data-k` de la hoja. **Sin estos mapas la obra «no ve»
+   ni la estructura nueva ni la retirada de la hoja siguiente** (el
+   `[AVISO] N clave(s) de la hoja sin resolver: no se retira nada de la base` es
+   la señal; corregido en `adaptar_revision_html` el 08/10/2026, que ahora los recibe).
+3. **Leer las marcas** (simular, leer entera la salida, escribir y repetir la
+   simulación: debe dar 0 cambios): `leer_hoja_marcada.py "<hoja.html>" <id> --digital --fecha DD/MM/AAAA [--escribir]`.
+   Las casillas en blanco pasan a `P` (norma del 04/10/2026).
+4. **Regenerar enseguida** la obra (`regenerar_obra.py <id>`, desde la raíz del
+   repo) y seguir los pasos 6-8 de la skill `sagarde-actualizar-obra`
+   (`--finalizar` + `restaurar_tarjetas_index.py`, PDF, suite).
+
+**Diferencias hoja ↔ proyecto no frenan el alta** (Bixente, 08/10/2026: «el día
+que se vuelva a hacer revisión, si hay una planta menos se borra del generador y
+saldrá una menos»). Se anotan en el informe técnico de la obra y se sigue.
 
 ## Trampas ya pagadas
 
