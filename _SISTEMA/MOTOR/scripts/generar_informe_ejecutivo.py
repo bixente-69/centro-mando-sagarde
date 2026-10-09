@@ -2419,11 +2419,15 @@ def _ajustar_pagina(fabrica, ancho: float, alto: float,
             len(planes_efectivos) - 1)
 
     print(
-        '[AVISO INFORME EJECUTIVO] {!r} excede la altura incluso con el '
-        'recorte maximo y escala 0.85: {:.1f} mm necesarios y {:.1f} mm '
-        'disponibles. Se genera igualmente; no se conserva un PDF antiguo '
+        '[AVISO INFORME EJECUTIVO] {!r} excede el limite de ocupacion incluso '
+        'con el recorte maximo y escala 0.85: limite de ocupacion: {:.1f} mm '
+        '({:.1f}%); {:.1f} mm necesarios; altura total de la pagina: {:.1f} '
+        'mm; {}. Se genera igualmente; no se conserva un PDF antiguo '
         'en silencio.'.format(
-            etiqueta, alto_minimo / mm, alto / mm))
+            etiqueta, limite_alto / mm, ocupacion_max * 100,
+            alto_minimo / mm, alto / mm,
+            ('CABE en la pagina fisica'
+             if alto_minimo <= alto else 'NO CABE en la pagina fisica')))
     return resultado(
         flowables, .85, alto_minimo, limites_finales,
         len(planes_efectivos) - 1, forzado=True)

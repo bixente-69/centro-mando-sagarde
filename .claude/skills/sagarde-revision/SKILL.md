@@ -210,7 +210,7 @@ Desde `SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA`:
    Las casillas en blanco pasan a `P` (norma del 04/10/2026).
 4. **Regenerar enseguida** la obra (`regenerar_obra.py <id>`, desde la raíz del
    repo) y seguir los pasos 6-8 de la skill `sagarde-actualizar-obra`
-   (`--finalizar` + `restaurar_tarjetas_index.py`, PDF, suite).
+   (`--finalizar`, que ya solo cambia la tarjeta de las obras regeneradas; PDF; suite).
 
 **Diferencias hoja ↔ proyecto no frenan el alta** (Bixente, 08/10/2026: «el día
 que se vuelva a hacer revisión, si hay una planta menos se borra del generador y

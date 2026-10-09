@@ -2349,14 +2349,14 @@
       "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
     },
     "p1__pb__montante_electrica__Local 1": {
-      "v": "P",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "/",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__pb__montante_teleco__Local 1": {
-      "v": "P",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "/",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__pb__montante_sscc__Local 1": {
       "v": "N",
@@ -2539,14 +2539,14 @@
       "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
     },
     "p1__pb__montante_electrica__Local 2": {
-      "v": "P",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "/",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__pb__montante_teleco__Local 2": {
-      "v": "P",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "/",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__pb__montante_sscc__Local 2": {
       "v": "N",
@@ -3674,9 +3674,9 @@
       "r": "rev_24082026"
     },
     "p1__1__casquillos_bombillas__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__1__iluminacion_rellanos__B": {
       "v": "P",
@@ -9603,9 +9603,9 @@
       "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__9__casquillos_bombillas__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__9__iluminacion_rellanos__A": {
       "v": "P",
@@ -9797,9 +9797,9 @@
       "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__9__casquillos_bombillas__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__9__iluminacion_rellanos__B": {
       "v": "P",
@@ -9991,9 +9991,9 @@
       "r": "bolueta__23/09/2026__historial_consolidado__6b6108c3"
     },
     "p1__9__casquillos_bombillas__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__9__iluminacion_rellanos__C": {
       "v": "P",
@@ -10340,9 +10340,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__10__mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__10__telemecanizado__A": {
       "v": "X",
@@ -10381,9 +10381,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__10__casquillos_bombillas__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__10__iluminacion_rellanos__A": {
       "v": "P",
@@ -10536,9 +10536,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__10__mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__10__telemecanizado__B": {
       "v": "X",
@@ -10577,9 +10577,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__10__casquillos_bombillas__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__10__iluminacion_rellanos__B": {
       "v": "P",
@@ -10731,9 +10731,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__10__mecanizado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__10__telemecanizado__C": {
       "v": "X",
@@ -10772,9 +10772,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__10__casquillos_bombillas__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__10__iluminacion_rellanos__C": {
       "v": "P",
@@ -10925,9 +10925,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__10__mecanizado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__10__telemecanizado__D": {
       "v": "X",
@@ -10966,9 +10966,9 @@
       "r": "bolueta__21/09/2026__historial_consolidado__2d8b7df3"
     },
     "p1__10__casquillos_bombillas__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__10__iluminacion_rellanos__D": {
       "v": "P",
@@ -11119,9 +11119,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__11__telemecanizado__A": {
       "v": "X",
@@ -11160,9 +11160,9 @@
       "r": "rev_26072026"
     },
     "p1__11__casquillos_bombillas__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__11__iluminacion_rellanos__A": {
       "v": "P",
@@ -11313,9 +11313,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__11__telemecanizado__B": {
       "v": "X",
@@ -11354,9 +11354,9 @@
       "r": "rev_26072026"
     },
     "p1__11__casquillos_bombillas__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__11__iluminacion_rellanos__B": {
       "v": "P",
@@ -11506,9 +11506,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__mecanizado__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__11__telemecanizado__C": {
       "v": "X",
@@ -11547,9 +11547,9 @@
       "r": "rev_26072026"
     },
     "p1__11__casquillos_bombillas__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__11__iluminacion_rellanos__C": {
       "v": "P",
@@ -11699,9 +11699,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__11__mecanizado__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__11__telemecanizado__D": {
       "v": "X",
@@ -11740,9 +11740,9 @@
       "r": "rev_26072026"
     },
     "p1__11__casquillos_bombillas__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__11__iluminacion_rellanos__D": {
       "v": "P",
@@ -11894,9 +11894,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__12__mecanizado__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__12__telemecanizado__A": {
       "v": "X",
@@ -12088,9 +12088,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__12__mecanizado__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__12__telemecanizado__B": {
       "v": "X",
@@ -14104,9 +14104,9 @@
       "r": "rev_28072026"
     },
     "p1__15__montante_electrica__A": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__15__montante_teleco__A": {
       "v": "X",
@@ -14297,9 +14297,9 @@
       "r": "rev_28072026"
     },
     "p1__15__montante_electrica__B": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__15__montante_teleco__B": {
       "v": "X",
@@ -14490,9 +14490,9 @@
       "r": "rev_28072026"
     },
     "p1__15__montante_electrica__C": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__15__montante_teleco__C": {
       "v": "X",
@@ -14683,9 +14683,9 @@
       "r": "rev_28072026"
     },
     "p1__15__montante_electrica__D": {
-      "v": "/",
-      "f": "09/09/2026",
-      "r": "bolueta__09/09/2026__html_digital__435f5ab1"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__15__montante_teleco__D": {
       "v": "X",
@@ -15750,9 +15750,9 @@
       "r": "rev_26072026"
     },
     "p1__17__derivacion_individual__A": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__17__cuadro_mecanizado__A": {
       "v": "X",
@@ -15944,9 +15944,9 @@
       "r": "rev_26072026"
     },
     "p1__17__derivacion_individual__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__17__cuadro_mecanizado__B": {
       "v": "X",
@@ -16138,9 +16138,9 @@
       "r": "rev_26072026"
     },
     "p1__17__derivacion_individual__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__17__cuadro_mecanizado__C": {
       "v": "X",
@@ -16332,9 +16332,9 @@
       "r": "rev_26072026"
     },
     "p1__17__derivacion_individual__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__17__cuadro_mecanizado__D": {
       "v": "X",
@@ -16439,10 +16439,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__18__montante_sscc__A": {
-      "v": "/",
-      "f": "24/08/2026",
-      "r": "rev_24082026",
-      "origen": "hoja generada rellenada digitalmente"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__18__tubeado_zzcc__A": {
       "v": "X",
@@ -16632,10 +16631,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__18__montante_sscc__B": {
-      "v": "/",
-      "f": "24/08/2026",
-      "r": "rev_24082026",
-      "origen": "hoja generada rellenada digitalmente"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__18__tubeado_zzcc__B": {
       "v": "X",
@@ -16825,10 +16823,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__18__montante_sscc__C": {
-      "v": "/",
-      "f": "24/08/2026",
-      "r": "rev_24082026",
-      "origen": "hoja generada rellenada digitalmente"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__18__tubeado_zzcc__C": {
       "v": "X",
@@ -17018,10 +17015,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__18__montante_sscc__D": {
-      "v": "/",
-      "f": "24/08/2026",
-      "r": "rev_24082026",
-      "origen": "hoja generada rellenada digitalmente"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__18__tubeado_zzcc__D": {
       "v": "X",
@@ -17211,10 +17207,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__montante_sscc__A": {
-      "v": "/",
-      "f": "24/08/2026",
-      "r": "rev_24082026",
-      "origen": "hoja generada rellenada digitalmente"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__19__tubeado_zzcc__A": {
       "v": "X",
@@ -17404,10 +17399,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__montante_sscc__B": {
-      "v": "/",
-      "f": "24/08/2026",
-      "r": "rev_24082026",
-      "origen": "hoja generada rellenada digitalmente"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__19__tubeado_zzcc__B": {
       "v": "X",
@@ -17597,10 +17591,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__montante_sscc__C": {
-      "v": "/",
-      "f": "24/08/2026",
-      "r": "rev_24082026",
-      "origen": "hoja generada rellenada digitalmente"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__19__tubeado_zzcc__C": {
       "v": "X",
@@ -17790,10 +17783,9 @@
       "origen": "hoja generada rellenada digitalmente"
     },
     "p1__19__montante_sscc__D": {
-      "v": "/",
-      "f": "24/08/2026",
-      "r": "rev_24082026",
-      "origen": "hoja generada rellenada digitalmente"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__19__tubeado_zzcc__D": {
       "v": "X",
@@ -18466,9 +18458,9 @@
       "r": "rev_26072026"
     },
     "p1__20__derivacion_individual__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__20__cuadro_mecanizado__C": {
       "v": "X",
@@ -18661,9 +18653,9 @@
       "r": "rev_26072026"
     },
     "p1__20__derivacion_individual__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__20__cuadro_mecanizado__D": {
       "v": "X",
@@ -19255,9 +19247,9 @@
       "r": "rev_26072026"
     },
     "p1__21__derivacion_individual__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__21__cuadro_mecanizado__C": {
       "v": "X",
@@ -19452,9 +19444,9 @@
       "r": "rev_26072026"
     },
     "p1__21__derivacion_individual__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__21__cuadro_mecanizado__D": {
       "v": "X",
@@ -20630,9 +20622,9 @@
       "r": "rev_26072026"
     },
     "p1__23__derivacion_individual__B": {
-      "v": "X",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "M",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__23__cuadro_mecanizado__B": {
       "v": "X",
@@ -20645,9 +20637,9 @@
       "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__23__techos_zzcc__B": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__23__techos__B": {
       "v": "X",
@@ -20655,9 +20647,9 @@
       "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
     },
     "p1__23__enchapado__B": {
-      "v": "M",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__23__pintura_primera__B": {
       "v": "P",
@@ -20840,14 +20832,14 @@
       "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__23__techos_zzcc__C": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "/",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__23__techos__C": {
-      "v": "/",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__23__enchapado__C": {
       "v": "X",
@@ -21035,9 +21027,9 @@
       "r": "bolueta__28/09/2026__html_digital__d8fa6959"
     },
     "p1__23__techos_zzcc__D": {
-      "v": "P",
-      "f": "26/07/2026",
-      "r": "rev_26072026"
+      "v": "X",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__23__techos__D": {
       "v": "X",
@@ -21795,9 +21787,9 @@
       "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
     },
     "p1__zesp__garaje_cableado_emp__z_mum61yi2_11": {
-      "v": "P",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "/",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__zesp__garaje_tubeado_visto__z_mum61yi2_11": {
       "v": "P",
@@ -21835,9 +21827,9 @@
       "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
     },
     "p1__zesp__garaje_cuadro_tubeado_cableado__z_mum61yi2_11": {
-      "v": "P",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "/",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__zesp__garaje_cuadro_colocacion__z_mum61yi2_11": {
       "v": "M",
@@ -21845,19 +21837,19 @@
       "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
     },
     "p1__zesp__garaje_cuadro_embornado__z_mum61yi2_11": {
-      "v": "P",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "/",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__zesp__garaje_cuadro_rotulacion__z_mum61yi2_11": {
-      "v": "P",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "/",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__zesp__garaje_cuadro_equipo_tubeado_cableado__z_mum61yi2_11": {
-      "v": "P",
-      "f": "08/10/2026",
-      "r": "bolueta__08/10/2026__html_digital__b9ad27cf"
+      "v": "/",
+      "f": "09/10/2026",
+      "r": "bolueta__09/10/2026__html_digital__784c8079"
     },
     "p1__zesp__garaje_lucido__z_mum620d4_12": {
       "v": "X",
@@ -22060,6 +22052,23 @@
       "procesada": "08/10/2026 18:21",
       "celdas": 3525,
       "cambios": 0
+    },
+    {
+      "id": "bolueta__09/10/2026__html_digital__784c8079",
+      "fecha": "09/10/2026",
+      "origen": "hoja generada rellenada digitalmente, leida por la IA",
+      "celdas_medidas": 2645,
+      "celdas_cambiadas": 57,
+      "ubicaciones_nuevas": 0,
+      "ubicaciones_retiradas": 0,
+      "celdas_retiradas": 0
+    },
+    {
+      "id": "rev_09102026",
+      "fecha": "09/10/2026",
+      "procesada": "09/10/2026 13:48",
+      "celdas": 3525,
+      "cambios": 0
     }
   ],
   "dudas": [],
@@ -22081,16 +22090,16 @@
     }
   },
   "documentos": {
-    "total": 133,
+    "total": 135,
     "por_categoria": {
       "Excel": 7,
       "Imágenes": 77,
-      "Otros": 15,
+      "Otros": 17,
       "PDF": 24,
       "Word": 10
     },
     "_meta": {
-      "actualizado": "08/10/2026 18:21"
+      "actualizado": "09/10/2026 13:48"
     }
   },
   "contactos": []

@@ -35,12 +35,15 @@ import os
 import re
 import json
 
+import cache_pdf
 from claves_correcciones import normalizar_unidad, partir_clave
 
 try:
     import pdfplumber
+    import pdfminer
 except ImportError:
     pdfplumber = None
+    pdfminer = None
 
 
 def cargar_correcciones(ruta_pdf):
@@ -185,6 +188,30 @@ def _parsear_tabla_pagina(tabla, identificar_portal, identificar_tajo):
     return portal_id, registros, dudas
 
 
+def _extraer_pdf_crudo_sin_cache(ruta_pdf):
+    """Extrae solo observaciones de pdfplumber, sin reglas de ninguna obra."""
+    paginas = []
+    with pdfplumber.open(ruta_pdf) as pdf:
+        for page in pdf.pages:
+            paginas.append({
+                'tabla': page.extract_table(),
+                'n_anotaciones': len(page.annots or []),
+            })
+    return {'paginas': paginas}
+
+
+def extraer_pdf_crudo(ruta_pdf):
+    """Devuelve tablas y recuentos de anotaciones, con cache por contenido."""
+    if pdfplumber is None or pdfminer is None:
+        raise RuntimeError("pdfplumber/pdfminer.six no estan disponibles")
+    return cache_pdf.extraer_con_cache(
+        ruta_pdf,
+        extractor=_extraer_pdf_crudo_sin_cache,
+        pdfplumber=pdfplumber,
+        pdfminer=pdfminer,
+    )
+
+
 def parsear_pdf(ruta_pdf, identificar_portal, identificar_tajo, nombre_log=''):
     """
     Lee toda la hoja de revision de tajos en PDF (todas las paginas/tablas).
@@ -206,18 +233,19 @@ def parsear_pdf(ruta_pdf, identificar_portal, identificar_tajo, nombre_log=''):
     usadas = set()
     registros_dict = {}
     dudas_sin_corregir = 0
-    with pdfplumber.open(ruta_pdf) as pdf:
-        for page in pdf.pages:
-            tabla = page.extract_table()
-            if not tabla:
-                continue
-            portal_id, registros, dudas = _parsear_tabla_pagina(tabla, identificar_portal, identificar_tajo)
-            if portal_id is None:
-                continue
-            celdas, sin_corregir = _resolver_celdas(
-                portal_id, registros, dudas, indice, usadas)
-            registros_dict.update(celdas)
-            dudas_sin_corregir += sin_corregir
+    extraccion = extraer_pdf_crudo(ruta_pdf)
+    for pagina in extraccion['paginas']:
+        tabla = pagina['tabla']
+        if not tabla:
+            continue
+        portal_id, registros, dudas = _parsear_tabla_pagina(
+            tabla, identificar_portal, identificar_tajo)
+        if portal_id is None:
+            continue
+        celdas, sin_corregir = _resolver_celdas(
+            portal_id, registros, dudas, indice, usadas)
+        registros_dict.update(celdas)
+        dudas_sin_corregir += sin_corregir
 
     _avisar(
         ruta_pdf,
@@ -298,9 +326,9 @@ def _mide_aportacion(ruta_pdf):
     hay_sidecar = os.path.isfile(ruta_pdf + '.correcciones.json')
     n_anotaciones = 0
     try:
-        import pdfplumber
-        with pdfplumber.open(ruta_pdf) as pdf:
-            n_anotaciones = sum(len(p.annots or []) for p in pdf.pages)
+        extraccion = extraer_pdf_crudo(ruta_pdf)
+        n_anotaciones = sum(
+            pagina['n_anotaciones'] for pagina in extraccion['paginas'])
     except Exception as exc:
         # Si no se puede mirar, se deja pasar y que lo juzgue el parser: es
         # peor descartar una revision buena que colar una hoja sin usar.

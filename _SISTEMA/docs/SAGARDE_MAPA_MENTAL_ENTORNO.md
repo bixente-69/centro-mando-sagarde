@@ -28,15 +28,15 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 08/10/2026 20:28. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 09/10/2026 15:08. No editar a mano.*
 
-**23** carpetas de obra abiertas · **7** en el registro único · **7** con panel · **6** con ficha. En todo el árbol, **338** `.py` y **9** `.bat`.
+**23** carpetas de obra abiertas · **7** en el registro único · **7** con panel · **6** con ficha. En todo el árbol, **341** `.py` y **9** `.bat`.
 
 | Obra | Ubic. | Tajos | Celdas | X | M | / | P | ? | N | % |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2025 GERNIKA 32V | 32 | 38 | 1216 | 1131 | 13 | 5 | 59 | – | 8 | 94.1 |
 | 2026 BARAKALDO 104V OBRAS ESPECIALES | 120 | 68 | 4140 | – | – | 10 | 4130 | – | – | 0.1 |
-| 2026 BOLUETA ACR | 106 | 73 | 3837 | 2437 | 135 | 31 | 1056 | – | 178 | 68.2 |
+| 2026 BOLUETA ACR | 106 | 73 | 3837 | 2467 | 149 | 29 | 1014 | – | 178 | 69.3 |
 | 2026 MUNGIA ACR NEINOR | 62 | 38 | 2356 | 2011 | 54 | 21 | 265 | 5 | – | 87.1 |
 | 2026 OBRA PRUEBA | 31 | 38 | 1178 | 161 | 36 | 5 | 976 | – | – | 16.3 |
 | 2026 OLABEAGA BILBAO | 48 | 72 | 1501 | 68 | 12 | 39 | 1376 | – | 6 | 5.0 |
@@ -53,7 +53,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 08/10/2026 20:28).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 09/10/2026 15:08).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
@@ -384,8 +384,7 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 | `generar_informe_ejecutivo.py` | `_SISTEMA/MOTOR/scripts/generar_informe_ejecutivo.py` | Python | PDF A4 eléctrico; una hoja densa por parte (general con cierre integrado, portales, garaje, zonas especiales) con ajuste a la página y recorte visible «+N más» (diseño de 30/09/2026) | `--obra`/import | orquestador | ficha/historial/prioridades + `assets/fonts/*.ttf` | PDF por obra y portal | ReportLab/catálogo | Activo; solo tajos propios Sagarde. Desde 14/08/2026 usa IBM Plex Sans y **falla si falta la fuente o el logo**, en vez de degradarse en silencio |
 | `test_informe_ejecutivo_caracter.py` | `_SISTEMA.../tests` | Python | 21 casos: activos publicados, registro de fuente, tipografía dentro del PDF, regla de color y logo | unittest | manual | informe/`.gitignore`/logo | resultado | unittest, pdfplumber, PIL | En verde el 14/08/2026 |
 | `generar_parte_incidencia.py` | `_SISTEMA/MOTOR/scripts/generar_parte_incidencia.py` | Python | Partes PDF | `--data --output`/import | skill parte | JSON/logo | PDF | ReportLab | Sin llamada real |
-| `regenerar_obra.py` | `_SISTEMA/MOTOR/scripts/regenerar_obra.py` | Python | Obra aislada/agregados | `<id> [--finalizar]` | skills/planes | fuentes/caché | salidas/caché | motor | Activo; sin finalizar no publica JS; `--finalizar` degrada las tarjetas de las obras no tocadas (caché desfasada, visto 05/10 y 08/10/2026; arreglo de raíz pendiente) |
-| `restaurar_tarjetas_index.py` | `_SISTEMA/MOTOR/scripts/restaurar_tarjetas_index.py` | Python | Parche provisional tras `--finalizar` | `"<obra tocada>" ...` | skill `sagarde-actualizar-obra` paso 6 | `index.html`, `git show HEAD:index.html` | `index.html` (solo tarjetas ajenas) | stdlib, git | Activo desde 08/10/2026; idempotente; se retira cuando `--finalizar` se arregle |
+| `regenerar_obra.py` | `_SISTEMA/MOTOR/scripts/regenerar_obra.py` | Python | Obra aislada/agregados | `<id> [--finalizar]` | skills/planes | fuentes/caché | salidas/caché | motor | Activo; sin finalizar no publica JS; desde el 09/10/2026 `--finalizar` solo cambia la tarjeta y la entrada de `resumen_obras.json` de las obras regeneradas desde el último finalizar (`_pendientes_finalizar` en la caché) y conserva las demás literalmente (6 pruebas en `tests/test_regenerar_obra_finalizar.py`) |
 | `validar_revision_pdf.py` | `_SISTEMA/MOTOR/scripts/validar_revision_pdf.py` | Python | Diagnóstico PDF | `<id> <pdf>` | skill revisión | PDF/adaptador | consola | lector PDF | Activo |
 | `test_avisos.py` | `_SISTEMA/MOTOR/tests/test_avisos.py` | Python | 8 tests | unittest | manual | módulos | temporales de test | unittest | No ejecutado |
 | `test_mapa_mental.py` | `_SISTEMA/MOTOR/tests/test_mapa_mental.py` | Python | 36 casos: extracción de rutas, bloques generados, estado de obras y trinquete sobre este mapa | unittest | manual | este mapa, actualizador | resultado | unittest | Mecanismo activo; ejecutado en verde el 26/08/2026 |

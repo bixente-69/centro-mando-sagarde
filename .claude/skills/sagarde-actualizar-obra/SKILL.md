@@ -96,12 +96,13 @@ regenerador en `_SISTEMA/MOTOR/scripts/regenerar_obra.py` (raíz del repo).
 6. **Agregados globales** (tarjeta del índice + registro del generador):
    `py -3.11 _SISTEMA/MOTOR/scripts/regenerar_obra.py --finalizar`
    Es lo único que sale del perímetro de la obra; hacerlo y decirlo.
-   **Inmediatamente después, SIEMPRE (parche hasta que `--finalizar` se
-   arregle de raíz; pasó el 05/10 y el 08/10/2026):**
-   `py -3.11 _SISTEMA/MOTOR/scripts/restaurar_tarjetas_index.py "<obra 1 tocada>" "<obra 2 tocada>"`
-   (nombre oficial de la carpeta de cada obra actualizada). Deja la tarjeta
-   nueva solo de esas obras y devuelve las demás a `HEAD`. Es idempotente. Si ya
-   se arregló `--finalizar` (mirar «Trampas ya vistas»), no hace falta.
+   Desde el 09/10/2026 `--finalizar` **solo cambia la tarjeta y la entrada de
+   `resumen_obras.json` de las obras regeneradas desde el último finalizar**
+   (las marca `regenerar_obra.py <id>` en `_pendientes_finalizar` de la caché) y
+   conserva literalmente las de las demás. Imprime `Tarjetas actualizadas: ...` y
+   `Tarjetas conservadas: ...`: comprobar que «actualizadas» son exactamente las
+   obras que se acaban de regenerar. Sin ninguna pendiente dice «Nada pendiente:
+   se conservan todas las tarjetas». Ya no hace falta ningún parche.
 7. **Verificar** (un `exit 0` no certifica nada):
    - PDF con PyMuPDF: páginas = 1 resumen + 1 por portal (si ≥2) + 1 garaje
      (si hay `ficha_garajes.json` con zonas) + 1 zonas especiales (si hay
@@ -133,25 +134,17 @@ Objetivo suyo (04/10/2026): tras actualizar la obra, el informe que pida sale
 
 ## Trampas ya vistas
 
-- **`--finalizar` puede degradar las tarjetas de OTRAS obras (05/10/2026).** Reconstruye
-  `index.html` y `resumen_obras.json` desde `_cache_resultados_regen.json`, que solo se
-  refresca para la obra regenerada: las demás entradas pueden estar desfasadas. Con Olabeaga
-  dejó Mungia en 83.8 % / 28 revisiones / última 04/09 (real: 85.5 % / 29 / 10/09) y OBRA
-  PRUEBA en 5.9 % (real 14.2 %). La afirmación de arriba «solo cambió Olabeaga» se midió el
-  04/10 con la caché al día; **no es una garantía**. Tras `--finalizar`, comparar el diff de
-  `index.html` tarjeta a tarjeta: solo debe cambiar la obra tocada (y lo que sea real en
-  disco: obras nuevas, hora de «último archivo»). Si otra tarjeta retrocede, restaurar esa
-  tarjeta desde `git show HEAD:` y avisar; `resumen_obras.json` (ignorado por git) queda
-  igualmente desfasado hasta la próxima actualización completa.
-
-- **Repetido el 08/10/2026 (Olabeaga+Bolueta+Barakaldo): `--finalizar` volvió a degradar
-  Mungia (85,5→83,8 %), OBRA PRUEBA (14,2→5,9 %) y Gernika (93,3→92,9 %, una revisión
-  menos).** Es un FALLO DE PROGRAMACIÓN (la caché solo se refresca para la obra que se
-  regenera), no un asunto de datos. Mientras no se arregle de raíz (tarea pendiente
-  abierta el 08/10/2026), el paso 6 incluye `restaurar_tarjetas_index.py`. Cuando se
-  arregle, borrar este aviso y ese paso. `resumen_obras.json` (ignorado por git) queda
-  desfasado para las obras no tocadas hasta la próxima actualización completa; solo lo
-  usa el Portal móvil, y el `.bat` lo rehace.
+- **RESUELTO el 09/10/2026: `--finalizar` ya no degrada las tarjetas de OTRAS obras.**
+  Pasó el 05/10, el 08/10 y el 09/10: reconstruía `index.html` y `resumen_obras.json`
+  desde `_cache_resultados_regen.json`, cuya entrada de cada obra solo se refrescaba al
+  regenerar ESA obra (Mungia salió con 83,8 % en vez de 85,5 %, OBRA PRUEBA con 5,9 % en
+  vez de 14,2 %, Gernika con una revisión menos). Ahora `regenerar_obra.py` apunta las
+  obras regeneradas en `_pendientes_finalizar` y `finalizar()` fusiona: tarjeta nueva solo
+  para esas, el resto literal (también en `resumen_obras.json`, que antes quedaba
+  desfasado). 6 pruebas en `tests/test_regenerar_obra_finalizar.py` y prueba real el
+  09/10 (regenerar Bolueta + finalizar: «actualizadas: Bolueta», las demás idénticas).
+  Si alguna vez una tarjeta ajena vuelve a retroceder, es un fallo nuevo: parar y
+  avisar, no restaurar a ciegas. Se retiró el parche `restaurar_tarjetas_index.py`.
 - **El «AVISO CUTOVER FICHA ... difieren en N clave(s)» es ruido conocido, no un fallo.**
   Sale siempre en las obras con ficha nativa y sin adaptador histórico (Olabeaga: 1.225
   claves; Barakaldo: 3.286): el camino antiguo rellena celdas fantasma con todos los
@@ -169,6 +162,12 @@ Objetivo suyo (04/10/2026): tras actualizar la obra, el informe que pida sale
   los hace parar a media tarea; (2) un worker puede dar «OK» con 0 errores y haber dejado
   celdas fantasma o desactivada una guarda: la verificación independiente (celdas de la
   ficha frente a las que imprime la hoja, simulaciones con y sin el cambio) es de Claude;
+  (2b) A veces la captura de `regenerar_obra.py` le llega VACÍA a Codex (09/10/2026): el
+  script sí terminó (PDF y panel escritos) pero no puede certificar KPIs, así que se
+  para con razón; repetir `regenerar_obra.py <id>` uno mismo (es idempotente) y seguir
+  con `--finalizar`; (2c) en la lista de ficheros «esperados» del encargo a Codex hay que
+  incluir el `.correcciones.json` de `REVISIONES/_SISTEMA/` que genera la propia
+  actualización, o se para (pasó el 09/10/2026);
   (3) Codex puede quedarse sin cuota a mitad: leer `git status`/`git diff` de lo que dejó,
   ejecutar las pruebas uno mismo (`py -3.11 -m unittest discover -s tests` desde el
   motor; los módulos sueltos solo funcionan con `discover -s tests -p "..."`, no con

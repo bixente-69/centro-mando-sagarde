@@ -2,26 +2,26 @@
   "version": "4.3",
   "catalogo_version": "1.3",
   "obra": "2026 BOLUETA ACR",
-  "revision": "27/09/2026",
+  "revision": "09/10/2026",
   "sin_base": false,
-  "edad_revision_dias": 11,
+  "edad_revision_dias": 0,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "08/10/2026 20:49",
+  "generado": "09/10/2026 15:00",
   "resumen": {
     "listos": 4,
     "verificar": 0,
     "unidades_listas": 4,
     "unidades_verificar": 0,
-    "bloqueados": 19,
+    "bloqueados": 13,
     "otros_gremios": 4,
     "dudas": 0,
     "sin_revisar": 0,
     "unidades_sin_revisar": 0,
-    "terminados": 3,
+    "terminados": 9,
     "inventario_total": 30,
-    "detalle_total": 90,
+    "detalle_total": 93,
     "preguntas_pendientes": 0,
     "viviendas": 0,
     "zonas_comunes": 4,
@@ -171,7 +171,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -198,7 +198,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -225,7 +225,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -252,7 +252,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -279,7 +279,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -306,7 +306,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -323,8 +323,8 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros -1",
-      "estado": "M",
-      "estado_actual": "M",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1).",
       "dependencias_cumplidas": [],
@@ -333,7 +333,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -360,7 +360,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -387,7 +387,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -414,7 +414,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -441,7 +441,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -468,7 +468,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -505,7 +505,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -542,7 +542,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -559,8 +559,8 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros -1",
-      "estado": "M",
-      "estado_actual": "M",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Lucido.",
       "dependencias_cumplidas": [],
@@ -571,7 +571,7 @@
         {
           "id": "garaje_lucido",
           "nombre": "Lucido",
-          "estado": "M",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -579,7 +579,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -606,7 +606,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -643,7 +643,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -680,7 +680,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -707,7 +707,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -734,7 +734,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -771,7 +771,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -808,7 +808,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -825,8 +825,8 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "Trasteros -1",
-      "estado": "M",
-      "estado_actual": "M",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Tubeado visto.",
       "dependencias_cumplidas": [],
@@ -837,7 +837,7 @@
         {
           "id": "garaje_tubeado_visto",
           "nombre": "Tubeado visto",
-          "estado": "M",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -845,7 +845,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -872,7 +872,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -909,7 +909,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -946,7 +946,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -973,7 +973,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -1000,7 +1000,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -1027,7 +1027,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -1054,7 +1054,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -1081,7 +1081,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -1108,7 +1108,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -1135,7 +1135,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -1162,7 +1162,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -1189,7 +1189,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -1216,7 +1216,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -1253,7 +1253,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -1290,7 +1290,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -1327,7 +1327,44 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_coloc_recinto",
+      "trabajo": "Colocación alumbrado fijo (recintos)",
+      "trabajos_originales": [
+        "Colocación alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 560,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_alum_fijo_coloc_recinto",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Trasteros -1",
+      "estado": "/",
+      "estado_actual": "/",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Pintura (recintos) — 1ª mano"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "garaje_pintura_1_recinto",
+          "nombre": "Pintura (recintos) — 1ª mano",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -1364,7 +1401,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -1401,7 +1438,34 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_coloc_recinto",
+      "trabajo": "Colocación alumbrado fijo (recintos)",
+      "trabajos_originales": [
+        "Colocación alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 560,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_alum_fijo_coloc_recinto",
+      "edificio": "Garaje 1",
+      "planta": "S-2",
+      "unidad": "Trasteros -2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -1418,27 +1482,17 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "planta -1",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (viales) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (viales) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_vial",
-          "nombre": "Pintura de garaje (viales) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -1465,7 +1519,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -1519,27 +1573,17 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "planta -1",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (viales) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (viales) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_vial",
-          "nombre": "Pintura de garaje (viales) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -1566,7 +1610,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -1640,7 +1684,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -1677,7 +1721,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -1714,7 +1758,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -1731,8 +1775,8 @@
       "edificio": "Garaje 1",
       "planta": "S-2",
       "unidad": "Escalera Principal",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "BLOQUEADO",
       "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano.",
       "dependencias_cumplidas": [],
@@ -1751,7 +1795,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -1768,27 +1812,17 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "planta -1",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Pintura de garaje (viales) — 1ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Pintura de garaje (viales) — 1ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_pintura_1_vial",
-          "nombre": "Pintura de garaje (viales) — 1ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -1815,7 +1849,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_enchufe_coloc",
@@ -1852,7 +1886,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_tubeado_cableado",
@@ -1889,7 +1923,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_tubeado_cableado",
@@ -1906,27 +1940,17 @@
       "edificio": "Garaje 1",
       "planta": "S-2",
       "unidad": "bombas de achique",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado (zona común).",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado (zona común)"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tabicado",
-          "nombre": "Tabicado (zona común)",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_colocacion",
@@ -1971,7 +1995,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_colocacion",
@@ -1991,19 +2015,20 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado y cableado hasta cuadro secundario, Pintura (recintos) — 1ª mano.",
-      "dependencias_cumplidas": [],
+      "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano.",
+      "dependencias_cumplidas": [
+        "Tubeado y cableado hasta cuadro secundario"
+      ],
       "dependencias_bloqueantes": [
-        "Tubeado y cableado hasta cuadro secundario",
         "Pintura (recintos) — 1ª mano"
       ],
       "dependencias_detalle": [
         {
           "id": "garaje_cuadro_tubeado_cableado",
           "nombre": "Tubeado y cableado hasta cuadro secundario",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         },
         {
           "id": "garaje_pintura_1_recinto",
@@ -2016,7 +2041,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -2043,7 +2068,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -2070,7 +2095,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -2097,7 +2122,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -2124,7 +2149,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_embornado",
@@ -2169,52 +2194,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
-    },
-    {
-      "tarea_id": "garaje_cuadro_embornado",
-      "trabajo": "Embornado de cuadro propio",
-      "trabajos_originales": [
-        "Embornado de cuadro propio"
-      ],
-      "propiedad": "propio",
-      "ambito": "zona_comun",
-      "ambito_nombre": "Zonas comunes",
-      "orden_ejecucion": 590,
-      "fase_nombre": "Cuadros",
-      "display_group": "garaje_cuadro_embornado",
-      "edificio": "Garaje 1",
-      "planta": "S-2",
-      "unidad": "bombas de achique",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio, Pintura (recintos) — 2ª mano.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación y mecanizado de cuadro propio",
-        "Pintura (recintos) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_cuadro_colocacion",
-          "nombre": "Colocación y mecanizado de cuadro propio",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_recinto",
-          "nombre": "Pintura (recintos) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_rotulacion",
@@ -2251,7 +2231,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_rotulacion",
@@ -2288,7 +2268,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_equipo_tubeado_cableado",
@@ -2325,7 +2305,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_cuadro_equipo_tubeado_cableado",
@@ -2352,7 +2332,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -2379,7 +2359,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -2424,7 +2404,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -2469,7 +2449,52 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_embornado_recinto",
+      "trabajo": "Embornado alumbrado fijo (recintos)",
+      "trabajos_originales": [
+        "Embornado alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 620,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_alum_fijo_embornado_recinto",
+      "edificio": "Garaje 1",
+      "planta": "S-1",
+      "unidad": "Trasteros -1",
+      "estado": "/",
+      "estado_actual": "/",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura (recintos) — 2ª mano.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Colocación alumbrado fijo (recintos)",
+        "Pintura (recintos) — 2ª mano"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "garaje_alum_fijo_coloc_recinto",
+          "nombre": "Colocación alumbrado fijo (recintos)",
+          "estado": "/",
+          "minimo": 1.0,
+          "cumplida": false
+        },
+        {
+          "id": "garaje_pintura_2_recinto",
+          "nombre": "Pintura (recintos) — 2ª mano",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -2514,7 +2539,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -2559,7 +2584,34 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_embornado_recinto",
+      "trabajo": "Embornado alumbrado fijo (recintos)",
+      "trabajos_originales": [
+        "Embornado alumbrado fijo (recintos)"
+      ],
+      "propiedad": "propio",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "orden_ejecucion": 620,
+      "fase_nombre": "Equipos",
+      "display_group": "garaje_alum_fijo_embornado_recinto",
+      "edificio": "Garaje 1",
+      "planta": "S-2",
+      "unidad": "Trasteros -2",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -2576,35 +2628,17 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "planta -1",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (viales), Pintura de garaje (viales) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado fijo (viales)",
-        "Pintura de garaje (viales) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_alum_fijo_coloc_vial",
-          "nombre": "Colocación alumbrado fijo (viales)",
-          "estado": "M",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_vial",
-          "nombre": "Pintura de garaje (viales) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -2631,7 +2665,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -2648,35 +2682,17 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "planta -1",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (viales), Pintura de garaje (viales) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación alumbrado temporizado (viales)",
-        "Pintura de garaje (viales) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_alum_temp_coloc_vial",
-          "nombre": "Colocación alumbrado temporizado (viales)",
-          "estado": "M",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_vial",
-          "nombre": "Pintura de garaje (viales) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -2703,7 +2719,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -2775,7 +2791,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -2820,7 +2836,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -2865,7 +2881,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -2895,7 +2911,7 @@
         {
           "id": "garaje_emergencia_coloc_recinto",
           "nombre": "Colocación luminarias de emergencia (recintos)",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         },
@@ -2910,7 +2926,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -2927,35 +2943,17 @@
       "edificio": "Garaje 1",
       "planta": "S-1",
       "unidad": "planta -1",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (viales), Pintura de garaje (viales) — 2ª mano.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Colocación luminarias de emergencia (viales)",
-        "Pintura de garaje (viales) — 2ª mano"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_emergencia_coloc_vial",
-          "nombre": "Colocación luminarias de emergencia (viales)",
-          "estado": "M",
-          "minimo": 1.0,
-          "cumplida": false
-        },
-        {
-          "id": "garaje_pintura_2_vial",
-          "nombre": "Pintura de garaje (viales) — 2ª mano",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -2982,7 +2980,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_enchufe_embornado",
@@ -3027,7 +3025,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_tierras_derivacion",
@@ -3064,7 +3062,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_puerta_alimentacion",
@@ -3101,7 +3099,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_puerta_mecanizado",
@@ -3128,7 +3126,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -3165,7 +3163,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -3192,7 +3190,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/09/2026"
+      "ultima_fecha": "09/10/2026"
     }
   ],
   "inventario": [
@@ -3214,8 +3212,8 @@
           "edificio": "Garaje 1",
           "planta": "S-2",
           "unidad": "bombas de achique",
-          "estado": "M",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -3224,12 +3222,12 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 2,
-      "estado_actual": "M: 1 · Pendiente: 1",
+      "estado_actual": "Pendiente: 1 · X: 1",
       "resumen_categorias": {
         "VIABLE": 1,
-        "BLOQUEADO": 1
+        "TERMINADO": 1
       },
-      "motivo": "Dependencias pendientes: Tabicado (zona común). Desde el cuadro general de la zona. Todo cuadro lo lleva, sea o no nuestro por dentro.",
+      "motivo": "Desde el cuadro general de la zona. Todo cuadro lo lleva, sea o no nuestro por dentro. Terminado según la última confirmación válida.",
       "orden_inventario": 1
     },
     {
@@ -3356,7 +3354,7 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Trasteros -1",
-          "estado": "M",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
@@ -3394,7 +3392,7 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 8,
-      "estado_actual": "M: 1 · /: 2 · Pendiente: 2 · X: 3",
+      "estado_actual": "/: 3 · Pendiente: 2 · X: 3",
       "resumen_categorias": {
         "TERMINADO": 3,
         "BLOQUEADO": 5
@@ -3434,7 +3432,7 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Trasteros -1",
-          "estado": "M",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         },
         {
@@ -3472,7 +3470,7 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 8,
-      "estado_actual": "M: 1 · Pendiente: 4 · X: 3",
+      "estado_actual": "/: 1 · Pendiente: 4 · X: 3",
       "resumen_categorias": {
         "TERMINADO": 3,
         "BLOQUEADO": 5
@@ -3510,6 +3508,13 @@
         },
         {
           "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros -1",
+          "estado": "/",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
           "planta": "S-2",
           "unidad": "Escalera 2",
           "estado": "Pendiente",
@@ -3521,6 +3526,13 @@
           "unidad": "Escalera Principal",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-2",
+          "unidad": "Trasteros -2",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -3528,49 +3540,14 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 5,
-      "estado_actual": "Pendiente: 5",
+      "n_ubicaciones": 7,
+      "estado_actual": "/: 1 · Pendiente: 5 · X: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 5
-      },
-      "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano.",
-      "orden_inventario": 7
-    },
-    {
-      "grupo_id": "garaje_alum_fijo_coloc_vial",
-      "trabajo": "Colocación alumbrado fijo (viales)",
-      "propiedad": "propio",
-      "orden_ejecucion": 561,
-      "fase_nombre": "Equipos garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "planta -1",
-          "estado": "M",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-2",
-          "unidad": "planta -2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        }
-      ],
-      "subtajos": [
-        "Colocación alumbrado fijo (viales)"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "M: 1 · X: 1",
-      "resumen_categorias": {
-        "BLOQUEADO": 1,
+        "BLOQUEADO": 6,
         "TERMINADO": 1
       },
-      "motivo": "Dependencias pendientes: Pintura de garaje (viales) — 1ª mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 8
+      "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano. Terminado según la última confirmación válida.",
+      "orden_inventario": 7
     },
     {
       "grupo_id": "garaje_alum_temp_coloc_recinto",
@@ -3598,43 +3575,7 @@
         "BLOQUEADO": 1
       },
       "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano.",
-      "orden_inventario": 9
-    },
-    {
-      "grupo_id": "garaje_alum_temp_coloc_vial",
-      "trabajo": "Colocación alumbrado temporizado (viales)",
-      "propiedad": "propio",
-      "orden_ejecucion": 563,
-      "fase_nombre": "Equipos garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "planta -1",
-          "estado": "M",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-2",
-          "unidad": "planta -2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        }
-      ],
-      "subtajos": [
-        "Colocación alumbrado temporizado (viales)"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "M: 1 · X: 1",
-      "resumen_categorias": {
-        "BLOQUEADO": 1,
-        "TERMINADO": 1
-      },
-      "motivo": "Dependencias pendientes: Pintura de garaje (viales) — 1ª mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 10
+      "orden_inventario": 8
     },
     {
       "grupo_id": "garaje_emergencia_coloc_recinto",
@@ -3675,7 +3616,7 @@
           "edificio": "Garaje 1",
           "planta": "S-2",
           "unidad": "Escalera Principal",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "BLOQUEADO"
         }
       ],
@@ -3685,48 +3626,12 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 5,
-      "estado_actual": "Pendiente: 5",
+      "estado_actual": "/: 1 · Pendiente: 4",
       "resumen_categorias": {
         "BLOQUEADO": 5
       },
       "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano.",
-      "orden_inventario": 11
-    },
-    {
-      "grupo_id": "garaje_emergencia_coloc_vial",
-      "trabajo": "Colocación luminarias de emergencia (viales)",
-      "propiedad": "propio",
-      "orden_ejecucion": 565,
-      "fase_nombre": "Equipos garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "planta -1",
-          "estado": "M",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-2",
-          "unidad": "planta -2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        }
-      ],
-      "subtajos": [
-        "Colocación luminarias de emergencia (viales)"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "M: 1 · X: 1",
-      "resumen_categorias": {
-        "BLOQUEADO": 1,
-        "TERMINADO": 1
-      },
-      "motivo": "Dependencias pendientes: Pintura de garaje (viales) — 1ª mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 12
+      "orden_inventario": 9
     },
     {
       "grupo_id": "garaje_enchufe_coloc",
@@ -3754,7 +3659,7 @@
         "BLOQUEADO": 1
       },
       "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano.",
-      "orden_inventario": 13
+      "orden_inventario": 10
     },
     {
       "grupo_id": "garaje_cuadro_colocacion",
@@ -3788,8 +3693,8 @@
       "resumen_categorias": {
         "BLOQUEADO": 2
       },
-      "motivo": "Dependencias pendientes: Tubeado y cableado hasta cuadro secundario, Pintura (recintos) — 1ª mano.",
-      "orden_inventario": 14
+      "motivo": "Dependencias pendientes: Pintura (recintos) — 1ª mano. Dependencias pendientes: Tubeado y cableado hasta cuadro secundario, Pintura (recintos) — 1ª mano.",
+      "orden_inventario": 11
     },
     {
       "grupo_id": "garaje_cuadro_embornado",
@@ -3804,13 +3709,6 @@
           "unidad": "Cuadro General Garaje",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-2",
-          "unidad": "bombas de achique",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
         }
       ],
       "subtajos": [
@@ -3818,13 +3716,13 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "Pendiente: 2",
+      "n_ubicaciones": 1,
+      "estado_actual": "Pendiente: 1",
       "resumen_categorias": {
-        "BLOQUEADO": 2
+        "BLOQUEADO": 1
       },
       "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio, Pintura (recintos) — 2ª mano.",
-      "orden_inventario": 15
+      "orden_inventario": 12
     },
     {
       "grupo_id": "garaje_cuadro_rotulacion",
@@ -3859,7 +3757,7 @@
         "BLOQUEADO": 2
       },
       "motivo": "Dependencias pendientes: Embornado de cuadro propio.",
-      "orden_inventario": 16
+      "orden_inventario": 13
     },
     {
       "grupo_id": "garaje_cuadro_equipo_tubeado_cableado",
@@ -3895,7 +3793,7 @@
         "TERMINADO": 1
       },
       "motivo": "Dependencias pendientes: Colocación y mecanizado de cuadro propio. Terminado según la última confirmación válida.",
-      "orden_inventario": 17
+      "orden_inventario": 14
     },
     {
       "grupo_id": "garaje_alum_fijo_embornado_recinto",
@@ -3927,6 +3825,13 @@
         },
         {
           "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "Trasteros -1",
+          "estado": "/",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
           "planta": "S-2",
           "unidad": "Escalera 2",
           "estado": "Pendiente",
@@ -3938,6 +3843,13 @@
           "unidad": "Escalera Principal",
           "estado": "Pendiente",
           "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-2",
+          "unidad": "Trasteros -2",
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -3945,86 +3857,14 @@
       ],
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 5,
-      "estado_actual": "Pendiente: 4 · X: 1",
+      "n_ubicaciones": 7,
+      "estado_actual": "/: 1 · Pendiente: 4 · X: 2",
       "resumen_categorias": {
-        "TERMINADO": 1,
-        "BLOQUEADO": 4
+        "TERMINADO": 2,
+        "BLOQUEADO": 5
       },
       "motivo": "Dependencias pendientes: Colocación alumbrado fijo (recintos), Pintura (recintos) — 2ª mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 18
-    },
-    {
-      "grupo_id": "garaje_alum_fijo_embornado_vial",
-      "trabajo": "Embornado alumbrado fijo (viales)",
-      "propiedad": "propio",
-      "orden_ejecucion": 621,
-      "fase_nombre": "Equipos garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "planta -1",
-          "estado": "M",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-2",
-          "unidad": "planta -2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        }
-      ],
-      "subtajos": [
-        "Embornado alumbrado fijo (viales)"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "M: 1 · X: 1",
-      "resumen_categorias": {
-        "BLOQUEADO": 1,
-        "TERMINADO": 1
-      },
-      "motivo": "Dependencias pendientes: Colocación alumbrado fijo (viales), Pintura de garaje (viales) — 2ª mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 19
-    },
-    {
-      "grupo_id": "garaje_alum_temp_embornado_vial",
-      "trabajo": "Embornado alumbrado temporizado (viales)",
-      "propiedad": "propio",
-      "orden_ejecucion": 623,
-      "fase_nombre": "Equipos garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "planta -1",
-          "estado": "M",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-2",
-          "unidad": "planta -2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        }
-      ],
-      "subtajos": [
-        "Embornado alumbrado temporizado (viales)"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "M: 1 · X: 1",
-      "resumen_categorias": {
-        "BLOQUEADO": 1,
-        "TERMINADO": 1
-      },
-      "motivo": "Dependencias pendientes: Colocación alumbrado temporizado (viales), Pintura de garaje (viales) — 2ª mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 20
+      "orden_inventario": 15
     },
     {
       "grupo_id": "garaje_emergencia_embornado_recinto",
@@ -4081,43 +3921,7 @@
         "BLOQUEADO": 4
       },
       "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (recintos), Pintura (recintos) — 2ª mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 21
-    },
-    {
-      "grupo_id": "garaje_emergencia_embornado_vial",
-      "trabajo": "Embornado luminarias de emergencia (viales)",
-      "propiedad": "propio",
-      "orden_ejecucion": 625,
-      "fase_nombre": "Equipos garaje",
-      "ubicaciones": [
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-1",
-          "unidad": "planta -1",
-          "estado": "M",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "Garaje 1",
-          "planta": "S-2",
-          "unidad": "planta -2",
-          "estado": "X",
-          "categoria": "TERMINADO"
-        }
-      ],
-      "subtajos": [
-        "Embornado luminarias de emergencia (viales)"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 2,
-      "estado_actual": "M: 1 · X: 1",
-      "resumen_categorias": {
-        "BLOQUEADO": 1,
-        "TERMINADO": 1
-      },
-      "motivo": "Dependencias pendientes: Colocación luminarias de emergencia (viales), Pintura de garaje (viales) — 2ª mano. Terminado según la última confirmación válida.",
-      "orden_inventario": 22
+      "orden_inventario": 16
     },
     {
       "grupo_id": "garaje_enchufe_embornado",
@@ -4145,7 +3949,7 @@
         "BLOQUEADO": 1
       },
       "motivo": "Dependencias pendientes: Colocación de enchufe de cuarto técnico, Pintura (recintos) — 2ª mano.",
-      "orden_inventario": 23
+      "orden_inventario": 17
     },
     {
       "grupo_id": "garaje_lucido",
@@ -4179,7 +3983,7 @@
           "edificio": "Garaje 1",
           "planta": "S-1",
           "unidad": "Trasteros -1",
-          "estado": "M",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -4210,13 +4014,13 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 7,
-      "estado_actual": "M: 1 · Pendiente: 5 · X: 1",
+      "estado_actual": "/: 1 · Pendiente: 5 · X: 1",
       "resumen_categorias": {
         "OTROS_GREMIOS": 6,
         "TERMINADO": 1
       },
       "motivo": "Depende solo de tabicado, nunca del tubeado de Sagarde (decisión de simplicidad, §4.1). Terminado según la última confirmación válida.",
-      "orden_inventario": 24
+      "orden_inventario": 18
     },
     {
       "grupo_id": "garaje_falso_techo",
@@ -4244,7 +4048,7 @@
         "OTROS_GREMIOS": 1
       },
       "motivo": "Si aplica en esa zona (trasteros/cuartos técnicos/rellano); rama independiente de lucido.",
-      "orden_inventario": 25
+      "orden_inventario": 19
     },
     {
       "grupo_id": "garaje_pintura",
@@ -4329,7 +4133,7 @@
         "OTROS_GREMIOS": 9
       },
       "motivo": "Primera mano de pintura en la zona; habilita colocación de equipos. Segunda mano de pintura en la zona; remate previo a embornado.",
-      "orden_inventario": 26
+      "orden_inventario": 20
     },
     {
       "grupo_id": "garaje_puerta_mecanizado",
@@ -4357,7 +4161,7 @@
         "OTROS_GREMIOS": 1
       },
       "motivo": "Puede ser del instalador de la puerta; en catálogo pero no marcado por defecto.",
-      "orden_inventario": 27
+      "orden_inventario": 21
     },
     {
       "grupo_id": "garaje_tabicado",
@@ -4399,7 +4203,7 @@
         "TERMINADO": 3
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 28
+      "orden_inventario": 22
     },
     {
       "grupo_id": "garaje_tubeado_vial",
@@ -4434,7 +4238,7 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
-      "orden_inventario": 29
+      "orden_inventario": 23
     },
     {
       "grupo_id": "garaje_cableado_vial",
@@ -4469,6 +4273,216 @@
         "TERMINADO": 2
       },
       "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 24
+    },
+    {
+      "grupo_id": "garaje_alum_fijo_coloc_vial",
+      "trabajo": "Colocación alumbrado fijo (viales)",
+      "propiedad": "propio",
+      "orden_ejecucion": 561,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "planta -1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-2",
+          "unidad": "planta -2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Colocación alumbrado fijo (viales)"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 25
+    },
+    {
+      "grupo_id": "garaje_alum_temp_coloc_vial",
+      "trabajo": "Colocación alumbrado temporizado (viales)",
+      "propiedad": "propio",
+      "orden_ejecucion": 563,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "planta -1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-2",
+          "unidad": "planta -2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Colocación alumbrado temporizado (viales)"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 26
+    },
+    {
+      "grupo_id": "garaje_emergencia_coloc_vial",
+      "trabajo": "Colocación luminarias de emergencia (viales)",
+      "propiedad": "propio",
+      "orden_ejecucion": 565,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "planta -1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-2",
+          "unidad": "planta -2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Colocación luminarias de emergencia (viales)"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 27
+    },
+    {
+      "grupo_id": "garaje_alum_fijo_embornado_vial",
+      "trabajo": "Embornado alumbrado fijo (viales)",
+      "propiedad": "propio",
+      "orden_ejecucion": 621,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "planta -1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-2",
+          "unidad": "planta -2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Embornado alumbrado fijo (viales)"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 28
+    },
+    {
+      "grupo_id": "garaje_alum_temp_embornado_vial",
+      "trabajo": "Embornado alumbrado temporizado (viales)",
+      "propiedad": "propio",
+      "orden_ejecucion": 623,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "planta -1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-2",
+          "unidad": "planta -2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Embornado alumbrado temporizado (viales)"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
+      "orden_inventario": 29
+    },
+    {
+      "grupo_id": "garaje_emergencia_embornado_vial",
+      "trabajo": "Embornado luminarias de emergencia (viales)",
+      "propiedad": "propio",
+      "orden_ejecucion": 625,
+      "fase_nombre": "Equipos garaje",
+      "ubicaciones": [
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-1",
+          "unidad": "planta -1",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        },
+        {
+          "edificio": "Garaje 1",
+          "planta": "S-2",
+          "unidad": "planta -2",
+          "estado": "X",
+          "categoria": "TERMINADO"
+        }
+      ],
+      "subtajos": [
+        "Embornado luminarias de emergencia (viales)"
+      ],
+      "seccion": "TERMINADO",
+      "seccion_nombre": "Tajos terminados",
+      "n_ubicaciones": 2,
+      "estado_actual": "X: 2",
+      "resumen_categorias": {
+        "TERMINADO": 2
+      },
+      "motivo": "Terminado según la última confirmación válida.",
       "orden_inventario": 30
     }
   ],
@@ -4480,7 +4494,7 @@
       "trabajo": "Pintura (recintos) — 1ª mano",
       "estado_actual": "Pendiente",
       "propiedad": "externo",
-      "desbloquea": 14,
+      "desbloquea": 15,
       "tajos_afectados": [
         "Colocación alumbrado fijo (recintos)",
         "Colocación alumbrado temporizado (recintos)",
@@ -4500,6 +4514,16 @@
         "Embornado de cuadro propio",
         "Embornado de enchufe de cuarto técnico",
         "Embornado luminarias de emergencia (recintos)"
+      ]
+    },
+    {
+      "tarea_id": "garaje_alum_fijo_coloc_recinto",
+      "trabajo": "Colocación alumbrado fijo (recintos)",
+      "estado_actual": "Pendiente",
+      "propiedad": "propio",
+      "desbloquea": 5,
+      "tajos_afectados": [
+        "Embornado alumbrado fijo (recintos)"
       ]
     },
     {
@@ -4523,16 +4547,6 @@
       ]
     },
     {
-      "tarea_id": "garaje_alum_fijo_coloc_recinto",
-      "trabajo": "Colocación alumbrado fijo (recintos)",
-      "estado_actual": "Pendiente",
-      "propiedad": "propio",
-      "desbloquea": 4,
-      "tajos_afectados": [
-        "Embornado alumbrado fijo (recintos)"
-      ]
-    },
-    {
       "tarea_id": "garaje_emergencia_coloc_recinto",
       "trabajo": "Colocación luminarias de emergencia (recintos)",
       "estado_actual": "Pendiente",
@@ -4547,34 +4561,10 @@
       "trabajo": "Colocación y mecanizado de cuadro propio",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 3,
+      "desbloquea": 2,
       "tajos_afectados": [
         "Embornado de cuadro propio",
         "Tubeado y cableado del cuadro al equipo que controla"
-      ]
-    },
-    {
-      "tarea_id": "garaje_pintura_1_vial",
-      "trabajo": "garaje_pintura_1_vial",
-      "estado_actual": "—",
-      "propiedad": "desconocido",
-      "desbloquea": 3,
-      "tajos_afectados": [
-        "Colocación alumbrado fijo (viales)",
-        "Colocación alumbrado temporizado (viales)",
-        "Colocación luminarias de emergencia (viales)"
-      ]
-    },
-    {
-      "tarea_id": "garaje_pintura_2_vial",
-      "trabajo": "garaje_pintura_2_vial",
-      "estado_actual": "—",
-      "propiedad": "desconocido",
-      "desbloquea": 3,
-      "tajos_afectados": [
-        "Embornado alumbrado fijo (viales)",
-        "Embornado alumbrado temporizado (viales)",
-        "Embornado luminarias de emergencia (viales)"
       ]
     },
     {
@@ -4588,36 +4578,6 @@
       ]
     },
     {
-      "tarea_id": "garaje_cuadro_tubeado_cableado",
-      "trabajo": "Tubeado y cableado hasta cuadro secundario",
-      "estado_actual": "Pendiente",
-      "propiedad": "propio",
-      "desbloquea": 2,
-      "tajos_afectados": [
-        "Colocación y mecanizado de cuadro propio"
-      ]
-    },
-    {
-      "tarea_id": "garaje_alum_fijo_coloc_vial",
-      "trabajo": "Colocación alumbrado fijo (viales)",
-      "estado_actual": "M",
-      "propiedad": "propio",
-      "desbloquea": 1,
-      "tajos_afectados": [
-        "Embornado alumbrado fijo (viales)"
-      ]
-    },
-    {
-      "tarea_id": "garaje_alum_temp_coloc_vial",
-      "trabajo": "Colocación alumbrado temporizado (viales)",
-      "estado_actual": "M",
-      "propiedad": "propio",
-      "desbloquea": 1,
-      "tajos_afectados": [
-        "Embornado alumbrado temporizado (viales)"
-      ]
-    },
-    {
       "tarea_id": "garaje_enchufe_coloc",
       "trabajo": "Colocación de enchufe de cuarto técnico",
       "estado_actual": "Pendiente",
@@ -4628,23 +4588,13 @@
       ]
     },
     {
-      "tarea_id": "garaje_emergencia_coloc_vial",
-      "trabajo": "Colocación luminarias de emergencia (viales)",
-      "estado_actual": "M",
+      "tarea_id": "garaje_cuadro_tubeado_cableado",
+      "trabajo": "Tubeado y cableado hasta cuadro secundario",
+      "estado_actual": "Pendiente",
       "propiedad": "propio",
       "desbloquea": 1,
       "tajos_afectados": [
-        "Embornado luminarias de emergencia (viales)"
-      ]
-    },
-    {
-      "tarea_id": "garaje_tabicado",
-      "trabajo": "Tabicado (zona común)",
-      "estado_actual": "X",
-      "propiedad": "externo",
-      "desbloquea": 1,
-      "tajos_afectados": [
-        "Tubeado y cableado hasta cuadro secundario"
+        "Colocación y mecanizado de cuadro propio"
       ]
     }
   ],
