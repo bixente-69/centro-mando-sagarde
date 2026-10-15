@@ -944,8 +944,11 @@ def _unir_retrocesos(*retros: Retrocesos) -> Retrocesos:
 
 
 def _lineas_retrocesos(retro: Retrocesos) -> list[str]:
+    # Informativo, no una pregunta: la ultima revision manda (norma de Bixente,
+    # reiterada el 15/10/2026) y estas marcas ya estan aplicadas.
     lineas = [
-        "E) CONFIRMAR CON BIXENTE (marca explicita de la hoja que baja un avance)"
+        "E) AVISO informativo: la hoja baja o quita avance (ya aplicado; "
+        "la ultima revision manda)"
     ]
     if not (retro.bajadas or retro.retiradas or retro.a_n):
         lineas.append("  Ninguno.")
@@ -1334,11 +1337,10 @@ def _escribir(obra: dict, args, deteccion_inicial: DeteccionHojas) -> int:
         "garaje",
     )
     retro = _unir_retrocesos(retro_v, retro_g)
+    # Las bajadas, retiradas y pasos a N se listan arriba como aviso; NO entran
+    # en motivos_revisar: una marca explicita de la ultima hoja vale a la
+    # primera y no deja el informe en REVISAR ni la salida en 2.
     lineas.extend([""] + _lineas_retrocesos(retro))
-    if retro.bajadas or retro.retiradas or retro.a_n:
-        motivos_revisar.append(
-            "hay retrocesos, celdas retiradas o pasos a N que debe confirmar Bixente"
-        )
     if aceptadas:
         lineas.append(
             "Estructura aceptada mediante --aceptar-estructura: "

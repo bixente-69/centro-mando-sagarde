@@ -82,11 +82,16 @@ py -3.11 _SISTEMA/MOTOR/scripts/actualizar_obra.py <id_obra> --escribir  # aplic
 3. **Leer el INFORME DE VERIFICACIÓN** (se guarda en `_SISTEMA/MOTOR/logs/`): debe acabar
    en `G) OK`. Mirar: A) antes/después x/m/slash/P/N y %; B) SHA de las demás obras
    `IDENTICO`; C) PDF con las páginas esperadas y «Datos» = última revisión; D) ninguna
-   tarjeta ajena cambiada; **E) «CONFIRMAR CON BIXENTE»: celdas que BAJAN de avance o
-   pasan a `N`: dárselas a Bixente en la respuesta**; F) tiempos.
-4. Reportar a Bixente el antes/después (A) y la lista E. **No commitear ni publicar**
-   salvo que lo pida (publicar = su `Actualizar_Sagarde.bat`). La suite completa NO hace
-   falta si no se ha tocado código (tarda ~2 min y regenera PDFs de Mungia).
+   tarjeta ajena cambiada; **E) AVISO informativo: celdas que BAJAN de avance o pasan a
+   `N`** (ya aplicadas: la última revisión manda); F) tiempos. **E NO es una pregunta:**
+   Bixente (15/10/2026, harto de repetirlo): «la última revisión manda… está bien el aviso
+   para tener en cuenta que se ha visto el cambio, pero no hace falta preguntar: se
+   cambia y punto». Se las cuento en el informe como dato, sin pedir confirmación, sin
+   «pendiente de tu OK» ni «a confirmar».
+4. Reportar a Bixente el antes/después (A) y, como aviso, la lista E. **No commitear ni
+   publicar** salvo que lo pida (publicar = su `Actualizar_Sagarde.bat`). La suite
+   completa NO hace falta si no se ha tocado código (tarda ~2 min y regenera PDFs de
+   Mungia).
 
 Lo que sigue es el procedimiento manual: úsalo solo como referencia o si el comando falla.
 

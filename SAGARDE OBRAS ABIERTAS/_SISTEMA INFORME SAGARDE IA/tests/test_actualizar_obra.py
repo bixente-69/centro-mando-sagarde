@@ -491,6 +491,23 @@ class TestRetrocesos(unittest.TestCase):
             [("p1__1__b__A", "M"), ("p1__1__d__A", "P")],
         )
 
+    def test_las_bajadas_se_avisan_pero_no_piden_confirmacion(self):
+        """Norma de Bixente (15/10/2026): la ultima revision manda, siempre.
+
+        Una marca explicita que baja de X a M ya esta aplicada; el informe la
+        enseña como AVISO informativo, nunca como algo que haya que confirmar.
+        """
+        retro = ao.calcular_retrocesos(
+            {"estados": {"p1__1__a__A": {"v": "X", "f": "01/10/2026"}}},
+            {"estados": {"p1__1__a__A": {"v": "M", "f": "10/10/2026"}}},
+        )
+
+        lineas = ao._lineas_retrocesos(retro)
+
+        self.assertTrue(lineas[0].startswith("E) AVISO"), lineas[0])
+        self.assertNotIn("CONFIRMAR", "\n".join(lineas).upper())
+        self.assertTrue(any("p1__1__a__A: X -> M" in l for l in lineas))
+
 
 def _tarjeta(nombre, dato, actualizado, ultimo):
     return (
