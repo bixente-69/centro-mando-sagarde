@@ -28,18 +28,18 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 09/10/2026 15:08. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 15/10/2026 15:07. No editar a mano.*
 
-**23** carpetas de obra abiertas · **7** en el registro único · **7** con panel · **6** con ficha. En todo el árbol, **341** `.py` y **9** `.bat`.
+**23** carpetas de obra abiertas · **7** en el registro único · **7** con panel · **6** con ficha. En todo el árbol, **344** `.py` y **9** `.bat`.
 
 | Obra | Ubic. | Tajos | Celdas | X | M | / | P | ? | N | % |
 |---|---|---|---|---|---|---|---|---|---|---|
 | 2025 GERNIKA 32V | 32 | 38 | 1216 | 1131 | 13 | 5 | 59 | – | 8 | 94.1 |
 | 2026 BARAKALDO 104V OBRAS ESPECIALES | 120 | 68 | 4140 | – | – | 10 | 4130 | – | – | 0.1 |
-| 2026 BOLUETA ACR | 106 | 73 | 3837 | 2467 | 149 | 29 | 1014 | – | 178 | 69.3 |
-| 2026 MUNGIA ACR NEINOR | 62 | 38 | 2356 | 2011 | 54 | 21 | 265 | 5 | – | 87.1 |
+| 2026 BOLUETA ACR | 106 | 73 | 3837 | 2511 | 187 | 53 | 908 | – | 178 | 71.2 |
+| 2026 MUNGIA ACR NEINOR | 62 | 38 | 2356 | 2083 | 66 | 21 | 186 | – | – | 90.3 |
 | 2026 OBRA PRUEBA | 31 | 38 | 1178 | 161 | 36 | 5 | 976 | – | – | 16.3 |
-| 2026 OLABEAGA BILBAO | 48 | 72 | 1501 | 68 | 12 | 39 | 1376 | – | 6 | 5.0 |
+| 2026 OLABEAGA BILBAO | 49 | 72 | 1519 | 69 | 41 | 45 | 1351 | – | 13 | 6.1 |
 
 `X` terminado · `M` mas del 50 % · `/` iniciado · `P` pendiente confirmado · `?` sin mirar · `N` no aplica.
 <!-- /AUTO:estado -->
@@ -53,7 +53,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 09/10/2026 15:08).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 15/10/2026 15:07).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
