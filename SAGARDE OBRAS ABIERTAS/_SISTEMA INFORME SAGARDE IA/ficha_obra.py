@@ -837,13 +837,77 @@ def _completar_matriz(ficha, estados, cambios):
                             cambios['estados_nuevos'] += 1
 
 
+def _planta_zonas_especiales(ficha, portal_id):
+    for bloque in (ficha.get('estructura') or {}).get('bloques') or []:
+        for portal in bloque.get('portales') or []:
+            if portal.get('id') != portal_id:
+                continue
+            for planta in portal.get('plantas') or []:
+                if planta.get('id') == ID_PLANTA_ZONAS_ESPECIALES:
+                    return planta
+    return None
+
+
+def _ids_zonas_especiales(ficha, portal_id):
+    planta = _planta_zonas_especiales(ficha, portal_id)
+    return [u['id'] for u in (planta or {}).get('ubicaciones') or []]
+
+
+def _colocar_zona_nueva(ficha, trio, nueva, orden_previo):
+    """Deja las zonas que ya estaban en su orden y agrupa la nueva por tipo.
+
+    ``_alta_ubicacion`` ordena las ubicaciones por id, que para las viviendas
+    es lo natural; las zonas especiales siguen el orden de la hoja (tecnicos,
+    ligeros, cubierta) y barajarlas por id cambiaria en silencio como las
+    ensenan el panel y el informe. La nueva va tras la ultima zona de su
+    mismo tipo, o al final si es el primer ejemplar de su tipo."""
+    planta = _planta_zonas_especiales(ficha, trio[0])
+    if planta is None:
+        return
+    por_id = {u['id']: u for u in planta.get('ubicaciones') or []}
+    resto = [por_id[i] for i in orden_previo if i in por_id]
+    ultimo = max((n for n, u in enumerate(resto)
+                  if u.get('tipo') == nueva.get('tipo')), default=None)
+    resto.insert(len(resto) if ultimo is None else ultimo + 1, nueva)
+    planta['ubicaciones'] = resto
+
+
+def _motivo_no_incorporada(item):
+    """Por que ``_alta_ubicacion`` no pudo dar de alta una ubicacion de la hoja.
+
+    Sirve para que lo que la hoja declara y la base no acepta se diga en voz
+    alta (``informe['no_incorporadas']``) en vez de perderse en silencio."""
+    es_zona = (str(item.get('planta_id') or '') == ID_PLANTA_ZONAS_ESPECIALES
+               or _fold(item.get('planta')) == _fold(
+                   NOMBRE_PLANTA_ZONAS_ESPECIALES))
+    if not es_zona:
+        return ('la base no pudo situar la ubicacion (portal desconocido o '
+                'datos incompletos)')
+    if item.get('problema'):
+        return str(item['problema'])
+    tipo = str(item.get('tipo_ubicacion') or '').strip().casefold()
+    if tipo not in TIPOS_ZONA_ESPECIAL:
+        return ('tipo de zona no admitido: %r (admitidos: %s)' % (
+            item.get('tipo_ubicacion'), ', '.join(sorted(TIPOS_ZONA_ESPECIAL))))
+    if not str(item.get('nombre_ubicacion') or '').strip():
+        return 'la hoja no imprime el nombre de la zona'
+    return ('la base no pudo situar la zona (portal desconocido o datos '
+            'incompletos)')
+
+
 def ampliar_estructura_desde_hoja(
         ficha, ubicaciones_nuevas, fecha, revision_id):
-    """Incorpora estructura residencial confirmada por una hoja digital.
+    """Incorpora estructura confirmada por una hoja digital: viviendas y
+    zonas especiales.
 
     Trabaja siempre sobre una copia profunda. Reutiliza las guardas de alta,
     pero crea solo las celdas de los tajos que la propia hoja imprimio para la
     nueva unidad. La ultima hoja entregada es la autoridad estructural.
+
+    Las zonas especiales (``planta_id == 'zesp'``) entran solo si la hoja
+    declara su tipo (``data-zone-category``) y su nombre: una revision no puede
+    inventar que cuarto es ni como se llama. Lo que no entra queda en
+    ``informe['no_incorporadas']`` con su motivo.
     """
     ficha_nueva = copy.deepcopy(ficha)
     informe = {
@@ -851,6 +915,7 @@ def ampliar_estructura_desde_hoja(
         'celdas_creadas': [],
         'excluidas': [],
         'sin_tajos': [],
+        'no_incorporadas': [],
     }
     cambios = {
         'ubicaciones_nuevas': [],
@@ -863,8 +928,6 @@ def ampliar_estructura_desde_hoja(
         if not isinstance(ubicacion, dict):
             continue
         item = copy.deepcopy(ubicacion)
-        if str(item.get('planta_id') or '') == ID_PLANTA_ZONAS_ESPECIALES:
-            continue
 
         trio_id = (item.get('portal_id'), item.get('planta_id'),
                    item.get('unidad'))
@@ -874,15 +937,30 @@ def ampliar_estructura_desde_hoja(
                       item.get('unidad')) is not None:
             continue
 
+        if item.get('problema'):
+            # La hoja declara la zona pero no de forma inequivoca (nombre
+            # ilegible, tipo o nombre contradictorios): no se adivina.
+            informe['no_incorporadas'].append(
+                dict(item, motivo=str(item['problema'])))
+            continue
+
+        es_zona = item.get('planta_id') == ID_PLANTA_ZONAS_ESPECIALES
+        orden_zonas = (_ids_zonas_especiales(ficha_nueva, item.get('portal_id'))
+                       if es_zona else [])
         exclusiones_antes = len(cambios['ubicaciones_excluidas'])
         trio = _alta_ubicacion(
             ficha_nueva, item, fecha, cambios, por_id, por_nombre)
         if trio is None:
             if len(cambios['ubicaciones_excluidas']) > exclusiones_antes:
                 informe['excluidas'].append(item)
+            else:
+                informe['no_incorporadas'].append(
+                    dict(item, motivo=_motivo_no_incorporada(item)))
             continue
 
         nueva = por_id[trio]
+        if es_zona:
+            _colocar_zona_nueva(ficha_nueva, trio, nueva, orden_zonas)
         nueva['origen'] = 'hoja digital'
         nueva['confirmado'] = fecha
         nueva['visto_en'] = revision_id

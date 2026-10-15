@@ -35,6 +35,7 @@ decodificados para no confundir una plantilla en blanco con una revisión.
 """
 import os
 import re
+from html.parser import HTMLParser
 
 
 def extraer_pares(ruta_html):
@@ -42,6 +43,172 @@ def extraer_pares(ruta_html):
     with open(ruta_html, encoding='utf-8') as f:
         html = f.read()
     return re.findall(r'data-k="([^"]*)"\s+data-st="([^"]*)"', html)
+
+
+# --------------------------------------------------------- zonas especiales
+#
+# Las zonas especiales (cuartos tecnicos, cuartos ligeros, cubierta) viven en
+# la planta virtual ``zesp`` y la hoja las DECLARA: cada zona va dentro de un
+# contenedor con ``data-zone-category`` (el tipo) y su nombre impreso. Hay dos
+# maquetas: la tarjeta (``.tecnico-card``, nombre en el ``<strong>`` de su
+# cabecera) y el bloque de tabla (``.special-zone-table-block``, un nombre por
+# columna en ``th.th-floor``, en el mismo orden que los ids de zona).
+# Se lee con la biblioteca estandar: este camino corre en CADA actualizacion y
+# no debe depender de un paquete que pueda faltar.
+
+_ETIQUETAS_VACIAS = frozenset({
+    'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link',
+    'meta', 'param', 'source', 'track', 'wbr',
+})
+
+
+def _compactar(texto):
+    return ' '.join(str(texto or '').split())
+
+
+class _ExtractorZonas(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.pila = []           # [{'tag', 'clases', 'contenedor', 'captura'}]
+        self.activo = None       # contenedor de zona abierto
+        self.contenedores = []   # contenedores ya cerrados, en orden
+
+    def _celda(self, atributos):
+        data_k = atributos.get('data-k')
+        if self.activo is None or not data_k:
+            return
+        partes = data_k.split('__')
+        if len(partes) == 4 and all(partes) and partes[1] == 'zesp':
+            self.activo['celdas'].append((partes[0], partes[3], partes[2]))
+
+    def handle_starttag(self, tag, attrs):
+        atributos = {k: (v if v is not None else '') for k, v in attrs}
+        clases = set((atributos.get('class') or '').split())
+        if tag in _ETIQUETAS_VACIAS:
+            self._celda(atributos)
+            return
+        contenedor = None
+        if self.activo is None and 'data-zone-category' in atributos:
+            contenedor = {
+                'tipo': _compactar(atributos['data-zone-category']),
+                'clases': clases, 'celdas': [], 'nombres_tarjeta': [],
+                'nombres_columna': [],
+            }
+            self.activo = contenedor
+        captura = None
+        if self.activo is not None:
+            if tag == 'strong' and any(
+                    'tecnico-card-head' in nivel['clases'] for nivel in self.pila):
+                captura = ('nombres_tarjeta', [])
+            elif (tag == 'th' and 'th-floor' in clases
+                    and 'th-floor-tajo' not in clases):
+                captura = ('nombres_columna', [])
+        self.pila.append({'tag': tag, 'clases': clases,
+                          'contenedor': contenedor, 'captura': captura})
+        self._celda(atributos)
+
+    def handle_data(self, data):
+        for nivel in reversed(self.pila):
+            if nivel['captura'] is not None:
+                nivel['captura'][1].append(data)
+                return
+
+    def handle_endtag(self, tag):
+        if tag in _ETIQUETAS_VACIAS:
+            return
+        posicion = next((i for i in range(len(self.pila) - 1, -1, -1)
+                         if self.pila[i]['tag'] == tag), None)
+        if posicion is None:
+            return
+        while len(self.pila) > posicion:
+            nivel = self.pila.pop()
+            if nivel['captura'] is not None and self.activo is not None:
+                destino, trozos = nivel['captura']
+                self.activo[destino].append(_compactar(''.join(trozos)))
+            if nivel['contenedor'] is not None:
+                self.contenedores.append(nivel['contenedor'])
+                self.activo = None
+
+    def close(self):
+        super().close()
+        # Un contenedor sin cerrar (HTML truncado) tambien cuenta: perder una
+        # zona declarada sin avisar es justo lo que este lector evita.
+        while self.pila:
+            nivel = self.pila.pop()
+            if nivel['contenedor'] is not None:
+                self.contenedores.append(nivel['contenedor'])
+        self.activo = None
+
+
+def _zonas_de_contenedor(contenedor):
+    ids = list(dict.fromkeys((p, z) for p, z, _t in contenedor['celdas']))
+    nombres = [None] * len(ids)
+    problema = None
+    if 'tecnico-card' in contenedor['clases']:
+        impresos = [n for n in contenedor['nombres_tarjeta'] if n]
+        if len(ids) == 1 and impresos:
+            nombres = [impresos[0]]
+        elif len(ids) != 1:
+            problema = ('la tarjeta contiene %d zonas: no se sabe a cual '
+                        'corresponde el nombre impreso' % len(ids))
+        else:
+            problema = 'la hoja no imprime el nombre de la zona'
+    elif 'special-zone-table-block' in contenedor['clases']:
+        impresos = contenedor['nombres_columna']
+        if len(impresos) == len(ids) and all(impresos):
+            nombres = list(impresos)
+        else:
+            problema = ('la tabla imprime %d nombre(s) para %d zona(s): no se '
+                        'sabe que nombre corresponde a cada una'
+                        % (len(impresos), len(ids)))
+    else:
+        problema = ('contenedor de zona de maqueta desconocida: no se puede '
+                    'leer el nombre')
+    zonas = []
+    for (portal, zona), nombre in zip(ids, nombres):
+        tajos = list(dict.fromkeys(
+            t for p, z, t in contenedor['celdas'] if (p, z) == (portal, zona)))
+        zonas.append({
+            'portal_html': portal, 'zona_id': zona,
+            'tipo': contenedor['tipo'], 'nombre': nombre,
+            'tajos_html': tajos, 'problema': problema,
+        })
+    return zonas
+
+
+def extraer_zonas_especiales(ruta_html):
+    """Zonas especiales que la hoja DECLARA, en orden de aparicion.
+
+    Devuelve ``[{'portal_html', 'zona_id', 'tipo', 'nombre', 'tajos_html',
+    'problema'}, ...]``. ``tipo`` es el ``data-zone-category`` tal cual;
+    ``nombre`` es el impreso en la hoja o ``None`` si no se puede asignar sin
+    adivinar (entonces ``problema`` dice por que). Las celdas ``zesp`` que no
+    estan dentro de un contenedor con ``data-zone-category`` no declaran
+    ninguna zona y no aparecen aqui: siguen siendo claves sin resolver, que el
+    adaptador avisa.
+    """
+    with open(ruta_html, encoding='utf-8') as f:
+        contenido = f.read()
+    extractor = _ExtractorZonas()
+    extractor.feed(contenido)
+    extractor.close()
+
+    zonas = {}
+    for contenedor in extractor.contenedores:
+        for zona in _zonas_de_contenedor(contenedor):
+            clave = (zona['portal_html'], zona['zona_id'])
+            anterior = zonas.get(clave)
+            if anterior is None:
+                zonas[clave] = zona
+                continue
+            for tajo in zona['tajos_html']:
+                if tajo not in anterior['tajos_html']:
+                    anterior['tajos_html'].append(tajo)
+            if (anterior['tipo'], anterior['nombre']) != (
+                    zona['tipo'], zona['nombre']):
+                anterior['problema'] = (
+                    'la zona figura con tipo o nombre distintos en la hoja')
+    return list(zonas.values())
 
 
 def parsear_html(ruta_html, portal_nombre, planta_nombre, tarea_id_a_nombre, nombre_log=''):

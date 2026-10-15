@@ -821,12 +821,24 @@ def main():
                     ficha, nuevas, args.fecha, id_ampliacion)
                 print('ESTRUCTURA NUEVA EN LA HOJA (se incorpora a la base):')
                 for item in informe_estructura['anadidas']:
+                    if item.get('planta_id') == fichas.ID_PLANTA_ZONAS_ESPECIALES:
+                        print(f"  + {item['edificio']} / zona especial "
+                              f"{item['nombre_ubicacion']!r} "
+                              f"({item['tipo_ubicacion']}, id {item['unidad']})  "
+                              f"({len(item.get('tajos') or [])} tajos)")
+                        continue
                     print(f"  + {item['edificio']} / planta {item['planta']} / "
                           f"unidad {item['unidad']}  "
                           f"({len(item.get('tajos') or [])} tajos)")
                 for item in informe_estructura['excluidas']:
                     print(f"  [EXCLUIDA A PROPOSITO] {item['edificio']} / "
                           f"planta {item['planta']} / unidad {item['unidad']}")
+                # Lo que la hoja declara y la base NO acepta se dice: sin esto
+                # sus celdas quedaban «sin resolver» sin explicar por que.
+                for item in informe_estructura['no_incorporadas']:
+                    print(f"  [NO INCORPORADA] {item['edificio']} / "
+                          f"planta {item['planta']} / unidad {item['unidad']}: "
+                          f"{item['motivo']}")
                 for item in informe_estructura['sin_tajos']:
                     print(f"  [SIN TAJOS] {item['edificio']} / planta "
                           f"{item['planta']} / unidad {item['unidad']}: "

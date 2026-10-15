@@ -19,6 +19,7 @@ import html
 import os
 from datetime import datetime
 
+import ficha_obra
 import lector_hoja_tajos_html
 import validar_revision
 from generar_todos import (
@@ -266,17 +267,72 @@ def _resolver_unidad(ficha_actual, portal_id, planta_id, unidad_html):
     return None, 'vivienda desconocida en la planta traducida'
 
 
+def _zonas_especiales_nuevas(
+        ruta_html, ficha_actual, mapa_portales, ambiguos_portal, mapa_tareas,
+        portales, plantas):
+    """Zonas especiales que la hoja DECLARA (tipo y nombre impresos) y la
+    ficha aun no tiene.
+
+    Una celda ``zesp`` suelta no declara nada, pero una zona dentro de su
+    tarjeta o tabla (``data-zone-category`` + nombre) si. Las que la hoja
+    declara a medias salen con ``problema`` para que quien las incorpora las
+    rechace diciendo por que, en vez de dejar sus celdas sin resolver sin
+    explicacion (caso Olabeaga, 15/10/2026).
+    """
+    nuevas = {}
+    for zona in lector_hoja_tajos_html.extraer_zonas_especiales(ruta_html):
+        portal_html = zona['portal_html']
+        if portal_html in ambiguos_portal:
+            continue
+        portal_id = mapa_portales.get(portal_html)
+        portal = portales.get(portal_id)
+        if portal is None:
+            continue
+        planta = plantas.get((portal_id, ficha_obra.ID_PLANTA_ZONAS_ESPECIALES))
+        if planta is not None:
+            _, error_unidad = _resolver_unidad(
+                ficha_actual, portal_id,
+                ficha_obra.ID_PLANTA_ZONAS_ESPECIALES, zona['zona_id'])
+            if error_unidad != 'vivienda desconocida en la planta traducida':
+                continue
+        item = {
+            'edificio': _referencia_portal(portal),
+            'planta': (_referencia_planta(planta) if planta is not None
+                       else ficha_obra.NOMBRE_PLANTA_ZONAS_ESPECIALES),
+            'planta_id': ficha_obra.ID_PLANTA_ZONAS_ESPECIALES,
+            'portal_id': portal_id,
+            'unidad': zona['zona_id'],
+            'tipo_ubicacion': zona['tipo'],
+            'nombre_ubicacion': zona['nombre'],
+            'tajos': [],
+            'tajos_sin_traducir': [],
+            'problema': zona['problema'],
+        }
+        for tarea_html in zona['tajos_html']:
+            tarea_id = mapa_tareas.get(tarea_html)
+            destino = ('tajos' if tarea_id is not None
+                       else 'tajos_sin_traducir')
+            valor = tarea_id if tarea_id is not None else tarea_html
+            if valor not in item[destino]:
+                item[destino].append(valor)
+        nuevas[(portal_id, item['planta_id'], zona['zona_id'])] = item
+    return nuevas
+
+
 def estructura_nueva_en_hoja(
         ruta_html, obra_id, ficha_actual, catalogo=None,
         tarea_id_a_real=None, portal_id_a_real=None,
         planta_id_a_real=None):
-    """Lista ubicaciones residenciales impresas que la ficha aun no conoce.
+    """Lista ubicaciones impresas que la ficha aun no conoce: viviendas y
+    zonas especiales.
 
     Solo se aceptan portales y plantas que los mapas seguros existentes
-    resuelven sin ambiguedad. Las zonas especiales quedan fuera: su alta
-    requiere un tipo y un nombre que una celda HTML no declara. Cada alta
-    incluye exactamente los tajos que la hoja imprime para esa unidad,
-    traducidos con el mismo mapa exacto que usa el adaptador de revision.
+    resuelven sin ambiguedad. Las zonas especiales entran solo si la hoja las
+    declara (``data-zone-category`` y nombre impreso); una celda ``zesp``
+    suelta, sin zona declarada, no se da de alta y sigue apareciendo como
+    clave sin resolver. Cada alta incluye exactamente los tajos que la hoja
+    imprime para esa unidad, traducidos con el mismo mapa exacto que usa el
+    adaptador de revision.
     """
     ruta_html = os.path.abspath(os.fspath(ruta_html))
     if catalogo is None:
@@ -348,6 +404,10 @@ def estructura_nueva_en_hoja(
         valor = tarea_id if tarea_id is not None else tarea_html
         if valor not in nueva[destino]:
             nueva[destino].append(valor)
+
+    nuevas.update(_zonas_especiales_nuevas(
+        ruta_html, ficha_actual, mapa_portales, ambiguos_portal, mapa_tareas,
+        portales, plantas))
 
     return sorted(nuevas.values(), key=lambda item: (
         _clave_natural(item['edificio']),

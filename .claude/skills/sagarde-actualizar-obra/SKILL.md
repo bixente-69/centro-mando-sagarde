@@ -53,7 +53,44 @@ fichas de las demás obras; `informe_movil.pdf` (solo lo hace el generador
 completo con PDF); el Centro de Mando de GitHub Pages (solo se publica con el
 `.bat`, que lanza Bixente).
 
-## Procedimiento
+## PROCEDIMIENTO RÁPIDO (desde el 09/10/2026) — usar SIEMPRE este primero
+
+Bixente tardaba ~40 min por actualización (queja textual del 09/10: «30 cambios como
+mucho en una tabla ya generada»). Todo lo determinista está en UN comando, ~25-60 s
+de reloj. **No hace falta Codex ni agy para actualizar datos** (cada ronda con un worker
+costaba 3-4 min de arranque y verificación); basta esto, desde la raíz del repo:
+
+```bash
+py -3.11 _SISTEMA/MOTOR/scripts/actualizar_obra.py <id_obra>             # SIMULA: no escribe
+py -3.11 _SISTEMA/MOTOR/scripts/actualizar_obra.py <id_obra> --escribir  # aplica
+```
+
+1. **Simular** y leer el resumen (hojas detectadas, cambios, transiciones). Códigos de
+   salida: `0` todo bien · `2` error o verificación fallida · `3` **requiere revisión
+   humana** (estructura nueva, estructura que la hoja ya no trae, `[MARCA SIN APLICAR]`,
+   claves sin resolver, hoja anormal: >400 cambios medidos o >15 % de las celdas con
+   marca; las casillas en blanco→`P` NO cuentan): leer la sección entera, contrastar con
+   lo que diga Bixente y, si procede, repetir con `--aceptar-estructura` (estructura) o
+   `--aceptar-hoja-grande N` (hoja anormal; `N` = el nº de «cambios medidos» que dice la
+   propia guarda, tras leer la lista de transiciones antes→después; con otra cifra la
+   guarda sigue). Las marcas sin aplicar NUNCA se saltan. Si dice que no hay
+   hojas nuevas: es verdad (compara fechas de `revisiones`, no `actualizado`, y
+   descarta copias idénticas que OneDrive re-sincroniza); no hay nada que hacer.
+2. **Aplicar** con `--escribir`. Hace: vivienda → re-simulación que debe dar 0 cambios →
+   garaje (una vez) → `regenerar_obra.py <id>` (con un reintento si la captura sale
+   vacía) → `--finalizar` (que ya solo toca la tarjeta de esa obra) → informe.
+3. **Leer el INFORME DE VERIFICACIÓN** (se guarda en `_SISTEMA/MOTOR/logs/`): debe acabar
+   en `G) OK`. Mirar: A) antes/después x/m/slash/P/N y %; B) SHA de las demás obras
+   `IDENTICO`; C) PDF con las páginas esperadas y «Datos» = última revisión; D) ninguna
+   tarjeta ajena cambiada; **E) «CONFIRMAR CON BIXENTE»: celdas que BAJAN de avance o
+   pasan a `N`: dárselas a Bixente en la respuesta**; F) tiempos.
+4. Reportar a Bixente el antes/después (A) y la lista E. **No commitear ni publicar**
+   salvo que lo pida (publicar = su `Actualizar_Sagarde.bat`). La suite completa NO hace
+   falta si no se ha tocado código (tarda ~2 min y regenera PDFs de Mungia).
+
+Lo que sigue es el procedimiento manual: úsalo solo como referencia o si el comando falla.
+
+## Procedimiento manual (referencia / plan B)
 
 Siempre con `py -3.11` (el `python` por defecto de este PC no trae `reportlab`
 y el PDF falla). Rutas: motor en `SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA`,
@@ -185,3 +222,6 @@ Objetivo suyo (04/10/2026): tras actualizar la obra, el informe que pida sale
 - Hacer la actualización de una obra no es motivo para ejecutar `git checkout --`
   ni `git restore` sobre otros ficheros: preservar y preguntar.
 - **Olabeaga 04/10/2026: la hoja traía la vivienda C en las 4 plantas del portal 3 y la base solo A y B.** 5 marcas (tabicado, suelo radiante, recrecido) y 148 casillas se perdieron sin aviso, y 1.411 celdas quedaron en `?` («sin revisar nunca») en vez de `P`, de modo que las rozas de timbres no se ofrecían ni con el tabique hecho. Ya está corregido en el lector (`ESTRUCTURA NUEVA EN LA HOJA`, aborto por `[MARCA SIN APLICAR]`, blanco → `P`); no relajar esas guardas.
+- **Olabeaga 15/10/2026: «(DPX)» en la etiqueta de una unidad = vivienda dúplex, NO unidad nueva.** Bixente (textual): «las unidades dpx se han renombrado para saber cuáles son las viviendas que son dúplex, tienen escaleras en su interior a una planta superior con más habitaciones que el resto». La hoja del 14/10 traía `A (DPX)` (P1, 4ª) y `B (DPX)`, `C (DPX)` (P3, 4ª) con los mismos estados que A/B/C de la hoja anterior. Leídas como unidad nueva habrían creado 111 celdas fantasma (103 pasadas a `P`) y dejado las originales huérfanas. Solución: declarar el renombre en `estructura.alias_historico` de la ficha (`"p1__4__A": "A (DPX)"`, `"p3__4__B": "B (DPX)"`, `"p3__4__C": "C (DPX)"`); el lector y el generador ya lo entienden. Señal para detectarlo: la simulación pide «ESTRUCTURA NUEVA» con una unidad cuya etiqueta es `<id> (algo)` y la base ya tiene `<id>` en esa planta; comparar los estados de la hoja anterior.
+- **RESUELTO el 15/10/2026: las zonas especiales nuevas o recreadas se dan de alta desde la hoja.** Antes `ampliar_estructura_desde_hoja` saltaba `planta_id == zesp` y `estructura_nueva_en_hoja` las excluía: la hoja traía «36 clave(s) sin resolver», la estructura no entraba y la zona antigua no se podía retirar (la baja exige que TODA clave se resuelva). Ahora `lector_hoja_tajos_html.extraer_zonas_especiales` lee lo que la hoja DECLARA (tipo = `data-zone-category`; nombre = `<strong>` de la `.tecnico-card` o cabecera `th.th-floor` de la tabla de los cuartos ligeros; solo biblioteca estándar), `estructura_nueva_en_hoja` las propone y `ampliar_estructura_desde_hoja` las da de alta (`origen: "hoja digital"`, `confirmado`, `visto_en`, celdas `?` solo de los tajos que la hoja imprime; la zona nueva se coloca tras la última del mismo tipo sin barajar las demás). Una zona recreada con otro id sigue el camino de retirada de siempre (exclusión; si la antigua guarda X/M// no se retira nada y `--escribir` aborta: decisión de Bixente). Lo que la hoja declara pero la base no acepta (sin nombre, tipo no admitido, nombre/tipo contradictorios) sale como `[NO INCORPORADA] ... motivo` dentro de la sección «ESTRUCTURA NUEVA»; las celdas `zesp` sueltas, fuera de una zona declarada, siguen siendo claves sin resolver. Comprobado con la hoja real de Olabeaga del 14/10: reproduce el alta manual del plan B (mismas 2 zonas con igual tipo/nombre y las mismas 36 celdas; solo difiere `visto_en`) y retira la RITI antigua. 22 pruebas en `tests/test_zonas_especiales_desde_hoja.py`. Ya no hay que añadirlas a mano.
+- **RESUELTO el 15/10/2026: la guarda `hoja_anormal` de `actualizar_obra.py` ya no bloquea sin salida.** Contaba las casillas en blanco→`P` como «cambios» y las medía contra las celdas con marca (peras con manzanas): en una obra joven casi todo son blancos que pasan a `P`, y 97 cambios sobre 153 marcas (Olabeaga, 14/10) bloqueaban una hoja correcta sin salida posible. Ahora cuenta solo los «cambios medidos» (cambios − blancos→P) frente al tope de 400 y al 15 % de las celdas con marca. Si aun así salta, la propia guarda lista las transiciones antes→después y dice la salida: `--aceptar-hoja-grande N` con `N` = esos cambios medidos (con otra cifra la guarda sigue; repetible; no salta ninguna otra guarda). En una obra joven eso seguirá pasando con hojas legítimas (Olabeaga 14/10: 61 cambios medidos de 153 marcas = 39,9 %, tras restar 36 `?→P`; se habría liberado con `--aceptar-hoja-grande 61`): es lo esperado, no un fallo; el criterio no intenta distinguir progreso real de hoja rara, solo obliga a mirar la lista antes de escribir. El informe de verificación deja escrita la lista de transiciones aceptadas. El plan B manual queda solo como último recurso.
