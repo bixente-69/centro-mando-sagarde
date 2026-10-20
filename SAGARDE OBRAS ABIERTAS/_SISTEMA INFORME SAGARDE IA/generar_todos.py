@@ -1909,6 +1909,10 @@ def main(hacer_pdf=True):
 
             # La base es el estado. Una obra sin base no calcula: lo dice.
             if ficha_actual:
+                if not bloquear_guardado_ficha:
+                    fichas.volcar_apartados(
+                        ficha_actual, ficha_xlsx=ficha, materiales=materiales,
+                        documentos=documentos)
                 prioridades = priorizador_trabajos.priorizar_ficha(
                     ficha_actual, obra=obra['nombre']
                 )

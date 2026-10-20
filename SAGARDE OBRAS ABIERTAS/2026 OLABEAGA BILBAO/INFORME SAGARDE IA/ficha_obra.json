@@ -9349,7 +9349,30 @@
     }
   ],
   "dudas": [],
-  "materiales": {},
-  "documentos": {},
+  "materiales": {
+    "ultimo_mes": "Octubre26",
+    "ultima_fecha": "20/10/2026",
+    "dias_desde": 0,
+    "meses": [
+      "Octubre26"
+    ],
+    "n_items": 5,
+    "aviso": null,
+    "_meta": {
+      "actualizado": "20/10/2026 09:03"
+    }
+  },
+  "documentos": {
+    "total": 27,
+    "por_categoria": {
+      "Excel": 2,
+      "Otros": 12,
+      "PDF": 10,
+      "Planos y gráfica": 3
+    },
+    "_meta": {
+      "actualizado": "20/10/2026 09:03"
+    }
+  },
   "contactos": []
 }
