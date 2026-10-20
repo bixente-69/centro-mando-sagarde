@@ -37,6 +37,11 @@ if str(MOTOR_DIR) not in sys.path:
 
 from avisos import dias_desde_timestamp, es_aviso_por_antiguedad
 
+_SCRIPTS_DIR = str(Path(__file__).resolve().parent)
+if _SCRIPTS_DIR not in sys.path:
+    sys.path.insert(0, _SCRIPTS_DIR)
+import materiales_xlsx
+
 WORD_EXTS = {".doc", ".docx"}
 EXCEL_EXTS = {".xls", ".xlsx", ".xlsm"}
 PDF_EXTS = {".pdf"}
@@ -146,6 +151,33 @@ def audit_obras_abiertas() -> list[dict]:
     return issues
 
 
+def audit_materiales() -> list[dict]:
+    """Hojas de entrega de materiales que el panel no podra leer.
+
+    Un Excel danado (o guardado sin recalcular) no da error en ningun sitio
+    visible: el panel de la obra sale sin materiales, o la obra desaparece del
+    portal movil (Olabeaga, 20/10/2026, tras editar agy el XML a mano)."""
+    try:
+        fallos = materiales_xlsx.diagnosticar_todas()
+    except Exception as exc:  # que la comprobacion falle se dice, no se calla
+        return [{
+            "nivel": "warning",
+            "area": "Materiales",
+            "obra": "(todas)",
+            "codigo": "MATERIALES_XLSX_NO_COMPROBADO",
+            "mensaje": f"No se pudo comprobar las hojas de materiales: {type(exc).__name__}: {exc}",
+            "solucion": "Ejecutar: py -3.11 _SISTEMA/MOTOR/scripts/materiales_xlsx.py comprobar --todas",
+        }]
+    return [{
+        "nivel": "warning",
+        "area": "Materiales",
+        "obra": obra,
+        "codigo": "MATERIALES_XLSX",
+        "mensaje": "La hoja de entrega de materiales no se podra leer bien: " + "; ".join(defectos),
+        "solucion": "Ejecutar: py -3.11 _SISTEMA/MOTOR/scripts/materiales_xlsx.py reparar <obra>",
+    } for obra, defectos in fallos.items()]
+
+
 def audit_mantenimientos() -> list[dict]:
     issues = []
     base = ROOT / "MANTENIMIENTOS"
@@ -191,7 +223,8 @@ def run_audit() -> dict:
 
     issues_obras = audit_obras_abiertas()
     issues_mant = audit_mantenimientos()
-    all_issues = issues_obras + issues_mant
+    issues_mat = audit_materiales()
+    all_issues = issues_obras + issues_mant + issues_mat
 
     warnings = [i for i in all_issues if i["nivel"] == "warning"]
     infos = [i for i in all_issues if i["nivel"] == "info"]

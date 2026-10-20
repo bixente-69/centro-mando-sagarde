@@ -22,6 +22,7 @@ import re
 from collections import OrderedDict
 from datetime import datetime
 
+import entregas_materiales
 import motor_informes as motor
 from ficha_obra import NOMBRE_PLANTA_ZONAS_ESPECIALES
 from hilos_notas import sanear_texto
@@ -1971,7 +1972,10 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     filas_det = filas_det or '<tr><td colspan="6" class="empty">Sin datos.</td></tr>'
 
     # ---- MATERIALES ----
-    if materiales.get('disponible') and materiales.get('items'):
+    if materiales.get('formato') == 'entregas':
+        # Registro de entregas (hoja ENTREGAS): meses, suministrador y albaran.
+        materiales_html = entregas_materiales.render_html(materiales)
+    elif materiales.get('disponible') and materiales.get('items'):
         filas_mat = ""
         cat_actual = None
         for it in materiales['items']:

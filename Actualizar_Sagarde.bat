@@ -19,7 +19,8 @@ echo.
 echo [1/6] Actualizando Informe Sagarde IA (Obras abiertas)...
 %PY% "SAGARDE OBRAS ABIERTAS\_SISTEMA INFORME SAGARDE IA\generar_todos.py" --no-pdf
 if %errorlevel% neq 0 (
-  echo   [AVISO] No se pudo actualizar Obras Abiertas. El portal usara los datos existentes.
+  echo   [AVISO] Alguna obra NO se pudo regenerar ^(ver el recuadro ATENCION de arriba^). El portal usara los datos existentes.
+  set "OBRAS_FALLO=1"
 )
 echo.
 
@@ -112,6 +113,17 @@ if defined GITCMD (
   echo   Instala GitHub Desktop o Git para Windows y vuelve a ejecutar este archivo.
   pause
   exit /b 1
+)
+
+if defined OBRAS_FALLO (
+  echo.
+  echo ============================================================
+  echo  ATENCION: alguna obra NO se regenero en esta pasada y su
+  echo  tarjeta puede haber quedado sin datos en el portal movil.
+  echo  Busca arriba el recuadro ATENCION del paso 1 y la linea
+  echo  [ERROR] de la obra afectada. Ya se ha publicado igual.
+  echo ============================================================
+  if /I not "%~1"=="--no-open" pause
 )
 
 echo.

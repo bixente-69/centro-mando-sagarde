@@ -199,6 +199,60 @@ primera: ha ido y ha visto que faltaba algo. Solo la **ausencia** de marca
 
 ---
 
+## 7b. Hojas de entrega de materiales (Excel): cómo editarlas sin romperlas
+
+Cada obra con seguimiento tiene `REVISIONES/hoja de entrega de materiales <OBRA>.xlsx`.
+**El panel no recalcula nada: lee los valores guardados en el fichero.** Hay dos
+formatos de libro (la herramienta `materiales_xlsx.py` reconoce cuál es):
+
+**A) Registro de entregas — Olabeaga (piloto desde el 20/10/2026).** La hoja
+`ENTREGAS` es la ÚNICA fuente: una fila por línea entregada
+(`FECHA · SUMINISTRADOR · ALBARÁN · CATEGORÍA · MATERIAL · TIPO · MARCA · UNI · CANTIDAD · NOTAS`).
+Las hojas de cada mes y `ACUMULADO` se **generan** de ahí (solo lo entregado ese
+mes, con una columna por entrega: fecha, suministrador y albarán, más MES ANT,
+TOTAL MES y ACUMULADO); el panel lee `ENTREGAS` directamente y pinta lo mismo.
+
+1. Para añadir material: **añadir filas al final de `ENTREGAS`** (con `openpyxl`
+   o a mano en Excel). Suministrador o albarán que no se sepan: **dejarlos
+   vacíos**, nunca inventarlos. Cantidad = número (`1200` o `1200,5`; `1.200` es
+   ambiguo y se rechaza). No editar las hojas de mes ni `ACUMULADO`: se sobrescriben.
+2. **Al terminar, SIEMPRE** ejecutar y leer el resultado (debe acabar en `OK`):
+
+   ```bash
+   py -3.11 _SISTEMA/MOTOR/scripts/materiales_xlsx.py generar olabeaga
+   ```
+
+   Hace copia en `REVISIONES/_SISTEMA/`, rehace las hojas generadas y comprueba el
+   libro. Una fila con fecha ilegible o cantidad no numérica **no se cuenta** y sale
+   en el aviso: hay que corregirla, no ignorarla.
+3. Migrar otra obra de rejilla a registro: `materiales_xlsx.py migrar <obra>`
+   (comprueba que no se pierde ni una unidad). Solo si Bixente lo pide: Mungia y
+   Bolueta se quedan como están.
+
+**B) Rejilla (Mungia, Bolueta): catálogo × fechas con `TOTAL`.** Solo vale si se
+abre con `openpyxl` **y** trae calculado el `TOTAL`.
+
+1. **Nunca** abrir el `.xlsx` como zip para escribir su XML (ni PowerShell,
+   `XmlDocument`, regex o `zipfile`). Se edita con `openpyxl` o con Excel.
+2. Copiar la estructura de la hoja que ya existe (cabecera
+   `MATERIAL · TIPO · MARCA · UNI · <fechas> · TOTAL`, filas de categoría,
+   `TOTAL` = `=SUM(...)`). No crear hojas ni columnas por iniciativa propia ni
+   **inventar cantidades**.
+3. Al terminar, ejecutar `materiales_xlsx.py reparar <obra>`: copia, corrige el
+   XML y deja que Excel recalcule los totales. **Debe acabar en `OK`.**
+
+**En ambos formatos:** nunca editar el XML interno del `.xlsx`. Si el comando dice
+`MAL`, falla o no se puede ejecutar: **no decir «hecho»**; contarle a Bixente qué ha
+fallado. `materiales_xlsx.py comprobar --todas` revisa todas las obras y el auditor
+del paso 0 de `Actualizar_Sagarde.bat` también las comprueba antes de publicar.
+
+**Por qué:** el 20/10/2026 agy añadió material a Olabeaga editando a mano el XML del
+`.xlsx` (declaración `utf-16` sobre bytes UTF-8 y 505 celdas con el valor en blanco);
+`generar_todos` descartó la obra entera y desapareció del portal móvil sin ningún
+aviso visible.
+
+---
+
 ## 8. Jerarquía de carpetas: la norma `_SISTEMA`
 
 **Cada apartado y cada obra tiene como mucho una carpeta técnica, llamada

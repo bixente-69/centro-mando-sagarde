@@ -16,6 +16,7 @@ Ninguno de estos lectores asume que el material esta instalado: solo lee lo
 que hay en la hoja. La interpretacion (recibido vs instalado) queda a criterio
 del encargado, como pide el proyecto.
 """
+import io
 import os
 from datetime import datetime, date
 
@@ -94,7 +95,39 @@ def leer_materiales(ruta_xlsx):
     if not openpyxl or not os.path.isfile(ruta_xlsx):
         return res
     res['disponible'] = True
-    wb = openpyxl.load_workbook(ruta_xlsx, data_only=True)
+    # Un Excel de materiales danado no puede tumbar la obra entera: el
+    # 20/10/2026 uno con XML escrito a mano hizo que generar_todos descartase
+    # Olabeaga del indice y del portal sin ningun aviso. Se devuelve un aviso
+    # visible (el panel lo pinta como banner) y ningun item: no se inventan
+    # cantidades.
+    try:
+        _interpretar_materiales(ruta_xlsx, res)
+    except Exception as exc:
+        res['items'] = []
+        causa = (str(exc).splitlines() or [''])[0]
+        causa = (f"{type(exc).__name__}: {causa}" if causa
+                 else type(exc).__name__).replace('<', '').replace('>', '')
+        res['aviso'] = (f"La hoja de materiales no se pudo abrir ({causa}). "
+                        "El Excel esta danado o se guardo mal, asi que no se "
+                        "muestran sus datos. Reparala con: py -3.11 "
+                        "_SISTEMA/MOTOR/scripts/materiales_xlsx.py reparar <obra>")
+    return res
+
+
+def _interpretar_materiales(ruta_xlsx, res):
+    """Rellena ``res`` (ver ``leer_materiales``) con el contenido del Excel.
+    Puede lanzar si el fichero esta danado: el que llama lo convierte en aviso."""
+    # Se carga desde memoria: si el Excel esta danado openpyxl fallaba dejando
+    # el fichero abierto, y en Windows eso impide repararlo o sustituirlo.
+    with open(ruta_xlsx, 'rb') as f:
+        wb = openpyxl.load_workbook(io.BytesIO(f.read()), data_only=True)
+    if 'ENTREGAS' in wb.sheetnames:
+        # Formato registro de entregas (Olabeaga, 20/10/2026): la hoja ENTREGAS es
+        # la fuente y el resto del libro se genera de ella. Se despacha por el
+        # contenido, no por configuracion: lo declarado no puede quedar ignorado.
+        import entregas_materiales
+        res.update(entregas_materiales.leer_materiales_wb(wb))
+        return res
     res['meses'] = list(wb.sheetnames)
     if not res['meses']:
         return res
@@ -125,6 +158,7 @@ def leer_materiales(ruta_xlsx):
         return res
 
     cat = None
+    sin_calcular = 0
     for r in rows[1:]:
         name = r[0]
         if not name or not isinstance(name, str):
@@ -137,6 +171,12 @@ def leer_materiales(ruta_xlsx):
         if not has_data and (tipo in (None, '')):
             cat = name  # fila cabecera de categoria
             continue
+        if tot is None and any(isinstance(x, (int, float)) and not isinstance(x, bool) and x
+                               for x in data_cols):
+            # Hay cantidades pero el TOTAL no tiene valor en cache: el Excel se
+            # guardo sin recalcular (p. ej. escrito por una libreria). Callar
+            # aqui hacia pasar la fila por "sin materiales".
+            sin_calcular += 1
         if tot in (None, '', 0):
             continue
         res['items'].append({
@@ -146,9 +186,16 @@ def leer_materiales(ruta_xlsx):
             'total': tot,
         })
 
+    avisos = []
+    if sin_calcular:
+        avisos.append(f"{sin_calcular} linea(s) de la hoja de materiales tienen cantidades "
+                      "pero el TOTAL sin calcular (el Excel se guardo sin recalcular), por "
+                      "eso no se muestran. Abrelo en Excel y guarda, o ejecuta: py -3.11 "
+                      "_SISTEMA/MOTOR/scripts/materiales_xlsx.py reparar <obra>")
     if res['dias_desde'] is not None and res['dias_desde'] > 30:
-        res['aviso'] = (f"La hoja de materiales no se actualiza desde {res['ultima_fecha']} "
-                        f"({res['dias_desde']} días). Los datos de consumo/stock pueden estar desfasados.")
+        avisos.append(f"La hoja de materiales no se actualiza desde {res['ultima_fecha']} "
+                      f"({res['dias_desde']} días). Los datos de consumo/stock pueden estar desfasados.")
+    res['aviso'] = ' '.join(avisos) or None
     return res
 
 

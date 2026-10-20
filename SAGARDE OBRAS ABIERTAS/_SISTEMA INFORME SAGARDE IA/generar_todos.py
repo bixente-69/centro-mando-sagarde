@@ -1693,8 +1693,26 @@ def intentar_pdf(html_path, pdf_path):
         return False, str(e)
 
 
+def _bloque_obras_fallidas(fallidas):
+    """Bloque final, imposible de confundir con una linea suelta, con las obras
+    que se descartaron de esta pasada. Su tarjeta del indice y del portal sale
+    degradada o desaparece; antes solo quedaba una linea [ERROR] perdida entre
+    cientos (Olabeaga, 20/10/2026)."""
+    linea = "=" * 66
+    nombres = "\n".join(f"   - {n}" for n in fallidas)
+    return (f"\n{linea}\n"
+            f" ATENCION: NO SE PUDO REGENERAR {len(fallidas)} OBRA(S) EN ESTA PASADA:\n"
+            f"{nombres}\n"
+            " Su panel anterior sigue en disco, pero su tarjeta del portal\n"
+            " queda sin datos. Busca arriba la linea [ERROR] de cada una.\n"
+            f"{linea}")
+
+
 def main(hacer_pdf=True):
+    """Regenera todas las obras. Devuelve la lista de nombres de las que NO se
+    pudieron regenerar (vacia si todo fue bien)."""
     resultados = []
+    fallidas = []
     for obra in OBRAS:
         print(f"--- {obra['nombre']} ---")
         carpeta_abs = os.path.join(OBRAS_ABIERTAS_DIR, obra['carpeta_obra'])
@@ -1709,6 +1727,7 @@ def main(hacer_pdf=True):
             print(f"  [ERROR] No se pudo leer la obra: {e}")
             print(f"  Causa probable: archivo abierto en Word, en sincronizacion o formato inesperado.")
             print(f"  El resto de obras se procesa igualmente.")
+            fallidas.append(obra['nombre'])
             continue
 
         salida_dir = os.path.join(carpeta_abs, 'INFORME SAGARDE IA')
@@ -1990,6 +2009,7 @@ def main(hacer_pdf=True):
         except Exception as e:
             print(f"  [ERROR] Fallo al generar el panel: {e}")
             print(f"  El panel anterior (si existe) no se sobreescribe. Continua con la siguiente obra.")
+            fallidas.append(obra['nombre'])
             continue
 
         print(f"  KPIs: {res['kpis']}")
@@ -2082,10 +2102,15 @@ def main(hacer_pdf=True):
     generar_index(resultados)
     escribir_resumen_json(resultados)
     publicar_registro_revisiones()
+    if fallidas:
+        print(_bloque_obras_fallidas(fallidas))
+    return fallidas
 
 
 if __name__ == "__main__":
     if '--solo-revisiones' in sys.argv:
         publicar_registro_revisiones()
     else:
-        main(hacer_pdf='--no-pdf' not in sys.argv)
+        # Codigo 1 si alguna obra no se pudo regenerar: Actualizar_Sagarde.bat
+        # lo recoge y avisa en vez de publicar en silencio.
+        sys.exit(1 if main(hacer_pdf='--no-pdf' not in sys.argv) else 0)

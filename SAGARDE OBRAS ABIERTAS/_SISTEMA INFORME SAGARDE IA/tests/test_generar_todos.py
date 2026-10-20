@@ -1089,5 +1089,67 @@ class TestRegistroGarajeDesdeFicha(unittest.TestCase):
         self.assertEqual(registro['resumen']['estados_precargados'], 1)
 
 
+class TestObrasFallidasSeVen(unittest.TestCase):
+    """20/10/2026: un Excel de materiales danado hizo que main() descartase
+    Olabeaga con una linea suelta entre cientos de la consola, y el .bat
+    publico el portal sin ella. Una obra que no se pueda regenerar tiene que
+    (a) devolverse a quien llama, (b) hacer salir el script con codigo 1 para
+    que el .bat avise, y (c) quedar nombrada en un bloque final."""
+
+    def _obra_falsa(self, tmp):
+        os.makedirs(os.path.join(tmp, 'OBRA FALSA'))
+        return {'nombre': 'OBRA FALSA', 'carpeta_obra': 'OBRA FALSA',
+                'adaptador': 'adaptador_que_no_existe'}
+
+    def _correr_main(self, obras, tmp):
+        salida = io.StringIO()
+        with patch.object(gt, 'OBRAS', obras), \
+                patch.object(gt, 'OBRAS_ABIERTAS_DIR', tmp), \
+                patch.object(gt, 'generar_index'), \
+                patch.object(gt, 'escribir_resumen_json'), \
+                patch.object(gt, 'publicar_registro_revisiones'), \
+                redirect_stdout(salida):
+            fallidas = gt.main(hacer_pdf=False)
+        return fallidas, salida.getvalue()
+
+    def test_main_devuelve_y_nombra_la_obra_que_no_pudo_regenerar(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fallidas, texto = self._correr_main([self._obra_falsa(tmp)], tmp)
+        self.assertEqual(fallidas, ['OBRA FALSA'])
+        self.assertIn('NO SE PUDO REGENERAR', texto)
+        self.assertIn('OBRA FALSA', texto.split('NO SE PUDO REGENERAR')[1])
+
+    def test_fallo_dentro_de_la_generacion_del_panel_tambien_se_devuelve(self):
+        """Es el camino que descarto Olabeaga: el adaptador carga bien y algo
+        del bloque del panel (aqui, la lectura de materiales) lanza."""
+        import types
+        with tempfile.TemporaryDirectory() as tmp:
+            obra = self._obra_falsa(tmp)
+            obra.update(adaptador='adaptador_falso_para_prueba',
+                        materiales_rel='no_importa.xlsx')
+            falso = types.SimpleNamespace(cargar_historial=lambda: [])
+            with patch.dict(sys.modules, {'adaptador_falso_para_prueba': falso}), \
+                    patch.object(gt.lectores, 'leer_materiales',
+                                 side_effect=RuntimeError('boom')):
+                fallidas, texto = self._correr_main([obra], tmp)
+        self.assertEqual(fallidas, ['OBRA FALSA'])
+        self.assertIn('Fallo al generar el panel', texto)
+        self.assertIn('NO SE PUDO REGENERAR', texto)
+
+    def test_sin_fallos_devuelve_lista_vacia_y_no_imprime_el_bloque(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            fallidas, texto = self._correr_main([], tmp)
+        self.assertEqual(fallidas, [])
+        self.assertNotIn('NO SE PUDO REGENERAR', texto)
+
+    def test_obra_cuya_carpeta_no_existe_no_cuenta_como_fallo(self):
+        """'Saltada' es normal en otro equipo; no debe hacer saltar la alarma."""
+        with tempfile.TemporaryDirectory() as tmp:
+            obra = {'nombre': 'OBRA AUSENTE', 'carpeta_obra': 'NO EXISTE',
+                    'adaptador': 'adaptador_que_no_existe'}
+            fallidas, _ = self._correr_main([obra], tmp)
+        self.assertEqual(fallidas, [])
+
+
 if __name__ == '__main__':
     unittest.main()

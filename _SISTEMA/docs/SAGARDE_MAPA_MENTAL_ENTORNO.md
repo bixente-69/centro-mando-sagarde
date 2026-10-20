@@ -28,9 +28,9 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 20/10/2026 13:58. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 20/10/2026 18:14. No editar a mano.*
 
-**23** carpetas de obra abiertas · **7** en el registro único · **7** con panel · **6** con ficha. En todo el árbol, **344** `.py` y **9** `.bat`.
+**23** carpetas de obra abiertas · **7** en el registro único · **7** con panel · **6** con ficha. En todo el árbol, **348** `.py` y **9** `.bat`.
 
 | Obra | Ubic. | Tajos | Celdas | X | M | / | P | ? | N | % |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -39,7 +39,7 @@ el criterio de quien la escribió.
 | 2026 BOLUETA ACR | 106 | 73 | 3837 | 2511 | 187 | 53 | 908 | – | 178 | 71.2 |
 | 2026 MUNGIA ACR NEINOR | 62 | 38 | 2356 | 2083 | 66 | 21 | 186 | – | – | 90.3 |
 | 2026 OBRA PRUEBA | 31 | 38 | 1178 | 161 | 36 | 5 | 976 | – | – | 16.3 |
-| 2026 OLABEAGA BILBAO | 49 | 72 | 1519 | 69 | 41 | 45 | 1351 | – | 13 | — |
+| 2026 OLABEAGA BILBAO | 49 | 72 | 1519 | 69 | 41 | 45 | 1351 | – | 13 | 6.1 |
 
 `X` terminado · `M` mas del 50 % · `/` iniciado · `P` pendiente confirmado · `?` sin mirar · `N` no aplica.
 <!-- /AUTO:estado -->
@@ -53,7 +53,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 20/10/2026 13:58).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 20/10/2026 18:14).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
@@ -373,7 +373,9 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 |---|---|---|---|---|---|---|---|---|---|
 | `avisos.py` | `_SISTEMA/MOTOR/avisos.py` | Python | Antigüedad/caducidad 400 días | import | portal/auditor/mantenimiento/tests | timestamps | — | stdlib | Activo |
 | `sagarde_portal.py` | `_SISTEMA/MOTOR/sagarde_portal.py` | Python | Portal, apps, cerradas, mapas | directo/BAT | BAT global | resúmenes/árbol | índices y mapas HTML | stdlib, avisos | Activo; móvil roto |
-| `auditor_sagarde.py` | `_SISTEMA/MOTOR/scripts/auditor_sagarde.py` | Python | Auditoría pre-vuelo | directo/import | BAT/test | obras/mantenimiento | `auditoria_diagnostico.json` | stdlib | Activo; falsos duplicados |
+| `auditor_sagarde.py` | `_SISTEMA/MOTOR/scripts/auditor_sagarde.py` | Python | Auditoría pre-vuelo | directo/import | BAT/test | obras/mantenimiento/hojas de materiales | `auditoria_diagnostico.json` | stdlib | Activo; falsos duplicados |
+| `materiales_xlsx.py` | `_SISTEMA/MOTOR/scripts/materiales_xlsx.py` | Python | Comprueba, repara y genera la hoja de entrega de materiales (`REVISIONES/hoja de entrega de materiales <OBRA>.xlsx`). Rejilla (Mungia, Bolueta): declaración XML que no casa con los bytes, `<v>` en blanco y fórmulas del TOTAL sin valor calculado (`reparar` copia, corrige el XML y recalcula con Excel por COM). Registro de entregas (Olabeaga): filas inválidas de ENTREGAS y hojas generadas desactualizadas (`generar` las rehace; `migrar` convierte una rejilla en registro sin perder cantidad) | `comprobar / reparar / generar / migrar <obra o ruta>` y `comprobar --todas` | agy/Claude al editar materiales; `auditor_sagarde.py` (paso 0 del BAT) | `registro_obras.py`, el `.xlsx` | el `.xlsx` y su copia `.bak` en `REVISIONES/_SISTEMA/` | openpyxl, Excel | Activo desde el 20/10/2026 (`tests/test_materiales_xlsx.py` y `tests/test_entregas_materiales.py`); `comprobar --todas` hoy marca **Bolueta** (TOTAL sin calcular en todas sus hojas; no se ha tocado) |
+| `entregas_materiales.py` | `SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/entregas_materiales.py` | Python | **Registro de entregas** (piloto Olabeaga, 20/10/2026): la hoja ENTREGAS (una fila por línea entregada: fecha, suministrador, albarán, categoría, material, tipo, marca, uni, cantidad) es la única fuente; de ella salen la pestaña Materiales del panel (por meses, solo lo entregado, con suministrador y albarán) y las hojas de mes y ACUMULADO del Excel, con el mismo cálculo y solo valores (sin fórmulas) | import desde `lectores.leer_materiales` (despacha por la hoja ENTREGAS) y `panel_obra.py` (vista nueva) | `generar_todos.py`, `materiales_xlsx.py` | `hoja de entrega de materiales OLABEAGA.xlsx` | datos del panel y Excel | openpyxl | Activo; una fila inválida no se cuenta ni se vuelve cero y se avisa; Mungia y Bolueta siguen con la rejilla antigua |
 | `cerrar_obra.py` | `_SISTEMA.../cerrar_obra.py` | Python | Cierra una obra: la saca del registro por AST, archiva su adaptador dentro de ella, mueve la carpeta a Obras cerradas y escribe `cierre.json` | `<id>` informa; `--ejecutar` lo hace | skill `sagarde-cerrar-obra` | registro, ficha, resumen | registro, carpeta movida, `cierre.json` | stdlib | Activo desde 13/08/2026 |
 | `nota_pendiente.py` | `_SISTEMA.../nota_pendiente.py` | Python | Añade una tarea manual trazable; `marcar_tarea_hecha`/`desmarcar_tarea_hecha` cambian Estado en ambos sentidos (Pendiente⇄Hecho) sobre la primera fila cuyos cuatro campos coinciden exactamente, compartiendo la búsqueda vía `_cambiar_estado_tarea`, sin alterar otras hojas o filas | `<xlsx> --tarea --origen --fecha --archivo` para añadir; import para marcar/desmarcar | skill `sagarde-nota-pendiente`, `panel_server.py` | libro XLSX existente | hoja `Tareas` del mismo libro | openpyxl | Activo desde 23/08/2026; toggle bidireccional desde 24/08/2026; 10 pruebas |
 | `hilos_notas.py` | `_SISTEMA.../hilos_notas.py` | Python | Lee el bloque `HILO CONDUCTOR` de la nota `.txt` de cada tarea (columna `Archivo` de `Tareas`) y lo sanea para el panel público: oculta correos, teléfonos y URLs, y solo abre el nombre base de una nota dentro de la carpeta de la obra. Una línea borrada de la nota no sale en el panel | import (`leer_hilos_de_tareas`, `parse_hilo_conductor`, `sanear_texto`) | `generar_todos.py`, `panel_obra.py` | notas `TEMAS PENDIENTES*.txt` de la raíz de la obra | desplegable «Ver el hilo conductor» en la tarjeta Tareas manuales (no escribe ficheros) | biblioteca estándar | Activo desde 29/09/2026; 22 pruebas; la cadena de correo se genera fuera del repo (agy lee, Claude verifica) y se pega en la nota |

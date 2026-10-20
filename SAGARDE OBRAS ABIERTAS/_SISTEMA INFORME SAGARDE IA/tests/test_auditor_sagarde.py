@@ -105,5 +105,52 @@ class TestConstanteCarpetasSistema(unittest.TestCase):
             {"_SISTEMA", "_SISTEMA INFORME SAGARDE IA", "INFORME SAGARDE IA"})
 
 
+class TestAuditoriaDeMateriales(unittest.TestCase):
+    """20/10/2026: un Excel de materiales danado por agy hizo que el portal
+    movil perdiera Olabeaga sin que nada lo avisara antes de publicar. El
+    auditor pre-publicacion (paso 0 del .bat) ahora lo ve."""
+
+    def test_un_excel_con_defectos_es_un_aviso_con_solucion(self):
+        defectos = {"2026 OLABEAGA BILBAO": ["declara codificacion utf-16 pero los bytes son utf-8."]}
+        with patch.object(auditor_sagarde.materiales_xlsx, "diagnosticar_todas",
+                          return_value=defectos):
+            issues = auditor_sagarde.audit_materiales()
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0]["nivel"], "warning")
+        self.assertEqual(issues[0]["obra"], "2026 OLABEAGA BILBAO")
+        self.assertIn("utf-16", issues[0]["mensaje"])
+        self.assertIn("materiales_xlsx.py reparar", issues[0]["solucion"])
+
+    def test_sin_defectos_no_hay_avisos(self):
+        with patch.object(auditor_sagarde.materiales_xlsx, "diagnosticar_todas",
+                          return_value={}):
+            self.assertEqual(auditor_sagarde.audit_materiales(), [])
+
+    def test_si_la_propia_comprobacion_falla_se_dice_no_se_calla(self):
+        with patch.object(auditor_sagarde.materiales_xlsx, "diagnosticar_todas",
+                          side_effect=RuntimeError("boom")):
+            issues = auditor_sagarde.audit_materiales()
+        self.assertEqual(len(issues), 1)
+        self.assertEqual(issues[0]["nivel"], "warning")
+        self.assertIn("boom", issues[0]["mensaje"])
+
+    def test_run_audit_incluye_los_avisos_de_materiales(self):
+        """Lo declarado tiene que producir efecto: si run_audit no llamase a
+        audit_materiales, todo lo anterior seria letra muerta."""
+        aviso = {"nivel": "warning", "area": "Materiales", "obra": "OBRA X",
+                 "codigo": "MATERIALES_XLSX", "mensaje": "m", "solucion": "s"}
+        with tempfile.TemporaryDirectory() as tmp, \
+                patch.object(auditor_sagarde, "DIAGNOSTICO_JSON", Path(tmp) / "d.json"), \
+                patch.object(auditor_sagarde, "audit_obras_abiertas", return_value=[]), \
+                patch.object(auditor_sagarde, "audit_mantenimientos", return_value=[]), \
+                patch.object(auditor_sagarde, "audit_materiales", return_value=[aviso]):
+            from contextlib import redirect_stdout
+            import io
+            with redirect_stdout(io.StringIO()):
+                resultado = auditor_sagarde.run_audit()
+        self.assertIn(aviso, resultado["issues"])
+        self.assertEqual(resultado["totales"]["warnings"], 1)
+
+
 if __name__ == "__main__":
     unittest.main()
