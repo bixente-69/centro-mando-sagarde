@@ -2288,7 +2288,11 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
             "<th>% estricto</th><th>% estimado</th><th>Nº registros</th>"
             f"</tr></thead><tbody>{filas_det}</tbody></table></div>"
         ),
-        'materiales': materiales_html,
+        'materiales': (
+            entregas_materiales.secciones_informe(materiales)
+            if materiales.get('formato') == 'entregas'
+            else materiales_html
+        ),
         'personal': f"<div class='card'><h3>Personal asignado</h3>{personal_html}</div>",
         'tareas': tareas_vista_html,
         'prioridades': secciones_prioridades,
@@ -2310,6 +2314,22 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     data_json = json.dumps(payload, ensure_ascii=False).replace('</script>', '<\\/script>')
 
     # ---- HTML ----
+    if materiales.get('formato') == 'entregas':
+        sub_items = '\n'.join(
+            f'      <label><input type="checkbox" class="cb-materiales" data-seccion="materiales" data-sub="{clave}"> {nombre}</label>'
+            for clave, nombre in entregas_materiales.OPCIONES_INFORME
+        )
+        materiales_informe_checkboxes_html = f"""    <div class="tj-group-hdr">
+      <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
+        <input type="checkbox" id="cb-materiales-all" onchange="toggleGrupoMateriales(this)"> <b>▣ Materiales</b>
+      </label>
+    </div>
+    <div class="tj-items" style="padding-left:26px;">
+{sub_items}
+    </div>"""
+    else:
+        materiales_informe_checkboxes_html = '    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="materiales" onchange="toggleGrupoInforme(this)"> <b>▣ Materiales</b></label>'
+
     pdf_ejecutivo_nombre = f"INFORME_EJECUTIVO_{obra.replace(' ', '_')}.pdf"
     html = f"""<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2335,7 +2355,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
   </p>
   <div id="informe-obra-grupos">
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="trabajos" onchange="toggleGrupoInforme(this)"> <b>✓ Trabajos</b></label>
-    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="materiales" onchange="toggleGrupoInforme(this)"> <b>▣ Materiales</b></label>
+{materiales_informe_checkboxes_html}
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="personal" onchange="toggleGrupoInforme(this)"> <b>👷 Personal</b></label>
     <div class="tj-group-hdr">
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
@@ -2493,6 +2513,8 @@ document.querySelectorAll('[id^="timeline-prio"]').forEach(function(el){{
   filtrarPrio(sufijo);
 }});
 
+{entregas_materiales.JS_ORDENAR_TABLA}
+
 function _claveSeleccionInforme(){{ return 'informe_obra_sel::' + OBRA_NOMBRE; }}
 
 function _checksInforme(){{
@@ -2528,6 +2550,11 @@ function cargarSeleccionInforme(){{
   const subsPrio = [...document.querySelectorAll('.cb-prioridades')];
   document.getElementById('cb-prioridades-all').checked =
     subsPrio.length > 0 && subsPrio.every(cb => cb.checked);
+  const cbMaterialesAll = document.getElementById('cb-materiales-all');
+  if (cbMaterialesAll) {{
+    const subsMateriales = [...document.querySelectorAll('.cb-materiales')];
+    cbMaterialesAll.checked = subsMateriales.length > 0 && subsMateriales.every(cb => cb.checked);
+  }}
   const cbGarajeAll = document.getElementById('cb-prioridades-garaje-all');
   if (cbGarajeAll) {{
     const subsGaraje = [...document.querySelectorAll('.cb-prioridades-garaje')];
@@ -2550,6 +2577,11 @@ function toggleGrupoInforme(cb){{
   guardarSeleccionInforme();
 }}
 
+function toggleGrupoMateriales(masterCb){{
+  document.querySelectorAll('.cb-materiales').forEach(cb => cb.checked = masterCb.checked);
+  guardarSeleccionInforme();
+}}
+
 function toggleGrupoPrioridades(masterCb){{
   document.querySelectorAll('.cb-prioridades').forEach(cb => cb.checked = masterCb.checked);
   guardarSeleccionInforme();
@@ -2569,6 +2601,17 @@ function marcarTodoInforme(){{
   _checksInforme().forEach(cb => cb.checked = true);
   guardarSeleccionInforme();
 }}
+
+document.querySelectorAll('.cb-materiales').forEach(cb => {{
+  cb.addEventListener('change', () => {{
+    const master = document.getElementById('cb-materiales-all');
+    if (master) {{
+      const subs = [...document.querySelectorAll('.cb-materiales')];
+      master.checked = subs.every(c => c.checked);
+    }}
+    guardarSeleccionInforme();
+  }});
+}});
 
 document.querySelectorAll('.cb-prioridades').forEach(cb => {{
   cb.addEventListener('change', () => {{
@@ -2608,13 +2651,15 @@ function generarVistaPreviaInforme(){{
   const NOMBRES_SUB = {{
     estado_proyecto: 'Estado del proyecto', que_hacer_ahora: 'Qué hacer ahora',
     tajos_bloqueados: 'Tajos bloqueados', sin_revisar: 'Sin revisar nunca',
+    total: 'Total acumulado', por_mes: 'Por mes', por_albaran: 'Por albarán',
+    por_suministrador: 'Por suministrador', entregas: 'Todas las entregas (línea a línea)',
   }};
   // Vivienda y garaje comparten las mismas claves de data-sub (arriba):
   // sin este prefijo, marcar "Qué hacer ahora" de las dos a la vez
   // imprimiria dos secciones con el mismo titulo, sin forma de saber
   // cual es cual -- encontrado probando de verdad la vista previa, no
   // solo leyendo el codigo.
-  const PREFIJO_SECCION = {{prioridades_garaje: '🅿️ ', prioridades_zesp: '🔧 '}};
+  const PREFIJO_SECCION = {{prioridades_garaje: '🅿️ ', prioridades_zesp: '🔧 ', materiales: '▣ Materiales — '}};
   let contenido = '';
   marcadas.forEach(cb => {{
     const seccion = cb.dataset.seccion;
@@ -2738,6 +2783,7 @@ input[type=checkbox]{{pointer-events:none;}}
 ${{contenido}}
 </div>
 <script>document.querySelectorAll('details').forEach(d => d.open = true);<\/script>
+<script>${{ordenarTabla.toString()}}<\/script>
 </body></html>`;
   const ventana = window.open('', '_blank');
   if (!ventana) {{

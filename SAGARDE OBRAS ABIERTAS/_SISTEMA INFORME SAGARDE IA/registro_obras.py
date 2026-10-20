@@ -119,8 +119,10 @@ OBRAS = [
             'f_muk0mey7_23': '4',
             'zesp': 'zesp',
         },
+        # Registro de entregas (hoja ENTREGAS) en su propia carpeta: una hoja de
+        # material no es una revision. Mungia y Bolueta siguen en REVISIONES.
         'materiales_rel': os.path.join(
-            'REVISIONES', 'hoja de entrega de materiales OLABEAGA.xlsx'),
+            'MATERIALES', 'hoja de entrega de materiales OLABEAGA.xlsx'),
     },
     {
         # Alta nativa el 08/10/2026 desde la primera hoja HTML del generador.

@@ -201,29 +201,38 @@ primera: ha ido y ha visto que faltaba algo. Solo la **ausencia** de marca
 
 ## 7b. Hojas de entrega de materiales (Excel): cómo editarlas sin romperlas
 
-Cada obra con seguimiento tiene `REVISIONES/hoja de entrega de materiales <OBRA>.xlsx`.
+Cada obra con seguimiento tiene una `hoja de entrega de materiales <OBRA>.xlsx`: en
+`MATERIALES/` en Olabeaga y en `REVISIONES/` en las demás, donde quedó por costumbre de
+las primeras obras (una hoja de material no es una revisión; solo se mueve a petición de Bixente).
 **El panel no recalcula nada: lee los valores guardados en el fichero.** Hay dos
 formatos de libro (la herramienta `materiales_xlsx.py` reconoce cuál es):
 
 **A) Registro de entregas — Olabeaga (piloto desde el 20/10/2026).** La hoja
 `ENTREGAS` es la ÚNICA fuente: una fila por línea entregada
 (`FECHA · SUMINISTRADOR · ALBARÁN · CATEGORÍA · MATERIAL · TIPO · MARCA · UNI · CANTIDAD · NOTAS`).
-Las hojas de cada mes y `ACUMULADO` se **generan** de ahí (solo lo entregado ese
-mes, con una columna por entrega: fecha, suministrador y albarán, más MES ANT,
-TOTAL MES y ACUMULADO); el panel lee `ENTREGAS` directamente y pinta lo mismo.
+Las hojas de cada mes y `ACUMULADO` se **generan** de ahí: cada mes es una lista con una
+fila por línea entregada (fecha, suministrador y albarán como columnas) y debajo el total
+del mes por material (mes anterior, total mes, acumulado). El panel lee `ENTREGAS`
+directamente y pinta lo mismo; sus cabeceras se pulsan para ordenar, el Excel lleva
+filtros de Excel y el «Informe de obra» deja elegir Total, Por mes, Por albarán,
+Por suministrador o Todas las entregas.
 
 1. Para añadir material: **añadir filas al final de `ENTREGAS`** (con `openpyxl`
-   o a mano en Excel). Suministrador o albarán que no se sepan: **dejarlos
-   vacíos**, nunca inventarlos. Cantidad = número (`1200` o `1200,5`; `1.200` es
-   ambiguo y se rechaza). No editar las hojas de mes ni `ACUMULADO`: se sobrescriben.
+   o a mano en Excel). Cantidad = número (`1200` o `1200,5`; `1.200` es ambiguo y se
+   rechaza). No editar las hojas de mes ni `ACUMULADO`: se sobrescriben.
+   **Suministrador y albarán (regla de Bixente, 20/10/2026):** entrega en mano =
+   suministrador `Sagarde` (albarán vacío); si no, la empresa que figura en el albarán
+   (Electrovizcaya, Suelbat…) y su número de albarán. Lo que no se sepa va **vacío**,
+   nunca inventado: el panel avisa de las líneas incompletas.
 2. **Al terminar, SIEMPRE** ejecutar y leer el resultado (debe acabar en `OK`):
 
    ```bash
    py -3.11 _SISTEMA/MOTOR/scripts/materiales_xlsx.py generar olabeaga
    ```
 
-   Hace copia en `REVISIONES/_SISTEMA/`, rehace las hojas generadas y comprueba el
-   libro. Una fila con fecha ilegible o cantidad no numérica **no se cuenta** y sale
+   Hace copia en `MATERIALES/_SISTEMA/`, rehace las hojas generadas y comprueba el
+   libro (si se olvida, el motor rehace las hojas desfasadas al regenerar la obra o al
+   publicar, pero solo este comando avisa de las filas inválidas: ejecutarlo siempre). Una fila con fecha ilegible o cantidad no numérica **no se cuenta** y sale
    en el aviso: hay que corregirla, no ignorarla.
 3. Migrar otra obra de rejilla a registro: `materiales_xlsx.py migrar <obra>`
    (comprueba que no se pierde ni una unidad). Solo si Bixente lo pide: Mungia y

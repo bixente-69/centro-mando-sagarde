@@ -19,9 +19,13 @@ Diseno
     siempre esta al dia. El Excel lleva ademas una hoja por mes y un
     ACUMULADO, generadas de la misma agrupacion (``construir_hojas``): lo que
     ves en pantalla y en el Excel es el mismo calculo.
-  * Cada mes lista SOLO lo entregado ese mes (no repite el catalogo): una
-    columna por entrega (fecha + suministrador + albaran), MES ANT, TOTAL MES
-    y ACUMULADO.
+  * Cada mes lista SOLO lo entregado ese mes (no repite el catalogo): una LISTA
+    con una fila por linea entregada (fecha, suministrador y albaran como
+    COLUMNAS, mas material, tipo, uni y cantidad) y debajo el TOTAL DEL MES POR
+    MATERIAL (MES ANT, TOTAL MES, ACUMULADO). Las cabeceras se pulsan para
+    ordenar en el panel y llevan filtros de Excel en la hoja.
+  * El "Informe de obra" a la carta ofrece Total acumulado, Por mes, Por
+    albaran, Por suministrador y Todas las entregas (secciones_informe).
   * Las hojas generadas llevan solo valores, sin formulas: no existe el
     "total sin calcular" que dejo a Olabeaga fuera del portal.
 
@@ -37,6 +41,7 @@ import html as html_lib
 import io
 import os
 import re
+import shutil
 import unicodedata
 from datetime import date, datetime
 
@@ -176,6 +181,26 @@ def _fmt(n) -> str:
     return t.replace(',', '§').replace('.', ',').replace('§', '.')
 
 
+SUMINISTRADORES_HABITUALES = ['Sagarde', 'Electrovizcaya', 'Suelbat']
+_EN_MANO = ('SAGARDE', 'EN MANO', 'MANO')
+
+
+def entrega_completa(suministrador, albaran) -> bool:
+    """Regla de Bixente (20/10/2026): entrega en mano = suministrador Sagarde (no
+    hay albaran); si no, la empresa y el codigo que vienen en el albaran. Una
+    entrega con el dato incompleto se ve y se avisa; nunca se rellena sola."""
+    s = _clave_texto(suministrador)
+    if not s:
+        return False
+    return s in _EN_MANO or bool(_clave_texto(albaran))
+
+
+def contar_incompletas(ruta) -> int:
+    """Lineas de ENTREGAS sin suministrador o sin albaran (segun la regla)."""
+    ent, _ = leer_registro(_abrir(ruta, data_only=True))
+    return sum(1 for e in ent if not entrega_completa(e['suministrador'], e['albaran']))
+
+
 def etiqueta_mes(f: date) -> str:
     return f"{MESES[f.month - 1]}{f.year % 100:02d}"
 
@@ -273,18 +298,72 @@ def agrupar(entregas):
     def orden_fila(k):
         return (orden_cat[k[0]], visto[k])
 
+    primera_grafia_s = {}
+    primera_grafia_a = {}
+    for e in ent:
+        s_raw = e.get('suministrador')
+        if s_raw is not None:
+            sk = _clave_texto(s_raw)
+            if sk and sk not in primera_grafia_s:
+                primera_grafia_s[sk] = s_raw
+        a_raw = e.get('albaran')
+        if a_raw is not None:
+            ak = _clave_texto(a_raw)
+            if ak and ak not in primera_grafia_a:
+                primera_grafia_a[ak] = a_raw
+
+    def dict_linea(e):
+        s_grafia = primera_grafia_s.get(_clave_texto(e.get('suministrador')))
+        a_grafia = primera_grafia_a.get(_clave_texto(e.get('albaran')))
+        return {
+            'fila': e['fila'],
+            'fecha': e['fecha'],
+            'suministrador': s_grafia,
+            'albaran': a_grafia,
+            'completa': entrega_completa(s_grafia, a_grafia),
+            'categoria': e.get('categoria'),
+            'material': e['material'],
+            'tipo': e.get('tipo'),
+            'marca': e.get('marca'),
+            'uni': e.get('uni'),
+            'cantidad': e['cantidad'],
+        }
+
+    def clave_orden_linea(e):
+        return (
+            e['fecha'],
+            _clave_texto(e.get('suministrador')),
+            _clave_texto(e.get('albaran')),
+            orden_fila(clave(e)),
+            e.get('fila', 0),
+        )
+
+    lineas_todas = [dict_linea(e) for e in sorted(ent, key=clave_orden_linea)]
+
     meses_claves = sorted({(e['fecha'].year, e['fecha'].month) for e in ent})
     previo = {}          # clave -> cantidad acumulada de meses anteriores
     meses = []
     for (anio, mes) in meses_claves:
         delmes = [e for e in ent if (e['fecha'].year, e['fecha'].month) == (anio, mes)]
-        cols = sorted({(e['fecha'], e['suministrador'], e['albaran']) for e in delmes},
-                      key=lambda c: (c[0], c[1] or '', c[2] or ''))
+        # Una columna por entrega = (fecha, suministrador, albaran), sin distinguir
+        # mayusculas ni espacios: "Suelbat" y " SUELBAT " son la misma empresa. Se
+        # muestra la primera grafia.
+        def col_clave(e):
+            return (e['fecha'], _clave_texto(e['suministrador']), _clave_texto(e['albaran']))
+        cols_info = {}
+        for e in delmes:
+            s_grafia = primera_grafia_s.get(_clave_texto(e.get('suministrador')))
+            a_grafia = primera_grafia_a.get(_clave_texto(e.get('albaran')))
+            cols_info.setdefault(col_clave(e), {'fecha': e['fecha'],
+                                                'suministrador': s_grafia,
+                                                'albaran': a_grafia,
+                                                'completa': entrega_completa(s_grafia, a_grafia)})
+        cols = sorted(cols_info)
         filas = {}
         for e in delmes:
             k = clave(e)
             fila = filas.setdefault(k, [None] * len(cols))
-            i = cols.index((e['fecha'], e['suministrador'], e['albaran']))
+            i = cols.index(col_clave(e))
             fila[i] = (fila[i] or 0) + e['cantidad']
         salida = []
         for k in sorted(filas, key=orden_fila):
@@ -295,9 +374,13 @@ def agrupar(entregas):
                                acumulado=_num(ant + total)))
         for k, cant in filas.items():
             previo[k] = previo.get(k, 0) + sum(x for x in cant if x is not None)
+        mes_lineas = [dict_linea(e) for e in sorted(delmes, key=clave_orden_linea)]
         meses.append({'etiqueta': etiqueta_mes(date(anio, mes, 1)), 'anio': anio, 'mes': mes,
-                      'columnas': [{'fecha': c[0], 'suministrador': c[1], 'albaran': c[2]} for c in cols],
-                      'filas': salida})
+                      'columnas': [cols_info[c] for c in cols],
+                      'n_incompletas': sum(1 for e in delmes
+                                           if not entrega_completa(e['suministrador'], e['albaran'])),
+                      'filas': salida,
+                      'lineas': mes_lineas})
 
     etiquetas = [m['etiqueta'] for m in meses]
     acum = []
@@ -312,7 +395,9 @@ def agrupar(entregas):
     return {'meses': meses,
             'acumulado': {'meses': etiquetas, 'filas': acum},
             'ultima_fecha': ent[-1]['fecha'] if ent else None,
-            'n_entregas': len(ent)}
+            'n_entregas': len(ent),
+            'n_incompletas': sum(m['n_incompletas'] for m in meses),
+            'lineas': lineas_todas}
 
 
 def leer_materiales_wb(wb, hoy: date | None = None) -> dict:
@@ -341,76 +426,307 @@ def leer_materiales_wb(wb, hoy: date | None = None) -> dict:
 
 
 # ----------------------------------------------------------------------- HTML
+#
+# Todo el dibujo de las tablas vive en este bloque, a proposito: Bixente quiere
+# ver como queda y poder cambiarlo (20/10/2026). Cambiar columnas, orden o
+# textos de la vista se hace aqui y en _hoja_mes (Excel), y nada mas.
 
-def _celda_sin_dato(v):
-    return _e(v) if v else '<span style="color:var(--muted)" title="sin dato">—</span>'
+# Orden por columna al pulsar la cabecera: asc -> desc -> orden original.
+# Se inyecta tal cual en la pagina del panel y en el documento del informe.
+JS_ORDENAR_TABLA = """function ordenarTabla(th){
+  var t=th.closest('table'), tb=t.tBodies[0], col=th.cellIndex;
+  var ant=th.getAttribute('data-orden')||'';
+  var sig=ant===''?'asc':(ant==='asc'?'desc':'');
+  [].forEach.call(t.tHead.querySelectorAll('th'),function(h){
+    h.removeAttribute('data-orden'); var f=h.querySelector('.flecha'); if(f){f.textContent='';}
+  });
+  var filas=[].slice.call(tb.rows);
+  if(sig===''){
+    filas.sort(function(a,b){return (+a.getAttribute('data-i'))-(+b.getAttribute('data-i'));});
+    filas.forEach(function(r){r.style.display='';tb.appendChild(r);});
+    return;
+  }
+  th.setAttribute('data-orden',sig);
+  var fl=th.querySelector('.flecha'); if(fl){fl.textContent=sig==='asc'?' \\u25B2':' \\u25BC';}
+  function valor(r){var c=r.cells[col]; var v=c?c.getAttribute('data-v'):null; return v===null?(c?c.textContent.trim():''):v;}
+  var datos=filas.filter(function(r){return !r.hasAttribute('data-cat');});
+  var cats=filas.filter(function(r){return r.hasAttribute('data-cat');});
+  cats.forEach(function(r){r.style.display='none';});
+  var numerico=datos.every(function(r){var v=valor(r);return v===''||!isNaN(+v);});
+  datos.sort(function(a,b){
+    var x=valor(a),y=valor(b);
+    if(x===''&&y==='')return 0; if(x==='')return 1; if(y==='')return -1;
+    var d=numerico?(+x)-(+y):x.localeCompare(y,'es',{numeric:true,sensitivity:'base'});
+    return sig==='asc'?d:-d;
+  });
+  datos.forEach(function(r){tb.appendChild(r);});
+  cats.forEach(function(r){tb.appendChild(r);});
+}"""
+
+_P_SUBTITULO = 'style="font-size:12.5px;font-weight:700;color:var(--header2);margin:16px 0 6px;"'
+_P_META = 'style="font-size:12.5px;color:var(--muted);margin-bottom:10px;"'
+_SIN_DATO = '<span style="color:var(--warn)" title="{t}">—</span>'
 
 
-def render_html(res: dict) -> str:
-    """HTML de la pestana Materiales. Sin JavaScript ni estilos propios: el
-    mismo bloque se incrusta en el informe de obra a la carta."""
-    g = res.get('detalle') or {}
-    meses = g.get('meses') or []
+def _th(texto, derecha=False):
+    estilo = 'cursor:pointer;user-select:none;white-space:nowrap;' + ('text-align:right;' if derecha else '')
+    return (f'<th style="{estilo}" onclick="ordenarTabla(this)" title="Pulsa para ordenar">'
+            f'{_e(texto)}<span class="flecha"></span></th>')
+
+
+def _td(contenido, valor=None, derecha=False):
+    attrs = f' data-v="{_e(valor)}"' if valor is not None else ''
+    if derecha:
+        attrs += ' style="text-align:right;"'
+    return f'<td{attrs}>{contenido}</td>'
+
+
+def _tabla(cabeceras, filas):
+    """Tabla con cabecera pulsable. ``cabeceras``: [(texto, alineada_a_la_derecha)].
+    ``filas``: [('cat', texto)] para una fila de categoria (se oculta al ordenar) o
+    [('fila', [celdas <td>])]. Cada fila lleva su posicion original (data-i)."""
+    cab = ''.join(_th(t, d) for t, d in cabeceras)
+    cuerpo = []
+    for i, (tipo, contenido) in enumerate(filas):
+        if tipo == 'cat':
+            cuerpo.append(f'<tr data-i="{i}" data-cat="1"><td colspan="{len(cabeceras)}" '
+                          f'style="font-weight:700;color:var(--header2);background:#f4f6f9;">{_e(contenido)}</td></tr>')
+        else:
+            cuerpo.append(f'<tr data-i="{i}">{"".join(contenido)}</tr>')
+    return ('<div style="overflow-x:auto;"><table class="data"><thead><tr>'
+            f'{cab}</tr></thead><tbody>{"".join(cuerpo)}</tbody></table></div>')
+
+
+def _celdas_suministrador_y_albaran(l):
+    sumi = _e(l['suministrador']) if l['suministrador'] else _SIN_DATO.format(t='falta el suministrador')
+    if l['albaran']:
+        alb = _e(l['albaran'])
+    elif l['completa']:
+        alb = '<span style="color:var(--muted)">en mano</span>'
+    else:
+        alb = _SIN_DATO.format(t='falta el albarán')
+    return (_td(sumi, l['suministrador'] or ''), _td(alb, l['albaran'] or ''))
+
+
+def _tipo_y_marca(x):
+    return ' · '.join(v for v in (x['tipo'], x['marca']) if v)
+
+
+def _tabla_lineas(lineas):
+    """Una fila por linea entregada: Fecha, Suministrador y Albaran como columnas."""
+    filas = []
+    for l in lineas:
+        sumi, alb = _celdas_suministrador_y_albaran(l)
+        filas.append(('fila', [_td(f"{l['fecha']:%d/%m/%Y}", f"{l['fecha']:%Y-%m-%d}"), sumi, alb,
+                               _td(_e(l['material'])), _td(_e(_tipo_y_marca(l))), _td(_e(l['uni'] or '')),
+                               _td(_fmt(l['cantidad']), l['cantidad'], True)]))
+    return _tabla([('Fecha', False), ('Suministrador', False), ('Albarán', False), ('Material', False),
+                   ('Tipo', False), ('Uni', False), ('Cant.', True)], filas)
+
+
+def _tabla_totales_mes(m):
+    filas, cat = [], object()
+    for f in m['filas']:
+        if f['categoria'] != cat:
+            cat = f['categoria']
+            if cat:
+                filas.append(('cat', cat))
+        filas.append(('fila', [_td(_e(f['material'])), _td(_e(_tipo_y_marca(f))), _td(_e(f['uni'] or '')),
+                               _td(_fmt(f['mes_ant']) if f['mes_ant'] else '', f['mes_ant'] or '', True),
+                               _td(f'<b>{_fmt(f["total_mes"])}</b>', f['total_mes'], True),
+                               _td(_fmt(f['acumulado']), f['acumulado'], True)]))
+    return _tabla([('Material', False), ('Tipo', False), ('Uni', False), ('Mes ant.', True),
+                   ('Total mes', True), ('Acumulado', True)], filas)
+
+
+def _vacio():
+    return ('<div class="card"><h3>Materiales</h3><p class="empty">Todavia no hay entregas '
+            f'registradas en la hoja {HOJA_ENTREGAS}.</p></div>')
+
+
+def _aviso_incompletas(n):
+    return ('<p style="font-size:12.5px;color:var(--warn);margin:0 0 10px;">'
+            f'⚠ {n} línea(s) sin suministrador o sin albarán '
+            '(entrega en mano: suministrador «Sagarde»). '
+            f'Complétalos en la hoja {HOJA_ENTREGAS}.</p>') if n else ''
+
+
+def render_por_mes(res: dict) -> str:
+    """Un bloque por mes (el mas reciente primero): la lista de entregas y debajo
+    el total por material."""
+    meses = (res.get('detalle') or {}).get('meses') or []
     if not meses:
-        return ('<div class="card"><h3>Materiales</h3><p class="empty">Todavia no hay entregas '
-                f'registradas en la hoja {HOJA_ENTREGAS}.</p></div>')
-    der = 'style="text-align:right;"'
-    sub = 'style="text-transform:none;font-weight:600;color:var(--text);font-size:12px;"'
-    cat_style = "style='font-weight:700;color:var(--header2);background:#f4f6f9;'"
+        return _vacio()
     out = []
     for m in reversed(meses):
-        cols = m['columnas']
-        n_cols = 4 + len(cols) + 2
-        cab = ''.join(f'<th {der}>{c["fecha"]:%d/%m}</th>' for c in cols)
-        sumi = ''.join(f'<th {der} {sub}>{_celda_sin_dato(c["suministrador"])}</th>' for c in cols)
-        alb = ''.join(f'<th {der} {sub}>{_celda_sin_dato(c["albaran"])}</th>' for c in cols)
-        cuerpo, cat = [], object()
-        for f in m['filas']:
-            if f['categoria'] != cat:
-                cat = f['categoria']
-                if cat:
-                    cuerpo.append(f'<tr><td colspan="{n_cols}" {cat_style}>{_e(cat)}</td></tr>')
-            tipo = ' · '.join(x for x in (f['tipo'], f['marca']) if x)
-            celdas = ''.join(f'<td {der}>{_fmt(c)}</td>' for c in f['cantidades'])
-            ant = _fmt(f['mes_ant']) if f['mes_ant'] else ''
-            cuerpo.append(
-                f'<tr><td>{_e(f["material"])}</td><td>{_e(tipo)}</td><td>{_e(f["uni"] or "")}</td>'
-                f'<td {der}>{ant}</td>{celdas}<td {der}><b>{_fmt(f["total_mes"])}</b></td>'
-                f'<td {der}>{_fmt(f["acumulado"])}</td></tr>')
-        n_ent = len(cols)
         out.append(
             f'<div class="card"><h3>{_e(m["etiqueta"])} — material entregado</h3>'
-            f'<p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">'
-            f'{len(m["filas"])} material(es) · {n_ent} entrega(s). Cantidades <b>entregadas</b> '
-            'según el registro de entregas; no equivalen necesariamente a material instalado.</p>'
-            '<div style="overflow-x:auto;"><table class="data"><thead>'
-            f'<tr><th>Material</th><th>Tipo</th><th>Uni</th><th {der}>Mes ant.</th>{cab}'
-            f'<th {der}>Total mes</th><th {der}>Acumulado</th></tr>'
-            f'<tr><th colspan="4" {sub}>Suministrador</th>{sumi}<th></th><th></th></tr>'
-            f'<tr><th colspan="4" {sub}>Albarán</th>{alb}<th></th><th></th></tr>'
-            f'</thead><tbody>{"".join(cuerpo)}</tbody></table></div></div>')
+            f'<p {_P_META}>{len(m["filas"])} material(es) · {len(m["columnas"])} entrega(s) · '
+            f'{len(m["lineas"])} línea(s). Cantidades <b>entregadas</b> según el registro de entregas; '
+            'no equivalen necesariamente a material instalado.</p>'
+            f'{_aviso_incompletas(m.get("n_incompletas"))}'
+            f'<div {_P_SUBTITULO}>Entregas del mes</div>{_tabla_lineas(m["lineas"])}'
+            f'<div {_P_SUBTITULO}>Total del mes por material</div>{_tabla_totales_mes(m)}</div>')
+    return '\n'.join(out)
 
+
+def render_total(res: dict) -> str:
+    """Acumulado de todo lo entregado: una fila por material, una columna por mes."""
+    g = res.get('detalle') or {}
+    if not g.get('meses'):
+        return _vacio()
     ac = g['acumulado']
-    cab = ''.join(f'<th {der}>{_e(x)}</th>' for x in ac['meses'])
-    cuerpo, cat = [], object()
+    filas, cat = [], object()
     for f in ac['filas']:
         if f['categoria'] != cat:
             cat = f['categoria']
             if cat:
-                cuerpo.append(f'<tr><td colspan="{4 + len(ac["meses"])}" {cat_style}>{_e(cat)}</td></tr>')
-        tipo = ' · '.join(x for x in (f['tipo'], f['marca']) if x)
-        celdas = ''.join(f'<td {der}>{_fmt(c)}</td>' for c in f['por_mes'])
-        cuerpo.append(f'<tr><td>{_e(f["material"])}</td><td>{_e(tipo)}</td><td>{_e(f["uni"] or "")}</td>'
-                      f'{celdas}<td {der}><b>{_fmt(f["total"])}</b></td></tr>')
+                filas.append(('cat', cat))
+        filas.append(('fila', [_td(_e(f['material'])), _td(_e(_tipo_y_marca(f))), _td(_e(f['uni'] or ''))]
+                      + [_td(_fmt(c), c if c is not None else '', True) for c in f['por_mes']]
+                      + [_td(f'<b>{_fmt(f["total"])}</b>', f['total'], True)]))
+    cab = [('Material', False), ('Tipo', False), ('Uni', False)] + [(x, True) for x in ac['meses']] + [('Total', True)]
     ultima = g['ultima_fecha'].strftime('%d/%m/%Y') if g.get('ultima_fecha') else '—'
-    out.append(
-        '<div class="card"><h3>Acumulado de material entregado</h3>'
-        f'<p style="font-size:12.5px;color:var(--muted);margin-bottom:10px;">{g["n_entregas"]} línea(s) '
-        f'de entrega · última entrega {ultima}.</p>'
-        '<div style="overflow-x:auto;"><table class="data"><thead>'
-        f'<tr><th>Material</th><th>Tipo</th><th>Uni</th>{cab}<th {der}>Total</th></tr></thead>'
-        f'<tbody>{"".join(cuerpo)}</tbody></table></div></div>')
+    return ('<div class="card"><h3>Acumulado de material entregado</h3>'
+            f'<p {_P_META}>{g["n_entregas"]} línea(s) de entrega · última entrega {ultima}.</p>'
+            f'{_tabla(cab, filas)}</div>')
+
+
+def render_entregas(res: dict) -> str:
+    """Todas las entregas, de todos los meses, linea a linea y por orden de fecha."""
+    g = res.get('detalle') or {}
+    if not g.get('lineas'):
+        return _vacio()
+    return ('<div class="card"><h3>Todas las entregas, línea a línea</h3>'
+            f'<p {_P_META}>{len(g["lineas"])} línea(s), por orden de fecha.</p>'
+            f'{_aviso_incompletas(g.get("n_incompletas"))}{_tabla_lineas(g["lineas"])}</div>')
+
+
+def grupos_por_albaran(lineas):
+    """[{'fecha','suministrador','albaran','completa','lineas'}] en orden de fecha."""
+    grupos = {}
+    for l in lineas:
+        k = (l['fecha'], _clave_texto(l['suministrador']), _clave_texto(l['albaran']))
+        grupos.setdefault(k, {'fecha': l['fecha'], 'suministrador': l['suministrador'],
+                              'albaran': l['albaran'], 'completa': l['completa'], 'lineas': []})['lineas'].append(l)
+    return list(grupos.values())
+
+
+def _titulo_albaran(gr):
+    sumi = gr['suministrador'] or 'sin suministrador'
+    if gr['albaran']:
+        cabeza = f"Albarán {gr['albaran']}"
+    elif gr['completa']:
+        cabeza = 'Entrega en mano'
+    else:
+        cabeza = 'Albarán sin número'
+    return f"{cabeza} — {sumi} — {gr['fecha']:%d/%m/%Y}"
+
+
+def render_por_albaran(res: dict) -> str:
+    """Un bloque por albaran (fecha + suministrador + numero) con sus materiales."""
+    g = res.get('detalle') or {}
+    grupos = grupos_por_albaran(g.get('lineas') or [])
+    if not grupos:
+        return _vacio()
+    resumen = []
+    for gr in grupos:
+        sumi, alb = _celdas_suministrador_y_albaran(dict(gr, lineas=None))
+        resumen.append(('fila', [_td(f"{gr['fecha']:%d/%m/%Y}", f"{gr['fecha']:%Y-%m-%d}"), sumi, alb,
+                                 _td(str(len(gr['lineas'])), len(gr['lineas']), True)]))
+    out = ['<div class="card"><h3>Albaranes</h3>'
+           f'<p {_P_META}>{len(grupos)} albarán(es) / entrega(s) en mano.</p>'
+           + _tabla([('Fecha', False), ('Suministrador', False), ('Albarán', False), ('Líneas', True)], resumen)
+           + '</div>']
+    for gr in grupos:
+        filas = [('fila', [_td(_e(l['material'])), _td(_e(_tipo_y_marca(l))), _td(_e(l['uni'] or '')),
+                           _td(_fmt(l['cantidad']), l['cantidad'], True)]) for l in gr['lineas']]
+        falta = '' if gr['completa'] else _aviso_incompletas(len(gr['lineas']))
+        out.append(f'<div class="card"><h3>{_e(_titulo_albaran(gr))}</h3>'
+                   f'<p {_P_META}>{len(gr["lineas"])} línea(s).</p>{falta}'
+                   + _tabla([('Material', False), ('Tipo', False), ('Uni', False), ('Cant.', True)], filas) + '</div>')
     return '\n'.join(out)
+
+
+def totales_por_suministrador(lineas):
+    """[{'suministrador', 'albaranes', 'n_lineas', 'materiales'}] ordenado por
+    nombre, con 'sin suministrador' (None) al final. Cada material suma todo lo
+    que ese suministrador ha entregado, de todos los meses."""
+    por = {}
+    for l in lineas:
+        k = _clave_texto(l['suministrador'])
+        d = por.setdefault(k, {'suministrador': l['suministrador'], 'albaranes': [], 'n_lineas': 0, 'mat': {}})
+        d['n_lineas'] += 1
+        a = (l['albaran'], l['fecha'])
+        if a not in d['albaranes']:
+            d['albaranes'].append(a)
+        km = (_clave_texto(l['categoria']), _clave_texto(l['material']), _clave_texto(l['tipo']),
+              _clave_texto(l['marca']), _clave_texto(l['uni']))
+        m = d['mat'].setdefault(km, dict(categoria=l['categoria'], material=l['material'], tipo=l['tipo'],
+                                         marca=l['marca'], uni=l['uni'], total=0, orden=len(d['mat'])))
+        m['total'] = _num(m['total'] + l['cantidad'])
+    salida = []
+    for k in sorted(por, key=lambda k: (k == '', k)):
+        d = por[k]
+        orden_cat = {}
+        for m in d['mat'].values():
+            orden_cat.setdefault(_clave_texto(m['categoria']), len(orden_cat))
+        mats = sorted(d['mat'].values(), key=lambda m: (orden_cat[_clave_texto(m['categoria'])], m['orden']))
+        salida.append({'suministrador': d['suministrador'], 'albaranes': d['albaranes'],
+                       'n_lineas': d['n_lineas'], 'materiales': mats})
+    return salida
+
+
+def render_por_suministrador(res: dict) -> str:
+    """Un bloque por suministrador: sus albaranes y lo que ha entregado en total."""
+    g = res.get('detalle') or {}
+    grupos = totales_por_suministrador(g.get('lineas') or [])
+    if not grupos:
+        return _vacio()
+    out = []
+    for d in grupos:
+        nombre = d['suministrador'] or 'Sin suministrador'
+        albs = ', '.join((f"{_e(a)} ({f:%d/%m})" if a else f"sin número ({f:%d/%m})") for a, f in d['albaranes'])
+        filas, cat = [], object()
+        for m in d['materiales']:
+            if m['categoria'] != cat:
+                cat = m['categoria']
+                if cat:
+                    filas.append(('cat', cat))
+            filas.append(('fila', [_td(_e(m['material'])), _td(_e(_tipo_y_marca(m))), _td(_e(m['uni'] or '')),
+                                   _td(f'<b>{_fmt(m["total"])}</b>', m['total'], True)]))
+        out.append(f'<div class="card"><h3>{_e(nombre)}</h3>'
+                   f'<p {_P_META}>{d["n_lineas"]} línea(s) · Albaranes: {albs}</p>'
+                   + _tabla([('Material', False), ('Tipo', False), ('Uni', False), ('Total entregado', True)], filas)
+                   + '</div>')
+    return '\n'.join(out)
+
+
+def render_html(res: dict) -> str:
+    """Pestana Materiales del panel: por mes y, debajo, el acumulado. Sin
+    JavaScript propio ni estilos propios: el mismo bloque se incrusta en el
+    informe de obra a la carta (la funcion de ordenar la pone el panel)."""
+    if not (res.get('detalle') or {}).get('meses'):
+        return _vacio()
+    return render_por_mes(res) + '\n' + render_total(res)
+
+
+# Opciones del "Informe de obra": mismo orden y nombres que los casilleros del panel.
+OPCIONES_INFORME = [
+    ('total', 'Total acumulado'),
+    ('por_mes', 'Por mes'),
+    ('por_albaran', 'Por albarán'),
+    ('por_suministrador', 'Por suministrador'),
+    ('entregas', 'Todas las entregas (línea a línea)'),
+]
+
+
+def secciones_informe(res: dict) -> dict:
+    """{opcion: html} para el 'Informe de obra' a la carta. Cada valor se
+    calcula con la misma funcion que la pestana: ninguna cifra por un camino aparte."""
+    f = {'total': render_total, 'por_mes': render_por_mes, 'por_albaran': render_por_albaran,
+         'por_suministrador': render_por_suministrador, 'entregas': render_entregas}
+    return {clave: f[clave](res) for clave, _ in OPCIONES_INFORME}
 
 
 # ----------------------------------------------------------------- Excel
@@ -421,11 +737,11 @@ _NOTA = ("Hoja GENERADA automaticamente desde ENTREGAS: no la edites aqui (se so
          "Anade las filas en ENTREGAS y ejecuta: " + COMANDO_GENERAR)
 
 
-def _cabecera_estilo(ws, fila, n):
-    for c in range(1, n + 1):
+def _cabecera_estilo(ws, fila, n, desde=1):
+    for c in range(desde, desde + n):
         celda = ws.cell(fila, c)
         celda.fill, celda.font = _AZUL, Font(bold=True, color='FFFFFF')
-        celda.alignment = Alignment(horizontal='center' if c > 4 else 'left', vertical='center', wrap_text=True)
+        celda.alignment = Alignment(horizontal='center' if c > desde + 3 else 'left', vertical='center', wrap_text=True)
 
 
 def _anchos(ws, anchos):
@@ -433,41 +749,52 @@ def _anchos(ws, anchos):
         ws.column_dimensions[get_column_letter(i)].width = a
 
 
-def _fila_categoria(ws, fila, texto, n):
-    ws.cell(fila, 1, texto)
-    for c in range(1, n + 1):
+def _fila_categoria(ws, fila, texto, n, desde=1):
+    ws.cell(fila, desde, texto)
+    for c in range(desde, desde + n):
         ws.cell(fila, c).fill = _GRIS
         ws.cell(fila, c).font = Font(bold=True)
 
 
 def _hoja_mes(wb, m):
     ws = wb.create_sheet(m['etiqueta'])
-    cols = m['columnas']
-    n = 5 + len(cols) + 2
-    ws.append(['MATERIAL', 'TIPO', 'MARCA', 'UNI', 'MES ANT']
-              + [datetime(c['fecha'].year, c['fecha'].month, c['fecha'].day) for c in cols]
-              + ['TOTAL MES', 'ACUMULADO'])
-    ws.append(['Suministrador', None, None, None, None] + [c['suministrador'] for c in cols] + [None, None])
-    ws.append(['Albarán', None, None, None, None] + [c['albaran'] for c in cols] + [None, None])
-    _cabecera_estilo(ws, 1, n)
-    for r in (2, 3):
-        for c in range(1, n + 1):
-            ws.cell(r, c).font = Font(bold=(c == 1), italic=(c > 1))
-            ws.cell(r, c).alignment = Alignment(horizontal='center' if c > 4 else 'left', wrap_text=True)
-    for c in range(6, 6 + len(cols)):
-        ws.cell(1, c).number_format = 'DD/MM/YYYY'
+    headers_b1 = ['FECHA', 'SUMINISTRADOR', 'ALBARÁN', 'CATEGORÍA', 'MATERIAL',
+                  'TIPO', 'MARCA', 'UNI', 'CANTIDAD']
+    ws.append(headers_b1)
+    _cabecera_estilo(ws, 1, len(headers_b1))
+
+    lineas = m.get('lineas', [])
+    for l in lineas:
+        f = l['fecha']
+        ws.append([datetime(f.year, f.month, f.day), l['suministrador'], l['albaran'],
+                   l['categoria'], l['material'], l['tipo'], l['marca'], l['uni'], l['cantidad']])
+        ws.cell(ws.max_row, 1).number_format = 'DD/MM/YYYY'
+
+    ws.auto_filter.ref = f"A1:I{1 + len(lineas)}"
+
+    r_titulo = ws.max_row + 2
+    ws.cell(r_titulo, 5, "TOTAL DEL MES POR MATERIAL").font = Font(bold=True)
+
+    r_cab2 = r_titulo + 1
+    headers_b2 = ['MATERIAL', 'TIPO', 'MARCA', 'UNI', 'MES ANT', 'TOTAL MES', 'ACUMULADO']
+    for col_idx, text in enumerate(headers_b2, start=5):
+        ws.cell(r_cab2, col_idx, text)
+    _cabecera_estilo(ws, r_cab2, len(headers_b2), desde=5)
+
     cat = object()
     for f in m['filas']:
         if f['categoria'] != cat:
             cat = f['categoria']
             if cat:
-                _fila_categoria(ws, ws.max_row + 1, cat, n)
-        ws.append([f['material'], f['tipo'], f['marca'], f['uni'], f['mes_ant'] or None]
-                  + f['cantidades'] + [f['total_mes'], f['acumulado']])
-        ws.cell(ws.max_row, n - 1).font = Font(bold=True)
+                _fila_categoria(ws, ws.max_row + 1, cat, len(headers_b2), desde=5)
+        r_mat = ws.max_row + 1
+        vals = [f['material'], f['tipo'], f['marca'], f['uni'], f['mes_ant'] or None, f['total_mes'], f['acumulado']]
+        for col_idx, val in enumerate(vals, start=5):
+            ws.cell(r_mat, col_idx, val)
+
     ws.cell(ws.max_row + 2, 1, _NOTA).font = Font(italic=True, color='647184')
-    _anchos(ws, [34, 22, 14, 8, 9] + [13] * len(cols) + [11, 12])
-    ws.freeze_panes = 'E4'
+    _anchos(ws, [12, 22, 14, 22, 34, 24, 14, 8, 11, 11, 12])
+    ws.freeze_panes = 'A2'
     return ws
 
 
@@ -493,20 +820,43 @@ def _hoja_acumulado(wb, ac):
 def _hoja_leeme(wb):
     ws = wb.create_sheet(HOJA_LEEME)
     lineas = [
-        ("COMO USAR ESTE LIBRO", True),
-        ("Para anadir material entregado: anade UNA FILA por linea al final de la hoja ENTREGAS "
-         "(fecha, suministrador, albaran, categoria, material, tipo, marca, uni, cantidad).", False),
+        ("CÓMO USAR ESTE LIBRO", True),
+        ("Para añadir material entregado: añade UNA FILA por línea al final de la hoja ENTREGAS "
+         "(fecha, suministrador, albarán, categoría, material, tipo, marca, uni, cantidad).", False),
+        ("SUMINISTRADOR y ALBARÁN: si lo entregó Sagarde en mano, escribe «Sagarde» y deja el albarán vacío. "
+         "Si no, la empresa que figura en el albarán (Electrovizcaya, Suelbat…) y su número de albarán.", False),
+        ("Si no sabes el suministrador o el albarán, déjalo vacío: no se inventa. El panel avisará de las líneas "
+         "que lo tengan vacío.", False),
         ("Las hojas de cada mes y ACUMULADO se GENERAN a partir de ENTREGAS: no se editan a mano.", False),
-        ("Despues de anadir filas ejecuta (desde la raiz del repositorio):", False),
+        ("Después de añadir filas ejecuta (desde la raíz del repositorio):", False),
         (COMANDO_GENERAR.replace('<obra>', 'olabeaga'), False),
-        ("Si no sabes el suministrador o el albaran, dejalo vacio: no se inventa.", False),
-        ("Una fila con fecha ilegible o cantidad no numerica NO se cuenta y se avisa en el panel.", False),
-        ("El panel lee ENTREGAS directamente: siempre esta al dia aunque no hayas regenerado el Excel.", False),
+        ("Una fila con fecha ilegible o cantidad no numérica NO se cuenta y se avisa en el panel.", False),
+        ("El panel lee ENTREGAS directamente: siempre está al día aunque no hayas regenerado el Excel.", False),
     ]
     for i, (t, negrita) in enumerate(lineas, start=1):
         ws.cell(i, 1, t).font = Font(bold=negrita)
-    ws.column_dimensions['A'].width = 120
+    ws.column_dimensions['A'].width = 130
     return ws
+
+
+def _validaciones_entregas(ws):
+    """Ayudas de entrada de ENTREGAS (idempotente: se rehacen enteras cada vez)."""
+    from openpyxl.worksheet.datavalidation import DataValidationList
+    ws.data_validations = DataValidationList()
+    fechas = DataValidation(type='date', operator='greaterThan', formula1='36526', allow_blank=True,
+                            showErrorMessage=True, errorTitle='Fecha', error='Escribe una fecha válida (DD/MM/AAAA).')
+    sumi = DataValidation(type='list', formula1='"' + ','.join(SUMINISTRADORES_HABITUALES) + '"',
+                          allow_blank=True, showErrorMessage=False, showInputMessage=True,
+                          promptTitle='Suministrador',
+                          prompt='Entrega en mano: Sagarde. Si no, la empresa del albarán. Puedes escribir otra.')
+    alb = DataValidation(type='textLength', operator='greaterThanOrEqual', formula1='0', allow_blank=True,
+                         showErrorMessage=False, showInputMessage=True, promptTitle='Albarán',
+                         prompt='Número de albarán tal como figura. Vacío si es entrega en mano.')
+    cant = DataValidation(type='decimal', operator='notEqual', formula1='0', allow_blank=True,
+                          showErrorMessage=True, errorTitle='Cantidad', error='La cantidad debe ser un número distinto de 0.')
+    for dv, rango in ((fechas, 'A2:A5000'), (sumi, 'B2:B5000'), (alb, 'C2:C5000'), (cant, 'I2:I5000')):
+        ws.add_data_validation(dv)
+        dv.add(rango)
 
 
 def _hoja_entregas(wb, entregas):
@@ -523,14 +873,7 @@ def _hoja_entregas(wb, entregas):
     ws.freeze_panes = 'A2'
     ws.auto_filter.ref = f"A1:{get_column_letter(len(CABECERA))}{max(ws.max_row, 2)}"
     _anchos(ws, [12, 22, 14, 22, 30, 24, 14, 8, 11, 30])
-    fechas = DataValidation(type='date', operator='greaterThan', formula1='36526', allow_blank=True,
-                            showErrorMessage=True, errorTitle='Fecha', error='Escribe una fecha valida (DD/MM/AAAA).')
-    cant = DataValidation(type='decimal', operator='notEqual', formula1='0', allow_blank=True,
-                          showErrorMessage=True, errorTitle='Cantidad', error='La cantidad debe ser un numero distinto de 0.')
-    ws.add_data_validation(fechas)
-    ws.add_data_validation(cant)
-    fechas.add('A2:A5000')
-    cant.add('I2:I5000')
+    _validaciones_entregas(ws)
     return ws
 
 
@@ -544,8 +887,11 @@ def construir_hojas(wb, entregas) -> dict:
     for m in g['meses']:
         _hoja_mes(wb, m)
     _hoja_acumulado(wb, g['acumulado'])
-    if HOJA_LEEME not in wb.sheetnames:
-        _hoja_leeme(wb)
+    if HOJA_LEEME in wb.sheetnames:       # tambien es texto generado: se mantiene al dia
+        del wb[HOJA_LEEME]
+    _hoja_leeme(wb)
+    if HOJA_ENTREGAS in wb.sheetnames:
+        _validaciones_entregas(wb[HOJA_ENTREGAS])
     orden = {nombre: (1, i) for i, nombre in enumerate(m['etiqueta'] for m in g['meses'])}
 
     def pos(ws):
@@ -589,6 +935,25 @@ def regenerar_hojas(ruta, hoy: date | None = None):
     construir_hojas(wb, entregas)
     _guardar(wb, ruta)
     return avisos
+
+
+def refrescar_hojas(ruta, hoy: date | None = None) -> bool:
+    """Si ``ruta`` es un registro de entregas y sus hojas generadas se han quedado
+    atras respecto a ENTREGAS, las rehace (con copia previa en ``_SISTEMA``).
+    Devuelve True si las rehizo. Existe para que el resultado no dependa de que
+    quien edita ENTREGAS (agy, Claude, una persona) se acuerde del ultimo paso:
+    lo llama ``generar_todos`` cada vez que regenera la obra."""
+    if not os.path.isfile(ruta):
+        return False
+    wb = _abrir(ruta, data_only=True)
+    if HOJA_ENTREGAS not in wb.sheetnames or not hojas_desactualizadas(wb):
+        return False
+    carpeta = os.path.join(os.path.dirname(os.path.abspath(ruta)), '_SISTEMA')
+    os.makedirs(carpeta, exist_ok=True)
+    marca = datetime.now().strftime('%Y%m%d_%H%M%S')
+    shutil.copy2(ruta, os.path.join(carpeta, f"{os.path.basename(ruta)}.antes_refrescar_{marca}.bak"))
+    regenerar_hojas(ruta, hoy)
+    return True
 
 
 def _grid_recortado(ws):

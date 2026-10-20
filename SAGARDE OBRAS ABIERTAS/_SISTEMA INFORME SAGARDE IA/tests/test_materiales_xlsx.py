@@ -262,10 +262,17 @@ class TestReparar(unittest.TestCase):
                 self.assertEqual(mx.main(["comprobar", roto]), 1)
 
     def test_ruta_por_id_de_obra_apunta_a_su_hoja(self):
+        """Olabeaga (registro de entregas) vive en su propia carpeta MATERIALES:
+        una hoja de material no es una revision. Mungia y Bolueta, que no se
+        han tocado, siguen en REVISIONES."""
         ruta = mx.ruta_materiales("olabeaga")
         self.assertTrue(ruta.endswith(
-            os.path.join("2026 OLABEAGA BILBAO", "REVISIONES",
+            os.path.join("2026 OLABEAGA BILBAO", "MATERIALES",
                          "hoja de entrega de materiales OLABEAGA.xlsx")), ruta)
+        mungia = mx.ruta_materiales("mungia")
+        self.assertTrue(mungia.endswith(
+            os.path.join("2026 MUNGIA ACR NEINOR", "REVISIONES",
+                         "hoja de entrega de materiales MUNGIA.xlsx")), mungia)
 
 
 if __name__ == "__main__":

@@ -33,6 +33,7 @@ sys.path.insert(0, os.path.join(ROOT_DIR, "_SISTEMA", "MOTOR", "scripts"))
 
 import panel_obra  # noqa: E402
 import hilos_notas  # noqa: E402
+import entregas_materiales    # noqa: E402
 import lectores    # noqa: E402
 import priorizador_trabajos  # noqa: E402
 import cierre_expediente  # noqa: E402
@@ -1745,7 +1746,17 @@ def main(hacer_pdf=True):
             # Se leen antes de tocar la ficha porque volcar_apartados() los
             # necesita, y porque el panel los usa igualmente para toda obra
             # (tenga ficha o no).
-            materiales = lectores.leer_materiales(os.path.join(carpeta_abs, obra['materiales_rel']))
+            ruta_materiales = os.path.join(carpeta_abs, obra['materiales_rel'])
+            # Registro de entregas: si alguien edito ENTREGAS y no regenero las hojas
+            # del mes (le paso a agy el 20/10/2026), se rehacen aqui. Un fallo (p. ej.
+            # el Excel abierto) avisa y sigue: el panel lee ENTREGAS directamente.
+            try:
+                if entregas_materiales.refrescar_hojas(ruta_materiales):
+                    print("  [MATERIALES] hojas del Excel rehechas desde ENTREGAS (estaban desfasadas).")
+            except Exception as exc:
+                print(f"  [AVISO MATERIALES] no se pudieron rehacer las hojas del Excel de materiales "
+                      f"({type(exc).__name__}: {exc}). Si lo tienes abierto en Excel, cierralo.")
+            materiales = lectores.leer_materiales(ruta_materiales)
             ficha = lectores.leer_ficha(os.path.join(carpeta_abs, 'FICHA DE OBRA.xlsx'))
             documentos = lectores.listar_documentos(carpeta_abs, salida_dir)
             hilos_tareas, avisos_hilos = hilos_notas.leer_hilos_de_tareas(

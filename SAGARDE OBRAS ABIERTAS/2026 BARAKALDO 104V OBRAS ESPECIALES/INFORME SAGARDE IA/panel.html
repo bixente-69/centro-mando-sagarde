@@ -173,7 +173,7 @@ table.data tbody tr:hover{background:#f8f9fb;}
 </style></head><body><div class="wrap">
 <div class="header">
   <div><div class="brand">Informe Sagarde IA · Panel de obra</div><h1>2026 BARAKALDO 104V OBRAS ESPECIALES</h1><div class="sub">Electricidad y telecomunicaciones · 1 bloque, 2 portales, 104 viviendas (78 tasadas + 26 alquiler) y garaje de 3 sotanos</div></div>
-  <div class="meta">Generado: 20/10/2026 18:25<br>
+  <div class="meta">Generado: 20/10/2026 20:02<br>
   Última revisión: 08/10/2026<br>
   <a class="volver" href="../../index.html">← Todas las obras</a>
   <a class="volver" href="INFORME_EJECUTIVO_2026_BARAKALDO_104V_OBRAS_ESPECIALES.pdf" target="_blank" style="background:var(--bad);border-color:var(--bad);margin-left:6px;">📄 Informe Ejecutivo PDF</a>
@@ -754,7 +754,7 @@ if (document.readyState === 'loading') {
 
 <section id="v-actualizar" class="view"><div class="card">
   <h3>↻ Actualizar panel</h3>
-  <p style="font-size:13px;">Este panel es un fichero HTML estático. Se actualizó el <b>20/10/2026 18:25</b>.
+  <p style="font-size:13px;">Este panel es un fichero HTML estático. Se actualizó el <b>20/10/2026 20:02</b>.
   Para reflejarlo con los últimos archivos de revisión hay que regenerarlo.</p>
   <div style="margin-top:18px;background:#f0f4ff;border:1px solid #c0cfe8;border-radius:8px;padding:14px 18px;">
     <b style="font-size:13px;">Paso 1 &mdash; Haz doble clic en este archivo:</b><br>
@@ -845,6 +845,36 @@ document.querySelectorAll('[id^="timeline-prio"]').forEach(function(el){
   filtrarPrio(sufijo);
 });
 
+function ordenarTabla(th){
+  var t=th.closest('table'), tb=t.tBodies[0], col=th.cellIndex;
+  var ant=th.getAttribute('data-orden')||'';
+  var sig=ant===''?'asc':(ant==='asc'?'desc':'');
+  [].forEach.call(t.tHead.querySelectorAll('th'),function(h){
+    h.removeAttribute('data-orden'); var f=h.querySelector('.flecha'); if(f){f.textContent='';}
+  });
+  var filas=[].slice.call(tb.rows);
+  if(sig===''){
+    filas.sort(function(a,b){return (+a.getAttribute('data-i'))-(+b.getAttribute('data-i'));});
+    filas.forEach(function(r){r.style.display='';tb.appendChild(r);});
+    return;
+  }
+  th.setAttribute('data-orden',sig);
+  var fl=th.querySelector('.flecha'); if(fl){fl.textContent=sig==='asc'?' \u25B2':' \u25BC';}
+  function valor(r){var c=r.cells[col]; var v=c?c.getAttribute('data-v'):null; return v===null?(c?c.textContent.trim():''):v;}
+  var datos=filas.filter(function(r){return !r.hasAttribute('data-cat');});
+  var cats=filas.filter(function(r){return r.hasAttribute('data-cat');});
+  cats.forEach(function(r){r.style.display='none';});
+  var numerico=datos.every(function(r){var v=valor(r);return v===''||!isNaN(+v);});
+  datos.sort(function(a,b){
+    var x=valor(a),y=valor(b);
+    if(x===''&&y==='')return 0; if(x==='')return 1; if(y==='')return -1;
+    var d=numerico?(+x)-(+y):x.localeCompare(y,'es',{numeric:true,sensitivity:'base'});
+    return sig==='asc'?d:-d;
+  });
+  datos.forEach(function(r){tb.appendChild(r);});
+  cats.forEach(function(r){tb.appendChild(r);});
+}
+
 function _claveSeleccionInforme(){ return 'informe_obra_sel::' + OBRA_NOMBRE; }
 
 function _checksInforme(){
@@ -880,6 +910,11 @@ function cargarSeleccionInforme(){
   const subsPrio = [...document.querySelectorAll('.cb-prioridades')];
   document.getElementById('cb-prioridades-all').checked =
     subsPrio.length > 0 && subsPrio.every(cb => cb.checked);
+  const cbMaterialesAll = document.getElementById('cb-materiales-all');
+  if (cbMaterialesAll) {
+    const subsMateriales = [...document.querySelectorAll('.cb-materiales')];
+    cbMaterialesAll.checked = subsMateriales.length > 0 && subsMateriales.every(cb => cb.checked);
+  }
   const cbGarajeAll = document.getElementById('cb-prioridades-garaje-all');
   if (cbGarajeAll) {
     const subsGaraje = [...document.querySelectorAll('.cb-prioridades-garaje')];
@@ -902,6 +937,11 @@ function toggleGrupoInforme(cb){
   guardarSeleccionInforme();
 }
 
+function toggleGrupoMateriales(masterCb){
+  document.querySelectorAll('.cb-materiales').forEach(cb => cb.checked = masterCb.checked);
+  guardarSeleccionInforme();
+}
+
 function toggleGrupoPrioridades(masterCb){
   document.querySelectorAll('.cb-prioridades').forEach(cb => cb.checked = masterCb.checked);
   guardarSeleccionInforme();
@@ -921,6 +961,17 @@ function marcarTodoInforme(){
   _checksInforme().forEach(cb => cb.checked = true);
   guardarSeleccionInforme();
 }
+
+document.querySelectorAll('.cb-materiales').forEach(cb => {
+  cb.addEventListener('change', () => {
+    const master = document.getElementById('cb-materiales-all');
+    if (master) {
+      const subs = [...document.querySelectorAll('.cb-materiales')];
+      master.checked = subs.every(c => c.checked);
+    }
+    guardarSeleccionInforme();
+  });
+});
 
 document.querySelectorAll('.cb-prioridades').forEach(cb => {
   cb.addEventListener('change', () => {
@@ -960,13 +1011,15 @@ function generarVistaPreviaInforme(){
   const NOMBRES_SUB = {
     estado_proyecto: 'Estado del proyecto', que_hacer_ahora: 'Qué hacer ahora',
     tajos_bloqueados: 'Tajos bloqueados', sin_revisar: 'Sin revisar nunca',
+    total: 'Total acumulado', por_mes: 'Por mes', por_albaran: 'Por albarán',
+    por_suministrador: 'Por suministrador', entregas: 'Todas las entregas (línea a línea)',
   };
   // Vivienda y garaje comparten las mismas claves de data-sub (arriba):
   // sin este prefijo, marcar "Qué hacer ahora" de las dos a la vez
   // imprimiria dos secciones con el mismo titulo, sin forma de saber
   // cual es cual -- encontrado probando de verdad la vista previa, no
   // solo leyendo el codigo.
-  const PREFIJO_SECCION = {prioridades_garaje: '🅿️ ', prioridades_zesp: '🔧 '};
+  const PREFIJO_SECCION = {prioridades_garaje: '🅿️ ', prioridades_zesp: '🔧 ', materiales: '▣ Materiales — '};
   let contenido = '';
   marcadas.forEach(cb => {
     const seccion = cb.dataset.seccion;
@@ -1257,6 +1310,7 @@ input[type=checkbox]{pointer-events:none;}
 ${contenido}
 </div>
 <script>document.querySelectorAll('details').forEach(d => d.open = true);<\/script>
+<script>${ordenarTabla.toString()}<\/script>
 </body></html>`;
   const ventana = window.open('', '_blank');
   if (!ventana) {

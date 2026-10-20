@@ -3,7 +3,8 @@
 """
 materiales_xlsx.py - comprobar y reparar la hoja de entrega de materiales
 
-Cada obra tiene un Excel ``REVISIONES/hoja de entrega de materiales <OBRA>.xlsx``
+Cada obra tiene un Excel ``hoja de entrega de materiales <OBRA>.xlsx`` (en ``MATERIALES/``
+para Olabeaga; en ``REVISIONES/`` en las obras que no se han movido)
 que el panel lee con ``lectores.leer_materiales``. El panel lee los VALORES
 guardados en el fichero (no recalcula formulas), asi que un Excel solo es
 valido si se abre con openpyxl Y trae calculado el TOTAL.
@@ -405,6 +406,21 @@ def _imprimir(titulo: str, defectos: list[str]) -> None:
         print(f"      - {d}")
 
 
+def _aviso_incompletas(ruta: str) -> None:
+    """Informa (sin cambiar el codigo de salida) de las entregas a las que les
+    falta suministrador o albaran: es un dato que solo puede dar quien tiene el albaran."""
+    if not os.path.isfile(ruta) or not es_registro(ruta):
+        return
+    try:
+        n = entregas_materiales.contar_incompletas(ruta)
+    except Exception:
+        return           # el diagnostico principal ya habra contado lo que no se pueda leer
+    if n:
+        print()
+        print(f"Aviso: {n} línea(s) sin suministrador o albarán (entrega en mano: suministrador "
+              f"«Sagarde»). Complétalas en la hoja {entregas_materiales.HOJA_ENTREGAS}.")
+
+
 def main(argv=None) -> int:
     argv = list(sys.argv[1:] if argv is None else argv)
     if len(argv) < 2 or argv[0] not in ("comprobar", "reparar", "generar", "migrar"):
@@ -426,6 +442,7 @@ def main(argv=None) -> int:
     if orden == "comprobar":
         defectos = diagnosticar(ruta)
         _imprimir(ruta, defectos)
+        _aviso_incompletas(ruta)
         if defectos:
             print("\nRepara con: py -3.11 _SISTEMA/MOTOR/scripts/materiales_xlsx.py reparar " + destino)
         return 1 if defectos else 0
@@ -439,7 +456,11 @@ def main(argv=None) -> int:
             return 1
         res = reparar(ruta)
         if res['ok'] and not res['acciones']:
-            print("Las hojas generadas ya estaban al dia con ENTREGAS: no hay nada que rehacer.")
+            # Contenido al dia, pero el LEEME y las listas de ayuda de ENTREGAS pueden ser
+            # de una version anterior (el libro se creo antes): se refrescan siempre.
+            entregas_materiales.regenerar_hojas(ruta)
+            print("Las hojas generadas ya estaban al dia con ENTREGAS; se han refrescado el LEEME "
+                  "y las listas de ayuda.")
     else:
         res = reparar(ruta)
     if res['copia']:
@@ -447,6 +468,7 @@ def main(argv=None) -> int:
     for a in res['acciones']:
         print(f"  hecho: {a}")
     _imprimir(ruta, res['pendientes'])
+    _aviso_incompletas(ruta)
     return 0 if res['ok'] else 1
 
 

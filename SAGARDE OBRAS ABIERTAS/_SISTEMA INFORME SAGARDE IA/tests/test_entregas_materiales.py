@@ -215,6 +215,107 @@ class TestAgrupacion(unittest.TestCase):
         self.assertIsNone(col["albaran"])
 
 
+class TestSuministradorYAlbaran(unittest.TestCase):
+    """Regla de Bixente (20/10/2026): entrega en mano = suministrador Sagarde;
+    si no, la empresa y el codigo que vienen en el albaran (Electrovizcaya,
+    Suelbat...). Un dato que falta no se inventa: se ve y se avisa."""
+
+    def test_en_mano_sagarde_sin_albaran_es_completa_y_una_empresa_sin_albaran_no(self):
+        self.assertTrue(em.entrega_completa("Sagarde", None))
+        self.assertTrue(em.entrega_completa(" SAGARDE ", ""))
+        self.assertTrue(em.entrega_completa("en mano", None))
+        self.assertTrue(em.entrega_completa("Suelbat", "A-1"))
+        self.assertFalse(em.entrega_completa("Suelbat", None))
+        self.assertFalse(em.entrega_completa(None, "A-1"))
+        self.assertFalse(em.entrega_completa(None, None))
+
+    def test_mismo_suministrador_con_otra_mayuscula_es_la_misma_columna(self):
+        filas = [_fila(datetime(2026, 10, 1), "Suelbat", "A-1", "T", "PVC", None, None, 20, 5),
+                 _fila(datetime(2026, 10, 1), " SUELBAT ", "a-1", "T", "ARTIGLAS", None, None, 20, 7)]
+        g = em.agrupar(em.leer_registro(_wb(filas))[0])
+        cols = g["meses"][0]["columnas"]
+        self.assertEqual(len(cols), 1, cols)
+        self.assertEqual(cols[0]["suministrador"], "Suelbat")      # se muestra la primera grafia
+
+    def test_cuenta_las_lineas_incompletas_por_mes(self):
+        filas = [_fila(datetime(2026, 10, 1), "Sagarde", None, "T", "PVC", None, None, 20, 5),       # completa (en mano)
+                 _fila(datetime(2026, 10, 1), "Suelbat", None, "T", "ARTIGLAS", None, None, 20, 5),  # falta albaran
+                 _fila(datetime(2026, 10, 2), None, "9", "T", "FORRO", None, None, 20, 5)]           # falta suministrador
+        g = em.agrupar(em.leer_registro(_wb(filas))[0])
+        self.assertEqual(g["meses"][0]["n_incompletas"], 2)
+        self.assertEqual([c["completa"] for c in g["meses"][0]["columnas"]], [True, False, False])
+
+    def test_el_panel_avisa_de_lo_que_falta_y_calla_si_esta_todo(self):
+        faltan = [_fila(datetime(2026, 10, 1), None, None, "T", "PVC", None, None, 20, 5)]
+        completos = [_fila(datetime(2026, 10, 1), "Sagarde", None, "T", "PVC", None, None, 20, 5)]
+        h1 = em.render_html(em.leer_materiales_wb(_wb(faltan), hoy=HOY))
+        h2 = em.render_html(em.leer_materiales_wb(_wb(completos), hoy=HOY))
+        self.assertIn("sin suministrador o sin albarán", h1)
+        self.assertIn("Sagarde", h2)
+        self.assertNotIn("sin suministrador o sin albarán", h2)
+
+    def test_excel_ofrece_la_lista_de_suministradores_sin_duplicar_validaciones(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ruta = os.path.join(tmp, "m.xlsx")
+            em.crear_libro(em.leer_registro(_wb(MUESTRA[:4]))[0], ruta)
+            em.regenerar_hojas(ruta)
+            em.regenerar_hojas(ruta)
+            dvs = openpyxl.load_workbook(ruta)["ENTREGAS"].data_validations.dataValidation
+        listas = [d for d in dvs if d.type == "list"]
+        self.assertEqual(len(listas), 1, [(d.type, str(d.sqref)) for d in dvs])
+        self.assertIn("Sagarde", listas[0].formula1)
+        self.assertIn("Suelbat", listas[0].formula1)
+        self.assertFalse(listas[0].showErrorMessage)        # lista de ayuda: se puede escribir otra empresa
+        self.assertEqual(len(dvs), 4)                       # fecha, suministrador, albaran, cantidad
+
+    def test_un_libro_antiguo_sin_listas_las_recibe_al_regenerar(self):
+        """El libro de Olabeaga se migro antes de que existieran las listas: al
+        regenerar las hojas tiene que ponerselas, no solo los libros nuevos."""
+        with tempfile.TemporaryDirectory() as tmp:
+            ruta = os.path.join(tmp, "m.xlsx")
+            em.crear_libro(em.leer_registro(_wb(MUESTRA[:4]))[0], ruta)
+            wb = openpyxl.load_workbook(ruta)
+            wb["ENTREGAS"].data_validations.dataValidation = []        # como un libro antiguo
+            wb.save(ruta)
+            sin = openpyxl.load_workbook(ruta)["ENTREGAS"].data_validations.dataValidation
+            em.regenerar_hojas(ruta)
+            con = openpyxl.load_workbook(ruta)["ENTREGAS"].data_validations.dataValidation
+        self.assertEqual(len(sin), 0)
+        self.assertTrue(any(d.type == "list" and "Suelbat" in d.formula1 for d in con))
+
+    def test_regenerar_actualiza_el_leeme_con_la_regla_de_entrega_en_mano(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ruta = os.path.join(tmp, "m.xlsx")
+            em.crear_libro(em.leer_registro(_wb(MUESTRA[:4]))[0], ruta)
+            wb = openpyxl.load_workbook(ruta)
+            wb["LEEME"]["A1"] = "texto viejo"
+            wb.save(ruta)
+            em.regenerar_hojas(ruta)
+            texto = " ".join(str(c.value) for f in _cargar(ruta)["LEEME"].iter_rows() for c in f if c.value)
+        self.assertNotIn("texto viejo", texto)
+        self.assertIn("en mano", texto)
+        self.assertIn("Sagarde", texto)
+
+    def test_la_herramienta_informa_de_las_lineas_sin_datos_pero_no_es_un_error(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ruta = os.path.join(tmp, "m.xlsx")
+            sin_datos = [_fila(datetime(2026, 10, 1), None, None, "T", "PVC", None, None, 20, 5),
+                         _fila(datetime(2026, 10, 1), None, None, "T", "ARTIGLAS", None, None, 20, 7)]
+            em.crear_libro(em.leer_registro(_wb(sin_datos))[0], ruta)
+            salida = io.StringIO()
+            from contextlib import redirect_stdout
+            with redirect_stdout(salida):
+                codigo = mx.main(["comprobar", ruta])
+            completo = os.path.join(tmp, "c.xlsx")
+            em.crear_libro(em.leer_registro(_wb(MUESTRA[:4]))[0], completo)
+            salida2 = io.StringIO()
+            with redirect_stdout(salida2):
+                mx.main(["comprobar", completo])
+        self.assertEqual(codigo, 0)
+        self.assertIn("2 línea(s) sin suministrador o albarán", salida.getvalue())
+        self.assertNotIn("sin suministrador o albarán", salida2.getvalue())
+
+
 class TestCompatibilidadConElLectorDeSiempre(unittest.TestCase):
 
     def test_resumen_con_las_mismas_claves_que_leer_materiales(self):
@@ -257,38 +358,85 @@ class TestPanel(unittest.TestCase):
             self.assertIn(esperado, h)
         self.assertIn("1.000", h)           # acumulado de AZUL con separador de miles del panel
 
-    def test_todas_las_filas_de_la_tabla_de_un_mes_ocupan_las_mismas_columnas(self):
-        """Fallo real de la primera version: las filas Suministrador/Albaran
-        llevaban colspan=5 y quedaban desplazadas una columna, de modo que el
-        albaran de una entrega aparecia bajo la fecha de la siguiente."""
+    @staticmethod
+    def _tablas(h):
         import re
-        h = self._html(MUESTRA[:4])
-        tabla = h[h.index("<table"):h.index("</table>")]
-        anchos = []
-        for tr in re.findall(r"<tr>(.*?)</tr>", tabla, re.S):
-            ancho = 0
-            for celda in re.findall(r"<t[hd]\b([^>]*)>", tr):
-                m = re.search(r'colspan="(\d+)"', celda)
-                ancho += int(m.group(1)) if m else 1
-            anchos.append(ancho)
-        self.assertEqual(len(set(anchos)), 1, anchos)
+        return re.findall(r"<table.*?</table>", h, re.S)
 
-    def test_el_albaran_queda_bajo_la_fecha_de_su_entrega(self):
+    @staticmethod
+    def _filas(tabla):
+        """[[texto de cada celda]] de las filas del cuerpo (sin cabecera)."""
         import re
-        h = self._html(MUESTRA[:4])
-        tabla = h[h.index("<table"):h.index("</table>")]
-        filas = re.findall(r"<tr>(.*?)</tr>", tabla, re.S)
+        cuerpo = tabla[tabla.index("<tbody"):]
+        return [[re.sub(r"<[^>]+>", "", c).strip() for c in re.findall(r"<t[dh](?=[ >])[^>]*>(.*?)</t[dh]>", tr, re.S)]
+                for tr in re.findall(r"<tr(?=[ >])[^>]*>(.*?)</tr>", cuerpo, re.S)]
 
-        def celdas(tr):
-            salida = []
-            for attrs, contenido in re.findall(r"<t[hd]\b([^>]*)>(.*?)</t[hd]>", tr, re.S):
-                m = re.search(r'colspan="(\d+)"', attrs)
-                salida += [re.sub(r"<[^>]+>", "", contenido).strip()] + [""] * ((int(m.group(1)) if m else 1) - 1)
-            return salida
-        fechas, alb = celdas(filas[0]), celdas(filas[2])
-        self.assertEqual(fechas[fechas.index("01/10")], "01/10")
-        self.assertEqual(alb[fechas.index("01/10")], "111")
-        self.assertEqual(alb[fechas.index("05/10")], "222")
+    @staticmethod
+    def _cabecera(tabla):
+        import re
+        cab = tabla[tabla.index("<thead"):tabla.index("</thead>")]
+        return [re.sub(r"<[^>]+>", "", c).strip().upper() for c in re.findall(r"<th(?=[ >])[^>]*>(.*?)</th>", cab, re.S)]
+
+    def test_la_lista_del_mes_tiene_fecha_suministrador_y_albaran_como_columnas(self):
+        """Peticion de Bixente (20/10/2026): suministrador y albaran en COLUMNAS, no
+        en filas encima de las fechas. Una fila por linea entregada."""
+        h = self._html(MUESTRA[:4])
+        lista = self._tablas(h)[0]
+        self.assertEqual(self._cabecera(lista),
+                         ["FECHA", "SUMINISTRADOR", "ALBARÁN", "MATERIAL", "TIPO", "UNI", "CANT."])
+        filas = self._filas(lista)
+        self.assertEqual(len(filas), 4)
+        self.assertEqual(filas[0], ["01/10/2026", "Sumi A", "111", "AZUL", "1,5", "200", "400"])
+        self.assertEqual(filas[2], ["05/10/2026", "Sumi B", "222", "PVC", "GRIS", "20", "171"])
+        self.assertEqual(filas[3], ["05/10/2026", "Sumi B", "223", "PVC", "GRIS", "20", "29"])
+
+    def test_debajo_de_la_lista_va_el_total_del_mes_por_material(self):
+        h = self._html(MUESTRA[:4])
+        totales = self._tablas(h)[1]
+        self.assertEqual(self._cabecera(totales),
+                         ["MATERIAL", "TIPO", "UNI", "MES ANT.", "TOTAL MES", "ACUMULADO"])
+        pvc = next(f for f in self._filas(totales) if f[0] == "PVC")
+        self.assertEqual(pvc, ["PVC", "GRIS", "20", "", "200", "200"])      # 171 + 29
+
+    def test_todas_las_filas_de_cada_tabla_ocupan_las_mismas_columnas(self):
+        import re
+        for tabla in self._tablas(self._html()):
+            anchos = []
+            for tr in re.findall(r"<tr(?=[ >])[^>]*>(.*?)</tr>", tabla, re.S):
+                ancho = 0
+                for celda in re.findall(r"<t[hd](?=[ >])([^>]*)>", tr):
+                    m = re.search(r'colspan="(\d+)"', celda)
+                    ancho += int(m.group(1)) if m else 1
+                anchos.append(ancho)
+            self.assertEqual(len(set(anchos)), 1, anchos)
+
+    def test_entrega_en_mano_muestra_en_mano_y_la_incompleta_un_guion(self):
+        filas = [_fila(datetime(2026, 10, 1), "Sagarde", None, "T", "PVC", None, None, 20, 5),
+                 _fila(datetime(2026, 10, 2), "Suelbat", None, "T", "ARTIGLAS", None, None, 20, 5),
+                 _fila(datetime(2026, 10, 3), None, None, "T", "FORRO", None, None, 20, 5)]
+        lista = self._tablas(self._html(filas))[0]
+        f = {x[3]: x for x in self._filas(lista)}
+        self.assertEqual((f["PVC"][1], f["PVC"][2]), ("Sagarde", "en mano"))
+        self.assertEqual((f["ARTIGLAS"][1], f["ARTIGLAS"][2]), ("Suelbat", "—"))
+        self.assertEqual((f["FORRO"][1], f["FORRO"][2]), ("—", "—"))
+
+    def test_las_cabeceras_se_pueden_pulsar_para_ordenar(self):
+        """Peticion de Bixente (20/10/2026): la primera fila como pestanas que se
+        pulsan para ordenar por esa columna. Cada celda lleva su valor de orden
+        (fecha ISO y cantidad numerica) para que '1.000' no ordene como texto."""
+        h = self._html(MUESTRA[:4])
+        for tabla in self._tablas(h):
+            cab = tabla[tabla.index("<thead"):tabla.index("</thead>")]
+            self.assertEqual(cab.count("<th "), cab.count('onclick="ordenarTabla(this)"'), cab)
+            self.assertGreater(cab.count("<th "), 0)
+        lista = self._tablas(h)[0]
+        self.assertIn('data-v="2026-10-01"', lista)
+        self.assertIn('data-v="171"', lista)
+        self.assertIn('data-i="0"', lista)           # orden original, para volver a el
+
+    def test_las_filas_de_categoria_se_marcan_para_que_el_orden_las_oculte(self):
+        totales = self._tablas(self._html(MUESTRA[:4]))[1]
+        self.assertIn("data-cat", totales)
 
     def test_el_mes_mas_reciente_va_primero(self):
         h = self._html()
@@ -351,6 +499,134 @@ class TestPanel(unittest.TestCase):
         self.assertIn("9.200", html)
 
 
+PRIORIDADES_VACIAS = {
+    'sin_base': False, 'revision': '28/07/2026', 'version': '4.3', 'catalogo_version': '1.3',
+    'resumen': {}, 'items': [], 'inventario': [], 'dudas_pendientes': [], 'preguntas_orden': [],
+    'prevision': [], 'avisos': []}
+FICHA_VACIA = {'_disponible': True, 'datos': {}, 'personal': [], 'hitos': [], 'riesgos': [],
+               'plan': [], 'tareas': []}
+
+
+def _panel_html(materiales):
+    carpeta = tempfile.mkdtemp()
+    try:
+        salida = os.path.join(carpeta, "panel.html")
+        panel_obra.generar_panel(obra="Obra", subtitulo="", historial=[], materiales=materiales,
+                                 ficha=FICHA_VACIA, documentos=[], prioridades=PRIORIDADES_VACIAS,
+                                 output_path=salida)
+        with open(salida, encoding="utf-8") as f:
+            return f.read()
+    finally:
+        import shutil
+        shutil.rmtree(carpeta, ignore_errors=True)
+
+
+def _secciones_del_panel(html):
+    import json
+    ini = html.index('<script id="secciones-informe" type="application/json">')
+    ini = html.index(">", ini) + 1
+    return json.loads(html[ini:html.index("</script>", ini)])
+
+
+class TestInformeDeMateriales(unittest.TestCase):
+    """Peticion de Bixente (20/10/2026): en el 'Informe de obra' poder elegir
+    que datos de materiales mostrar al imprimir o presentar: total, por mes,
+    por albaran, por suministrador..."""
+
+    OPCIONES = ["total", "por_mes", "por_albaran", "por_suministrador", "entregas"]
+
+    def _res(self, filas=None):
+        return em.leer_materiales_wb(_wb(filas), hoy=HOY)
+
+    def test_el_informe_ofrece_las_cinco_opciones(self):
+        self.assertEqual(list(em.secciones_informe(self._res()).keys()), self.OPCIONES)
+
+    def test_total_y_por_mes_son_las_mismas_cadenas_que_la_pestana(self):
+        res = self._res()
+        sec = em.secciones_informe(res)
+        self.assertEqual(sec["por_mes"] + "\n" + sec["total"], em.render_html(res))
+
+    def test_por_albaran_un_bloque_por_albaran_con_su_suministrador_y_fecha(self):
+        h = em.secciones_informe(self._res(MUESTRA[:4]))["por_albaran"]
+        for esperado in ("Albarán 111", "Albarán 222", "Albarán 223", "Sumi A", "Sumi B",
+                         "01/10/2026", "05/10/2026"):
+            self.assertIn(esperado, h)
+        self.assertEqual(h.count("<h3>"), 4)           # resumen + 3 albaranes
+
+    def test_por_albaran_distingue_la_entrega_en_mano_y_la_que_no_tiene_numero(self):
+        filas = [_fila(datetime(2026, 10, 1), "Sagarde", None, "T", "PVC", None, None, 20, 5),
+                 _fila(datetime(2026, 10, 2), "Suelbat", None, "T", "ARTIGLAS", None, None, 20, 5)]
+        h = em.secciones_informe(self._res(filas))["por_albaran"]
+        self.assertIn("Entrega en mano", h)
+        self.assertIn("Albarán sin número", h)
+
+    def test_por_suministrador_suma_los_materiales_y_lista_sus_albaranes(self):
+        h = em.secciones_informe(self._res(MUESTRA))["por_suministrador"]
+        a, b = h.index("Sumi A"), h.index("Sumi B")
+        self.assertLess(a, b)
+        bloque_a = h[a:b]
+        self.assertIn("1.000", bloque_a)               # AZUL: 400 de octubre + 600 de noviembre
+        self.assertIn("111", bloque_a)
+        self.assertIn("333", bloque_a)
+        self.assertIn("222", h[b:])
+        self.assertIn("223", h[b:])
+
+    def test_por_suministrador_sin_dato_va_el_ultimo(self):
+        filas = [_fila(datetime(2026, 10, 1), None, None, "T", "PVC", None, None, 20, 5),
+                 _fila(datetime(2026, 10, 2), "Zeta", "9", "T", "ARTIGLAS", None, None, 20, 5)]
+        h = em.secciones_informe(self._res(filas))["por_suministrador"]
+        self.assertLess(h.index("Zeta"), h.index("Sin suministrador"))
+
+    def test_los_totales_por_suministrador_cuadran_con_el_total_general(self):
+        """Salvaguarda: sumando todos los suministradores sale lo mismo que el
+        acumulado. Si no, algun camino contaria distinto (familia de fallo del proyecto)."""
+        res = self._res(MUESTRA)
+        g = res["detalle"]
+        por_sum = em.totales_por_suministrador(g["lineas"])
+        suma = {}
+        for grupo in por_sum:
+            for f in grupo["materiales"]:
+                clave = (f["material"], f["tipo"], f["uni"])
+                suma[clave] = suma.get(clave, 0) + f["total"]
+        esperado = {(f["material"], f["tipo"], f["uni"]): f["total"] for f in g["acumulado"]["filas"]}
+        self.assertEqual(suma, esperado)
+
+    def test_todas_las_entregas_es_una_lista_unica_en_orden_de_fecha(self):
+        h = em.secciones_informe(self._res(MUESTRA))["entregas"]
+        tabla = TestPanel._tablas(h)[0]
+        fechas = [f[0] for f in TestPanel._filas(tabla)]
+        self.assertEqual(len(fechas), 5)
+        self.assertEqual(fechas, sorted(fechas, key=lambda x: (x[6:], x[3:5], x[:2])))
+
+    def test_panel_nuevo_ofrece_las_opciones_como_subapartados_de_materiales(self):
+        html = _panel_html(self._res())
+        for sub in self.OPCIONES:
+            self.assertIn('data-seccion="materiales" data-sub="%s"' % sub, html)
+        self.assertIn('id="cb-materiales-all"', html)
+        sec = _secciones_del_panel(html)["materiales"]
+        self.assertEqual(list(sec.keys()), self.OPCIONES)
+        self.assertIn("Albarán 111", sec["por_albaran"])
+
+    def test_panel_con_formato_antiguo_conserva_el_casillero_simple(self):
+        antiguo = {'disponible': True, 'meses': ['Mayo26'], 'ultimo_mes': 'Mayo26', 'ultima_fecha': '08/05/2026',
+                   'dias_desde': 1, 'aviso': None,
+                   'items': [{'categoria': 'C', 'material': 'AZUL', 'tipo': '1.5', 'uni': '200', 'total': 9200}]}
+        html = _panel_html(antiguo)
+        self.assertNotIn('data-seccion="materiales" data-sub=', html)
+        self.assertIn('class="grp-cb" data-seccion="materiales"', html)
+        self.assertIsInstance(_secciones_del_panel(html)["materiales"], str)
+
+    def test_el_panel_lleva_la_funcion_de_ordenar_y_el_informe_la_incluye(self):
+        html = _panel_html(self._res())
+        self.assertIn("function ordenarTabla(th)", html)
+        self.assertIn("ordenarTabla.toString()", html)       # tambien al presentar/imprimir
+
+    def test_el_nombre_de_cada_opcion_sale_en_el_informe(self):
+        html = _panel_html(self._res())
+        for texto in ("Total acumulado", "Por mes", "Por albarán", "Por suministrador", "línea a línea"):
+            self.assertIn(texto, html)
+
+
 class TestExcelGenerado(unittest.TestCase):
 
     def _libro(self, tmp, filas=None):
@@ -364,20 +640,23 @@ class TestExcelGenerado(unittest.TestCase):
             wb = _cargar(self._libro(tmp))
         self.assertEqual(wb.sheetnames, ["ENTREGAS", "Octubre26", "Noviembre26", "ACUMULADO", "LEEME"])
 
-    def test_hoja_de_mes_lleva_fechas_suministrador_albaran_y_totales(self):
+    def test_hoja_de_mes_es_una_lista_con_columnas_y_debajo_el_total_por_material(self):
         with tempfile.TemporaryDirectory() as tmp:
-            ws = _cargar(self._libro(tmp))["Octubre26"]
+            wb = _cargar(self._libro(tmp, MUESTRA[:4]))
+            ws = wb["Octubre26"]
             g = _grid(ws)
-        cab = g[0]
-        self.assertEqual(cab[:5], ["MATERIAL", "TIPO", "MARCA", "UNI", "MES ANT"])
-        self.assertEqual(cab[5:8], [datetime(2026, 10, 1), datetime(2026, 10, 5), datetime(2026, 10, 5)])
-        self.assertEqual(cab[8:], ["TOTAL MES", "ACUMULADO"])
-        self.assertEqual(g[1][0], "Suministrador")
-        self.assertEqual(g[1][5:8], ["Sumi A", "Sumi B", "Sumi B"])
-        self.assertEqual(g[2][0], "Albarán")
-        self.assertEqual(g[2][5:8], ["111", "222", "223"])
-        pvc = next(f for f in g if f[0] == "PVC")
-        self.assertEqual(pvc[5:], [None, 171, 29, 200, 200])
+            filtro = wb["Octubre26"].auto_filter.ref
+        self.assertEqual(g[0][:9], ["FECHA", "SUMINISTRADOR", "ALBARÁN", "CATEGORÍA", "MATERIAL",
+                                    "TIPO", "MARCA", "UNI", "CANTIDAD"])
+        self.assertEqual(g[1][:9], [datetime(2026, 10, 1), "Sumi A", "111", "CABLE 1,5", "AZUL", "1,5", None, "200", 400])
+        self.assertEqual(g[4][:9], [datetime(2026, 10, 5), "Sumi B", "223", "TUBO", "PVC", "GRIS", None, "20", 29])
+        self.assertEqual(filtro, "A1:I5", "la cabecera de la lista lleva los filtros de Excel (ordenar)")
+        # segundo bloque: total del mes por material, alineado en las columnas E..K
+        titulo = next(i for i, f in enumerate(g) if f[4] == "TOTAL DEL MES POR MATERIAL")
+        self.assertEqual(g[titulo + 1][4:11], ["MATERIAL", "TIPO", "MARCA", "UNI", "MES ANT", "TOTAL MES", "ACUMULADO"])
+        pvc = next(f for f in g[titulo + 2:] if f[4] == "PVC")
+        self.assertEqual(pvc[4:11], ["PVC", "GRIS", None, "20", None, 200, 200])
+        self.assertTrue(any(f[4] == "TUBO" and f[5] is None for f in g[titulo + 2:]), "fila de categoria")
 
     def test_las_hojas_generadas_no_llevan_formulas(self):
         with tempfile.TemporaryDirectory() as tmp:
@@ -551,6 +830,76 @@ class TestHerramientaMaterialesXlsx(unittest.TestCase):
             from contextlib import redirect_stdout
             with redirect_stdout(io.StringIO()):
                 self.assertEqual(mx.main(["migrar", ruta]), 1)
+
+
+class TestRefrescoAutomaticoDeLasHojas(unittest.TestCase):
+    """20/10/2026: agy relleno bien suministrador y albaran en ENTREGAS pero se
+    olvido del paso final (`generar`): la hoja del mes seguia sin los albaranes.
+    El resultado no puede depender de que una IA recuerde un ultimo paso: el
+    motor rehace solo las hojas desfasadas cada vez que regenera la obra."""
+
+    def _libro_desfasado(self, tmp):
+        ruta = os.path.join(tmp, "MATERIALES", "m.xlsx")
+        os.makedirs(os.path.dirname(ruta))
+        em.crear_libro(em.leer_registro(_wb(MUESTRA[:4]))[0], ruta)
+        wb = openpyxl.load_workbook(ruta)
+        for fila in wb["ENTREGAS"].iter_rows(min_row=2):      # lo que hizo agy: solo ENTREGAS
+            fila[1].value, fila[2].value = "Suelbat", "471832"
+        wb.save(ruta)
+        return ruta
+
+    def test_rehace_las_hojas_desfasadas_con_copia_y_no_toca_entregas(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ruta = self._libro_desfasado(tmp)
+            entregas_antes = _grid(_cargar(ruta)["ENTREGAS"])
+            self.assertTrue(em.hojas_desactualizadas(_cargar(ruta)))
+            self.assertTrue(em.refrescar_hojas(ruta))
+            self.assertEqual(em.hojas_desactualizadas(_cargar(ruta)), [])
+            texto = " ".join(str(c.value) for f in _cargar(ruta)["Octubre26"].iter_rows() for c in f if c.value)
+            copias = os.listdir(os.path.join(tmp, "MATERIALES", "_SISTEMA"))
+            self.assertEqual(_grid(_cargar(ruta)["ENTREGAS"]), entregas_antes)
+        self.assertIn("471832", texto)
+        self.assertEqual(len(copias), 1)
+
+    def test_si_ya_estan_al_dia_no_hace_nada_ni_copia(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            ruta = self._libro_desfasado(tmp)
+            em.refrescar_hojas(ruta)
+            self.assertFalse(em.refrescar_hojas(ruta))
+            self.assertEqual(len(os.listdir(os.path.join(tmp, "MATERIALES", "_SISTEMA"))), 1)
+
+    def test_un_fichero_que_no_es_registro_o_no_existe_se_ignora(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            self.assertFalse(em.refrescar_hojas(os.path.join(tmp, "no_existe.xlsx")))
+            rejilla = os.path.join(tmp, "rejilla.xlsx")
+            TestMigracionDesdeLaRejilla()._rejilla().save(rejilla)
+            self.assertFalse(em.refrescar_hojas(rejilla))
+
+    def test_el_generador_lo_llama_antes_de_leer_los_materiales_y_un_fallo_no_tumba_la_obra(self):
+        import types
+        from unittest.mock import patch
+        import generar_todos as gt
+        llamadas = []
+        with tempfile.TemporaryDirectory() as tmp:
+            os.makedirs(os.path.join(tmp, "OBRA FALSA"))
+            obra = {'nombre': 'OBRA FALSA', 'carpeta_obra': 'OBRA FALSA', 'adaptador': 'adaptador_falso_refresco',
+                    'materiales_rel': os.path.join('MATERIALES', 'm.xlsx')}
+            falso = types.SimpleNamespace(cargar_historial=lambda: [])
+            salida = io.StringIO()
+            from contextlib import redirect_stdout
+            with patch.dict(sys.modules, {'adaptador_falso_refresco': falso}), \
+                    patch.object(gt, 'OBRAS', [obra]), patch.object(gt, 'OBRAS_ABIERTAS_DIR', tmp), \
+                    patch.object(gt, 'generar_index'), patch.object(gt, 'escribir_resumen_json'), \
+                    patch.object(gt, 'publicar_registro_revisiones'), \
+                    patch.object(gt.entregas_materiales, 'refrescar_hojas',
+                                 side_effect=lambda r: llamadas.append(r) or (_ for _ in ()).throw(PermissionError("abierto en Excel"))), \
+                    patch.object(gt.lectores, 'leer_materiales', side_effect=RuntimeError('corta aqui')), \
+                    redirect_stdout(salida):
+                gt.main(hacer_pdf=False)
+        self.assertEqual(llamadas, [os.path.join(tmp, 'OBRA FALSA', 'MATERIALES', 'm.xlsx')])
+        self.assertIn("AVISO MATERIALES", salida.getvalue())
+        self.assertIn("Excel", salida.getvalue())
+        self.assertIn("Fallo al generar el panel", salida.getvalue())     # llego hasta leer_materiales: el aviso no la corto antes
 
 
 if __name__ == "__main__":
