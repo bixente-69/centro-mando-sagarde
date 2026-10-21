@@ -13213,7 +13213,7 @@
   "materiales": {
     "ultimo_mes": "Mayo26",
     "ultima_fecha": "08/05/2026",
-    "dias_desde": 165,
+    "dias_desde": 166,
     "meses": [
       "Febrero26",
       "Marzo26",
@@ -13221,9 +13221,9 @@
       "Mayo26"
     ],
     "n_items": 50,
-    "aviso": "La hoja de materiales no se actualiza desde 08/05/2026 (165 días). Los datos de consumo/stock pueden estar desfasados.",
+    "aviso": "La hoja de materiales no se actualiza desde 08/05/2026 (166 días). Los datos de consumo/stock pueden estar desfasados.",
     "_meta": {
-      "actualizado": "20/10/2026 13:53"
+      "actualizado": "21/10/2026 06:35"
     }
   },
   "documentos": {
