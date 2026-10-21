@@ -231,6 +231,10 @@ def _nombres_de_alta(ficha) -> set[str]:
     return nombres
 
 
+# «_garaje.html», o «_garaje (1).html» cuando el navegador renombra una descarga repetida.
+_ES_HOJA_GARAJE = re.compile(r"_garaje(?:\s*\(\d+\))?\.html$", flags=re.I)
+
+
 def detectar_hojas(
     carpeta_revisiones,
     ficha_obra,
@@ -258,7 +262,7 @@ def detectar_hojas(
         orden, fecha = _fecha_desde_nombre(ruta.name)
         if not orden or not fecha:
             continue
-        tipo = "garaje" if ruta.name.casefold().endswith("_garaje.html") else "vivienda"
+        tipo = "garaje" if _ES_HOJA_GARAJE.search(ruta.name) else "vivienda"
         if tipo == "vivienda" and not incluir_vivienda:
             continue
         if tipo == "garaje" and not incluir_garaje:

@@ -159,6 +159,24 @@ class TestDeteccionHojas(unittest.TestCase):
         self.assertEqual(deteccion.vivienda[0].fecha, "01/10/2026")
         self.assertEqual(len(deteccion.copias_identicas), 1)
 
+    def test_garaje_con_sufijo_de_descarga_duplicada_sigue_siendo_garaje(self):
+        # El navegador renombra una segunda descarga como «..._garaje (1).html»
+        # (Olabeaga 21/10/2026): seguía siendo una hoja de garaje.
+        with tempfile.TemporaryDirectory() as tmp:
+            _escribir(Path(tmp) / "REVISION OBRA 21102026.html", b"v")
+            _escribir(Path(tmp) / "REVISION OBRA 21102026_garaje (1).html", b"g")
+
+            deteccion = ao.detectar_hojas(tmp, _ficha(), _ficha())
+
+        self.assertEqual(
+            [h.ruta.name for h in deteccion.vivienda],
+            ["REVISION OBRA 21102026.html"],
+        )
+        self.assertEqual(
+            [h.ruta.name for h in deteccion.garaje],
+            ["REVISION OBRA 21102026_garaje (1).html"],
+        )
+
     def test_filtro_solo_vivienda_no_detecta_garajes(self):
         with tempfile.TemporaryDirectory() as tmp:
             _escribir(Path(tmp) / "REVISION OBRA 01102026.html", b"v")
