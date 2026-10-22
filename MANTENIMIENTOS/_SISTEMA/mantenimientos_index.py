@@ -27,7 +27,7 @@ MOTOR_DIR = ROOT.parent / "_SISTEMA" / "MOTOR"
 if str(MOTOR_DIR) not in sys.path:
     sys.path.insert(0, str(MOTOR_DIR))
 
-from avisos import dias_desde_timestamp, es_aviso_por_antiguedad
+from avisos import dias_desde_timestamp, es_aviso_por_antiguedad, motivo_sin_aviso
 
 INDEX_PATH = ROOT / "index.html"
 RESUMEN_JSON = SISTEMA_DIR / "mantenimientos_resumen.json"
@@ -103,11 +103,22 @@ def scan_mantenimientos() -> list[dict]:
                 ultima_ts = 0.0
 
         dias_inactivo = days_count(ultima_ts)
-        
+        nombre_limpio = clean_name(folder.name)
+        aviso_activo = es_aviso_por_antiguedad(
+            dias_inactivo, DIAS_ALERTA_MANTENIMIENTO)
+        motivo = motivo_sin_aviso(nombre_limpio)
+
         if dias_inactivo <= DIAS_ALERTA_MANTENIMIENTO:
             estado_actividad = "al_dia"
             estado_label = "Al día"
             clase_estado = "ok"
+        elif aviso_activo and motivo:
+            # Declarado sin aviso (avisos.py): se apaga el aviso, pero la
+            # tarjeta dice por que, en vez de dejar que parezca que esta al dia.
+            aviso_activo = False
+            estado_actividad = "sin_aviso"
+            estado_label = f"Sin aviso: {motivo} ({dias_inactivo}d)"
+            clase_estado = "off"
         elif dias_inactivo <= 365:
             estado_actividad = "revision_pendiente"
             estado_label = f"Revisión pendiente ({dias_inactivo}d)"
@@ -117,7 +128,6 @@ def scan_mantenimientos() -> list[dict]:
             estado_label = f"Inactivo ({dias_inactivo}d)"
             clase_estado = "bad"
 
-        nombre_limpio = clean_name(folder.name)
         folder_rel = folder.name
         index_rel = f"{quote(folder.name, safe='/()[]!$&()*+,;=:@-._~')}/index.html"
 
@@ -132,8 +142,7 @@ def scan_mantenimientos() -> list[dict]:
             "ultima_str": fmt_dt(ultima_ts),
             "hace_texto": days_text(ultima_ts),
             "dias_inactivo": dias_inactivo,
-            "aviso_activo": es_aviso_por_antiguedad(
-                dias_inactivo, DIAS_ALERTA_MANTENIMIENTO),
+            "aviso_activo": aviso_activo,
             "estado_actividad": estado_actividad,
             "estado_label": estado_label,
             "clase_estado": clase_estado,
@@ -163,6 +172,7 @@ def escribir_resumen_json(contratos: list[dict]):
             "n_al_dia": sum(1 for c in contratos if c["estado_actividad"] == "al_dia"),
             "n_pendientes": sum(1 for c in contratos if c["estado_actividad"] == "revision_pendiente"),
             "n_inactivos": sum(1 for c in contratos if c["estado_actividad"] == "inactivo"),
+            "n_sin_aviso": sum(1 for c in contratos if c["estado_actividad"] == "sin_aviso"),
             "n_alertas_desactualizadas": len(inactivos),
             "archivos_totales": sum(c["n_archivos"] for c in contratos),
         },
@@ -198,10 +208,10 @@ a{{color:inherit;}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;}}
 .card{{background:var(--card);border-radius:var(--radius);padding:20px 22px;box-shadow:0 1px 3px rgba(0,0,0,.08);text-decoration:none;color:var(--ink);display:block;transition:transform .1s;border-top:4px solid var(--accent);}}
 .card:hover{{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.12);}}
-.card.ok{{border-top-color:var(--ok);}}.card.warn{{border-top-color:var(--warn);}}.card.bad{{border-top-color:var(--bad);}}
+.card.ok{{border-top-color:var(--ok);}}.card.warn{{border-top-color:var(--warn);}}.card.bad{{border-top-color:var(--bad);}}.card.off{{border-top-color:#98a2b3;}}
 .card h2{{font-size:15.5px;font-weight:700;margin-bottom:10px;}}
 .card .badge{{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;text-transform:uppercase;margin-bottom:10px;}}
-.card .badge.ok{{background:#e8f6ee;color:var(--ok);}}.card .badge.warn{{background:#fff4e5;color:var(--warn);}}.card .badge.bad{{background:#fdecea;color:var(--bad);}}
+.card .badge.ok{{background:#e8f6ee;color:var(--ok);}}.card .badge.warn{{background:#fff4e5;color:var(--warn);}}.card .badge.bad{{background:#fdecea;color:var(--bad);}}.card .badge.off{{background:#eef1f4;color:var(--muted);}}
 .card .row{{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px;}}
 .footer{{text-align:right;font-size:11px;color:var(--muted);margin-top:20px;}}
 @media(max-width:900px){{.logo{{width:190px;}}}}

@@ -461,13 +461,19 @@ def attach_word_previews(obras: list[dict]) -> None:
     for obra in obras:
         previews = {}
         pending_by_word = {}
+        rows_by_word = {}
         for word in obra["words"]:
             preview, pending_count, rows_considered = write_preview(word)
             if preview:
                 previews[word] = preview
                 pending_by_word[word] = pending_count
+                rows_by_word[word] = rows_considered
         obra["previews"] = previews
         obra["pending_count"] = pending_by_word.get(obra["main_word"], 0) if obra.get("main_word") else 0
+        # Sin tabla de incidencias estandar (Word ausente, .doc o columnas
+        # distintas) no se sabe cuantas hay pendientes: 0 filas leidas no es
+        # "0 pendientes", es "no se pudo leer".
+        obra["pending_legible"] = bool(rows_by_word.get(obra.get("main_word"), 0))
         obra["vencido"] = is_vencido(obra)
 
 
@@ -716,6 +722,15 @@ applyFilters();
 """
 
 
+def pendientes_de(obra: dict) -> int | None:
+    """Incidencias sin resolver del Word principal, o None si no se pudo leer
+    (el portal avisa solo de lo que esta sin solucionar y nunca da un 0 por
+    bueno cuando en realidad no se sabe)."""
+    if not obra.get("pending_legible"):
+        return None
+    return obra.get("pending_count", 0)
+
+
 def escribir_resumen_json(obras: list[dict]) -> None:
     """
     Publica un resumen en JSON para que lo lea el portal raiz
@@ -730,6 +745,7 @@ def escribir_resumen_json(obras: list[dict]) -> None:
         "totales": {
             "n_contratos": len(obras),
             "n_recientes": sum(1 for o in obras if is_recent(o)),
+            "n_con_pendientes": sum(1 for o in obras if pendientes_de(o)),
             "n_pdfs": sum(len(o["pdfs"]) for o in obras),
             "n_words": sum(len(o["words"]) for o in obras),
         },
@@ -739,6 +755,7 @@ def escribir_resumen_json(obras: list[dict]) -> None:
                 "carpeta": o["raw_name"],
                 "n_archivos": len(o["files"]),
                 "reciente": is_recent(o),
+                "pendientes": pendientes_de(o),
                 "vencido": o.get("vencido", False),
                 "ultimo_archivo_ts": o["last_ts"],
                 "ultima_incidencia_ts": o.get("last_incident_ts"),

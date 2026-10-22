@@ -9,6 +9,7 @@ import os
 
 from avisos import (
     aviso_caducado,
+    contrato_sin_aviso,
     dias_desde_timestamp,
     es_aviso_por_antiguedad,
 )
@@ -1368,7 +1369,8 @@ def construir_alertas(ro: dict | None = None, rp: dict | None = None, mant: list
     if mant:
         mant_inactivos = [
             m for m in mant
-            if es_aviso_por_antiguedad(
+            if not contrato_sin_aviso(m.get("nombre"))
+            and es_aviso_por_antiguedad(
                 dias_desde(m.get("ultima_ts")),
                 DIAS_MANTENIMIENTO_INACTIVO,
             )
@@ -1380,16 +1382,24 @@ def construir_alertas(ro: dict | None = None, rp: dict | None = None, mant: list
             )
             alertas.append(("warn", f"{len(mant_inactivos)} contrato(s) de mantenimiento sin revision ni archivos nuevos entre {DIAS_MANTENIMIENTO_INACTIVO + 1} y 399 dias: {nombres_m}"))
 
-    # 3. POST-VENTAS
+    # 3. POST-VENTAS: solo lo que esta SIN SOLUCIONAR. Tocar un archivo hace
+    # poco no es un aviso (daba a malentendido, 22/10/2026). `pendientes` es
+    # None cuando el Word no se puede leer: ni se cuenta como 0 ni se avisa.
     if rp and rp.get("contratos"):
-        pv_recientes = [c for c in rp["contratos"] if c.get("reciente")]
-        if pv_recientes:
+        pv_pendientes = sorted(
+            (c for c in rp["contratos"] if (c.get("pendientes") or 0) > 0),
+            key=lambda c: -c["pendientes"],
+        )
+        if pv_pendientes:
+            def _pendientes_txt(c):
+                n = c["pendientes"]
+                return f'{n} pendiente{"s" if n != 1 else ""}'
             nombres_pv = ", ".join(
-                f'<a href="{escape(c["href"])}" style="color:inherit;text-decoration:underline"><b>{escape(c["nombre"])}</b> ({dias_desde(c.get("ultimo_archivo_ts"))}d)</a>'
-                if c.get("href") else f"<b>{escape(c['nombre'])}</b>"
-                for c in pv_recientes[:4]
+                f'<a href="{escape(c["href"])}" style="color:inherit;text-decoration:underline"><b>{escape(c["nombre"])}</b> ({_pendientes_txt(c)})</a>'
+                if c.get("href") else f"<b>{escape(c['nombre'])}</b> ({_pendientes_txt(c)})"
+                for c in pv_pendientes[:4]
             )
-            alertas.append(("info", f"{len(pv_recientes)} contrato(s) de post-venta con incidencias activas recientemente: {nombres_pv}"))
+            alertas.append(("info", f"{len(pv_pendientes)} contrato(s) de post-venta con incidencias sin solucionar: {nombres_pv}"))
 
     # 4. AUDITORÍA DE DATOS Y PRE-PUBLICACIÓN
     diag_path = ROOT / "_SISTEMA" / "MOTOR" / "auditoria_diagnostico.json"

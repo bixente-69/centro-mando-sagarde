@@ -35,7 +35,7 @@ CARPETAS_SISTEMA = {"_SISTEMA", "_SISTEMA INFORME SAGARDE IA",
 if str(MOTOR_DIR) not in sys.path:
     sys.path.insert(0, str(MOTOR_DIR))
 
-from avisos import dias_desde_timestamp, es_aviso_por_antiguedad
+from avisos import contrato_sin_aviso, dias_desde_timestamp, es_aviso_por_antiguedad
 
 _SCRIPTS_DIR = str(Path(__file__).resolve().parent)
 if _SCRIPTS_DIR not in sys.path:
@@ -46,6 +46,14 @@ WORD_EXTS = {".doc", ".docx"}
 EXCEL_EXTS = {".xls", ".xlsx", ".xlsm"}
 PDF_EXTS = {".pdf"}
 DATA_EXTS = WORD_EXTS | EXCEL_EXTS | PDF_EXTS | {".json"}
+
+# Carpetas de una obra cuyo contenido NO son hojas de revision aunque el nombre
+# del fichero lleve "Parte" o "Revision": los planos del proyecto (p. ej.
+# "P.06 PLANOS INSTALACIONES_rev01_Parte3.pdf") y los informes tecnicos de
+# visitas o reuniones. Sin esto salian como "fecha invalida" (22/10/2026).
+# Se compara por nombre de carpeta, en mayusculas.
+CARPETAS_NO_REVISION = {"DOCUMENTACION INICIAL",
+                        "INFORMES TECNICOS DE VISITAS O REUNIONES"}
 
 # Patrón estándar para detectar fechas DDMMYYYY o DD_MM_YYYY en nombres de archivo
 DATE_PATTERN = re.compile(r"(\d{2})[-_/\.]?(\d{2})[-_/\.]?(\d{4})")
@@ -70,6 +78,9 @@ def audit_obras_abiertas() -> list[dict]:
                 # y la carpeta se llama '_SISTEMA INFORME SAGARDE IA'.
                 # Funcionaba solo por la segunda.
                 if CARPETAS_SISTEMA & set(f.parts):
+                    continue
+                carpetas = {p.upper() for p in f.relative_to(obra_dir).parts[:-1]}
+                if CARPETAS_NO_REVISION & carpetas:
                     continue
                 if "REVISION" in f.name.upper() or "PARTE" in f.name.upper():
                     rev_files.append(f)
@@ -201,6 +212,8 @@ def audit_mantenimientos() -> list[dict]:
 
         latest_mtime = max(f.stat().st_mtime for f in files)
         dias_inactivo = dias_desde_timestamp(latest_mtime)
+        if contrato_sin_aviso(c.name.replace("MANTENIMIENTO ", "").strip()):
+            continue  # declarado sin aviso en avisos.py (p. ej. rescindido)
         if es_aviso_por_antiguedad(dias_inactivo, desde_dias=90):
             issues.append({
                 "nivel": "warning",
