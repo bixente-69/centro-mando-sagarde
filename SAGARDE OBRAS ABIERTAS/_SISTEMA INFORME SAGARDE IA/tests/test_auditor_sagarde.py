@@ -143,6 +143,7 @@ class TestAuditoriaDeMateriales(unittest.TestCase):
                 patch.object(auditor_sagarde, "DIAGNOSTICO_JSON", Path(tmp) / "d.json"), \
                 patch.object(auditor_sagarde, "audit_obras_abiertas", return_value=[]), \
                 patch.object(auditor_sagarde, "audit_mantenimientos", return_value=[]), \
+                patch.object(auditor_sagarde, "audit_personal", return_value=[]), \
                 patch.object(auditor_sagarde, "audit_materiales", return_value=[aviso]):
             from contextlib import redirect_stdout
             import io

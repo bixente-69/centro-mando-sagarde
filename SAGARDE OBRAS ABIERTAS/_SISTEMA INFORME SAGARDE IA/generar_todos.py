@@ -1736,6 +1736,47 @@ def _bloque_obras_fallidas(fallidas):
             f"{linea}")
 
 
+def _personal_para_panel(obra):
+    """Filas de personal de la obra para su pestana Personal («Personal en obra»).
+
+    Un fallo con los datos de personal NUNCA tumba el panel de la obra: se avisa
+    y el panel sale como siempre. Una obra sin personal_obra.json devuelve [] y
+    se ve exactamente igual que antes (panel_obra lo verifica byte a byte)."""
+    try:
+        import personal_integracion
+        filas, aviso = personal_integracion.filas_para_panel(obra, OBRAS_ABIERTAS_DIR)
+    except Exception as exc:
+        filas, aviso = [], f"{type(exc).__name__}: {exc}"
+    if aviso:
+        print(f"  [AVISO PERSONAL] {obra['nombre']}: no se pudieron leer los datos de "
+              f"personal ({aviso}). El panel sale sin la vista de personal nueva.")
+        return []
+    if filas:
+        print(f"  [PERSONAL] {len(filas)} filas de jornadas para la pestana Personal")
+    return filas
+
+
+def exportar_personal_estado():
+    """Escribe personal_estado.js (tablet y ranking) con TODAS las obras del registro y
+    las archivadas. Se llama al final, junto al index y el resumen; regenerar_obra.py
+    lo apaga al regenerar una sola obra y lo ejecuta en --finalizar. Un fallo avisa,
+    no tumba la publicacion."""
+    try:
+        import personal_integracion
+        r = personal_integracion.exportar_estado_real(OBRAS_ABIERTAS_DIR)
+    except Exception as exc:
+        print(f"[AVISO PERSONAL] no se pudo escribir personal_estado.js "
+              f"({type(exc).__name__}: {exc}). La tablet y el ranking usaran el que haya.")
+        return None
+    if r["escrito"]:
+        print(f"[PERSONAL] personal_estado.js actualizado: {r['obras']}")
+    else:
+        print(f"[PERSONAL] personal_estado.js: {r['motivo'] or 'no escrito'}")
+    for aviso in r["avisos"]:
+        print(f"[AVISO PERSONAL] {aviso}")
+    return r
+
+
 def main(hacer_pdf=True):
     """Regenera todas las obras. Devuelve la lista de nombres de las que NO se
     pudieron regenerar (vacia si todo fue bien)."""
@@ -2031,6 +2072,7 @@ def main(hacer_pdf=True):
                 salida_cierre, obra=obra['nombre'])
             if not os.path.isfile(salida_cierre):
                 cierre_expediente.guardar(salida_cierre, cierre_datos)
+            personal = _personal_para_panel(obra)
             res = panel_obra.generar_panel(
                 obra=obra['nombre'], subtitulo=obra['subtitulo'], historial=historial,
                 materiales=materiales, ficha=ficha, documentos=documentos,
@@ -2043,6 +2085,7 @@ def main(hacer_pdf=True):
                     prioridades_zonas_especiales),
                 snapshot_zonas_especiales=snapshot_zesp,
                 fecha_datos=fecha_datos,
+                personal=personal, personal_obra_id=obra['id'],
             )
         except Exception as e:
             print(f"  [ERROR] Fallo al generar el panel: {e}")
@@ -2140,6 +2183,7 @@ def main(hacer_pdf=True):
     generar_index(resultados)
     escribir_resumen_json(resultados)
     publicar_registro_revisiones()
+    exportar_personal_estado()
     if fallidas:
         print(_bloque_obras_fallidas(fallidas))
     return fallidas

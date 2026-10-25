@@ -14,6 +14,18 @@ echo.
 
 echo [0/6] Ejecutando Auditoria Pre-Vuelo de Salud de Datos...
 %PY% "_SISTEMA\MOTOR\scripts\auditor_sagarde.py"
+rem Codigo 3 = la auditoria encontro ERRORES, por ahora solo en los datos de personal.
+rem Esos ficheros se publican tal cual: mejor parar aqui que publicarlos rotos.
+if errorlevel 3 (
+  echo.
+  echo ============================================================
+  echo  ATENCION: la auditoria ha encontrado ERRORES en los datos de
+  echo  personal. NO se ha publicado nada. Lee el recuadro [X] de
+  echo  arriba, corrige lo que dice y vuelve a ejecutar este archivo.
+  echo ============================================================
+  pause
+  exit /b 1
+)
 echo.
 
 echo [1/6] Actualizando Informe Sagarde IA (Obras abiertas)...

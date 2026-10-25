@@ -10,11 +10,17 @@ para detectar proactivamente:
   - Obras abiertas sin revisión reciente (31-399 días)
   - Documentos o planos enlazados rotos / faltantes
   - Anomalías en contratos de mantenimiento o post-ventas
+  - Datos de «Personal en obra»: esquema, DNI/teléfono/correo, ficheros declarados y
+    doble cálculo (Python contra personal_calculo.js con node)
 
 Genera _SISTEMA/MOTOR/auditoria_diagnostico.json y emite resumen por pantalla.
 
 Uso:
   python _SISTEMA/MOTOR/scripts/auditor_sagarde.py
+
+Código de salida: 0 si no hay errores; 3 si hay incidencias de nivel «error» (por ahora
+solo las de Personal). Actualizar_Sagarde.bat para ahí y NO publica. Los avisos
+(«warning») y las observaciones («info») nunca frenan nada.
 """
 from __future__ import annotations
 
@@ -189,6 +195,45 @@ def audit_materiales() -> list[dict]:
     } for obra, defectos in fallos.items()]
 
 
+def audit_personal() -> list[dict]:
+    """Datos de «Personal en obra» antes de publicar (esquema, datos privados, ficheros
+    declarados, doble cálculo). Sin ningún personal_obra.json no hace nada.
+
+    Es la única auditoría con nivel «error»: esos ficheros se publican tal cual y un
+    esquema roto o un total que no cuadra acabaría en el ranking sin aviso."""
+    base = ROOT / "SAGARDE OBRAS ABIERTAS"
+    motor = base / "_SISTEMA INFORME SAGARDE IA"
+    if not motor.is_dir():
+        return []
+    if str(motor) not in sys.path:
+        sys.path.insert(0, str(motor))
+    try:
+        import personal_integracion
+        return personal_integracion.auditar(base)
+    except ImportError as exc:
+        hay_datos = any(base.glob("*/INFORME SAGARDE IA/personal_obra.json")) or any(
+            (ROOT / "SAGARDE (OLD)" / "OBRAS CERRADAS").glob("*/INFORME SAGARDE IA/personal_obra.json"))
+        if not hay_datos:
+            return []
+        return [{
+            "nivel": "error",
+            "area": "Personal",
+            "obra": "(personal)",
+            "codigo": "PERSONAL_FICHERO_FALTA",
+            "mensaje": f"Hay datos de personal pero no se puede cargar su código: {exc}",
+            "solucion": "Restaurar los ficheros de personal desde git.",
+        }]
+    except Exception as exc:  # que la comprobacion falle se dice, no se calla
+        return [{
+            "nivel": "warning",
+            "area": "Personal",
+            "obra": "(personal)",
+            "codigo": "PERSONAL_NO_COMPROBADO",
+            "mensaje": f"No se pudo comprobar los datos de personal: {type(exc).__name__}: {exc}",
+            "solucion": "Ejecutar: py -3.11 \"SAGARDE OBRAS ABIERTAS\\_SISTEMA INFORME SAGARDE IA\\personal_integracion.py\" auditar",
+        }]
+
+
 def audit_mantenimientos() -> list[dict]:
     issues = []
     base = ROOT / "MANTENIMIENTOS"
@@ -237,17 +282,20 @@ def run_audit() -> dict:
     issues_obras = audit_obras_abiertas()
     issues_mant = audit_mantenimientos()
     issues_mat = audit_materiales()
-    all_issues = issues_obras + issues_mant + issues_mat
+    issues_personal = audit_personal()
+    all_issues = issues_obras + issues_mant + issues_mat + issues_personal
 
+    errors = [i for i in all_issues if i["nivel"] == "error"]
     warnings = [i for i in all_issues if i["nivel"] == "warning"]
     infos = [i for i in all_issues if i["nivel"] == "info"]
 
     resultado = {
         "generado": datetime.now().strftime("%d/%m/%Y %H:%M"),
         "generado_ts": datetime.now().timestamp(),
-        "salud_score": max(0, 100 - (len(warnings) * 15 + len(infos) * 2)),
+        "salud_score": max(0, 100 - (len(errors) * 30 + len(warnings) * 15 + len(infos) * 2)),
         "totales": {
             "total_issues": len(all_issues),
+            "errors": len(errors),
             "warnings": len(warnings),
             "infos": len(infos),
         },
@@ -258,19 +306,30 @@ def run_audit() -> dict:
         json.dump(resultado, f, ensure_ascii=False, indent=2)
 
     print(f"\n[RESULTADO] Salud Global de Datos: {resultado['salud_score']}%")
+    print(f"            - Errores que frenan la publicación: {len(errors)}")
     print(f"            - Avisos de Formato (Warnings): {len(warnings)}")
     print(f"            - Observaciones Informativas (Infos): {len(infos)}\n")
 
+    if errors:
+        print("[X] ERRORES: NO SE PUBLICA hasta corregirlos:")
+        for e in errors:
+            print(f"  * [{e['area']}] {e['mensaje']}")
+            print(f"    Solucion: {e['solucion']}\n")
     if warnings:
         print("[!] AVISOS DE FORMATO / ACCION RECOMENDADA:")
         for w in warnings:
             print(f"  * [{w['area']}] {w['obra']}: {w['mensaje']}")
             print(f"    Solucion: {w['solucion']}\n")
-    else:
+    elif not errors:
         print("[OK] Sin errores de formato criticos. Los datos estan 100% listos para publicar.")
 
     return resultado
 
 
+def main() -> int:
+    """Código de salida para Actualizar_Sagarde.bat: 3 si hay errores que frenan la publicación."""
+    return 3 if run_audit()["totales"]["errors"] else 0
+
+
 if __name__ == "__main__":
-    run_audit()
+    sys.exit(main())

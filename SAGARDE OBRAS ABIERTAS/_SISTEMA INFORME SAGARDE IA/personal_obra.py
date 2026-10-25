@@ -721,7 +721,13 @@ def fusionar(raiz, origen, destino, escribir=False, ahora=None):
     if mp[destino].get("fusionado_en") is not None:
         return {"ok": False, "error": "destino_fusionado", "escrito": False}
     # Comprueba en todas las obras que origen y destino no coincidan en la misma jornada ni horario.
-    for p in Path(raiz).glob("*/INFORME SAGARDE IA/personal_obra.json"):
+    # Las archivadas (cerrar_obra.py las deja en «SAGARDE (OLD)/OBRAS CERRADAS», al lado de la raíz)
+    # cuentan igual: sus jornadas siguen en el ranking y una persona no puede sumar dos veces un día.
+    rutas = list(Path(raiz).glob("*/INFORME SAGARDE IA/personal_obra.json"))
+    rutas += sorted(
+        (Path(raiz).parent / "SAGARDE (OLD)" / "OBRAS CERRADAS").glob("*/INFORME SAGARDE IA/personal_obra.json")
+    )
+    for p in rutas:
         try:
             d = _read(p)
         except Exception:
@@ -1017,7 +1023,14 @@ def main(argv=None):
             print("Fusión correcta" if r["ok"] else "ERROR: " + r["error"])
             return 0 if r["ok"] else 2
         if a.cmd == "exportar-estado":
-            exportar_estado(a.raiz, ob, escribir=a.escribir)
+            if a.obras:
+                exportar_estado(a.raiz, ob, escribir=a.escribir)
+            else:
+                # Sin --obras es el entorno real: nombres de obra del registro y obras archivadas
+                # marcadas `cerrada`. Sin esto el estado saldría con ids por nombre y todo abierto.
+                import personal_integracion
+
+                personal_integracion.exportar_estado_real(a.raiz, escribir=a.escribir)
             print("Estado exportado")
             return 0
         z = comprobar(a.raiz, ob)

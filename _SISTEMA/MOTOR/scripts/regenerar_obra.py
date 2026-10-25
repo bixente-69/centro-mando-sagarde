@@ -336,6 +336,7 @@ def regenerar_una_obra(obra_id, hacer_pdf=False):
     gt.generar_index = lambda resultados: capturado.setdefault("resultados", resultados)
     gt.escribir_resumen_json = lambda resultados: None
     gt.publicar_registro_revisiones = lambda: None
+    gt.exportar_personal_estado = lambda: None
     try:
         gt.main(hacer_pdf=hacer_pdf)
     finally:
@@ -343,6 +344,7 @@ def regenerar_una_obra(obra_id, hacer_pdf=False):
         gt.generar_index = _generar_index_original
         gt.escribir_resumen_json = _escribir_resumen_json_original
         gt.publicar_registro_revisiones = _publicar_registro_revisiones_original
+        gt.exportar_personal_estado = _exportar_personal_estado_original
 
     resultados = capturado.get("resultados", [])
     if not resultados:
@@ -487,6 +489,9 @@ def finalizar():
             "restaurados: {}".format(exc)
         ) from exc
 
+    # Estado de personal para la tablet y el ranking: siempre con el registro entero.
+    # Un fallo se avisa dentro y no invalida lo ya finalizado.
+    _exportar_personal_estado_original()
     print(
         "Tarjetas actualizadas:",
         ", ".join(actualizadas) if actualizadas else "(ninguna)",
@@ -503,6 +508,7 @@ def finalizar():
 _generar_index_original = gt.generar_index
 _escribir_resumen_json_original = gt.escribir_resumen_json
 _publicar_registro_revisiones_original = gt.publicar_registro_revisiones
+_exportar_personal_estado_original = gt.exportar_personal_estado
 
 
 if __name__ == "__main__":
