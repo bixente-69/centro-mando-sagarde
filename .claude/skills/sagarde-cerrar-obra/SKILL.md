@@ -73,6 +73,14 @@ cd "_SISTEMA/MOTOR" && python -m unittest discover -s tests
   la carpeta se mueve, que es justo el efecto buscado: la obra sale de lo
   publicado. Los ficheros siguen en disco y en el historial de git.
 - **Postventa.** Otro apartado.
+- **`personal_obra.json` y `personal_jornadas.jsonl`** (Personal en obra, si la obra los tiene).
+  Viajan con la carpeta a `SAGARDE (OLD)/OBRAS CERRADAS` y **no se borran**: el estado de la
+  tablet y el ranking de Sagarde siguen contando a la obra, marcada como cerrada. Al cerrar, el
+  `personal_estado.js` se rehace en la siguiente generación (`generar_todos.py` o
+  `regenerar_obra.py --finalizar`); para tenerlo ya: `py -3.11 personal_integracion.py
+  exportar-estado --escribir`. Ojo: ya no se publican (la lista blanca solo cubre las obras
+  abiertas); quedan en disco (y en el historial de git si ya se habían publicado antes de cerrar).
+  Ver la skill `sagarde-personal`.
 
 ## Si hay que deshacerlo
 
