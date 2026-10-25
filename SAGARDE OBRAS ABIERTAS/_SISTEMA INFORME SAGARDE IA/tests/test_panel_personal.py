@@ -524,7 +524,9 @@ class TestPublicacion(unittest.TestCase):
 
     def test_personal_calculo_js_no_esta_ignorado_por_git(self):
         try:
-            resultado = subprocess.run(['git', 'check-ignore', '-q', RUTA_CALCULO], cwd=_BASE,
+            # --no-index: sin él, un fichero ya versionado nunca cuenta como ignorado y esta
+            # prueba no fallaría aunque se quitase la línea del .gitignore (paso 06).
+            resultado = subprocess.run(['git', 'check-ignore', '-q', '--no-index', RUTA_CALCULO], cwd=_BASE,
                                        capture_output=True)
         except FileNotFoundError:
             self.skipTest('git no está disponible')

@@ -67,6 +67,26 @@ VARIOS/APPS SAGARDE/
 # tests/test_panel_personal.py comprueba que de verdad se publica.
 !SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_calculo.js
 
+# Personal en obra (paso 06): los cuatro ficheros de DATOS. Sin cada linea el
+# fichero se genera pero nunca se publica (la lista blanca solo deja pasar .html
+# y .py): el ranking y la tablet leen personal_estado.js con <script src>, y el
+# resto son la base de datos que se versiona (decision de Bixente: los datos de
+# personal se publican; el esquema no lleva DNI, telefono ni correo).
+# tests/test_publicacion_personal.py comprueba UNO A UNO que cada una publica
+# y que un fichero de personal no declarado NO se publica.
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_estado.js
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_catalogo.json
+!SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/personal_obra.json
+!SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/personal_jornadas.jsonl
+
+# El verificador de node de personal_calculo.js (lo lanza tests/test_personal_calculo.py). Es un
+# .js dentro de tests/: sin esta linea no se versiona y la prueba falla en una copia limpia.
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/tests/verificar_personal_calculo.js
+
+# Herramienta local de personal: Bixente arrastra el lote de la tablet encima. Se versiona
+# para que llegue a la carpeta real al fusionar la rama; no es nada de la web.
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/Ingerir_Personal.bat
+
 # Ficha de obra: fuente de verdad de estructura y estados (una por obra)
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/ficha_obra.json
 
