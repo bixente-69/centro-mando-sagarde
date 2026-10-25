@@ -251,6 +251,17 @@ class TestVistaPersonal(unittest.TestCase):
         self.assertNotIn(' ', html)
         self.assertEqual(malo, self.datos_incrustados(html)[0]['nombre'])
 
+    def test_un_nombre_con_marcadores_de_la_plantilla_no_se_cuela_en_la_pagina(self):
+        """Los textos libres no pueden volver a sustituirse como si fueran marcadores de la plantilla."""
+        for marcador in ('__SCRIPT_VISTA__', '__CSS__', '__SCRIPT_CALCULO__', '__DATOS_JSON__', '__OBRA_ID__'):
+            with self.subTest(marcador):
+                html = self.m.vista_personal(marcador, [_fila('2026-10-01', 'vivienda', marcador, 7.5)])
+                self.assertEqual(3, len(re.findall(r'</script', html, re.I)))
+                datos = self.datos_incrustados(html)
+                self.assertEqual(marcador, datos[0]['nombre'])
+                self.assertEqual(marcador, datos[0]['obra'])
+                self.assertIn('data-obra="%s"' % marcador, html)
+
     def test_un_nombre_con_comentario_html_no_rompe_la_pagina(self):
         html = self.vista([_fila('2026-10-01', 'vivienda', '<!-- x', 7.5)])
         with open(RUTA_CALCULO, encoding='utf-8') as f:
