@@ -32,6 +32,8 @@ APP_HINTS = ("app", "panel", "sagarde", "plantilla", "generador")
 # cada ruta declarada aqui es un fichero de verdad.
 APPS_OBRAS_ABIERTAS = {
     "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_sagarde.html": "Personal Sagarde · ranking",
+    # La app de la tablet ya salia sola por llevar «generador» en el nombre, pero como «generador personal».
+    "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/generador_personal.html": "Personal en obra · jornada",
 }
 DOC_EXTS = {".doc", ".docx", ".pdf", ".xls", ".xlsx", ".xlsm"}
 

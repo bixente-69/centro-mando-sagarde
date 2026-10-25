@@ -164,6 +164,18 @@ class TestPaginaPersonalSagarde(unittest.TestCase):
         self.assertIn("Personal Sagarde · ranking", html)
         self.assertIn("Personal Sagarde · ranking", indice)
 
+    RUTA_APP = "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/generador_personal.html"
+
+    def test_la_app_de_la_tablet_sale_con_su_nombre_y_no_como_generador_personal(self):
+        (self.motor / "generador_personal.html").write_text("<html></html>", encoding="utf-8")
+        apps = {a["path"]: a for a in portal.discover_apps()}
+
+        self.assertEqual("Personal en obra · jornada", apps[self.RUTA_APP]["name"])
+        self.assertEqual("SAGARDE OBRAS ABIERTAS", apps[self.RUTA_APP]["area"])
+        html = portal.build_html([], list(apps.values()), None, None, [], None, [])
+        self.assertIn("Personal en obra · jornada", html)
+        self.assertNotIn("generador personal", html.lower())
+
     def test_cada_pagina_declarada_existe_en_el_repositorio(self):
         # Una ruta declarada que ya no existe haria desaparecer el acceso sin ningun aviso.
         self.assertTrue(portal.APPS_OBRAS_ABIERTAS)
