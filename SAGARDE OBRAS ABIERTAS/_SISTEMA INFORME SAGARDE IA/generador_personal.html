@@ -1,0 +1,1864 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Personal en obra</title>
+    <style>
+      /* ---- Horario propio: estilos del editor y selector de horario específico por trabajador ---- */
+      /* Estos estilos van antes del bloque principal por historia; se deja el orden porque la
+         cascada (qué regla gana a igualdad de especificidad) depende de él
+       */
+      .chip.propio {
+        background: #e3efff;
+        color: #1f5fa8;
+      }
+      .row .sub {
+        flex-basis: 100%;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        flex-wrap: wrap;
+      }
+      .hpb {
+        min-height: 48px;
+        padding: 0 8px;
+        font-size: 14px;
+        font-weight: 600;
+        background: none;
+        border: 0;
+        color: #1f5fa8;
+        text-decoration: underline;
+      }
+      .sub .hpb {
+        margin-left: auto;
+      }
+      .hp {
+        flex-basis: 100%;
+        border-top: 1px dashed var(--line);
+        margin-top: 2px;
+        padding-top: 10px;
+      }
+      .hp .nota {
+        margin: 4px 0 0;
+      }
+      .hp .hor label {
+        color: var(--muted);
+      }
+      .hp input {
+        min-height: 48px;
+        font-size: 16px;
+        text-align: center;
+        padding: 6px;
+      }
+      .hp .actions .btn {
+        flex: 1;
+      }
+      /* ---- Variables de color y estilos base: paleta de colores del tema y estilos generales ---- */
+      :root {
+        --bg: #f4f6f9;
+        --card: #fff;
+        --header: #0b1f3a;
+        --text: #1c2733;
+        --muted: #647184;
+        --accent: #f5a524;
+        --ok: #2e9e5b;
+        --warn: #e07b1a;
+        --line: #d8dce4;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      button,
+      input,
+      select {
+        font: inherit;
+      }
+      /* ---- Pestañas: navegación superior fija y segmentos de selección de vista ---- */
+      .tabs {
+        position: sticky;
+        top: 0;
+        z-index: 9;
+        padding: 10px;
+        background: #fff;
+        border-bottom: 1px solid var(--line);
+      }
+      main {
+        max-width: 520px;
+        margin: auto;
+        padding: 10px;
+      }
+      .view[hidden] {
+        display: none;
+      }
+      .seg {
+        display: flex;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .seg button {
+        flex: 1;
+        border: 0;
+        background: #fff;
+        padding: 10px;
+        min-height: 44px;
+      }
+      .seg button + button {
+        border-left: 1px solid var(--line);
+      }
+      .seg button.on {
+        background: var(--header);
+        color: #fff;
+        font-weight: 700;
+      }
+      button[data-amb] {
+        min-height: 48px;
+      }
+      /* ---- Barra superior y tarjetas: cabecera con degradado, origen de datos y contenedores ---- */
+      .bar {
+        background: linear-gradient(135deg, #0b1f3a, #123a63);
+        color: #fff;
+        padding: 15px;
+        border-radius: 14px 14px 0 0;
+        display: flex;
+        justify-content: space-between;
+        font-weight: 700;
+      }
+      .pad,
+      .card {
+        background: #fff;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        box-shadow: 0 1px 3px #0b1f3a15;
+      }
+      .pad {
+        border-radius: 0 0 14px 14px;
+      }
+      .origin {
+        background: var(--header);
+        color: #cbd7e5;
+        padding: 0 15px 10px;
+        font-size: 12px;
+      }
+      .fld {
+        display: block;
+        font-size: 12px;
+        color: var(--muted);
+        text-transform: uppercase;
+        margin: 12px 0 4px;
+      }
+      select,
+      input {
+        width: 100%;
+        min-height: 46px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px;
+        background: #fff;
+      }
+      /* ---- Botones: estilos primarios, secundarios, fantasma y variantes de tamaño ---- */
+      .btn {
+        border: 0;
+        border-radius: 10px;
+        padding: 11px 14px;
+        min-height: 52px;
+        font-weight: 700;
+      }
+      .pri {
+        background: var(--accent);
+      }
+      .sec {
+        background: var(--header);
+        color: #fff;
+      }
+      .ghost {
+        background: #fff;
+        border: 1px solid var(--line);
+      }
+      .sm {
+        min-height: 42px;
+        padding: 7px 10px;
+      }
+      /* ---- Chips: selectores rápidos de fecha y contenedores flexibles de acciones ---- */
+      .chips,
+      .actions,
+      .ctl {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+        margin-top: 8px;
+      }
+      .chips .on {
+        background: var(--header);
+        color: #fff;
+      }
+      /* ---- Lista de presentes: filas de trabajadores, botón de asistencia y control de horas ---- */
+      .row {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        flex-wrap: wrap;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 8px;
+        margin: 8px 0;
+      }
+      .row.off {
+        opacity: 0.58;
+      }
+      .x {
+        width: 56px;
+        height: 56px;
+        min-width: 56px;
+        border: 2px solid var(--line);
+        border-radius: 10px;
+        background: #fff;
+        color: var(--ok);
+        font-size: 24px;
+        font-weight: 800;
+      }
+      .x.on {
+        background: #e8f6ee;
+        border-color: var(--ok);
+      }
+      .x:not(.on) {
+        color: transparent;
+      }
+      .nm {
+        flex: 1;
+        min-width: 80px;
+        font-weight: 600;
+        overflow-wrap: anywhere;
+      }
+      .step {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+      }
+      .step button {
+        width: 48px;
+        height: 48px;
+        border: 1px solid var(--line);
+        background: #fff;
+        border-radius: 9px;
+        font-size: 20px;
+      }
+      .step output {
+        min-width: 50px;
+        text-align: center;
+        font-weight: 700;
+      }
+      .step output.falta {
+        color: var(--warn);
+        font-size: 13px;
+      }
+      .chip {
+        font-size: 11px;
+        font-weight: 700;
+        background: #fff1d6;
+        color: #9a5b00;
+        padding: 3px 7px;
+        border-radius: 20px;
+      }
+      .add {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: 7px;
+      }
+      /* ---- Avisos y resumen: mensajes de alerta, confirmaciones y contador de jornadas pendientes ---- */
+      .aviso {
+        background: #fff7e0;
+        border: 1px solid #f1d58a;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 8px 0;
+      }
+      .aviso > button {
+        float: right;
+        border: 0;
+        background: none;
+        font-size: 20px;
+      }
+      .sum {
+        font-weight: 700;
+        margin: 14px 0;
+      }
+      .full {
+        width: 100%;
+      }
+      .pending {
+        background: #fff7e0;
+        padding: 10px;
+        border-radius: 10px;
+        margin: 10px 0;
+      }
+      /* ---- Horarios y jornadas: cuadrícula de horario semanal y tarjetas de jornadas anteriores ---- */
+      details {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px;
+        margin: 12px 0;
+      }
+      .hor {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 5px;
+        margin-top: 8px;
+        text-align: center;
+        font-size: 12px;
+      }
+      .jor-item {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 11px;
+        margin: 8px 0;
+      }
+      .jor-item.pendiente {
+        border-left: 5px solid var(--accent);
+      }
+      .jor-item h3 {
+        margin: 0;
+        font-size: 15px;
+      }
+      .muted,
+      .nota {
+        font-size: 12px;
+        color: var(--muted);
+      }
+      /* ---- Informe y tabla: tabla resumen de horas y barras de porcentaje de impacto ---- */
+      .wrapx {
+        max-width: 100%;
+      }
+      table.data {
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+        font-size: 11px;
+      }
+      table.data th,
+      table.data td {
+        padding: 7px 2px;
+        border-bottom: 1px solid #edf0f4;
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+      table.data th {
+        font-size: 10px;
+        color: var(--muted);
+        text-align: left;
+        vertical-align: bottom;
+      }
+      table.data th:first-child,
+      table.data td:first-child {
+        width: 27%;
+      }
+      .periodo {
+        font-weight: 700;
+        margin: 12px 0 4px;
+      }
+      .n {
+        text-align: right;
+      }
+      .impacto {
+        display: grid;
+        grid-template-columns: 90px 1fr 50px;
+        gap: 6px;
+        align-items: center;
+        margin: 7px 0;
+        font-size: 13px;
+      }
+      .ib {
+        height: 15px;
+        background: #e8edf4;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .ib i {
+        display: block;
+        height: 100%;
+        background: #2e7dd7;
+      }
+      .impacto.top i {
+        background: var(--accent);
+      }
+      /* ---- Utilidades y diseño adaptable: notificaciones flotantes toast y reglas responsive ---- */
+      #toast {
+        pointer-events: none;
+        position: fixed;
+        left: 50%;
+        bottom: 20px;
+        transform: translateX(-50%);
+        background: var(--header);
+        color: #fff;
+        padding: 12px;
+        border-radius: 10px;
+        opacity: 0;
+        z-index: 20;
+        max-width: 92vw;
+      }
+      #toast.on {
+        opacity: 1;
+      }
+      @media (max-width: 400px) {
+        main {
+          padding: 7px;
+        }
+        .card,
+        .pad {
+          padding: 11px;
+        }
+        .hor {
+          grid-template-columns: repeat(3, 1fr);
+        }
+        table.data {
+          font-size: 10px;
+        }
+        table.data th {
+          font-size: 9px;
+        }
+      }
+    </style>
+    <script src="personal_calculo.js"></script>
+    <script>
+      (function () {
+        var s = document.createElement('script');
+        s.src = 'personal_estado.js?v=' + Date.now();
+        s.onload = function () {
+          window.__pub = 1;
+        };
+        s.onerror = function () {
+          window.__pub = 0;
+        };
+        document.head.appendChild(s);
+      })();
+    </script>
+  </head>
+  <body>
+    <nav class="tabs">
+      <div class="seg">
+        <button data-v="app" class="on">Anotar</button><button data-v="jornadas">Jornadas</button
+        ><button data-v="informe">Informe</button><button data-exportar="1">Exportar</button>
+      </div>
+    </nav>
+    <main>
+      <section id="sin-estado" hidden>
+        <div class="card">
+          <h2>Todavía no hay datos publicados…</h2>
+          <p>Abre la app con conexión al menos una vez.</p>
+        </div>
+      </section>
+      <section id="v-app" class="view"></section>
+      <section id="v-jornadas" class="view" hidden></section>
+      <section id="v-informe" class="view" hidden></section>
+    </main>
+    <div id="toast" role="status"></div>
+    <script>
+      'use strict';
+      // ---------------------------------------------------------------------------
+      // Almacenamiento: lectura y escritura en localStorage y definición de claves K
+      // ---------------------------------------------------------------------------
+      const LS = 'sgd_personal_',
+        K = {
+          e: LS + 'estado',
+          p: LS + 'pendientes',
+          b: LS + 'borrador',
+          n: LS + 'nuevos',
+          h: LS + 'horarios',
+          x: LS + 'excepciones',
+          a: LS + 'aviso_instalar',
+          r: LS + 'rotos',
+        };
+      // Lee y parsea un valor JSON de localStorage; devuelve el valor por defecto d si no existe o
+      // falla
+      function get(k, d) {
+        try {
+          let v = localStorage.getItem(k);
+          return v === null ? d : JSON.parse(v);
+        } catch (e) {
+          return d;
+        }
+      }
+      // Serializa a JSON y guarda un valor en localStorage; devuelve true si tuvo éxito o false si
+      // falló
+      function set(k, v) {
+        try {
+          localStorage.setItem(k, JSON.stringify(v));
+          return true;
+        } catch (e) {
+          return false;
+        }
+      }
+      // Borra una clave de localStorage sin fallar si el aparato no deja.
+      function del(k) {
+        try {
+          localStorage.removeItem(k);
+        } catch (e) {}
+      }
+      // ---------------------------------------------------------------------------
+      // Utilidades: funciones de formato, fechas, redondeo y validadores
+      // ---------------------------------------------------------------------------
+      const clean = (s) => (typeof s === 'string' ? s.trim().replace(/\s+/g, ' ') : ''),
+        key = (s) =>
+          clean(s)
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase(),
+        E = (s) =>
+          String(s ?? '').replace(
+            /[&<>"']/g,
+            (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c],
+          ),
+        N = (x) => (Math.round(+x * 10) / 10).toString().replace('.', ','),
+        HK = ['dom', 'lun', 'mar', 'mie', 'jue', 'vie', 'sab'];
+      // Redondeo a 2 decimales: evita el ruido de coma flotante que el PC rechazaría.
+      function R(x) {
+        return Math.round(x * 100) / 100;
+      }
+      function today() {
+        let d = new Date(),
+          z = (n) => String(n).padStart(2, '0');
+        return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate());
+      }
+      // Suma n días a una fecha AAAA-MM-DD y devuelve otra fecha AAAA-MM-DD.
+      function add(f, n) {
+        let p = f.split('-').map(Number),
+          d = new Date(p[0], p[1] - 1, p[2] + n),
+          z = (x) => String(x).padStart(2, '0');
+        return d.getFullYear() + '-' + z(d.getMonth() + 1) + '-' + z(d.getDate());
+      }
+      // Día de la semana de una fecha (0 = domingo … 6 = sábado), igual que Date.getDay().
+      function dow(f) {
+        let p = f.split('-').map(Number);
+        return new Date(p[0], p[1] - 1, p[2]).getDay();
+      }
+      // Fecha AAAA-MM-DD que existe de verdad (rechaza, por ejemplo, el 30 de febrero).
+      function fechaOk(f) {
+        return /^\d{4}-\d{2}-\d{2}$/.test(f) && add(f, 0) === f;
+      }
+      // Valida que una lista de trabajadores sea un array de objetos con nombre (texto), on
+      // (booleano) y horas válidas
+      function listaOk(l) {
+        return (
+          Array.isArray(l) &&
+          l.every(
+            (x) =>
+              x &&
+              typeof x === 'object' &&
+              typeof x.nombre === 'string' &&
+              typeof x.on === 'boolean' &&
+              (x.horas === null || (typeof x.horas === 'number' && Number.isFinite(x.horas))),
+          )
+        );
+      }
+      // Valida la estructura completa de una jornada guardada: obra, ámbito, fecha real, anulada y
+      // lista de presentes
+      function jornadaOk(j) {
+        return (
+          !!j &&
+          typeof j === 'object' &&
+          typeof j.obra === 'string' &&
+          ['vivienda', 'garaje'].includes(j.ambito) &&
+          fechaOk(j.fecha) &&
+          typeof j.anulada === 'boolean' &&
+          Array.isArray(j.presentes) &&
+          j.presentes.every(
+            (x) =>
+              x &&
+              typeof x === 'object' &&
+              typeof x.nombre === 'string' &&
+              typeof x.horas === 'number' &&
+              Number.isFinite(x.horas) &&
+              (x.extra === undefined || (typeof x.extra === 'number' && Number.isFinite(x.extra))),
+          )
+        );
+      }
+      // ---------------------------------------------------------------------------
+      // Estado y reconciliación: estado publicado, pendientes, borrador, horarios propios y
+      // reconcile
+      // ---------------------------------------------------------------------------
+      // Leyenda de abreviaturas: a = estado de pantalla (vista, obra, ámbito, fecha, lista), K =
+      // claves localStorage, E = escapar HTML, N = formato número con coma, R = redondeo a 2
+      // decimales, hor = horario de obra, cat = catálogo, pub = jornadas publicadas, jk = clave
+      // única obra|ámbito|fecha.
+      let state = null,
+        origin = '',
+        pending = get(K.p, []),
+        news = get(K.n, []),
+        hours = get(K.h, {}),
+        excepciones = get(K.x, {}),
+        rotos = 0;
+      if (!Array.isArray(pending)) pending = [];
+      // Vigilante de integridad: separa las jornadas pendientes válidas de las dañadas en
+      // localStorage
+      let pendientesBuenos = pending.filter((j) => jornadaOk(j));
+      let pendientesRotos = pending.filter((j) => !jornadaOk(j));
+      rotos = pendientesRotos.length;
+      // Aparta las jornadas corruptas en sgd_personal_rotos (K.r) para no perder datos ni bloquear
+      // la app
+      if (rotos) {
+        let anteriores = get(K.r, []);
+        if (!Array.isArray(anteriores)) anteriores = [];
+        set(K.r, anteriores.concat(pendientesRotos));
+        pending = pendientesBuenos;
+        set(K.p, pending);
+      }
+      news = Array.isArray(news) ? news.filter((x) => typeof x === 'string') : [];
+      if (!hours || typeof hours !== 'object' || Array.isArray(hours)) hours = {};
+      // Objeto «llano»: ni null ni lista.
+      function objetoSimple(valor) {
+        return valor !== null && typeof valor === 'object' && !Array.isArray(valor);
+      }
+      // Limpia y valida los horarios propios guardados en este aparato: descarta a la persona
+      // ENTERA si alguno de sus días no es válido (día inventado, hora no numérica o fuera de
+      // 0-24).
+      function limpiarExcepciones(valor) {
+        let limpio = {};
+        if (!objetoSimple(valor)) return limpio;
+        Object.entries(valor).forEach(([obra, personas]) => {
+          if (!objetoSimple(personas)) return;
+          let personasLimpias = {};
+          Object.entries(personas).forEach(([nombre, dias]) => {
+            if (!objetoSimple(dias)) return;
+            let diasLimpios = {};
+            let valido = Object.entries(dias).every(([dia, hora]) => {
+              if (
+                !HK.includes(dia) ||
+                typeof hora !== 'number' ||
+                !Number.isFinite(hora) ||
+                hora < 0 ||
+                hora > 24
+              )
+                return false;
+              diasLimpios[dia] = hora;
+              return true;
+            });
+            if (valido) personasLimpias[nombre] = diasLimpios;
+          });
+          if (Object.keys(personasLimpias).length) limpio[obra] = personasLimpias;
+        });
+        return limpio;
+      }
+      excepciones = limpiarExcepciones(excepciones);
+      set(K.x, excepciones);
+      let a = {
+        v: 'app',
+        obra: '',
+        amb: 'vivienda',
+        fecha: today(),
+        list: [],
+        p: 'mes',
+        ref: today(),
+        scope: 'todo',
+        confirm: null,
+        warn: null,
+        reset: false,
+        hp: null,
+        auto: false,
+      };
+      // Devuelve la lista unificada y ordenada alfabéticamente de nombres de trabajadores
+      // (publicados y nuevos creados)
+      function cat() {
+        let m = new Map();
+        (state?.catalogo || []).forEach((x) => m.set(key(x.nombre), x.nombre));
+        news.forEach((x) => {
+          if (!m.has(key(x))) m.set(key(x), x);
+        });
+        return [...m.values()].sort((x, y) => x.localeCompare(y, 'es'));
+      }
+      // Nombre tal como está en el catálogo o en los nuevos si coincide sin tildes ni mayúsculas;
+      // si no, el nombre limpio.
+      function canon(n) {
+        return cat().find((x) => key(x) === key(n)) || clean(n);
+      }
+      // Jornadas que el PC ha publicado para la obra (una fila por persona), con el nombre
+      // normalizado.
+      function pub(ob = a.obra) {
+        let o = state?.obras?.[ob];
+        return o && Array.isArray(o.jornadas)
+          ? o.jornadas.map((x) => ({ ...x, obra: ob, nombre: canon(x.nombre) }))
+          : [];
+      }
+      // Clave única de una jornada: obra|ámbito|fecha.
+      function jk(x) {
+        return x.obra + '|' + x.ambito + '|' + x.fecha;
+      }
+      // Filas publicadas de la jornada que identifica x (misma obra, ámbito y fecha).
+      function rowsKey(x) {
+        return pub(x.obra).filter((r) => r.ambito === x.ambito && r.fecha === x.fecha);
+      }
+      // Horario semanal de la obra publicado por el PC, como lista de 7 horas indexada como
+      // Date.getDay() (0 = domingo).
+      function base(id) {
+        let x = state?.obras?.[id]?.horario_semanal || {};
+        return HK.map((k) => +x[k] || 0);
+      }
+      // Horario semanal vigente de la obra: el cambiado en este aparato si existe; si no, el
+      // publicado.
+      function hor(id = a.obra) {
+        return Array.isArray(hours[id]) && hours[id].length === 7 ? hours[id].slice() : base(id);
+      }
+      // Horario propio de esa persona publicado por el PC ({} si no tiene).
+      function publicadoPropio(nombre, id = a.obra) {
+        let publicados = state?.obras?.[id]?.excepciones_horario;
+        if (!objetoSimple(publicados)) return {};
+        let entrada = Object.entries(publicados).find(([publicado]) => key(publicado) === key(nombre));
+        return entrada && objetoSimple(entrada[1]) ? entrada[1] : {};
+      }
+      // Horario propio recordado en este aparato: null si no hay nada; {} significa «quitado» y
+      // manda sobre lo publicado.
+      function memoriaPropia(nombre, id = a.obra) {
+        let personas = excepciones[id];
+        if (!objetoSimple(personas)) return null;
+        let entrada = Object.entries(personas).find(([guardado]) => key(guardado) === key(nombre));
+        return entrada ? entrada[1] : null;
+      }
+      // Horario propio que cuenta: lo recordado en este aparato manda sobre lo publicado.
+      function propioEfectivo(nombre, id = a.obra) {
+        let memoria = memoriaPropia(nombre, id);
+        return memoria === null ? publicadoPropio(nombre, id) : memoria;
+      }
+      // ¿Tiene horario propio ESE día de la semana? Quien solo lo tiene el viernes sigue el de la
+      // obra el lunes.
+      function tienePropio(nombre, fecha = a.fecha) {
+        return Object.prototype.hasOwnProperty.call(propioEfectivo(nombre), HK[dow(fecha)]);
+      }
+      // Horas normales de esa persona en esa fecha: su horario propio de ese día si lo tiene; si
+      // no, el de la obra. La extra se cuenta sobre ellas.
+      function horarioDe(nombre, fecha = a.fecha) {
+        let propio = propioEfectivo(nombre);
+        let dia = HK[dow(fecha)];
+        return Object.prototype.hasOwnProperty.call(propio, dia) ? propio[dia] : hor()[dow(fecha)];
+      }
+      // Compara dos horarios propios día a día (los 7 días y el mismo número de días definidos).
+      function mismosDias(izquierda, derecha) {
+        let aDias = objetoSimple(izquierda) ? izquierda : {};
+        let bDias = objetoSimple(derecha) ? derecha : {};
+        return (
+          HK.every((dia) => aDias[dia] === bDias[dia]) &&
+          Object.keys(aDias).length === Object.keys(bDias).length
+        );
+      }
+      // ¿La jornada pendiente j es idéntica a las filas publicadas r (mismas personas, horas y
+      // extra)? Una anulada coincide solo si no hay filas.
+      function same(j, r) {
+        if (j.anulada) return !r.length;
+        let x = (j.presentes || []).map((p) => key(p.nombre) + '|' + +p.horas + '|' + +(p.extra || 0)).sort(),
+          y = r.map((p) => key(p.nombre) + '|' + +p.horas + '|' + +(p.extra || 0)).sort();
+        return x.length === y.length && x.every((v, i) => v === y[i]);
+      }
+      // Reconcilia pendientes y horarios locales con el estado publicado por el PC, eliminando los
+      // datos redundantes
+      function reconcile() {
+        // Descarta jornadas pendientes locales que ya coincidan exactamente con las publicadas por
+        // el PC
+        pending = pending.filter((j) => !same(j, rowsKey(j)));
+        // Limpia horarios de obra locales si vuelven a coincidir con el horario base publicado
+        Object.keys(hours).forEach((id) => {
+          if (JSON.stringify(hours[id]) === JSON.stringify(base(id))) delete hours[id];
+        });
+        // Limpia excepciones de horario propias si coinciden con las registradas en el estado
+        // publicado
+        Object.entries(excepciones).forEach(([id, personas]) => {
+          Object.keys(personas).forEach((nombre) => {
+            if (mismosDias(personas[nombre], publicadoPropio(nombre, id))) delete personas[nombre];
+          });
+          if (!Object.keys(personas).length) delete excepciones[id];
+        });
+        set(K.p, pending);
+        set(K.h, hours);
+        set(K.x, excepciones);
+      }
+      // Guarda o actualiza el horario propio de un trabajador en la obra activa y ajusta sus horas
+      // si estaba presente
+      function guardarPropio(nombre, objeto) {
+        let nombreCanonico = canon(nombre);
+        let antes = horarioDe(nombreCanonico, a.fecha);
+        let limpio = {};
+        // Recorta cada hora a 0-24 y la redondea a 2 decimales; ignora días inventados y valores no
+        // numéricos.
+        if (objetoSimple(objeto))
+          Object.entries(objeto).forEach(([dia, hora]) => {
+            if (!HK.includes(dia) || typeof hora !== 'number' || !Number.isFinite(hora)) return;
+            limpio[dia] = R(Math.max(0, Math.min(24, hora)));
+          });
+        let personas = objetoSimple(excepciones[a.obra]) ? excepciones[a.obra] : {};
+        Object.keys(personas).forEach((guardado) => {
+          if (key(guardado) === key(nombreCanonico)) delete personas[guardado];
+        });
+        // Solo almacena la excepción local si difiere de lo que ya está publicado en el estado del
+        // PC
+        if (!mismosDias(limpio, publicadoPropio(nombreCanonico))) personas[nombreCanonico] = limpio;
+        if (Object.keys(personas).length) excepciones[a.obra] = personas;
+        else delete excepciones[a.obra];
+        let guardado = set(K.x, excepciones);
+        let ahora = horarioDe(nombreCanonico, a.fecha);
+        // Si sus horas coincidían con su horario de antes (lo seguía), pasan a su nuevo horario
+        // propio de hoy.
+        let persona = a.list.find((fila) => key(fila.nombre) === key(nombreCanonico));
+        if (persona?.on && persona.horas !== null && R(persona.horas) === R(antes) && antes !== ahora)
+          persona.horas = ahora > 0 ? ahora : null;
+        draft();
+        render();
+        if (!guardado)
+          toast(
+            'No se pudo guardar en este aparato (¿navegación privada o memoria llena?). Exporta ' +
+              'ya para no perder el cambio.',
+          );
+        return guardado;
+      }
+      // Jornada pendiente de la obra, el ámbito y la fecha que hay en pantalla, si existe.
+      function current() {
+        return pending.find((x) => jk(x) === a.obra + '|' + a.amb + '|' + a.fecha);
+      }
+      // ---------------------------------------------------------------------------
+      // Lista de presentes: catálogo, nombres de trabajadores, filas y horas de la jornada
+      // ---------------------------------------------------------------------------
+      // Genera los nombres iniciales sugeridos: presentes de la última jornada más habituales (≥ 3
+      // días en 30 días)
+      function defaultNames() {
+        let out = [],
+          u = state.obras[a.obra].ultima?.[a.amb];
+        if (u?.presentes) u.presentes.forEach((x) => out.push(canon(x.nombre)));
+        let cnt = {},
+          from = add(a.fecha, -30);
+        pub()
+          .filter((x) => x.ambito === a.amb && x.fecha < a.fecha && x.fecha >= from)
+          .forEach((x) => (cnt[key(x.nombre)] ??= new Set()).add(x.fecha));
+        Object.keys(cnt)
+          .filter((k) => cnt[k].size >= 3)
+          .map((k) => cat().find((n) => key(n) === k))
+          .filter(Boolean)
+          .sort((x, y) => x.localeCompare(y, 'es'))
+          .forEach((x) => out.push(x));
+        let seen = new Set();
+        return out.filter((x) => !seen.has(key(x)) && seen.add(key(x)));
+      }
+      // Carga la lista de presentes para la fecha actual a partir de la jornada pendiente, de la
+      // publicada o sugeridos
+      function loadList() {
+        if (!state.obras[a.obra]) {
+          a.list = [];
+          return;
+        }
+        let p = current(),
+          r = rowsKey({ obra: a.obra, ambito: a.amb, fecha: a.fecha }),
+          pres = p ? (p.anulada ? [] : p.presentes) : r.length ? r : null,
+          names = defaultNames();
+        if (pres) {
+          let m = new Map(pres.map((x) => [key(x.nombre), x]));
+          pres.forEach((x) => {
+            let nombre = canon(x.nombre);
+            if (!names.some((n) => key(n) === key(nombre))) names.push(nombre);
+          });
+          a.list = names.map((nombre) => {
+            let x = m.get(key(nombre));
+            return { nombre, on: !!x, horas: x ? +x.horas : null };
+          });
+          return;
+        }
+        a.list = names.map((nombre) => ({ nombre, on: false, horas: null }));
+      }
+      // Guarda en localStorage el borrador de lo que se está anotando (obra, ámbito, fecha y
+      // lista).
+      function draft() {
+        set(K.b, { obra: a.obra, ambito: a.amb, fecha: a.fecha, lista: a.list });
+        a.auto = true;
+      }
+      // Restaura el borrador guardado en localStorage si la obra sigue abierta y los datos del
+      // formulario son válidos
+      function restore() {
+        let b = get(K.b, null);
+        if (
+          b &&
+          state.obras[b.obra] &&
+          !state.obras[b.obra].cerrada &&
+          ['vivienda', 'garaje'].includes(b.ambito) &&
+          fechaOk(b.fecha) &&
+          listaOk(b.lista)
+        ) {
+          Object.assign(a, { obra: b.obra, amb: b.ambito, fecha: b.fecha, list: b.lista, auto: true });
+          return true;
+        }
+        return false;
+      }
+      // Aviso flotante que se oculta solo (dura más cuanto más largo es el texto).
+      function toast(s) {
+        let x = document.querySelector('#toast');
+        x.textContent = s;
+        x.classList.add('on');
+        clearTimeout(toast.t);
+        toast.t = setTimeout(() => x.classList.remove('on'), Math.max(2500, s.length * 60));
+      }
+      // Calcula la distancia de Levenshtein entre dos cadenas para detectar erratas y nombres
+      // parecidos
+      function lev(x, y) {
+        let p = [...Array(y.length + 1).keys()];
+        for (let i = 1; i <= x.length; i++) {
+          let q = [i];
+          for (let j = 1; j <= y.length; j++)
+            q[j] = Math.min(q[j - 1] + 1, p[j] + 1, p[j - 1] + (x[i - 1] === y[j - 1] ? 0 : 1));
+          p = q;
+        }
+        return p[y.length];
+      }
+      // Devuelve un nombre ya existente (catálogo o lista actual) que se parezca al nuevo sin ser
+      // el mismo: ambos de 3 letras o más (sin tildes) y a distancia ≤ 1, o uno contenido en el
+      // otro; null si no hay ninguno.
+      function similar(n) {
+        let k = key(n);
+        if (k.length < 3) return null;
+        return [...cat(), ...a.list.map((x) => x.nombre)].find((x) => {
+          let z = key(x);
+          return z !== k && z.length >= 3 && (lev(k, z) <= 1 || k.includes(z) || z.includes(k));
+        });
+      }
+      // Marca como presente a una persona de la lista o, si no estaba, la añade.
+      function addName(n) {
+        n = cat().find((x) => key(x) === key(n)) || clean(n);
+        let x = a.list.find((x) => key(x.nombre) === key(n));
+        if (x) x.on = true;
+        else a.list.push({ nombre: n, on: true, horas: null });
+      }
+      // Nombres del catálogo que aún no están en la lista, filtrados por lo escrito en el buscador.
+      function libres(q = '') {
+        let used = new Set(a.list.map((x) => key(x.nombre))),
+          k = key(q);
+        return cat().filter((x) => !used.has(key(x)) && (!k || key(x).includes(k)));
+      }
+      // Combina las filas de jornadas publicadas con las pendientes locales de la obra para los
+      // cálculos del informe
+      function rowState() {
+        let m = new Map();
+        pub().forEach((x) => {
+          let k = x.ambito + '|' + x.fecha;
+          (m.get(k) || m.set(k, []).get(k)).push(x);
+        });
+        pending
+          .filter((x) => x.obra === a.obra)
+          .forEach((j) =>
+            m.set(
+              j.ambito + '|' + j.fecha,
+              j.anulada
+                ? []
+                : j.presentes.map((x) => ({
+                    ...x,
+                    obra: j.obra,
+                    ambito: j.ambito,
+                    fecha: j.fecha,
+                    nombre: canon(x.nombre),
+                  })),
+            ),
+          );
+        return [...m.values()].flat();
+      }
+      // Genera el marcado HTML de las filas de trabajadores, con control de asistencia, horas,
+      // horas extra y horario propio
+      function rowsHTML() {
+        return a.list
+          .map((persona, indice) => {
+            // Horas base según el horario de esa persona hoy; la hora extra es el exceso sobre
+            // dicha base
+            let baseDia = horarioDe(persona.nombre) || 0;
+            let horas = persona.horas === null ? baseDia : persona.horas;
+            let extra = Math.max(0, (horas || 0) - baseDia);
+            let chipPropio = tienePropio(persona.nombre)
+              ? `<span class="chip propio">horario propio ${N(baseDia)} h</span>`
+              : '';
+            let propio = propioEfectivo(persona.nombre);
+            let dias = [
+              ['Lun', 'lun', 1],
+              ['Mar', 'mar', 2],
+              ['Mié', 'mie', 3],
+              ['Jue', 'jue', 4],
+              ['Vie', 'vie', 5],
+              ['Sáb', 'sab', 6],
+              ['Dom', 'dom', 0],
+            ];
+            let editor =
+              a.hp === persona.nombre
+                ? `<div class="hp"><b>${E('Horario propio de ' + persona.nombre)}</b><p class="nota">` +
+                  `${E('Horas normales de cada día en esta obra. Vacío = sigue el horario de la obra.')}` +
+                  `</p><div class="hor">` +
+                  `${dias
+                    .map(
+                      (dia) =>
+                        `<label>${E(dia[0])}<input type="number" inputmode="decimal" min="0" max="24" ` +
+                        `step=".5" data-hp="${E(dia[1])}" value="` +
+                        `${E(Object.prototype.hasOwnProperty.call(propio, dia[1]) ? propio[dia[1]] : '')}" ` +
+                        `placeholder="${E(N(hor()[dia[2]]))}"></label>`,
+                    )
+                    .join('')}` +
+                  `</div><div class="actions"><button class="btn pri" data-hp-guardar>` +
+                  `${E('Guardar horario propio')}</button><button class="btn ghost" data-hp-quitar>` +
+                  `${E('Quitar')}</button></div></div>`
+                : '';
+            return (
+              `<div class="row ${persona.on ? '' : 'off'}" data-nombre="${E(persona.nombre)}">` +
+              `<button class="x ${persona.on ? 'on' : ''}" data-x="${E(indice)}">X</button><span ` +
+              `class="nm">${E(persona.nombre)}</span>` +
+              `${
+                persona.on
+                  ? `<span class="step"><button data-i="${E(indice)}" data-d="-0.5">−</button><output ` +
+                    `class="${baseDia === 0 && persona.horas === null ? 'falta' : ''}">` +
+                    `${baseDia === 0 && persona.horas === null ? '¿horas?' : N(horas) + ' h'}</output>` +
+                    `<button data-i="${E(indice)}" data-d="0.5">+</button></span><div class="sub">` +
+                    `${chipPropio}${extra ? `<span class="chip">+${N(extra)} h extra</span>` : ''}` +
+                    `<button class="hpb" data-hp-abrir="${E(indice)}">Horario propio</button></div>` +
+                    `${editor}`
+                  : ''
+              }` +
+              `</div>`
+            );
+          })
+          .join('');
+      }
+      // Calcula el total de personas presentes, la suma de horas trabajadas y las horas extra de la
+      // jornada en curso
+      function sumHTML() {
+        let presentes = a.list.filter((persona) => persona.on);
+        let faltan = presentes.some((persona) => horarioDe(persona.nombre) === 0 && persona.horas === null);
+        if (faltan)
+          return `${presentes.length} ${presentes.length === 1 ? 'presente' : 'presentes'} · faltan horas`;
+        let total = presentes.reduce(
+          (suma, persona) => suma + (persona.horas === null ? horarioDe(persona.nombre) : persona.horas),
+          0,
+        );
+        let extra = presentes.reduce((suma, persona) => {
+          let baseDia = horarioDe(persona.nombre);
+          return suma + Math.max(0, (persona.horas === null ? baseDia : persona.horas) - baseDia);
+        }, 0);
+        return (
+          `${presentes.length} ${presentes.length === 1 ? 'presente' : 'presentes'} · ` +
+          `${N(total)} h${extra ? ' · ' + N(extra) + ' h extra' : ''}`
+        );
+      }
+      // Repinta solo la lista y el resumen: repintar toda la vista perdería el primer toque sobre
+      // «Guardar».
+      function refrescar() {
+        let lista = document.querySelector('#lista');
+        let resumen = document.querySelector('#resumen');
+        if (lista) lista.innerHTML = rowsHTML();
+        if (resumen) resumen.innerHTML = sumHTML();
+      }
+      // ---------------------------------------------------------------------------
+      // Vistas: appView, jornadasView, infoView y renderizado de la interfaz
+      // ---------------------------------------------------------------------------
+      // Genera la vista principal de anotación: selectores de obra, ámbito y fecha, lista, altas y
+      // horario semanal
+      function appView() {
+        let horario = hor();
+        let mostrarAviso = !matchMedia('(display-mode: standalone)').matches && !get(K.a, false);
+        let obras = Object.entries(state.obras).filter((entrada) => !entrada[1].cerrada);
+        return (
+          `<div class="bar"><span>Personal en obra</span><small>` +
+          `${a.auto ? 'Borrador guardado automáticamente' : 'sin red: OK'}</small></div><div ` +
+          `class="origin" id="estado-origen">${E(origin)}</div><div class="pad">` +
+          `${
+            mostrarAviso
+              ? '<div class="aviso" id="aviso-instalar"><button data-cerrar-aviso>×</button>Conviene ' +
+                'añadir la app a la pantalla de inicio. Safari borra los datos de una web que no se ' +
+                'usa en 7 días.</div>'
+              : ''
+          }` +
+          `<label class="fld">Obra</label><select id="obra">` +
+          `${obras
+            .map(
+              (entrada) =>
+                `<option value="${E(entrada[0])}" ${entrada[0] === a.obra ? 'selected' : ''}>` +
+                `${E(entrada[1].nombre)}</option>`,
+            )
+            .join('')}` +
+          `</select><label class="fld">Qué anotas</label><div class="seg"><button ` +
+          `data-amb="vivienda" class="${a.amb === 'vivienda' ? 'on' : ''}">Viviendas</button>` +
+          `<button data-amb="garaje" class="${a.amb === 'garaje' ? 'on' : ''}">Garajes</button>` +
+          `</div><label class="fld">Fecha</label><input id="fecha" type="date" value="` +
+          `${E(a.fecha)}"><div class="chips">` +
+          `${[
+            ['0', 'Hoy'],
+            ['-1', 'Ayer'],
+            ['-2', 'Anteayer'],
+          ]
+            .map(
+              (opcion) =>
+                `<button class="btn ghost sm ${a.fecha === add(today(), +opcion[0]) ? 'on' : ''}" ` +
+                `data-dia="${E(opcion[0])}">${opcion[1]}</button>`,
+            )
+            .join('')}` +
+          `</div><div class="actions"><button class="btn ghost sm" data-todos="1">Marcar ` +
+          `todos</button><button class="btn ghost sm" data-todos="0">Desmarcar todos</button>` +
+          `</div><div id="lista">${rowsHTML()}</div><label class="fld">Añadir de la ` +
+          `base</label><input id="filtro" placeholder="Buscar por nombre"><div class="add">` +
+          `<select id="addsel">` +
+          `${libres()
+            .map((nombre) => `<option>${E(nombre)}</option>`)
+            .join('')}` +
+          `</select><button class="btn sec" data-add>Añadir</button></div><label ` +
+          `class="fld">Nombre nuevo</label><div class="add"><input id="nuevo" maxlength="60">` +
+          `<button class="btn sec" data-nuevo>Crear</button></div><div id="nuevo-aviso">` +
+          `${
+            a.warn
+              ? `<div class="aviso">Se parece a «${E(a.warn.old)}». ¿Es la misma persona?<div ` +
+                `class="actions"><button class="btn ghost sm" data-usar="${E(a.warn.old)}` +
+                `">Sí</button><button class="btn ghost sm" data-crear="${E(a.warn.neo)}">No, ` +
+                `crear</button></div></div>`
+              : ''
+          }` +
+          `</div><details id="horario"><summary>Horario semanal</summary><div class="hor">` +
+          `${[
+            ['Lun', 1],
+            ['Mar', 2],
+            ['Mié', 3],
+            ['Jue', 4],
+            ['Vie', 5],
+            ['Sáb', 6],
+            ['Dom', 0],
+          ]
+            .map(
+              (dia) =>
+                `<label>${dia[0]}<input type="number" min="0" max="24" step=".5" data-hor="` +
+                `${E(dia[1])}" value="${E(horario[dia[1]])}"></label>`,
+            )
+            .join('')}` +
+          `</div><div id="aviso-horario" class="nota"></div></details><div class="sum" ` +
+          `id="resumen">${sumHTML()}</div><button class="btn pri full" data-guardar>Guardar ` +
+          `jornada</button><div class="pending"><b id="pendientes" data-n="${E(pending.length)}` +
+          `">${pending.length} jornada(s) pendiente(s) de pasar al PC</b></div>` +
+          `${
+            a.reset
+              ? '<div id="confirmar-reset" class="aviso">¿Borrar lo que llevas a medias?<div ' +
+                'class="actions"><button class="btn sec" data-reset-si>Sí, borrar</button><button ' +
+                'class="btn ghost" data-reset-no>No</button></div></div>'
+              : '<div class="actions"><button class="btn sec" data-exportar>Exportar ' +
+                'pendientes</button><button class="btn ghost" data-reset>Empezar de cero</button>' +
+                '</div>'
+          }` +
+          `</div>`
+        );
+      }
+      // Fecha corta con el día de la semana, p. ej. «vie 23/10».
+      function fdia(fecha) {
+        let dias = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+        let partes = fecha.split('-');
+        return dias[dow(fecha)] + ' ' + partes[2] + '/' + partes[1];
+      }
+      // Genera la vista de histórico de jornadas recientes y pendientes con opciones para reabrir o
+      // anular cada una
+      function jornadasView() {
+        let jornadas = new Map();
+        let limite = add(today(), -14);
+        pub()
+          .filter((fila) => fila.fecha >= limite && fila.fecha <= today())
+          .forEach((fila) => {
+            let clave = fila.ambito + '|' + fila.fecha;
+            if (!jornadas.has(clave))
+              jornadas.set(clave, { obra: a.obra, ambito: fila.ambito, fecha: fila.fecha, presentes: [] });
+            jornadas.get(clave).presentes.push(fila);
+          });
+        pending
+          .filter((jornada) => jornada.obra === a.obra)
+          .forEach((jornada) => jornadas.set(jornada.ambito + '|' + jornada.fecha, jornada));
+        let lista = [...jornadas.values()].sort((izquierda, derecha) =>
+          derecha.fecha.localeCompare(izquierda.fecha),
+        );
+        let opciones = Object.entries(state.obras)
+          .filter((entrada) => !entrada[1].cerrada)
+          .map(
+            (entrada) =>
+              `<option value="${E(entrada[0])}" ${entrada[0] === a.obra ? 'selected' : ''}>` +
+              `${E(entrada[1].nombre)}</option>`,
+          )
+          .join('');
+        let contenido =
+          lista
+            .map((jornada) => {
+              let esPendiente = pending.includes(jornada);
+              let coincide =
+                a.confirm &&
+                a.confirm.obra === jornada.obra &&
+                a.confirm.ambito === jornada.ambito &&
+                a.confirm.fecha === jornada.fecha;
+              let numeroPresentes = (jornada.presentes || []).length;
+              let resumen = jornada.anulada
+                ? '<b>Anulada</b> · pendiente de pasar al PC'
+                : `${numeroPresentes} ${numeroPresentes === 1 ? 'presente' : 'presentes'} · ` +
+                  `${N((jornada.presentes || []).reduce((suma, persona) => suma + (+persona.horas || 0), 0))}` +
+                  ` h`;
+              let acciones = coincide
+                ? '<div id="confirmar" class="aviso">¿Anular esta jornada?<div class="actions"><button ' +
+                  'class="btn ghost sm" data-confirmar="si">Sí, anular</button><button class="btn ' +
+                  'ghost sm" data-confirmar="no">No</button></div></div>'
+                : `<button class="btn sec sm" data-abrir>Abrir</button>` +
+                  `${jornada.anulada ? '' : ' <button class="btn ghost sm" data-anular>Anular</button>'}`;
+              return (
+                `<div class="jor-item ${esPendiente ? 'pendiente' : ''}" data-obra="` +
+                `${E(jornada.obra)}" data-ambito="${E(jornada.ambito)}" data-fecha="` +
+                `${E(jornada.fecha)}"><h3>${E(fdia(jornada.fecha))} · ${E(jornada.ambito)}</h3><p>` +
+                `${resumen}</p>${acciones}</div>`
+              );
+            })
+            .join('') || '<p>Sin jornadas recientes.</p>';
+        return `<div class="card"><h2>Jornadas</h2><select id="obra-j">${opciones}</select>${contenido}</div>`;
+      }
+      // Formatea el texto descriptivo del rango temporal seleccionado para la cabecera del informe
+      // de personal
+      function etiquetaPeriodo() {
+        let meses = [
+          'enero',
+          'febrero',
+          'marzo',
+          'abril',
+          'mayo',
+          'junio',
+          'julio',
+          'agosto',
+          'septiembre',
+          'octubre',
+          'noviembre',
+          'diciembre',
+        ];
+        let mesesCortos = [
+          'ene',
+          'feb',
+          'mar',
+          'abr',
+          'may',
+          'jun',
+          'jul',
+          'ago',
+          'sep',
+          'oct',
+          'nov',
+          'dic',
+        ];
+        if (a.p === 'obra') return 'Toda la obra';
+        let rango = PersonalCalculo.rangoPeriodo(a.p, a.ref);
+        let desde = rango.desde.split('-').map(Number);
+        let hasta = rango.hasta.split('-').map(Number);
+        if (a.p === 'mes') return meses[desde[1] - 1] + ' ' + desde[0];
+        if (a.p === 'anio') return String(desde[0]);
+        return (
+          `Semana del ${desde[2]} ${mesesCortos[desde[1] - 1]} al ${hasta[2]} ` +
+          `${mesesCortos[hasta[1] - 1]} ${hasta[0]}`
+        );
+      }
+      // Genera la vista de informe con agregados de horas, días, porcentaje de impacto y barras
+      // gráficas relativas
+      function infoView() {
+        let filas = PersonalCalculo.filtrar(rowState(), {
+          obra: a.obra,
+          ambito: a.scope,
+          periodo: a.p,
+          ref: a.ref,
+        });
+        let informe = PersonalCalculo.agregar(filas);
+        let controles =
+          `<div class="ctl"><div class="seg">` +
+          `${[
+            ['semana', 'Semana'],
+            ['mes', 'Mes'],
+            ['anio', 'Año'],
+            ['obra', 'Obra'],
+          ]
+            .map(
+              (opcion) =>
+                `<button data-p="${E(opcion[0])}" class="${a.p === opcion[0] ? 'on' : ''}">${opcion[1]}</button>`,
+            )
+            .join('')}` +
+          `</div><div class="seg"><button data-m="-1">‹</button><button data-m="1">›</button>` +
+          `</div><div class="seg">` +
+          `${[
+            ['todo', 'Todo'],
+            ['vivienda', 'Viviendas'],
+            ['garaje', 'Garajes'],
+          ]
+            .map(
+              (opcion) =>
+                `<button data-a="${E(opcion[0])}" class="${a.scope === opcion[0] ? 'on' : ''}">` +
+                `${opcion[1]}</button>`,
+            )
+            .join('')}` +
+          `</div></div>`;
+        let periodo = `<div id="periodo" class="periodo">${E(etiquetaPeriodo())}</div>`;
+        if (!informe.total)
+          return (
+            `<div class="card"><h2>Informe de personal</h2>${controles}${periodo}<p>Sin jornadas ` +
+            `anotadas en este periodo (no es lo mismo que 0 horas)</p></div>`
+          );
+        let tabla =
+          `<div class="wrapx"><table class="data"><thead><tr><th>Nombre</th><th>Días</th>` +
+          `<th>H. ordinarias</th><th>H. extra</th><th>Total h</th><th>% de impacto</th></tr>` +
+          `</thead><tbody>` +
+          `${informe.trabajadores
+            .map(
+              (persona) =>
+                `<tr><td>${E(persona.nombre)}</td><td class="n">${N(persona.dias)}</td><td class="n">` +
+                `${N(persona.ordinarias)}</td><td class="n">${N(persona.extra)}</td><td class="n">` +
+                `${N(persona.horas)}</td><td class="n">${N(persona.pct)} %</td></tr>`,
+            )
+            .join('')}` +
+          `</tbody></table></div>`;
+        let barras = informe.trabajadores
+          .map(
+            (persona, indice) =>
+              `<div class="impacto ${indice ? '' : 'top'}"><span>${E(persona.nombre)}</span><div ` +
+              `class="ib"><i style="width:` +
+              `${E(informe.trabajadores[0].pct ? (100 * persona.pct) / informe.trabajadores[0].pct : 0)}` +
+              `%"></i></div><b>${N(persona.pct)} %</b></div>`,
+          )
+          .join('');
+        return (
+          `<div class="card"><h2>Informe de personal</h2>${controles}${periodo}${tabla}` +
+          `${barras}<p class="nota">Los porcentajes se redondean a 1 decimal; por eso pueden ` +
+          `sumar 99,9 o 100,1.</p></div>`
+        );
+      }
+      // Actualiza el DOM mostrando la vista activa (app, jornadas o informe) y el estado de
+      // selección de pestañas
+      function render() {
+        if (!state) {
+          document.querySelector('#sin-estado').hidden = false;
+          document.querySelectorAll('.view').forEach((vista) => (vista.hidden = true));
+          return;
+        }
+        document.querySelector('#sin-estado').hidden = true;
+        document
+          .querySelectorAll('[data-v]')
+          .forEach((boton) => boton.classList.toggle('on', boton.dataset.v === a.v));
+        if (a.obra) document.querySelector('#v-app').innerHTML = appView();
+        else
+          document.querySelector('#v-app').innerHTML =
+            '<div class="bar"><span>Personal en obra</span><small>sin red: OK</small></div><div ' +
+            'class="origin" id="estado-origen">' +
+            E(origin) +
+            ('</div><div class="pad" id="sin-obras"><h2>No hay obras abiertas</h2><p>Cuando haya ' +
+              'una obra abierta con personal aparecerá aquí.</p></div>');
+        document.querySelector('#v-jornadas').innerHTML = jornadasView();
+        document.querySelector('#v-informe').innerHTML = infoView();
+        ['app', 'jornadas', 'informe'].forEach(
+          (vista) => (document.querySelector('#v-' + vista).hidden = a.v !== vista),
+        );
+      }
+      // Notifica un cambio en obra, ámbito o fecha: recarga la lista, guarda el borrador automático
+      // y repinta la vista
+      function changed(cargar = true) {
+        if (cargar) {
+          a.hp = null;
+          loadList();
+        }
+        draft();
+        render();
+      }
+      // ---------------------------------------------------------------------------
+      // Guardar: validación de horas y almacenamiento de jornadas pendientes
+      // ---------------------------------------------------------------------------
+      // Reúne las jornadas de todas las obras (publicadas y pendientes) para verificar acumulados
+      // diarios de horas
+      function filasDeTodasLasObras() {
+        let jornadas = new Map();
+        Object.keys(state.obras).forEach((obra) => {
+          pub(obra).forEach((fila) => {
+            let clave = jk(fila);
+            if (!jornadas.has(clave)) jornadas.set(clave, []);
+            jornadas.get(clave).push(fila);
+          });
+        });
+        pending.forEach((jornada) => jornadas.set(jk(jornada), jornada.anulada ? [] : jornada.presentes));
+        return jornadas;
+      }
+      // Valida y guarda la jornada en pendientes de localStorage: exige las horas en los días sin
+      // horario, rechaza si alguien pasa de 24 h ese día entre todas las obras y avisa (sin
+      // bloquear) por encima de 12 h.
+      function save() {
+        let presentes = a.list.filter((persona) => persona.on);
+        // Rechaza guardar si no hay ningún trabajador marcado como presente en la jornada
+        if (!presentes.length) return toast('No hay ninguna persona presente');
+        let sinHoras = presentes.filter(
+          (persona) => horarioDe(persona.nombre) === 0 && persona.horas === null,
+        );
+        // En días sin horario fijado (0 h), las horas trabajadas son obligatorias y no pueden ser
+        // null
+        if (sinHoras.length)
+          return toast('Faltan las horas de: ' + sinHoras.map((persona) => persona.nombre).join(', '));
+        let jornada = {
+          obra: a.obra,
+          ambito: a.amb,
+          fecha: a.fecha,
+          presentes: presentes.map((persona) => {
+            let baseDia = horarioDe(persona.nombre);
+            let horasPersona = R(persona.horas === null ? baseDia : persona.horas);
+            return {
+              nombre: persona.nombre,
+              horas: horasPersona,
+              extra: R(Math.max(0, horasPersona - baseDia)),
+            };
+          }),
+          anulada: false,
+          notas: '',
+          registrado: new Date().toISOString(),
+        };
+        // Suma las horas de cada persona en todas las demás obras y ámbitos en la misma fecha
+        let otras = filasDeTodasLasObras();
+        otras.delete(jk(jornada));
+        let anteriores = new Map();
+        otras.forEach((personas, clave) => {
+          if (!clave.endsWith('|' + jornada.fecha)) return;
+          personas.forEach((persona) =>
+            anteriores.set(
+              key(persona.nombre),
+              R((anteriores.get(key(persona.nombre)) || 0) + persona.horas),
+            ),
+          );
+        });
+        let totales = jornada.presentes.map((persona) => ({
+          nombre: persona.nombre,
+          total: R((anteriores.get(key(persona.nombre)) || 0) + persona.horas),
+        }));
+        let excesos = totales.filter((persona) => persona.total > 24);
+        // Rechazo estricto si una persona supera 24 h en el mismo día sumando todas las obras
+        if (excesos.length)
+          return toast(
+            'No se guarda: ' +
+              excesos
+                .map(
+                  (persona) =>
+                    persona.nombre +
+                    ' pasaría de 24 h ese día (' +
+                    N(persona.total) +
+                    ' h entre todas las obras)',
+                )
+                .join('; '),
+          );
+        pending = pending.filter((guardada) => jk(guardada) !== jk(jornada));
+        pending.push(jornada);
+        // Guarda la jornada en localStorage (la anterior con la misma clave obra|ámbito|fecha ya se
+        // ha quitado).
+        let guardada = set(K.p, pending);
+        render();
+        if (!guardada)
+          return toast(
+            'No se pudo guardar en este aparato (¿navegación privada o memoria llena?). Exporta ' +
+              'ya para no perder la jornada.',
+          );
+        let avisos = totales.filter((persona) => persona.total > 12);
+        // Aviso preventivo si una persona supera 12 h en el día entre todas las obras, pero permite
+        // guardar
+        if (avisos.length)
+          return toast(
+            'Jornada guardada. Aviso: ' +
+              avisos
+                .map(
+                  (persona) => persona.nombre + ' suma ' + N(persona.total) + ' h ese día (todas las obras)',
+                )
+                .join('; '),
+          );
+        toast('Jornada guardada en este aparato ✓');
+      }
+      // ---------------------------------------------------------------------------
+      // Exportar: generación y descarga del lote de personal para el PC
+      // ---------------------------------------------------------------------------
+      // Construye el lote JSON de jornadas pendientes y modificaciones de horario y dispara su
+      // descarga para el PC
+      function exportar() {
+        if (!a.obra) return;
+        let horario = hor();
+        let jornadas = pending.filter((jornada) => jornada.obra === a.obra);
+        let horarioCambiado = JSON.stringify(horario) !== JSON.stringify(base(a.obra));
+        let propios = objetoSimple(excepciones[a.obra]) ? excepciones[a.obra] : {};
+        let numeroPropios = Object.keys(propios).length;
+        // Rechaza exportar si no hay jornadas pendientes ni cambios en el horario de obra ni
+        // horarios propios
+        if (!jornadas.length && !horarioCambiado && !numeroPropios)
+          return toast('No hay jornadas pendientes en esta obra');
+        // Construye el lote_personal según el contrato P1: jornadas por nombre, horario semanal y
+        // excepciones
+        let lote = { tipo: 'lote_personal', version: 1, obra: a.obra };
+        if (horarioCambiado)
+          lote.horario_semanal = {
+            lun: horario[1],
+            mar: horario[2],
+            mie: horario[3],
+            jue: horario[4],
+            vie: horario[5],
+            sab: horario[6],
+            dom: horario[0],
+          };
+        if (numeroPropios) lote.excepciones_horario = JSON.parse(JSON.stringify(propios));
+        lote.jornadas = jornadas.map((jornada) => ({
+          ambito: jornada.ambito,
+          fecha: jornada.fecha,
+          presentes: jornada.anulada
+            ? []
+            : jornada.presentes.map((persona) => ({
+                nombre: persona.nombre,
+                horas: persona.horas,
+                extra: persona.extra,
+              })),
+          anulada: !!jornada.anulada,
+          notas: jornada.notas || '',
+          registrado: jornada.registrado,
+        }));
+        // Genera y dispara la descarga del fichero JSON del lote mediante un objeto Blob temporal
+        let url = URL.createObjectURL(
+          new Blob([JSON.stringify(lote, null, 1)], { type: 'application/json' }),
+        );
+        let enlace = document.createElement('a');
+        enlace.href = url;
+        enlace.download = 'lote_personal_' + a.obra + '.json';
+        document.body.appendChild(enlace);
+        enlace.click();
+        enlace.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        toast(
+          'Exportadas ' +
+            jornadas.length +
+            ' jornada(s) de ' +
+            state.obras[a.obra].nombre +
+            (numeroPropios ? ' y ' + numeroPropios + ' horario(s) propio(s)' : ''),
+        );
+      }
+      // ---------------------------------------------------------------------------
+      // Eventos: manejadores de click, change e input de la interfaz de usuario
+      // ---------------------------------------------------------------------------
+      document.addEventListener('click', (evento) => {
+        let boton = evento.target.closest('button');
+        if (!boton) return;
+        let datos = boton.dataset;
+        // Pestañas superiores: cambia la vista activa entre Anotar, Jornadas e Informe
+        if (datos.v) {
+          a.v = datos.v;
+          render();
+          return;
+        }
+        // Cierra y recuerda no volver a mostrar el aviso de añadir la app a la pantalla de inicio
+        // de Safari
+        if (datos.cerrarAviso !== undefined) {
+          set(K.a, true);
+          render();
+          return;
+        }
+        // Selector de ámbito de trabajo: conmuta entre Viviendas y Garajes
+        if (datos.amb) {
+          a.amb = datos.amb;
+          changed();
+          return;
+        }
+        // Chips de fecha rápida: cambia la fecha a Hoy (0), Ayer (-1) o Anteayer (-2)
+        if (datos.dia !== undefined) {
+          a.fecha = add(today(), +datos.dia);
+          changed();
+          return;
+        }
+        // Botones de acción masiva: marca o desmarca a todos los trabajadores de la lista
+        if (datos.todos !== undefined) {
+          a.hp = null;
+          a.list.forEach((persona) => (persona.on = datos.todos === '1'));
+          changed(false);
+          return;
+        }
+        // Botón X de asistencia: activa o desactiva la presencia; al activar fija las horas base
+        // del día
+        if (datos.x !== undefined) {
+          let persona = a.list[+datos.x];
+          persona.on = !persona.on;
+          if (!persona.on && a.hp === persona.nombre) a.hp = null;
+          let baseDia = horarioDe(persona.nombre);
+          if (persona.on && baseDia > 0) persona.horas = baseDia;
+          changed(false);
+          return;
+        }
+        // Abre o cierra el editor de horario propio específico para ese trabajador
+        if (datos.hpAbrir !== undefined) {
+          let persona = a.list[+datos.hpAbrir];
+          if (persona?.on) {
+            a.hp = a.hp === persona.nombre ? null : persona.nombre;
+            render();
+          }
+          return;
+        }
+        // Guarda los valores introducidos en el editor de horario propio del trabajador en la obra
+        if (datos.hpGuardar !== undefined) {
+          let editor = boton.closest('.hp');
+          let fila = boton.closest('.row');
+          let propio = {};
+          editor.querySelectorAll('[data-hp]').forEach((campo) => {
+            let valor = campo.value.trim();
+            let numero = Number(valor);
+            if (valor !== '' && Number.isFinite(numero)) propio[campo.dataset.hp] = numero;
+          });
+          a.hp = null;
+          if (guardarPropio(fila.dataset.nombre, propio))
+            toast('Horario propio guardado. No cambia las jornadas ya guardadas.');
+          return;
+        }
+        // Elimina el horario propio del trabajador, restableciendo el horario general de la obra
+        if (datos.hpQuitar !== undefined) {
+          let fila = boton.closest('.row');
+          a.hp = null;
+          if (guardarPropio(fila.dataset.nombre, {})) toast('Horario propio quitado.');
+          return;
+        }
+        // Ajusta horas con botones +/- (pasos de 0,5 h); en días sin horario fija 7,5 h al primer
+        // toque
+        if (datos.i !== undefined) {
+          let persona = a.list[+datos.i];
+          let baseDia = horarioDe(persona.nombre);
+          persona.horas =
+            baseDia === 0 && persona.horas === null
+              ? 7.5
+              : R(Math.max(0, Math.min(24, (persona.horas === null ? baseDia : persona.horas) + +datos.d)));
+          changed(false);
+          return;
+        }
+        // Añade a la lista de presentes el trabajador seleccionado en el desplegable de la base
+        if (datos.add !== undefined) {
+          let selector = document.querySelector('#addsel');
+          if (selector.value) {
+            addName(selector.value);
+            changed(false);
+          }
+          return;
+        }
+        // Crea un trabajador con nombre nuevo; comprueba si ya existe o si se parece a uno del
+        // catálogo
+        if (datos.nuevo !== undefined) {
+          let nombre = clean(document.querySelector('#nuevo').value);
+          if (!nombre) return;
+          let igual =
+            cat().find((existente) => key(existente) === key(nombre)) ||
+            a.list.find((persona) => key(persona.nombre) === key(nombre))?.nombre;
+          if (igual) {
+            addName(igual);
+            changed(false);
+            return;
+          }
+          let parecido = similar(nombre);
+          if (parecido) {
+            a.warn = { neo: nombre, old: parecido };
+            render();
+            return;
+          }
+          news.push(nombre);
+          set(K.n, news);
+          addName(nombre);
+          changed(false);
+          return;
+        }
+        // Confirma el aviso de nombre parecido: reutiliza el nombre ya existente en el catálogo
+        if (datos.usar) {
+          addName(datos.usar);
+          a.warn = null;
+          changed(false);
+          return;
+        }
+        // Descarta el aviso de nombre parecido y fuerza la creación del nombre nuevo tal como se
+        // escribió
+        if (datos.crear) {
+          let nombre = clean(datos.crear);
+          news.push(nombre);
+          set(K.n, news);
+          addName(nombre);
+          a.warn = null;
+          changed(false);
+          return;
+        }
+        // Botón guardar jornada: valida horas y límites y guarda la jornada en pendientes
+        if (datos.guardar !== undefined) return save();
+        // Botón exportar pendientes: genera y descarga el lote JSON para enviar al PC
+        if (datos.exportar !== undefined) return exportar();
+        // Botón empezar de cero: solicita confirmación para borrar el borrador de la jornada en
+        // curso
+        if (datos.reset !== undefined) {
+          a.hp = null;
+          a.reset = true;
+          render();
+          document.querySelector('#confirmar-reset')?.scrollIntoView({ block: 'nearest' });
+          return;
+        }
+        // Cancela la solicitud de reinicio del borrador
+        if (datos.resetNo !== undefined) {
+          a.reset = false;
+          render();
+          return;
+        }
+        // Confirma el borrado del borrador en localStorage y recarga la aplicación
+        if (datos.resetSi !== undefined) {
+          del(K.b);
+          location.reload();
+          return;
+        }
+        // Acciones en lista de jornadas: abrir para editar en el formulario o pedir confirmación
+        // para anular
+        if (datos.abrir !== undefined || datos.anular !== undefined) {
+          let elemento = boton.closest('.jor-item');
+          let jornada = {
+            obra: elemento.dataset.obra,
+            ambito: elemento.dataset.ambito,
+            fecha: elemento.dataset.fecha,
+          };
+          if (datos.abrir !== undefined) {
+            Object.assign(a, jornada, { v: 'app' });
+            loadList();
+            draft();
+          } else a.confirm = jornada;
+          render();
+          return;
+        }
+        // Cancela la anulación de la jornada
+        if (datos.confirmar === 'no') {
+          a.confirm = null;
+          render();
+          return;
+        }
+        // Confirma la anulación: registra la jornada como anulada sin presentes en pendientes para
+        // el PC
+        if (datos.confirmar === 'si') {
+          let jornada = {
+            ...a.confirm,
+            presentes: [],
+            anulada: true,
+            notas: '',
+            registrado: new Date().toISOString(),
+          };
+          pending = pending.filter((guardada) => jk(guardada) !== jk(jornada));
+          pending.push(jornada);
+          set(K.p, pending);
+          a.confirm = null;
+          render();
+          return;
+        }
+        // Informe: cambia la agrupación temporal entre Semana, Mes, Año y Obra
+        if (datos.p) {
+          a.p = datos.p;
+          render();
+          return;
+        }
+        // Informe: desplaza el periodo en curso hacia atrás o hacia adelante con los botones ‹ y ›
+        if (datos.m) {
+          a.ref = PersonalCalculo.mover(a.p, a.ref, +datos.m);
+          render();
+          return;
+        }
+        // Informe: filtra los datos agregados por ámbito (Todo, Viviendas o Garajes)
+        if (datos.a) {
+          a.scope = datos.a;
+          render();
+        }
+      });
+      document.addEventListener('change', (evento) => {
+        let campo = evento.target;
+        // Cambio de obra seleccionada: actualiza la obra activa y recarga la lista de presentes
+        if (campo.id === 'obra' || campo.id === 'obra-j') {
+          a.obra = campo.value;
+          changed();
+          return;
+        }
+        // Cambio manual del selector de fecha: valida el formato YYYY-MM-DD y actualiza la lista
+        if (campo.id === 'fecha') {
+          if (!fechaOk(campo.value)) {
+            render();
+            return;
+          }
+          a.fecha = campo.value;
+          changed();
+          return;
+        }
+        // Edición del horario semanal de la obra: lo guarda en hours y mueve las horas de quienes
+        // seguían el horario anterior y no tienen horario propio ese día (las fijadas a mano no se
+        // tocan).
+        if (campo.dataset.hor !== undefined) {
+          let horario = hor();
+          let indice = +campo.dataset.hor;
+          let nuevoValor = R(Math.max(0, Math.min(24, +campo.value || 0)));
+          let anterior = horario[indice];
+          let aviso = document.querySelector('#aviso-horario');
+          if (horario[indice] === nuevoValor) {
+            if (aviso) aviso.textContent = 'Cambiar el horario no modifica las jornadas ya guardadas';
+            return;
+          }
+          horario[indice] = nuevoValor;
+          hours[a.obra] = horario;
+          set(K.h, hours);
+          if (indice === dow(a.fecha))
+            a.list.forEach((persona) => {
+              if (
+                persona.on &&
+                persona.horas !== null &&
+                R(persona.horas) === R(anterior) &&
+                !tienePropio(persona.nombre, a.fecha)
+              )
+                persona.horas = nuevoValor > 0 ? nuevoValor : null;
+            });
+          draft();
+          refrescar();
+          if (aviso) aviso.textContent = 'Cambiar el horario no modifica las jornadas ya guardadas';
+        }
+      });
+      document.addEventListener('input', (evento) => {
+        // Filtrado dinámico del desplegable de trabajadores disponibles según el texto tecleado
+        if (evento.target.id === 'filtro')
+          document.querySelector('#addsel').innerHTML = libres(evento.target.value)
+            .map((nombre) => `<option>${E(nombre)}</option>`)
+            .join('');
+      });
+      // ---------------------------------------------------------------------------
+      // Arranque: inicialización con init, carga de estado y temporizadores
+      // ---------------------------------------------------------------------------
+      let iniciada = false;
+      // Arranca la app con el estado publicado SAGARDE_PERSONAL o la copia local de respaldo tras
+      // un máximo de 4 s
+      function init(porEspera = false) {
+        if (iniciada) return;
+        let copia = get(K.e, null);
+        if (porEspera && !copia?.obras) return;
+        iniciada = true;
+        // Si cargó personal_estado.js, guarda copia en K.e y anota origen con fecha de generación
+        if (window.__pub && window.SAGARDE_PERSONAL?.obras) {
+          state = window.SAGARDE_PERSONAL;
+          set(K.e, state);
+          let generado = state.generado || '';
+          let coincidencia = generado.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
+          let fechaLegible = coincidencia
+            ? coincidencia[3] +
+              '/' +
+              coincidencia[2] +
+              '/' +
+              coincidencia[1] +
+              ' ' +
+              coincidencia[4] +
+              ':' +
+              coincidencia[5]
+            : generado;
+          origin = 'Estado publicado' + (generado ? ' · ' + fechaLegible : '');
+        } else {
+          // Si no hay conexión o se superó el tiempo de espera, arranca con la copia local de
+          // respaldo
+          if (copia?.obras) {
+            state = copia;
+            origin =
+              'Usando la copia guardada en este aparato' +
+              (porEspera ? ' · el estado publicado tarda en llegar' : '');
+          }
+        }
+        if (!state) return render();
+        reconcile();
+        a.obra = Object.keys(state.obras).find((obra) => !state.obras[obra].cerrada) || '';
+        if (!restore()) loadList();
+        render();
+        if (rotos > 0) toast('Se han apartado ' + rotos + ' jornada(s) guardada(s) con formato no válido');
+      }
+      // Arranque en carga de página y temporizador de seguridad de 4 s por si el script tarda en
+      // responder
+      window.addEventListener('load', () => setTimeout(init, 0));
+      setTimeout(() => init(true), 4000);
+    </script>
+  </body>
+</html>

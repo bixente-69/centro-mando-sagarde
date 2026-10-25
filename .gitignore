@@ -60,6 +60,13 @@ VARIOS/APPS SAGARDE/
 # dibujaban en la version publicada aunque funcionasen en local.
 !SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/static/chart.min.js
 
+# Personal en obra: panel_personal.py incrusta este fichero en cada panel, y la
+# pagina del ranking lo cargara con <script src="personal_calculo.js">. Sin esta
+# linea el .js se ignora (la lista blanca solo deja pasar .html y .py) y una
+# copia limpia del repositorio no puede generar la pestana Personal.
+# tests/test_panel_personal.py comprueba que de verdad se publica.
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_calculo.js
+
 # Ficha de obra: fuente de verdad de estructura y estados (una por obra)
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/ficha_obra.json
 
