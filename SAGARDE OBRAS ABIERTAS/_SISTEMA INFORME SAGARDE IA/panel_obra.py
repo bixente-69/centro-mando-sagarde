@@ -1814,7 +1814,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   snapshot_garaje=None,
                   prioridades_zonas_especiales=None,
                   snapshot_zonas_especiales=None, hilos=None,
-                  fecha_datos=None):
+                  fecha_datos=None, personal=None, personal_obra_id=None):
     prioridades = prioridades or {}
     snapshot = historial[-1][1] if historial else []
     fecha_datos = fecha_datos or (historial[-1][0] if historial else '—')
@@ -2009,6 +2009,30 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
         return f'<table class="data"><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table>'
 
     personal_html = tabla_ficha(ficha.get('personal', []))
+    # Pestana Personal. Con jornadas anotadas (`personal`: filas planas
+    # {fecha, ambito, nombre, horas, extra}, el nombre ya canonico, como las
+    # devuelve personal_obra.aplanar) se pinta la vista nueva; sin ellas queda
+    # lo de siempre, byte a byte: la tabla de la hoja `Personal` de la ficha.
+    # El informe a la carta sigue usando `personal_html` hasta el paso P5.
+    personal_vista_html = (
+        '<div class="card"><h3>Personal asignado</h3>' + personal_html + '</div>')
+    if personal:
+        # El import va aqui y no arriba: un fallo de la vista nueva (tambien al
+        # importar el modulo) no puede tumbar el panel de ninguna obra, pero
+        # tampoco pasar en silencio: el aviso se ve en la propia pestana.
+        try:
+            import panel_personal
+            personal_vista_html = (
+                '<div class="card"><h3>Personal asignado</h3>'
+                + panel_personal.vista_personal(personal_obra_id or obra, personal)
+                + '</div>')
+        except Exception as error:
+            motivo = html_lib.escape(type(error).__name__ + ': ' + str(error))
+            personal_vista_html = (
+                '<div class="card"><h3>Personal asignado</h3>'
+                '<div class="banner bad">⚠ No se pudo pintar el personal de la obra '
+                f'({motivo}). Se muestra la tabla de la ficha.</div>'
+                + personal_html + '</div>')
     hitos_html = tabla_ficha(ficha.get('hitos', []))
 
     # ---- TAREAS MANUALES: pestaña propia, reutilizada por el informe ----
@@ -2419,7 +2443,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 
 <section id="v-materiales" class="view">{materiales_html}</section>
 
-<section id="v-personal" class="view"><div class="card"><h3>Personal asignado</h3>{personal_html}</div></section>
+<section id="v-personal" class="view">{personal_vista_html}</section>
 
 <section id="v-prioridades" class="view">{prioridades_html}
   <div class="card"><h3>Hitos manuales</h3>{hitos_html}</div></section>
