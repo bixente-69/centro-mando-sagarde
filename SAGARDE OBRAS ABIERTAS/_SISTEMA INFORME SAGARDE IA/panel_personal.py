@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
-"""Vista de personal asignado para el panel de obra de Sagarde.
+"""Vista de personal asignado para el panel y el informe de obra de Sagarde.
 
 Este módulo proporciona la vista interactiva de la pestaña «Personal» en el panel
-de obra, permitiendo filtrar jornadas por periodo y ámbito, consultar KPIs globales,
-la tabla de horas por trabajador y barras de impacto relativo.
+de obra y el fragmento imprimible de la sección «Personal» para el informe de obra,
+permitiendo filtrar jornadas por periodo y ámbito, consultar KPIs globales,
+la matriz de horas por trabajador y barras de impacto relativo.
 """
 
 import datetime
@@ -262,7 +263,314 @@ _CSS_PANEL_PERSONAL = """\
 }
 """
 
-_JS_VISTA_PERSONAL = """\
+_CSS_INFORME_PERSONAL = """\
+#pinf-raiz {
+  font-family: inherit;
+  color: var(--text, #1c2733);
+  line-height: 1.5;
+  max-width: 100%;
+  min-width: 0;
+}
+#pinf-raiz * {
+  box-sizing: border-box;
+}
+#pinf-raiz .pinf-ctl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+#pinf-raiz .pinf-seg {
+  display: inline-flex;
+  align-items: center;
+  background: var(--bg, #f4f6f9);
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 8px;
+  padding: 2px;
+  gap: 2px;
+  max-width: 100%;
+  min-width: 0;
+}
+#pinf-raiz .pinf-seg button {
+  border: none;
+  background: transparent;
+  color: var(--text, #1c2733);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+#pinf-raiz .pinf-seg button:hover:not(:disabled) {
+  background: rgba(0, 0, 0, 0.05);
+}
+#pinf-raiz .pinf-seg button.on {
+  background: var(--header, #0b1f3a);
+  color: #fff;
+}
+#pinf-raiz .pinf-seg button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+#pinf-raiz button[data-pinf-m] {
+  width: 44px;
+  font-size: 18px;
+  font-weight: 700;
+  padding: 0;
+}
+#pinf-raiz #pinf-etiqueta {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text, #1c2733);
+  padding: 0 10px;
+  text-align: center;
+  white-space: nowrap;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+#pinf-raiz .pinf-sub {
+  font-size: 13px;
+  color: var(--text, #1c2733);
+  margin-bottom: 12px;
+}
+#pinf-raiz .pinf-parte {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--header2, #123a63);
+  margin: 14px 0 6px 0;
+}
+#pinf-raiz .pinf-aviso {
+  background: #fff4e5;
+  border: 1px solid var(--warn, #e07b1a);
+  color: #7a4c00;
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+#pinf-raiz .pinf-vacio {
+  color: var(--muted, #647184);
+  font-size: 13.5px;
+  padding: 16px 4px;
+}
+#pinf-raiz .pinf-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 16px;
+}
+#pinf-raiz .pinf-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+#pinf-raiz .pinf-tabla th {
+  text-align: left;
+  padding: 7px 6px;
+  border-bottom: 2px solid var(--line, #e3e7ee);
+  color: var(--muted, #647184);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+#pinf-raiz .pinf-tabla td {
+  padding: 6px;
+  border-bottom: 1px solid var(--line, #eef1f5);
+}
+#pinf-raiz .pinf-tabla td:first-child {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+#pinf-raiz .pinf-tabla tr:hover td {
+  background: rgba(0, 0, 0, 0.02);
+}
+#pinf-raiz .pinf-tabla .n {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+#pinf-raiz .pinf-tabla tfoot tr td {
+  border-top: 2px solid var(--line, #e3e7ee);
+  border-bottom: none;
+  font-weight: 700;
+  padding-top: 8px;
+}
+#pinf-raiz .pinf-sin {
+  color: var(--muted, #94a3b8);
+}
+#pinf-raiz .pinf-ih {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--header, #0b1f3a);
+  margin: 18px 0 10px 0;
+}
+#pinf-raiz .pinf-bloque-impacto {
+  margin-top: 16px;
+}
+#pinf-raiz .pinf-impacto {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 7px;
+  font-size: 12.5px;
+}
+#pinf-raiz .pinf-nom {
+  width: 130px;
+  max-width: 130px;
+  flex: 0 0 130px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.2;
+}
+#pinf-raiz .pinf-bar {
+  flex: 1;
+  height: 14px;
+  background: var(--bg, #eef1f5);
+  border-radius: 7px;
+  overflow: hidden;
+  position: relative;
+  min-width: 60px;
+}
+#pinf-raiz .pinf-bar i {
+  display: block;
+  height: 100%;
+  border-radius: 7px;
+  background: var(--accent2, #2e7dd7);
+  transition: width 0.25s ease;
+}
+#pinf-raiz .pinf-bar.top i {
+  background: var(--accent, #f5a524);
+}
+#pinf-raiz .pinf-impacto b {
+  width: 55px;
+  max-width: 55px;
+  flex: 0 0 55px;
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+#pinf-raiz .pinf-nota {
+  font-size: 11px;
+  color: var(--muted, #647184);
+  margin-top: 10px;
+  line-height: 1.4;
+}
+@media (max-width: 480px) {
+  #pinf-raiz .pinf-ctl {
+    gap: 6px;
+  }
+  #pinf-raiz .pinf-seg button {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+  #pinf-raiz .pinf-nom {
+    width: 90px;
+    max-width: 90px;
+    flex: 0 0 90px;
+    font-size: 12px;
+  }
+  #pinf-raiz .pinf-impacto b {
+    width: 45px;
+    max-width: 45px;
+    flex: 0 0 45px;
+    font-size: 12px;
+  }
+}
+@media print {
+  #pinf-raiz {
+    margin: 0 -14px;
+  }
+  #pinf-raiz .pinf-ctl {
+    display: none !important;
+  }
+  #pinf-raiz .pinf-scroll {
+    overflow: visible;
+    margin-bottom: 12px;
+  }
+  #pinf-raiz .pinf-tabla {
+    font-size: 8.5pt;
+    width: 100%;
+  }
+  #pinf-raiz .pinf-tabla th {
+    font-size: 7.5pt;
+    padding: 3px 2px;
+  }
+  #pinf-raiz .pinf-tabla td {
+    padding: 3px 2px;
+  }
+  #pinf-raiz .pinf-tabla .n {
+    font-size: 8pt;
+  }
+  #pinf-raiz .pinf-tabla thead {
+    display: table-header-group;
+  }
+  #pinf-raiz .pinf-tabla tfoot {
+    display: table-row-group;
+  }
+  #pinf-raiz .pinf-tabla tr {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  #pinf-raiz .pinf-parte {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  #pinf-raiz .pinf-ih {
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  /* Un gráfico que cabe en una página va entero en una; si es más largo, se parte entre barras. */
+  #pinf-raiz .pinf-bloque-impacto {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  #pinf-raiz .pinf-impacto {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  #pinf-raiz .pinf-bar {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+}
+"""
+
+_JS_AYUDAS = """\
+  var MESES = [
+    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+  ];
+
+  function formatearNum(x) {
+    // Un dato ausente se distingue de cero en toda la presentación.
+    if (x === null || x === undefined || typeof x !== 'number' || isNaN(x)) {
+      return '–';
+    }
+    return String(Math.round(x * 10) / 10).replace('.', ',');
+  }
+
+  function escaparHtml(str) {
+    // Los nombres se insertan como marcado generado y por eso requieren escape explícito.
+    if (str === null || str === undefined) return '';
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }"""
+
+_JS_VISTA_PERSONAL_PLANTILLA = """\
 (function () {
   'use strict';
 
@@ -294,29 +602,7 @@ _JS_VISTA_PERSONAL = """\
     }
   }
 
-  var MESES = [
-    'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
-    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
-  ];
-
-  function formatearNum(x) {
-    // Un dato ausente se distingue de cero en toda la presentación.
-    if (x === null || x === undefined || typeof x !== 'number' || isNaN(x)) {
-      return '–';
-    }
-    return String(Math.round(x * 10) / 10).replace('.', ',');
-  }
-
-  function escaparHtml(str) {
-    // Los nombres se insertan como marcado generado y por eso requieren escape explícito.
-    if (str === null || str === undefined) return '';
-    return String(str)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
+__AYUDAS__
 
   function mostrarError(error) {
     // Un fallo al calcular o pintar tiene que verse en la pestaña: nunca una vista vacía en silencio.
@@ -555,6 +841,341 @@ _JS_VISTA_PERSONAL = """\
 })();
 """
 
+# Reemplazo de ayudas comunes a nivel de módulo para la vista de pestaña.
+_JS_VISTA_PERSONAL = _JS_VISTA_PERSONAL_PLANTILLA.replace("__AYUDAS__", _JS_AYUDAS)
+
+_JS_INFORME_PERSONAL_PLANTILLA = """\
+(function () {
+  'use strict';
+
+  var raiz = document.getElementById('pinf-raiz');
+  if (!raiz) return;
+
+  var datosEl = document.getElementById('pinf-datos');
+  if (!datosEl) return;
+
+  var filas = [];
+  try {
+    filas = JSON.parse(datosEl.textContent);
+  } catch (errJson) {
+    mostrarError(errJson);
+    return;
+  }
+
+  // Estado inicial: periodo 'mes', ámbito 'todo', referencia = fecha más reciente
+  var periodo = 'mes';
+  var ambito = 'todo';
+  var ref = '';
+
+  for (var i = 0; i < filas.length; i++) {
+    var f = filas[i];
+    if (f && typeof f.fecha === 'string') {
+      if (!ref || f.fecha > ref) {
+        ref = f.fecha;
+      }
+    }
+  }
+
+__AYUDAS__
+
+  function mostrarError(error) {
+    // Un fallo al calcular o pintar tiene que verse en el informe: nunca una sección vacía en silencio.
+    var contenedor = document.getElementById('pinf-contenido');
+    if (contenedor) {
+      contenedor.innerHTML = '<p class="pinf-aviso">⚠ No se pudo calcular el personal: ' +
+        escaparHtml(error && error.message ? error.message : String(error)) + '</p>';
+    }
+  }
+
+  function obtenerTextoEtiqueta(p, r) {
+    // El motor fija los límites; aquí únicamente se da formato legible a esos datos.
+    if (p === 'obra') {
+      return 'Toda la obra';
+    }
+    if (p === 'anio') {
+      return r ? r.slice(0, 4) : '';
+    }
+    if (p === 'mes') {
+      if (!r || r.length < 7) return '';
+      var anio = r.slice(0, 4);
+      var mesNum = parseInt(r.slice(5, 7), 10);
+      var nombreMes = (mesNum >= 1 && mesNum <= 12) ? MESES[mesNum - 1] : '';
+      return nombreMes + ' ' + anio;
+    }
+    if (p === 'semana') {
+      if (!window.PersonalCalculo) return '';
+      var numSemana = window.PersonalCalculo.semanaISO(r);
+      var rango = window.PersonalCalculo.rangoPeriodo('semana', r);
+      if (!rango || !rango.desde || !rango.hasta) return '';
+      var diaD = rango.desde.slice(8, 10);
+      var mesD = rango.desde.slice(5, 7);
+      var anioD = rango.desde.slice(0, 4);
+      var diaH = rango.hasta.slice(8, 10);
+      var mesH = rango.hasta.slice(5, 7);
+      var anioH = rango.hasta.slice(0, 4);
+      return 'Semana ' + numSemana + ' · ' +
+        diaD + '/' + mesD + '/' + anioD + ' – ' + diaH + '/' + mesH + '/' + anioH;
+    }
+    return '';
+  }
+
+  function actualizarControles() {
+    // Se mutan los controles existentes para conservar tanto el foco como el teclado.
+    var btnsP = raiz.querySelectorAll('[data-pinf-p]');
+    for (var i = 0; i < btnsP.length; i++) {
+      var bp = btnsP[i];
+      var activoP = bp.getAttribute('data-pinf-p') === periodo;
+      if (activoP) {
+        bp.classList.add('on');
+        bp.setAttribute('aria-pressed', 'true');
+      } else {
+        bp.classList.remove('on');
+        bp.setAttribute('aria-pressed', 'false');
+      }
+    }
+
+    var btnsA = raiz.querySelectorAll('[data-pinf-a]');
+    for (var j = 0; j < btnsA.length; j++) {
+      var ba = btnsA[j];
+      var activoA = ba.getAttribute('data-pinf-a') === ambito;
+      if (activoA) {
+        ba.classList.add('on');
+        ba.setAttribute('aria-pressed', 'true');
+      } else {
+        ba.classList.remove('on');
+        ba.setAttribute('aria-pressed', 'false');
+      }
+    }
+
+    var btnsM = raiz.querySelectorAll('[data-pinf-m]');
+    for (var k = 0; k < btnsM.length; k++) {
+      btnsM[k].disabled = (periodo === 'obra');
+    }
+
+    var etq = document.getElementById('pinf-etiqueta');
+    if (etq) {
+      etq.textContent = obtenerTextoEtiqueta(periodo, ref);
+    }
+  }
+
+  function pintarContenido() {
+    // La vista consume los resultados del motor sin reproducir sus cálculos.
+    var contenedor = document.getElementById('pinf-contenido');
+    if (!contenedor) return;
+
+    if (!window.PersonalCalculo) {
+      contenedor.innerHTML =
+        '<p class="pinf-aviso">⚠ No se pudo calcular el personal: ' +
+        'motor PersonalCalculo no disponible.</p>';
+      return;
+    }
+
+    var filtradas = window.PersonalCalculo.filtrar(filas, {
+      ambito: ambito,
+      periodo: periodo,
+      ref: ref
+    });
+
+    var res = window.PersonalCalculo.agregar(filtradas);
+    var trabajadores = res.trabajadores || [];
+    var total = res.total;
+    var avisos = res.avisos || {};
+
+    var etiqueta = obtenerTextoEtiqueta(periodo, ref);
+    var textoAmbito = 'Viviendas y garajes';
+    if (ambito === 'vivienda') {
+      textoAmbito = 'Solo viviendas';
+    } else if (ambito === 'garaje') {
+      textoAmbito = 'Solo garajes';
+    }
+
+    var html = '<p class="pinf-sub">Periodo: <b>' + escaparHtml(etiqueta) + '</b> · ' + textoAmbito + '</p>';
+
+    var sinH = avisos.filasSinHoras || 0;
+    var inv = avisos.filasInvalidas || 0;
+    if (sinH > 0 || inv > 0) {
+      var partes = [];
+      if (sinH > 0) {
+        partes.push(sinH === 1 ? '1 sin horas' : (sinH + ' sin horas'));
+      }
+      if (inv > 0) {
+        partes.push(inv + ' con datos no válidos');
+      }
+      html += '<p class="pinf-aviso">⚠ Filas que no se han contado: ' +
+        partes.join(', ') + '.</p>';
+    }
+
+    if (total === null) {
+      // La ausencia de jornadas válidas no equivale a un total numérico de cero.
+      html += '<p class="empty pinf-vacio">Sin jornadas anotadas en este periodo ' +
+        '(no es lo mismo que 0 horas).</p>';
+      contenedor.innerHTML = html;
+      return;
+    }
+
+    var m = window.PersonalCalculo.matriz(filtradas, periodo, ref);
+    var MAX_COLUMNAS = 12;
+    var columnas = m.columnas || [];
+    var numTramos = Math.ceil(columnas.length / MAX_COLUMNAS) || 1;
+    var tramos = [];
+    for (var tIdx = 0; tIdx < numTramos; tIdx++) {
+      tramos.push(columnas.slice(tIdx * MAX_COLUMNAS, (tIdx + 1) * MAX_COLUMNAS));
+    }
+
+    var mapaTrabajadores = {};
+    for (var ti = 0; ti < trabajadores.length; ti++) {
+      var tr = trabajadores[ti];
+      mapaTrabajadores[tr.nombre] = tr;
+    }
+
+    for (var tramoIdx = 0; tramoIdx < tramos.length; tramoIdx++) {
+      var tramo = tramos[tramoIdx];
+      var esUltimoTramo = (tramoIdx === tramos.length - 1);
+
+      if (tramos.length > 1 && tramo.length > 0) {
+        var primCol = tramo[0];
+        var ultCol = tramo[tramo.length - 1];
+        html += '<p class="pinf-parte">Tabla ' + (tramoIdx + 1) + ' de ' + tramos.length +
+          ' · ' + escaparHtml(primCol.etiqueta) + ' – ' + escaparHtml(ultCol.etiqueta) + '</p>';
+      }
+
+      html += '<div class="pinf-scroll"><table class="data pinf-tabla"><thead><tr>';
+      html += '<th>Nombre</th>';
+      for (var cIdx = 0; cIdx < tramo.length; cIdx++) {
+        html += '<th class="n">' + escaparHtml(tramo[cIdx].etiqueta) + '</th>';
+      }
+      if (esUltimoTramo) {
+        html += '<th class="n">Total h</th><th class="n">Extra</th><th class="n">%</th>';
+      }
+      html += '</tr></thead><tbody>';
+
+      for (var fIdx = 0; fIdx < m.filas.length; fIdx++) {
+        var fila = m.filas[fIdx];
+        html += '<tr><td><b>' + escaparHtml(fila.nombre) + '</b></td>';
+        for (var colIdx = 0; colIdx < tramo.length; colIdx++) {
+          var cClave = tramo[colIdx].clave;
+          var cVal = fila.celdas[cClave];
+          var celdaStr = (cVal === null || cVal === undefined)
+            ? '<span class="pinf-sin">–</span>'
+            : formatearNum(cVal);
+          html += '<td class="n">' + celdaStr + '</td>';
+        }
+        if (esUltimoTramo) {
+          var tInf = mapaTrabajadores[fila.nombre] || {};
+          var pctVal = (tInf.pct !== null && tInf.pct !== undefined)
+            ? (formatearNum(tInf.pct) + ' %')
+            : '–';
+          var extraVal = (tInf.extra !== null && tInf.extra !== undefined)
+            ? formatearNum(tInf.extra)
+            : '–';
+          html += '<td class="n"><b>' + formatearNum(fila.total) + '</b></td>';
+          html += '<td class="n">' + extraVal + '</td>';
+          html += '<td class="n">' + pctVal + '</td>';
+        }
+        html += '</tr>';
+      }
+
+      html += '</tbody><tfoot><tr>';
+      html += '<td>Total</td>';
+      for (var totIdx = 0; totIdx < tramo.length; totIdx++) {
+        var claveCol = tramo[totIdx].clave;
+        var tCol = m.totalesColumna ? m.totalesColumna[claveCol] : null;
+        var totStr = (tCol === null || tCol === undefined)
+          ? '<span class="pinf-sin">–</span>'
+          : formatearNum(tCol);
+        html += '<td class="n">' + totStr + '</td>';
+      }
+      if (esUltimoTramo) {
+        var pctTotStr = (total.horas > 0) ? '100 %' : '–';
+        html += '<td class="n">' + formatearNum(total.horas) + '</td>';
+        html += '<td class="n">' + formatearNum(total.extra) + '</td>';
+        html += '<td class="n">' + pctTotStr + '</td>';
+      }
+      html += '</tr></tfoot></table></div>';
+    }
+
+    var unidad = 'mes';
+    if (periodo === 'semana') {
+      unidad = 'día';
+    } else if (periodo === 'mes') {
+      unidad = 'periodo (semana)';
+    }
+    var notaTexto = '“–” = ese trabajador no tiene jornadas anotadas ese ' + unidad + '.';
+    if (periodo === 'mes') {
+      notaTexto += ' Las semanas de los extremos solo cuentan los días de este mes.';
+    }
+    if (tramos.length > 1) {
+      notaTexto += ' El total, el extra y el % de cada persona van en la última tabla.';
+    }
+    html += '<p class="pinf-nota">' + notaTexto + '</p>';
+
+    if (total.horas > 0 && trabajadores.length > 0) {
+      html += '<div class="pinf-bloque-impacto">';
+      html += '<h4 class="pinf-ih">Impacto en la obra · % de horas-hombre</h4>';
+      var pctMax = trabajadores[0].pct || 1;
+      for (var bIdx = 0; bIdx < trabajadores.length; bIdx++) {
+        var tb = trabajadores[bIdx];
+        var valPct = tb.pct || 0;
+        var ancho = (100 * valPct / pctMax).toFixed(1) + '%';
+        var claseBar = (bIdx === 0) ? 'pinf-bar top' : 'pinf-bar';
+        html += '<div class="pinf-impacto">' +
+          '<span class="pinf-nom">' + escaparHtml(tb.nombre) + '</span>' +
+          '<div class="' + claseBar + '"><i style="width:' + ancho + '"></i></div>' +
+          '<b>' + formatearNum(tb.pct) + ' %</b>' +
+          '</div>';
+      }
+      html += '<p class="pinf-nota">% = horas del trabajador ÷ horas totales en el periodo ' +
+        'y el filtro elegidos. La barra naranja es la de mayor impacto. Los porcentajes se ' +
+        'redondean a 1 decimal; por eso pueden sumar 99,9 o 100,1.</p>';
+      html += '</div>';
+    }
+
+    contenedor.innerHTML = html;
+  }
+
+  function repintar() {
+    // Primero los controles y luego el contenido; un fallo de cálculo se muestra, no se traga.
+    try {
+      actualizarControles();
+      pintarContenido();
+    } catch (error) {
+      mostrarError(error);
+    }
+  }
+
+  raiz.addEventListener('click', function (evento) {
+    // La delegación evita reconstruir botones y mantiene estable el elemento enfocado.
+    var btn = evento.target.closest('button');
+    if (!btn || !raiz.contains(btn)) return;
+
+    if (btn.hasAttribute('data-pinf-p')) {
+      periodo = btn.getAttribute('data-pinf-p');
+    } else if (btn.hasAttribute('data-pinf-a')) {
+      ambito = btn.getAttribute('data-pinf-a');
+    } else if (btn.hasAttribute('data-pinf-m')) {
+      // Con el periodo «obra» no hay a dónde moverse (los botones ya van deshabilitados).
+      if (periodo === 'obra' || !window.PersonalCalculo) return;
+      var paso = parseInt(btn.getAttribute('data-pinf-m'), 10);
+      if (isNaN(paso)) return;
+      try {
+        ref = window.PersonalCalculo.mover(periodo, ref, paso);
+      } catch (error) {
+        mostrarError(error);
+        return;
+      }
+    } else {
+      return;
+    }
+    repintar();
+  });
+
+  repintar();
+})();
+"""
+
+# Reemplazo de ayudas comunes a nivel de módulo para la sección de informe.
+_JS_INFORME_PERSONAL = _JS_INFORME_PERSONAL_PLANTILLA.replace("__AYUDAS__", _JS_AYUDAS)
+
 _PLANTILLA_HTML = """\
 <div id="pers-raiz" class="pers" data-obra="__OBRA_ID__">
   <style>
@@ -585,6 +1206,41 @@ __CSS__
 __SCRIPT_CALCULO__
   </script>
   <script id="pers-datos" type="application/json">__DATOS_JSON__</script>
+  <script>
+__SCRIPT_VISTA__
+  </script>
+</div>"""
+
+_PLANTILLA_INFORME = """\
+<div id="pinf-raiz" class="pinf" data-obra="__OBRA_ID__">
+  <style>
+__CSS__
+  </style>
+  <div class="pinf-ctl">
+    <div class="pinf-seg">
+      <button type="button" data-pinf-p="semana" aria-pressed="false">Semana</button>
+      <button type="button" data-pinf-p="mes" class="on" aria-pressed="true">Mes</button>
+      <button type="button" data-pinf-p="anio" aria-pressed="false">Año</button>
+      <button type="button" data-pinf-p="obra" aria-pressed="false">Obra</button>
+    </div>
+    <div class="pinf-seg">
+      <button type="button" data-pinf-m="-1" aria-label="Periodo anterior">‹</button>
+      <span id="pinf-etiqueta" aria-live="polite"></span>
+      <button type="button" data-pinf-m="1" aria-label="Periodo siguiente">›</button>
+    </div>
+    <div class="pinf-seg">
+      <button type="button" data-pinf-a="todo" class="on" aria-pressed="true">Todo</button>
+      <button type="button" data-pinf-a="vivienda" aria-pressed="false">Viviendas</button>
+      <button type="button" data-pinf-a="garaje" aria-pressed="false">Garajes</button>
+    </div>
+  </div>
+  <div id="pinf-contenido">
+    <p class="pinf-aviso">Cargando personal…</p>
+  </div>
+  <script>
+__SCRIPT_CALCULO__
+  </script>
+  <script id="pinf-datos" type="application/json">__DATOS_JSON__</script>
   <script>
 __SCRIPT_VISTA__
   </script>
@@ -698,14 +1354,8 @@ def _validar_entradas(obra_id: str, filas_planas: list) -> None:
                 )
 
 
-def vista_personal(obra_id: str, filas_planas: list) -> str:
-    """Genera el fragmento HTML autocontenido para la pestaña de personal de una obra."""
-    _validar_entradas(obra_id, filas_planas)
-
-    # Si la lista viene vacía se muestra mensaje neutro sin inyectar scripts ni estilos
-    if not filas_planas:
-        return '<p class="empty pers-vacio">Sin jornadas de personal anotadas en esta obra.</p>'
-
+def _datos_incrustables(obra_id: str, filas_planas: list) -> str:
+    """Serializa las filas con la clave obra y caracteres escapados para script JSON."""
     # Una copia evita modificar diccionarios que siguen perteneciendo al llamador.
     # Añadir al final preserva exactamente el orden original de sus claves.
     filas_con_obra = []
@@ -722,7 +1372,7 @@ def vista_personal(obra_id: str, filas_planas: list) -> str:
     )
 
     # El escape impide cerrar el bloque script sin alterar los datos tras JSON.parse.
-    json_escapado = (
+    return (
         json_compacto
         .replace("&", "\\u0026")
         .replace("<", "\\u003c")
@@ -731,14 +1381,48 @@ def vista_personal(obra_id: str, filas_planas: list) -> str:
         .replace("\u2029", "\\u2029")
     )
 
+
+def _rellenar(plantilla: str, valores: dict) -> str:
+    """Sustituye los marcadores __CLAVE__ de la plantilla en una sola pasada con re.sub."""
+    # Una sola pasada sobre la plantilla: con varios .replace seguidos, un texto de usuario
+    # que contuviera «__OTRO__» se volvería a sustituir y rompería el código o los datos.
+    patron = r"__(" + "|".join(re.escape(k) for k in valores) + r")__"
+    return re.sub(patron, lambda coincidencia: valores[coincidencia.group(1)], plantilla)
+
+
+def vista_personal(obra_id: str, filas_planas: list) -> str:
+    """Genera el fragmento HTML autocontenido para la pestaña de personal de una obra."""
+    _validar_entradas(obra_id, filas_planas)
+
+    # Si la lista viene vacía se muestra mensaje neutro sin inyectar scripts ni estilos
+    if not filas_planas:
+        return '<p class="empty pers-vacio">Sin jornadas de personal anotadas en esta obra.</p>'
+
     valores = {
         "OBRA_ID": html.escape(obra_id, quote=True),
         "CSS": _CSS_PANEL_PERSONAL,
         "SCRIPT_CALCULO": _leer_personal_calculo_js(),
-        "DATOS_JSON": json_escapado,
+        "DATOS_JSON": _datos_incrustables(obra_id, filas_planas),
         "SCRIPT_VISTA": _JS_VISTA_PERSONAL,
     }
-    # Una sola pasada sobre la plantilla: con varios .replace seguidos, un nombre de trabajador
-    # (texto libre) que fuera «__SCRIPT_VISTA__» se volvería a sustituir y rompería los datos.
-    return re.sub(r"__(OBRA_ID|CSS|SCRIPT_CALCULO|DATOS_JSON|SCRIPT_VISTA)__",
-                  lambda coincidencia: valores[coincidencia.group(1)], _PLANTILLA_HTML)
+    # La sustitución en un paso previene que nombres con formato de marcador rompan la vista.
+    return _rellenar(_PLANTILLA_HTML, valores)
+
+
+def informe_personal(obra_id: str, filas_planas: list) -> str:
+    """Genera el fragmento HTML autocontenido para la sección de personal del informe de obra."""
+    _validar_entradas(obra_id, filas_planas)
+
+    # Si la lista viene vacía se muestra mensaje neutro sin inyectar scripts ni estilos
+    if not filas_planas:
+        return '<p class="empty pinf-vacio">Sin jornadas de personal anotadas en esta obra.</p>'
+
+    valores = {
+        "OBRA_ID": html.escape(obra_id, quote=True),
+        "CSS": _CSS_INFORME_PERSONAL,
+        "SCRIPT_CALCULO": _leer_personal_calculo_js(),
+        "DATOS_JSON": _datos_incrustables(obra_id, filas_planas),
+        "SCRIPT_VISTA": _JS_INFORME_PERSONAL,
+    }
+    # Se rellenan los marcadores en una pasada para asegurar la integridad de los datos.
+    return _rellenar(_PLANTILLA_INFORME, valores)

@@ -2013,7 +2013,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     # {fecha, ambito, nombre, horas, extra}, el nombre ya canonico, como las
     # devuelve personal_obra.aplanar) se pinta la vista nueva; sin ellas queda
     # lo de siempre, byte a byte: la tabla de la hoja `Personal` de la ficha.
-    # El informe a la carta sigue usando `personal_html` hasta el paso P5.
+    # El informe a la carta tiene su propia seccion (`informe_personal`, mas abajo).
     personal_vista_html = (
         '<div class="card"><h3>Personal asignado</h3>' + personal_html + '</div>')
     if personal:
@@ -2033,6 +2033,23 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                 '<div class="banner bad">⚠ No se pudo pintar el personal de la obra '
                 f'({motivo}). Se muestra la tabla de la ficha.</div>'
                 + personal_html + '</div>')
+    personal_informe_html = (
+        "<div class='card'><h3>Personal asignado</h3>" + personal_html + "</div>")
+    if personal:
+        # Aqui tambien el import va dentro: un fallo se ve en el informe, no tumba el panel.
+        try:
+            import panel_personal
+            personal_informe_html = (
+                "<div class='card'><h3>Personal asignado</h3>"
+                + panel_personal.informe_personal(personal_obra_id or obra, personal)
+                + "</div>")
+        except Exception as error:
+            motivo = html_lib.escape(type(error).__name__ + ': ' + str(error))
+            personal_informe_html = (
+                "<div class='card'><h3>Personal asignado</h3>"
+                '<div class="banner bad">⚠ No se pudo pintar el personal de la obra '
+                f'({motivo}). Se muestra la tabla de la ficha.</div>'
+                + personal_html + "</div>")
     hitos_html = tabla_ficha(ficha.get('hitos', []))
 
     # ---- TAREAS MANUALES: pestaña propia, reutilizada por el informe ----
@@ -2317,7 +2334,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
             if materiales.get('formato') == 'entregas'
             else materiales_html
         ),
-        'personal': f"<div class='card'><h3>Personal asignado</h3>{personal_html}</div>",
+        'personal': personal_informe_html,
         'tareas': tareas_vista_html,
         'prioridades': secciones_prioridades,
         'prioridades_garaje': secciones_prioridades_garaje,

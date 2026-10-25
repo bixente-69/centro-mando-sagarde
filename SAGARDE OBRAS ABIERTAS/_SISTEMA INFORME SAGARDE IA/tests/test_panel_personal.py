@@ -106,6 +106,18 @@ def _secciones_informe(html):
     return json.loads(m.group(1))
 
 
+def _sin_personal(html):
+    """El panel sin la pestaña Personal ni las secciones del informe a la carta (la de Personal cambia con
+    los datos); las demás secciones se comparan aparte con `_otras_secciones`."""
+    html = html.replace(_vista(html, 'v-personal'), '')
+    return re.sub(r'<script id="secciones-informe" type="application/json">.*?</script>', '', html, flags=re.S)
+
+
+def _otras_secciones(html):
+    """Las secciones del informe a la carta menos la de Personal."""
+    return {k: v for k, v in _secciones_informe(html).items() if k != 'personal'}
+
+
 def _modulo():
     """Importa `panel_personal`; si aún no existe, la prueba falla con un motivo legible."""
     try:
@@ -148,20 +160,25 @@ class TestHuecoEnElPanel(unittest.TestCase):
         vista = _vista(_generar(FILAS_OLA), 'v-personal')
         self.assertIn('data-obra="2026 OBRA INVENTADA"', vista)
 
-    def test_el_informe_a_la_carta_sigue_con_la_tabla_de_la_ficha(self):
+    def test_sin_datos_el_informe_a_la_carta_sigue_con_la_tabla_de_la_ficha(self):
         esperado = "<div class='card'><h3>Personal asignado</h3>" + TABLA_FICHA + '</div>'
         self.assertEqual(esperado, _secciones_informe(
             _generar(None, ficha_personal=PERSONAL_FICHA))['personal'])
+
+    def test_con_datos_el_informe_a_la_carta_lleva_la_matriz_nueva(self):
         _modulo()
-        self.assertEqual(esperado, _secciones_informe(
-            _generar(FILAS_OLA, ficha_personal=PERSONAL_FICHA))['personal'])
+        seccion = _secciones_informe(
+            _generar(FILAS_OLA, personal_obra_id='olabeaga', ficha_personal=PERSONAL_FICHA))['personal']
+        self.assertIn('id="pinf-raiz"', seccion)
+        self.assertIn('data-obra="olabeaga"', seccion)
+        self.assertNotIn(TABLA_FICHA, seccion)
 
     def test_el_resto_del_panel_no_cambia_con_datos(self):
         _modulo()
         sin = _generar(None, ficha_personal=PERSONAL_FICHA)
         con = _generar(FILAS_OLA, personal_obra_id='olabeaga', ficha_personal=PERSONAL_FICHA)
-        self.assertEqual(
-            sin.replace(_vista(sin, 'v-personal'), ''), con.replace(_vista(con, 'v-personal'), ''))
+        self.assertEqual(_sin_personal(sin), _sin_personal(con))
+        self.assertEqual(_otras_secciones(sin), _otras_secciones(con))
 
     def test_si_la_vista_falla_el_panel_sale_con_aviso_y_con_la_tabla_de_la_ficha(self):
         falso = types.ModuleType('panel_personal')
@@ -169,16 +186,24 @@ class TestHuecoEnElPanel(unittest.TestCase):
         def vista_personal(obra_id, filas):
             raise RuntimeError('fallo <inventado>')
 
+        def informe_personal(obra_id, filas):
+            raise RuntimeError('fallo <inventado>')
+
         falso.vista_personal = vista_personal
+        falso.informe_personal = informe_personal
         with mock.patch.dict(sys.modules, {'panel_personal': falso}):
             html = _generar(FILAS_OLA, ficha_personal=PERSONAL_FICHA)
         vista = _vista(html, 'v-personal')
         self.assertIn('class="banner bad"', vista)
         self.assertIn('RuntimeError: fallo &lt;inventado&gt;', vista)
         self.assertIn(TABLA_FICHA, vista)
+        informe = _secciones_informe(html)['personal']
+        self.assertIn('class="banner bad"', informe)
+        self.assertIn('RuntimeError: fallo &lt;inventado&gt;', informe)
+        self.assertIn(TABLA_FICHA, informe)
         sin = _generar(None, ficha_personal=PERSONAL_FICHA)
-        self.assertEqual(sin.replace(_vista(sin, 'v-personal'), ''),
-                         html.replace(vista, ''), 'el aviso no debe tocar el resto del panel')
+        self.assertEqual(_sin_personal(sin), _sin_personal(html), 'el aviso no debe tocar el resto del panel')
+        self.assertEqual(_otras_secciones(sin), _otras_secciones(html))
 
     def test_si_el_modulo_no_se_puede_importar_el_panel_sale_con_aviso(self):
         with mock.patch.dict(sys.modules, {'panel_personal': None}):
@@ -344,6 +369,107 @@ class TestVistaPersonal(unittest.TestCase):
         self.assertNotIn('document.write', html)
 
 
+class TestInformePersonal(unittest.TestCase):
+    """Contrato de `panel_personal.informe_personal` (paso 04): la sección Personal del informe a la carta.
+
+    Las cifras de la matriz las calcula `personal_calculo.js` en el navegador: `verificar_p5.py`
+    (Playwright, fuera de `tests/`) las compara con un cálculo independiente y lee el PDF A4."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.m = _modulo()
+
+    def informe(self, filas=None, obra_id='olabeaga'):
+        return self.m.informe_personal(obra_id, FILAS_OLA if filas is None else filas)
+
+    def datos_incrustados(self, html):
+        m = re.search(r'<script id="pinf-datos" type="application/json">(.*?)</script>', html, re.S)
+        self.assertIsNotNone(m, 'falta el bloque <script id="pinf-datos" type="application/json">')
+        return json.loads(m.group(1))
+
+    def test_devuelve_un_fragmento_con_la_estructura_pedida(self):
+        html = self.informe()
+        self.assertTrue(html.lstrip().startswith('<div id="pinf-raiz" class="pinf" data-obra="olabeaga">'))
+        for esperado in ('data-pinf-p="semana"', 'data-pinf-p="mes"', 'data-pinf-p="anio"', 'data-pinf-p="obra"',
+                         'data-pinf-m="-1"', 'data-pinf-m="1"', 'data-pinf-a="todo"', 'data-pinf-a="vivienda"',
+                         'data-pinf-a="garaje"', 'id="pinf-etiqueta"', 'id="pinf-contenido"', 'Cargando personal'):
+            self.assertIn(esperado, html)
+
+    def test_las_filas_incrustadas_son_las_recibidas_mas_la_obra(self):
+        self.assertEqual([dict(f, obra='olabeaga') for f in FILAS_OLA], self.datos_incrustados(self.informe()))
+
+    def test_incrusta_personal_calculo_js_dentro_de_una_funcion_autoejecutada(self):
+        with open(RUTA_CALCULO, encoding='utf-8') as f:
+            calculo = f.read().rstrip('\r\n')
+        html = self.informe()
+        self.assertIn(calculo, html)
+        self.assertRegex(html, r'(?s)\(function \(\) \{\n.*window\.PersonalCalculo = API')
+
+    def test_tiene_exactamente_tres_scripts_y_nada_que_rompa_la_vista_previa(self):
+        html = self.informe()
+        self.assertEqual(3, html.count('<script'))
+        self.assertEqual(3, html.count('</script>'))
+        # la vista previa mete el fragmento en un documento nuevo con document.write y
+        # sustituye «<details»: nada de eso debe aparecer en el texto del fragmento
+        for prohibido in ('<!--', 'document.write', 'currentScript', '<details', 'http://', 'https://',
+                          '<link', ' src='):
+            self.assertNotIn(prohibido, html)
+
+    def test_sobrevive_al_viaje_por_el_json_del_informe(self):
+        # el panel lo guarda dentro de <script type="application/json"> con «</script>» escapado
+        seccion = _secciones_informe(_generar(FILAS_OLA, personal_obra_id='olabeaga'))['personal']
+        self.assertEqual(3, seccion.count('<script'))
+        self.assertEqual(3, seccion.count('</script>'))
+        self.assertIn(self.informe(), seccion)
+
+    def test_un_nombre_con_script_o_con_marcadores_no_rompe_el_fragmento(self):
+        ataque = '</script><img src=x onerror="window.__pwn=1">'
+        raro = 'x __SCRIPT_VISTA__ __CSS__ ' + chr(0x2028)
+        html = self.m.informe_personal('2026 OBRA "RARA" <&> __CSS__', [
+            _fila('2026-10-05', 'vivienda', ataque, 9, 1.5), _fila('2026-10-06', 'garaje', raro, 6)])
+        self.assertIn('data-obra="2026 OBRA &quot;RARA&quot; &lt;&amp;&gt; __CSS__"', html)
+        self.assertEqual([ataque, raro], [f['nombre'] for f in self.datos_incrustados(html)])
+        self.assertNotIn(chr(0x2028), html)
+        self.assertEqual(3, html.count('<script'))
+        self.assertEqual(3, html.count('</script>'))
+
+    def test_lista_vacia_solo_dice_que_no_hay_jornadas(self):
+        html = self.m.informe_personal('olabeaga', [])
+        self.assertIn('Sin jornadas de personal anotadas', html)
+        self.assertNotIn('<script', html)
+        self.assertNotIn('<style', html)
+
+    def test_datos_invalidos_se_rechazan_nombrando_la_fila(self):
+        for malas in ([_fila('2026-13-40', 'vivienda', 'A', 1)], [_fila('2026-10-05', 'otro', 'A', 1)],
+                      [_fila('2026-10-05', 'vivienda', 5, 1)], [_fila('2026-10-05', 'vivienda', 'A', True)],
+                      [{'fecha': '2026-10-05', 'ambito': 'vivienda', 'nombre': 'A'}],
+                      [dict(_fila('2026-10-05', 'vivienda', 'A', 1), zzz=1)]):
+            with self.subTest(malas=malas):
+                with self.assertRaisesRegex(ValueError, 'Fila 1'):
+                    self.m.informe_personal('olabeaga', malas)
+
+    def test_id_de_obra_y_filas_que_no_son_lo_que_se_espera_se_rechazan(self):
+        for mala_obra in ('', '  ', None, 5):
+            with self.subTest(obra=mala_obra):
+                with self.assertRaises(ValueError):
+                    self.m.informe_personal(mala_obra, FILAS_OLA)
+        with self.assertRaises(ValueError):
+            self.m.informe_personal('olabeaga', 'no es una lista')
+
+    def test_es_determinista_y_no_modifica_las_filas(self):
+        copia = [dict(f) for f in FILAS_OLA]
+        primera = self.m.informe_personal('olabeaga', copia)
+        self.assertEqual(FILAS_OLA, copia)
+        self.assertEqual(primera, self.informe())
+
+    def test_la_pestana_y_el_informe_comparten_las_ayudas_de_presentacion(self):
+        # los números y los escapes salen de un único texto (_JS_AYUDAS): no pueden divergir entre vistas
+        for html in (self.informe(), self.m.vista_personal('olabeaga', FILAS_OLA)):
+            self.assertIn('function formatearNum(x)', html)
+            self.assertIn('function escaparHtml(str)', html)
+            self.assertNotIn('__AYUDAS__', html)
+
+
 class TestFormaDelModulo(unittest.TestCase):
     """El código debe poder leerse: la pasada de legibilidad del paso 02 no se repite a mano."""
 
@@ -387,10 +513,10 @@ class TestFormaDelModulo(unittest.TestCase):
                 importados.add((nodo.module or '').split('.')[0])
         self.assertEqual(set(), importados - permitidos)
 
-    def test_una_unica_funcion_publica(self):
+    def test_solo_dos_funciones_publicas(self):
         publicas = [n.name for n in ast.parse(self.texto).body
                     if isinstance(n, ast.FunctionDef) and not n.name.startswith('_')]
-        self.assertEqual(['vista_personal'], publicas)
+        self.assertEqual(['informe_personal', 'vista_personal'], sorted(publicas))
 
 
 class TestPublicacion(unittest.TestCase):
