@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Personal Sagarde · ranking</title>
+<style>
+:root{--bg:#f4f6f9;--card:#fff;--header:#0b1f3a;--header2:#123a63;--text:#1c2733;--muted:#647184;--accent:#f5a524;--accent2:#2e7dd7;--warn:#e07b1a;--line:#d8dce4}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+main{max-width:1100px;margin:0 auto;padding:16px}
+.volver{display:inline-flex;align-items:center;min-height:44px;margin-bottom:6px;color:var(--header2);font-weight:600;font-size:14px;text-decoration:none}
+.hdr{background:linear-gradient(135deg,var(--header),var(--header2));color:#fff;border-radius:14px;padding:20px 24px}
+.hdr small{color:var(--accent);letter-spacing:.14em;font-weight:700;font-size:12px}
+.hdr h1{margin:4px 0;font-size:24px}
+.hdr p{margin:0;font-size:14px;opacity:.85}
+.card{background:var(--card);border-radius:12px;box-shadow:0 1px 3px rgba(11,31,58,.08);padding:18px 20px;margin-top:16px}
+.card h2{margin:0 0 12px;font-size:17px}
+.ctl{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.ctl[hidden]{display:none}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;max-width:100%}
+.seg>*+*{border-left:1px solid var(--line)}
+.seg button{border:0;background:none;padding:10px 14px;font:inherit;font-size:14px;cursor:pointer;color:var(--text);min-height:44px;min-width:44px;white-space:nowrap}
+.seg button.on{background:var(--header);color:#fff;font-weight:600}
+.seg button:disabled{cursor:default;opacity:.45}
+.seg button:focus-visible{outline:3px solid var(--accent2);outline-offset:-3px}
+.etq{display:flex;align-items:center;justify-content:center;min-width:170px;padding:0 10px;font-size:14px;line-height:1.2;text-align:center}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:14px 0}
+.kpi{background:#f4f7fb;border-radius:10px;padding:10px 12px}
+.kpi b{display:block;font-size:22px}
+.kpi span{font-size:12px;color:var(--muted)}
+table.data{width:100%;border-collapse:collapse;font-size:14px}
+table.data th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--line)}
+table.data th.n{text-align:right}
+table.data td{padding:9px 10px;border-bottom:1px solid #edf0f4;vertical-align:top}
+table.data .n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.data td.nom{font-weight:700;overflow-wrap:anywhere}
+.chip{display:inline-block;max-width:100%;font-size:11px;font-weight:700;padding:2px 8px;border-radius:99px;background:#e7f0fb;color:#1f5ea8;margin:2px 4px 2px 0;overflow-wrap:anywhere}
+.ih{margin:18px 0 6px;font-size:15px}
+.impacto{display:grid;grid-template-columns:110px 1fr 62px;gap:10px;align-items:center;margin:7px 0;font-size:14px}
+.impacto .nom{overflow-wrap:anywhere;line-height:1.2}
+.impacto b{text-align:right;font-variant-numeric:tabular-nums}
+.bar{height:16px;background:#e8edf4;border-radius:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent2)}
+.bar.top i{background:var(--accent)}
+.nota{font-size:12.5px;color:var(--muted);margin-top:10px}
+.empty{color:var(--muted);padding:18px 4px;margin:0}
+.aviso{background:#fff7e0;border:1px solid #f1d58a;border-radius:10px;padding:10px 12px;font-size:14px;margin:8px 0}
+@media(max-width:640px){
+  main{padding:8px}
+  .hdr{padding:16px}
+  .hdr h1{font-size:21px}
+  .card{padding:14px 12px}
+  table.data thead{display:none}
+  table.data,table.data tbody{display:block}
+  table.data tr{display:grid;grid-template-columns:28px minmax(0,1fr) auto;column-gap:10px;row-gap:2px;padding:10px 2px;border-bottom:1px solid #edf0f4}
+  table.data td{display:block;padding:0;border:0;text-align:left}
+  table.data td.pos{grid-column:1;grid-row:1;color:var(--muted)}
+  table.data td.nom{grid-column:2;grid-row:1}
+  table.data td.pct{grid-column:3;grid-row:1;text-align:right;font-weight:700}
+  table.data td.h{grid-column:2;grid-row:2;font-size:13px;color:var(--muted)}
+  table.data td.h::before{content:'Total '}
+  table.data td.h::after{content:' h'}
+  table.data td.d{grid-column:3;grid-row:2;text-align:right;font-size:13px;color:var(--muted)}
+  table.data td.d::before{content:'Días '}
+  table.data td.obras{grid-column:2 / 4;grid-row:3}
+  .impacto{grid-template-columns:84px 1fr 52px;font-size:13px}
+}
+</style>
+<script src="personal_calculo.js"></script>
+</head>
+<body>
+<main>
+  <a class="volver" href="../../index.html">← Centro de mando</a>
+  <header class="hdr">
+    <small>SAGARDE · CENTRO DE MANDO</small>
+    <h1>Personal Sagarde</h1>
+    <p>Quién trabaja más para Sagarde y qué impacto tiene cada uno, sumando todas las obras</p>
+  </header>
+  <section class="card" aria-labelledby="t-ranking">
+    <h2 id="t-ranking">Ranking</h2>
+    <div class="ctl" id="controles" hidden>
+      <div class="seg" role="group" aria-label="Periodo">
+        <button type="button" data-p="semana" aria-pressed="false">Semana</button>
+        <button type="button" data-p="mes" class="on" aria-pressed="true">Mes</button>
+        <button type="button" data-p="anio" aria-pressed="false">Año</button>
+        <button type="button" data-p="obra" aria-pressed="false">Todo</button>
+      </div>
+      <div class="seg" role="group" aria-label="Moverse entre periodos">
+        <button type="button" data-m="-1" aria-label="Periodo anterior">‹</button>
+        <output class="etq" id="etiqueta" aria-live="polite"></output>
+        <button type="button" data-m="1" aria-label="Periodo siguiente">›</button>
+      </div>
+    </div>
+    <div id="contenido"><p class="empty">Cargando personal…</p></div>
+  </section>
+</main>
+<script>
+(function () {
+  'use strict';
+
+  /* ================= AYUDAS (ya escritas: no las cambies) ================= */
+
+  var MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+    'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+  // Un dato ausente se escribe «–», nunca 0. Un decimal, con coma.
+  function formatearNum(x) {
+    if (x === null || x === undefined || typeof x !== 'number' || isNaN(x)) return '–';
+    return String(Math.round(x * 10) / 10).replace('.', ',');
+  }
+
+  // Todo texto que venga de los datos (nombres de personas y de obras) pasa por aquí antes de ir a un innerHTML.
+  function escaparHtml(texto) {
+    if (texto === null || texto === undefined) return '';
+    return String(texto)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  // Texto del rótulo entre las flechas. `ref` es una fecha 'YYYY-MM-DD'.
+  function etiquetaPeriodo(p, r) {
+    if (p === 'obra') return 'Todo Sagarde';
+    if (p === 'anio') return r.slice(0, 4);
+    if (p === 'mes') return MESES[parseInt(r.slice(5, 7), 10) - 1] + ' ' + r.slice(0, 4);
+    var rango = window.PersonalCalculo.rangoPeriodo('semana', r);
+    return 'Semana ' + window.PersonalCalculo.semanaISO(r) + ' · ' +
+      rango.desde.slice(8, 10) + '/' + rango.desde.slice(5, 7) + ' – ' +
+      rango.hasta.slice(8, 10) + '/' + rango.hasta.slice(5, 7);
+  }
+
+  /* ================= ESTADO DE LA PÁGINA ================= */
+
+  var periodo = 'mes';  // 'semana' | 'mes' | 'anio' | 'obra'
+  var ref = '';         // fecha 'YYYY-MM-DD' de referencia del periodo
+  var filas = [];       // todas las jornadas de todas las obras, cada una con su campo `obra`
+  var nombresObra = {}; // id de obra -> nombre para mostrar
+  var avisosCarga = []; // frases de aviso por obras cuyas jornadas no se pudieron leer
+
+  /* ================= A ESCRIBIR POR TI (ver encargo.md) ================= */
+
+  // Valida window.SAGARDE_PERSONAL y rellena filas, nombresObra, avisosCarga y ref.
+  // Devuelve null si todo va bien o la frase de error que se enseña en pantalla.
+  function leerEstado() {
+    var sp = window.SAGARDE_PERSONAL;
+    // Comprobamos la existencia del objeto de estado raíz
+    if (!sp || typeof sp !== 'object' || Array.isArray(sp)) {
+      return 'El fichero personal_estado.js no tiene el formato esperado: no define SAGARDE_PERSONAL.';
+    }
+
+    // Validamos la versión del esquema de datos
+    if (sp.version !== 1) {
+      var ver = ('version' in sp && sp.version !== undefined && sp.version !== null) ? sp.version : 'ausente';
+      return 'El fichero personal_estado.js no tiene el formato esperado: versión ' + ver + ' no soportada.';
+    }
+
+    // Verificamos la presencia del diccionario de obras
+    if (!sp.obras || typeof sp.obras !== 'object' || Array.isArray(sp.obras)) {
+      return 'El fichero personal_estado.js no tiene el formato esperado: falta el listado de obras.';
+    }
+
+    filas = [];
+    nombresObra = {};
+    avisosCarga = [];
+    ref = '';
+
+    var maxFecha = '';
+    var keys = Object.keys(sp.obras);
+
+    for (var i = 0; i < keys.length; i++) {
+      var id = keys[i];
+      var obraObj = sp.obras[id];
+
+      // Asignamos el nombre descriptivo de la obra si existe, usando el id como alternativa
+      var nombreRaw = (obraObj && typeof obraObj.nombre === 'string') ? obraObj.nombre : '';
+      var nombreFinal = (nombreRaw.trim().length > 0) ? nombreRaw : id;
+      nombresObra[id] = nombreFinal;
+
+      if (!obraObj || !Array.isArray(obraObj.jornadas)) {
+        // Registramos aviso por cada obra con jornadas no legibles
+        avisosCarga.push('No se pudieron leer las jornadas de la obra «' + nombreFinal + '»; no se cuentan.');
+      } else {
+        for (var j = 0; j < obraObj.jornadas.length; j++) {
+          var item = obraObj.jornadas[j];
+          if (item && typeof item === 'object' && !Array.isArray(item)) {
+            // Copiamos la jornada añadiendo el identificador de obra sin alterar la fuente original
+            var copia = {};
+            for (var k in item) {
+              if (Object.prototype.hasOwnProperty.call(item, k)) {
+                copia[k] = item[k];
+              }
+            }
+            copia.obra = id;
+            filas.push(copia);
+
+            // Determinamos la fecha más reciente con formato AAAA-MM-DD
+            if (typeof copia.fecha === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(copia.fecha)) {
+              if (copia.fecha > maxFecha) {
+                maxFecha = copia.fecha;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    ref = maxFecha;
+    return null;
+  }
+
+  // Calcula con window.PersonalCalculo.ranking y devuelve el HTML del contenido.
+  function pintarContenido() {
+    var res = window.PersonalCalculo.ranking(filas, { periodo: periodo, ref: ref });
+    var trabajadores = res.trabajadores || [];
+    var total = res.total;
+    var avisos = res.avisos || { filasSinHoras: 0, filasInvalidas: 0 };
+
+    var html = '';
+
+    // Agregamos primero los avisos durante la ingesta de archivos
+    for (var i = 0; i < avisosCarga.length; i++) {
+      html += '<p class="aviso" role="alert">⚠ ' + escaparHtml(avisosCarga[i]) + '</p>';
+    }
+
+    // Detallamos las jornadas omitidas en el cálculo del periodo actual
+    var a = avisos.filasSinHoras || 0;
+    var b = avisos.filasInvalidas || 0;
+    var n = a + b;
+    if (n > 0) {
+      var strJornada = (n === 1) ? 'jornada' : 'jornadas';
+      var strCuenta = (n === 1) ? 'no se cuenta' : 'no se cuentan';
+      html += '<p class="aviso" role="alert">⚠ En este periodo hay ' + n + ' ' + strJornada + ' que ' + strCuenta + ' en el ranking: ' + a + ' sin horas y ' + b + ' con datos no válidos.</p>';
+    }
+
+    // Si no existen horas registradas en el periodo seleccionado, finalizamos tras la advertencia
+    if (!total) {
+      html += '<p class="empty">Sin jornadas anotadas en este periodo (no es lo mismo que 0 horas).</p>';
+      return html;
+    }
+
+    // Calculamos las obras distintas que presentan actividad de personal
+    var obrasUnicas = {};
+    var numObrasConGente = 0;
+    for (var tIdx = 0; tIdx < trabajadores.length; tIdx++) {
+      var tObras = trabajadores[tIdx].obras || {};
+      var oKeys = Object.keys(tObras);
+      for (var ok = 0; ok < oKeys.length; ok++) {
+        if (!obrasUnicas[oKeys[ok]]) {
+          obrasUnicas[oKeys[ok]] = true;
+          numObrasConGente++;
+        }
+      }
+    }
+
+    var numTrabajadores = trabajadores.length;
+    var lblTrabajadores = (numTrabajadores === 1) ? 'trabajador' : 'trabajadores';
+    var lblObras = (numObrasConGente === 1) ? 'obra con gente' : 'obras con gente';
+
+    html += '<div class="kpis">';
+    html += '<div class="kpi"><b>' + numTrabajadores + '</b><span>' + lblTrabajadores + '</span></div>';
+    html += '<div class="kpi"><b>' + formatearNum(total.horas) + ' h</b><span>horas totales</span></div>';
+    html += '<div class="kpi"><b>' + formatearNum(total.extra) + ' h</b><span>de ellas extra</span></div>';
+    html += '<div class="kpi"><b>' + numObrasConGente + '</b><span>' + lblObras + '</span></div>';
+    html += '</div>';
+
+    // Posición de cada trabajador, calculada una sola vez para la tabla y las barras:
+    // con las mismas horas que el anterior se repite su posición (1, 1, 3).
+    var posiciones = [];
+    for (var pIdx = 0; pIdx < trabajadores.length; pIdx++) {
+      var empatado = pIdx > 0 &&
+        Math.round(trabajadores[pIdx].horas * 100) === Math.round(trabajadores[pIdx - 1].horas * 100);
+      posiciones.push(empatado ? posiciones[pIdx - 1] : pIdx + 1);
+    }
+
+    html += '<table class="data">';
+    html += '<thead><tr><th>#</th><th>Nombre</th><th class="n">Total h</th><th class="n">Días</th><th class="n">% de Sagarde</th><th>Obras</th></tr></thead>';
+    html += '<tbody>';
+
+    for (var trIdx = 0; trIdx < trabajadores.length; trIdx++) {
+      var tr = trabajadores[trIdx];
+
+      var strPct = (tr.pct === null || tr.pct === undefined) ? '–' : (formatearNum(tr.pct) + ' %');
+
+      // Ordenamos chips por horas descendentes y secundariamente por nombre de obra
+      var tObrasMap = tr.obras || {};
+      var idObras = Object.keys(tObrasMap);
+      idObras.sort(function (idA, idB) {
+        var hA = tObrasMap[idA];
+        var hB = tObrasMap[idB];
+        if (hB !== hA) {
+          return hB - hA;
+        }
+        var nomA = nombresObra[idA] || idA;
+        var nomB = nombresObra[idB] || idB;
+        return nomA.localeCompare(nomB, 'es');
+      });
+
+      var chipsHtml = '';
+      for (var cIdx = 0; cIdx < idObras.length; cIdx++) {
+        var oId = idObras[cIdx];
+        var oNom = nombresObra[oId] || oId;
+        var oHoras = tObrasMap[oId];
+        chipsHtml += '<span class="chip">' + escaparHtml(oNom) + ' · ' + formatearNum(oHoras) + ' h</span>';
+      }
+
+      html += '<tr>';
+      html += '<td class="pos">' + posiciones[trIdx] + '</td>';
+      html += '<td class="nom">' + escaparHtml(tr.nombre) + '</td>';
+      html += '<td class="h n">' + formatearNum(tr.horas) + '</td>';
+      html += '<td class="d n">' + tr.dias + '</td>';
+      html += '<td class="pct n">' + strPct + '</td>';
+      html += '<td class="obras">' + chipsHtml + '</td>';
+      html += '</tr>';
+    }
+
+    html += '</tbody></table>';
+
+    html += '<h3 class="ih">Impacto en Sagarde · % de horas-hombre</h3>';
+
+    var mx = (trabajadores.length > 0) ? trabajadores[0].pct : null;
+
+    for (var bIdx = 0; bIdx < trabajadores.length; bIdx++) {
+      var tBar = trabajadores[bIdx];
+
+      // Barra naranja para todos los que comparten la primera posición
+      var isTop = (posiciones[bIdx] === 1);
+      var barClass = isTop ? 'bar top' : 'bar';
+
+      var pctWidth = '0%';
+      if (typeof mx === 'number' && mx > 0 && typeof tBar.pct === 'number' && !isNaN(tBar.pct)) {
+        pctWidth = (100 * tBar.pct / mx).toFixed(2) + '%';
+      }
+
+      var strPctBar = (tBar.pct === null || tBar.pct === undefined) ? '–' : (formatearNum(tBar.pct) + ' %');
+
+      html += '<div class="impacto">';
+      html += '<span class="nom">' + escaparHtml(tBar.nombre) + '</span>';
+      html += '<div class="' + barClass + '"><i style="width:' + pctWidth + '"></i></div>';
+      html += '<b>' + strPctBar + '</b>';
+      html += '</div>';
+    }
+
+    html += '<p class="nota">% = horas del trabajador ÷ horas totales de Sagarde en el periodo elegido, sumando todas las obras (también las cerradas). Días = días distintos con jornada, aunque haya trabajado en dos obras el mismo día. La barra naranja es la de mayor impacto. Los porcentajes se redondean a 1 decimal; por eso pueden sumar 99,9 o 100,1.</p>';
+
+    return html;
+  }
+
+  // Pone aria-pressed/on en el periodo activo, el rótulo y deshabilita las flechas en «Todo».
+  function actualizarControles() {
+    var ctl = document.getElementById('controles');
+    if (!ctl) return;
+
+    // Actualizamos clases y atributos ARIA de los botones de periodo
+    var pBtns = ctl.querySelectorAll('[data-p]');
+    for (var i = 0; i < pBtns.length; i++) {
+      var btnP = pBtns[i];
+      var valP = btnP.getAttribute('data-p');
+      btnP.classList.toggle('on', valP === periodo);
+      btnP.setAttribute('aria-pressed', valP === periodo ? 'true' : 'false');
+    }
+
+    var etq = document.getElementById('etiqueta');
+    if (etq) {
+      etq.textContent = etiquetaPeriodo(periodo, ref);
+    }
+
+    // Inhabilitamos la simulación de desplazamiento en vista global por obra
+    var mBtns = ctl.querySelectorAll('[data-m]');
+    for (var j = 0; j < mBtns.length; j++) {
+      mBtns[j].disabled = (periodo === 'obra');
+    }
+  }
+
+  // Un solo manejador de clics para los botones [data-p] y [data-m].
+  function alPulsar(ev) {
+    var btn = ev.target.closest('button');
+    if (!btn || btn.disabled) return;
+
+    if (btn.hasAttribute('data-p')) {
+      periodo = btn.getAttribute('data-p');
+    } else if (btn.hasAttribute('data-m')) {
+      if (periodo === 'obra') return;
+      var k = parseInt(btn.getAttribute('data-m'), 10);
+      if (isNaN(k)) return;
+      // Desplazamos el periodo usando la utilidad de cálculo
+      ref = window.PersonalCalculo.mover(periodo, ref, k);
+    } else {
+      return;
+    }
+
+    actualizarControles();
+
+    // Actualizamos el DOM secundario dentro del contenedor principal conservando los controles
+    var cont = document.getElementById('contenido');
+    if (cont) {
+      try {
+        cont.innerHTML = pintarContenido();
+      } catch (e) {
+        var msg = e && e.message ? e.message : String(e);
+        cont.innerHTML = '<p class="aviso" role="alert">⚠ No se pudo calcular el ranking: ' + escaparHtml(msg) + '</p>';
+      }
+    }
+  }
+
+  // Se llama UNA vez, cuando personal_estado.js ha cargado (cargado = true) o ha fallado (false).
+  function iniciar(cargado) {
+    var cont = document.getElementById('contenido');
+    var ctl = document.getElementById('controles');
+    if (ctl) ctl.hidden = true;
+
+    // Englobamos el flujo de inicialización para prevenir pantallas en blanco ante fallos inesperados
+    try {
+      if (!window.PersonalCalculo) {
+        cont.innerHTML = '<p class="aviso" role="alert">⚠ No se pudo cargar personal_calculo.js: la página no puede calcular el ranking.</p>';
+        return;
+      }
+
+      if (!cargado) {
+        cont.innerHTML = '<p class="empty">Todavía no hay datos de personal publicados (no se encontró personal_estado.js). Cuando se ingieran las primeras jornadas, el ranking aparecerá aquí.</p>';
+        return;
+      }
+
+      var errText = leerEstado();
+      if (errText) {
+        cont.innerHTML = '<p class="aviso" role="alert">⚠ ' + escaparHtml(errText) + '</p>';
+        return;
+      }
+
+      var avisosHtml = '';
+      for (var i = 0; i < avisosCarga.length; i++) {
+        avisosHtml += '<p class="aviso" role="alert">⚠ ' + escaparHtml(avisosCarga[i]) + '</p>';
+      }
+
+      if (filas.length === 0) {
+        cont.innerHTML = avisosHtml + '<p class="empty">Todavía no hay jornadas anotadas en ninguna obra.</p>';
+        return;
+      }
+
+      // Ocultamos controles e informamos cuando ninguna jornada aporta una fecha admisible
+      if (ref === '') {
+        cont.innerHTML = avisosHtml +
+          '<p class="aviso" role="alert">⚠ Ninguna jornada tiene una fecha válida; no se puede calcular el ranking.</p>' +
+          '<p class="empty">Todavía no hay jornadas anotadas en ninguna obra.</p>';
+        return;
+      }
+
+      if (ctl) {
+        ctl.hidden = false;
+        ctl.addEventListener('click', alPulsar);
+      }
+      actualizarControles();
+      cont.innerHTML = pintarContenido();
+
+    } catch (e) {
+      var msg = e && e.message ? e.message : String(e);
+      cont.innerHTML = '<p class="aviso" role="alert">⚠ No se pudo calcular el ranking: ' + escaparHtml(msg) + '</p>';
+    }
+  }
+
+  /* ================= ARRANQUE (ya escrito: no lo cambies) ================= */
+
+  function cargarEstado() {
+    var s = document.createElement('script');
+    s.src = 'personal_estado.js?v=' + Date.now();
+    s.onload = function () { iniciar(true); };
+    s.onerror = function () { iniciar(false); };
+    document.head.appendChild(s);
+  }
+  cargarEstado();
+})();
+</script>
+</body>
+</html>

@@ -26,6 +26,13 @@ IGNORE_DIRS = {".git", ".memory", "__pycache__", "_PREVIEWS_WORD",
                "_SISTEMA", "docs", "scratch", ".claude", ".gemini", ".agents"}
 IGNORE_NAMES = {"index.html"}
 APP_HINTS = ("app", "panel", "sagarde", "plantilla", "generador")
+# Paginas de SAGARDE OBRAS ABIERTAS que se listan como aplicacion ademas del generador de
+# revisiones: ruta relativa a la raiz -> nombre que se ve en el portal. Si la ruta deja de
+# existir el acceso desaparece sin avisar, por eso tests/test_portal_areas.py comprueba que
+# cada ruta declarada aqui es un fichero de verdad.
+APPS_OBRAS_ABIERTAS = {
+    "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_sagarde.html": "Personal Sagarde · ranking",
+}
 DOC_EXTS = {".doc", ".docx", ".pdf", ".xls", ".xlsx", ".xlsm"}
 
 # Mapa mental por mantenimiento: profundidad maxima que se recorre y numero
@@ -1448,12 +1455,13 @@ def discover_apps() -> list[dict]:
         area = rel.parts[0]
         if area in EXCLUIR_AREAS:
             continue
-        # De obras abiertas solo se incluye el generador de revisiones
-        if area == "SAGARDE OBRAS ABIERTAS" and "generador" not in low:
+        # De obras abiertas solo se incluye el generador de revisiones y lo declarado en
+        # APPS_OBRAS_ABIERTAS
+        if area == "SAGARDE OBRAS ABIERTAS" and "generador" not in low and rel.as_posix() not in APPS_OBRAS_ABIERTAS:
             continue
         if any(año in rel.parts for año in EXCLUIR_AÑOS):
             continue
-        label = " ".join(path.stem.replace("_", " ").split())
+        label = APPS_OBRAS_ABIERTAS.get(rel.as_posix()) or " ".join(path.stem.replace("_", " ").split())
         apps.append({"name": label, "area": area, "path": rel.as_posix(), "url": url(path), "mtime": path.stat().st_mtime})
     return sorted(apps, key=lambda x: (-x["mtime"], x["name"].lower()))
 

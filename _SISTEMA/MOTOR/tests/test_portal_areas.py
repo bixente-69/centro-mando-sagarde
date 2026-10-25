@@ -110,5 +110,65 @@ class TestPortadasAreas(unittest.TestCase):
         self.assertIn("OBRAS%20CERRADAS/2024%20OBRA%20DEMO/", archivo)
 
 
+
+class TestPaginaPersonalSagarde(unittest.TestCase):
+    """La pagina del ranking de personal sale como acceso del portal (y solo ella)."""
+
+    RUTA = "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_sagarde.html"
+
+    def setUp(self):
+        self._tmp = tempfile.TemporaryDirectory()
+        self.raiz = Path(self._tmp.name)
+        self.addCleanup(self._tmp.cleanup)
+        self._root_original = portal.ROOT
+        self._output_original = portal.OUTPUT
+        portal.ROOT = self.raiz
+        portal.OUTPUT = self.raiz / "index.html"
+        self.addCleanup(self._restaurar_rutas)
+        self.motor = self.raiz / "SAGARDE OBRAS ABIERTAS" / "_SISTEMA INFORME SAGARDE IA"
+        self.motor.mkdir(parents=True)
+        (self.motor / "generador_revisiones.html").write_text("<html></html>", encoding="utf-8")
+        (self.motor / "panel_borrador.html").write_text("<html></html>", encoding="utf-8")
+
+    def _restaurar_rutas(self):
+        portal.ROOT = self._root_original
+        portal.OUTPUT = self._output_original
+
+    def _con_pagina(self):
+        (self.motor / "personal_sagarde.html").write_text("<html></html>", encoding="utf-8")
+
+    def test_la_pagina_declarada_sale_como_aplicacion(self):
+        self._con_pagina()
+        apps = {a["path"]: a for a in portal.discover_apps()}
+
+        self.assertIn(self.RUTA, apps)
+        self.assertEqual("Personal Sagarde · ranking", apps[self.RUTA]["name"])
+        self.assertEqual("SAGARDE OBRAS ABIERTAS", apps[self.RUTA]["area"])
+
+    def test_sin_la_pagina_no_sale_nada_nuevo_y_el_resto_no_cambia(self):
+        apps = {a["path"] for a in portal.discover_apps()}
+
+        self.assertNotIn(self.RUTA, apps)
+        # El generador de revisiones sigue saliendo y cualquier otro html de obras abiertas sigue fuera.
+        self.assertEqual({"SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/generador_revisiones.html"}, apps)
+
+    def test_se_pinta_en_la_portada_y_en_el_indice_de_aplicaciones(self):
+        self._con_pagina()
+        apps = portal.discover_apps()
+        html = portal.build_html([], apps, None, None, [], None, [])
+        portal.generar_index_aplicaciones(apps)
+        indice = (self.raiz / "APLICACIONES" / "index.html").read_text(encoding="utf-8")
+
+        enlace = 'href="SAGARDE%20OBRAS%20ABIERTAS/_SISTEMA%20INFORME%20SAGARDE%20IA/personal_sagarde.html"'
+        self.assertIn(enlace, html)
+        self.assertIn("Personal Sagarde · ranking", html)
+        self.assertIn("Personal Sagarde · ranking", indice)
+
+    def test_cada_pagina_declarada_existe_en_el_repositorio(self):
+        # Una ruta declarada que ya no existe haria desaparecer el acceso sin ningun aviso.
+        self.assertTrue(portal.APPS_OBRAS_ABIERTAS)
+        for ruta in portal.APPS_OBRAS_ABIERTAS:
+            self.assertTrue((self._root_original / ruta).is_file(), f"no existe {ruta}")
+
 if __name__ == "__main__":
     unittest.main()
