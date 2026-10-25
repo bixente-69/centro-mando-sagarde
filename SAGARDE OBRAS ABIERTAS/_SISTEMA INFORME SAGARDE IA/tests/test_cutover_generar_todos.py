@@ -182,5 +182,146 @@ class TestCutoverGenerarTodos(unittest.TestCase):
         self.assertIn('OBRA CON PARIDAD', texto)
 
 
+class TestDiferenciasEstados(unittest.TestCase):
+    """Que cuenta y que NO cuenta como diferencia entre los dos caminos.
+
+    Olabeaga (1.225 claves) y Barakaldo (3.286) daban el aviso CUTOVER en cada
+    pasada por celdas "fantasma": el camino antiguo (`_completar_matriz`) rellena
+    con '?' los tajos del catalogo en viviendas cuya hoja no los imprime, y el
+    motor comun, fiel a "la ultima hoja manda", no las crea. Una celda '?' que
+    solo existe en el camino antiguo no es un dato medido: no es una
+    discrepancia. Cualquier otra diferencia SIGUE siendo discrepancia."""
+
+    @staticmethod
+    def _est(**valores):
+        return {k: {'v': v, 'f': '01/01/2026', 'r': 'rev'} for k, v in valores.items()}
+
+    def _comparar(self, antiguos, nuevos):
+        return gt._diferencias_estados(antiguos, nuevos)
+
+    def test_un_interrogante_solo_del_camino_antiguo_no_es_diferencia(self):
+        claves, diferencias, fantasmas = self._comparar(
+            self._est(a='?', b='X'), self._est(b='X'))
+        self.assertEqual(diferencias, [])
+        self.assertEqual(fantasmas, ['a'])
+        # Solo cuenta como comparada la celda que existe en los dos.
+        self.assertEqual(len(claves), 1)
+
+    def test_los_fantasmas_se_cuentan_para_decirlo(self):
+        _claves, _dif, fantasmas = self._comparar(
+            self._est(a='?', b='?', c='?', d='X'), self._est(d='X'))
+        self.assertEqual(sorted(fantasmas), ['a', 'b', 'c'])
+
+    def test_una_celda_con_dato_que_falta_en_el_motor_comun_si_es_diferencia(self):
+        # El camino antiguo tiene X y el motor comun la perdio: grave.
+        for valor in ('X', 'M', '/', 'P', 'N'):
+            _claves, diferencias, fantasmas = self._comparar(
+                self._est(a=valor), {})
+            self.assertEqual([d[0] for d in diferencias], ['a'], valor)
+            self.assertEqual(fantasmas, [], valor)
+
+    def test_la_direccion_contraria_sigue_siendo_diferencia(self):
+        # Solo se perdona '?' que sobra en el camino ANTIGUO. Un '?' que
+        # aparece unicamente en el motor comun es otra cosa y se sigue viendo.
+        _claves, diferencias, fantasmas = self._comparar({}, self._est(a='?'))
+        self.assertEqual([d[0] for d in diferencias], ['a'])
+        self.assertEqual(fantasmas, [])
+
+    def test_interrogante_frente_a_un_valor_real_sigue_siendo_diferencia(self):
+        for valor in ('X', 'M', '/', 'P', 'N'):
+            _claves, diferencias, _f = self._comparar(
+                self._est(a='?'), self._est(a=valor))
+            self.assertEqual([d[0] for d in diferencias], ['a'], valor)
+
+    def test_dos_valores_reales_distintos_siguen_siendo_diferencia(self):
+        _claves, diferencias, _f = self._comparar(
+            self._est(a='X'), self._est(a='M'))
+        self.assertEqual(diferencias, [('a', 'X', 'M')])
+
+    def test_valores_iguales_y_vacio_no_dan_diferencias(self):
+        self.assertEqual(self._comparar({}, {})[1], [])
+        self.assertEqual(self._comparar(self._est(a='X'), self._est(a='X'))[1], [])
+        self.assertEqual(self._comparar(self._est(a='?'), self._est(a='?'))[1], [])
+
+
+class TestSalvaguardaConCeldasFantasma(unittest.TestCase):
+    """La salvaguarda completa con fantasmas, sin tocar disco."""
+
+    def _ejecutar(self, fantasmas=0, divergir=False):
+        ficha = _ficha('pruebas')
+        real = gt.fichas.actualizar_desde_snapshot
+
+        def con_fantasmas(ficha_entrada, snapshot, fecha, **kwargs):
+            ficha_antigua, cambios = real(ficha_entrada, snapshot, fecha, **kwargs)
+            for i in range(fantasmas):
+                ficha_antigua['estados'][f'p1__pb__cub_antena_cableado__F{i}'] = {
+                    'v': '?', 'f': '31/08/2026', 'r': 'rev_31082026'}
+            if divergir:
+                ficha_antigua['estados'][CLAVE]['v'] = 'M'
+            return ficha_antigua, cambios
+
+        salida = io.StringIO()
+        with (
+                mock.patch.object(gt, '_correcciones_mas_recientes', return_value={}),
+                mock.patch.object(gt, '_mapa_tajos_cortos', return_value={}),
+                mock.patch.object(
+                    gt.fichas, 'actualizar_desde_snapshot',
+                    side_effect=con_fantasmas),
+                mock.patch.object(gt.fichas, 'guardar') as guardar,
+                contextlib.redirect_stdout(salida)):
+            resultado = gt.actualizar_ficha_con_salvaguarda(
+                _obra('pruebas', 'OBRA PRUEBA FICHA'), 'carpeta-sintetica',
+                ficha, SNAPSHOT, FECHA)
+        return resultado, guardar, salida.getvalue()
+
+    def test_con_solo_fantasmas_coincide_y_guarda_sin_crearlos(self):
+        (ficha, aplicada), guardar, texto = self._ejecutar(fantasmas=3)
+        self.assertTrue(aplicada)
+        guardar.assert_called_once()
+        # Se guarda el resultado del motor comun: los fantasmas no se escriben.
+        self.assertFalse(any('cub_antena_cableado' in k for k in ficha['estados']))
+        self.assertEqual(ficha['estados'][CLAVE]['v'], 'X')
+        self.assertNotIn('AVISO CUTOVER', texto)
+
+    def test_el_mensaje_dice_cuantos_fantasmas_se_han_ignorado(self):
+        _res, _guardar, texto = self._ejecutar(fantasmas=3)
+        self.assertIn('3', texto)
+        self.assertIn('fantasma', texto)
+
+    def test_sin_fantasmas_el_mensaje_no_los_menciona(self):
+        _res, _guardar, texto = self._ejecutar(fantasmas=0)
+        self.assertNotIn('fantasma', texto)
+
+    def test_una_diferencia_real_con_fantasmas_sigue_bloqueando_la_ficha(self):
+        (ficha, aplicada), guardar, texto = self._ejecutar(
+            fantasmas=5, divergir=True)
+        self.assertFalse(aplicada)
+        guardar.assert_not_called()
+        self.assertIn('AVISO CUTOVER FICHA', texto)
+        self.assertIn("antiguo='M'; nuevo='X'", texto)
+        # El ruido ya no tapa la diferencia real: solo se lista esa.
+        self.assertNotIn('cub_antena_cableado', texto)
+        self.assertIn('difieren en 1 clave', texto)
+
+    def test_el_resultado_expone_cuantos_fantasmas_ignoro(self):
+        ficha = _ficha('pruebas')
+        real = gt.fichas.actualizar_desde_snapshot
+
+        def con_dos(ficha_entrada, snapshot, fecha, **kwargs):
+            ficha_antigua, cambios = real(ficha_entrada, snapshot, fecha, **kwargs)
+            for i in range(2):
+                ficha_antigua['estados'][f'x__y__z__{i}'] = {'v': '?'}
+            return ficha_antigua, cambios
+
+        with mock.patch.object(
+                gt.fichas, 'actualizar_desde_snapshot', side_effect=con_dos):
+            res = gt.calcular_actualizacion_ficha_con_salvaguarda(
+                _obra('pruebas', 'OBRA'), ficha, SNAPSHOT, FECHA,
+                correcciones={}, mapa_tajos_cortos={})
+        self.assertTrue(res['coincide'])
+        self.assertEqual(res['fantasmas_ignoradas'], 2)
+        self.assertEqual(res['claves_comparadas'], len(ficha['estados']))
+
+
 if __name__ == '__main__':
     unittest.main()
