@@ -104,11 +104,8 @@ _CSS_PANEL_PERSONAL = """\
   line-height: 1.2;
 }
 #pers-raiz .pers-kpi span {
-  font-size: 11px;
-  text-transform: uppercase;
+  font-size: 12px;
   color: var(--muted, #647184);
-  font-weight: 600;
-  letter-spacing: 0.5px;
 }
 #pers-raiz .pers-aviso {
   background: #fff4e5;

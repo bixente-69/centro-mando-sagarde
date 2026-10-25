@@ -285,6 +285,7 @@ class TestVistaPersonal(unittest.TestCase):
             'falta el nombre': {k: v for k, v in buenas.items() if k != 'nombre'},
             'fecha con otro formato': dict(buenas, fecha='01/10/2026'),
             'fecha imposible': dict(buenas, fecha='2026-02-30'),
+            'fecha en formato de semana ISO (10 caracteres)': dict(buenas, fecha='2026-W41-1'),
             'fecha que no es texto': dict(buenas, fecha=20261001),
             'ámbito desconocido': dict(buenas, ambito='local'),
             'nombre que no es texto': dict(buenas, nombre=None),
