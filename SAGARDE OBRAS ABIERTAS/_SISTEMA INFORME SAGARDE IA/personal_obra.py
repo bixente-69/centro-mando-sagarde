@@ -6,7 +6,7 @@ exportar_estado, comprobar y la línea de comandos (main).
 """
 
 from __future__ import annotations
-import argparse, copy, datetime as dt, json, math, os, sys, tempfile, time, unicodedata
+import argparse, copy, datetime as dt, json, math, os, re, sys, tempfile, time, unicodedata
 from collections import Counter
 from pathlib import Path
 
@@ -16,14 +16,24 @@ HOR = {"lun": 7.5, "mar": 7.5, "mie": 7.5, "jue": 7.5, "vie": 7.5, "sab": 0, "do
 # Claves permitidas (esquemas cerrados). LK = lote, JK = jornada del lote, PK = presente del lote:
 # un campo extra los rechaza. CK, TK, OK, GJK y GPK (catálogo, trabajador, obra, jornada guardada y
 # presente guardado) los usa `comprobar` para señalar campos fuera del esquema.
-LK = {"tipo", "version", "obra", "horario_semanal", "excepciones_horario", "jornadas", "dispositivo"}
+LK = {
+    "tipo", "version", "obra", "horario_semanal", "excepciones_horario", "jornadas",
+    "dispositivo", "renombres", "altas",
+}
 JK = {"ambito", "fecha", "presentes", "anulada", "notas", "registrado"}
 PK = {"nombre", "horas", "extra"}
 CK = {"version", "trabajadores"}
-TK = {"id", "nombre", "categoria", "empresa", "activo", "alta", "fusionado_en"}
+TK = {"id", "nombre", "categoria", "empresa", "activo", "alta", "fusionado_en", "nombres_anteriores"}
 OK = {"version", "obra", "jornada_base_h", "horario_semanal", "excepciones_horario", "jornadas"}
 GJK = {"fecha", "ambito", "anulada", "notas", "presentes", "registrado", "origen"}
 GPK = {"id", "horas", "extra"}
+
+PATRONES_PRIVADOS = (
+    ("DNI", re.compile(r"(?<![A-Za-z0-9])\d{8}[- ]?[A-Za-z](?![A-Za-z0-9])")),
+    ("NIE", re.compile(r"(?<![A-Za-z0-9])[XYZxyz][- ]?\d{7}[- ]?[A-Za-z](?![A-Za-z0-9])")),
+    ("telefono", re.compile(r"(?<![\d.])(?:\+?34[\s.-]?)?[6789](?:[\s.-]?\d){8}(?!\d)")),
+    ("correo", re.compile(r"[^\s@\"']+@[^\s@\"']+\.[^\s@\"']+")),
+)
 
 
 def limpiar_nombre(x):
@@ -39,6 +49,14 @@ def nombre_valido(x):
     """
     x = limpiar_nombre(x)
     return bool(x) and len(x) <= 60 and not any(unicodedata.category(c) == "Cc" for c in x)
+
+
+def nombre_publicable(x):
+    """Comprueba que un nombre sea válido y no lleve etiquetas ni parezca un DNI, teléfono o correo."""
+    nombre = limpiar_nombre(x)
+    return nombre_valido(x) and "<" not in nombre and ">" not in nombre and not any(
+        patron.search(nombre) for _, patron in PATRONES_PRIVADOS
+    )
 
 
 def clave_nombre(x):
@@ -303,6 +321,23 @@ def validar_lote(lote, obras):
         e.append("horario_invalido")
     if "excepciones_horario" in lote and not _excepciones_validas(lote["excepciones_horario"]):
         e.append("excepcion_invalida")
+    renombres = lote.get("renombres")
+    if "renombres" in lote and (
+        not isinstance(renombres, list)
+        or any(
+            not isinstance(x, dict)
+            or set(x) != {"de", "a"}
+            or not nombre_publicable(x.get("de"))
+            or not nombre_publicable(x.get("a"))
+            for x in renombres
+        )
+    ):
+        e.append("renombre_invalido")
+    altas = lote.get("altas")
+    if "altas" in lote and (
+        not isinstance(altas, list) or any(not nombre_publicable(x) for x in altas)
+    ):
+        e.append("alta_invalida")
     return e
 
 
@@ -316,6 +351,111 @@ def _resolve(i, mp):
         seen.add(i)
         i = mp[i]["fusionado_en"]
     return i
+
+
+def _indices_nombres(catalogo):
+    """Crea los índices de nombres actuales y anteriores, cada uno hacia el id vigente (siguiendo fusiones)."""
+    mp = {t["id"]: t for t in catalogo["trabajadores"]}
+    actuales = {}
+    anteriores = {}
+    for trabajador in catalogo["trabajadores"]:
+        vigente = _resolve(trabajador["id"], mp)
+        actuales[clave_nombre(trabajador["nombre"])] = vigente
+        for nombre in trabajador.get("nombres_anteriores", []):
+            anteriores[clave_nombre(nombre)] = vigente
+    return mp, actuales, anteriores
+
+
+def _buscar_nombre(nombre, catalogo):
+    """Resuelve un nombre: primero entre los actuales y después entre los anteriores."""
+    mp, actuales, anteriores = _indices_nombres(catalogo)
+    clave = clave_nombre(nombre)
+    if clave in actuales:
+        return actuales[clave], "actual", mp
+    if clave in anteriores:
+        return anteriores[clave], "anterior", mp
+    return None, None, mp
+
+
+def _persona_nueva(catalogo, nombre, hoy):
+    """Añade al catálogo una persona nueva con los mismos campos que las altas de siempre."""
+    identificador = _newid(catalogo["trabajadores"])
+    persona = {
+        "id": identificador,
+        "nombre": nombre,
+        "categoria": "",
+        "empresa": "",
+        "activo": True,
+        "alta": hoy,
+        "fusionado_en": None,
+    }
+    catalogo["trabajadores"].append(persona)
+    return persona
+
+
+def _aplicar_renombre(catalogo, de, a, identificador=None, rechazar_fusionada=False):
+    """Aplica la regla común de renombre (la usan el lote y `renombrar`) y devuelve su resultado."""
+    de = limpiar_nombre(de)
+    a = limpiar_nombre(a)
+    mp, actuales, anteriores = _indices_nombres(catalogo)
+    origen_anterior = False
+    if identificador is not None:
+        if identificador not in mp:
+            return {"error": "persona_inexistente", "id": None}
+        if rechazar_fusionada and mp[identificador].get("fusionado_en") is not None:
+            return {"error": "persona_fusionada", "id": identificador}
+        origen = _resolve(identificador, mp)
+    else:
+        clave_de = clave_nombre(de)
+        if clave_de in actuales:
+            origen = actuales[clave_de]
+        elif clave_de in anteriores:
+            origen = anteriores[clave_de]
+            origen_anterior = True
+        else:
+            return {"error": "persona_inexistente", "id": None}
+    persona = mp[origen]
+    otro = actuales.get(clave_nombre(a))
+    if otro is not None and otro != origen:
+        return {"error": "coincide_con_otro", "id": origen, "id_otro": otro}
+    anterior_actual = persona["nombre"]
+    if anterior_actual == a:
+        return {
+            "error": None, "accion": "sin_cambios", "id": origen, "id_otro": None,
+            "de_actual": anterior_actual, "uso_anterior": False,
+        }
+    historial = list(persona.get("nombres_anteriores", []))
+    clave_nueva = clave_nombre(a)
+    historial = [x for x in historial if clave_nombre(x) != clave_nueva]
+    if clave_nombre(anterior_actual) != clave_nueva:
+        historial.append(anterior_actual)
+    unicos = []
+    vistas = set()
+    for nombre in historial:
+        clave = clave_nombre(nombre)
+        if clave not in vistas:
+            unicos.append(nombre)
+            vistas.add(clave)
+    persona["nombre"] = a
+    persona["nombres_anteriores"] = unicos
+    return {
+        "error": None, "accion": "renombrado", "id": origen, "id_otro": None,
+        "de_actual": anterior_actual, "uso_anterior": origen_anterior,
+    }
+
+
+def _traza_base(ts, obra, accion, dispositivo=None):
+    """Construye una línea de traza con las claves comunes (sin ámbito, fecha ni presentes)."""
+    return {
+        "ts": ts,
+        "obra": obra,
+        "ambito": None,
+        "fecha": None,
+        "accion": accion,
+        "n_presentes": 0,
+        "avisos": [],
+        "dispositivo": dispositivo,
+    }
 
 
 def _norm(x):
@@ -393,291 +533,353 @@ def _now():
     return dt.datetime.now().astimezone().isoformat()
 
 
-def ingerir_lote(lote, raiz, obras, hoy, escribir=False, ahora=None):
-    """Ingiere un lote de la tablet: lo valida entero y después procesa jornadas, horario semanal y
-    horarios propios. Con escribir=True guarda catálogo y obra y añade la traza. Devuelve ok,
-    escrito, lote_rechazado, avisos_lote, jornadas, altas y excepciones.
+def ingerir_lote(
+    lote, raiz, obras, hoy, escribir=False, ahora=None, sha256=None, fichero=None, estado=None
+):
+    """Ingiere un lote: lo valida entero y aplica renombres, altas, jornadas, horario semanal y horarios propios.
+    Con escribir=True guarda y anota la traza; con `estado` trabaja en memoria sin tocar el disco.
+    Devuelve ok, escrito, lote_rechazado, avisos_lote, jornadas, altas, excepciones, renombres y más.
     """
-    lr = validar_lote(lote, obras)
+    if estado is not None and escribir:
+        raise ValueError("no se puede escribir al usar estado")
+    if sha256 is not None and (
+        not isinstance(sha256, str) or re.fullmatch(r"[0-9A-Fa-f]{64}", sha256) is None
+    ):
+        raise ValueError("sha256 invalido")
+    errores_lote = validar_lote(lote, obras)
     res = {
-        "ok": not lr,
-        "escrito": False,
-        "lote_rechazado": lr,
-        "avisos_lote": [],
-        "jornadas": [],
-        "altas": [],
-        "excepciones": [],
+        "ok": not errores_lote, "escrito": False, "lote_rechazado": errores_lote,
+        "avisos_lote": [], "jornadas": [], "altas": [], "excepciones": [],
+        "renombres": [], "altas_pedidas": [], "obra_creada": False, "recibido": False,
     }
-    # Rechazo de lote completo: si la cabecera o esquema general fallan no se procesa ninguna
-    # jornada.
-    if lr:
+    # Rechazo de lote completo: si la cabecera o el esquema general fallan no se procesa nada.
+    if errores_lote:
         return res
     oid = lote["obra"]
-    # Paso 1: Normaliza previamente cada jornada y cuenta repeticiones de clave en el propio lote.
-    norms = []
-    counts = Counter()
-    for x in lote["jornadas"]:
-        n, e = _norm(x)
-        norms.append((n, e))
-        if n and n["ambito"] in ("vivienda", "garaje") and _date(n["fecha"]):
-            counts[(n["ambito"], n["fecha"])] += 1
-    # Paso 2: Carga copias de trabajo del catálogo y de las obras para operar en memoria de forma
-    # aislada.
-    cat = copy.deepcopy(cargar_catalogo(raiz))
-    ods = {o: copy.deepcopy(cargar_obra(raiz, obras, o)) for o in obras}
+    no_existia = estado is None and not _rop(raiz, obras, oid).exists()
+    # Copias de trabajo del catálogo y de las obras (del disco, o del `estado` en memoria): se opera en ellas
+    # de forma aislada y solo al final se persisten o se devuelven al `estado`.
+    if estado is None:
+        cat = copy.deepcopy(cargar_catalogo(raiz))
+        ods = {o: copy.deepcopy(cargar_obra(raiz, obras, o)) for o in obras}
+    else:
+        cat = copy.deepcopy(estado["cat"])
+        ods = copy.deepcopy(estado["ods"])
     od = ods[oid]
-    cc = oc = False
-    traces = []
+    cambio_cat = False
+    cambio_obra = False
+    trazas = []
     ts = ahora or _now()
-    today = dt.date.fromisoformat(hoy)
-    # Paso 3: Procesa las jornadas en orden; cada una ve las altas y cambios de las anteriores.
-    for n, e in norms:
-        a = n["ambito"] if n else None
-        f = n["fecha"] if n else None
-        key = [oid, a, f]
-        # Rechaza si la misma clave de jornada (ámbito y fecha) viene repetida dentro del propio
-        # lote.
-        if n and counts[(a, f)] > 1:
-            e.append("jornada_repetida_en_lote")
-        e = list(dict.fromkeys(e))
-        # Rechazo de jornada individual: descarta la fila errónea sin detener el procesamiento del
-        # resto del lote.
-        if e:
+    # El primer fichero recibido de una obra crea su `personal_obra.json`: ya no hay alta manual de la obra.
+    if sha256 is not None and no_existia:
+        res["obra_creada"] = True
+        cambio_obra = True
+        trazas.append(_traza_base(ts, oid, "obra_creada", lote.get("dispositivo")))
+
+    # Paso 1: renombres, en orden (cada uno ve el efecto de los anteriores). El nombre cambia por id: las
+    # jornadas y horarios propios siguen colgando de la misma persona.
+    for item in lote.get("renombres", []):
+        de = limpiar_nombre(item["de"])
+        nuevo = limpiar_nombre(item["a"])
+        r = _aplicar_renombre(cat, de, nuevo)
+        if r.get("error") == "persona_inexistente":
+            accion = "sin_origen"
+            res["avisos_lote"].append({"codigo": "renombre_sin_origen", "detalle": de})
+        elif r.get("error") == "coincide_con_otro":
+            accion = "coincide_con_otro"
+            detalle = f"{de} -> {nuevo} ({r['id']}, {r['id_otro']})"
+            res["avisos_lote"].append({"codigo": "renombre_coincide_con_otro", "detalle": detalle})
+        else:
+            accion = r["accion"]
+            if accion == "renombrado":
+                cambio_cat = True
+                tr = _traza_base(ts, oid, "renombre", lote.get("dispositivo"))
+                tr.update({"id": r["id"], "de": r["de_actual"], "a": nuevo})
+                trazas.append(tr)
+                if r["uso_anterior"]:
+                    detalle = f"{de} -> {r['de_actual']}"
+                    res["avisos_lote"].append({"codigo": "nombre_anterior_usado", "detalle": detalle})
+        orden = None
+        if accion == "coincide_con_otro":
+            orden = f"personal_obra.py fusionar {r['id']} {r['id_otro']}"
+        res["renombres"].append({
+            "de": de, "a": nuevo, "accion": accion, "id": r.get("id"),
+            "id_otro": r.get("id_otro"), "orden": orden,
+        })
+
+    # Paso 2: altas sin jornada. Un nombre que ya existe (actual o anterior) no abre una persona nueva.
+    for original in lote.get("altas", []):
+        nombre = limpiar_nombre(original)
+        identificador, modo, mp = _buscar_nombre(nombre, cat)
+        if identificador is None:
+            parecido = next((
+                p for p in cat["trabajadores"]
+                if _similar(clave_nombre(nombre), clave_nombre(p["nombre"]))
+            ), None)
+            if parecido:
+                res["avisos_lote"].append({
+                    "codigo": "nombre_parecido", "detalle": nombre + " ~ " + parecido["nombre"],
+                })
+            persona = _persona_nueva(cat, nombre, hoy)
+            identificador = persona["id"]
+            accion = "alta"
+            cambio_cat = True
+            res["altas"].append({"id": identificador, "nombre": nombre})
+            res["avisos_lote"].append({"codigo": "alta_nueva", "detalle": nombre})
+            tr = _traza_base(ts, oid, "alta_persona", lote.get("dispositivo"))
+            tr.update({"id": identificador, "nombre": nombre})
+            trazas.append(tr)
+        else:
+            accion = "sin_cambios"
+            if modo == "anterior":
+                res["avisos_lote"].append({
+                    "codigo": "nombre_anterior_usado",
+                    "detalle": f"{nombre} -> {mp[identificador]['nombre']}",
+                })
+        res["altas_pedidas"].append({"nombre": nombre, "id": identificador, "accion": accion})
+
+    # Paso 3: normaliza cada jornada y cuenta repeticiones de clave dentro del propio lote.
+    normas = []
+    repetidas = Counter()
+    for entrada in lote["jornadas"]:
+        normal, errores = _norm(entrada)
+        normas.append((normal, errores))
+        if normal and normal["ambito"] in ("vivienda", "garaje") and _date(normal["fecha"]):
+            repetidas[(normal["ambito"], normal["fecha"])] += 1
+    hoy_fecha = dt.date.fromisoformat(hoy)
+    # Procesa las jornadas en orden; cada una ve las altas y cambios de las anteriores.
+    for normal, errores_originales in normas:
+        errores = list(errores_originales)
+        ambito = normal["ambito"] if normal else None
+        fecha = normal["fecha"] if normal else None
+        clave = [oid, ambito, fecha]
+        # Rechaza si el mismo ámbito y fecha vienen repetidos dentro del propio lote.
+        if normal and repetidas[(ambito, fecha)] > 1:
+            errores.append("jornada_repetida_en_lote")
+        errores = list(dict.fromkeys(errores))
+        # Rechazo de jornada individual: descarta la fila errónea sin detener el resto del lote.
+        if errores:
             res["ok"] = False
-            res["jornadas"].append(
-                {"clave": key, "estado": "rechazada", "accion": None, "rechazos": e, "avisos": []}
-            )
+            res["jornadas"].append({
+                "clave": clave, "estado": "rechazada", "accion": None,
+                "rechazos": errores, "avisos": [],
+            })
             continue
-        tc = copy.deepcopy(cat)
-        mp = {t["id"]: t for t in tc["trabajadores"]}
-        names = {}
-        # Mapea nombres a ids vigentes resolviendo fusiones para que las horas computen al destino.
-        for t in tc["trabajadores"]:
-            names[clave_nombre(t["nombre"])] = _resolve(t["id"], mp)
-        av = []
-        alts = []
-        prs = []
-        for p in n["presentes"]:
-            # Resuelve el trabajador por clave; si es desconocido crea alta nueva y busca nombres
-            # parecidos.
-            i = names.get(p["clave"])
-            if i is None:
-                i = _newid(tc["trabajadores"])
-                # Un solo aviso por alta; las claves muy cortas no son fiables.
-                parecido = next(
-                    (q for q in tc["trabajadores"] if _similar(p["clave"], clave_nombre(q["nombre"]))), None
-                )
+        temporal = copy.deepcopy(cat)
+        mp, actuales, anteriores = _indices_nombres(temporal)
+        avisos = []
+        altas = []
+        presentes = []
+        for p in normal["presentes"]:
+            # Resuelve por nombre actual y, si no, por nombre anterior; solo si no existe se crea una persona
+            # nueva (y se busca si se parece a otra).
+            identificador = actuales.get(p["clave"])
+            antiguo = identificador is None and p["clave"] in anteriores
+            if antiguo:
+                identificador = anteriores[p["clave"]]
+            if identificador is None:
+                parecido = next((
+                    q for q in temporal["trabajadores"]
+                    if _similar(p["clave"], clave_nombre(q["nombre"]))
+                ), None)
                 if parecido:
-                    av.append(
-                        {"codigo": "nombre_parecido", "detalle": p["nombre"] + " ~ " + parecido["nombre"]}
-                    )
-                q = {
-                    "id": i,
-                    "nombre": p["nombre"],
-                    "categoria": "",
-                    "empresa": "",
-                    "activo": True,
-                    "alta": hoy,
-                    "fusionado_en": None,
-                }
-                tc["trabajadores"].append(q)
-                mp[i] = q
-                names[p["clave"]] = i
-                alts.append({"id": i, "nombre": p["nombre"]})
-                av.append({"codigo": "alta_nueva", "detalle": p["nombre"]})
-            prs.append({"id": i, "horas": p["horas"], "extra": p["extra"]})
-        old = next((j for j in od["jornadas"] if j.get("fecha") == f and j.get("ambito") == a), None)
-        # Inicializa el cómputo de horas del día con los presentes de la jornada evaluada.
-        totals = {p["id"]: p["horas"] for p in prs}
-        # Calcula las horas diarias acumuladas por persona entre todas las obras, ignorando la
-        # jornada previa.
-        for xd in ods.values():
-            for j in xd.get("jornadas", []):
-                if j.get("fecha") != f or j.get("anulada") or (xd is od and j is old):
+                    avisos.append({
+                        "codigo": "nombre_parecido",
+                        "detalle": p["nombre"] + " ~ " + parecido["nombre"],
+                    })
+                persona = _persona_nueva(temporal, p["nombre"], hoy)
+                identificador = persona["id"]
+                mp[identificador] = persona
+                actuales[p["clave"]] = identificador
+                altas.append({"id": identificador, "nombre": p["nombre"]})
+                avisos.append({"codigo": "alta_nueva", "detalle": p["nombre"]})
+            elif antiguo:
+                avisos.append({
+                    "codigo": "nombre_anterior_usado",
+                    "detalle": f"{p['nombre']} -> {mp[identificador]['nombre']}",
+                })
+            presentes.append({"id": identificador, "horas": p["horas"], "extra": p["extra"]})
+        # Dos nombres que resuelven a la misma persona (p. ej. el nuevo y el antiguo): jornada rechazada.
+        if len(presentes) != len({p["id"] for p in presentes}):
+            res["ok"] = False
+            res["jornadas"].append({
+                "clave": clave, "estado": "rechazada", "accion": None,
+                "rechazos": ["presente_duplicado"], "avisos": [],
+            })
+            continue
+        previa = next((
+            j for j in od["jornadas"]
+            if j.get("fecha") == fecha and j.get("ambito") == ambito
+        ), None)
+        # Horas del día por persona entre todas las obras, sin contar la jornada que esta sustituye.
+        totales = {p["id"]: p["horas"] for p in presentes}
+        for otra in ods.values():
+            for j in otra.get("jornadas", []):
+                if j.get("fecha") != fecha or j.get("anulada") or (otra is od and j is previa):
                     continue
                 for p in j.get("presentes", []):
-                    # Resuelve el id vigente antes de acumular horas para contabilizar duplicados
-                    # fusionados.
-                    rid = _resolve(p["id"], mp)
-                    totals[rid] = totals.get(rid, 0) + p["horas"]
-        # Rechaza la jornada si alguien supera 24 h en el día entre todas las obras por ser
-        # imposible.
-        if any(v > 24 for v in totals.values()):
+                    vigente = _resolve(p["id"], mp)
+                    totales[vigente] = totales.get(vigente, 0) + p["horas"]
+        # Rechaza la jornada si alguien supera 24 h en el día entre todas las obras: es imposible.
+        if any(h > 24 for h in totales.values()):
             res["ok"] = False
-            res["jornadas"].append(
-                {
-                    "clave": key,
-                    "estado": "rechazada",
-                    "accion": None,
-                    "rechazos": ["suma_diaria_invalida"],
-                    "avisos": [],
-                }
-            )
+            res["jornadas"].append({
+                "clave": clave, "estado": "rechazada", "accion": None,
+                "rechazos": ["suma_diaria_invalida"], "avisos": [],
+            })
             continue
-        # Emite aviso informativo si la suma diaria acumulada supera 12 h sin llegar a 24 h.
-        if any(v > 12 for v in totals.values()):
-            av.append({"codigo": "suma_diaria_alta", "detalle": None})
-        # Avisa si la fecha anotada es posterior al día de hoy para advertir sobre posibles erratas.
-        if dt.date.fromisoformat(f) > today:
-            av.append({"codigo": "fecha_futura", "detalle": f})
-        new = {
-            "fecha": f,
-            "ambito": a,
-            "anulada": n["anulada"],
-            "notas": n["notas"],
-            "presentes": sorted(prs, key=lambda p: p["id"]),
-            "registrado": n["registrado"] if n["registrado"] is not None else ts,
+        # Aviso si alguien suma más de 12 h el mismo día (con sus nombres) o si la fecha aún no ha llegado.
+        altos = sorted(mp[i]["nombre"] for i, horas in totales.items() if horas > 12)
+        if altos:
+            avisos.append({"codigo": "suma_diaria_alta", "detalle": ", ".join(altos)})
+        if dt.date.fromisoformat(fecha) > hoy_fecha:
+            avisos.append({"codigo": "fecha_futura", "detalle": fecha})
+        nueva = {
+            "fecha": fecha, "ambito": ambito, "anulada": normal["anulada"],
+            "notas": normal["notas"], "presentes": sorted(presentes, key=lambda p: p["id"]),
+            "registrado": normal["registrado"] if normal["registrado"] is not None else ts,
             "origen": "movil",
         }
-        # Comprueba idempotencia: si el contenido es idéntico a lo guardado no reescribe ni deja
-        # traza.
-        if old and _content(old) == _content(new):
-            act = "sin_cambios"
-        elif n["anulada"]:
-            act = "anulacion"
-        elif old:
-            act = "reemplazo"
-            av.append({"codigo": "reemplazo", "detalle": None})
+        # Idempotencia: si el contenido es idéntico a lo guardado no se reescribe ni deja traza.
+        if previa and _content(previa) == _content(nueva):
+            accion = "sin_cambios"
+        elif normal["anulada"]:
+            accion = "anulacion"
+        elif previa:
+            accion = "reemplazo"
+            avisos.append({"codigo": "reemplazo", "detalle": None})
         else:
-            act = "alta"
-        # Aplica los cambios en memoria y registra la traza solo si la jornada aporta novedades
-        # efectivas.
-        if act != "sin_cambios":
-            cat = tc
-            res["altas"] += alts
-            cc |= bool(alts)
-            oc = True
-            if old:
-                od["jornadas"][od["jornadas"].index(old)] = new
+            accion = "alta"
+        # Aplica los cambios en memoria y anota la traza solo si la jornada aporta novedades efectivas.
+        if accion != "sin_cambios":
+            cat = temporal
+            res["altas"] += altas
+            cambio_cat |= bool(altas)
+            cambio_obra = True
+            if previa:
+                od["jornadas"][od["jornadas"].index(previa)] = nueva
             else:
-                od["jornadas"].append(new)
-            traces.append(
-                {
-                    "ts": ts,
-                    "obra": oid,
-                    "ambito": a,
-                    "fecha": f,
-                    "accion": act,
-                    "n_presentes": len(prs),
-                    "avisos": [x["codigo"] for x in av],
-                    "dispositivo": lote.get("dispositivo"),
-                }
-            )
-        res["jornadas"].append(
-            {"clave": key, "estado": "aceptada", "accion": act, "rechazos": [], "avisos": av}
-        )
-    # Paso 4: Actualiza el horario semanal de la obra si viene en el lote y es distinto al actual.
-    if "horario_semanal" in lote and lote["horario_semanal"] != od["horario_semanal"]:
-        od["horario_semanal"] = {k: _num(lote["horario_semanal"][k]) for k in DIAS}
-        oc = True
-        traces.append(
-            {
-                "ts": ts,
-                "obra": oid,
-                "ambito": None,
-                "fecha": None,
-                "accion": "horario",
-                "n_presentes": 0,
-                "avisos": [],
+                od["jornadas"].append(nueva)
+            trazas.append({
+                "ts": ts, "obra": oid, "ambito": ambito, "fecha": fecha,
+                "accion": accion, "n_presentes": len(presentes),
+                "avisos": [x["codigo"] for x in avisos],
                 "dispositivo": lote.get("dispositivo"),
-            }
-        )
-    # Aplica el horario propio una vez resueltas las altas de las jornadas.
-    mp = {t["id"]: t for t in cat["trabajadores"]}
-    names = {clave_nombre(t["nombre"]): _resolve(t["id"], mp) for t in cat["trabajadores"]}
+            })
+        res["jornadas"].append({
+            "clave": clave, "estado": "aceptada", "accion": accion,
+            "rechazos": [], "avisos": avisos,
+        })
+
+    # Paso 4: actualiza el horario semanal de la obra si viene en el lote y es distinto del actual.
+    if "horario_semanal" in lote and lote["horario_semanal"] != od["horario_semanal"]:
+        od["horario_semanal"] = {dia: _num(lote["horario_semanal"][dia]) for dia in DIAS}
+        cambio_obra = True
+        trazas.append(_traza_base(ts, oid, "horario", lote.get("dispositivo")))
+
+    # Paso 5: horarios propios, una vez resueltas las altas de las jornadas. Se aplican incluso si alguna
+    # jornada del lote se rechazó. Un nombre anterior vale; uno desconocido con horario da de alta a la persona.
+    mp, actuales, anteriores = _indices_nombres(cat)
     horarios = od.setdefault("excepciones_horario", {})
-    # Paso 5: Procesa horarios propios, aplicándose incluso si alguna jornada del lote fue
-    # rechazada.
-    for nombre_original, horario_original in lote.get("excepciones_horario", {}).items():
-        nombre = limpiar_nombre(nombre_original)
-        clave = clave_nombre(nombre)
-        i = names.get(clave)
-        # Da de alta al trabajador si se le asigna un horario propio y aún no figuraba en el
-        # catálogo.
-        if i is None and horario_original:
-            i = _newid(cat["trabajadores"])
-            parecido = next(
-                (q for q in cat["trabajadores"] if _similar(clave, clave_nombre(q["nombre"]))), None
-            )
+    for original, horario in lote.get("excepciones_horario", {}).items():
+        nombre = limpiar_nombre(original)
+        clave_nombre_limpia = clave_nombre(nombre)
+        identificador = actuales.get(clave_nombre_limpia)
+        if identificador is None and clave_nombre_limpia in anteriores:
+            identificador = anteriores[clave_nombre_limpia]
+            res["avisos_lote"].append({
+                "codigo": "nombre_anterior_usado",
+                "detalle": f"{nombre} -> {mp[identificador]['nombre']}",
+            })
+        if identificador is None and horario:
+            parecido = next((
+                p for p in cat["trabajadores"]
+                if _similar(clave_nombre_limpia, clave_nombre(p["nombre"]))
+            ), None)
             if parecido:
-                res["avisos_lote"].append(
-                    {"codigo": "nombre_parecido", "detalle": nombre + " ~ " + parecido["nombre"]}
-                )
-            q = {
-                "id": i,
-                "nombre": nombre,
-                "categoria": "",
-                "empresa": "",
-                "activo": True,
-                "alta": hoy,
-                "fusionado_en": None,
-            }
-            cat["trabajadores"].append(q)
-            mp[i] = q
-            names[clave] = i
-            res["altas"].append({"id": i, "nombre": nombre})
+                res["avisos_lote"].append({
+                    "codigo": "nombre_parecido", "detalle": nombre + " ~ " + parecido["nombre"],
+                })
+            persona = _persona_nueva(cat, nombre, hoy)
+            identificador = persona["id"]
+            mp[identificador] = persona
+            actuales[clave_nombre_limpia] = identificador
+            res["altas"].append({"id": identificador, "nombre": nombre})
             res["avisos_lote"].append({"codigo": "alta_nueva", "detalle": nombre})
-            cc = True
-        if i is None:
+            cambio_cat = True
+        if identificador is None:
             res["excepciones"].append({"nombre": nombre, "id": None, "accion": "sin_cambios"})
             continue
-        # Sustituye por completo el horario propio del trabajador con los días especificados en el
-        # lote.
-        nuevo = (
-            {dia: _num(horario_original[dia]) for dia in DIAS if dia in horario_original}
-            if horario_original
-            else None
-        )
-        propio = horarios.get(i)
-        # Purga posibles claves antiguas residuales pertenecientes a identificadores fusionados en
-        # este.
-        viejas = [x for x in horarios if x != i and x in mp and _resolve(x, mp) == i]
-        if not viejas and ((nuevo is None and propio is None) or nuevo == propio):
+        # Sustituye por completo el horario propio de la persona por los días indicados en el lote y purga
+        # claves antiguas de ids que se fusionaron en ella.
+        nuevo = {d: _num(horario[d]) for d in DIAS if d in horario} if horario else None
+        viejas = [
+            i for i in horarios
+            if i != identificador and i in mp and _resolve(i, mp) == identificador
+        ]
+        if not viejas and ((nuevo is None and horarios.get(identificador) is None)
+                           or nuevo == horarios.get(identificador)):
             accion = "sin_cambios"
         else:
-            for x in viejas:
-                del horarios[x]
+            for vieja in viejas:
+                del horarios[vieja]
             if nuevo is None:
-                horarios.pop(i, None)
+                horarios.pop(identificador, None)
                 accion = "quitada"
                 accion_traza = "horario_propio_quitado"
             else:
-                horarios[i] = nuevo
+                horarios[identificador] = nuevo
                 accion = "fijada"
                 accion_traza = "horario_propio"
-            oc = True
-            traces.append(
-                {
-                    "ts": ts,
-                    "obra": oid,
-                    "ambito": None,
-                    "fecha": None,
-                    "accion": accion_traza,
-                    "n_presentes": 0,
-                    "avisos": [],
-                    "dispositivo": lote.get("dispositivo"),
-                    "id": i,
-                }
-            )
-        res["excepciones"].append({"nombre": nombre, "id": i, "accion": accion})
-    # Paso 6: Persiste atómicamente catálogo y obra solo si se activó la opción y hubo
-    # modificaciones.
-    if escribir and (cc or oc):
-        if cc:
+            cambio_obra = True
+            tr = _traza_base(ts, oid, accion_traza, lote.get("dispositivo"))
+            tr["id"] = identificador
+            trazas.append(tr)
+        res["excepciones"].append({"nombre": nombre, "id": identificador, "accion": accion})
+
+    # Recepción del fichero: si el SHA256 aún no consta en la traza de la obra, una última línea `recibido`
+    # lo anota (aunque no cambie ningún dato) y es lo que evita aplicar dos veces el mismo fichero.
+    sha_nuevo = sha256 is not None
+    if estado is None and sha_nuevo:
+        sha_nuevo = sha256 not in shas_recibidos(raiz, obras, oid)
+    if sha_nuevo:
+        codigos = []
+        avisos = res["avisos_lote"] + [a for j in res["jornadas"] for a in j["avisos"]]
+        for aviso in avisos:
+            if aviso["codigo"] not in codigos:
+                codigos.append(aviso["codigo"])
+        tr = _traza_base(ts, oid, "recibido", lote.get("dispositivo"))
+        tr["avisos"] = codigos
+        tr["rechazadas"] = sum(j["estado"] == "rechazada" for j in res["jornadas"])
+        trazas.append(tr)
+        res["recibido"] = True
+    if sha256 is not None:
+        for tr in trazas:
+            tr["sha256"] = sha256
+            if isinstance(fichero, str):
+                tr["fichero"] = fichero
+    # En memoria: el estado recibe el resultado y no se toca el disco.
+    if estado is not None:
+        estado["cat"] = cat
+        estado["ods"] = ods
+        return res
+    # Paso 6: persiste atómicamente catálogo y obra solo si se pidió y hubo algo que guardar.
+    if escribir and (cambio_cat or cambio_obra or trazas):
+        if cambio_cat:
             guardar_catalogo(raiz, cat)
-        if oc:
+        if cambio_obra:
             _saveobra(raiz, obras, oid, od)
         res["escrito"] = True
         try:
-            # Añade la traza a `personal_jornadas.jsonl`. Si falla, lo ya guardado se mantiene y
-            # solo se avisa (`traza_no_escrita`).
-            p = _rop(raiz, obras, oid, "personal_jornadas.jsonl")
-            p.parent.mkdir(parents=True, exist_ok=True)
-            with open(p, "ab") as z:
-                for tr in traces:
-                    z.write((json.dumps(tr, ensure_ascii=False) + "\n").encode())
-        except Exception as x:
-            res["avisos_lote"].append({"codigo": "traza_no_escrita", "detalle": str(x)})
+            # Añade la traza a `personal_jornadas.jsonl`. Si falla, lo ya guardado se mantiene y solo se avisa
+            # (`traza_no_escrita`).
+            ruta = _rop(raiz, obras, oid, "personal_jornadas.jsonl")
+            ruta.parent.mkdir(parents=True, exist_ok=True)
+            with open(ruta, "ab") as salida:
+                for tr in trazas:
+                    salida.write((json.dumps(tr, ensure_ascii=False) + "\n").encode())
+        except Exception as error:
+            res["avisos_lote"].append({"codigo": "traza_no_escrita", "detalle": str(error)})
     return res
 
 
@@ -687,6 +889,108 @@ def _maps(c):
     """
     mp = {t["id"]: t for t in c["trabajadores"]}
     return mp, {i: _resolve(i, mp) for i in mp}
+
+
+def cargar_estado(raiz, obras):
+    """Carga copias profundas del catálogo y de todas las obras: un estado en memoria para simular."""
+    return {
+        "cat": copy.deepcopy(cargar_catalogo(raiz)),
+        "ods": {o: copy.deepcopy(cargar_obra(raiz, obras, o)) for o in obras},
+    }
+
+
+def shas_recibidos(raiz, obras, obra):
+    """Huellas SHA256 de los ficheros ya recibidos que constan en la traza de una obra.
+    Sin traza devuelve un conjunto vacío; si no se puede leer, la excepción sube.
+    """
+    ruta = _rop(raiz, obras, obra, "personal_jornadas.jsonl")
+    if not ruta.exists():
+        return set()
+    resultado = set()
+    with open(ruta, encoding="utf-8") as entrada:
+        for linea in entrada:
+            try:
+                dato = json.loads(linea)
+            except (json.JSONDecodeError, UnicodeDecodeError):
+                continue
+            if isinstance(dato, dict) and isinstance(dato.get("sha256"), str):
+                resultado.add(dato["sha256"])
+    return resultado
+
+
+def alta_obra(raiz, obras, obra, escribir=False):
+    """Crea el `personal_obra.json` base de una obra del registro si todavía no existe (solo con escribir)."""
+    if obra not in obras:
+        raise ValueError("obra inexistente")
+    ruta = _rop(raiz, obras, obra)
+    falta = not ruta.exists()
+    creada = falta and escribir
+    if creada:
+        _saveobra(raiz, obras, obra, cargar_obra(raiz, obras, obra))
+    if creada:
+        motivo = "creada"
+    elif falta:
+        motivo = "vista_previa"
+    else:
+        motivo = "ya_existia"
+    return {"creada": creada, "ruta": str(ruta), "motivo": motivo}
+
+
+def _obras_de_persona(raiz, obras, identificador, catalogo):
+    """Obras en las que consta una persona (en jornadas u horarios propios), siguiendo fusiones."""
+    mp = {t["id"]: t for t in catalogo["trabajadores"]}
+    destino = _resolve(identificador, mp)
+    resultado = []
+    for obra in obras:
+        datos = cargar_obra(raiz, obras, obra)
+        ids = [p.get("id") for j in datos.get("jornadas", []) for p in j.get("presentes", [])]
+        ids += list(datos.get("excepciones_horario", {}))
+        if any(i in mp and _resolve(i, mp) == destino for i in ids):
+            resultado.append(obra)
+    return sorted(resultado)
+
+
+def renombrar(raiz, obras, quien, nuevo, escribir=False, ahora=None):
+    """Cambia el nombre de una persona (por id o por nombre): vista previa o, con escribir, de verdad."""
+    base = {
+        "ok": False, "error": None, "id": None, "id_otro": None, "orden": None,
+        "de": quien, "a": limpiar_nombre(nuevo), "accion": None, "avisos": [],
+        "escrito": False, "trazas_en": [],
+    }
+    if not nombre_publicable(nuevo):
+        base["error"] = "nombre_invalido"
+        return base
+    catalogo = copy.deepcopy(cargar_catalogo(raiz))
+    mp = {t["id"]: t for t in catalogo["trabajadores"]}
+    es_id = isinstance(quien, str) and re.fullmatch(r"T\d{4,}", quien) is not None
+    if es_id:
+        cambio = _aplicar_renombre(catalogo, mp.get(quien, {}).get("nombre", ""),
+                                   limpiar_nombre(nuevo), quien, True)
+    else:
+        cambio = _aplicar_renombre(catalogo, limpiar_nombre(quien), limpiar_nombre(nuevo))
+    if cambio.get("error"):
+        base.update({"error": cambio["error"], "id": cambio.get("id"),
+                     "id_otro": cambio.get("id_otro")})
+        if cambio["error"] == "coincide_con_otro":
+            base["orden"] = f"personal_obra.py fusionar {cambio['id']} {cambio['id_otro']}"
+        return base
+    base.update({"ok": True, "id": cambio["id"], "accion": cambio["accion"],
+                 "de": cambio["de_actual"]})
+    if cambio["uso_anterior"]:
+        detalle = f"{limpiar_nombre(quien)} -> {cambio['de_actual']}"
+        base["avisos"].append({"codigo": "nombre_anterior_usado", "detalle": detalle})
+    base["trazas_en"] = _obras_de_persona(raiz, obras, cambio["id"], catalogo)
+    if escribir and cambio["accion"] == "renombrado":
+        guardar_catalogo(raiz, catalogo)
+        for obra in base["trazas_en"]:
+            traza = _traza_base(ahora or _now(), obra, "renombre")
+            traza.update({"id": cambio["id"], "de": cambio["de_actual"], "a": limpiar_nombre(nuevo)})
+            ruta = _rop(raiz, obras, obra, "personal_jornadas.jsonl")
+            ruta.parent.mkdir(parents=True, exist_ok=True)
+            with open(ruta, "ab") as salida:
+                salida.write((json.dumps(traza, ensure_ascii=False) + "\n").encode())
+        base["escrito"] = True
+    return base
 
 
 def ultima_jornada(raiz, obras, obra, ambito):
@@ -764,14 +1068,16 @@ def fusionar(raiz, origen, destino, escribir=False, ahora=None):
     return {"ok": True, "error": None, "escrito": bool(escribir)}
 
 
-def aplanar(raiz, obras, obra):
+def aplanar(raiz, obras, obra, estado=None):
     """Convierte jornadas activas en filas planas de cálculo.
     Ordena el resultado por fecha, ámbito y trabajador.
     """
-    mp, rs = _maps(cargar_catalogo(raiz))
+    catalogo = estado["cat"] if estado is not None else cargar_catalogo(raiz)
+    datos_obra = estado["ods"][obra] if estado is not None else cargar_obra(raiz, obras, obra)
+    mp, rs = _maps(catalogo)
     out = []
     # Filtra jornadas anuladas y proyecta cada presente en una fila plana con su nombre resuelto.
-    for j in cargar_obra(raiz, obras, obra)["jornadas"]:
+    for j in datos_obra["jornadas"]:
         if j["anulada"]:
             continue
         for p in j["presentes"]:
@@ -787,14 +1093,14 @@ def aplanar(raiz, obras, obra):
     return sorted(out, key=lambda x: (x["fecha"], x["ambito"], x["nombre"]))
 
 
-def totales_control(raiz, obras, obra=None):
+def totales_control(raiz, obras, obra=None, estado=None):
     """Calcula totales independientes de horas, días y extra.
     Devuelve None si no hay filas para no falsear datos.
     """
     fs = (
-        aplanar(raiz, obras, obra)
+        aplanar(raiz, obras, obra, estado)
         if obra is not None
-        else [x for o in obras for x in aplanar(raiz, obras, o)]
+        else [x for o in obras for x in aplanar(raiz, obras, o, estado)]
     )
     # Si no hay jornadas devuelve None (nunca ceros) para distinguir ausencia de datos de ceros
     # reales.
@@ -899,6 +1205,18 @@ def comprobar(raiz, obras):
             ks[clave_nombre(t.get("nombre"))] += 1
         elif t["fusionado_en"] not in ids or mp[t["fusionado_en"]].get("fusionado_en") is not None:
             out.append(f"{pc}: fusionado_en inválido")
+        if "nombres_anteriores" in t:
+            anteriores = t["nombres_anteriores"]
+            validos = isinstance(anteriores, list) and all(
+                isinstance(nombre, str) and nombre_publicable(nombre) for nombre in anteriores
+            )
+            claves_anteriores = [clave_nombre(nombre) for nombre in anteriores] if validos else []
+            if (
+                not validos
+                or len(claves_anteriores) != len(set(claves_anteriores))
+                or clave_nombre(t.get("nombre")) in claves_anteriores
+            ):
+                out.append(f"{pc}: nombres_anteriores invalidos")
     if any(v > 1 for v in ks.values()):
         out.append(f"{pc}: nombres no fusionados duplicados")
     for o in obras:
@@ -953,6 +1271,76 @@ def comprobar(raiz, obras):
     return out
 
 
+def texto_aviso(codigo, detalle=None):
+    """Frase en lenguaje llano para un código de aviso o de rechazo (nunca se enseña el código)."""
+    fijos = {
+        "lote_invalido": "El fichero no tiene el formato esperado.",
+        "tipo_desconocido": "Este fichero no es un control horario.",
+        "version_desconocida": "Este control horario es de una versión que este PC no conoce.",
+        "obra_invalida": "La obra que figura en el fichero no existe en Sagarde.",
+        "campo_desconocido": "El fichero trae algo que no se esperaba.",
+        "horario_invalido": "El horario de la obra viene mal escrito.",
+        "excepcion_invalida": "Un horario especial viene mal escrito.",
+        "renombre_invalido": "Un cambio de nombre viene mal escrito.",
+        "alta_invalida": "Un nombre de la lista de nuevos viene mal escrito.",
+        "ambito_invalido": "Una jornada no dice si es de viviendas o de garajes.",
+        "fecha_invalida": "Una jornada tiene una fecha que no existe.",
+        "sin_presentes": "Una jornada no tiene a nadie apuntado.",
+        "nombre_vacio": "Hay un trabajador sin nombre.",
+        "nombre_invalido": "Hay un nombre que no vale (vacío, demasiado largo o con signos raros).",
+        "horas_invalidas": "Hay unas horas que no valen (deben estar entre 0 y 24).",
+        "extra_invalido": "Hay unas horas extra que no valen.",
+        "presente_duplicado": "Una persona sale dos veces el mismo día.",
+        "anulada_con_presentes": "Una jornada anulada no puede llevar gente.",
+        "jornada_repetida_en_lote": "El mismo día y el mismo ámbito aparece dos veces en el fichero.",
+        "suma_diaria_invalida": "Alguien suma más de 24 horas ese día entre todas las obras.",
+        "persona_inexistente": "No hay nadie en la base con ese nombre ni con ese número.",
+        "persona_fusionada": "Esa persona ya está juntada con otra: cambia el nombre de la otra.",
+        "coincide_con_otro": "Ese nombre ya es de otra persona. Si son la misma persona hay que juntarlas.",
+        "reemplazo": "Ya había una jornada de ese día en esa obra: la nueva la sustituye.",
+        "traza_no_escrita": "Guardado bien, pero no se pudo anotar en el registro.",
+    }
+    if codigo in fijos:
+        return fijos[codigo]
+    if codigo == "alta_nueva":
+        if isinstance(detalle, str) and detalle:
+            return f"Nombre nuevo: «{detalle}» no estaba en la base; se añade."
+        return "Hay un nombre nuevo que no estaba en la base; se añade."
+    if codigo == "nombre_parecido":
+        if isinstance(detalle, str) and " ~ " in detalle:
+            primero, segundo = detalle.split(" ~ ", 1)
+            return f"Se parecen: «{primero}» y «{segundo}». ¿Es la misma persona?"
+        return "Hay dos nombres que se parecen. ¿Es la misma persona?"
+    if codigo == "suma_diaria_alta":
+        if not isinstance(detalle, str) or not detalle:
+            return "Alguien suma más de 12 horas ese día entre todas las obras."
+        verbo = "suman" if "," in detalle else "suma"
+        return f"{detalle} {verbo} más de 12 horas ese día entre todas las obras."
+    if codigo == "fecha_futura":
+        if isinstance(detalle, str) and _date(detalle):
+            fecha = dt.date.fromisoformat(detalle)
+            return f"La jornada es de una fecha que aún no ha llegado ({fecha:%d/%m}): ¿es una errata?"
+        return "La jornada es de una fecha que aún no ha llegado: ¿es una errata?"
+    if codigo == "renombre_coincide_con_otro":
+        if isinstance(detalle, str) and " -> " in detalle:
+            primero, resto = detalle.split(" -> ", 1)
+            segundo = resto.split(" (", 1)[0]
+            return (f"No se ha cambiado «{primero}»: «{segundo}» ya es otra persona de la base. "
+                    "Si son la misma persona hay que juntarlas.")
+        return "No se ha cambiado el nombre: ya es de otra persona de la base."
+    if codigo == "renombre_sin_origen":
+        if isinstance(detalle, str) and detalle:
+            return f"«{detalle}» no estaba en la base: no hay nada que cambiar de nombre."
+        return "Un nombre que se quería cambiar no estaba en la base: no hay nada que cambiar."
+    if codigo == "nombre_anterior_usado":
+        if isinstance(detalle, str) and " -> " in detalle:
+            anterior, actual = detalle.split(" -> ", 1)
+            return (f"«{anterior}» es un nombre antiguo de «{actual}»: "
+                    "se ha tomado como la misma persona.")
+        return "Se ha reconocido un nombre antiguo como la misma persona."
+    return f"Aviso: {codigo}."
+
+
 def _cli_obras(x):
     """Devuelve {id_obra: carpeta_obra}: lo indicado en --obras (formato id=carpeta,id=carpeta) o,
     si no se indica,
@@ -993,6 +1381,10 @@ def main(argv=None):
     q.add_argument("origen")
     q.add_argument("destino")
     comunes(q)
+    q = s.add_parser("renombrar")
+    q.add_argument("quien")
+    q.add_argument("nuevo")
+    comunes(q)
     q = s.add_parser("exportar-estado")
     comunes(q)
     q = s.add_parser("comprobar")
@@ -1021,6 +1413,21 @@ def main(argv=None):
         if a.cmd == "fusionar":
             r = fusionar(a.raiz, a.origen, a.destino, a.escribir)
             print("Fusión correcta" if r["ok"] else "ERROR: " + r["error"])
+            return 0 if r["ok"] else 2
+        if a.cmd == "renombrar":
+            r = renombrar(a.raiz, ob, a.quien, a.nuevo, a.escribir)
+            if not a.escribir:
+                print("Vista previa: todavía no se guarda nada.")
+            if r["error"]:
+                print(texto_aviso(r["error"]))
+                if r["error"] == "coincide_con_otro":
+                    print("Para juntarlas: " + r["orden"])
+            elif r["accion"] == "sin_cambios":
+                print(f"«{r['de']}» ya se llama así: no hay nada que cambiar.")
+            else:
+                print(f"«{r['de']}» pasa a llamarse «{r['a']}».")
+            for aviso in r["avisos"]:
+                print(texto_aviso(aviso["codigo"], aviso["detalle"]))
             return 0 if r["ok"] else 2
         if a.cmd == "exportar-estado":
             if a.obras:

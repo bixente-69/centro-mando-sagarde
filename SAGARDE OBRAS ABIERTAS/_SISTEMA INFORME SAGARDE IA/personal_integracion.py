@@ -56,20 +56,23 @@ FICHEROS_DECLARADOS = (
     "personal_integracion.py",
     "generador_personal.html",
     "personal_sagarde.html",
+    "lector_control_horario.py",
 )
 
-# Claves de una línea de la traza `personal_jornadas.jsonl` (ver ingerir_lote).
-CLAVES_TRAZA = {"ts", "obra", "ambito", "fecha", "accion", "n_presentes", "avisos", "dispositivo", "id"}
+# Claves de una línea de la traza `personal_jornadas.jsonl` (ver ingerir_lote). `sha256` y `fichero` identifican el
+# control horario recibido; `de`, `a` y `nombre` los cambios de nombre y las altas; `rechazadas` cuenta las jornadas
+# que no valían en la línea `recibido`.
+CLAVES_TRAZA = {
+    "ts", "obra", "ambito", "fecha", "accion", "n_presentes", "avisos", "dispositivo", "id",
+    "sha256", "fichero", "de", "a", "nombre", "rechazadas",
+}
+_SHA256 = re.compile(r"[0-9a-fA-F]{64}")
 
 # Datos que jamás deben llegar a estos ficheros (decisión de Bixente: el
 # esquema no lleva DNI, teléfono ni correo). Se buscan en el texto crudo para
 # que cuenten también las notas y el nombre del dispositivo, que son libres.
-PATRONES_PRIVADOS = (
-    ("DNI", re.compile(r"(?<![A-Za-z0-9])\d{8}[- ]?[A-Za-z](?![A-Za-z0-9])")),
-    ("NIE", re.compile(r"(?<![A-Za-z0-9])[XYZxyz][- ]?\d{7}[- ]?[A-Za-z](?![A-Za-z0-9])")),
-    ("telefono", re.compile(r"(?<![\d.])(?:\+?34[\s.-]?)?[6789](?:[\s.-]?\d){8}(?!\d)")),
-    ("correo", re.compile(r"[^\s@\"']+@[^\s@\"']+\.[^\s@\"']+")),
-)
+# La lista es UNA sola, la de personal_obra, que la usa también para rechazar nombres.
+PATRONES_PRIVADOS = po.PATRONES_PRIVADOS
 
 # Se ejecuta con node sobre `personal_calculo.js`: la misma implementación que
 # usan la pestaña, el informe, la tablet y el ranking. Entrada por stdin
@@ -278,6 +281,18 @@ def _datos_privados(ficheros):
     return out
 
 
+def _traza_valida(d):
+    """Una línea de traza: objeto con claves conocidas, `sha256` en hexadecimal y tipos coherentes."""
+    if not isinstance(d, dict) or set(d) - CLAVES_TRAZA:
+        return False
+    if "sha256" in d and not (isinstance(d["sha256"], str) and _SHA256.fullmatch(d["sha256"])):
+        return False
+    if any(k in d and not isinstance(d[k], str) for k in ("fichero", "de", "a", "nombre")):
+        return False
+    rechazadas = d.get("rechazadas", 0)
+    return isinstance(rechazadas, int) and not isinstance(rechazadas, bool) and rechazadas >= 0
+
+
 def _trazas(ficheros):
     """Cada línea de personal_jornadas.jsonl: JSON de un objeto con las claves de la traza."""
     out = []
@@ -291,7 +306,7 @@ def _trazas(ficheros):
                 d = json.loads(linea)
             except ValueError:
                 d = None
-            if not isinstance(d, dict) or set(d) - CLAVES_TRAZA:
+            if not _traza_valida(d):
                 out.append(_incidencia(
                     "error", "PERSONAL_TRAZA", f"{f.name} línea {n}: no es una traza válida de ingesta.",
                     "Revisar el fichero; la traza solo se añade con personal_obra.py ingerir.", f))
