@@ -1541,14 +1541,32 @@ def _formatear_valor_paridad(valor):
 
 
 def _diferencias_estados(estados_antiguos, estados_nuevos):
+    """Compara los ``v`` de los dos caminos.
+
+    Devuelve ``(claves comparadas, diferencias, fantasmas)``. Una celda ``'?'``
+    que solo existe en el camino ANTIGUO es un fantasma, no una diferencia: el
+    camino antiguo (``_completar_matriz``) rellena con ``'?'`` los tajos del
+    catalogo en las viviendas cuya hoja no los imprime, y ``'?'`` no es un dato
+    medido; el motor comun, fiel a "la ultima hoja manda", no las crea.
+    Olabeaga (1.225 claves) y Barakaldo (3.286) daban el aviso CUTOVER en cada
+    pasada solo por esto (22/10/2026). Los fantasmas no se cuentan como
+    comparadas, no bloquean y se devuelven aparte para que se vea cuantos se
+    han ignorado. Todo lo demas SIGUE siendo diferencia, incluido el caso
+    contrario (``'?'`` solo en el motor comun) y cualquier valor real que falte.
+    """
+    claves = []
     diferencias = []
-    claves = sorted(set(estados_antiguos) | set(estados_nuevos))
-    for clave in claves:
+    fantasmas = []
+    for clave in sorted(set(estados_antiguos) | set(estados_nuevos)):
         antiguo = _valor_estado(estados_antiguos, clave)
         nuevo = _valor_estado(estados_nuevos, clave)
+        if nuevo is _AUSENTE and antiguo == '?':
+            fantasmas.append(clave)
+            continue
+        claves.append(clave)
         if antiguo is _AUSENTE or nuevo is _AUSENTE or antiguo != nuevo:
             diferencias.append((clave, antiguo, nuevo))
-    return claves, diferencias
+    return claves, diferencias, fantasmas
 
 
 def calcular_actualizacion_ficha_con_salvaguarda(
@@ -1574,7 +1592,7 @@ def calcular_actualizacion_ficha_con_salvaguarda(
         revision, ficha_actual, catalogo, dry_run=False)
     ficha_nueva = aplicacion.get('ficha_actualizada')
     estados_nuevos = ((ficha_nueva or ficha_actual).get('estados') or {})
-    claves, diferencias = _diferencias_estados(
+    claves, diferencias, fantasmas = _diferencias_estados(
         ficha_antigua.get('estados') or {}, estados_nuevos)
     coincide = bool(
         validacion['aplicable'] and aplicacion.get('escrito')
@@ -1582,6 +1600,7 @@ def calcular_actualizacion_ficha_con_salvaguarda(
     return {
         'coincide': coincide,
         'claves_comparadas': len(claves),
+        'fantasmas_ignoradas': len(fantasmas),
         'diferencias': diferencias,
         'ficha_antigua': ficha_antigua,
         'cambios_antiguos': cambios_antiguos,
@@ -1611,6 +1630,9 @@ def actualizar_ficha_con_salvaguarda(
               f"y el motor comun difieren en {len(diferencias)} clave(s). "
               "La ficha de esta obra no se actualiza; el resto del proceso "
               "y las demas obras continuan.")
+        if resultado.get('fantasmas_ignoradas'):
+            print(f"    (ademas, {resultado['fantasmas_ignoradas']} celda(s) "
+                  "fantasma '?' solo del camino antiguo, ignoradas)")
         for clave, antiguo, nuevo in diferencias:
             print(f'    {clave}: antiguo={_formatear_valor_paridad(antiguo)}; '
                   f'nuevo={_formatear_valor_paridad(nuevo)}')
@@ -1651,6 +1673,11 @@ def actualizar_ficha_con_salvaguarda(
           f"motor comun coinciden exactamente en "
           f"{resultado['claves_comparadas']} celdas; se guarda el resultado "
           "del motor comun.")
+    if resultado.get('fantasmas_ignoradas'):
+        print(f"  [SALVAGUARDA FICHA] {obra['nombre']}: "
+              f"{resultado['fantasmas_ignoradas']} celda(s) fantasma '?' que "
+              "solo crea el camino antiguo (tajos que la hoja no imprime para "
+              "esas ubicaciones) no se cuentan ni se escriben.")
     if cambios:
         print(f'  [FICHA] celdas que cambian de estado: {cambios}')
     if tocados:
