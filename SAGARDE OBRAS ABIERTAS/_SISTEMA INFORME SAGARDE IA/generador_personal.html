@@ -465,6 +465,47 @@
       #varios-resumen div[data-res] {
         margin: 6px 0;
       }
+      /* ---- Enviar al PC: para qué sirve, lo que hay sin enviar por obra, pasos y recuadro «Listo» ---- */
+      .envio {
+        border: 1px solid var(--line);
+        border-left: 5px solid var(--accent);
+        border-radius: 10px;
+        padding: 11px;
+        margin: 10px 0;
+      }
+      .envio h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+      }
+      .envio ul {
+        margin: 0 0 10px;
+        padding-left: 18px;
+      }
+      .envio li {
+        margin: 4px 0;
+      }
+      .pasos {
+        margin: 10px 0;
+        padding-left: 22px;
+      }
+      .pasos li {
+        margin: 6px 0;
+      }
+      .listo {
+        background: #e6f5ec;
+        border: 1px solid #9fd3b4;
+        border-radius: 10px;
+        padding: 12px;
+        margin: 10px 0;
+        font-weight: 700;
+      }
+      .rotulo {
+        background: #e8f0fb;
+        border: 1px solid #b9cfee;
+        border-radius: 10px;
+        padding: 10px;
+        margin: 10px 0;
+      }
       @media (max-width: 400px) {
         main {
           padding: 7px;
@@ -503,19 +544,20 @@
     <nav class="tabs">
       <div class="seg">
         <button data-v="app" class="on">Anotar</button><button data-v="jornadas">Jornadas</button
-        ><button data-v="informe">Informe</button><button data-exportar="1">Exportar</button>
+        ><button data-v="informe">Informe</button><button data-v="enviar">Enviar al PC</button>
       </div>
     </nav>
     <main>
       <section id="sin-estado" hidden>
         <div class="card">
-          <h2>Todavía no hay datos publicados…</h2>
-          <p>Abre la app con conexión al menos una vez.</p>
+          <h2>Todavía no hay lista de obras y trabajadores…</h2>
+          <p>Abre la app con cobertura al menos una vez.</p>
         </div>
       </section>
       <section id="v-app" class="view"></section>
       <section id="v-jornadas" class="view" hidden></section>
       <section id="v-informe" class="view" hidden></section>
+      <section id="v-enviar" class="view" hidden></section>
     </main>
     <div id="toast" role="status"></div>
     <script>
@@ -756,6 +798,8 @@
         ren: null,
         varios: null,
         nuevoError: '',
+        prefill: null,
+        listo: null,
       };
       // Devuelve la lista unificada y ordenada alfabéticamente de nombres de trabajadores
       // (publicados y nuevos creados)
@@ -905,8 +949,8 @@
         render();
         if (!guardado)
           toast(
-            'No se pudo guardar en este aparato (¿navegación privada o memoria llena?). Exporta ' +
-              'ya para no perder el cambio.',
+            'No se pudo guardar en este aparato (¿navegación privada o memoria llena?). Envía ya ' +
+              'las jornadas al PC para no perder el cambio.',
           );
         return guardado;
       }
@@ -937,9 +981,33 @@
         let seen = new Set();
         return out.filter((x) => !seen.has(key(x)) && seen.add(key(x)));
       }
+      // Última jornada de esta obra y este ámbito ANTERIOR a la fecha elegida (no «ayer» de calendario:
+      // el lunes mira el viernes). Cuentan las que ya tiene el PC y las que están sin enviar; una
+      // anulada sin enviar quita la del PC. Devuelve { fecha, nombres } o null si no hay ninguna.
+      function jornadaAnterior() {
+        let jornadas = new Map();
+        pub()
+          .filter((fila) => fila.ambito === a.amb && fila.fecha < a.fecha)
+          .forEach((fila) => {
+            if (!jornadas.has(fila.fecha)) jornadas.set(fila.fecha, []);
+            jornadas.get(fila.fecha).push(fila.nombre);
+          });
+        pending
+          .filter((j) => j.obra === a.obra && j.ambito === a.amb && j.fecha < a.fecha)
+          .forEach((j) => {
+            if (j.anulada) jornadas.delete(j.fecha);
+            else jornadas.set(j.fecha, j.presentes.map((persona) => canon(persona.nombre)));
+          });
+        let fechas = [...jornadas.keys()].sort();
+        if (!fechas.length) return null;
+        let fecha = fechas[fechas.length - 1];
+        return { fecha, nombres: jornadas.get(fecha) };
+      }
       // Carga la lista de presentes para la fecha actual a partir de la jornada pendiente, de la
-      // publicada o sugeridos
+      // publicada o, si la fecha es nueva, de la última jornada anterior (sus presentes salen marcados
+      // con las horas normales de la fecha, sin extra) o de sugeridos
       function loadList() {
+        a.prefill = null;
         if (!state.obras[a.obra]) {
           a.list = [];
           return;
@@ -947,7 +1015,17 @@
         let p = current(),
           r = rowsKey({ obra: a.obra, ambito: a.amb, fecha: a.fecha }),
           pres = p ? (p.anulada ? [] : p.presentes) : r.length ? r : null,
-          names = defaultNames();
+          names = defaultNames(),
+          anterior = pres ? null : jornadaAnterior();
+        if (anterior) {
+          a.prefill = anterior.fecha;
+          anterior.nombres.forEach((nombre) => {
+            if (!names.some((n) => key(n) === key(nombre))) names.push(nombre);
+          });
+          let marcados = new Set(anterior.nombres.map(key));
+          a.list = names.map((nombre) => ({ nombre, on: marcados.has(key(nombre)), horas: null }));
+          return;
+        }
         if (pres) {
           let m = new Map(pres.map((x) => [key(x.nombre), x]));
           pres.forEach((x) => {
@@ -965,7 +1043,7 @@
       // Guarda en localStorage el borrador de lo que se está anotando (obra, ámbito, fecha y
       // lista).
       function draft() {
-        set(K.b, { obra: a.obra, ambito: a.amb, fecha: a.fecha, lista: a.list });
+        set(K.b, { obra: a.obra, ambito: a.amb, fecha: a.fecha, lista: a.list, prefill: a.prefill });
         a.auto = true;
       }
       // Restaura el borrador guardado en localStorage si la obra sigue abierta y los datos del
@@ -980,7 +1058,9 @@
           fechaOk(b.fecha) &&
           listaOk(b.lista)
         ) {
+          let marcadosDe = fechaOk(b.prefill) && b.prefill < b.fecha ? b.prefill : null;
           Object.assign(a, { obra: b.obra, amb: b.ambito, fecha: b.fecha, list: b.lista, auto: true });
+          a.prefill = marcadosDe;
           return true;
         }
         return false;
@@ -1053,7 +1133,27 @@
         if (altas.length)
           partes.push(`${altas.length} ${altas.length === 1 ? 'nombre nuevo' : 'nombres nuevos'}`);
         if (!partes.length) return '';
-        return `<div id="cambios-nombres" class="nota">${E(partes.join(' · '))} por pasar al PC</div>`;
+        return `<div id="cambios-nombres" class="nota">${E(partes.join(' · '))} sin enviar al PC</div>`;
+      }
+      // «1 jornada» / «3 jornadas»: el número con la palabra en singular o en plural.
+      function uno(n, singular, plural) {
+        return n + ' ' + (n === 1 ? singular : plural);
+      }
+      // Día de la semana entero con día y mes, p. ej. «jueves 22/10».
+      function diaLargo(fecha) {
+        let dias = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
+        let partes = fecha.split('-');
+        return dias[dow(fecha)] + ' ' + partes[2] + '/' + partes[1];
+      }
+      // Rótulo que avisa de que la lista sale marcada con la gente de otra jornada; solo mientras la
+      // fecha no tenga jornada guardada.
+      function rotuloHTML() {
+        let guardada = current() || rowsKey({ obra: a.obra, ambito: a.amb, fecha: a.fecha }).length;
+        if (!a.prefill || guardada) return '';
+        return (
+          `<div class="rotulo" id="rotulo-marcados">` +
+          `${E('Marcados según la jornada del ' + diaLargo(a.prefill) + ': quita a quien no haya venido.')}</div>`
+        );
       }
       // Combina las filas de jornadas publicadas con las pendientes locales de la obra para los
       // cálculos del informe
@@ -1109,7 +1209,7 @@
             let horas = persona.horas === null ? baseDia : persona.horas;
             let extra = Math.max(0, (horas || 0) - baseDia);
             let chipPropio = tienePropio(persona.nombre)
-              ? `<span class="chip propio">horario propio ${N(baseDia)} h</span>`
+              ? `<span class="chip propio">horario especial ${N(baseDia)} h</span>`
               : '';
             let propio = propioEfectivo(persona.nombre);
             let dias = [
@@ -1123,7 +1223,7 @@
             ];
             let editor =
               a.hp === persona.nombre
-                ? `<div class="hp"><b>${E('Horario propio de ' + persona.nombre)}</b><p class="nota">` +
+                ? `<div class="hp"><b>${E('Horario especial de ' + persona.nombre)}</b><p class="nota">` +
                   `${E('Horas normales de cada día en esta obra. Vacío = sigue el horario de la obra.')}` +
                   `</p><div class="hor">` +
                   `${dias
@@ -1136,7 +1236,7 @@
                     )
                     .join('')}` +
                   `</div><div class="actions"><button class="btn pri" data-hp-guardar>` +
-                  `${E('Guardar horario propio')}</button><button class="btn ghost" data-hp-quitar>` +
+                  `${E('Guardar horario especial')}</button><button class="btn ghost" data-hp-quitar>` +
                   `${E('Quitar')}</button></div></div>`
                 : '';
             return (
@@ -1152,7 +1252,7 @@
                     `${baseDia === 0 && persona.horas === null ? '¿horas?' : N(horas) + ' h'}</output>` +
                     `<button data-i="${E(indice)}" data-d="0.5">+</button></span><div class="sub">` +
                     `${chipPropio}${extra ? `<span class="chip">+${N(extra)} h extra</span>` : ''}` +
-                    `<button class="hpb" data-hp-abrir="${E(indice)}">Horario propio</button></div>` +
+                    `<button class="hpb" data-hp-abrir="${E(indice)}">Horario especial</button></div>` +
                     `${editor}`
                   : ''
               }` +
@@ -1200,7 +1300,7 @@
         let obras = Object.entries(state.obras).filter((entrada) => !entrada[1].cerrada);
         return (
           `<div class="bar"><span>Personal en obra</span><small>` +
-          `${a.auto ? 'Borrador guardado automáticamente' : 'sin red: OK'}</small></div><div ` +
+          `${a.auto ? 'Borrador guardado automáticamente' : 'Funciona sin cobertura: sí'}</small></div><div ` +
           `class="origin" id="estado-origen">${E(origin)}</div><div class="pad">` +
           `${
             mostrarAviso
@@ -1233,7 +1333,7 @@
                 `data-dia="${E(opcion[0])}">${opcion[1]}</button>`,
             )
             .join('')}` +
-          `</div><div class="actions"><button class="btn ghost sm" data-todos="1">Marcar ` +
+          `</div>${rotuloHTML()}<div class="actions"><button class="btn ghost sm" data-todos="1">Marcar ` +
           `todos</button><button class="btn ghost sm" data-todos="0">Desmarcar todos</button>` +
           `</div><div id="lista">${rowsHTML()}</div><label class="fld">Añadir de la ` +
           `base</label><input id="filtro" placeholder="Buscar por nombre"><div class="add">` +
@@ -1280,15 +1380,15 @@
           `</div><div id="aviso-horario" class="nota"></div></details><div class="sum" ` +
           `id="resumen">${sumHTML()}</div><button class="btn pri full" data-guardar>Guardar ` +
           `jornada</button><div class="pending"><b id="pendientes" data-n="${E(pending.length)}` +
-          `">${pending.length} jornada(s) pendiente(s) de pasar al PC</b>${cambiosNombresHTML()}</div>` +
+          `">Sin enviar al PC: ${uno(pending.length, 'jornada', 'jornadas')}</b>` +
+          `${cambiosNombresHTML()}</div>` +
           `${
             a.reset
               ? '<div id="confirmar-reset" class="aviso">¿Borrar lo que llevas a medias?<div ' +
                 'class="actions"><button class="btn sec" data-reset-si>Sí, borrar</button><button ' +
                 'class="btn ghost" data-reset-no>No</button></div></div>'
-              : '<div class="actions"><button class="btn sec" data-exportar>Exportar ' +
-                'pendientes</button><button class="btn ghost" data-reset>Empezar de cero</button>' +
-                '</div>'
+              : '<div class="actions"><button class="btn sec" data-v="enviar">Enviar al PC</button>' +
+                '<button class="btn ghost" data-reset>Borrar lo que llevo a medias</button></div>'
           }` +
           `</div>`
         );
@@ -1337,7 +1437,7 @@
                 a.confirm.fecha === jornada.fecha;
               let numeroPresentes = (jornada.presentes || []).length;
               let resumen = jornada.anulada
-                ? '<b>Anulada</b> · pendiente de pasar al PC'
+                ? '<b>Anulada</b> · sin enviar al PC'
                 : `${numeroPresentes} ${numeroPresentes === 1 ? 'presente' : 'presentes'} · ` +
                   `${N((jornada.presentes || []).reduce((suma, persona) => suma + (+persona.horas || 0), 0))}` +
                   ` h`;
@@ -1485,14 +1585,15 @@
         if (a.obra) document.querySelector('#v-app').innerHTML = appView();
         else
           document.querySelector('#v-app').innerHTML =
-            '<div class="bar"><span>Personal en obra</span><small>sin red: OK</small></div><div ' +
+            '<div class="bar"><span>Personal en obra</span><small>Funciona sin cobertura: sí</small></div><div ' +
             'class="origin" id="estado-origen">' +
             E(origin) +
             ('</div><div class="pad" id="sin-obras"><h2>No hay obras abiertas</h2><p>Cuando haya ' +
               'una obra abierta con personal aparecerá aquí.</p></div>');
         document.querySelector('#v-jornadas').innerHTML = jornadasView();
         document.querySelector('#v-informe').innerHTML = infoView();
-        ['app', 'jornadas', 'informe'].forEach(
+        document.querySelector('#v-enviar').innerHTML = enviarView();
+        ['app', 'jornadas', 'informe', 'enviar'].forEach(
           (vista) => (document.querySelector('#v-' + vista).hidden = a.v !== vista),
         );
       }
@@ -1624,7 +1725,10 @@
         let aviso = r.fusion
           ? '«' + de + '» y «' + r.final + '» pasan a ser la misma persona. Se juntarán al pasarlo al PC.'
           : 'Nombre corregido: «' + de + '» ahora es «' + r.final + '». Queda apuntado para el PC.';
-        if (r.duplicadas) aviso += ' En ' + r.duplicadas + ' jornada(s) salían los dos; se ha dejado una sola anotación.';
+        if (r.duplicadas) {
+          let salian = r.duplicadas === 1 ? 'En 1 jornada salían los dos' : 'En ' + r.duplicadas + ' jornadas salían los dos';
+          aviso += ' ' + salian + '; se ha dejado una sola anotación.';
+        }
         return aviso;
       }
       // «Guardar nombre» (y «Sí, son la misma persona» con confirmado = true): comprueba el nombre escrito,
@@ -1798,8 +1902,8 @@
         render();
         if (!guardada)
           return toast(
-            'No se pudo guardar en este aparato (¿navegación privada o memoria llena?). Exporta ' +
-              'ya para no perder la jornada.',
+            'No se pudo guardar en este aparato (¿navegación privada o memoria llena?). Envía ya ' +
+              'la jornada al PC para no perder lo apuntado.',
           );
         let avisos = totales.filter((persona) => persona.total > 12);
         // Aviso preventivo si una persona supera 12 h en el día entre todas las obras, pero permite
@@ -1816,25 +1920,138 @@
         toast('Jornada guardada en este aparato ✓');
       }
       // ---------------------------------------------------------------------------
-      // Exportar: generación y descarga del lote de personal para el PC
+      // Enviar al PC: lo que hay sin enviar, el nombre del fichero y su descarga
       // ---------------------------------------------------------------------------
-      // Construye el lote JSON de jornadas pendientes y modificaciones de horario y dispara su
-      // descarga para el PC
-      function exportar() {
-        if (!a.obra) return;
-        let horario = hor();
-        let jornadas = pending.filter((jornada) => jornada.obra === a.obra);
-        let horarioCambiado = JSON.stringify(horario) !== JSON.stringify(base(a.obra));
-        let propios = objetoSimple(excepciones[a.obra]) ? excepciones[a.obra] : {};
-        let numeroPropios = Object.keys(propios).length;
-        // Rechaza exportar si no hay jornadas pendientes ni cambios en el horario de obra ni
-        // horarios propios ni cambios de nombres
-        if (!jornadas.length && !horarioCambiado && !numeroPropios && !renombres.length && !altas.length)
-          return toast('No hay jornadas pendientes en esta obra');
-        // Construye el lote_personal según el contrato P1: jornadas por nombre, horario semanal y
-        // excepciones
-        let lote = { tipo: 'lote_personal', version: 1, obra: a.obra };
-        if (horarioCambiado)
+      // Nombre de una obra tal como lo limpia el generador de revisiones (safeRevisionWorkName):
+      // mayúsculas, sin tildes y todo lo que no sea letra o número pasa a un espacio. Si no queda nada,
+      // «OBRA».
+      function nombreSeguro(valor) {
+        let limpio = String(valor || 'OBRA')
+          .normalize('NFD')
+          .replace(/[\u0300-\u036f]/g, '')
+          .toUpperCase()
+          .replace(/[^A-Z0-9]+/g, ' ')
+          .trim()
+          .replace(/\s+/g, ' ');
+        return limpio || 'OBRA';
+      }
+      // Nombre de la obra como sale en la pantalla (el del registro; si falta, su identificador).
+      function nombreObra(id) {
+        return state.obras[id]?.nombre || id;
+      }
+      // Nombre (sin «.json») del fichero de una obra: «CONTROL HORARIO <OBRA> <DDMMAAAA>», con el día
+      // en que se prepara según el reloj de la tablet.
+      function nombreFichero(id, dia = today()) {
+        let p = dia.split('-');
+        return 'CONTROL HORARIO ' + nombreSeguro(nombreObra(id)) + ' ' + p[2] + p[1] + p[0];
+      }
+      // Lo que una obra tiene sin enviar: sus jornadas (por fecha), si cambió el horario semanal y los
+      // horarios especiales.
+      function sinEnviarDe(id) {
+        let jornadas = pending
+          .filter((jornada) => jornada.obra === id)
+          .sort((x, y) => x.fecha.localeCompare(y.fecha) || x.ambito.localeCompare(y.ambito));
+        let horarioCambiado = JSON.stringify(hor(id)) !== JSON.stringify(base(id));
+        let propios = objetoSimple(excepciones[id]) ? excepciones[id] : {};
+        return { jornadas, horarioCambiado, propios };
+      }
+      // ¿Hay algo que llevar al PC en esos datos de una obra?
+      function hayQueEnviar(datos) {
+        return !!(datos.jornadas.length || datos.horarioCambiado || Object.keys(datos.propios).length);
+      }
+      // Obras con algo sin enviar (la que se está viendo, primero). Si lo único que hay son nombres, los
+      // lleva el fichero de la obra que se está viendo.
+      function obrasConEnvio() {
+        let todas = [...new Set([a.obra, ...Object.keys(state.obras), ...pending.map((j) => j.obra)])];
+        let ids = todas.filter((id) => id && hayQueEnviar(sinEnviarDe(id)));
+        if (!ids.length && a.obra && (renombres.length || altas.length)) ids = [a.obra];
+        return ids;
+      }
+      // Frase de una jornada sin enviar: «Viviendas · vie 23/10 — Ana, Beto (15 h)».
+      function lineaJornada(jornada) {
+        let donde = (jornada.ambito === 'garaje' ? 'Garajes' : 'Viviendas') + ' · ' + fdia(jornada.fecha);
+        if (jornada.anulada) return donde + ' — jornada anulada (se quita del PC)';
+        let horas = jornada.presentes.reduce((suma, persona) => suma + (+persona.horas || 0), 0);
+        return donde + ' — ' + jornada.presentes.map((persona) => persona.nombre).join(', ') + ' (' + N(horas) + ' h)';
+      }
+      // Lista en llano de lo que lleva un fichero: «2 jornadas, 1 horario especial y 3 nombres nuevos».
+      function contenidoEnLlano(datos) {
+        let especiales = Object.keys(datos.propios).length;
+        let partes = [];
+        if (datos.jornadas.length) partes.push(uno(datos.jornadas.length, 'jornada', 'jornadas'));
+        if (datos.horarioCambiado) partes.push('el cambio del horario de la obra');
+        if (especiales) partes.push(uno(especiales, 'horario especial', 'horarios especiales'));
+        if (renombres.length) partes.push(uno(renombres.length, 'nombre corregido', 'nombres corregidos'));
+        if (altas.length) partes.push(uno(altas.length, 'nombre nuevo', 'nombres nuevos'));
+        if (partes.length < 2) return partes.join('');
+        return partes.slice(0, -1).join(', ') + ' y ' + partes[partes.length - 1];
+      }
+      // Bloque de una obra en la pantalla «Enviar al PC»: qué lleva, cómo se llamará el fichero y el botón.
+      function envioObraHTML(id) {
+        let datos = sinEnviarDe(id);
+        let lineas = datos.jornadas.map((jornada) => `<li>${E(lineaJornada(jornada))}</li>`);
+        let especiales = Object.keys(datos.propios);
+        if (datos.horarioCambiado) lineas.push('<li>Cambio del horario semanal de la obra</li>');
+        if (especiales.length)
+          lineas.push(
+            `<li>${E(uno(especiales.length, 'horario especial', 'horarios especiales') + ': ' + especiales.join(', '))}</li>`,
+          );
+        return (
+          `<div class="envio" data-obra="${E(id)}"><h3>${E(nombreObra(id))}</h3><ul>${lineas.join('')}</ul>` +
+          `<p class="nota">Se llamará «${E(nombreFichero(id))}»</p>` +
+          `<button class="btn pri full" data-preparar="${E(id)}">Preparar el fichero para el PC</button></div>`
+        );
+      }
+      // Bloque de los nombres corregidos y nuevos, que viajan dentro del fichero de cualquier obra.
+      function envioNombresHTML() {
+        if (!renombres.length && !altas.length) return '';
+        let lineas = [];
+        if (renombres.length) {
+          let cambios = renombres.map((cambio) => '«' + cambio.de + '» → «' + cambio.a + '»').join(', ');
+          lineas.push(`<li>${E(uno(renombres.length, 'nombre corregido', 'nombres corregidos') + ': ' + cambios)}</li>`);
+        }
+        if (altas.length)
+          lineas.push(`<li>${E(uno(altas.length, 'nombre nuevo', 'nombres nuevos') + ': ' + altas.join(', '))}</li>`);
+        return (
+          `<div class="envio" id="envio-nombres"><h3>Nombres</h3><ul>${lineas.join('')}</ul>` +
+          `<p class="nota">Van dentro del fichero de la obra que prepares.</p></div>`
+        );
+      }
+      // Pantalla «Enviar al PC»: para qué sirve, lo que hay sin enviar por obra, los 3 pasos y, si se
+      // acaba de preparar un fichero, el recuadro «Listo» (que se queda hasta preparar otro).
+      function enviarView() {
+        let ids = obrasConEnvio();
+        let resumen = pending.length
+          ? `Tienes ${uno(pending.length, 'jornada', 'jornadas')} sin enviar:`
+          : ids.length
+            ? 'Tienes cambios sin enviar:'
+            : '';
+        let contenido = ids.length
+          ? `<p id="resumen-envio"><b>${E(resumen)}</b></p>${ids.map(envioObraHTML).join('')}${envioNombresHTML()}`
+          : `<div class="aviso" id="nada-que-enviar">No hay nada por enviar: todas las jornadas ya están en el PC.</div>`;
+        let listo = a.listo ? `<div class="listo" id="listo" role="status">${E(a.listo)}</div>` : '';
+        return (
+          `<div class="card" id="enviar"><h2>Enviar las jornadas al PC</h2>` +
+          `<p id="para-que"><b>Para qué sirve:</b> la tablet apunta quién ha trabajado cada día, pero las ` +
+          `cuentas (horas, días y % de cada uno), el panel de la obra, el informe y el ranking se hacen en ` +
+          `el PC. Aquí preparas lo que has apuntado para llevárselo al PC. No se envía solo: si no lo ` +
+          `llevas, el PC no se entera.</p>${contenido}${listo}` +
+          `<p><b>Cómo sigue:</b></p><ol class="pasos" id="pasos">` +
+          `<li>Se guarda un fichero llamado «CONTROL HORARIO», con el nombre de la obra y la fecha de ` +
+          `hoy, en las descargas de este aparato.</li>` +
+          `<li>Pásalo al PC como haces con las revisiones y déjalo en la carpeta REVISIONES de la obra.</li>` +
+          `<li>En el PC, pídele a Claude «actualiza la obra» (o ejecuta el .bat).</li></ol>` +
+          `<p class="nota" id="sigue-apuntado">Las jornadas siguen apuntadas aquí hasta que el PC las recibe y ` +
+          `se publica: no hace falta volver a anotarlas.</p></div>`
+        );
+      }
+      // Arma el contenido del fichero de una obra (mismo contrato de siempre): jornadas, horario
+      // semanal si cambió, horarios especiales, nombres corregidos y nombres nuevos.
+      function armarFichero(id) {
+        let datos = sinEnviarDe(id);
+        let horario = hor(id);
+        let lote = { tipo: 'lote_personal', version: 1, obra: id };
+        if (datos.horarioCambiado)
           lote.horario_semanal = {
             lun: horario[1],
             mar: horario[2],
@@ -1844,10 +2061,10 @@
             sab: horario[6],
             dom: horario[0],
           };
-        if (numeroPropios) lote.excepciones_horario = JSON.parse(JSON.stringify(propios));
-        if (renombres.length) lote.renombres = renombres.map((r) => ({ de: r.de, a: r.a }));
+        if (Object.keys(datos.propios).length) lote.excepciones_horario = JSON.parse(JSON.stringify(datos.propios));
+        if (renombres.length) lote.renombres = renombres.map((cambio) => ({ de: cambio.de, a: cambio.a }));
         if (altas.length) lote.altas = altas.slice();
-        lote.jornadas = jornadas.map((jornada) => ({
+        lote.jornadas = datos.jornadas.map((jornada) => ({
           ambito: jornada.ambito,
           fecha: jornada.fecha,
           presentes: jornada.anulada
@@ -1861,26 +2078,25 @@
           notas: jornada.notas || '',
           registrado: jornada.registrado,
         }));
-        // Genera y dispara la descarga del fichero JSON del lote mediante un objeto Blob temporal
-        let url = URL.createObjectURL(
-          new Blob([JSON.stringify(lote, null, 1)], { type: 'application/json' }),
-        );
+        return { lote, nombre: nombreFichero(id), contenido: contenidoEnLlano(datos) };
+      }
+      // «Preparar el fichero para el PC»: descarga el fichero de la obra y deja a la vista el recuadro
+      // «Listo» con su nombre y lo que lleva.
+      function prepararFichero(id) {
+        if (!state.obras[id] && !pending.some((jornada) => jornada.obra === id)) return;
+        let fichero = armarFichero(id);
+        if (!fichero.contenido) return;
+        // Genera y dispara la descarga con un objeto Blob temporal
+        let url = URL.createObjectURL(new Blob([JSON.stringify(fichero.lote, null, 1)], { type: 'application/json' }));
         let enlace = document.createElement('a');
         enlace.href = url;
-        enlace.download = 'lote_personal_' + a.obra + '.json';
+        enlace.download = fichero.nombre + '.json';
         document.body.appendChild(enlace);
         enlace.click();
         enlace.remove();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
-        toast(
-          'Exportadas ' +
-            jornadas.length +
-            ' jornada(s) de ' +
-            state.obras[a.obra].nombre +
-            (numeroPropios ? ' y ' + numeroPropios + ' horario(s) propio(s)' : '') +
-            (renombres.length ? ' · ' + renombres.length + ' nombre(s) corregido(s)' : '') +
-            (altas.length ? ' · ' + altas.length + ' nombre(s) nuevo(s)' : ''),
-        );
+        a.listo = `Listo. Se ha guardado el fichero «${fichero.nombre}» con ${fichero.contenido}. Ahora mándalo al PC.`;
+        render();
       }
       // ---------------------------------------------------------------------------
       // Eventos: manejadores de click, change e input de la interfaz de usuario
@@ -1994,14 +2210,14 @@
           });
           a.hp = null;
           if (guardarPropio(fila.dataset.nombre, propio))
-            toast('Horario propio guardado. No cambia las jornadas ya guardadas.');
+            toast('Horario especial guardado. No cambia las jornadas ya guardadas.');
           return;
         }
         // Elimina el horario propio del trabajador, restableciendo el horario general de la obra
         if (datos.hpQuitar !== undefined) {
           let fila = boton.closest('.row');
           a.hp = null;
-          if (guardarPropio(fila.dataset.nombre, {})) toast('Horario propio quitado.');
+          if (guardarPropio(fila.dataset.nombre, {})) toast('Horario especial quitado.');
           return;
         }
         // Ajusta horas con botones +/- (pasos de 0,5 h); en días sin horario fija 7,5 h al primer
@@ -2079,8 +2295,8 @@
         }
         // Botón guardar jornada: valida horas y límites y guarda la jornada en pendientes
         if (datos.guardar !== undefined) return save();
-        // Botón exportar pendientes: genera y descarga el lote JSON para enviar al PC
-        if (datos.exportar !== undefined) return exportar();
+        // Botón «Preparar el fichero para el PC» de una obra: lo descarga y deja el recuadro «Listo»
+        if (datos.preparar !== undefined) return prepararFichero(datos.preparar);
         // Botón empezar de cero: solicita confirmación para borrar el borrador de la jornada en
         // curso
         if (datos.reset !== undefined) {
@@ -2258,15 +2474,15 @@
               ':' +
               coincidencia[5]
             : generado;
-          origin = 'Estado publicado' + (generado ? ' · ' + fechaLegible : '');
+          origin = 'Lista de trabajadores y obras al día' + (generado ? ': ' + fechaLegible : '');
         } else {
           // Si no hay conexión o se superó el tiempo de espera, arranca con la copia local de
           // respaldo
           if (copia?.obras) {
             state = copia;
             origin =
-              'Usando la copia guardada en este aparato' +
-              (porEspera ? ' · el estado publicado tarda en llegar' : '');
+              'Se usa la lista guardada en este aparato' +
+              (porEspera ? ' · la lista nueva tarda en llegar' : '');
           }
         }
         if (!state) return render();
@@ -2277,7 +2493,12 @@
         a.obra = Object.keys(state.obras).find((obra) => !state.obras[obra].cerrada) || '';
         if (!restore()) loadList();
         render();
-        if (rotos > 0) toast('Se han apartado ' + rotos + ' jornada(s) guardada(s) con formato no válido');
+        if (rotos > 0)
+          toast(
+            rotos === 1
+              ? 'Se ha apartado 1 jornada guardada que no se puede leer'
+              : 'Se han apartado ' + rotos + ' jornadas guardadas que no se pueden leer',
+          );
       }
       // Arranque en carga de página y temporizador de seguridad de 4 s por si el script tarda en
       // responder

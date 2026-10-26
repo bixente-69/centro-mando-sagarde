@@ -449,8 +449,8 @@ def _trazas(ficheros):
                 d = None
             if not _traza_valida(d):
                 out.append(_incidencia(
-                    "error", "PERSONAL_TRAZA", f"{f.name} línea {n}: no es una traza válida de ingesta.",
-                    "Revisar el fichero; la traza solo se añade con personal_obra.py ingerir.", f))
+                    "error", "PERSONAL_TRAZA", f"{f.name} línea {n}: no es una anotación válida del registro de controles horarios.",
+                    "Revisar el fichero: el registro solo se escribe al aplicar un control horario; no editarlo a mano.", f))
     return out
 
 
@@ -588,7 +588,7 @@ def auditar(raiz=None):
                                    "Restaurarlo desde git (git restore <fichero>).", Path(raiz) / MOTOR / nombre))
     for problema in po.comprobar(raiz, obras):
         out.append(_incidencia("error", "PERSONAL_ESQUEMA", problema,
-                               "Corregir el fichero o restaurarlo; no editar a mano el JSON de personal."))
+                               "Corregir el fichero o restaurarlo; no editar a mano los datos de personal."))
     out += _datos_privados(ficheros)
     out += _trazas(ficheros)
     if not any(i["nivel"] == "error" and i["codigo"] in ("PERSONAL_ESQUEMA", "PERSONAL_ILEGIBLE") for i in out):

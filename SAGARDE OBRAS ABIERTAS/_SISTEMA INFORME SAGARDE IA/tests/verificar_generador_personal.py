@@ -6,6 +6,7 @@ Monta una carpeta de pruebas con la app, personal_calculo.js y un personal_estad
 fecha en el 23/10/2026 y recorre el flujo completo. El lote que exporta la app se valida con personal_obra.py
 (P1). Viene del verificador de staging (paso 06): solo cambia de dónde salen la app, P1 y la carpeta de pruebas.
 P3_SOLO_08C=1 = modo rápido del paso 08c: solo las escenas T80 en adelante (lápiz, desplegable completo, varios nombres).
+P3_SOLO_08D=1 = modo rápido del paso 08d: solo las escenas T90 en adelante (día nuevo con la gente anterior marcada, «Enviar al PC», nombre del fichero).
 P3_APP = carpeta que tiene generador_personal.html, personal_calculo.js y personal_obra.py (por defecto, el motor)."""
 import copy
 import functools
@@ -99,6 +100,10 @@ def quitar_estado():
         os.remove(ruta)
 
 
+# Paso 08d (D5): un día nuevo sale con la gente de la jornada anterior marcada. Las pruebas de antes del 08d parten de la lista sin marcar:
+# este JS desmarca por dentro (sin pulsar nada ni guardar borrador) lo que salió prerrellenado. Las escenas nuevas (T90+) no lo usan.
+JS_SIN_PREVIA = "if (typeof a !== 'undefined' && a.prefill) { a.list.forEach(x => { x.on = false; }); a.prefill = null; render(); }"
+MAIN = {'sin_previa': False}
 FECHA_FIJA = """(() => { const fijo = new Date('2026-10-23T10:00:00+02:00').valueOf(); const Real = Date;
   class Falsa extends Real { constructor(...a) { if (a.length === 0) { super(fijo); } else { super(...a); } } static now() { return fijo; } }
   window.Date = Falsa; })();"""
@@ -123,11 +128,15 @@ ok(not re.search(r'alias|mote\b', html, re.I), 'no debe aparecer «alias» ni «
 # añadidas en el paso 01: codex:low llegó a dejar mojibake (Ã³, Â·, âœ“) y a parchear funciones por capas sin que nada lo viera
 ok(not any(m in html for m in ('Ã', 'Â', 'â€', 'âœ', '�')), 'el fichero tiene mojibake (UTF-8 leído como cp1252, p. ej. «Ã³», «Â·», «âœ“»): se escribe siempre en UTF-8 limpio')
 ok(not re.search(r'\w+Original\b|stopImmediatePropagation', html), 'no se parchean funciones por capas ni se anulan manejadores con stopImmediatePropagation: edita la función original y borra el código muerto')
-ok(not re.search(r'(?m)^\s*(?:save|exportar|render|init|appView|jornadasView|infoView|loadList|restore|reconcile)\s*=\s*(?:function|\()', html), 'no se reasignan funciones ya declaradas (save=function…): edita la función original')
-ok(len(re.findall(r'\bfunction (?:save|exportar|render|init|appView|jornadasView|infoView|loadList)\b', html)) == 8, 'cada función principal debe estar declarada una sola vez')
+ok(not re.search(r'(?m)^\s*(?:save|prepararFichero|render|init|appView|jornadasView|infoView|loadList|restore|reconcile)\s*=\s*(?:function|\()', html), 'no se reasignan funciones ya declaradas (save=function…): edita la función original')
+ok(len(re.findall(r'\bfunction (?:save|prepararFichero|render|init|appView|jornadasView|infoView|loadList)\b', html)) == 8, 'cada función principal debe estar declarada una sola vez')
 # añadida en el paso 01b: las preguntas van dentro de la página, nunca con ventanas del navegador (en el iPad bloquean o no se ven)
 ok(not re.search(r'(?<![\w.])(?:confirm|alert|prompt)\s*\(', html), 'no se usan confirm(), alert() ni prompt(): las preguntas van dentro de la página')
 ok(len(re.findall(r'\bfunction (?:guardarPropio|horarioDe)\b', html)) == 2, 'guardarPropio(nombre, objeto) y horarioDe(nombre, fecha) deben estar declaradas una sola vez')
+# añadidas en el paso 08d: Chromium pone «.json» al descargar aunque el nombre no lo lleve y Safari del iPad no tiene por qué: se exige en el código;
+# y del camino viejo de «Exportar» no debe quedar nada
+ok("enlace.download = fichero.nombre + '.json'" in html, 'el fichero se descarga con «.json» escrito en su nombre')
+ok(not re.search(r'lote_personal_|data-exportar|function exportar\b', html), 'no debe quedar nada del camino viejo de «Exportar» (nombre lote_personal_…, data-exportar, function exportar)')
 
 if os.path.isdir(SANDBOX):
     shutil.rmtree(SANDBOX, ignore_errors=True)
@@ -182,6 +191,8 @@ with sync_playwright() as p:
             ok(False, msg or 'no existe el elemento %s' % sel)
             return False
         pg.click(sel, timeout=4000)
+        if MAIN['sin_previa'] and ('data-amb' in sel or 'data-dia' in sel):
+            pg.evaluate(JS_SIN_PREVIA)
         return True
 
     def espera_obra():
@@ -223,16 +234,22 @@ with sync_playwright() as p:
             ok(False, 'no existe #fecha')
             return
         pg.evaluate("v=>{const e=document.getElementById('fecha');e.value=v;e.dispatchEvent(new Event('change',{bubbles:true}))}", v)
+        if MAIN['sin_previa']:
+            pg.evaluate(JS_SIN_PREVIA)
 
     def exportar():
+        # Paso 08d: se prepara desde la pestaña «Enviar al PC» (botón de la obra que se ve en «Anotar») y se vuelve a «Anotar».
         try:
+            obra_id = pg.evaluate("document.querySelector('#obra') ? document.querySelector('#obra').value : ''")
+            pg.click('nav button[data-v="enviar"]', timeout=3000)
             with pg.expect_download(timeout=5000) as d:
-                pg.click('button[data-exportar]', timeout=3000)
+                pg.click('button[data-preparar="%s"]' % obra_id, timeout=3000)
             ruta = os.path.join(SANDBOX, 'descarga.json')
             d.value.save_as(ruta)
+            pg.click('nav button[data-v="app"]', timeout=3000)
             return json.load(open(ruta, encoding='utf-8'))
         except Exception as e:  # noqa: BLE001
-            ok(False, 'exportar no descarga un JSON válido con button[data-exportar]: %s' % str(e)[:160])
+            ok(False, 'preparar el fichero no descarga un JSON válido desde «Enviar al PC» (button[data-preparar]): %s' % str(e)[:160])
             return {}
 
     def filas_informe():
@@ -246,7 +263,7 @@ with sync_playwright() as p:
         pg.goto(URL)
         espera_obra()
         ok(pg.eval_on_selector_all('#obra option', 'e=>e.map(o=>o.value)') == ['olabeaga', 'mungia'], 'el selector #obra debe listar las obras no cerradas con su id como value')
-        ok('publicado' in txt('#estado-origen').lower(), '#estado-origen debe decir «publicado» cuando carga personal_estado.js: %r' % txt('#estado-origen'))
+        ok('al día' in txt('#estado-origen').lower(), '#estado-origen debe decir «Lista de trabajadores y obras al día» cuando carga personal_estado.js (08d: antes «publicado»): %r' % txt('#estado-origen'))
         ok(any('personal_estado.js?v=' in u for u in peticiones), 'personal_estado.js debe pedirse con ?v=<marca de tiempo> para saltarse la caché')
         ok(pg.is_visible('#sin-estado') is False if pg.query_selector('#sin-estado') else True, '#sin-estado no debe verse si hay estado')
         ok(pg.query_selector('#aviso-instalar') is not None and 'pantalla de inicio' in txt('#aviso-instalar'), 'falta #aviso-instalar con el texto «pantalla de inicio»')
@@ -255,14 +272,19 @@ with sync_playwright() as p:
     except Exception as e:  # noqa: BLE001
         ok(False, 'T0 se interrumpio: %s' % (str(e).strip().splitlines() or [repr(e)])[0][:220])
     try:
-        # --- T1: lista inicial = última jornada + habituales, todos sin marcar (propuesta B)
+        # --- T1 (reescrita en 08d, D5): lista inicial = última jornada + habituales, con MARCADA la gente de la última jornada anterior
         ok(filas_lista() == ['Mikel', 'Txomin', 'Rafa'], 'lista inicial de viviendas: última jornada + habituales (≥ 3 días en 30): %s' % filas_lista())
-        ok(marcados() == [], 'la lista inicial debe empezar sin nadie marcado: %s' % marcados())
+        ok(marcados() == ['Mikel', 'Txomin'], 'el viernes 23/10 sale marcada la gente del jueves 22/10 (Mikel y Txomin), no Rafa: %s' % marcados())
+        ok(txt('#rotulo-marcados') == 'Marcados según la jornada del jueves 22/10: quita a quien no haya venido.', 'rótulo de la lista prerrellenada: %r' % txt('#rotulo-marcados'))
         clic('button[data-amb="garaje"]')
-        ok(filas_lista() == ['Andoni'], 'lista inicial de garajes: %s' % filas_lista())
+        ok(filas_lista() == ['Andoni'] and marcados() == ['Andoni'], 'lista inicial de garajes: la última jornada de garajes (viernes 16/10) marcada: %s %s' % (filas_lista(), marcados()))
+        ok(txt('#rotulo-marcados') == 'Marcados según la jornada del viernes 16/10: quita a quien no haya venido.', 'rótulo de garajes: %r' % txt('#rotulo-marcados'))
         ok('on' in (pg.get_attribute('button[data-amb="garaje"]', 'class') or ''), 'el ámbito activo debe llevar la clase on')
         clic('button[data-amb="vivienda"]')
         ok(filas_lista() == ['Mikel', 'Txomin', 'Rafa'], 'al volver a viviendas vuelve su lista: %s' % filas_lista())
+        # T2 en adelante (anteriores a 08d) parten de la lista sin marcar: se desmarca por dentro, sin pulsar nada ni guardar borrador
+        MAIN['sin_previa'] = True
+        pg.evaluate(JS_SIN_PREVIA)
 
     except Exception as e:  # noqa: BLE001
         ok(False, 'T1 se interrumpio: %s' % (str(e).strip().splitlines() or [repr(e)])[0][:220])
@@ -490,7 +512,7 @@ with sync_playwright() as p:
         pg.reload()
         espera_obra()
         ok(pg.eval_on_selector_all('#obra option', 'e=>e.map(o=>o.value)') == ['olabeaga', 'mungia'], 'sin personal_estado.js la app debe usar la copia local')
-        ok('copia' in txt('#estado-origen').lower(), '#estado-origen debe decir «copia» al usar la copia local: %r' % txt('#estado-origen'))
+        ok('guardada' in txt('#estado-origen').lower(), '#estado-origen debe decir «lista guardada» al usar la copia local (08d: antes «copia»): %r' % txt('#estado-origen'))
 
     except Exception as e:  # noqa: BLE001
         ok(False, 'T14 se interrumpio: %s' % (str(e).strip().splitlines() or [repr(e)])[0][:220])
@@ -534,15 +556,24 @@ with sync_playwright() as p:
             self.pg = self.ctx.new_page()
             self.pg.set_default_timeout(4000)
             self.errs = []
+            self.previa = False
             self.pg.on('pageerror', lambda e: self.errs.append(str(e)))
 
-        def ir(self, esperar_obra=True):
+        def sin_previa(self):
+            if not self.previa:
+                self.pg.evaluate(JS_SIN_PREVIA)
+
+        def ir(self, esperar_obra=True, previa=False):
             self.pg.goto(self.url)
             if esperar_obra:
                 try:
                     self.pg.wait_for_selector('#obra', timeout=3000)
                 except Exception:  # noqa: BLE001
                     pass
+            # Paso 08d (D5): las escenas de antes del 08d parten de la lista sin marcar (solo si salió prerrellenada, para no tocar un
+            # borrador restaurado). Lo nuevo se prueba en T90+ con previa=True.
+            self.previa = previa
+            self.sin_previa()
             return self
 
         def cerrar(self):
@@ -561,6 +592,8 @@ with sync_playwright() as p:
                 ok(False, 'no existe el elemento %s' % sel)
                 return False
             self.pg.click(sel, timeout=4000)
+            if 'data-amb' in sel or 'data-dia' in sel:
+                self.sin_previa()
             return True
 
         def filas(self):
@@ -575,9 +608,11 @@ with sync_playwright() as p:
 
         def fecha(self, v):
             self.pg.evaluate("v=>{const e=document.getElementById('fecha');e.value=v;e.dispatchEvent(new Event('change',{bubbles:true}))}", v)
+            self.sin_previa()
 
         def obra(self, v):
             self.pg.select_option('#obra', v)
+            self.sin_previa()
 
         def horas(self, nombre):
             return self.txt('#v-app .row[data-nombre="%s"] .step output' % nombre)
@@ -598,21 +633,44 @@ with sync_playwright() as p:
                 self.pg.select_option('#addsel', nombre)
                 self.clic('button[data-add]')
 
-        def exportar(self, esperar=True):
+        def exportar(self, esperar=True, obra=None):
+            """Paso 08d: prepara el fichero de la obra que se ve en «Anotar» (o la indicada) desde «Enviar al PC» y vuelve a «Anotar».
+            Devuelve su contenido, o None si esa obra no tiene nada por enviar (entonces no hay botón). Guarda el nombre en self.descarga."""
             try:
+                obra_id = obra or self.pg.evaluate("document.querySelector('#obra') ? document.querySelector('#obra').value : ''")
+                self.pg.click('nav button[data-v="enviar"]', timeout=3000)
+                boton = 'button[data-preparar="%s"]' % obra_id
+                if self.pg.query_selector(boton) is None:
+                    self.pg.click('nav button[data-v="app"]', timeout=3000)
+                    return None
                 with self.pg.expect_download(timeout=5000 if esperar else 1500) as d:
-                    self.pg.click('button[data-exportar]', timeout=3000)
+                    self.pg.click(boton, timeout=3000)
                 ruta = os.path.join(self.dir, 'descarga.json')
                 d.value.save_as(ruta)
+                self.descarga = d.value.suggested_filename
+                self.pg.click('nav button[data-v="app"]', timeout=3000)
                 return json.load(open(ruta, encoding='utf-8'))
             except Exception:  # noqa: BLE001
                 return None
+
+        def listo(self):
+            """Texto del recuadro «Listo» de «Enviar al PC» (está en la página aunque esa pestaña no se vea)."""
+            el = self.pg.query_selector('#listo')
+            return norm(el.text_content()) if el else ''
+
+        def enviar_txt(self, sel):
+            el = self.pg.query_selector(sel)
+            return norm(el.text_content()) if el else ''
 
         def informe(self):
             return self.pg.eval_on_selector_all('#v-informe table.data tbody tr', 'e=>e.map(r=>r.innerText.split(String.fromCharCode(10)).join(" ").split(String.fromCharCode(9)).join(" ").trim())')
 
     def con_escena(nombre, datos, fn, **kw):
         """Ejecuta una escena; cualquier excepción se convierte en un fallo legible y no tumba las demás."""
+        if os.environ.get('P3_SOLO_08D') == '1':     # modo del paso 08d: solo las escenas T90 en adelante
+            m = re.match(r'T(\d+)', nombre)
+            if not (m and int(m.group(1)) >= 90):
+                return
         if os.environ.get('P3_SOLO_08C') == '1':     # modo del paso 08c: solo las escenas T80 en adelante (las comprobaciones estáticas corren siempre)
             m = re.match(r'T(\d+)', nombre)
             if not (m and int(m.group(1)) >= 80):
@@ -644,16 +702,17 @@ with sync_playwright() as p:
 
     # --- T16: lista por defecto = última jornada + habituales (≥ 3 fechas en los 30 días anteriores, límite inclusivo, mismo ámbito y obra)
     def t16(e):
-        e.ir()
+        e.ir(previa=True)
         ok(e.filas() == ['Fran', 'Ana', 'Beto', 'Dani'], 'T16 lista de viviendas = última jornada (en su orden) + habituales por nombre, sin repetir: %s' % e.filas())
-        ok(e.marcados() == [], 'T16 la lista inicial va sin marcar')
+        ok(e.marcados() == ['Fran', 'Ana'], 'T16 (08d) de esa lista salen marcados solo los de la última jornada anterior (22/10: Fran y Ana); los habituales, sin marcar: %s' % e.marcados())
         e.clic('button[data-amb="garaje"]')
-        ok(e.filas() == ['Hugo'], 'T16 lista de garajes: solo cuentan las fechas del propio ámbito (Eva: 2 de garaje + 2 de vivienda no es habitual): %s' % e.filas())
+        ok(e.filas() == ['Hugo'] and e.marcados() == ['Hugo'], 'T16 lista de garajes: solo cuentan las fechas del propio ámbito (Eva: 2 de garaje + 2 de vivienda no es habitual): %s %s' % (e.filas(), e.marcados()))
     d16 = [fila(f, 'vivienda', 'Ana', 7.5) for f in ('2026-10-05', '2026-10-06')]  # 2 días: no es habitual
     d16 += [fila(f, 'vivienda', 'Beto', 7.5) for f in ('2026-09-23', '2026-10-01', '2026-10-02')]  # 09-23 = justo 30 días antes (incluido)
     d16 += [fila(f, 'vivienda', 'Carlos', 7.5) for f in ('2026-09-22', '2026-10-01', '2026-10-02')]  # 09-22 = 31 días antes (fuera): solo 2
     d16 += [fila(f, 'vivienda', 'Dani', 7.5) for f in ('2026-10-14', '2026-10-15', '2026-10-16')]
-    d16 += [fila(f, 'vivienda', 'Eva', 7.5) for f in ('2026-10-21', '2026-10-22')] + [fila(f, 'garaje', 'Eva', 7.5) for f in ('2026-10-19', '2026-10-20')]
+    d16 += [fila(f, 'vivienda', 'Eva', 7.5) for f in ('2026-10-19', '2026-10-20')] + [fila(f, 'garaje', 'Eva', 7.5) for f in ('2026-10-19', '2026-10-20')]
+    d16 += [fila('2026-10-22', 'vivienda', 'Fran', 7.5), fila('2026-10-22', 'vivienda', 'Ana', 7.5), fila('2026-10-22', 'garaje', 'Hugo', 7.5)]  # 08d: la última jornada por filas = la de «ultima»
     d16 += [fila(f, 'vivienda', 'Fran', 7.5) for f in ('2026-10-12', '2026-10-13', '2026-10-14')]  # habitual y además en «última»
     d16 += [fila(f, 'garaje', 'Hugo', 7.5) for f in ('2026-10-12', '2026-10-13', '2026-10-14')]
     s16 = estado_con({
@@ -790,6 +849,7 @@ with sync_playwright() as p:
         e.pg.dispatch_event('input[data-hor="5"]', 'change')
         e.pg.reload()
         e.pg.wait_for_selector('#obra')
+        e.sin_previa()      # 08d: al recargar, el día nuevo vuelve a salir con la gente anterior marcada; T25 no trata de eso
         ok(e.pg.evaluate("localStorage.getItem('sgd_personal_horarios')") in ('{}', None), 'T25 el horario guardado en el aparato debe olvidarse cuando coincide con el publicado: %r' % e.pg.evaluate("localStorage.getItem('sgd_personal_horarios')"))
         e.clic('#v-app .row[data-nombre="Mikel"] .x')
         e.clic('button[data-guardar]')
@@ -839,7 +899,7 @@ with sync_playwright() as p:
         ok(e.pendientes() == '2', 'T29 vivienda y garaje del mismo día son jornadas distintas: %r' % e.pendientes())
         lote = e.exportar() or {}
         ok(sorted((j['ambito'], [p['nombre'] for p in j['presentes']]) for j in lote.get('jornadas', [])) == [('garaje', ['Andoni']), ('vivienda', ['Mikel', 'Rafa'])], 'T29 lote con las dos jornadas: %s' % lote.get('jornadas'))
-        ok('exportad' in e.toast(), 'T29 exportar debe confirmar con un aviso «Exportadas N jornadas…»: %r' % e.toast())
+        ok('con 2 jornadas' in e.listo() and e.descarga == 'CONTROL HORARIO 2026 OLABEAGA BILBAO 23102026.json', 'T29 (08d) preparar el fichero deja a la vista el recuadro «Listo» con su nombre y las 2 jornadas, y el fichero se llama así: %r %r' % (e.listo(), e.descarga))
     con_escena('T28', ESTADO1, t28)
 
     # --- T30/T31: «Marcar todos» + guardar fija el horario del día; bajar de horario no genera extra negativa
@@ -903,7 +963,7 @@ with sync_playwright() as p:
         e.ir()
         lote = e.exportar(esperar=False)
         ok(lote is None, 'T34 sin pendientes ni horario cambiado no debe descargarse un lote vacío: %s' % lote)
-        ok('no hay' in e.toast(), 'T34 debe avisar «No hay jornadas pendientes en esta obra»: %r' % e.toast())
+        ok('no hay nada por enviar' in e.enviar_txt('#nada-que-enviar').lower(), 'T34 (08d) la pantalla «Enviar al PC» debe decir «No hay nada por enviar»: %r' % e.enviar_txt('#nada-que-enviar'))
     con_escena('T34', ESTADO1, t34)
 
     # --- T35: borrador y pendientes corruptos o de otra versión: se ignoran, la app arranca
@@ -1048,7 +1108,7 @@ with sync_playwright() as p:
         os.remove(os.path.join(e.dir, 'personal_estado.js'))
         e.pg.reload()
         e.pg.wait_for_selector('#obra')
-        ok('copia' in e.txt('#estado-origen').lower() and e.pendientes() == '1', 'T43 sin red usa la copia local y conserva el pendiente: %r %r' % (e.txt('#estado-origen'), e.pendientes()))
+        ok('guardada' in e.txt('#estado-origen').lower() and e.pendientes() == '1', 'T43 sin red usa la lista guardada y conserva la jornada sin enviar: %r %r' % (e.txt('#estado-origen'), e.pendientes()))
     con_escena('T43', ESTADO1, t43)
 
     # ======================================================================================================================
@@ -1127,7 +1187,7 @@ with sync_playwright() as p:
     # --- T48: singular en Jornadas y en el resumen; fecha del estado legible; el resumen se repinta al cambiar el horario
     def t48(e):
         e.ir()
-        ok(e.txt('#estado-origen') == 'Estado publicado · 23/10/2026 08:00', 'T48 #estado-origen: %r' % e.txt('#estado-origen'))
+        ok(e.txt('#estado-origen') == 'Lista de trabajadores y obras al día: 23/10/2026 08:00', 'T48 #estado-origen: %r' % e.txt('#estado-origen'))
         e.clic('#v-app .row[data-nombre="Mikel"] .x')
         ok(e.txt('.sum') == '1 presente · 7,5 h', 'T48 resumen con una persona: %r' % e.txt('.sum'))
         e.clic('button[data-v="jornadas"]')
@@ -1265,7 +1325,7 @@ with sync_playwright() as p:
         ok(horas5(e) == H_9, 'T52 viernes con los 5 marcados: los de horario propio salen a 9 h, los demás a 7,5 h: %s' % horas5(e))
         ok(e.txt('.sum') == '5 presentes · 40,5 h', 'T52 el resumen no habla de «extra» (los 9 h son normales): %r' % e.txt('.sum'))
         ok(all(chip(e, n) == '' for n in CINCO), 'T52 nadie lleva chip de horas extra: %s' % [chip(e, n) for n in CINCO])
-        ok(chip(e, 'Aitor', True) == 'horario propio 9 h' and chip(e, 'Gorka', True) == 'horario propio 9 h', 'T52 quien tiene horario propio lleva el chip «horario propio 9 h»: %r %r' % (chip(e, 'Aitor', True), chip(e, 'Gorka', True)))
+        ok(chip(e, 'Aitor', True) == 'horario especial 9 h' and chip(e, 'Gorka', True) == 'horario especial 9 h', 'T52 quien tiene horario especial lleva el chip «horario especial 9 h»: %r %r' % (chip(e, 'Aitor', True), chip(e, 'Gorka', True)))
         ok(chip(e, 'Mikel', True) == '' and chip(e, 'Rafa', True) == '' and chip(e, 'Txomin', True) == '', 'T52 los demás no llevan el chip de horario propio')
         e.clic('button[data-guardar]')
         lote = e.exportar() or {}
@@ -1315,7 +1375,7 @@ with sync_playwright() as p:
         e.pg.reload()
         e.pg.wait_for_selector('#obra')
         ok(propio_ls(e) in (None, '{}'), 'T53 cuando el estado publicado ya trae el horario propio, la app lo olvida: %r' % propio_ls(e))
-        ok(e.exportar(esperar=False) is None and 'no hay' in e.toast(), 'T53 recargada con el estado nuevo ya no queda nada que exportar: %r' % e.toast())
+        ok(e.exportar(esperar=False) is None and 'no hay nada por enviar' in e.enviar_txt('#nada-que-enviar').lower(), 'T53 (08d) recargada con el estado nuevo ya no queda nada por enviar: %r' % e.enviar_txt('#nada-que-enviar'))
         ok(e.horas('Aitor') == '9 h', 'T53 y Aitor sigue saliendo a 9 h (ahora por el estado publicado): %r' % e.horas('Aitor'))
     con_escena('T53', est5(), t53)
 
@@ -1366,7 +1426,7 @@ with sync_playwright() as p:
         e.fecha('2026-10-19')
         e.clic('#v-app .row[data-nombre="Gorka"] .x')
         e.clic('#v-app .row[data-nombre="Aitor"] .x')
-        ok(e.horas('Gorka') == '8 h' and chip(e, 'Gorka', True) == 'horario propio 8 h', 'T55b el lunes Gorka tiene horario propio de 8 h: %r %r' % (e.horas('Gorka'), chip(e, 'Gorka', True)))
+        ok(e.horas('Gorka') == '8 h' and chip(e, 'Gorka', True) == 'horario especial 8 h', 'T55b el lunes Gorka tiene horario propio de 8 h: %r %r' % (e.horas('Gorka'), chip(e, 'Gorka', True)))
         ok(e.horas('Aitor') == '7,5 h' and chip(e, 'Aitor', True) == '', 'T55b el lunes Aitor (propio solo el viernes) sigue el horario de la obra y no lleva chip: %r %r' % (e.horas('Aitor'), chip(e, 'Aitor', True)))
     con_escena('T55b', est5({'Aitor': {'vie': 9}, 'Gorka': {'lun': 8}}), t55b)
 
@@ -1511,7 +1571,7 @@ with sync_playwright() as p:
         return None
 
     def t63(nombre, retraso, con_copia, fn):
-        if os.environ.get('P3_SOLO_08C') == '1':
+        if os.environ.get('P3_SOLO_08C') == '1' or os.environ.get('P3_SOLO_08D') == '1':
             return
         e = srv = None
         try:
@@ -1529,15 +1589,15 @@ with sync_playwright() as p:
     def f63a(e, t0):
         t = espera_obra_hasta(e, t0, 12)
         ok(t is not None and 3.5 <= t <= 6.5, 'T63a con el .js tardando 8 s y copia guardada, la app abre a los ~4 s (no antes, no después): abrió a los %s s' % (None if t is None else round(t, 1)))
-        ok('copia' in e.txt('#estado-origen').lower(), 'T63a debe decir que usa la copia guardada: %r' % e.txt('#estado-origen'))
+        ok('guardada' in e.txt('#estado-origen').lower(), 'T63a debe decir que usa la lista guardada: %r' % e.txt('#estado-origen'))
         e.pg.wait_for_timeout(max(0, int((8.5 - (time.time() - t0)) * 1000)))
-        ok('copia' in e.txt('#estado-origen').lower() and e.pg.query_selector('#obra') is not None, 'T63a cuando el .js llega tarde no se cambia lo que se está viendo: %r' % e.txt('#estado-origen'))
+        ok('guardada' in e.txt('#estado-origen').lower() and e.pg.query_selector('#obra') is not None, 'T63a cuando el .js llega tarde no se cambia lo que se está viendo: %r' % e.txt('#estado-origen'))
     t63('T63a', 8, True, f63a)
 
     def f63b(e, t0):
         t = espera_obra_hasta(e, t0, 8)
         ok(t is not None and t <= 3.5, 'T63b si el .js llega a los 1,5 s la app abre sin esperar a los 4 s: abrió a los %s s' % (None if t is None else round(t, 1)))
-        ok('publicado' in e.txt('#estado-origen').lower(), 'T63b debe decir «publicado»: %r' % e.txt('#estado-origen'))
+        ok('al día' in e.txt('#estado-origen').lower(), 'T63b debe decir «al día»: %r' % e.txt('#estado-origen'))
     t63('T63b', 1.5, True, f63b)
 
     def f63c(e, t0):
@@ -1545,7 +1605,7 @@ with sync_playwright() as p:
         sin = e.pg.query_selector('#sin-estado') is not None and e.pg.is_visible('#sin-estado')
         ok(e.pg.query_selector('#obra') is None and not sin, 'T63c sin copia guardada no hay con qué abrir: la app sigue esperando (no enseña «todavía no hay datos»): sin_datos=%s' % sin)
         t = espera_obra_hasta(e, t0, 12)
-        ok(t is not None and 'publicado' in e.txt('#estado-origen').lower(), 'T63c cuando por fin llega el .js (a los 7 s) la app abre con él: %r' % e.txt('#estado-origen'))
+        ok(t is not None and 'al día' in e.txt('#estado-origen').lower(), 'T63c cuando por fin llega el .js (a los 7 s) la app abre con él: %r' % e.txt('#estado-origen'))
     t63('T63c', 7, False, f63c)
 
     # --- Escenas extra (P3_EXTRA=1; se añadieron al revisar el código de la tanda A y matar mutantes)
@@ -1557,7 +1617,7 @@ with sync_playwright() as p:
             guardar_propio(e, 'Aitor', {'vie': 9})
             guardar_propio(e, 'Gorka', {'vie': 9})
             e.clic('button[data-guardar]')
-            ok(e.exportar() is not None and '2 horario(s) propio(s)' in e.toast() and '1 jornada(s)' in e.toast(), 'T53b el aviso de exportar cuenta jornadas y horarios propios: %r' % e.toast())
+            ok(e.exportar() is not None and '1 jornada' in e.listo() and '2 horarios especiales' in e.listo(), 'T53b (08d) el recuadro «Listo» cuenta jornadas y horarios especiales: %r' % e.listo())
         con_escena('T53b', est5(), t53b)
 
         def t54b(e):
@@ -1654,7 +1714,7 @@ with sync_playwright() as p:
 
         def f63d(e, t0):
             t = espera_obra_hasta(e, t0, 10)
-            ok(t is not None and 'tarda en llegar' in e.txt('#estado-origen').lower() and 'copia guardada en este aparato' in e.txt('#estado-origen').lower(), 'T63d cuando abre por la espera dice que el estado publicado tarda en llegar: %r' % e.txt('#estado-origen'))
+            ok(t is not None and 'tarda en llegar' in e.txt('#estado-origen').lower() and 'lista guardada en este aparato' in e.txt('#estado-origen').lower(), 'T63d cuando abre por la espera dice que la lista nueva tarda en llegar: %r' % e.txt('#estado-origen'))
         t63('T63d', 6, True, f63d)
 
     if GRUPO_B:
@@ -1663,7 +1723,7 @@ with sync_playwright() as p:
             e.ir()
             marcar_los_cinco(e)
             ok(all(e.pg.query_selector('#v-app .row[data-nombre="%s"] button[data-hp-abrir]' % n) is not None for n in CINCO), 'T65 cada presente lleva su botón «Horario propio» (button[data-hp-abrir])')
-            ok(all('horario propio' in e.txt('#v-app .row[data-nombre="%s"] button[data-hp-abrir]' % n).lower() for n in CINCO), 'T65 el botón dice «Horario propio»')
+            ok(all('horario especial' in e.txt('#v-app .row[data-nombre="%s"] button[data-hp-abrir]' % n).lower() for n in CINCO), 'T65 el botón dice «Horario especial»')
             for n in ('Aitor', 'Gorka'):
                 fila_n = '#v-app .row[data-nombre="%s"]' % n
                 e.clic(fila_n + ' button[data-hp-abrir]')
@@ -1673,7 +1733,7 @@ with sync_playwright() as p:
                 e.clic(fila_n + ' button[data-hp-guardar]')
                 ok(e.pg.query_selector(fila_n + ' .hp') is None, 'T65 el editor se cierra al guardar')
             ok(horas5(e) == H_9 and e.txt('.sum') == '5 presentes · 40,5 h', 'T65 con la pantalla: Aitor y Gorka a 9 h, resumen 40,5 h: %s %r' % (horas5(e), e.txt('.sum')))
-            ok(chip(e, 'Aitor', True) == 'horario propio 9 h', 'T65 chip de horario propio tras guardar: %r' % chip(e, 'Aitor', True))
+            ok(chip(e, 'Aitor', True) == 'horario especial 9 h', 'T65 chip de horario especial tras guardar: %r' % chip(e, 'Aitor', True))
             e.clic('button[data-guardar]')
             lote = e.exportar() or {}
             ok(lote.get('excepciones_horario') == {'Aitor': {'vie': 9}, 'Gorka': {'vie': 9}}, 'T65 el lote lleva el horario propio: %s' % lote.get('excepciones_horario'))
@@ -1691,7 +1751,7 @@ with sync_playwright() as p:
             ok(e.pg.input_value(a + ' input[data-hp="vie"]') == '9' and all(e.pg.input_value(a + ' input[data-hp="%s"]' % d) == '' for d in ('lun', 'mar', 'mie', 'jue', 'sab', 'dom')), 'T66 el editor sale rellenado con el horario propio actual (vie 9) y el resto vacío')
             ok(e.pg.get_attribute(a + ' input[data-hp="lun"]', 'placeholder') == '7,5' and e.pg.get_attribute(a + ' input[data-hp="sab"]', 'placeholder') == '0', 'T66 las casillas vacías enseñan el horario de la obra de ese día (7,5 / 0) como pista: %r %r' % (e.pg.get_attribute(a + ' input[data-hp="lun"]', 'placeholder'), e.pg.get_attribute(a + ' input[data-hp="sab"]', 'placeholder')))
             tx = e.txt(a + ' .hp').lower()
-            ok('aitor' in tx and 'sigue el horario de la obra' in tx and 'guardar horario propio' in tx and 'quitar' in tx, 'T66 el editor dice de quién es, qué significa vacío y lleva «Guardar horario propio» y «Quitar»: %r' % tx)
+            ok('aitor' in tx and 'sigue el horario de la obra' in tx and 'guardar horario especial' in tx and 'quitar' in tx, 'T66 el editor dice de quién es, qué significa vacío y lleva «Guardar horario especial» y «Quitar»: %r' % tx)
             e.clic(g + ' button[data-hp-abrir]')
             ok(e.pg.query_selector(a + ' .hp') is None and e.pg.query_selector(g + ' .hp') is not None, 'T66 solo hay un editor abierto a la vez')
             e.clic(g + ' button[data-hp-abrir]')
@@ -1783,7 +1843,7 @@ with sync_playwright() as p:
             e.clic('#v-app .row[data-nombre="Aitor"] button[data-hp-abrir]')
             e.pg.fill('#v-app .row[data-nombre="Aitor"] input[data-hp="vie"]', '9')
             e.clic('#v-app .row[data-nombre="Aitor"] button[data-hp-guardar]')
-            ok('no se pudo' in e.toast() and 'horario propio guardado' not in e.toast(), 'T70 sin poder escribir en el aparato, «Guardar horario propio» avisa del fallo y no dice «guardado»: %r' % e.toast())
+            ok('no se pudo' in e.toast() and 'horario especial guardado' not in e.toast(), 'T70 sin poder escribir en el aparato, «Guardar horario especial» avisa del fallo y no dice «guardado»: %r' % e.toast())
             e.clic('#v-app .row[data-nombre="Aitor"] button[data-hp-abrir]')
             e.clic('#v-app .row[data-nombre="Aitor"] button[data-hp-quitar]')
             ok('horario propio quitado' not in e.toast(), 'T70 lo mismo con «Quitar»: %r' % e.toast())
@@ -1810,7 +1870,7 @@ with sync_playwright() as p:
             e.ir()
             e.clic('#v-app .row .x')
             e.clic('#v-app .row button[data-hp-abrir]')
-            ok(e.txt('#v-app .hp b') == 'Horario propio de ' + raro, 'T72 el título del editor lleva el nombre tal cual: %r' % e.txt('#v-app .hp b'))
+            ok(e.txt('#v-app .hp b') == 'Horario especial de ' + raro, 'T72 el título del editor lleva el nombre tal cual: %r' % e.txt('#v-app .hp b'))
             ok(e.pg.evaluate("document.querySelectorAll('#v-app .hp b *').length") == 0 and e.pg.evaluate("document.querySelectorAll('#v-app .hp b').length") == 1, 'T72 no se interpreta HTML dentro del nombre del editor')
             e.pg.fill('#v-app .hp input[data-hp="vie"]', '9')
             e.clic('#v-app .hp button[data-hp-guardar]')
@@ -1959,7 +2019,7 @@ with sync_playwright() as p:
         nombres = [n for n in nombres_opciones(e)]
         ok(all(n in nombres for n in ('Al', 'Ane', 'Iker', 'Jon Ander')) and not any(n.startswith(('x@', 'Mikell', '<')) for n in nombres), 'T81 los que entran quedan disponibles en el desplegable, y solo ellos: %s' % nombres)
         ok(e.filas() == ['Mikel', 'Txomin'], 'T81 entrar en la base no mete a nadie en la lista de pantalla: %s' % e.filas())
-        ok(cambios(e) == '4 nombres nuevos por pasar al PC', 'T81 contador de cambios por pasar al PC: %r' % cambios(e))
+        ok(cambios(e) == '4 nombres nuevos sin enviar al PC', 'T81 contador de cambios por pasar al PC: %r' % cambios(e))
         e.pg.fill('#varios-texto', 'ane\nBegoña\n')
         e.clic('button[data-varios-ok]')
         ok(e.txt('[data-res="estaban"]') == 'Ya estaba 1: Ane.' and e.txt('[data-res="entran"]') == 'Entra 1: Begoña.' and e.valor('#varios-texto') == '', 'T81 singular y vaciado del cuadro: %r %r %r' % (e.txt('[data-res="estaban"]'), e.txt('[data-res="entran"]'), e.valor('#varios-texto')))
@@ -1967,14 +2027,14 @@ with sync_playwright() as p:
         e.clic('button[data-varios-ok]')
         ok(e.txt('[data-res="nada"]') == 'No hay ningún nombre que añadir.' and ls(e, 'altas') == ['Ane', 'Iker', 'Jon Ander', 'Al', 'Begoña'], 'T81 un cuadro vacío lo dice y no apunta nada: %r %s' % (e.txt('[data-res="nada"]'), ls(e, 'altas')))
         e.clic('button[data-varios-cerrar]')
-        ok(e.pg.query_selector('#varios') is None and ls(e, 'altas') is not None and cambios(e) == '5 nombres nuevos por pasar al PC', 'T81 «Cerrar» esconde el cuadro y no pierde nada: %r' % cambios(e))
+        ok(e.pg.query_selector('#varios') is None and ls(e, 'altas') is not None and cambios(e) == '5 nombres nuevos sin enviar al PC', 'T81 «Cerrar» esconde el cuadro y no pierde nada: %r' % cambios(e))
         lote = e.exportar() or {}
         ok(set(lote) == {'tipo', 'version', 'obra', 'altas', 'jornadas'} and lote.get('altas') == ['Ane', 'Iker', 'Jon Ander', 'Al', 'Begoña'] and lote.get('jornadas') == [], 'T81 con solo nombres nuevos el fichero lleva altas y ninguna jornada: %s' % {k: lote.get(k) for k in lote})
         valida_con_p1(lote)
         r, cat8, filas8 = e2e_p1(lote)
         ok(r is not None and r['ok'] and sorted(x['nombre'] for x in r['altas']) == ['Al', 'Ane', 'Begoña', 'Iker', 'Jon Ander'], 'T81 el PC da de alta a los 5 sin jornada: %s' % (json.dumps(r, ensure_ascii=False)[:400] if r else r))
         ok(r is not None and not any(f['nombre'] in ('Al', 'Ane', 'Iker', 'Begoña', 'Jon Ander') for f in filas8), 'T81 y no les inventa ninguna jornada')
-        ok('5 nombre(s) nuevo(s)' in e.toast(), 'T81 el aviso de enviar cuenta los nombres nuevos: %r' % e.toast())
+        ok('con 5 nombres nuevos' in e.listo(), 'T81 (08d) el recuadro «Listo» cuenta los nombres nuevos: %r' % e.listo())
         e.pg.reload()
         e.pg.wait_for_selector('#obra')
         ok(ls(e, 'altas') == ['Ane', 'Iker', 'Jon Ander', 'Al', 'Begoña'] and 'Ane' in nombres_opciones(e), 'T81 al recargar siguen apuntados y disponibles: %s' % ls(e, 'altas'))
@@ -1983,7 +2043,7 @@ with sync_playwright() as p:
     def t81b(e):
         e.ir()
         ok(ls(e, 'altas') == ['Ane'], 'T81b al abrir, el nombre que el PC ya publicó (Josu) se olvida de lo que falta por enviar y el otro se conserva: %s' % ls(e, 'altas'))
-        ok(cambios(e) == '1 nombre nuevo por pasar al PC', 'T81b contador en singular: %r' % cambios(e))
+        ok(cambios(e) == '1 nombre nuevo sin enviar al PC', 'T81b contador en singular: %r' % cambios(e))
     con_escena('T81b', est8(), t81b, init=sembrar_varios({'sgd_personal_altas': ['Ane', 'Josu'], 'sgd_personal_nuevos': ['Ane', 'Josu']}))
 
     def t81c(e):
@@ -2018,7 +2078,7 @@ with sync_playwright() as p:
         ok(e.filas() == ['Mikel', 'Txomin', 'Rafael'] and e.marcados() == ['Mikel', 'Rafael'] and e.horas('Rafael') == '7,5 h', 'T82 el nombre cambia en la lista (limpio, en el mismo sitio y conservando marca y horas): %s %s %s' % (e.filas(), e.marcados(), e.horas('Rafael')))
         ok(e.txt('#toast') == 'Nombre corregido: «Rafa» ahora es «Rafael». Queda apuntado para el PC.', 'T82 aviso: %r' % e.txt('#toast'))
         ok(ls(e, 'renombres') == [{'de': 'Rafa', 'a': 'Rafael'}], 'T82 se apunta el renombre {de, a} con el nombre limpio de espacios: %s' % ls(e, 'renombres'))
-        ok(cambios(e) == '1 nombre corregido por pasar al PC', 'T82 contador: %r' % cambios(e))
+        ok(cambios(e) == '1 nombre corregido sin enviar al PC', 'T82 contador: %r' % cambios(e))
         ok(['Rafael (ya está)', True] in opciones(e) and 'Rafa' not in nombres_opciones(e), 'T82 el desplegable ya trae el nombre nuevo: %s' % nombres_opciones(e))
         ok(ls(e, 'borrador')['lista'][2]['nombre'] == 'Rafael', 'T82 el borrador guardado lleva el nombre nuevo: %s' % ls(e, 'borrador'))
         e.clic('button[data-guardar]')
@@ -2124,9 +2184,9 @@ with sync_playwright() as p:
         guardar_propio(e, 'Gorka', {'vie': 9})
         ok(json.loads(propio_ls(e) or '{}') == {'olabeaga': {'Gorka': {'vie': 9}}}, 'T84 preparación: solo Gorka tiene un horario propio recordado (el de Aitor es el publicado): %r' % propio_ls(e))
         renombra(e, 'Gorka', 'Gorka B')
-        ok(json.loads(propio_ls(e) or '{}') == {'olabeaga': {'Gorka B': {'vie': 9}}} and chip(e, 'Gorka B', True) == 'horario propio 9 h', 'T84 el horario propio recordado sigue a la persona con su nombre nuevo: %r %r' % (propio_ls(e), chip(e, 'Gorka B', True)))
+        ok(json.loads(propio_ls(e) or '{}') == {'olabeaga': {'Gorka B': {'vie': 9}}} and chip(e, 'Gorka B', True) == 'horario especial 9 h', 'T84 el horario propio recordado sigue a la persona con su nombre nuevo: %r %r' % (propio_ls(e), chip(e, 'Gorka B', True)))
         renombra(e, 'Aitor', 'Aitor Z')
-        ok(chip(e, 'Aitor Z', True) == 'horario propio 9 h' and json.loads(propio_ls(e) or '{}') == {'olabeaga': {'Gorka B': {'vie': 9}}}, 'T84 el horario propio PUBLICADO de Aitor también sigue a su nombre nuevo, sin inventar nada que enviar: %r %r' % (chip(e, 'Aitor Z', True), propio_ls(e)))
+        ok(chip(e, 'Aitor Z', True) == 'horario especial 9 h' and json.loads(propio_ls(e) or '{}') == {'olabeaga': {'Gorka B': {'vie': 9}}}, 'T84 el horario propio PUBLICADO de Aitor también sigue a su nombre nuevo, sin inventar nada que enviar: %r %r' % (chip(e, 'Aitor Z', True), propio_ls(e)))
         e.clic('button[data-guardar]')
         lote = e.exportar() or {}
         ok(lote.get('excepciones_horario') == {'Gorka B': {'vie': 9}} and lote.get('renombres') == [{'de': 'Gorka', 'a': 'Gorka B'}, {'de': 'Aitor', 'a': 'Aitor Z'}], 'T84 el fichero lleva los dos renombres (en orden) y solo el horario propio nuevo: %s' % {k: lote.get(k) for k in lote})
@@ -2138,7 +2198,7 @@ with sync_playwright() as p:
     # --- T85: lo apuntado se olvida cuando el estado publicado ya lo trae; si no, se reaplica al abrir
     def t85a(e):
         e.ir()
-        ok('Rafael' in nombres_opciones(e) and 'Rafa' not in nombres_opciones(e) and ls(e, 'renombres') == [{'de': 'Rafa', 'a': 'Rafael'}] and cambios(e) == '1 nombre corregido por pasar al PC', 'T85a el PC aún no lo ha hecho: al abrir se ve el nombre nuevo y sigue apuntado: %s %s' % (nombres_opciones(e), ls(e, 'renombres')))
+        ok('Rafael' in nombres_opciones(e) and 'Rafa' not in nombres_opciones(e) and ls(e, 'renombres') == [{'de': 'Rafa', 'a': 'Rafael'}] and cambios(e) == '1 nombre corregido sin enviar al PC', 'T85a el PC aún no lo ha hecho: al abrir se ve el nombre nuevo y sigue apuntado: %s %s' % (nombres_opciones(e), ls(e, 'renombres')))
         e.clic('button[data-v="informe"]')
         ok('Rafael' in [f.split(' ')[0] for f in e.informe()] and 'Rafa' not in [f.split(' ')[0] for f in e.informe()], 'T85a y el informe ya lo ve con el nombre nuevo: %s' % e.informe())
     con_escena('T85a', est8(), t85a, init=sembrar('sgd_personal_renombres', [{'de': 'Rafa', 'a': 'Rafael'}]))
@@ -2178,7 +2238,7 @@ with sync_playwright() as p:
         renombra(e, 'Miguel', 'Mikelo')
         ok(ls(e, 'renombres') == [{'de': 'Mikel', 'a': 'Mikelo'}], 'T85f dos cambios seguidos sobre la misma persona se apuntan como uno: de lo que conoce el PC al último nombre: %s' % ls(e, 'renombres'))
         renombra(e, 'Txomin', 'Txomín')
-        ok(ls(e, 'renombres') == [{'de': 'Mikel', 'a': 'Mikelo'}, {'de': 'Txomin', 'a': 'Txomín'}] and cambios(e) == '2 nombres corregidos por pasar al PC', 'T85f y dos personas distintas, dos apuntes en orden: %s %r' % (ls(e, 'renombres'), cambios(e)))
+        ok(ls(e, 'renombres') == [{'de': 'Mikel', 'a': 'Mikelo'}, {'de': 'Txomin', 'a': 'Txomín'}] and cambios(e) == '2 nombres corregidos sin enviar al PC', 'T85f y dos personas distintas, dos apuntes en orden: %s %r' % (ls(e, 'renombres'), cambios(e)))
         renombra(e, 'Mikelo', 'Mikel')
         ok(ls(e, 'renombres') == [{'de': 'Txomin', 'a': 'Txomín'}] and e.filas() == ['Mikel', 'Txomín'], 'T85f si se vuelve al nombre de antes de todo, ya no hay nada que apuntar de esa persona: %s %s' % (ls(e, 'renombres'), e.filas()))
         renombra(e, 'Mikel', 'mikel')
@@ -2233,7 +2293,7 @@ with sync_playwright() as p:
         renombra(e, 'Ane', 'Anita')
         ok(ls(e, 'altas') == ['Anita', 'Iker'] and ls(e, 'renombres') == [{'de': 'Ane', 'a': 'Anita'}], 'T85h un nombre nuevo (sin jornada) que ya pudo salir en un envío se corrige apuntando el cambio y con el nombre nuevo en la lista de nuevos: %s %s' % (ls(e, 'altas'), ls(e, 'renombres')))
         renombra(e, 'Anita', 'Iker')
-        ok(ls(e, 'altas') == ['Iker'] and (ls(e, 'nuevos') or []).count('Iker') == 1 and cambios(e) == '1 nombre corregido · 1 nombre nuevo por pasar al PC', 'T85h si el nombre corregido ya era de otro nombre nuevo, no quedan repetidos: %s %s %r' % (ls(e, 'altas'), ls(e, 'nuevos'), cambios(e)))
+        ok(ls(e, 'altas') == ['Iker'] and (ls(e, 'nuevos') or []).count('Iker') == 1 and cambios(e) == '1 nombre corregido · 1 nombre nuevo sin enviar al PC', 'T85h si el nombre corregido ya era de otro nombre nuevo, no quedan repetidos: %s %s %r' % (ls(e, 'altas'), ls(e, 'nuevos'), cambios(e)))
         lote = e.exportar() or {}
         ok(lote.get('altas') == ['Iker'] and lote.get('renombres') == [{'de': 'Ane', 'a': 'Iker'}], 'T85h el fichero lleva las dos cosas: %s' % {k: lote.get(k) for k in lote})
         valida_con_p1(lote)
@@ -2242,11 +2302,11 @@ with sync_playwright() as p:
     # --- T86: el fichero y el aviso de enviar con los cambios nuevos
     def t86(e):
         e.ir()
-        ok(e.exportar(esperar=False) is None and 'no hay' in e.toast(), 'T86 sin nada que enviar sigue sin descargarse nada: %r' % e.toast())
+        ok(e.exportar(esperar=False) is None and 'no hay nada por enviar' in e.enviar_txt('#nada-que-enviar').lower(), 'T86 (08d) sin nada que enviar no hay botón ni se descarga nada: %r' % e.enviar_txt('#nada-que-enviar'))
         renombra(e, 'Mikel', 'Mikelo')
         lote = e.exportar() or {}
         ok(set(lote) == {'tipo', 'version', 'obra', 'renombres', 'jornadas'} and lote['jornadas'] == [] and lote['renombres'] == [{'de': 'Mikel', 'a': 'Mikelo'}], 'T86 solo con un nombre corregido el fichero se envía igualmente, sin jornadas: %s' % lote)
-        ok('0 jornada(s)' in e.toast() and '1 nombre(s) corregido(s)' in e.toast(), 'T86 el aviso cuenta lo enviado: %r' % e.toast())
+        ok('con 1 nombre corregido' in e.listo() and 'jornada' not in e.listo(), 'T86 (08d) el recuadro «Listo» cuenta lo enviado (sin hablar de jornadas si no hay): %r' % e.listo())
         valida_con_p1(lote)
     con_escena('T86', est8(), t86)
 
@@ -2312,6 +2372,426 @@ with sync_playwright() as p:
         ok(raro in e.txt('#toast') and e.pg.evaluate("document.querySelectorAll('#toast *').length") == 0 and e.pg.evaluate("document.querySelectorAll('#v-app .nm *').length") == 0, 'T89 el aviso lleva el nombre raro como texto: %r' % e.txt('#toast'))
     raro2 = "O'Brien \"el Rubio\" &amp; Co &lt;i&gt;"
     con_escena('T89', estado_con({'olabeaga': obra_est('2026 OLABEAGA', [], ultima={'vivienda': {'fecha': '2026-10-22', 'presentes': pres(raro, raro2, 'Mikel')}, 'garaje': None})}, [raro, raro2, 'Mikel']), t89)
+
+
+    # ======================================================================================================================
+    # Bloque del paso 08d: día nuevo con la gente anterior marcada (D5), pantalla «Enviar al PC», nombre del fichero (D7).
+    # Fecha fija: viernes 23/10/2026. Datos inventados. Escenas T90 en adelante (P3_SOLO_08D=1 corre solo estas).
+    # ======================================================================================================================
+    OB = '2026 OLABEAGA'
+
+    def viv(fecha, *nombres, horas=7.5, extra=0):
+        return [fila(fecha, 'vivienda', n, horas, extra) for n in nombres]
+
+    def gar(fecha, *nombres):
+        return [fila(fecha, 'garaje', n, 7.5) for n in nombres]
+
+    def est9(filas, catalogo, ultima_viv=None, ultima_gar=None, extra_obras=None, excep=None):
+        obras = {'olabeaga': obra_est(OB, filas, ultima={'vivienda': ultima_viv, 'garaje': ultima_gar}, excep=excep)}
+        obras.update(extra_obras or {})
+        return estado_con(obras, catalogo)
+
+    def u(fecha, *nombres):
+        return {'fecha': fecha, 'presentes': pres(*nombres)}
+
+    def rotulo(e):
+        return e.txt('#rotulo-marcados')
+
+    def pend9(fecha, nombres, ambito='vivienda', anulada=False, obra='olabeaga', horas=7.5):
+        return {'obra': obra, 'ambito': ambito, 'fecha': fecha, 'anulada': anulada,
+                'presentes': [] if anulada else [{'nombre': n, 'horas': horas, 'extra': 0} for n in nombres],
+                'notas': '', 'registrado': fecha + 'T18:00:00.000Z'}
+
+    # --- T90: el lunes mira el viernes (la última jornada anterior que existe, no el «ayer» de calendario)
+    def t90(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Ana', 'Beto'] and rotulo(e) == 'Marcados según la jornada del viernes 16/10: quita a quien no haya venido.',
+           'T90 el viernes 23/10 (ayer, 22/10, no hubo obra) sale marcada la gente del viernes 16/10: %s %r' % (e.marcados(), rotulo(e)))
+        e.fecha('2026-10-19')
+        ok(e.filas() == ['Ana', 'Beto'] and e.marcados() == ['Ana', 'Beto'] and 'viernes 16/10' in rotulo(e),
+           'T90 el lunes 19/10 mira el viernes 16/10 (no el domingo ni el jueves 15/10, que es de Carlos): %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
+        e.fecha('2026-10-14')
+        ok(e.marcados() == [] and e.pg.query_selector('#rotulo-marcados') is None,
+           'T90 el miércoles 14/10 no tiene nada ANTERIOR (lo del 15 y el 16 es posterior): no se marca a nadie y no hay rótulo: %s %r' % (e.marcados(), rotulo(e)))
+    con_escena('T90', est9(viv('2026-10-15', 'Carlos') + viv('2026-10-16', 'Ana', 'Beto'), ['Ana', 'Beto', 'Carlos'], u('2026-10-16', 'Ana', 'Beto')), t90)
+
+    # --- T90b: «la última jornada anterior» deja fuera la de la propia fecha (se prueba la función directamente: la pantalla ni la llama
+    # cuando la fecha ya tiene jornada)
+    def t90b(e):
+        e.ir(previa=True)
+        e.fecha('2026-10-16')           # el 16/10 ya tiene jornada (Ana y Beto): lo anterior es el 15/10 (Carlos)
+        r = e.pg.evaluate("jornadaAnterior()")
+        ok(r == {'fecha': '2026-10-15', 'nombres': ['Carlos']}, 'T90b la última jornada anterior al 16/10 es la del 15/10 (Carlos), no la del propio 16/10: %s' % r)
+    con_escena('T90b', est9(viv('2026-10-15', 'Carlos') + viv('2026-10-16', 'Ana', 'Beto'), ['Ana', 'Beto', 'Carlos'], u('2026-10-16', 'Ana', 'Beto')), t90b,
+               init=sembrar('sgd_personal_pendientes', [pend9('2026-10-16', ['Ana'])]))
+
+    # --- T91: viviendas y garajes por separado (y cada obra con lo suyo)
+    def t91(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T91 viviendas mira SU última jornada (miércoles 21/10: Ana): %s %r' % (e.marcados(), rotulo(e)))
+        e.clic('button[data-amb="garaje"]')
+        ok(e.marcados() == ['Hugo'] and 'jueves 22/10' in rotulo(e) and 'Ana' not in e.filas(), 'T91 garajes mira SU última jornada (jueves 22/10: Hugo) y no mezcla las de viviendas: %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
+        e.clic('button[data-amb="vivienda"]')
+        ok(e.marcados() == ['Ana'] and 'Hugo' not in e.filas(), 'T91 al volver a viviendas vuelve la suya: %s %s' % (e.filas(), e.marcados()))
+        e.obra('mungia')
+        ok(e.marcados() == ['Pepe'] and 'martes 20/10' in rotulo(e), 'T91 otra obra mira la suya (Mungia, martes 20/10: Pepe): %s %r' % (e.marcados(), rotulo(e)))
+    mun9 = {'mungia': obra_est('2026 MUNGIA', viv('2026-10-20', 'Pepe'), ultima={'vivienda': u('2026-10-20', 'Pepe'), 'garaje': None})}
+    con_escena('T91', est9(viv('2026-10-21', 'Ana') + gar('2026-10-22', 'Hugo'), ['Ana', 'Hugo', 'Pepe'], u('2026-10-21', 'Ana'), u('2026-10-22', 'Hugo'), mun9), t91)
+
+    # --- T91b: una jornada de GARAJES sin enviar no entra en la lista de viviendas (ni al revés)
+    def t91b(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T91b viviendas sigue mirando la suya (miércoles 21/10: Ana) aunque haya garajes sin enviar el jueves: %s %r' % (e.marcados(), rotulo(e)))
+        e.clic('button[data-amb="garaje"]')
+        ok(e.marcados() == ['Hugo'] and 'jueves 22/10' in rotulo(e), 'T91b garajes mira la de garajes sin enviar (jueves 22/10: Hugo): %s %r' % (e.marcados(), rotulo(e)))
+    con_escena('T91b', est9(viv('2026-10-21', 'Ana'), ['Ana', 'Hugo'], u('2026-10-21', 'Ana')), t91b,
+               init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', ['Hugo'], ambito='garaje')]))
+
+    # --- T92: cuentan las jornadas todavía sin enviar al PC (y mandan sobre las del PC)
+    def t92(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Beto'] and 'jueves 22/10' in rotulo(e) and e.filas() == ['Ana', 'Beto'],
+           'T92 una jornada sin enviar (jueves 22/10: Beto) cuenta como anterior: %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
+    con_escena('T92', est9(viv('2026-10-21', 'Ana'), ['Ana', 'Beto'], u('2026-10-21', 'Ana')), t92,
+               init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', ['beto'])]))   # «beto» en minúscula: sale como «Beto»
+
+    def t92b(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Beto'] and 'jueves 22/10' in rotulo(e),
+           'T92b la jornada corregida sin enviar (Beto) manda sobre la que ya tiene el PC de ese mismo día (Ana): %s %r' % (e.marcados(), rotulo(e)))
+    con_escena('T92b', est9(viv('2026-10-22', 'Ana'), ['Ana', 'Beto'], u('2026-10-22', 'Ana')), t92b,
+               init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', ['Beto'])]))
+
+    # --- T93: una jornada ANULADA no cuenta (la anulada sin enviar quita la del PC)
+    def t93(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T93 la jornada del jueves 22/10 está anulada: se mira la del miércoles 21/10 (Ana): %s %r' % (e.marcados(), rotulo(e)))
+        e.clic('nav button[data-v="enviar"]')
+        li = e.pg.eval_on_selector_all('.envio[data-obra="olabeaga"] li', 'e=>e.map(l=>l.textContent.trim())')
+        ok(li == ['Viviendas · jue 22/10 — jornada anulada (se quita del PC)'], 'T93 en «Enviar al PC» una jornada anulada se cuenta como anulada (no como gente): %s' % li)
+    con_escena('T93', est9(viv('2026-10-21', 'Ana') + viv('2026-10-22', 'Beto'), ['Ana', 'Beto'], u('2026-10-22', 'Beto')), t93,
+               init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', [], anulada=True)]))
+
+    def t93b(e):
+        e.ir(previa=True)
+        ok(e.marcados() == [] and e.pg.query_selector('#rotulo-marcados') is None, 'T93b si la única jornada anterior está anulada es como si no hubiera: sin marcar y sin rótulo: %s %r' % (e.marcados(), rotulo(e)))
+    con_escena('T93b', est9(viv('2026-10-22', 'Beto'), ['Beto'], u('2026-10-22', 'Beto')), t93b,
+               init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', [], anulada=True)]))
+
+    # --- T94: se marcan con las horas normales de la fecha nueva (su horario especial si lo tienen), sin extra ni notas
+    def t94(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Ana', 'Beto'] and e.horas('Ana') == '7,5 h' and e.horas('Beto') == '9 h',
+           'T94 el viernes: Ana a 7,5 h (aunque el jueves hizo 9 h) y Beto a su horario especial de 9 h: %s %r %r' % (e.marcados(), e.horas('Ana'), e.horas('Beto')))
+        ok(chip(e, 'Beto', True) == 'horario especial 9 h' and chip(e, 'Ana') == '' and chip(e, 'Beto') == '',
+           'T94 sin horas extra heredadas (ni el +1,5 h de Ana): %r %r %r' % (chip(e, 'Ana'), chip(e, 'Beto'), chip(e, 'Beto', True)))
+        ok(e.txt('.sum') == '2 presentes · 16,5 h', 'T94 el resumen: %r' % e.txt('.sum'))
+        e.clic('button[data-guardar]')
+        lote = e.exportar() or {}
+        js = {p['nombre']: p for j in lote.get('jornadas', []) for p in j['presentes']}
+        ok(js.get('Ana') == {'nombre': 'Ana', 'horas': 7.5, 'extra': 0} and js.get('Beto') == {'nombre': 'Beto', 'horas': 9, 'extra': 0},
+           'T94 la jornada guardada lleva las horas normales de hoy y extra 0: %s' % js)
+        ok(all(j['notas'] == '' for j in lote.get('jornadas', [])), 'T94 sin notas heredadas: %s' % lote.get('jornadas'))
+        valida_con_p1(lote)
+    con_escena('T94', est9([fila('2026-10-22', 'vivienda', 'Ana', 9, 1.5), fila('2026-10-22', 'vivienda', 'Beto', 9)], ['Ana', 'Beto'],
+                           {'fecha': '2026-10-22', 'presentes': [{'nombre': 'Ana', 'horas': 9, 'extra': 1.5}, {'nombre': 'Beto', 'horas': 9, 'extra': 0}]},
+                           excep={'Beto': {'vie': 9}}), t94)
+
+    def t94b(e):
+        e.ir(previa=True)
+        e.fecha('2026-10-24')
+        ok(e.marcados() == ['Ana'] and e.horas('Ana') == '¿horas?', 'T94b un sábado sin horario sale marcada pero pide las horas, como al marcar a mano: %s %r' % (e.marcados(), e.horas('Ana')))
+        e.clic('button[data-guardar]')
+        ok('faltan las horas' in e.toast() and e.pendientes() == '0', 'T94b y no se guarda sin ellas: %r %r' % (e.toast(), e.pendientes()))
+    con_escena('T94b', est9(viv('2026-10-23', 'Ana'), ['Ana'], u('2026-10-23', 'Ana')), t94b, hoy='2026-10-24T10:00:00+02:00')
+
+    # --- T95: nada se guarda hasta «Guardar jornada»
+    def t95(e):
+        e.ir(previa=True)
+        e.fecha('2026-10-19')
+        e.fecha('2026-10-23')
+        ok(e.marcados() == ['Ana', 'Beto'] and e.pendientes() == '0' and ls(e, 'pendientes') in (None, []), 'T95 abrir y cambiar de fecha no guarda ninguna jornada: %s %r %s' % (e.marcados(), e.pendientes(), ls(e, 'pendientes')))
+        e.clic('button[data-guardar]')
+        ok(e.pendientes() == '1' and [x['nombre'] for x in ls(e, 'pendientes')[0]['presentes']] == ['Ana', 'Beto'], 'T95 «Guardar jornada» sí la guarda, con los marcados: %s' % ls(e, 'pendientes'))
+        ok(e.pg.query_selector('#rotulo-marcados') is None, 'T95 una vez guardada la jornada el rótulo ya no se ve: %r' % rotulo(e))
+    con_escena('T95', est9(viv('2026-10-16', 'Ana', 'Beto'), ['Ana', 'Beto'], u('2026-10-16', 'Ana', 'Beto')), t95)
+
+    # --- T96: si la fecha YA tiene jornada (del PC o sin enviar) se ve lo guardado, como hoy
+    def t96(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Ana'] and e.filas() == ['Ana', 'Beto'] and e.pg.query_selector('#rotulo-marcados') is None,
+           'T96 con jornada del PC en esa fecha se ve lo guardado (solo Ana), sin rótulo: %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
+        e.fecha('2026-10-24')
+        e.fecha('2026-10-23')
+        ok(e.marcados() == ['Ana'] and e.pg.query_selector('#rotulo-marcados') is None, 'T96 al volver a esa fecha sigue viéndose lo guardado: %s' % e.marcados())
+    con_escena('T96', est9(viv('2026-10-22', 'Ana', 'Beto') + viv('2026-10-23', 'Ana'), ['Ana', 'Beto'], u('2026-10-22', 'Ana', 'Beto')), t96)
+
+    def t96b(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Beto'] and e.pg.query_selector('#rotulo-marcados') is None, 'T96b con jornada SIN ENVIAR en esa fecha se ve lo guardado (Beto), sin rótulo: %s %r' % (e.marcados(), rotulo(e)))
+    con_escena('T96b', est9(viv('2026-10-22', 'Ana', 'Beto'), ['Ana', 'Beto'], u('2026-10-22', 'Ana', 'Beto')), t96b,
+               init=sembrar('sgd_personal_pendientes', [pend9('2026-10-23', ['Beto'])]))
+
+    # --- T97: un borrador a medias manda (no se pisa); y conserva el rótulo al recargar
+    def t97(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Beto'] and e.pg.query_selector('#rotulo-marcados') is None, 'T97 el borrador a medias (solo Beto) manda sobre la jornada anterior (Ana y Beto): %s %r' % (e.marcados(), rotulo(e)))
+    bor97 = {'obra': 'olabeaga', 'ambito': 'vivienda', 'fecha': '2026-10-23', 'lista': [{'nombre': 'Ana', 'on': False, 'horas': None}, {'nombre': 'Beto', 'on': True, 'horas': None}]}
+    con_escena('T97', est9(viv('2026-10-22', 'Ana', 'Beto'), ['Ana', 'Beto'], u('2026-10-22', 'Ana', 'Beto')), t97, init=sembrar('sgd_personal_borrador', bor97))
+
+    def t97b(e):
+        e.ir(previa=True)
+        e.clic('#v-app .row[data-nombre="Ana"] .x')
+        ok(e.marcados() == ['Beto'], 'T97b preparación: se quita a Ana: %s' % e.marcados())
+        e.pg.reload()
+        e.pg.wait_for_selector('#obra')
+        ok(e.marcados() == ['Beto'] and 'jueves 22/10' in rotulo(e), 'T97b al recargar manda el borrador (sin Ana) y el rótulo sigue avisando de dónde salió la lista: %s %r' % (e.marcados(), rotulo(e)))
+    con_escena('T97b', est9(viv('2026-10-22', 'Ana', 'Beto'), ['Ana', 'Beto'], u('2026-10-22', 'Ana', 'Beto')), t97b)
+
+    def t97c(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Beto'] and e.pg.query_selector('#rotulo-marcados') is None, 'T97c un borrador con la marca de un día que NO es anterior no enseña rótulo: %s %r' % (e.marcados(), rotulo(e)))
+    con_escena('T97c', est9(viv('2026-10-22', 'Ana', 'Beto'), ['Ana', 'Beto'], u('2026-10-22', 'Ana', 'Beto')), t97c,
+               init=sembrar('sgd_personal_borrador', dict(bor97, prefill='2026-10-24')))
+
+    # --- T98: sin jornada anterior, como hoy (habituales sin marcar, sin rótulo)
+    def t98(e):
+        e.ir(previa=True)
+        e.fecha('2026-10-01')
+        ok(e.marcados() == [] and e.filas() == ['Ana'] and e.pg.query_selector('#rotulo-marcados') is None, 'T98 antes de la primera jornada no se marca a nadie y no hay rótulo: %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
+    con_escena('T98', est9(viv('2026-10-14', 'Ana'), ['Ana'], u('2026-10-14', 'Ana')), t98)
+
+    # --- T99: «Desmarcar todos» y «Marcar todos» siguen funcionando con la lista prerrellenada
+    def t99(e):
+        e.ir(previa=True)
+        e.clic('button[data-todos="0"]')
+        ok(e.marcados() == [], 'T99 Desmarcar todos con la lista prerrellenada: %s' % e.marcados())
+        e.clic('button[data-todos="1"]')
+        ok(e.marcados() == e.filas() == ['Ana', 'Beto'], 'T99 Marcar todos: %s %s' % (e.marcados(), e.filas()))
+    con_escena('T99', est9(viv('2026-10-21', 'Carlos') + viv('2026-10-22', 'Ana', 'Beto'), ['Ana', 'Beto', 'Carlos'], u('2026-10-22', 'Ana', 'Beto')), t99)
+
+    # --- T100: al cambiar fecha, ámbito u obra se recalcula
+    def t100(e):
+        e.ir(previa=True)
+        ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T100 punto de partida (viernes 23/10 mira el miércoles 21/10): %s %r' % (e.marcados(), rotulo(e)))
+        e.clic('button[data-dia="-2"]')                      # anteayer = 21/10, que ya tiene jornada: se ve lo guardado y desaparece el rótulo
+        ok(e.marcados() == ['Ana'] and e.pg.query_selector('#rotulo-marcados') is None, 'T100 con «Anteayer» (21/10, con jornada) se ve lo guardado y se recalcula el rótulo: %s %r' % (e.marcados(), rotulo(e)))
+        e.fecha('2026-10-20')                                # martes sin jornada: mira el lunes 19/10
+        ok(e.marcados() == ['Beto'] and 'lunes 19/10' in rotulo(e), 'T100 al cambiar de fecha (20/10) mira el 19/10: %s %r' % (e.marcados(), rotulo(e)))
+        e.fecha('2026-10-18')                                # domingo sin jornada: mira el viernes 16/10
+        ok(e.marcados() == ['Carlos'] and 'viernes 16/10' in rotulo(e), 'T100 con el domingo 18/10 mira el viernes 16/10: %s %r' % (e.marcados(), rotulo(e)))
+        e.obra('mungia')
+        ok(e.marcados() == ['Pepe'] and 'lunes 12/10' in rotulo(e), 'T100 al cambiar de obra mira la de esa obra: %s %r' % (e.marcados(), rotulo(e)))
+        e.obra('olabeaga')
+        e.clic('button[data-amb="garaje"]')
+        ok(e.marcados() == [] and e.pg.query_selector('#rotulo-marcados') is None, 'T100 al cambiar de ámbito a uno sin jornadas anteriores no se marca a nadie: %s' % e.marcados())
+    mun100 = {'mungia': obra_est('2026 MUNGIA', viv('2026-10-12', 'Pepe'), ultima={'vivienda': u('2026-10-12', 'Pepe'), 'garaje': None})}
+    con_escena('T100', est9(viv('2026-10-16', 'Carlos') + viv('2026-10-19', 'Beto') + viv('2026-10-21', 'Ana'), ['Ana', 'Beto', 'Carlos', 'Pepe'],
+                            u('2026-10-21', 'Ana'), None, mun100), t100)
+
+    # --- T101: nombres escritos distinto en el PC («mikel») salen una sola vez y con el nombre de la base
+    def t101(e):
+        e.ir(previa=True)
+        ok(e.filas() == ['Mikel'] and e.marcados() == ['Mikel'], 'T101 «mikel» del PC sale como «Mikel», una vez y marcado: %s %s' % (e.filas(), e.marcados()))
+    con_escena('T101', est9([fila('2026-10-22', 'vivienda', 'mikel', 7.5)], ['Mikel'], None), t101)   # sin «ultima»: el nombre sale SOLO de las filas del PC
+
+    # --- T104: la pantalla «Enviar al PC» sin nada que enviar
+    def t104(e):
+        e.ir()
+        ok(e.pg.eval_on_selector_all('nav button', 'e=>e.map(b=>b.textContent.trim())') == ['Anotar', 'Jornadas', 'Informe', 'Enviar al PC'],
+           'T104 las cuatro pestañas: Anotar, Jornadas, Informe y Enviar al PC: %s' % e.pg.eval_on_selector_all('nav button', 'e=>e.map(b=>b.textContent.trim())'))
+        e.clic('nav button[data-v="enviar"]')
+        ok(e.pg.is_visible('#enviar') and e.pg.query_selector('#v-app') is not None and not e.pg.is_visible('#v-app'), 'T104 la pestaña abre una pantalla de verdad')
+        ok(e.txt('#enviar h2') == 'Enviar las jornadas al PC', 'T104 título: %r' % e.txt('#enviar h2'))
+        ok(e.txt('#para-que').startswith('Para qué sirve:') and 'No se envía solo' in e.txt('#para-que') and 'el PC no se entera' in e.txt('#para-que'), 'T104 «Para qué sirve»: %r' % e.txt('#para-que'))
+        ok(e.txt('#nada-que-enviar') == 'No hay nada por enviar: todas las jornadas ya están en el PC.' and e.pg.query_selector('button[data-preparar]') is None, 'T104 sin nada que enviar lo dice y no hay botón: %r' % e.txt('#nada-que-enviar'))
+        pasos = e.pg.eval_on_selector_all('#pasos li', 'e=>e.map(l=>l.textContent.trim())')
+        ok(len(pasos) == 3 and 'CONTROL HORARIO' in pasos[0] and 'descargas' in pasos[0] and 'REVISIONES' in pasos[1] and 'como haces con las revisiones' in pasos[1] and 'actualiza la obra' in pasos[2] and '.bat' in pasos[2],
+           'T104 los 3 pasos (fichero «CONTROL HORARIO», REVISIONES como las revisiones, «actualiza la obra» o el .bat): %s' % pasos)
+        ok('siguen apuntadas aquí hasta que el PC las recibe' in e.txt('#sigue-apuntado'), 'T104 dice que las jornadas siguen apuntadas: %r' % e.txt('#sigue-apuntado'))
+    con_escena('T104', ESTADO1, t104)
+
+    # --- T105: con 2 jornadas: lista con obra, ámbito, día y gente; el fichero; el recuadro «Listo» que se queda
+    def t105(e):
+        e.ir()
+        e.clic('#v-app .row[data-nombre="Mikel"] .x')
+        e.clic('#v-app .row[data-nombre="Txomin"] .x')
+        e.clic('button[data-guardar]')
+        e.clic('button[data-amb="garaje"]')
+        e.clic('#v-app .row[data-nombre="Andoni"] .x')
+        e.clic('button[data-guardar]')
+        e.clic('button[data-amb="vivienda"]')
+        e.fecha('2026-10-20')
+        e.clic('#v-app .row[data-nombre="Mikel"] .x')
+        e.clic('button[data-guardar]')
+        e.clic('nav button[data-v="enviar"]')
+        ok(e.txt('#resumen-envio') == 'Tienes 3 jornadas sin enviar:', 'T105 resumen: %r' % e.txt('#resumen-envio'))
+        li = e.pg.eval_on_selector_all('.envio[data-obra="olabeaga"] li', 'e=>e.map(l=>l.textContent.trim())')
+        ok(li == ['Viviendas · mar 20/10 — Mikel (7,5 h)', 'Garajes · vie 23/10 — Andoni (7,5 h)', 'Viviendas · vie 23/10 — Mikel, Txomin (15 h)'],
+           'T105 cada jornada con ámbito, día y gente (por fecha): %s' % li)
+        ok(e.txt('.envio[data-obra="olabeaga"] h3') == '2026 OLABEAGA BILBAO' and e.txt('.envio[data-obra="olabeaga"] .nota') == 'Se llamará «CONTROL HORARIO 2026 OLABEAGA BILBAO 23102026»',
+           'T105 obra y nombre del fichero: %r %r' % (e.txt('.envio[data-obra="olabeaga"] h3'), e.txt('.envio[data-obra="olabeaga"] .nota')))
+        ok(e.txt('button[data-preparar="olabeaga"]') == 'Preparar el fichero para el PC' and e.pg.query_selector('#listo') is None, 'T105 botón y todavía sin recuadro «Listo»')
+        with e.pg.expect_download(timeout=5000) as d:
+            e.pg.click('button[data-preparar="olabeaga"]')
+        ok(d.value.suggested_filename == 'CONTROL HORARIO 2026 OLABEAGA BILBAO 23102026.json', 'T105 nombre del fichero descargado: %r' % d.value.suggested_filename)
+        ruta = os.path.join(e.dir, 'f105.json')
+        d.value.save_as(ruta)
+        lote = json.load(open(ruta, encoding='utf-8'))
+        ok(lote['tipo'] == 'lote_personal' and len(lote['jornadas']) == 3, 'T105 el fichero lleva las 3 jornadas: %s' % lote)
+        valida_con_p1(lote)
+        esperado = 'Listo. Se ha guardado el fichero «CONTROL HORARIO 2026 OLABEAGA BILBAO 23102026» con 3 jornadas. Ahora mándalo al PC.'
+        ok(e.txt('#listo') == esperado, 'T105 recuadro «Listo»: %r' % e.txt('#listo'))
+        e.pg.wait_for_timeout(6500)
+        ok(e.pg.is_visible('#listo') and e.txt('#listo') == esperado, 'T105 el recuadro se queda (no es un aviso que desaparece a los pocos segundos): visible=%s' % e.pg.is_visible('#listo'))
+        e.clic('nav button[data-v="app"]')
+        e.clic('nav button[data-v="enviar"]')
+        ok(e.txt('#listo') == esperado and e.pendientes() == '3', 'T105 sigue ahí al cambiar de pestaña y las jornadas siguen apuntadas (3): %r %r' % (e.txt('#listo'), e.pendientes()))
+    con_escena('T105', ESTADO1, t105)
+
+    # --- T106: singular y plural bien
+    def t106(e):
+        e.ir()
+        ok(e.txt('#pendientes') == 'Sin enviar al PC: 0 jornadas', 'T106 cero: %r' % e.txt('#pendientes'))
+        e.clic('#v-app .row[data-nombre="Mikel"] .x')
+        e.clic('button[data-guardar]')
+        ok(e.txt('#pendientes') == 'Sin enviar al PC: 1 jornada', 'T106 una: %r' % e.txt('#pendientes'))
+        e.clic('nav button[data-v="enviar"]')
+        ok(e.txt('#resumen-envio') == 'Tienes 1 jornada sin enviar:', 'T106 una en la pantalla: %r' % e.txt('#resumen-envio'))
+        e.clic('nav button[data-v="app"]')
+        e.fecha('2026-10-22')
+        e.clic('#v-app .row[data-nombre="Mikel"] .x')
+        e.clic('button[data-guardar]')
+        e.fecha('2026-10-21')
+        e.clic('#v-app .row[data-nombre="Mikel"] .x')
+        e.clic('button[data-guardar]')
+        ok(e.txt('#pendientes') == 'Sin enviar al PC: 3 jornadas', 'T106 tres: %r' % e.txt('#pendientes'))
+    con_escena('T106', ESTADO1, t106)
+
+    # --- T107: dos obras con cosas sin enviar: un bloque, un botón y un fichero por obra; cada fichero solo lleva lo suyo
+    def t107(e):
+        e.ir()
+        e.clic('#v-app .row[data-nombre="Mikel"] .x')
+        e.clic('button[data-guardar]')
+        e.obra('mungia')
+        e.clic('#v-app .row[data-nombre="Pepe"] .x')
+        e.clic('button[data-guardar]')
+        e.clic('nav button[data-v="enviar"]')
+        ids = e.pg.eval_on_selector_all('#enviar .envio[data-obra]', 'e=>e.map(b=>b.dataset.obra)')
+        ok(ids == ['mungia', 'olabeaga'], 'T107 un bloque por obra, la que se está viendo primero: %s' % ids)
+        lm = e.exportar(obra='mungia') or {}
+        nm = e.descarga
+        ok(nm == 'CONTROL HORARIO 2026 MUNGIA ACR NEINOR 23102026.json' and lm.get('obra') == 'mungia' and [p['nombre'] for j in lm.get('jornadas', []) for p in j['presentes']] == ['Pepe'],
+           'T107 el fichero de Mungia lleva solo lo de Mungia: %r %s' % (nm, lm))
+        ok(e.pendientes() == '2' and 'CONTROL HORARIO 2026 MUNGIA ACR NEINOR 23102026' in e.listo(), 'T107 las dos siguen sin enviar y el recuadro nombra el de Mungia: %r %r' % (e.pendientes(), e.listo()))
+        lo = e.exportar(obra='olabeaga') or {}
+        ok(lo.get('obra') == 'olabeaga' and [p['nombre'] for j in lo.get('jornadas', []) for p in j['presentes']] == ['Mikel'] and 'OLABEAGA BILBAO 23102026' in e.listo() and 'MUNGIA' not in e.listo(),
+           'T107 el de Olabeaga lleva solo lo suyo y el recuadro pasa a nombrar el suyo: %s %r' % (lo, e.listo()))
+    con_escena('T107', ESTADO1, t107)
+
+    # --- T108: nombre del fichero: limpio como el del generador de revisiones, y con la fecha en que se prepara (reloj de la tablet)
+    def t108(e):
+        e.ir()
+        e.clic('nav button[data-v="enviar"]')
+        lote = e.exportar(obra='rara') or {}
+        ok(e.descarga == 'CONTROL HORARIO N OBRA X 1 A B UNICA NANDU 24102026.json', 'T108 nombre limpio (mayúsculas, sin tildes, signos y barras → espacio) y fecha DEL DÍA QUE SE PREPARA en hora de la tablet (00:30 del 24/10, que en UTC aún es el 23): %r' % e.descarga)
+        ok(not re.search(r'[\\/:*?"<>|]', e.descarga), 'T108 sin caracteres que Windows no admita: %r' % e.descarga)
+        ok('CONTROL HORARIO N OBRA X 1 A B UNICA NANDU 24102026' in e.listo(), 'T108 el recuadro muestra el nombre exacto (sin .json): %r' % e.listo())
+        ok(e.pg.eval_on_selector_all('#enviar .envio[data-obra="rara"] h3', 'e=>e.map(h=>h.textContent)') == ['Ñ Obra/ "X": 1 <a>|b? Única ñandú'] and e.pg.evaluate("document.querySelectorAll('#enviar h3 *').length") == 0,
+           'T108 el nombre de la obra sale como texto, sin crear elementos')
+    rara = obra_est('Ñ Obra/ "X": 1 <a>|b? Única ñandú', [], ultima={'vivienda': u('2026-10-23', 'Pepe'), 'garaje': None})
+    con_escena('T108', estado_con({'olabeaga': obra_est(OB, []), 'rara': rara}, ['Pepe']), t108, hoy='2026-10-24T00:30:00+02:00',
+               init=sembrar('sgd_personal_pendientes', [pend9('2026-10-23', ['Pepe'], obra='rara')]))
+
+    # --- T109: la limpieza del nombre es LA MISMA que la del generador de revisiones (se prueba con su código, no con una copia)
+    def t109(e):
+        e.ir()
+        fuente = open(os.path.join(TRABAJO, 'generador_revisiones.html'), encoding='utf-8').read()
+        m = re.search(r'function safeRevisionWorkName\(value\)\{.*?\n\}', fuente, re.S)
+        ok(m is not None, 'T109 no se encuentra safeRevisionWorkName en generador_revisiones.html')
+        if m is None:
+            return
+        casos = ['2026 OLABEAGA BILBAO', 'Ñandú / Órgano "X"', 'a:b*c?d<e>f|g\\h', '   muchos    espacios  ', 'ÀÉÎÕÜ ç', '2026-MUNGIA_ACR (NEINOR)', 'tab\tray']
+        for c in casos:
+            ref = e.pg.evaluate("([src,v])=>new Function('v', src+';return safeRevisionWorkName(v)')(v)", [m.group(0), c])
+            mia = e.pg.evaluate("v=>nombreSeguro(v)", c)
+            ok(ref == mia, 'T109 «%s»: el generador de revisiones da %r y la tablet %r' % (c, ref, mia))
+        ok(e.pg.evaluate("nombreSeguro('')") == 'OBRA' and e.pg.evaluate("nombreSeguro('€€€')") == 'OBRA', 'T109 si no queda nada, «OBRA» (como el generador para un nombre vacío)')
+    con_escena('T109', ESTADO1, t109)
+
+    # --- T110: horarios especiales, cambio de horario y nombres también salen en la lista y en el recuadro, en llano
+    def t110(e):
+        e.ir()
+        e.clic('nav button[data-v="enviar"]')
+        lis = e.pg.eval_on_selector_all('#enviar .envio li', 'e=>e.map(l=>l.textContent.trim())')
+        ok(lis == ['Viviendas · vie 23/10 — Mikel (7,5 h)', 'Cambio del horario semanal de la obra', '1 horario especial: Mikel', '1 nombre corregido: «Rafa» → «Rafael»', '2 nombres nuevos: Ane, Iker'],
+           'T110 la lista dice todo lo que se enviará: %s' % lis)
+        e.exportar()
+        ok(e.listo().endswith('con 1 jornada, el cambio del horario de la obra, 1 horario especial, 1 nombre corregido y 2 nombres nuevos. Ahora mándalo al PC.'),
+           'T110 el recuadro lo cuenta en llano: %r' % e.listo())
+    pend110 = [pend9('2026-10-23', ['Mikel'])]
+    init110 = (sembrar_varios({'sgd_personal_pendientes': pend110, 'sgd_personal_horarios': {'olabeaga': [0, 8, 8, 8, 8, 8, 0]},
+                               'sgd_personal_excepciones': {'olabeaga': {'Mikel': {'vie': 9}}}, 'sgd_personal_renombres': [{'de': 'Rafa', 'a': 'Rafael'}],
+                               'sgd_personal_altas': ['Ane', 'Iker'], 'sgd_personal_nuevos': ['Ane', 'Iker']}))
+    con_escena('T110', ESTADO1, t110, init=init110)
+
+    # --- T110b: solo un horario especial (sin jornadas ni cambio de horario) también se ofrece para enviar
+    def t110b(e):
+        e.ir()
+        e.clic('nav button[data-v="enviar"]')
+        lis = e.pg.eval_on_selector_all('#enviar .envio[data-obra="olabeaga"] li', 'e=>e.map(l=>l.textContent.trim())')
+        ok(lis == ['1 horario especial: Mikel'] and e.pg.query_selector('button[data-preparar="olabeaga"]') is not None,
+           'T110b solo con un horario especial hay bloque, lista y botón: %s' % lis)
+        lote = e.exportar() or {}
+        ok(lote.get('excepciones_horario') == {'Mikel': {'vie': 9}} and lote.get('jornadas') == [] and e.listo().endswith('con 1 horario especial. Ahora mándalo al PC.'),
+           'T110b el fichero lleva el horario especial y el recuadro lo cuenta: %s %r' % (lote, e.listo()))
+    con_escena('T110b', ESTADO1, t110b, init=sembrar('sgd_personal_excepciones', {'olabeaga': {'Mikel': {'vie': 9}}}))
+
+    # --- T111: solo nombres (sin jornadas) también tienen su bloque y su botón; y nada de eso se ve si no hay nada
+    def t111(e):
+        e.ir()
+        e.clic('nav button[data-v="enviar"]')
+        ok(e.txt('#resumen-envio') == 'Tienes cambios sin enviar:' and e.pg.query_selector('#envio-nombres') is not None and e.pg.query_selector('button[data-preparar="olabeaga"]') is not None,
+           'T111 solo con nombres nuevos hay bloque de nombres y botón para la obra que se ve: %r' % e.txt('#resumen-envio'))
+        lote = e.exportar() or {}
+        ok(lote.get('altas') == ['Ane'] and lote.get('jornadas') == [] and 'con 1 nombre nuevo.' in e.listo(), 'T111 el fichero lleva el nombre nuevo y ninguna jornada: %s %r' % (lote, e.listo()))
+    con_escena('T111', ESTADO1, t111, init=sembrar_varios({'sgd_personal_altas': ['Ane'], 'sgd_personal_nuevos': ['Ane']}))
+
+    # --- T112: textos de la pantalla de anotar: «Enviar al PC» lleva a la pantalla, «Borrar lo que llevo a medias» pregunta antes
+    def t112(e):
+        e.ir()
+        ok(e.txt('#v-app button[data-v="enviar"]') == 'Enviar al PC' and e.txt('#v-app button[data-reset]') == 'Borrar lo que llevo a medias',
+           'T112 botones de abajo: %r %r' % (e.txt('#v-app button[data-v="enviar"]'), e.txt('#v-app button[data-reset]')))
+        e.clic('#v-app button[data-v="enviar"]')
+        ok(e.pg.is_visible('#enviar'), 'T112 «Enviar al PC» (abajo) abre la pantalla de enviar')
+        e.clic('nav button[data-v="app"]')
+        ok(e.txt('.bar small') == 'Funciona sin cobertura: sí', 'T112 cabecera: %r' % e.txt('.bar small'))
+        e.clic('button[data-reset]')
+        ok(e.txt('#confirmar-reset').startswith('¿Borrar lo que llevas a medias?'), 'T112 pregunta antes de borrar: %r' % e.txt('#confirmar-reset'))
+    con_escena('T112', ESTADO1, t112)
+
+    # --- T113: nada de lo que se escribe a mano se interpreta como HTML en la pantalla de enviar
+    def t113(e):
+        e.ir()
+        e.clic('nav button[data-v="enviar"]')
+        ok(e.pg.evaluate("document.querySelectorAll('#enviar li *, #enviar h3 *, #enviar .nota *').length") == 0 and raro in e.txt('#enviar .envio li'),
+           'T113 el nombre raro sale como texto en la lista de lo que se envía: %r' % e.txt('#enviar .envio li'))
+        e.exportar()
+        ok(raro in e.listo() or 'con 1 jornada' in e.listo(), 'T113 el recuadro sale: %r' % e.listo())
+    con_escena('T113', estado_con({'olabeaga': obra_est(OB, [], ultima={'vivienda': u('2026-10-22', raro), 'garaje': None})}, [raro]), t113,
+               init=sembrar('sgd_personal_pendientes', [pend9('2026-10-23', [raro])]))
+
+    # --- T114: en un iPad estrecho (320 px) y en una tableta (820 px) la pantalla cabe y los botones se pueden pulsar
+    def t114(e):
+        e.ir()
+        e.clic('nav button[data-v="enviar"]')
+        ok(e.pg.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1"), 'T114 la pantalla de enviar no se sale de ancho (%s px)' % e.pg.viewport_size['width'])
+        caja = e.pg.eval_on_selector('button[data-preparar]', 'b=>{const r=b.getBoundingClientRect();return [r.width,r.height]}')
+        ok(caja[1] >= 48 and caja[0] >= 150, 'T114 el botón es grande para el dedo: %s' % caja)
+    for ancho in (320, 820):
+        con_escena('T114', ESTADO1, t114, ancho=ancho, alto=900, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', ['Mikel'])]))
+
+    # Fin del bloque del paso 08d
 
     # Fin del bloque del paso 08c
     ok(not errs, 'errores de JavaScript: %s' % errs)
