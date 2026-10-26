@@ -11,6 +11,11 @@ Uso:
     python cerrar_obra.py <id_obra>              # informa, no toca nada
     python cerrar_obra.py <id_obra> --ejecutar   # lo hace
 
+No cierra una obra a la que le quede un CONTROL HORARIO sin aplicar en su
+`REVISIONES/`: al salir del registro, ni «actualiza la obra» ni el `.bat` la
+recorren y las jornadas de ese fichero no llegarian nunca al ranking. Lo dice
+tambien la vista previa (sin `--ejecutar`) y sale con codigo 1.
+
 Diseno: _SISTEMA/docs/superpowers/specs/2026-08-13-cierre-de-obra-design.md
 """
 from __future__ import annotations
@@ -25,6 +30,13 @@ import sys
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+if str(BASE_DIR) not in sys.path:
+    sys.path.insert(0, str(BASE_DIR))
+
+import lector_control_horario as lector  # noqa: E402
+import personal_obra as po  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parents[2]
 OBRAS_ABIERTAS = "SAGARDE OBRAS ABIERTAS"
@@ -94,6 +106,81 @@ def estado_de_cierre(raiz: Path, obra: dict) -> dict:
         "ultima_revision": ultima,
         "pct": _pct_publicado(raiz, obra["nombre"]),
     }
+
+
+# ─── Controles horarios sin aplicar ───────────────────────────────────────
+def _situacion_de(ficha: dict) -> str:
+    """Una frase llana de en que situacion esta un control horario sin aplicar."""
+    textos = [m.get("texto") for m in (ficha.get("motivos") or []) + (ficha.get("avisos") or [])
+              if isinstance(m, dict) and m.get("texto")]
+    primero = textos[0] if textos else ""
+    if ficha.get("estado") == lector.LISTO:
+        return "listo para aplicar"
+    if ficha.get("estado") == lector.A_REVISAR:
+        return "hay que mirarlo antes de aplicarlo" + (f": {primero}" if primero else "")
+    if ficha.get("estado") == lector.RECHAZADO:
+        return "no vale tal como esta" + (f": {primero}" if primero else "")
+    return primero or "sin aplicar"
+
+
+def controles_sin_aplicar(raiz: Path, obra: dict) -> dict:
+    """Los `CONTROL HORARIO` de `<obra>/REVISIONES` que aun no se han aplicado.
+
+    Un control esta aplicado si su SHA256 consta en la traza de la obra
+    (`personal_jornadas.jsonl`), igual que lo decide «actualiza la obra». Si no
+    se puede saber —carpeta ilegible, traza ilegible, un fichero que no se deja
+    leer— no se da por aplicado: la comprobacion falla hacia el lado de NO
+    cerrar. `error` lleva el motivo y `pendientes` los ficheros que no se
+    pueden dar por aplicados (con su situacion en llano, que solo informa: lo
+    que bloquea es el SHA256).
+    """
+    raiz = Path(raiz)
+    obras = {obra["id"]: obra["carpeta_obra"]}
+    info = {"pendientes": [], "aplicados": 0, "error": None}
+    try:
+        ficheros = lector.listar(_carpeta_obra(raiz, obra) / "REVISIONES")
+        recibidos = po.shas_recibidos(raiz / OBRAS_ABIERTAS, obras, obra["id"])
+    except Exception as exc:  # noqa: BLE001 - no poder comprobar tambien bloquea el cierre
+        info["error"] = f"{type(exc).__name__}: {exc}"
+        return info
+    # un fichero que no se deja leer tiene sha256 None: no esta en `recibidos`, asi que cuenta como sin aplicar
+    sin_aplicar = [f for f in ficheros if f["sha256"] not in recibidos]
+    info["aplicados"] = len(ficheros) - len(sin_aplicar)
+    situaciones: dict = {}
+    if sin_aplicar:
+        try:
+            analisis = lector.analizar(obra["id"], ficheros, datetime.now().strftime("%Y-%m-%d"),
+                                       str(raiz / OBRAS_ABIERTAS), obras)
+            situaciones = {f["ruta"]: _situacion_de(f) for f in analisis["ficheros"]}
+        except Exception as exc:  # noqa: BLE001 - la situacion es solo informacion
+            situaciones = {f["ruta"]: f"no se ha podido revisar ({type(exc).__name__})" for f in sin_aplicar}
+    for f in sin_aplicar:
+        info["pendientes"].append({
+            "nombre": f["nombre"],
+            "situacion": situaciones.get(f["ruta"], "sin aplicar") if f["error"] is None
+            else f"no se puede leer ({f['error']})",
+        })
+    return info
+
+
+def texto_de_controles(obra: dict, info: dict) -> str:
+    """Lo que se le dice a quien cierra cuando quedan controles horarios sin aplicar (vacio si no hay motivo)."""
+    if info["error"]:
+        return ("No se ha podido comprobar si quedan controles horarios sin aplicar en "
+                f"{obra['carpeta_obra']}/REVISIONES ({info['error']}). Por prudencia no se cierra la obra.")
+    if not info["pendientes"]:
+        return ""
+    n = len(info["pendientes"])
+    cuantos = "Queda 1 control horario" if n == 1 else f"Quedan {n} controles horarios"
+    lineas = [f"{cuantos} sin aplicar en {obra['carpeta_obra']}/REVISIONES:"]
+    lineas += [f"  - «{p['nombre']}»: {p['situacion']}" for p in info["pendientes"]]
+    lineas += [
+        "Si se cierra la obra ahora nadie los aplica (sale del registro y «actualiza la obra» ya no la",
+        "recorre): sus jornadas no llegarian nunca al ranking.",
+        f"Antes de cerrar: di «actualiza la obra {obra['id']}». Si algun fichero no hay que aplicarlo,",
+        "sacalo de la carpeta REVISIONES.",
+    ]
+    return "\n".join(lineas)
 
 
 # ─── El registro unico ────────────────────────────────────────────────────
@@ -282,10 +369,15 @@ def cerrar(raiz: Path, id_obra: str, ejecutar: bool = False) -> dict:
             f"Ya hay una obra archivada con ese nombre: {destino_previsto}.")
 
     estado = estado_de_cierre(raiz, obra)
+    controles = controles_sin_aplicar(raiz, obra)
+    bloqueo = texto_de_controles(obra, controles)
     resultado = {"estado": estado, "movida": False, "destino": None,
-                 "adaptador": None, "cierre": None}
+                 "adaptador": None, "cierre": None,
+                 "controles": controles, "bloqueo_controles": bloqueo}
     if not ejecutar:
         return resultado
+    if bloqueo:
+        raise CierreAbortado(bloqueo)
 
     implicadas = [
         f"{OBRAS_ABIERTAS}/{obra['carpeta_obra']}",
@@ -341,6 +433,16 @@ def _informe(estado: dict) -> str:
     ])
 
 
+def _informe_controles(controles: dict, bloqueo: str) -> str:
+    """El apartado «Controles horarios» del informe (siempre sale: un 0 no se calla)."""
+    if bloqueo:
+        return "\n".join(["  [NO SE PUEDE CERRAR]"] + ["  " + l for l in bloqueo.splitlines()])
+    n = controles["aplicados"]
+    if n == 0:
+        return "  Controles horarios: no hay ninguno en REVISIONES"
+    return f"  Controles horarios: {n} en REVISIONES, todos aplicados"
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(
         description="Cierra una obra y la manda a SAGARDE (OLD)/OBRAS CERRADAS.")
@@ -358,6 +460,12 @@ def main(argv=None) -> int:
     estado = resultado["estado"]
     print("\nAsi esta la obra ahora mismo:\n")
     print(_informe(estado))
+    print()
+    print(_informe_controles(resultado["controles"], resultado["bloqueo_controles"]))
+
+    if resultado["bloqueo_controles"]:
+        print("\n  No se ha movido nada y no se puede cerrar hasta resolver lo de arriba.\n")
+        return 1
 
     if not resultado["movida"]:
         print("\n  No se ha movido nada. Para cerrarla de verdad:")

@@ -26,10 +26,11 @@ cd "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA" && python cerrar_obra.py
 
 3. Enseñarle ese informe —avance, última revisión y desglose `X/M///P/?/N`— y
    que confirme.
-4. Si la obra tiene Personal en obra: comprobar que **no queda ningún `CONTROL HORARIO` sin aplicar** en su `REVISIONES/`
-   (`py -3.11 _SISTEMA/MOTOR/scripts/actualizar_obra.py <id_obra>` debe decir «No hay controles horarios nuevos»). Si hay alguno,
-   aplicarlo antes con «actualiza la obra» (skill `sagarde-actualizar-obra`): **después de cerrar nadie lo aplica** (la obra sale
-   del registro y ni «actualiza la obra» ni el `.bat` la recorren), y `cerrar_obra.py` hoy no lo comprueba.
+4. Mirar el apartado **«Controles horarios»** del informe (el mismo comando del punto 2 lo da): si dice `[NO SE PUEDE CERRAR]`,
+   queda al menos un `CONTROL HORARIO` sin aplicar en `REVISIONES/` y `cerrar_obra.py` **se niega a cerrar** (también con
+   `--ejecutar`, antes de mover nada). Hay que aplicarlo con «actualiza la obra» (skill `sagarde-actualizar-obra`) o, si el fichero
+   no hay que aplicarlo, sacarlo de la carpeta. Motivo: **después de cerrar nadie lo aplica** (la obra sale del registro y ni
+   «actualiza la obra» ni el `.bat` la recorren). Si el script no puede comprobarlo (carpeta o traza ilegibles) tampoco cierra.
 
 Los `id` válidos salen del propio error si te equivocas, o de
 `registro_obras.py`.
@@ -47,7 +48,8 @@ terminó: avance, desglose completo, última revisión y el commit desde el que
 se cerró.
 
 **Aborta sin mover nada** si la obra no está en el registro, si su carpeta no
-existe, si ya hay una obra archivada con ese nombre, o si hay cambios sin
+existe, si ya hay una obra archivada con ese nombre, si queda un `CONTROL HORARIO`
+sin aplicar en su `REVISIONES/` (o no se puede comprobar), o si hay cambios sin
 commitear en la carpeta de la obra, su adaptador o el registro.
 
 ## Después
@@ -86,8 +88,8 @@ cd "_SISTEMA/MOTOR" && python -m unittest discover -s tests
   cubre las obras abiertas); quedan en disco (y en el historial de git si ya se habían publicado
   antes de cerrar). Ver la skill `sagarde-personal`.
 - **Los `CONTROL HORARIO … .json` de `REVISIONES/`** ya aplicados se quedan ahí, dentro de la carpeta
-  archivada, como el original de cada hoja (nunca se publican). Los que estén sin aplicar, **se aplican
-  antes de cerrar** (ver «Antes de tocar nada», punto 4).
+  archivada, como el original de cada hoja (nunca se publican). Los que estén sin aplicar **impiden cerrar**
+  (el script se niega; ver «Antes de tocar nada», punto 4).
 
 ## Si hay que deshacerlo
 
