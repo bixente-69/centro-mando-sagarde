@@ -17,6 +17,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -396,6 +397,49 @@ class TestLenguajeDeLaApp(unittest.TestCase):
         self.assertEqual([], sorted(set(problemas)), "\n".join(sorted(set(problemas))[:30]))
 
 
+class TestLenguajeDeLaSumaPorEmpresa(unittest.TestCase):
+    """Paso 08c2b: el bloque «Por empresa» se escribe una sola vez (personal_calculo.js) y lo enseñan los cuatro sitios, así que se
+    revisan todos sus estados: con autónomos, sin empresas, con alguien que sale con dos empresas, y su nota y su aviso."""
+
+    GUION = """
+const C = require(process.argv[2]);
+const f = (nombre, empresa, horas, fecha) => ({ fecha: fecha || '2026-10-19', ambito: 'vivienda', nombre, horas: horas || 7.5, extra: 0, empresa });
+const casos = [
+  [f('Ana', 'Manueles'), f('Beto', 'CATERSYSTEM'), f('Dani', 'Dani @AUT'), f('Eli', 'Eli@aut'), f('Fran', '')],
+  [f('Ana', ''), f('Beto', '')],
+  [f('Ana', 'Manueles'), f('Ana', 'CATERSYSTEM', 7.5, '2026-10-20')],
+  [f('Ana', 'Manueles', 7.5), f('Beto', 'Manueles', 7.5)],
+  [],
+];
+const salida = casos.map(c => C.htmlPorEmpresa(C.agregarPorEmpresa(c), {}));
+salida.push(C.textoAvisoEmpresas(C.agregarPorEmpresa(casos[2])));
+console.log(JSON.stringify(salida));
+"""
+
+    def test_el_bloque_por_empresa_no_usa_palabras_de_programador(self):
+        node = shutil.which("node")
+        if not node:
+            self.skipTest("falta node: NO se ha revisado el lenguaje del bloque «Por empresa»")
+        base = Path(os.environ.get("P3_TMP") or tempfile.gettempdir()) / ("lenguaje_suma_" + uuid.uuid4().hex[:8])
+        base.mkdir(parents=True)
+        self.addCleanup(shutil.rmtree, str(base), True)
+        guion = base / "bloques.js"
+        guion.write_text(self.GUION, encoding="utf-8")
+        p = subprocess.run([node, str(guion), str(APP_DIR / "personal_calculo.js")], capture_output=True, timeout=60)
+        self.assertEqual(0, p.returncode, p.stderr.decode("utf-8", "replace"))
+        bloques = json.loads(p.stdout.decode("utf-8"))
+        textos = []
+        for bloque in bloques:
+            textos.extend(t.strip() for t in re.findall(r">([^<>]+)<", bloque) if t.strip())
+        textos.append(bloques[-1])
+        self.assertGreater(len(textos), 40, "se han revisado muy pocos textos del bloque «Por empresa»: la guarda no está mirando lo que debe")
+        todo = " ".join(textos)
+        for frase in ("Por empresa", "Sin empresa", "Total autónomos (@AUT)", "no se suman otra vez", "con más de una empresa"):
+            self.assertIn(frase, todo, "falta en lo revisado: " + frase)
+        problemas = revisar(textos, "suma por empresa")
+        self.assertEqual([], sorted(set(problemas)), chr(10).join(sorted(set(problemas))[:30]))
+
+
 class TestLenguajeDelPC(unittest.TestCase):
     def test_los_avisos_y_las_lineas_del_pc_no_usan_palabras_de_programador(self):
         textos = textos_del_pc()
@@ -426,7 +470,8 @@ class TestElDetectorDeLenguaje(unittest.TestCase):
     def test_no_salta_con_lenguaje_de_electricista(self):
         for texto in ["Enviar al PC", "Sin enviar al PC: 3 jornadas", "Borrar lo que llevo a medias", "horario especial 9 h",
                       "Lista de trabajadores y obras al día: 25/10/2026 15:59", "Funciona sin cobertura: sí",
-                      "Es importante mirar la carpeta REVISIONES", "Nombre nuevo: «Asensio» no estaba en la base; se añade."]:
+                      "Es importante mirar la carpeta REVISIONES", "Nombre nuevo: «Asensio» no estaba en la base; se añade.",
+                      "Por empresa", "Sin empresa", "Total autónomos (@AUT)", "Hay una persona con más de una empresa (Ana)"]:
             self.assertEqual([], palabras_prohibidas(texto), texto)
 
 

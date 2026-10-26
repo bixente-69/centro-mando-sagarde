@@ -368,6 +368,57 @@
       .n {
         text-align: right;
       }
+      /* ---- Informe: la empresa junto al nombre y la tabla «Por empresa» ---- */
+      .nom-emp {
+        display: block;
+        word-break: normal;
+        overflow-wrap: normal;
+        font-size: 10px;
+        color: var(--muted);
+        line-height: 1.2;
+      }
+      .emp-titulo {
+        margin: 18px 0 4px;
+        font-size: 14px;
+      }
+      table.emp-tabla {
+        border-collapse: collapse;
+        width: 100%;
+        table-layout: fixed;
+        font-size: 11px;
+      }
+      table.emp-tabla th,
+      table.emp-tabla td {
+        padding: 7px 2px;
+        border-bottom: 1px solid #edf0f4;
+        overflow-wrap: break-word;
+      }
+      .emp-bloque {
+        margin-bottom: 12px;
+      }
+      table.emp-tabla th {
+        font-size: 10px;
+        color: var(--muted);
+        text-align: left;
+        vertical-align: bottom;
+      }
+      table.emp-tabla th:first-child,
+      table.emp-tabla td:first-child {
+        width: 30%;
+      }
+      table.emp-tabla tr.emp-sin td {
+        color: var(--muted);
+      }
+      table.emp-tabla tfoot td {
+        border-top: 2px solid #cfd6e0;
+        border-bottom: 0;
+        font-weight: 700;
+      }
+      table.emp-tabla tfoot tr.emp-total-aut td {
+        border-top: 1px dashed #cfd6e0;
+        font-style: italic;
+        font-weight: 600;
+      }
       .impacto {
         display: grid;
         grid-template-columns: 90px 1fr 50px;
@@ -1641,15 +1692,16 @@
           `${mesesCortos[hasta[1] - 1]} ${hasta[0]}`
         );
       }
-      // Genera la vista de informe con agregados de horas, días, porcentaje de impacto y barras
-      // gráficas relativas
+      // Genera la vista de informe con agregados de horas, días, porcentaje de impacto, la suma por
+      // empresa y barras gráficas relativas
       function infoView() {
+        // Cada fila lleva la empresa de su persona tal como la ve esta tablet (lo apuntado aquí manda).
         let filas = PersonalCalculo.filtrar(rowState(), {
           obra: a.obra,
           ambito: a.scope,
           periodo: a.p,
           ref: a.ref,
-        });
+        }).map((fila) => ({ ...fila, empresa: empresaDe(fila.nombre) }));
         let informe = PersonalCalculo.agregar(filas);
         let controles =
           `<div class="ctl"><div class="seg">` +
@@ -1691,7 +1743,8 @@
           `${informe.trabajadores
             .map(
               (persona) =>
-                `<tr><td>${E(persona.nombre)}</td><td class="n">${N(persona.dias)}</td><td class="n">` +
+                `<tr><td>${E(persona.nombre)}${persona.empresa ? `<span class="nom-emp">${E(persona.empresa)}</span>` : ''}` +
+                `</td><td class="n">${N(persona.dias)}</td><td class="n">` +
                 `${N(persona.ordinarias)}</td><td class="n">${N(persona.extra)}</td><td class="n">` +
                 `${N(persona.horas)}</td><td class="n">${N(persona.pct)} %</td></tr>`,
             )
@@ -1706,8 +1759,18 @@
               `%"></i></div><b>${N(persona.pct)} %</b></div>`,
           )
           .join('');
+        // La suma por empresa sale del mismo cálculo y del mismo bloque que la pestaña, el informe y el ranking.
+        let porEmpresa = PersonalCalculo.htmlPorEmpresa(PersonalCalculo.agregarPorEmpresa(filas), {
+          bloque: 'emp-bloque',
+          titulo: 'emp-titulo',
+          aviso: 'aviso',
+          scroll: 'wrapx',
+          tabla: 'emp-tabla',
+          nota: 'nota',
+          pct: '% de impacto',
+        });
         return (
-          `<div class="card"><h2>Informe de personal</h2>${controles}${periodo}${tabla}` +
+          `<div class="card"><h2>Informe de personal</h2>${controles}${periodo}${tabla}${porEmpresa}` +
           `${barras}<p class="nota">Los porcentajes se redondean a 1 decimal; por eso pueden ` +
           `sumar 99,9 o 100,1.</p></div>`
         );

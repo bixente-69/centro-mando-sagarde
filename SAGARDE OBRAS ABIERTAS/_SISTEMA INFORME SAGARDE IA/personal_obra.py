@@ -1313,7 +1313,7 @@ def fusionar(raiz, origen, destino, escribir=False, ahora=None):
 
 
 def aplanar(raiz, obras, obra, estado=None):
-    """Convierte jornadas activas en filas planas de cálculo.
+    """Convierte jornadas activas en filas planas de cálculo (con la empresa de la persona, si la tiene).
     Ordena el resultado por fecha, ámbito y trabajador.
     """
     catalogo = estado["cat"] if estado is not None else cargar_catalogo(raiz)
@@ -1325,15 +1325,20 @@ def aplanar(raiz, obras, obra, estado=None):
         if j["anulada"]:
             continue
         for p in j["presentes"]:
-            out.append(
-                {
-                    "fecha": j["fecha"],
-                    "ambito": j["ambito"],
-                    "nombre": mp[rs[p["id"]]]["nombre"],
-                    "horas": p["horas"],
-                    "extra": p.get("extra", 0),
-                }
-            )
+            persona = mp[rs[p["id"]]]
+            fila = {
+                "fecha": j["fecha"],
+                "ambito": j["ambito"],
+                "nombre": persona["nombre"],
+                "horas": p["horas"],
+                "extra": p.get("extra", 0),
+            }
+            # La empresa va en la fila solo si la persona la tiene: «sin empresa» es no tener la clave, y así
+            # lo que se publica de quien no usa empresas no cambia ni un byte.
+            empresa = limpiar_nombre(persona.get("empresa"))
+            if empresa:
+                fila["empresa"] = empresa
+            out.append(fila)
     return sorted(out, key=lambda x: (x["fecha"], x["ambito"], x["nombre"]))
 
 

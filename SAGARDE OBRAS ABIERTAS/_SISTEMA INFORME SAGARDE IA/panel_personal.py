@@ -219,6 +219,29 @@ _CSS_PANEL_PERSONAL = """\
   margin-top: 14px;
   line-height: 1.4;
 }
+#pers-raiz .pers-emp {
+  display: block;
+  word-break: normal;
+  overflow-wrap: normal;
+  font-size: 11.5px;
+  font-weight: 400;
+  color: var(--muted, #647184);
+  line-height: 1.2;
+}
+#pers-raiz .pers-tabla tr.emp-sin td {
+  color: var(--muted, #647184);
+}
+#pers-raiz [data-por-empresa] .pers-tabla td:first-child {
+  overflow-wrap: break-word;
+  word-break: normal;
+  max-width: none;
+}
+#pers-raiz .pers-tabla tfoot tr.emp-total-aut td {
+  border-top: 1px dashed var(--line, #e3e7ee);
+  font-style: italic;
+  font-weight: 600;
+  padding-top: 6px;
+}
 @media (max-width: 480px) {
   #pers-raiz .pers-tabla {
     font-size: 11px;
@@ -233,6 +256,13 @@ _CSS_PANEL_PERSONAL = """\
   }
   #pers-raiz .pers-tabla td:first-child {
     max-width: 90px;
+  }
+  #pers-raiz .pers-emp {
+    font-size: 10px;
+    letter-spacing: -0.2px;
+  }
+  #pers-raiz .pers-tabla th {
+    letter-spacing: 0;
   }
   #pers-raiz .pers-nom {
     width: 90px;
@@ -465,6 +495,29 @@ _CSS_INFORME_PERSONAL = """\
   margin-top: 10px;
   line-height: 1.4;
 }
+#pinf-raiz .pinf-emp {
+  display: block;
+  word-break: normal;
+  overflow-wrap: normal;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--muted, #647184);
+  line-height: 1.2;
+}
+#pinf-raiz .pinf-tabla tr.emp-sin td {
+  color: var(--muted, #647184);
+}
+#pinf-raiz [data-por-empresa] .pinf-tabla td:first-child {
+  overflow-wrap: break-word;
+  word-break: normal;
+  max-width: none;
+}
+#pinf-raiz .pinf-tabla tfoot tr.emp-total-aut td {
+  border-top: 1px dashed var(--line, #e3e7ee);
+  font-style: italic;
+  font-weight: 600;
+  padding-top: 5px;
+}
 @media (max-width: 480px) {
   #pinf-raiz .pinf-ctl {
     gap: 6px;
@@ -472,6 +525,10 @@ _CSS_INFORME_PERSONAL = """\
   #pinf-raiz .pinf-seg button {
     padding: 6px 10px;
     font-size: 12px;
+  }
+  #pinf-raiz .pinf-emp {
+    font-size: 10px;
+    letter-spacing: -0.2px;
   }
   #pinf-raiz .pinf-nom {
     width: 90px;
@@ -529,6 +586,14 @@ _CSS_INFORME_PERSONAL = """\
     break-after: avoid;
     page-break-after: avoid;
   }
+  /* La suma por empresa es corta: va entera en una página. */
+  #pinf-raiz .pinf-bloque-empresa {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  #pinf-raiz .pinf-emp {
+    font-size: 7.5pt;
+  }
   /* Un gráfico que cabe en una página va entero en una; si es más largo, se parte entre barras. */
   #pinf-raiz .pinf-bloque-impacto {
     break-inside: avoid;
@@ -568,6 +633,12 @@ _JS_AYUDAS = """\
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#39;');
+  }
+
+  function etiquetaEmpresa(empresa, clase) {
+    // La empresa va en pequeño junto al nombre; quien no la tiene no lleva nada.
+    if (!empresa) return '';
+    return '<span class="' + clase + '">' + escaparHtml(empresa) + '</span>';
   }"""
 
 _JS_VISTA_PERSONAL_PLANTILLA = """\
@@ -758,7 +829,7 @@ __AYUDAS__
       var t = trabajadores[tIdx];
       var pctStr = (t.pct !== null) ? (formatearNum(t.pct) + ' %') : '–';
       html += '<tr>' +
-        '<td><b>' + escaparHtml(t.nombre) + '</b></td>' +
+        '<td><b>' + escaparHtml(t.nombre) + '</b>' + etiquetaEmpresa(t.empresa, 'pers-emp') + '</td>' +
         '<td class="n">' + t.dias + '</td>' +
         '<td class="n">' + formatearNum(t.ordinarias) + '</td>' +
         '<td class="n">' + formatearNum(t.extra) + '</td>' +
@@ -776,6 +847,12 @@ __AYUDAS__
       '<td class="n">' + formatearNum(total.horas) + '</td>' +
       '<td class="n">' + pctTotalStr + '</td>' +
       '</tr></tfoot></table></div>';
+
+    // 3b. Suma por empresa: el mismo cálculo y el mismo bloque que el informe, el ranking y la tablet
+    html += window.PersonalCalculo.htmlPorEmpresa(window.PersonalCalculo.agregarPorEmpresa(filtradas), {
+      bloque: 'pers-bloque-empresa', titulo: 'pers-ih', aviso: 'pers-aviso', scroll: 'pers-scroll',
+      tabla: 'pers-tabla', nota: 'pers-nota', pct: '% impacto'
+    });
 
     // 4 y 5. Barras de impacto y nota explicativa (solo si total.horas > 0)
     if (total.horas > 0 && trabajadores.length > 0) {
@@ -1051,7 +1128,9 @@ __AYUDAS__
 
       for (var fIdx = 0; fIdx < m.filas.length; fIdx++) {
         var fila = m.filas[fIdx];
-        html += '<tr><td><b>' + escaparHtml(fila.nombre) + '</b></td>';
+        var empresaDeFila = (mapaTrabajadores[fila.nombre] || {}).empresa;
+        html += '<tr><td><b>' + escaparHtml(fila.nombre) + '</b>' +
+          etiquetaEmpresa(empresaDeFila, 'pinf-emp') + '</td>';
         for (var colIdx = 0; colIdx < tramo.length; colIdx++) {
           var cClave = tramo[colIdx].clave;
           var cVal = fila.celdas[cClave];
@@ -1108,6 +1187,12 @@ __AYUDAS__
       notaTexto += ' El total, el extra y el % de cada persona van en la última tabla.';
     }
     html += '<p class="pinf-nota">' + notaTexto + '</p>';
+
+    // Suma por empresa: el mismo cálculo y el mismo bloque que la pestaña, el ranking y la tablet
+    html += window.PersonalCalculo.htmlPorEmpresa(window.PersonalCalculo.agregarPorEmpresa(filtradas), {
+      bloque: 'pinf-bloque-empresa', titulo: 'pinf-ih', aviso: 'pinf-aviso', scroll: 'pinf-scroll',
+      tabla: 'pinf-tabla', nota: 'pinf-nota', pct: '% impacto'
+    });
 
     if (total.horas > 0 && trabajadores.length > 0) {
       html += '<div class="pinf-bloque-impacto">';
@@ -1276,7 +1361,7 @@ def _validar_entradas(obra_id: str, filas_planas: list) -> None:
         raise ValueError("El parámetro 'filas_planas' debe ser una lista de diccionarios.")
 
     claves_requeridas = {"fecha", "ambito", "nombre", "horas"}
-    claves_permitidas = {"fecha", "ambito", "nombre", "horas", "extra"}
+    claves_permitidas = {"fecha", "ambito", "nombre", "horas", "extra", "empresa"}
 
     for idx, fila in enumerate(filas_planas, start=1):
         # La numeración humana comienza en uno para localizar la fila en el origen.
@@ -1336,6 +1421,11 @@ def _validar_entradas(obra_id: str, filas_planas: list) -> None:
             raise ValueError(
                 f"Fila {idx}: las horas deben ser None o un número finito, sin booleanos "
                 f"(recibido {horas!r})."
+            )
+
+        if fila.get("empresa") is not None and not isinstance(fila["empresa"], str):
+            raise ValueError(
+                f"Fila {idx}: la empresa debe ser texto (recibido {type(fila['empresa']).__name__})."
             )
 
         if "extra" in fila:

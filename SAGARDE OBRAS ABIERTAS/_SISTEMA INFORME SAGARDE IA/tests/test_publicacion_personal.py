@@ -43,6 +43,7 @@ CON_REGLA_PROPIA = {
     f"{OTRA_OBRA}/personal_obra.json": "personal_obra.json",
     f"{OTRA_OBRA}/personal_jornadas.jsonl": "personal_jornadas.jsonl",
     f"{MOTOR}/tests/verificar_personal_calculo.js": "verificar_personal_calculo.js",
+    f"{MOTOR}/tests/verificar_personal_empresas.js": "verificar_personal_empresas.js",
 }
 POR_REGLA_GENERAL = [
     f"{MOTOR}/personal_obra.py",

@@ -102,6 +102,17 @@ py -3.11 personal_obra.py separar-empresas --aplicar    # solo tras su «sí»
 Lo dudoso (nombre que quedaría vacío, nombre que ya existe, dos que quedarían iguales, un sufijo «@AUT», alguien que ya
 tiene otra empresa) **no se toca y se enseña**; para juntar dos personas, `fusionar`.
 
+### La suma por empresa (desde el 08c2b)
+
+Sale sola, sin ningún paso aparte, en los **cuatro sitios**: pestaña Personal de cada obra, sección Personal del
+Informe de obra, ranking de Sagarde (suma de todas las obras) e Informe de la tablet. Es un bloque «Por empresa»
+(personas, días de trabajo de cada persona sumados, horas y % de impacto; más horas primero y «Sin empresa» siempre al
+final) y la empresa en pequeño debajo de cada nombre. Cada autónomo («X @AUT») es una línea más y debajo del total va
+«Total autónomos (@AUT)», que ya está contado arriba y no se suma otra vez. Una obra sin empresas puestas solo enseña la
+línea «Sin empresa». El cálculo y el bloque se escriben UNA sola vez, en `personal_calculo.js`
+(`agregarPorEmpresa` y `htmlPorEmpresa`): no lo copies en otro sitio. Si en un informe sale el aviso «Hay una persona
+con más de una empresa», es un dato incoherente (una persona, una empresa): se corrige con `poner_empresa`.
+
 ## Fusionar nombres duplicados
 
 Mikel / Mikell son la misma persona: se funde el **origen** en el **destino** por sus ids

@@ -47,6 +47,16 @@ table.data td.nom{font-weight:700;overflow-wrap:anywhere}
 .nota{font-size:12.5px;color:var(--muted);margin-top:10px}
 .empty{color:var(--muted);padding:18px 4px;margin:0}
 .aviso{background:#fff7e0;border:1px solid #f1d58a;border-radius:10px;padding:10px 12px;font-size:14px;margin:8px 0}
+.nom-emp{display:block;word-break:normal;overflow-wrap:normal;font-size:12px;font-weight:400;color:var(--muted);line-height:1.2}
+.emp-scroll{overflow-x:auto}
+table.emp-tabla{width:100%;border-collapse:collapse;font-size:14px}
+table.emp-tabla th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--line)}
+table.emp-tabla th.n{text-align:right}
+table.emp-tabla td{padding:9px 10px;border-bottom:1px solid #edf0f4;vertical-align:top;overflow-wrap:break-word}
+table.emp-tabla .n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.emp-tabla tr.emp-sin td{color:var(--muted)}
+table.emp-tabla tfoot td{border-top:2px solid var(--line);border-bottom:0;font-weight:700}
+table.emp-tabla tfoot tr.emp-total-aut td{border-top:1px dashed var(--line);font-style:italic;font-weight:600}
 @media(max-width:640px){
   main{padding:8px}
   .hdr{padding:16px}
@@ -66,6 +76,8 @@ table.data td.nom{font-weight:700;overflow-wrap:anywhere}
   table.data td.d::before{content:'Días '}
   table.data td.obras{grid-column:2 / 4;grid-row:3}
   .impacto{grid-template-columns:84px 1fr 52px;font-size:13px}
+  table.emp-tabla{font-size:13px}
+  table.emp-tabla th,table.emp-tabla td{padding:7px 4px}
 }
 </style>
 <script src="personal_calculo.js"></script>
@@ -306,7 +318,8 @@ table.data td.nom{font-weight:700;overflow-wrap:anywhere}
 
       html += '<tr>';
       html += '<td class="pos">' + posiciones[trIdx] + '</td>';
-      html += '<td class="nom">' + escaparHtml(tr.nombre) + '</td>';
+      var empresaDe = tr.empresa ? '<span class="nom-emp">' + escaparHtml(tr.empresa) + '</span>' : '';
+      html += '<td class="nom">' + escaparHtml(tr.nombre) + empresaDe + '</td>';
       html += '<td class="h n">' + formatearNum(tr.horas) + '</td>';
       html += '<td class="d n">' + tr.dias + '</td>';
       html += '<td class="pct n">' + strPct + '</td>';
@@ -315,6 +328,12 @@ table.data td.nom{font-weight:700;overflow-wrap:anywhere}
     }
 
     html += '</tbody></table>';
+
+    // Suma por empresa de todas las obras: el mismo cálculo y el mismo bloque que la pestaña, el informe y la tablet
+    var filasDelPeriodo = window.PersonalCalculo.filtrar(filas, { periodo: periodo, ref: ref });
+    html += window.PersonalCalculo.htmlPorEmpresa(window.PersonalCalculo.agregarPorEmpresa(filasDelPeriodo), {
+      titulo: 'ih', aviso: 'aviso', scroll: 'emp-scroll', tabla: 'emp-tabla', nota: 'nota', pct: '% de Sagarde'
+    });
 
     html += '<h3 class="ih">Impacto en Sagarde · % de horas-hombre</h3>';
 

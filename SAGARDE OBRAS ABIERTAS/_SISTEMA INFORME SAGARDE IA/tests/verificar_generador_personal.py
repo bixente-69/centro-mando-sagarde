@@ -7,6 +7,7 @@ fecha en el 23/10/2026 y recorre el flujo completo. El lote que exporta la app s
 (P1). Viene del verificador de staging (paso 06): solo cambia de dónde salen la app, P1 y la carpeta de pruebas.
 P3_SOLO_08C=1 = modo rápido del paso 08c: solo las escenas T80 en adelante (lápiz, desplegable completo, varios nombres).
 P3_SOLO_08C2A=1 = modo rápido del paso 08c2a: solo las escenas T120 en adelante (el campo Empresa: crear, lápiz, varios nombres, lista, «Enviar al PC»).
+P3_SOLO_08C2B=1 = modo rápido del paso 08c2b: solo las escenas T140 en adelante (la suma por empresa y la empresa junto al nombre en el Informe).
 P3_SOLO_08D=1 = modo rápido del paso 08d: solo las escenas T90 en adelante (día nuevo con la gente anterior marcada, «Enviar al PC», nombre del fichero).
 P3_APP = carpeta que tiene generador_personal.html, personal_calculo.js y personal_obra.py (por defecto, el motor)."""
 import copy
@@ -668,6 +669,10 @@ with sync_playwright() as p:
 
     def con_escena(nombre, datos, fn, **kw):
         """Ejecuta una escena; cualquier excepción se convierte en un fallo legible y no tumba las demás."""
+        if os.environ.get('P3_SOLO_08C2B') == '1':     # modo del paso 08c2b: solo las escenas T140 en adelante (la suma por empresa en el Informe)
+            m = re.match(r'T(\d+)', nombre)
+            if not (m and int(m.group(1)) >= 140):
+                return
         if os.environ.get('P3_SOLO_08C2A') == '1':     # modo del paso 08c2a: solo las escenas T120 en adelante (el campo Empresa)
             m = re.match(r'T(\d+)', nombre)
             if not (m and int(m.group(1)) >= 120):
@@ -1576,7 +1581,8 @@ with sync_playwright() as p:
         return None
 
     def t63(nombre, retraso, con_copia, fn):
-        if os.environ.get('P3_SOLO_08C') == '1' or os.environ.get('P3_SOLO_08D') == '1' or os.environ.get('P3_SOLO_08C2A') == '1':
+        if os.environ.get('P3_SOLO_08C') == '1' or os.environ.get('P3_SOLO_08D') == '1' or os.environ.get('P3_SOLO_08C2A') == '1' \
+                or os.environ.get('P3_SOLO_08C2B') == '1':
             return
         e = srv = None
         try:
@@ -3218,6 +3224,125 @@ with sync_playwright() as p:
         con_escena('T139', est10([('Ana', 'Construcciones y Reformas Muñoz de Bilbao S.L.'), ('Beto', 'CATERSYSTEM'), ('Carlos', '')]), t139, ancho=ancho, alto=900)
 
     # Fin del bloque del paso 08c2a
+
+    # ======================================================================================================================
+    # Bloque del paso 08c2b: la suma por empresa en el Informe de la tablet (y la empresa junto al nombre). Escenas T140 en
+    # adelante (P3_SOLO_08C2B=1 corre solo estas). Fecha fija: viernes 23/10/2026. Datos inventados; cifras hechas a mano.
+    # ======================================================================================================================
+    CAB_EMP = ['Empresa', 'Personas', 'Días', 'Horas', '% de impacto']
+
+    def tabla_emp(e):
+        return e.pg.eval_on_selector_all('#v-informe table.emp-tabla tr', "f=>f.map(r=>[...r.children].map(c=>c.textContent.trim()))")
+
+    def informe_toda_la_obra(e):
+        e.clic('button[data-v="informe"]')
+        e.clic('#v-informe button[data-p="obra"]')
+
+    # Ana 3 días, Beto 1, Carlos 2, Dani 2, Eli 2 (7,5 h cada día): 75 h y 10 días de persona en total.
+    FILAS140 = viv('2026-10-19', 'Ana', 'Beto', 'Carlos', 'Eli') + viv('2026-10-20', 'Ana', 'Carlos', 'Dani', 'Eli') + viv('2026-10-21', 'Ana', 'Dani')
+    # El PC publica la empresa de cada persona también dentro de sus jornadas (quien no tiene, sin clave): la escena lo imita.
+    for fila_140 in FILAS140:
+        empresa_140 = dict(PERS).get(fila_140['nombre'])
+        if empresa_140:
+            fila_140['empresa'] = empresa_140
+    EST140 = est10(filas=FILAS140, ultima=u('2026-10-21', 'Ana', 'Dani'))
+
+    # --- T140: la tabla «Por empresa» con las cifras a mano; «Sin empresa» al final aunque empate en horas; el total de autónomos debajo
+    def t140(e):
+        e.ir()
+        informe_toda_la_obra(e)
+        ok(tabla_emp(e) == [CAB_EMP,
+                            ['Manueles', '2', '4', '30', '40 %'], ['CATERSYSTEM', '1', '2', '15', '20 %'], ['Eli @AUT', '1', '2', '15', '20 %'],
+                            ['Sin empresa', '1', '2', '15', '20 %'], ['Total', '5', '10', '75', '100 %'],
+                            ['Total autónomos (@AUT)', '1', '2', '15', '20 %']],
+           'T140 tabla por empresa: %s' % tabla_emp(e))
+        ok(e.txt('#v-informe .emp-bloque h4') == 'Por empresa', 'T140 el bloque lleva su título «Por empresa»: %r' % e.txt('#v-informe .emp-bloque h4'))
+        ok('no se suman otra vez' in e.txt('#v-informe .emp-bloque .nota'), 'T140 la nota explica que el total de autónomos ya está contado')
+        ok(e.pg.evaluate("document.querySelectorAll('#v-informe table.emp-tabla tfoot tr').length") == 2, 'T140 el total y el total de autónomos van en el pie')
+        ok(e.pg.evaluate("document.querySelectorAll('#v-informe table.emp-tabla tbody tr.emp-total-aut').length") == 0,
+           'T140 el total de autónomos NO está entre las líneas que se suman')
+    con_escena('T140', EST140, t140)
+
+    # --- T141: la empresa en pequeño junto al nombre en la tabla de personas; quien no tiene, nada; la tabla de personas sigue igual
+    def t141(e):
+        e.ir()
+        informe_toda_la_obra(e)
+        quien = e.pg.eval_on_selector_all('#v-informe table.data tbody tr', "f=>f.map(r=>[r.children[0].childNodes[0].textContent.trim(), (r.querySelector('.nom-emp')||{}).textContent||null])")
+        ok(quien == [['Ana', 'Manueles'], ['Carlos', 'CATERSYSTEM'], ['Dani', None], ['Eli', 'Eli @AUT'], ['Beto', 'Manueles']], 'T141 empresa junto al nombre: %s' % quien)
+        ok(len(e.informe()) == 5, 'T141 sigue habiendo una fila por persona: %s' % e.informe())
+    con_escena('T141', EST140, t141)
+
+    # --- T142: una obra sin empresas puestas solo enseña «Sin empresa» (y no inventa autónomos)
+    def t142(e):
+        e.ir()
+        informe_toda_la_obra(e)
+        ok(tabla_emp(e) == [CAB_EMP, ['Sin empresa', '2', '2', '15', '100 %'], ['Total', '2', '2', '15', '100 %']], 'T142 sin empresas: %s' % tabla_emp(e))
+        ok(e.pg.evaluate("document.querySelectorAll('#v-informe .nom-emp').length") == 0 and 'Total autónomos' not in e.txt('#v-informe'),
+           'T142 sin empresas no sale nada junto a los nombres ni línea de autónomos')
+    con_escena('T142', est10(personas=[('Ana', ''), ('Beto', '')], filas=viv('2026-10-22', 'Ana', 'Beto')), t142)
+
+    # --- T143: lo que se apunta en la tablet (aún sin enviar) manda: Ana pasa de Manueles a Sagarde y el informe lo enseña
+    def t143(e):
+        e.ir()
+        e.clic(lapiz('Ana'))
+        e.pg.select_option('#ren-empresa', 'Sagarde')
+        e.clic('button[data-ren-guardar]')
+        informe_toda_la_obra(e)
+        ok(tabla_emp(e) == [CAB_EMP,
+                            ['Sagarde', '1', '3', '22,5', '30 %'], ['CATERSYSTEM', '1', '2', '15', '20 %'], ['Eli @AUT', '1', '2', '15', '20 %'],
+                            ['Manueles', '1', '1', '7,5', '10 %'], ['Sin empresa', '1', '2', '15', '20 %'], ['Total', '5', '10', '75', '100 %'],
+                            ['Total autónomos (@AUT)', '1', '2', '15', '20 %']],
+           'T143 empresa apuntada en la tablet: %s' % tabla_emp(e))
+    con_escena('T143', EST140, t143)
+
+    # --- T144: una jornada guardada y aún sin enviar cuenta en la empresa de cada persona
+    def t144(e):
+        e.ir()
+        informe_toda_la_obra(e)
+        ok(tabla_emp(e) == [CAB_EMP,
+                            ['Manueles', '2', '4', '30', '33,3 %'], ['Eli @AUT', '1', '3', '22,5', '25 %'], ['CATERSYSTEM', '1', '2', '15', '16,7 %'],
+                            ['Sin empresa', '1', '3', '22,5', '25 %'], ['Total', '5', '12', '90', '100 %'],
+                            ['Total autónomos (@AUT)', '1', '3', '22,5', '25 %']],
+           'T144 con una jornada sin enviar: %s' % tabla_emp(e))
+    con_escena('T144', EST140, t144, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-23', ['Dani', 'Eli'])]))
+
+    # --- T145: el nombre de una empresa nunca se interpreta como HTML
+    def t145(e):
+        e.ir()
+        informe_toda_la_obra(e)
+        ok(e.pg.evaluate("document.querySelectorAll('#v-informe table.emp-tabla td b, #v-informe .nom-emp b').length") == 0, 'T145 no debe nacer un <b> del nombre de la empresa')
+        ok(tabla_emp(e)[1][0] == '<b>x</b> & Co' and e.txt('#v-informe .nom-emp') == '<b>x</b> & Co', 'T145 se ve tal cual: %s %r' % (tabla_emp(e), e.txt('#v-informe .nom-emp')))
+    con_escena('T145', est10(personas=[('Ana', '<b>x</b> & Co')], filas=viv('2026-10-22', 'Ana')), t145)
+
+    # --- T146: el informe cabe a 320, 390 y 820 px aunque haya empresas muy largas
+    def t146(e):
+        e.ir()
+        informe_toda_la_obra(e)
+        ok(e.pg.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1"), 'T146 el informe no se sale de ancho a %s px' % e.pg.viewport_size['width'])
+        sobra = e.pg.evaluate("[...document.querySelectorAll('#v-informe .emp-bloque *')].filter(x=>x.getBoundingClientRect().right > window.innerWidth + 1).length")
+        ok(sobra == 0, 'T146 nada del bloque «Por empresa» queda fuera de la pantalla a %s px (%s elementos)' % (e.pg.viewport_size['width'], sobra))
+    for ancho in (320, 390, 820):
+        con_escena('T146', est10([('Ana', 'Construcciones y Reformas Muñoz de Bilbao S.L.'), ('Beto', 'CATERSYSTEM'), ('Carlos', 'Eli @AUT'), ('Dani', '')]), t146, ancho=ancho, alto=900)
+
+    # --- T147: Todo / Viviendas / Garajes también cambia la suma por empresa (y el periodo, el mes)
+    def t147(e):
+        e.ir()
+        e.clic('button[data-v="informe"]')
+        e.clic('#v-informe button[data-p="obra"]')
+        e.clic('#v-informe button[data-a="garaje"]')
+        ok(tabla_emp(e) == [CAB_EMP, ['CATERSYSTEM', '1', '1', '8', '100 %'], ['Total', '1', '1', '8', '100 %']], 'T147 solo garajes: %s' % tabla_emp(e))
+        e.clic('#v-informe button[data-a="vivienda"]')
+        ok(tabla_emp(e) == [CAB_EMP, ['Manueles', '1', '1', '7,5', '50 %'], ['Sin empresa', '1', '1', '7,5', '50 %'], ['Total', '2', '2', '15', '100 %']],
+           'T147 solo viviendas: %s' % tabla_emp(e))
+        e.clic('#v-informe button[data-a="todo"]')
+        e.clic('#v-informe button[data-p="mes"]')
+        ok(tabla_emp(e) == [CAB_EMP, ['CATERSYSTEM', '1', '1', '8', '51,6 %'], ['Sin empresa', '1', '1', '7,5', '48,4 %'], ['Total', '2', '2', '15,5', '100 %']],
+           'T147 solo octubre (la jornada de septiembre de Manueles no cuenta): %s' % tabla_emp(e))
+    filas_147 = [dict(fila('2026-09-30', 'vivienda', 'Ana', 7.5), empresa='Manueles'), dict(fila('2026-10-22', 'vivienda', 'Dani', 7.5)),
+                 dict(fila('2026-10-22', 'garaje', 'Carlos', 8), empresa='CATERSYSTEM')]
+    con_escena('T147', est10(filas=filas_147, ultima=u('2026-10-22', 'Dani')), t147)
+
+    # Fin del bloque del paso 08c2b
 
     # Fin del bloque del paso 08d
 
