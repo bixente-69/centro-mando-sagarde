@@ -57,6 +57,27 @@ table.emp-tabla .n{text-align:right;font-variant-numeric:tabular-nums;white-spac
 table.emp-tabla tr.emp-sin td{color:var(--muted)}
 table.emp-tabla tfoot td{border-top:2px solid var(--line);border-bottom:0;font-weight:700}
 table.emp-tabla tfoot tr.emp-total-aut td{border-top:1px dashed var(--line);font-style:italic;font-weight:600}
+.pestanas{margin:16px 0 0}
+.pestanas .seg button{min-width:120px}
+.intro{margin:0 0 12px;font-size:14px;color:var(--muted)}
+.buscar{flex:1 1 220px;min-width:0;min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:14px;background:#fff;color:var(--text)}
+.buscar:focus-visible{outline:3px solid var(--accent2);outline-offset:-1px}
+.cuenta{font-size:13px;color:var(--muted);margin:0 0 6px}
+.base-scroll{overflow-x:auto}
+table.base{width:100%;border-collapse:collapse;font-size:14px}
+table.base th{text-align:left;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:8px 10px;border-bottom:2px solid var(--line)}
+table.base th.n{text-align:right}
+table.base td{padding:9px 10px;border-bottom:1px solid #edf0f4;vertical-align:top}
+table.base .n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.base td.b-nom{font-weight:700;overflow-wrap:anywhere;min-width:140px}
+table.base td.b-ult{white-space:nowrap}
+table.base td.b-hist{font-size:13px;color:var(--muted);overflow-wrap:anywhere;min-width:170px}
+.peq{display:block;font-size:12px;font-weight:400;color:var(--muted);line-height:1.2;white-space:normal;overflow-wrap:anywhere}
+.chip.etq-aviso{background:#fff1d6;color:#8a5200}
+.chip.etq-gris{background:#eceff4;color:#4a5668}
+.sinj{color:var(--muted);font-size:13px}
+.etqs{display:block;margin-top:2px}
+.solo-movil{display:none}
 @media(max-width:640px){
   main{padding:8px}
   .hdr{padding:16px}
@@ -78,6 +99,22 @@ table.emp-tabla tfoot tr.emp-total-aut td{border-top:1px dashed var(--line);font
   .impacto{grid-template-columns:84px 1fr 52px;font-size:13px}
   table.emp-tabla{font-size:13px}
   table.emp-tabla th,table.emp-tabla td{padding:7px 4px}
+  .pestanas .seg{display:flex;width:100%}
+  .pestanas .seg button{flex:1 1 0;min-width:0;white-space:normal;line-height:1.2}
+  table.base thead{display:none}
+  table.base,table.base tbody{display:block}
+  table.base tr{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;row-gap:2px;padding:10px 2px;border-bottom:1px solid #edf0f4}
+  table.base td{display:block;padding:0;border:0;text-align:left}
+  table.base td.b-nom{grid-column:1;grid-row:1;min-width:0}
+  table.base td.b-h{grid-column:2;grid-row:1;text-align:right;font-weight:700}
+  table.base td.b-d{grid-column:1;grid-row:2;text-align:left;font-size:13px;color:var(--muted)}
+  table.base td.b-ult{grid-column:2;grid-row:2;text-align:right;font-size:13px;color:var(--muted)}
+  table.base td.b-ult::before{content:'Última: '}
+  table.base td.b-obras{grid-column:1 / 3;grid-row:3}
+  table.base td.b-hist{grid-column:1 / 3;grid-row:4;min-width:0}
+  table.base td.b-hist.vacio{display:none}
+  table.base tr.sin-j td.b-d,table.base tr.sin-j td.b-ult{display:none}
+  .solo-movil{display:inline}
 }
 </style>
 <script src="personal_calculo.js"></script>
@@ -90,7 +127,13 @@ table.emp-tabla tfoot tr.emp-total-aut td{border-top:1px dashed var(--line);font
     <h1>Personal Sagarde</h1>
     <p>Quién trabaja más para Sagarde y qué impacto tiene cada uno, sumando todas las obras</p>
   </header>
-  <section class="card" aria-labelledby="t-ranking">
+  <div class="ctl pestanas" id="pestanas">
+    <div class="seg" role="group" aria-label="Qué quieres ver">
+      <button type="button" data-v="ranking" class="on" aria-pressed="true">Ranking</button>
+      <button type="button" data-v="base" aria-pressed="false">Base de trabajadores</button>
+    </div>
+  </div>
+  <section class="card" id="vista-ranking" aria-labelledby="t-ranking">
     <h2 id="t-ranking">Ranking</h2>
     <div class="ctl" id="controles" hidden>
       <div class="seg" role="group" aria-label="Periodo">
@@ -106,6 +149,11 @@ table.emp-tabla tfoot tr.emp-total-aut td{border-top:1px dashed var(--line);font
       </div>
     </div>
     <div id="contenido"><p class="empty">Cargando personal…</p></div>
+  </section>
+  <section class="card" id="vista-base" aria-labelledby="t-base" hidden>
+    <h2 id="t-base">Base de trabajadores</h2>
+    <p class="intro">Todas las personas que hay en la base de Sagarde, hayan trabajado ya o no.</p>
+    <div id="contenido-base"><p class="empty">Cargando personal…</p></div>
   </section>
 </main>
 <script>
@@ -149,6 +197,11 @@ table.emp-tabla tfoot tr.emp-total-aut td{border-top:1px dashed var(--line);font
   var filas = [];       // todas las jornadas de todas las obras, cada una con su campo `obra`
   var nombresObra = {}; // id de obra -> nombre para mostrar
   var avisosCarga = []; // frases de aviso por obras cuyas jornadas no se pudieron leer
+  var catalogo = [];          // fichas de la base de trabajadores (SAGARDE_PERSONAL.catalogo)
+  var catalogoLegible = true; // false si el fichero no trae la lista de la base
+  var base = null;            // resultado de PersonalCalculo.baseTrabajadores
+  var ordenBase = 'nombre';   // 'nombre' | 'horas' | 'ultima'
+  var consulta = '';          // lo escrito en el buscador de la base
 
   /* ================= A ESCRIBIR POR TI (ver encargo.md) ================= */
 
@@ -176,6 +229,9 @@ table.emp-tabla tfoot tr.emp-total-aut td{border-top:1px dashed var(--line);font
     nombresObra = {};
     avisosCarga = [];
     ref = '';
+    // La lista de la base: si el fichero no la trae se dice, y solo se ven las personas con jornadas
+    catalogoLegible = Array.isArray(sp.catalogo);
+    catalogo = catalogoLegible ? sp.catalogo : [];
 
     var maxFecha = '';
     var keys = Object.keys(sp.obras);
@@ -230,7 +286,7 @@ table.emp-tabla tfoot tr.emp-total-aut td{border-top:1px dashed var(--line);font
 
     var html = '';
 
-    // Agregamos primero los avisos durante la ingesta de archivos
+    // Agregamos primero los avisos de la lectura del fichero
     for (var i = 0; i < avisosCarga.length; i++) {
       html += '<p class="aviso" role="alert">⚠ ' + escaparHtml(avisosCarga[i]) + '</p>';
     }
@@ -422,30 +478,235 @@ table.emp-tabla tfoot tr.emp-total-aut td{border-top:1px dashed var(--line);font
     }
   }
 
-  // Se llama UNA vez, cuando personal_estado.js ha cargado (cargado = true) o ha fallado (false).
-  function iniciar(cargado) {
+  /* ================= BASE DE TRABAJADORES ================= */
+
+  // 'AAAA-MM-DD' -> 'DD/MM/AAAA'
+  function formatearFecha(iso) {
+    return iso.slice(8, 10) + '/' + iso.slice(5, 7) + '/' + iso.slice(0, 4);
+  }
+
+  function plural(n, uno, varios) {
+    return n === 1 ? uno : varios;
+  }
+
+  // «Ana», «Anita»: texto plano (quien lo use lo escapa)
+  function comillas(textos) {
+    return textos.map(function (t) { return '«' + t + '»'; }).join(', ');
+  }
+
+  function nombreDeObra(id) {
+    return nombresObra[id] || id;
+  }
+
+  function avisoHtml(texto) {
+    return '<p class="aviso" role="alert">⚠ ' + escaparHtml(texto) + '</p>';
+  }
+
+  function kpiHtml(valor, etiqueta) {
+    return '<div class="kpi"><b>' + valor + '</b><span>' + etiqueta + '</span></div>';
+  }
+
+  // Un aviso por cada cosa rara de los datos: nada se calla
+  function avisosDeLaBase() {
+    var av = base.avisos;
+    var html = '';
+    for (var i = 0; i < avisosCarga.length; i++) html += avisoHtml(avisosCarga[i]);
+    var sinContar = av.filasSinHoras + av.filasInvalidas;
+    if (sinContar > 0) {
+      html += avisoHtml('Hay ' + sinContar + ' ' + plural(sinContar, 'jornada que no se cuenta', 'jornadas que no se cuentan') +
+        ' en las horas de la base: ' + av.filasSinHoras + ' sin horas y ' + av.filasInvalidas + ' con datos no válidos.');
+    }
+    if (!catalogoLegible) {
+      html += avisoHtml('El fichero no trae la lista de la base: solo se ven las personas que tienen jornadas.');
+    }
+    if (av.fichasInvalidas > 0) {
+      html += avisoHtml(plural(av.fichasInvalidas, 'Hay 1 ficha de la base sin nombre; no se enseña.',
+        'Hay ' + av.fichasInvalidas + ' fichas de la base sin nombre; no se enseñan.'));
+    }
+    if (av.fichasRepetidas.length > 0) {
+      html += avisoHtml('Hay nombres repetidos en la base: ' + comillas(av.fichasRepetidas) +
+        '. Solo se enseña una ficha de cada nombre.');
+    }
+    if (av.historialIlegible.length > 0) {
+      html += avisoHtml('No se pudo leer el historial de nombres de ' + comillas(av.historialIlegible) + '.');
+    }
+    if (catalogoLegible && av.sinFicha.length > 0) {
+      html += avisoHtml(plural(av.sinFicha.length, 'Esta persona tiene jornadas pero no figura en la lista de la base: ',
+        'Estas personas tienen jornadas pero no figuran en la lista de la base: ') + comillas(av.sinFicha) + '.');
+    }
+    return html;
+  }
+
+  // Todo lo que se puede buscar de una persona, sin tildes ni mayúsculas
+  function textoDeBusqueda(p) {
+    var trozos = [p.nombre, p.empresa].concat(p.anteriores, p.fusionados);
+    for (var i = 0; i < p.obras.length; i++) trozos.push(nombreDeObra(p.obras[i].obra));
+    return window.PersonalCalculo.claveNombre(trozos.join(' '));
+  }
+
+  function coincide(p, palabras) {
+    var texto = textoDeBusqueda(p);
+    for (var i = 0; i < palabras.length; i++) {
+      if (texto.indexOf(palabras[i]) < 0) return false;
+    }
+    return true;
+  }
+
+  // Una fila de la tabla: la persona, dónde ha estado, cuánto y cuándo fue la última vez, y cómo se ha llamado
+  function filaBase(p) {
+    var etiquetas = '';
+    if (p.sinFicha && catalogoLegible) etiquetas += '<span class="chip etq-aviso">No está en la lista de la base</span>';
+    if (!p.activo) etiquetas += '<span class="chip etq-gris">De baja</span>';
+    if (etiquetas !== '') etiquetas = '<span class="etqs">' + etiquetas + '</span>';
+    var empresa = p.empresa ? '<span class="nom-emp">' + escaparHtml(p.empresa) + '</span>' : '';
+
+    var obras = '';
+    for (var i = 0; i < p.obras.length; i++) {
+      var o = p.obras[i];
+      obras += '<span class="chip">' + escaparHtml(nombreDeObra(o.obra)) + ' · ' + o.dias + ' ' +
+        plural(o.dias, 'día', 'días') + ' · ' + formatearNum(o.horas) + ' h</span>';
+    }
+    if (!p.conJornadas) obras = '<span class="sinj">Sin jornadas todavía</span>';
+    else if (obras === '') obras = '<span class="sinj">–</span>';
+
+    var ultima = '–';
+    if (p.ultima) {
+      var donde = p.ultimaObras.map(nombreDeObra).join(', ');
+      ultima = formatearFecha(p.ultima) + (donde ? '<span class="peq">' + escaparHtml(donde) + '</span>' : '');
+    }
+    var horas = p.conJornadas ? formatearNum(p.horas) + '<span class="solo-movil"> h</span>' : '–';
+    var dias = p.conJornadas ? p.dias + '<span class="solo-movil"> ' + plural(p.dias, 'día', 'días') + '</span>' : '–';
+
+    var historia = [];
+    if (p.anteriores.length > 0) historia.push(escaparHtml('Antes se llamaba: ' + comillas(p.anteriores) + '.'));
+    if (p.fusionados.length > 0) {
+      historia.push(escaparHtml(plural(p.fusionados.length, 'Se juntó con otra ficha: ', 'Se juntó con otras fichas: ') +
+        comillas(p.fusionados) + '.'));
+    }
+
+    var h = '<tr' + (p.conJornadas ? '' : ' class="sin-j"') + '>';
+    h += '<td class="b-nom">' + escaparHtml(p.nombre) + empresa + etiquetas + '</td>';
+    h += '<td class="b-obras">' + obras + '</td>';
+    h += '<td class="b-d n">' + dias + '</td>';
+    h += '<td class="b-h n">' + horas + '</td>';
+    h += '<td class="b-ult">' + ultima + '</td>';
+    h += '<td class="b-hist' + (historia.length > 0 ? '' : ' vacio') + '">' + (historia.length > 0 ? historia.join('<br>') : '–') + '</td>';
+    return h + '</tr>';
+  }
+
+  // Pinta la lista según el orden y lo escrito en el buscador (los controles no se tocan, así no se pierde el foco)
+  function pintarListaBase() {
+    var lista = document.getElementById('base-lista');
+    if (!lista || !base) return;
+    var botones = document.querySelectorAll('#controles-base [data-o]');
+    for (var i = 0; i < botones.length; i++) {
+      var activo = botones[i].getAttribute('data-o') === ordenBase;
+      botones[i].classList.toggle('on', activo);
+      botones[i].setAttribute('aria-pressed', activo ? 'true' : 'false');
+    }
+    var palabras = window.PersonalCalculo.claveNombre(consulta).split(' ').filter(function (x) { return x !== ''; });
+    var visibles = window.PersonalCalculo.ordenarBase(base.personas, ordenBase).filter(function (p) {
+      return coincide(p, palabras);
+    });
+    var n = base.total.personas;
+    var html = '<p class="cuenta" aria-live="polite">' + (palabras.length > 0 ? 'Se ven ' + visibles.length + ' de ' : '') +
+      n + ' ' + plural(n, 'persona', 'personas') + '</p>';
+    if (visibles.length === 0) {
+      html += '<p class="empty">Nadie coincide con «' + escaparHtml(consulta.trim()) + '».</p>';
+    } else {
+      html += '<div class="base-scroll"><table class="base"><thead><tr><th>Nombre</th><th>Obras donde ha trabajado</th>' +
+        '<th class="n">Días</th><th class="n">Horas</th><th>Última jornada</th><th>Nombres de antes</th></tr></thead><tbody>';
+      for (var k = 0; k < visibles.length; k++) html += filaBase(visibles[k]);
+      html += '</tbody></table></div>';
+    }
+    lista.innerHTML = html;
+  }
+
+  // Se llama UNA vez con los datos ya leídos: avisos, cifras generales, buscador, orden y lista
+  function iniciarBase() {
+    var cont = document.getElementById('contenido-base');
+    if (!cont) return;
+    try {
+      base = window.PersonalCalculo.baseTrabajadores(filas, catalogo);
+      var t = base.total;
+      var html = avisosDeLaBase();
+      if (t.personas === 0) {
+        cont.innerHTML = html + '<p class="empty">Todavía no hay nadie en la base de trabajadores.</p>';
+        return;
+      }
+      html += '<div class="kpis">' + kpiHtml(t.personas, plural(t.personas, 'persona en la base', 'personas en la base')) +
+        kpiHtml(t.conJornadas, 'con jornadas') + kpiHtml(t.sinJornadas, 'sin jornadas todavía') +
+        kpiHtml(t.conJornadas > 0 ? formatearNum(t.horas) + ' h' : '–', 'horas en total') + '</div>';
+      html += '<div class="ctl" id="controles-base">' +
+        '<input class="buscar" id="buscar" type="search" autocomplete="off" aria-label="Buscar por nombre, empresa u obra" ' +
+        'placeholder="Buscar por nombre, empresa u obra">' +
+        '<div class="seg" role="group" aria-label="Ordenar por">' +
+        '<button type="button" data-o="nombre" aria-pressed="true" class="on">Nombre</button>' +
+        '<button type="button" data-o="horas" aria-pressed="false">Horas</button>' +
+        '<button type="button" data-o="ultima" aria-pressed="false">Última jornada</button></div></div>';
+      html += '<div id="base-lista"></div>';
+      html += '<p class="nota">Horas y días son los de toda la vida de Sagarde, sumando todas las obras (también las cerradas). ' +
+        'Días = días distintos con jornada, aunque haya trabajado en dos obras el mismo día. «–» = todavía no tiene jornadas. ' +
+        'Aquí solo se mira: un nombre se corrige con el lápiz ✎ de la tablet (viaja en el CONTROL HORARIO y entra con ' +
+        '«actualiza la obra»). Para juntar dos fichas de la misma persona hay que pedirlo aparte, y antes se enseña cómo quedaría.</p>';
+      cont.innerHTML = html;
+
+      var caja = document.getElementById('buscar');
+      caja.addEventListener('input', function () {
+        consulta = caja.value;
+        pintarListaBase();
+      });
+      document.getElementById('controles-base').addEventListener('click', function (ev) {
+        var btn = ev.target.closest('button');
+        if (!btn || !btn.hasAttribute('data-o')) return;
+        ordenBase = btn.getAttribute('data-o');
+        pintarListaBase();
+      });
+      pintarListaBase();
+    } catch (e) {
+      var msg = e && e.message ? e.message : String(e);
+      cont.innerHTML = '<p class="aviso" role="alert">⚠ No se pudo calcular la base de trabajadores: ' + escaparHtml(msg) + '</p>';
+    }
+  }
+
+  // Cambia entre el ranking y la base (`tocarDireccion`: también deja #base en la dirección para poder enlazarla)
+  function mostrarVista(v, tocarDireccion) {
+    var queVer = (v === 'base') ? 'base' : 'ranking';
+    var vr = document.getElementById('vista-ranking');
+    var vb = document.getElementById('vista-base');
+    if (vr) vr.hidden = queVer !== 'ranking';
+    if (vb) vb.hidden = queVer !== 'base';
+    var botones = document.querySelectorAll('#pestanas [data-v]');
+    for (var i = 0; i < botones.length; i++) {
+      var activo = botones[i].getAttribute('data-v') === queVer;
+      botones[i].classList.toggle('on', activo);
+      botones[i].setAttribute('aria-pressed', activo ? 'true' : 'false');
+    }
+    if (tocarDireccion) {
+      try {
+        history.replaceState(null, '', queVer === 'base' ? '#base' : location.pathname + location.search);
+      } catch (e) { /* sin historial (algunos visores): la pestaña funciona igual */ }
+    }
+  }
+
+  function configurarPestanas() {
+    var barra = document.getElementById('pestanas');
+    if (barra) {
+      barra.addEventListener('click', function (ev) {
+        var btn = ev.target.closest('button');
+        if (btn && btn.hasAttribute('data-v')) mostrarVista(btn.getAttribute('data-v'), true);
+      });
+    }
+    if (location.hash === '#base') mostrarVista('base', false);
+  }
+
+  /* ================= RANKING: ARRANQUE DE LA VISTA ================= */
+
+  // Ranking de siempre; si algo falla aquí, la base sigue funcionando (y al revés)
+  function iniciarRanking() {
     var cont = document.getElementById('contenido');
     var ctl = document.getElementById('controles');
-    if (ctl) ctl.hidden = true;
-
-    // Englobamos el flujo de inicialización para prevenir pantallas en blanco ante fallos inesperados
     try {
-      if (!window.PersonalCalculo) {
-        cont.innerHTML = '<p class="aviso" role="alert">⚠ No se pudo cargar personal_calculo.js: la página no puede calcular el ranking.</p>';
-        return;
-      }
-
-      if (!cargado) {
-        cont.innerHTML = '<p class="empty">Todavía no hay datos de personal publicados (no se encontró personal_estado.js). Cuando se ingieran las primeras jornadas, el ranking aparecerá aquí.</p>';
-        return;
-      }
-
-      var errText = leerEstado();
-      if (errText) {
-        cont.innerHTML = '<p class="aviso" role="alert">⚠ ' + escaparHtml(errText) + '</p>';
-        return;
-      }
-
       var avisosHtml = '';
       for (var i = 0; i < avisosCarga.length; i++) {
         avisosHtml += '<p class="aviso" role="alert">⚠ ' + escaparHtml(avisosCarga[i]) + '</p>';
@@ -477,6 +738,55 @@ table.emp-tabla tfoot tr.emp-total-aut td{border-top:1px dashed var(--line);font
     }
   }
 
+  // El mismo mensaje (con su sujeto) en las dos vistas: ranking y base
+  function mostrarEnLasDos(plantilla) {
+    var vr = document.getElementById('contenido');
+    var vb = document.getElementById('contenido-base');
+    if (vr) vr.innerHTML = plantilla('el ranking');
+    if (vb) vb.innerHTML = plantilla('la base de trabajadores');
+  }
+
+  // Se llama UNA vez, cuando personal_estado.js ha cargado (cargado = true) o ha fallado (false).
+  function iniciar(cargado) {
+    var ctl = document.getElementById('controles');
+    if (ctl) ctl.hidden = true;
+
+    // Englobamos el flujo de inicialización para prevenir pantallas en blanco ante fallos inesperados
+    try {
+      if (!window.PersonalCalculo) {
+        mostrarEnLasDos(function (sujeto) {
+          return '<p class="aviso" role="alert">⚠ No se pudo cargar personal_calculo.js: la página no puede calcular ' + sujeto + '.</p>';
+        });
+        return;
+      }
+
+      if (!cargado) {
+        mostrarEnLasDos(function (sujeto) {
+          return '<p class="empty">Todavía no hay datos de personal publicados (no se encontró personal_estado.js). ' +
+            'Cuando se pase el primer control horario a una obra, ' + sujeto + ' aparecerá aquí.</p>';
+        });
+        return;
+      }
+
+      var errText = leerEstado();
+      if (errText) {
+        mostrarEnLasDos(function () {
+          return '<p class="aviso" role="alert">⚠ ' + escaparHtml(errText) + '</p>';
+        });
+        return;
+      }
+    } catch (e) {
+      var msg = e && e.message ? e.message : String(e);
+      mostrarEnLasDos(function (sujeto) {
+        return '<p class="aviso" role="alert">⚠ No se pudo calcular ' + sujeto + ': ' + escaparHtml(msg) + '</p>';
+      });
+      return;
+    }
+
+    iniciarBase();
+    iniciarRanking();
+  }
+
   /* ================= ARRANQUE (ya escrito: no lo cambies) ================= */
 
   function cargarEstado() {
@@ -486,6 +796,7 @@ table.emp-tabla tfoot tr.emp-total-aut td{border-top:1px dashed var(--line);font
     s.onerror = function () { iniciar(false); };
     document.head.appendChild(s);
   }
+  configurarPestanas();
   cargarEstado();
 })();
 </script>

@@ -480,12 +480,20 @@ class TestNombresAnteriores(Base):
             P.guardar_catalogo(self.raiz, c)
             self.assertTrue(any('nombres_anteriores' in x for x in P.comprobar(self.raiz, OBRAS)), repr(m))
 
-    def test_el_estado_de_la_tablet_no_cambia_de_forma(self):
+    def test_el_estado_de_la_tablet_solo_lleva_el_historial_de_quien_lo_tiene(self):
+        # 08e: antes (08a) exigia EXACTAMENTE 5 claves en cada persona. Ahora el estado publica tambien nombres_anteriores
+        # (y fusionados) para la pestana «Base de trabajadores», pero SOLO de quien tiene historial: el resto sigue con
+        # las 5 claves de siempre y la tablet ignora las claves que no conoce (lo prueba test_base_trabajadores_08e).
         self.sembrar()
         self.ing(lote([], renombres=[ren('Mikel', 'Mikel Etxeberria')]), escribir=True)
         s = P.exportar_estado(self.raiz, OBRAS, generado=AHORA)
         d = json.loads(s[s.index('{'):s.rindex('}') + 1])
-        self.assertTrue(all(set(t) == {'id', 'nombre', 'categoria', 'empresa', 'activo'} for t in d['catalogo']))
+        base = {'id', 'nombre', 'categoria', 'empresa', 'activo'}
+        con_historial = [t for t in d['catalogo'] if set(t) != base]
+        self.assertEqual(['Mikel Etxeberria'], [t['nombre'] for t in con_historial])
+        self.assertEqual(base | {'nombres_anteriores'}, set(con_historial[0]))
+        self.assertEqual(['Mikel'], con_historial[0]['nombres_anteriores'])
+        self.assertTrue(all(set(t) == base for t in d['catalogo'] if t not in con_historial))
         self.assertIn('Mikel Etxeberria', [t['nombre'] for t in d['catalogo']])
 
 

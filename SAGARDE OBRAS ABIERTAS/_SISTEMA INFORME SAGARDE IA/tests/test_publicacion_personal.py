@@ -44,6 +44,7 @@ CON_REGLA_PROPIA = {
     f"{OTRA_OBRA}/personal_jornadas.jsonl": "personal_jornadas.jsonl",
     f"{MOTOR}/tests/verificar_personal_calculo.js": "verificar_personal_calculo.js",
     f"{MOTOR}/tests/verificar_personal_empresas.js": "verificar_personal_empresas.js",
+    f"{MOTOR}/tests/verificar_personal_base.js": "verificar_personal_base.js",
 }
 POR_REGLA_GENERAL = [
     f"{MOTOR}/personal_obra.py",

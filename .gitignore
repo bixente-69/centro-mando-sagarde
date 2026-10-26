@@ -87,6 +87,10 @@ VARIOS/APPS SAGARDE/
 # .js dentro de tests/ y sin esta linea se genera pero nunca se publica.
 !SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/tests/verificar_personal_empresas.js
 
+# El verificador de node de la pestana «Base de trabajadores» (08e; lo lanza tests/test_base_trabajadores_08e.py). Mismo motivo:
+# es un .js dentro de tests/ y sin esta linea se genera pero nunca se publica.
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/tests/verificar_personal_base.js
+
 # Ficha de obra: fuente de verdad de estructura y estados (una por obra)
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/ficha_obra.json
 

@@ -1,6 +1,6 @@
 ---
 name: sagarde-actualizar-obra
-description: Actualizar UNA obra concreta de Sagarde cuando Bixente entrega o ha dejado hojas de revisión nuevas (vivienda y/o garaje) y pide "actualiza la obra X". Aplica solo esa obra: ficha, panel, prioridades, informe ejecutivo PDF y su tarjeta en el índice. NO recorre el resto de obras. Usar siempre que la petición nombre una obra concreta; el recorrido de todas las obras solo si Bixente pide expresamente "todas las obras".
+description: Actualizar UNA obra concreta de Sagarde cuando Bixente entrega o ha dejado hojas de revisión nuevas (vivienda y/o garaje) o controles horarios de la tablet (`CONTROL HORARIO … .json`) en la carpeta REVISIONES y pide "actualiza la obra X". Aplica solo esa obra: ficha, personal, panel, prioridades, informe ejecutivo PDF y su tarjeta en el índice. NO recorre el resto de obras. Usar siempre que la petición nombre una obra concreta; el recorrido de todas las obras solo si Bixente pide expresamente "todas las obras".
 ---
 
 # Actualizar UNA obra (alcance cerrado)
@@ -33,15 +33,16 @@ autoriza el recorrido completo.
 `revisiones_aplicadas.jsonl` · sidecar `.correcciones.json` en
 `REVISIONES/_SISTEMA/` · `memoria_obra.json` · `prioridades_trabajos.json`,
 `_garaje.json`, `_zesp.json` · `dudas_pendientes.json` · `panel.html` ·
-`INFORME_EJECUTIVO_<obra>.pdf`. Todo esto lo produce `regenerar_obra.py <id>`
-solo. Medido: no se movió ningún fichero de otra obra.
+`INFORME_EJECUTIVO_<obra>.pdf` · `personal_obra.json` y `personal_jornadas.jsonl` (solo si la obra tiene controles horarios).
+Todo esto lo produce `regenerar_obra.py <id>` solo. Medido: no se movió ningún fichero de otra obra.
 
 **Globales (solo cambia la entrada/tarjeta de la obra tocada):**
 `SAGARDE OBRAS ABIERTAS/index.html` (tarjeta de la obra + hora «actualizado»,
 y el orden de tarjetas por último archivo) ·
 `_SISTEMA INFORME SAGARDE IA/obras_revisiones.js` (registro que precarga la
 app del generador: sin esto la próxima hoja en blanco sale sin los estados
-nuevos) · `resumen_obras.json` (tarjeta del Portal; ignorado por git).
+nuevos) · `resumen_obras.json` (tarjeta del Portal; ignorado por git) · `_SISTEMA INFORME SAGARDE IA/personal_estado.js` (lo que leen la
+tablet y el ranking; lo reescribe `--finalizar`, por lectura de código).
 Los escribe `regenerar_obra.py --finalizar` leyendo `_cache_resultados_regen.json`
 (ignorado por git; guarda el resultado de cada obra). Medido en el diff de
 git: en `index.html` y `obras_revisiones.js` solo cambió Olabeaga.
@@ -93,19 +94,71 @@ py -3.11 _SISTEMA/MOTOR/scripts/actualizar_obra.py <id_obra> --escribir  # aplic
    completa NO hace falta si no se ha tocado código (tarda ~2 min y regenera PDFs de
    Mungia).
 
-5. **Control horario (desde el 25/10/2026, paso 08b).** Un `CONTROL HORARIO <OBRA> <DDMMAAAA>.json` que
-   Bixente deja en `<obra>/REVISIONES/` entra con este mismo comando, **sin ningún paso aparte**: la
-   simulación lo enseña en llano (qué trae, personas nuevas, avisos y horas antes/después; sin controles
-   dice «No hay controles horarios nuevos»), `--escribir` lo aplica antes de regenerar la obra y el informe
-   lleva la sección **H) CONTROL HORARIO** (lo aplicado, lo que no se aplica y por qué, y los datos de
-   personal de las demás obras `IDENTICO`). Si trae algo que hay que mirar (nombre parecido, más de 12 h,
-   fecha futura, una jornada que sustituye o anula otra, un cambio de nombre que choca con otra persona) la
-   guarda sale con el código **3** y **no se aplica nada** (ni controles ni hojas): leer la lista, contrastar
-   con Bixente y repetir con `--aceptar-controles N` (`N` = el nº de avisos que dice la propia guarda; con
-   otra cifra la guarda sigue). Un fichero que no vale (ilegible, de otra obra, con un nombre que parece
-   DNI/teléfono/correo…) no se aplica, se dice y deja el informe en `G) REVISAR` (código 2). Detalle y
-   operaciones sobre nombres: skill `sagarde-personal`. El `.bat` también aplica los controles **limpios**
-   (nunca los dudosos, que salen como `[AVISO PERSONAL]` con el nombre del fichero).
+5. **Controles horarios.** Un `CONTROL HORARIO` que Bixente deja en `<obra>/REVISIONES/` es otra clase de «hoja» y entra
+   con este mismo comando, sin ningún paso aparte: ver la sección **Controles horarios** de más abajo (vista previa en
+   llano, guarda con código 3, `--aceptar-controles N`, sección H del informe).
+
+## Controles horarios: otra clase de «hoja» en REVISIONES (desde el 25/10/2026)
+
+La tablet (`generador_personal.html`, «Personal en obra · jornada» en el portal) anota quién trabaja cada día y descarga un
+`CONTROL HORARIO <OBRA EN MAYÚSCULAS SIN TILDES> <DDMMAAAA>.json` (fecha = el día en que lo prepara; por dentro es
+`tipo: lote_personal`, versión 1). **Es una aportación de datos a la obra, como una hoja de revisión**: Bixente lo deja **a mano
+en `<carpeta obra>/REVISIONES/`** y dice «actualiza la obra X». No hay `.bat`, comando, carpeta ni alta de obra aparte: **el primer
+fichero crea el `personal_obra.json` de la obra**. Principio de Bixente (25/10/2026, «no pierdas nunca esta idea»): la app no es
+una app suelta, es una integración del entorno; ante cualquier pieza nueva, copiar cómo lo hace el generador de revisiones.
+
+**Flujo (el mismo comando de siempre, sin pasos aparte):**
+
+1. **Detectar.** `actualizar_obra.py <id>` mira `REVISIONES/` y separa las hojas de revisión de los controles horarios. Un control
+   está **ya aplicado** si su SHA256 consta en `personal_jornadas.jsonl` (una copia con otro nombre, p. ej. «(1)», cuenta igual).
+   Se ordenan por la fecha del nombre (sin fecha, primero; luego el número de copia): **la última manda**, y cada fichero ve el
+   efecto de los anteriores.
+2. **Vista previa** (sin `--escribir`, no escribe nada). Lo cuenta **en llano**: qué trae cada fichero (jornadas con ámbito, día y
+   gente; cambios de nombre; nombres nuevos; empresas; horarios), las personas nuevas, los avisos y las **horas, días y personas
+   antes → después**. Sin controles dice «No hay controles horarios nuevos».
+3. **Aplicar** (`--escribir`). Los controles entran **después de las hojas y antes de regenerar la obra** (panel con su pestaña
+   Personal, Informe de obra, PDF).
+4. **Verificar.** El informe lleva la sección **H) CONTROL HORARIO**: lo aplicado, lo que no se aplica y por qué, el visto bueno
+   (`--aceptar-controles`), horas antes/después, las personas de la lista y los datos de personal de las demás obras por SHA
+   (`IDENTICO`/`CAMBIO`; un cambio en otra obra es un error de efecto colateral). Reportar a Bixente horas, días y personas
+   antes/después. Un control que no vale deja `G) REVISAR` (código 2) sin bloquear lo demás.
+
+**Cada fichero queda en una de cuatro situaciones:** *ya aplicado* · *listo* · *hay que mirarlo* (no se aplica; **código 3**: no se
+escribe nada, ni controles ni hojas) · *no vale* (no se aplica; código 2). Si hay algo que mirar: leer la lista, contrastar con
+Bixente y repetir con **`--aceptar-controles N`**, donde `N` = el nº de avisos que dice la propia guarda (con otra cifra la guarda
+sigue; los avisos no se saltan en silencio).
+
+| Lo que sale en pantalla | Qué es |
+|---|---|
+| «Nombre nuevo: «X» no estaba en la base; se añade.» | Informativo. Si es una errata de otro nombre, ver el siguiente. |
+| «Se parecen: «A» y «B». ¿Es la misma persona?» | **Hay que mirarlo.** Si lo es, juntarlas después de guardar (skill `sagarde-personal`). |
+| «X suma más de 12 horas ese día entre todas las obras.» | **Hay que mirarlo**; preguntar a Bixente. |
+| «La jornada es de una fecha que aún no ha llegado (dd/mm): ¿es una errata?» | **Hay que mirarlo.** |
+| «Ya había una jornada de ese día en esa obra: la nueva la sustituye.» | **Hay que mirarlo** (es una corrección; al aceptarla manda la nueva). También si anula una jornada que tenía gente. |
+| «No se ha cambiado «A»: «B» ya es otra persona de la base…» | **Hay que mirarlo**; juntarlas con `fusionar` (skill `sagarde-personal`). |
+| ««A» es un nombre antiguo de «B»: se ha tomado como la misma persona.» | Informativo (un fichero viejo con el nombre de antes). |
+
+**No vale** (no se aplica y se dice): fichero ilegible o que no es un control horario; la obra que lleva dentro no es la de la
+carpeta donde está (no se mezclan obras); un nombre o una empresa que parece DNI, teléfono o correo; versión o esquema roto;
+datos de personal de la obra ilegibles (nada se aplica). Una **jornada** inválida suelta (horas fuera de 0–24, más de 24 h entre
+todas las obras, una persona dos veces el mismo día…) se rechaza y **las demás entran**. Un control que no vale deja salida 2 en
+cada «actualiza la obra» de esa obra hasta que se corrija o se retire el fichero (a propósito: no se oculta).
+
+**El `.bat`.** `Actualizar_Sagarde.bat` también aplica los controles **limpios** al generar cada obra (la misma función,
+idempotente); los dudosos o inválidos no se aplican y salen como `[AVISO PERSONAL]` con el nombre del fichero, y el auditor del
+paso 0 avisa de cada control sin aplicar (aviso, no frena). Los `CONTROL HORARIO … .json` **no se publican** (llevan nombres y
+horas; lo vigila `test_publicacion_personal`) y **no salen en la lista de Documentos** de la obra (son un dato de entrada).
+
+**Operaciones sobre la base de trabajadores** (corregir un nombre, juntar dos fichas, separar la empresa que va dentro de un
+nombre; todas con vista previa y antes/después) → skill **`sagarde-personal`**:
+
+```bash
+py -3.11 personal_obra.py renombrar "Mikell" "Mikel"            # vista previa (añadir --escribir)
+py -3.11 personal_obra.py fusionar T0002 T0001                  # simulación (añadir --escribir)
+py -3.11 personal_obra.py separar-empresas                      # vista previa (--aplicar solo con su «sí»)
+```
+Para **verlo**: pestaña «Base de trabajadores» del ranking (`personal_sagarde.html#base`): todas las personas con obras, días,
+horas, última jornada y nombres de antes. El portal es estático: no escribe datos.
 
 Lo que sigue es el procedimiento manual: úsalo solo como referencia o si el comando falla.
 

@@ -262,6 +262,26 @@ aviso visible.
 
 ---
 
+## 7c. Personal en obra: es una aportación de datos, no una app suelta
+
+> «La app de control horario **NO es una app suelta, es una integración en el entorno de Sagarde**. Eso lo máximo principal.
+> Desde el portal de Sagarde se controlan todos los datos. La app de control horario es solo una **aportación de datos** a las
+> obras del entorno Sagarde. No pierdas nunca esta idea.» — Bixente, 25/10/2026
+
+Se hace **como el generador de revisiones**: genera un `CONTROL HORARIO` en la tablet → lo pasa **a mano** a la carpeta
+`REVISIONES` de la obra → cuando dice **«actualiza la obra»** se actualiza toda la obra (revisiones, controles horarios y todo lo
+demás) → el **`.bat`** actualiza informes y todo → **desde el portal se ve todo**.
+
+Cuatro reglas que no se rompen:
+
+1. **La app solo aporta un fichero.** No guarda datos maestros ni tiene circuito propio.
+2. **Nada de «recibir/ingerir», `.bat` propios, carpetas de app propias ni altas manuales por herramienta.**
+3. **Los datos viven en el entorno** (la obra, sus ficheros derivados, el portal). El portal es estático: se ve ahí y los cambios se
+   piden por el camino del entorno («actualiza la obra», `renombrar`, `fusionar`).
+4. **Ante cualquier pieza nueva, primero: «¿cómo lo hace el generador de revisiones?», y se copia.**
+
+---
+
 ## 8. Jerarquía de carpetas: la norma `_SISTEMA`
 
 **Cada apartado y cada obra tiene como mucho una carpeta técnica, llamada

@@ -1384,12 +1384,25 @@ def exportar_estado(
     """
     c = cargar_catalogo(raiz)
     mp, rs = _maps(c)
-    # Solo se exportan las identidades vigentes: los trabajadores fusionados en otro no aparecen.
-    cats = [
-        {k: t[k] for k in ("id", "nombre", "categoria", "empresa", "activo")}
-        for t in sorted(c["trabajadores"], key=lambda x: x["id"])
-        if t.get("fusionado_en") is None
-    ]
+    ordenados = sorted(c["trabajadores"], key=lambda x: x["id"])
+    # Quién se juntó con quién: los nombres de las fichas fusionadas, agrupados por la persona que sigue vigente.
+    juntados = {}
+    for t in ordenados:
+        if t.get("fusionado_en") is not None:
+            juntados.setdefault(rs[t["id"]], []).append(t["nombre"])
+    # Solo se exportan las identidades vigentes: los trabajadores fusionados en otro no aparecen como personas.
+    cats = []
+    for t in ordenados:
+        if t.get("fusionado_en") is not None:
+            continue
+        ficha = {k: t[k] for k in ("id", "nombre", "categoria", "empresa", "activo")}
+        # El historial de nombres (renombres y fusiones) solo sale si lo hay: quien nunca cambió de nombre se publica
+        # igual que antes, y la tablet (que lee este mismo fichero) ignora las claves que no conoce.
+        if t.get("nombres_anteriores"):
+            ficha["nombres_anteriores"] = list(t["nombres_anteriores"])
+        if juntados.get(t["id"]):
+            ficha["fusionados"] = juntados[t["id"]]
+        cats.append(ficha)
     obs = {}
     for o in obras:
         # Por defecto solo salen las obras con datos; la tablet necesita ofrecerlas todas (`incluir_vacias`).

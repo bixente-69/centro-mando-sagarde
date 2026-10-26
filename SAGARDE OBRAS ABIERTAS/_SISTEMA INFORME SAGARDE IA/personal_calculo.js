@@ -578,6 +578,151 @@ function htmlPorEmpresa(res, clases) {
   return html;
 }
 
+// Una fecha válida de jornada: 'AAAA-MM-DD' (solo estas cuentan como «última jornada»)
+function esFechaISO(fecha) {
+  if (typeof fecha !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(fecha)) return false;
+  return aTextoISO(aFechaUTC(fecha)) === fecha;
+}
+
+// 9. baseTrabajadores(filas, catalogo): una línea por persona de la base, tenga o no jornadas. Horas, días, obras y última
+// jornada salen de las MISMAS filas y con las mismas reglas que el ranking (una fila sin horas o inválida no se cuenta y se
+// avisa); de la ficha de la base salen la empresa y el historial de nombres (renombres y fusiones). Nada se pierde en
+// silencio: alguien con jornadas que no está en la base sale igual (con `sinFicha`), y lo raro de la base se cuenta en `avisos`.
+function claveNombre(x) {
+  return claveEmpresa(x);
+}
+
+function textosDeLista(valor) {
+  if (valor === undefined || valor === null) return { lista: [], legible: true };
+  if (!Array.isArray(valor)) return { lista: [], legible: false };
+  const lista = valor.filter(x => typeof x === 'string' && limpiarTexto(x)).map(limpiarTexto);
+  return { lista, legible: lista.length === valor.length };
+}
+
+function baseTrabajadores(filas, catalogo) {
+  const avisos = {
+    filasSinHoras: 0,
+    filasInvalidas: 0,
+    fichasInvalidas: 0,
+    fichasRepetidas: [],
+    historialIlegible: [],
+    sinFicha: []
+  };
+  const porClave = new Map();
+
+  const nuevaLinea = (nombre, ficha) => ({
+    nombre,
+    empresa: ficha ? empresaDeFila(ficha) : '',
+    activo: !(ficha && ficha.activo === false),
+    anteriores: [],
+    fusionados: [],
+    sinFicha: !ficha,
+    horas: 0,
+    extra: 0,
+    dias: 0,
+    obras: [],
+    ultima: null,
+    ultimaObras: [],
+    conJornadas: false,
+    _dias: new Set(),
+    _obras: new Map()
+  });
+
+  (Array.isArray(catalogo) ? catalogo : []).forEach(ficha => {
+    const nombre = ficha && typeof ficha.nombre === 'string' ? limpiarTexto(ficha.nombre) : '';
+    if (!nombre) {
+      avisos.fichasInvalidas++;
+      return;
+    }
+    const clave = claveNombre(nombre);
+    if (porClave.has(clave)) {
+      avisos.fichasRepetidas.push(nombre);
+      return;
+    }
+    const linea = nuevaLinea(nombre, ficha);
+    const anteriores = textosDeLista(ficha.nombres_anteriores);
+    const fusionados = textosDeLista(ficha.fusionados);
+    linea.anteriores = anteriores.lista;
+    linea.fusionados = fusionados.lista;
+    if (!anteriores.legible || !fusionados.legible) avisos.historialIlegible.push(nombre);
+    porClave.set(clave, linea);
+  });
+
+  (Array.isArray(filas) ? filas : []).forEach(f => {
+    const estado = clasificarFila(f);
+    if (estado === 'sinHoras') { avisos.filasSinHoras++; return; }
+    if (estado === 'invalida') { avisos.filasInvalidas++; return; }
+
+    const clave = claveNombre(f.nombre);
+    let linea = porClave.get(clave);
+    if (!linea) {
+      linea = nuevaLinea(limpiarTexto(f.nombre), null);
+      porClave.set(clave, linea);
+      avisos.sinFicha.push(linea.nombre);
+    }
+    const extra = (f.extra !== undefined && f.extra !== null) ? f.extra : 0;
+    linea.conJornadas = true;
+    linea.horas += f.horas;
+    linea.extra += extra;
+    if (!linea.empresa && linea.sinFicha) linea.empresa = empresaDeFila(f);
+    if (f.fecha) linea._dias.add(f.fecha);
+
+    if (f.obra) {
+      let o = linea._obras.get(f.obra);
+      if (!o) {
+        o = { obra: f.obra, dias: new Set(), horas: 0, ultima: null };
+        linea._obras.set(f.obra, o);
+      }
+      o.horas += f.horas;
+      if (f.fecha) o.dias.add(f.fecha);
+      if (esFechaISO(f.fecha) && (o.ultima === null || f.fecha > o.ultima)) o.ultima = f.fecha;
+    }
+    if (esFechaISO(f.fecha) && (linea.ultima === null || f.fecha > linea.ultima)) linea.ultima = f.fecha;
+  });
+
+  const personas = Array.from(porClave.values()).map(linea => {
+    linea.dias = linea._dias.size;
+    linea.obras = Array.from(linea._obras.values())
+      .map(o => ({ obra: o.obra, dias: o.dias.size, horas: o.horas, ultima: o.ultima }))
+      .sort((a, b) => (b.horas - a.horas) || (a.obra < b.obra ? -1 : a.obra > b.obra ? 1 : 0));
+    linea.ultimaObras = linea.obras.filter(o => linea.ultima !== null && o.ultima === linea.ultima).map(o => o.obra).sort();
+    delete linea._dias;
+    delete linea._obras;
+    return linea;
+  });
+  personas.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+
+  const total = {
+    personas: personas.length,
+    conJornadas: personas.filter(p => p.conJornadas).length,
+    sinJornadas: personas.filter(p => !p.conJornadas).length,
+    horas: personas.reduce((s, p) => s + p.horas, 0),
+    extra: personas.reduce((s, p) => s + p.extra, 0)
+  };
+  return { personas, total, avisos };
+}
+
+// 10. ordenarBase(personas, por): copia ordenada. 'nombre' = alfabético sin tildes; 'horas' = más horas primero;
+// 'ultima' = jornada más reciente primero. Con el mismo valor manda el nombre; quien no tiene jornadas va siempre al final.
+function ordenarBase(personas, por) {
+  const alfabetico = (a, b) => a.nombre.localeCompare(b.nombre, 'es');
+  const copia = Array.isArray(personas) ? personas.slice() : [];
+  if (por === 'horas') {
+    return copia.sort((a, b) => {
+      if (a.conJornadas !== b.conJornadas) return a.conJornadas ? -1 : 1;
+      return (b.horas - a.horas) || alfabetico(a, b);
+    });
+  }
+  if (por === 'ultima') {
+    return copia.sort((a, b) => {
+      if ((a.ultima === null) !== (b.ultima === null)) return a.ultima === null ? 1 : -1;
+      if (a.ultima !== b.ultima) return a.ultima < b.ultima ? 1 : -1;
+      return alfabetico(a, b);
+    });
+  }
+  return copia.sort(alfabetico);
+}
+
 const API = {
   semanaISO,
   rangoPeriodo,
@@ -589,7 +734,10 @@ const API = {
   agregarPorEmpresa,
   esAutonomo,
   textoAvisoEmpresas,
-  htmlPorEmpresa
+  htmlPorEmpresa,
+  claveNombre,
+  baseTrabajadores,
+  ordenarBase
 };
 
 if (typeof module !== 'undefined' && module.exports) { module.exports = API; }

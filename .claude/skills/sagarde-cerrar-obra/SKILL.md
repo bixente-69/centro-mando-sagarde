@@ -26,6 +26,10 @@ cd "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA" && python cerrar_obra.py
 
 3. Enseñarle ese informe —avance, última revisión y desglose `X/M///P/?/N`— y
    que confirme.
+4. Si la obra tiene Personal en obra: comprobar que **no queda ningún `CONTROL HORARIO` sin aplicar** en su `REVISIONES/`
+   (`py -3.11 _SISTEMA/MOTOR/scripts/actualizar_obra.py <id_obra>` debe decir «No hay controles horarios nuevos»). Si hay alguno,
+   aplicarlo antes con «actualiza la obra» (skill `sagarde-actualizar-obra`): **después de cerrar nadie lo aplica** (la obra sale
+   del registro y ni «actualiza la obra» ni el `.bat` la recorren), y `cerrar_obra.py` hoy no lo comprueba.
 
 Los `id` válidos salen del propio error si te equivocas, o de
 `registro_obras.py`.
@@ -75,12 +79,15 @@ cd "_SISTEMA/MOTOR" && python -m unittest discover -s tests
 - **Postventa.** Otro apartado.
 - **`personal_obra.json` y `personal_jornadas.jsonl`** (Personal en obra, si la obra los tiene).
   Viajan con la carpeta a `SAGARDE (OLD)/OBRAS CERRADAS` y **no se borran**: el estado de la
-  tablet y el ranking de Sagarde siguen contando a la obra, marcada como cerrada. Al cerrar, el
-  `personal_estado.js` se rehace en la siguiente generación (`generar_todos.py` o
-  `regenerar_obra.py --finalizar`); para tenerlo ya: `py -3.11 personal_integracion.py
-  exportar-estado --escribir`. Ojo: ya no se publican (la lista blanca solo cubre las obras
-  abiertas); quedan en disco (y en el historial de git si ya se habían publicado antes de cerrar).
-  Ver la skill `sagarde-personal`.
+  tablet, el ranking de Sagarde y su pestaña «Base de trabajadores» siguen contando a la obra
+  (marcada como cerrada). Al cerrar, el `personal_estado.js` se rehace en la siguiente generación
+  (`generar_todos.py` o `regenerar_obra.py --finalizar`); para tenerlo ya: `py -3.11
+  personal_integracion.py exportar-estado --escribir`. Ojo: ya no se publican (la lista blanca solo
+  cubre las obras abiertas); quedan en disco (y en el historial de git si ya se habían publicado
+  antes de cerrar). Ver la skill `sagarde-personal`.
+- **Los `CONTROL HORARIO … .json` de `REVISIONES/`** ya aplicados se quedan ahí, dentro de la carpeta
+  archivada, como el original de cada hoja (nunca se publican). Los que estén sin aplicar, **se aplican
+  antes de cerrar** (ver «Antes de tocar nada», punto 4).
 
 ## Si hay que deshacerlo
 
