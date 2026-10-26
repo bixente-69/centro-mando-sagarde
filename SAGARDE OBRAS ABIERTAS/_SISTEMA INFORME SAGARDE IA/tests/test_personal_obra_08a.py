@@ -803,6 +803,8 @@ class TestTextos(unittest.TestCase):
         ('renombre_sin_origen', 'Fantasma', '«Fantasma» no estaba en la base: no hay nada que cambiar de nombre.'),
         ('nombre_anterior_usado', 'Mikel -> Mikel Etxeberria',
          '«Mikel» es un nombre antiguo de «Mikel Etxeberria»: se ha tomado como la misma persona.'),
+        # 08c2a: el campo Empresa
+        ('empresa_sin_persona', 'Fantasma', '«Fantasma» no estaba en la base: no se le puede poner empresa.'),
     ]
     RECHAZOS = {
         'lote_invalido': 'El fichero no tiene el formato esperado.',
@@ -814,6 +816,7 @@ class TestTextos(unittest.TestCase):
         'excepcion_invalida': 'Un horario especial viene mal escrito.',
         'renombre_invalido': 'Un cambio de nombre viene mal escrito.',
         'alta_invalida': 'Un nombre de la lista de nuevos viene mal escrito.',
+        'empresa_invalida': 'Una empresa viene mal escrita.',
         'ambito_invalido': 'Una jornada no dice si es de viviendas o de garajes.',
         'fecha_invalida': 'Una jornada tiene una fecha que no existe.',
         'sin_presentes': 'Una jornada no tiene a nadie apuntado.',

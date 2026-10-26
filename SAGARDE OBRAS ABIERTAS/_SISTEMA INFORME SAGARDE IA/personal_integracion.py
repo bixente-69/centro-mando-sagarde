@@ -303,6 +303,8 @@ def _lineas_ficha(f):
         return out
     if f["personas_nuevas"]:
         out.append("      personas nuevas: " + ", ".join(p["nombre"] for p in f["personas_nuevas"]))
+    for e in f.get("empresas", []):
+        out.append("      · " + po.texto_empresa(e["accion"], e["nombre"], e["antes"], e["despues"]))
     vistos = set()
     for m in f["motivos"]:
         if m["texto"] not in vistos and m["codigo"] != "sin_efecto":

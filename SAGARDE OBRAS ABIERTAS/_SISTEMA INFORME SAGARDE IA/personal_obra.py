@@ -3,6 +3,7 @@
 trabajadores y estado para la app.
 Funciones principales: ingerir_lote, alta_trabajador, fusionar, aplanar, totales_control,
 exportar_estado, comprobar y la línea de comandos (main).
+Empresa: cada persona tiene una (`poner_empresa`, la clave `empresas` del fichero y `separar_empresas`).
 """
 
 from __future__ import annotations
@@ -18,7 +19,7 @@ HOR = {"lun": 7.5, "mar": 7.5, "mie": 7.5, "jue": 7.5, "vie": 7.5, "sab": 0, "do
 # presente guardado) los usa `comprobar` para señalar campos fuera del esquema.
 LK = {
     "tipo", "version", "obra", "horario_semanal", "excepciones_horario", "jornadas",
-    "dispositivo", "renombres", "altas",
+    "dispositivo", "renombres", "altas", "empresas",
 }
 JK = {"ambito", "fecha", "presentes", "anulada", "notas", "registrado"}
 PK = {"nombre", "horas", "extra"}
@@ -66,6 +67,16 @@ def clave_nombre(x):
     return "".join(
         c for c in unicodedata.normalize("NFD", limpiar_nombre(x)) if not unicodedata.combining(c)
     ).lower()
+
+
+def es_autonomo(empresa):
+    """True si la empresa termina en «@AUT» (mayúsculas indiferentes, con o sin espacio): un autónomo."""
+    return re.search(r"@\s*aut$", limpiar_nombre(empresa), re.IGNORECASE) is not None
+
+
+def empresa_valida(x):
+    """Una empresa vale si es texto vacío (sin empresa) o un nombre publicable (nunca DNI, teléfono ni correo)."""
+    return isinstance(x, str) and (limpiar_nombre(x) == "" or nombre_publicable(x))
 
 
 def _sis(r, n):
@@ -338,6 +349,18 @@ def validar_lote(lote, obras):
         not isinstance(altas, list) or any(not nombre_publicable(x) for x in altas)
     ):
         e.append("alta_invalida")
+    empresas = lote.get("empresas")
+    if "empresas" in lote and (
+        not isinstance(empresas, list)
+        or any(
+            not isinstance(x, dict)
+            or set(x) != {"nombre", "empresa"}
+            or not nombre_publicable(x.get("nombre"))
+            or not empresa_valida(x.get("empresa"))
+            for x in empresas
+        )
+    ):
+        e.append("empresa_invalida")
     return e
 
 
@@ -442,6 +465,31 @@ def _aplicar_renombre(catalogo, de, a, identificador=None, rechazar_fusionada=Fa
         "error": None, "accion": "renombrado", "id": origen, "id_otro": None,
         "de_actual": anterior_actual, "uso_anterior": origen_anterior,
     }
+
+
+def _grafia_empresa(catalogo, empresa):
+    """La grafía con la que ya consta una empresa en la base (se compara sin tildes ni mayúsculas);
+    si es nueva, la que se ha escrito."""
+    escrita = limpiar_nombre(empresa)
+    clave = clave_nombre(escrita)
+    for t in catalogo["trabajadores"]:
+        actual = limpiar_nombre(t.get("empresa"))
+        if t.get("fusionado_en") is None and actual and clave_nombre(actual) == clave:
+            return actual
+    return escrita
+
+
+def _aplicar_empresa(catalogo, persona, empresa):
+    """Regla común de empresa (la usan el fichero y `poner_empresa`): una persona, una empresa.
+    Vacía = quitarla. Devuelve la acción (puesta, cambiada, quitada o sin_cambios) y la empresa de antes y de después.
+    """
+    antes = limpiar_nombre(persona.get("empresa"))
+    despues = _grafia_empresa(catalogo, empresa) if limpiar_nombre(empresa) else ""
+    if clave_nombre(despues) == clave_nombre(antes):
+        return {"accion": "sin_cambios", "antes": antes, "despues": antes}
+    persona["empresa"] = despues
+    accion = "quitada" if not despues else ("puesta" if not antes else "cambiada")
+    return {"accion": accion, "antes": antes, "despues": despues}
 
 
 def _traza_base(ts, obra, accion, dispositivo=None):
@@ -551,6 +599,7 @@ def ingerir_lote(
         "ok": not errores_lote, "escrito": False, "lote_rechazado": errores_lote,
         "avisos_lote": [], "jornadas": [], "altas": [], "excepciones": [],
         "renombres": [], "altas_pedidas": [], "obra_creada": False, "recibido": False,
+        "empresas": [],
     }
     # Rechazo de lote completo: si la cabecera o el esquema general fallan no se procesa nada.
     if errores_lote:
@@ -637,6 +686,35 @@ def ingerir_lote(
                     "detalle": f"{nombre} -> {mp[identificador]['nombre']}",
                 })
         res["altas_pedidas"].append({"nombre": nombre, "id": identificador, "accion": accion})
+
+    # Paso 2b: empresas, una por persona. Van después de los renombres y las altas (quien se acaba de crear o de
+    # renombrar ya puede llevar empresa) y antes de las jornadas. Quien no existe no se crea: se avisa.
+    for item in lote.get("empresas", []):
+        nombre = limpiar_nombre(item["nombre"])
+        empresa = limpiar_nombre(item["empresa"])
+        identificador, modo, mp = _buscar_nombre(nombre, cat)
+        if identificador is None:
+            res["avisos_lote"].append({"codigo": "empresa_sin_persona", "detalle": nombre})
+            res["empresas"].append({
+                "nombre": nombre, "id": None, "accion": "sin_persona", "antes": "", "despues": empresa,
+            })
+            continue
+        persona = mp[identificador]
+        if modo == "anterior":
+            detalle = f"{nombre} -> {persona['nombre']}"
+            res["avisos_lote"].append({"codigo": "nombre_anterior_usado", "detalle": detalle})
+        cambio = _aplicar_empresa(cat, persona, empresa)
+        if cambio["accion"] != "sin_cambios":
+            cambio_cat = True
+            tr = _traza_base(ts, oid, "empresa", lote.get("dispositivo"))
+            tr.update({
+                "id": identificador, "nombre": persona["nombre"], "de": cambio["antes"], "a": cambio["despues"],
+            })
+            trazas.append(tr)
+        res["empresas"].append({
+            "nombre": persona["nombre"], "id": identificador, "accion": cambio["accion"],
+            "antes": cambio["antes"], "despues": cambio["despues"],
+        })
 
     # Paso 3: normaliza cada jornada y cuenta repeticiones de clave dentro del propio lote.
     normas = []
@@ -993,6 +1071,172 @@ def renombrar(raiz, obras, quien, nuevo, escribir=False, ahora=None):
     return base
 
 
+def poner_empresa(raiz, obras, quien, empresa, escribir=False, ahora=None):
+    """Pone (o quita, con la empresa vacía) la empresa de una persona, por id o por nombre.
+    Vista previa o, con escribir, de verdad: guarda la base y deja una línea de registro en cada obra de la persona.
+    """
+    base = {
+        "ok": False, "error": None, "id": None, "nombre": quien, "accion": None, "antes": "",
+        "despues": limpiar_nombre(empresa), "avisos": [], "escrito": False, "trazas_en": [],
+    }
+    if not empresa_valida(empresa):
+        base["error"] = "empresa_invalida"
+        return base
+    catalogo = copy.deepcopy(cargar_catalogo(raiz))
+    mp = {t["id"]: t for t in catalogo["trabajadores"]}
+    if isinstance(quien, str) and re.fullmatch(r"T\d{4,}", quien) is not None:
+        identificador = _resolve(quien, mp) if quien in mp else None
+        modo = "actual"
+    else:
+        identificador, modo, mp = _buscar_nombre(limpiar_nombre(quien), catalogo)
+    if identificador is None:
+        base["error"] = "persona_inexistente"
+        return base
+    persona = mp[identificador]
+    cambio = _aplicar_empresa(catalogo, persona, empresa)
+    base.update({
+        "ok": True, "id": identificador, "nombre": persona["nombre"], "accion": cambio["accion"],
+        "antes": cambio["antes"], "despues": cambio["despues"],
+    })
+    if modo == "anterior":
+        base["avisos"].append({
+            "codigo": "nombre_anterior_usado", "detalle": f"{limpiar_nombre(quien)} -> {persona['nombre']}",
+        })
+    base["trazas_en"] = _obras_de_persona(raiz, obras, identificador, catalogo)
+    if escribir and cambio["accion"] != "sin_cambios":
+        guardar_catalogo(raiz, catalogo)
+        for obra in base["trazas_en"]:
+            traza = _traza_base(ahora or _now(), obra, "empresa")
+            traza.update({
+                "id": identificador, "nombre": persona["nombre"], "de": cambio["antes"], "a": cambio["despues"],
+            })
+            ruta = _rop(raiz, obras, obra, "personal_jornadas.jsonl")
+            ruta.parent.mkdir(parents=True, exist_ok=True)
+            with open(ruta, "ab") as salida:
+                salida.write((json.dumps(traza, ensure_ascii=False) + "\n").encode())
+        base["escrito"] = True
+    return base
+
+
+# La empresa que va escrita dentro del nombre: «Alejo (Manueles)» o «Javi @ CATERSYSTEM».
+_EMPRESA_EN_PARENTESIS = re.compile(r"^(?P<nombre>.*?)\s*\(\s*(?P<empresa>[^()]*?)\s*\)$")
+_EMPRESA_CON_ARROBA = re.compile(r"^(?P<nombre>.*?)\s*@\s*(?P<empresa>.*)$")
+
+
+def _partir_empresa(nombre):
+    """Separa «Alejo (Manueles)» en ("Alejo", "Manueles") y «Javi @ CATERSYSTEM» en ("Javi", "CATERSYSTEM").
+    Devuelve None si el nombre no lleva ninguna empresa dentro.
+    """
+    texto = limpiar_nombre(nombre)
+    for patron in (_EMPRESA_EN_PARENTESIS, _EMPRESA_CON_ARROBA):
+        encontrado = patron.match(texto)
+        if encontrado:
+            return limpiar_nombre(encontrado.group("nombre")), limpiar_nombre(encontrado.group("empresa"))
+    return None
+
+
+def _motivo_que_para(persona, limpio, empresa, repetidos):
+    """Por qué un nombre con empresa dentro NO se puede separar solo: (código, detalle) o None si se puede."""
+    if not limpio:
+        return "nombre_vacio", None
+    if not any(c.isalpha() for c in empresa):
+        return "sin_letras", empresa
+    if es_autonomo(empresa) or clave_nombre(empresa) == "aut":
+        return "sufijo_aut", empresa
+    if not nombre_publicable(limpio) or not empresa_valida(empresa):
+        return "no_vale", None
+    if repetidos[clave_nombre(limpio)] > 1:
+        return "mismo_nombre", limpio
+    propia = limpiar_nombre(persona.get("empresa"))
+    if propia and clave_nombre(propia) != clave_nombre(empresa):
+        return "ya_tiene_empresa", propia
+    return None
+
+
+def texto_separar(codigo, nombre, detalle=None):
+    """Frase en lenguaje llano de por qué un nombre con empresa dentro se deja sin tocar."""
+    if codigo == "nombre_vacio":
+        return f"«{nombre}»: quitando la empresa no quedaría ningún nombre."
+    if codigo == "sin_letras":
+        return f"«{nombre}»: lo que acompaña al nombre no parece una empresa. No se toca."
+    if codigo == "sufijo_aut":
+        return (f"«{nombre}»: acaba en «@AUT», que marca a un autónomo. ¿Es una persona con la empresa "
+                f"«{detalle}»? Dímelo con este caso delante.")
+    if codigo == "no_vale":
+        return f"«{nombre}»: la parte del nombre o la de la empresa no vale (vacía, muy larga o con signos raros)."
+    if codigo == "mismo_nombre":
+        return f"«{nombre}»: otra persona de la lista quedaría también como «{detalle}». ¿Son la misma persona?"
+    if codigo == "ya_tiene_empresa":
+        return f"«{nombre}» ya tiene la empresa «{detalle}»: una persona solo puede tener una."
+    if codigo == "coincide_con_otro":
+        return (f"«{nombre}»: ya hay otro «{detalle}» en la base. "
+                "Si son la misma persona hay que juntarlas antes.")
+    return f"«{nombre}»: no se puede separar la empresa."
+
+
+def separar_empresas(raiz, obras, aplicar=False, ahora=None):
+    """Separa la empresa escrita dentro del nombre («Alejo (Manueles)» -> «Alejo», empresa «Manueles»).
+    Sin `aplicar` es una vista previa; con `aplicar` renombra a la persona y le pone la empresa, sin tocar jornadas.
+    Lo dudoso sale en `paran` y no se aplica nunca. Devuelve propuestas, paran, aplicadas, errores y escrito.
+    """
+    trabajo = copy.deepcopy(cargar_catalogo(raiz))
+    candidatas = []
+    sin_empresa = 0
+    for persona in trabajo["trabajadores"]:
+        if persona.get("fusionado_en") is not None:
+            continue
+        partes = _partir_empresa(persona.get("nombre"))
+        if partes is None:
+            sin_empresa += 1
+        else:
+            candidatas.append((persona, partes[0], partes[1]))
+    repetidos = Counter(clave_nombre(limpio) for _, limpio, _ in candidatas)
+    res = {
+        "propuestas": [], "paran": [], "sin_empresa_en_el_nombre": sin_empresa,
+        "aplicadas": [], "errores": [], "escrito": False,
+    }
+
+    def parar(persona, codigo, detalle=None, extra=None):
+        """Anota una persona que NO se separa (con su frase en llano) en `paran`."""
+        item = {"id": persona["id"], "de": persona["nombre"], "motivo": codigo, "detalle": detalle}
+        item["texto"] = texto_separar(codigo, persona["nombre"], detalle)
+        item.update(extra or {})
+        res["paran"].append(item)
+
+    # Cada propuesta se prueba sobre la copia, en orden, igual que se aplicará: lo que se enseña es lo que pasa.
+    for persona, limpio, empresa in candidatas:
+        motivo = _motivo_que_para(persona, limpio, empresa, repetidos)
+        if motivo:
+            parar(persona, *motivo)
+            continue
+        original = persona["nombre"]
+        cambio = _aplicar_renombre(trabajo, original, limpio, persona["id"])
+        if cambio.get("error") == "coincide_con_otro":
+            otro = {t["id"]: t for t in trabajo["trabajadores"]}[cambio["id_otro"]]
+            orden = f"personal_obra.py fusionar {persona['id']} {otro['id']}"
+            parar(persona, "coincide_con_otro", otro["nombre"], {"orden": orden})
+            continue
+        puesta = _aplicar_empresa(trabajo, persona, empresa)
+        res["propuestas"].append({
+            "id": persona["id"], "de": original, "nombre": persona["nombre"], "empresa": persona.get("empresa", ""),
+            "accion": puesta["accion"],
+        })
+    if not aplicar:
+        return res
+    for propuesta in res["propuestas"]:
+        cambio_nombre = renombrar(raiz, obras, propuesta["id"], propuesta["nombre"], escribir=True, ahora=ahora)
+        if not cambio_nombre["ok"]:
+            res["errores"].append({"id": propuesta["id"], "error": cambio_nombre["error"]})
+            break
+        cambio_empresa = poner_empresa(raiz, obras, propuesta["id"], propuesta["empresa"], escribir=True, ahora=ahora)
+        if not cambio_empresa["ok"]:
+            res["errores"].append({"id": propuesta["id"], "error": cambio_empresa["error"]})
+            break
+        res["aplicadas"].append(propuesta["id"])
+        res["escrito"] = True
+    return res
+
+
 def ultima_jornada(raiz, obras, obra, ambito):
     """Obtiene la última jornada no anulada por obra y ámbito.
     Devuelve la fecha y presentes con nombres canónicos.
@@ -1220,6 +1464,8 @@ def comprobar(raiz, obras):
                 or clave_nombre(t.get("nombre")) in claves_anteriores
             ):
                 out.append(f"{pc}: nombres_anteriores invalidos")
+        if t.get("empresa") is not None and not empresa_valida(t["empresa"]):
+            out.append(f"{pc}: empresa invalida")
     if any(v > 1 for v in ks.values()):
         out.append(f"{pc}: nombres no fusionados duplicados")
     for o in obras:
@@ -1286,6 +1532,7 @@ def texto_aviso(codigo, detalle=None):
         "excepcion_invalida": "Un horario especial viene mal escrito.",
         "renombre_invalido": "Un cambio de nombre viene mal escrito.",
         "alta_invalida": "Un nombre de la lista de nuevos viene mal escrito.",
+        "empresa_invalida": "Una empresa viene mal escrita.",
         "ambito_invalido": "Una jornada no dice si es de viviendas o de garajes.",
         "fecha_invalida": "Una jornada tiene una fecha que no existe.",
         "sin_presentes": "Una jornada no tiene a nadie apuntado.",
@@ -1335,6 +1582,10 @@ def texto_aviso(codigo, detalle=None):
         if isinstance(detalle, str) and detalle:
             return f"«{detalle}» no estaba en la base: no hay nada que cambiar de nombre."
         return "Un nombre que se quería cambiar no estaba en la base: no hay nada que cambiar."
+    if codigo == "empresa_sin_persona":
+        if isinstance(detalle, str) and detalle:
+            return f"«{detalle}» no estaba en la base: no se le puede poner empresa."
+        return "Una empresa era para alguien que no estaba en la base: no se ha puesto."
     if codigo == "nombre_anterior_usado":
         if isinstance(detalle, str) and " -> " in detalle:
             anterior, actual = detalle.split(" -> ", 1)
@@ -1342,6 +1593,17 @@ def texto_aviso(codigo, detalle=None):
                     "se ha tomado como la misma persona.")
         return "Se ha reconocido un nombre antiguo como la misma persona."
     return f"Aviso: {codigo}."
+
+
+def texto_empresa(accion, nombre, antes="", despues=""):
+    """Frase en llano de un cambio de empresa: puesta, cambiada o quitada."""
+    if accion == "puesta":
+        return f"Pone la empresa «{despues}» a «{nombre}»."
+    if accion == "cambiada":
+        return f"Cambia la empresa de «{nombre}»: de «{antes}» a «{despues}»."
+    if accion == "quitada":
+        return f"Quita la empresa a «{nombre}» (era «{antes}»)."
+    return f"«{nombre}» ya tiene esa empresa: no hay nada que cambiar."
 
 
 def _cli_obras(x):
@@ -1356,10 +1618,35 @@ def _cli_obras(x):
     return {o["id"]: o["carpeta_obra"] for o in registro_obras.OBRAS}
 
 
+def _cli_separar_empresas(raiz, obras, aplicar):
+    """Imprime en llano la vista previa (o el resultado) de `separar_empresas`. Devuelve 0 si no hay nada dudoso."""
+    r = separar_empresas(raiz, obras, aplicar=aplicar)
+    if not aplicar:
+        print("Vista previa: todavía no se guarda nada.")
+    if not r["propuestas"] and not r["paran"]:
+        print("No hay nombres con la empresa dentro: no hay nada que separar.")
+    if r["propuestas"]:
+        print("Se separaría así:" if not aplicar else "Se ha separado así:")
+        for x in r["propuestas"]:
+            print(f"  · «{x['de']}» pasa a «{x['nombre']}», empresa «{x['empresa']}»")
+    if r["paran"]:
+        print("Hay que mirarlos a mano (no se tocan):")
+        for x in r["paran"]:
+            print("  · " + x["texto"])
+            if x.get("orden"):
+                print("    Para juntarlas: " + x["orden"])
+    for x in r["errores"]:
+        print(f"  ✗ No se pudo con {x['id']}: " + texto_aviso(x["error"]))
+    n = r["sin_empresa_en_el_nombre"]
+    print(("1 persona no lleva" if n == 1 else f"{n} personas no llevan") + " empresa en el nombre: no se toca.")
+    if r["propuestas"] and not aplicar:
+        print("Para hacerlo de verdad, vuelve a lanzarlo con --aplicar (cuando lo hayas visto).")
+    return 0 if not r["paran"] and not r["errores"] else 2
+
+
 def main(argv=None):
-    """Punto de entrada de la línea de comandos (ingerir, fusionar, exportar-estado, comprobar).
-    Devuelve 0 si va bien, 2 si hay rechazos o incoherencias y 1 si el uso o el fichero son
-    erróneos.
+    """Punto de entrada de la línea de comandos (ingerir, fusionar, renombrar, separar-empresas, exportar-estado,
+    comprobar). Devuelve 0 si va bien, 2 si hay rechazos o incoherencias y 1 si el uso es erróneo.
     """
     try:
         sys.stdout.reconfigure(encoding="utf-8")
@@ -1388,6 +1675,10 @@ def main(argv=None):
     q.add_argument("quien")
     q.add_argument("nuevo")
     comunes(q)
+    q = s.add_parser("separar-empresas")
+    q.add_argument("--raiz", default=str(Path(__file__).resolve().parent.parent))
+    q.add_argument("--obras")
+    q.add_argument("--aplicar", action="store_true")
     q = s.add_parser("exportar-estado")
     comunes(q)
     q = s.add_parser("comprobar")
@@ -1410,6 +1701,8 @@ def main(argv=None):
                 print("RECHAZADO lote", codigo)
             for x in r["excepciones"]:
                 print("HORARIO PROPIO", x["nombre"], x["accion"])
+            for x in r["empresas"]:
+                print("EMPRESA", x["nombre"], x["accion"])
             for v in r["avisos_lote"]:
                 print("REVISAR", v["codigo"], v["detalle"])
             return 0 if r["ok"] else 2
@@ -1432,6 +1725,8 @@ def main(argv=None):
             for aviso in r["avisos"]:
                 print(texto_aviso(aviso["codigo"], aviso["detalle"]))
             return 0 if r["ok"] else 2
+        if a.cmd == "separar-empresas":
+            return _cli_separar_empresas(a.raiz, ob, a.aplicar)
         if a.cmd == "exportar-estado":
             if a.obras:
                 exportar_estado(a.raiz, ob, escribir=a.escribir)

@@ -429,8 +429,33 @@
         font-size: 20px;
         color: #1f5fa8;
       }
-      .row.ren input {
+      .row.ren input,
+      .row.ren select {
         flex-basis: 100%;
+      }
+      /* La empresa va en pequeño debajo del nombre (al lado no cabe en un móvil): el nombre y la empresa ocupan una
+         columna y el lápiz queda a la derecha de las dos. */
+      .nw.con-emp {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: center;
+        min-width: 150px;
+      }
+      .nw.con-emp .nm {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .nw.con-emp .emp {
+        grid-column: 1;
+        grid-row: 2;
+        font-size: 12px;
+        line-height: 1.2;
+        color: var(--muted);
+        overflow-wrap: anywhere;
+      }
+      .nw.con-emp .lap {
+        grid-column: 2;
+        grid-row: 1 / span 2;
       }
       .row.ren .actions,
       .row.ren .aviso {
@@ -577,6 +602,7 @@
           r: LS + 'rotos',
           rn: LS + 'renombres',
           al: LS + 'altas',
+          em: LS + 'empresas',
         };
       // Lee y parsea un valor JSON de localStorage; devuelve el valor por defecto d si no existe o
       // falla
@@ -714,6 +740,7 @@
         excepciones = get(K.x, {}),
         renombres = get(K.rn, []),
         altas = get(K.al, []),
+        empresas = get(K.em, []),
         publicados = new Set(),
         rotos = 0;
       if (!Array.isArray(pending)) pending = [];
@@ -744,6 +771,12 @@
           )
         : [];
       altas = Array.isArray(altas) ? altas.filter((x) => typeof x === 'string' && clean(x)) : [];
+      // Empresas apuntadas en este aparato: { nombre, empresa }; empresa vacía = quitársela.
+      empresas = Array.isArray(empresas)
+        ? empresas.filter(
+            (e) => e && typeof e === 'object' && typeof e.nombre === 'string' && clean(e.nombre) && typeof e.empresa === 'string',
+          )
+        : [];
       if (!hours || typeof hours !== 'object' || Array.isArray(hours)) hours = {};
       // Objeto «llano»: ni null ni lista.
       function objetoSimple(valor) {
@@ -815,6 +848,79 @@
       // si no, el nombre limpio.
       function canon(n) {
         return cat().find((x) => key(x) === key(n)) || clean(n);
+      }
+      // ---------------------------------------------------------------------------
+      // Empresas: cada persona tiene una (o ninguna); se elige de una lista y se apunta para el PC
+      // ---------------------------------------------------------------------------
+      const OTRA_EMPRESA = '__otra__';
+      // Empresa que el PC tiene publicada para ese nombre ('' = sin empresa).
+      function empresaPublicada(nombre) {
+        let persona = (state?.catalogo || []).find((x) => key(x.nombre) === key(nombre));
+        return clean(persona?.empresa);
+      }
+      // Empresa de una persona: lo apuntado en este aparato manda sobre lo publicado.
+      function empresaDe(nombre) {
+        let apuntada = empresas.find((x) => key(x.nombre) === key(nombre));
+        return apuntada ? clean(apuntada.empresa) : empresaPublicada(nombre);
+      }
+      // Empresas conocidas, sin repetir (sin tildes ni mayúsculas) y por orden alfabético: las del catálogo
+      // publicado, las apuntadas aquí y «Sagarde», que siempre sale.
+      function listaEmpresas() {
+        let m = new Map();
+        [...(state?.catalogo || []).map((x) => x.empresa), ...empresas.map((x) => x.empresa), 'Sagarde'].forEach((e) => {
+          let nombre = clean(e);
+          if (nombre && !m.has(key(nombre))) m.set(key(nombre), nombre);
+        });
+        return [...m.values()].sort((x, y) => x.localeCompare(y, 'es'));
+      }
+      // La empresa tal como ya consta (misma, sin tildes ni mayúsculas) o, si es nueva, tal como se escribió.
+      function canonEmpresa(texto) {
+        return listaEmpresas().find((e) => key(e) === key(texto)) || clean(texto);
+      }
+      // Opciones del desplegable de empresa: «Sin empresa», las conocidas y «Otra empresa…» para escribir una nueva.
+      function opcionesEmpresaHTML(elegida) {
+        let marca = (valor) => (valor === elegida ? ' selected' : '');
+        return (
+          `<option value=""${marca('')}>Sin empresa</option>` +
+          listaEmpresas()
+            .map((e) => `<option value="${E(e)}"${marca(e)}>${E(e)}</option>`)
+            .join('') +
+          `<option value="${OTRA_EMPRESA}"${marca(OTRA_EMPRESA)}>Otra empresa…</option>`
+        );
+      }
+      // Empresa elegida en un desplegable (y, si es «Otra empresa…», la que se ha escrito): { empresa, error }.
+      function leerEmpresa(elegida, escrita) {
+        if (elegida !== OTRA_EMPRESA) return { empresa: clean(elegida), error: '' };
+        let texto = clean(escrita);
+        if (!texto) return { empresa: '', error: 'Escribe la empresa.' };
+        let motivo = motivoNombre(texto);
+        if (motivo) return { empresa: '', error: 'Esa empresa no vale: ' + motivo + '.' };
+        return { empresa: canonEmpresa(texto), error: '' };
+      }
+      // Apunta la empresa de una persona para el PC ('' = sin empresa). Solo se apunta si difiere de la que ya
+      // publicó el PC: si se vuelve a esa, no queda nada apuntado. Devuelve si se pudo guardar.
+      function fijarEmpresa(nombre, empresa) {
+        empresas = empresas.filter((x) => key(x.nombre) !== key(nombre));
+        let final = canonEmpresa(empresa);
+        if (key(final) !== key(empresaPublicada(nombre))) empresas.push({ nombre, empresa: final });
+        return set(K.em, empresas);
+      }
+      // Empresa escrita para alguien que ya está en la base: se le pone si no tenía ninguna; si ya tiene otra
+      // no se cambia (para eso está el lápiz). Devuelve el aviso, o '' si no hace falta ninguno.
+      function empresaParaExistente(nombre, empresa) {
+        if (!empresa) return '';
+        let actual = empresaDe(nombre);
+        if (!actual) {
+          fijarEmpresa(nombre, empresa);
+          return '';
+        }
+        if (key(actual) === key(empresa)) return '';
+        return '«' + nombre + '» ya tiene la empresa «' + actual + '»: para cambiarla usa el lápiz ✎.';
+      }
+      // Al abrir, olvida las empresas que el PC ya trae iguales en el estado publicado.
+      function olvidarEmpresas() {
+        empresas = empresas.filter((x) => key(x.empresa) !== key(empresaPublicada(x.nombre)));
+        set(K.em, empresas);
       }
       // Jornadas que el PC ha publicado para la obra (una fila por persona), con el nombre
       // normalizado.
@@ -1132,12 +1238,36 @@
           partes.push(`${renombres.length} ${renombres.length === 1 ? 'nombre corregido' : 'nombres corregidos'}`);
         if (altas.length)
           partes.push(`${altas.length} ${altas.length === 1 ? 'nombre nuevo' : 'nombres nuevos'}`);
+        partes.push(...textosEmpresas());
         if (!partes.length) return '';
         return `<div id="cambios-nombres" class="nota">${E(partes.join(' · '))} sin enviar al PC</div>`;
       }
       // «1 jornada» / «3 jornadas»: el número con la palabra en singular o en plural.
       function uno(n, singular, plural) {
         return n + ' ' + (n === 1 ? singular : plural);
+      }
+      // «2 empresas puestas» y «1 empresa quitada» según lo apuntado en este aparato (nada si no hay).
+      function textosEmpresas() {
+        let puestas = empresas.filter((x) => clean(x.empresa)).length;
+        let quitadas = empresas.length - puestas;
+        let partes = [];
+        if (puestas) partes.push(uno(puestas, 'empresa puesta', 'empresas puestas'));
+        if (quitadas) partes.push(uno(quitadas, 'empresa quitada', 'empresas quitadas'));
+        return partes;
+      }
+      // Nombres con empresa que el PC aún no conoce (y que no van ya como nombres nuevos ni son un nombre
+      // corregido de alguien que sí conoce): viajan también como nombres nuevos, para que la empresa tenga a quién
+      // ponerse (el PC aplica los nombres nuevos antes que las empresas).
+      function nuevasConEmpresa() {
+        return empresas
+          .filter((x) => clean(x.empresa))
+          .map((x) => x.nombre)
+          .filter(
+            (nombre) =>
+              !publicados.has(key(nombre)) &&
+              !altas.some((x) => key(x) === key(nombre)) &&
+              !renombres.some((cambio) => key(cambio.a) === key(nombre) && publicados.has(key(cambio.de))),
+          );
       }
       // Día de la semana entero con día y mes, p. ej. «jueves 22/10».
       function diaLargo(fecha) {
@@ -1181,8 +1311,8 @@
           );
         return [...m.values()].flat();
       }
-      // Fila de una persona mientras se corrige su nombre: el campo, «Guardar nombre» y «Cancelar», y debajo
-      // el error o la pregunta si los hay.
+      // Fila de una persona mientras se corrige su nombre o su empresa: el campo del nombre, el desplegable de la
+      // empresa (y su campo si es «Otra empresa…»), «Guardar» y «Cancelar», y debajo el error o la pregunta.
       function filaEdicionHTML(persona) {
         let error = a.ren.error ? `<div class="aviso" id="ren-error" role="alert">${E(a.ren.error)}</div>` : '';
         let pregunta = a.ren.pregunta
@@ -1190,10 +1320,16 @@
             `<div class="actions"><button class="btn sec" data-ren-si>Sí, son la misma persona</button>` +
             `<button class="btn ghost" data-ren-no>No</button></div></div>`
           : '';
+        let otra =
+          a.ren.empresa === OTRA_EMPRESA
+            ? `<input id="ren-empresa-otra" maxlength="60" autocomplete="off" placeholder="Nombre de la empresa" ` +
+              `aria-label="Nombre de la empresa" value="${E(a.ren.otra)}">`
+            : '';
         return (
           `<div class="row ren" data-nombre="${E(persona.nombre)}"><input id="ren-campo" maxlength="60" ` +
-          `autocomplete="off" aria-label="Nombre correcto" value="${E(a.ren.valor)}"><div class="actions">` +
-          `<button class="btn pri" data-ren-guardar>Guardar nombre</button>` +
+          `autocomplete="off" aria-label="Nombre correcto" value="${E(a.ren.valor)}">` +
+          `<select id="ren-empresa" aria-label="Empresa">${opcionesEmpresaHTML(a.ren.empresa)}</select>${otra}` +
+          `<div class="actions"><button class="btn pri" data-ren-guardar>Guardar</button>` +
           `<button class="btn ghost" data-ren-cancelar>Cancelar</button></div>${error}${pregunta}</div>`
         );
       }
@@ -1206,6 +1342,7 @@
             // Horas base según el horario de esa persona hoy; la hora extra es el exceso sobre
             // dicha base
             let baseDia = horarioDe(persona.nombre) || 0;
+            let empresaFila = empresaDe(persona.nombre);
             let horas = persona.horas === null ? baseDia : persona.horas;
             let extra = Math.max(0, (horas || 0) - baseDia);
             let chipPropio = tienePropio(persona.nombre)
@@ -1242,8 +1379,9 @@
             return (
               `<div class="row ${persona.on ? '' : 'off'}" data-nombre="${E(persona.nombre)}">` +
               `<button class="x ${persona.on ? 'on' : ''}" data-x="${E(indice)}">X</button>` +
-              `<span class="nw"><span class="nm">${E(persona.nombre)}</span>` +
-              `<button class="lap" data-ren="${E(indice)}" aria-label="Corregir el nombre de ` +
+              `<span class="nw${empresaFila ? ' con-emp' : ''}"><span class="nm">${E(persona.nombre)}</span>` +
+              `${empresaFila ? `<span class="emp">${E(empresaFila)}</span>` : ''}` +
+              `<button class="lap" data-ren="${E(indice)}" aria-label="Corregir el nombre o la empresa de ` +
               `${E(persona.nombre)}">✎</button></span>` +
               `${
                 persona.on
@@ -1338,8 +1476,11 @@
           `</div><div id="lista">${rowsHTML()}</div><label class="fld">Añadir de la ` +
           `base</label><input id="filtro" placeholder="Buscar por nombre"><div class="add">` +
           `<select id="addsel">${opcionesHTML()}</select><button class="btn sec" data-add>Añadir</button>` +
-          `</div><label class="fld">Nombre nuevo</label><div class="add"><input id="nuevo" maxlength="60">` +
-          `<button class="btn sec" data-nuevo>Crear</button></div><div id="nuevo-aviso">` +
+          `</div><label class="fld">Nombre nuevo</label><input id="nuevo" maxlength="60">` +
+          `<label class="fld">Empresa del nombre nuevo</label><select id="nuevo-empresa" aria-label="Empresa del ` +
+          `nombre nuevo">${opcionesEmpresaHTML('')}</select><input id="nuevo-empresa-otra" maxlength="60" ` +
+          `autocomplete="off" placeholder="Nombre de la empresa" aria-label="Nombre de la empresa" hidden>` +
+          `<div class="actions"><button class="btn sec full" data-nuevo>Crear</button></div><div id="nuevo-aviso">` +
           `${a.nuevoError ? `<div class="aviso">${E(a.nuevoError)}</div>` : ''}` +
           `${
             a.warn
@@ -1353,8 +1494,9 @@
           `${
             a.varios
               ? `<div class="varios" id="varios"><b>Añadir varios nombres</b><p class="nota">` +
-                `Escribe un nombre en cada línea. Entran en la base sin anotarles ningún día.</p>` +
-                `<textarea id="varios-texto" rows="6" placeholder="Un nombre por línea" ` +
+                `Escribe un nombre en cada línea. Si quieres ponerle empresa, escríbela detrás de una coma: ` +
+                `«Alejo, Manueles». Entran en la base sin anotarles ningún día.</p>` +
+                `<textarea id="varios-texto" rows="6" placeholder="Un nombre por línea (o «Nombre, Empresa»)" ` +
                 `aria-label="Nombres, uno por línea">${E(a.varios.texto)}</textarea>` +
                 `<div class="actions"><button class="btn pri" data-varios-ok>Añadir a la base</button>` +
                 `<button class="btn ghost" data-varios-cerrar>Cerrar</button></div>` +
@@ -1693,7 +1835,8 @@
       // Corrige el nombre de la persona que ahora se llama de, en todo lo que hay en el aparato, y lo
       // apunta para el PC. Si el nombre nuevo ya es de otra persona, las dos pasan a ser una. Devuelve si
       // se pudo guardar, si fue una unión, cuántas jornadas guardadas tenían a los dos y el nombre final.
-      function renombrar(de, nuevo) {
+      // La empresa apuntada se va con el nombre; si se da `empresa` ('' = sin empresa), además se cambia.
+      function renombrar(de, nuevo, empresa) {
         let destino = cat().find((n) => key(n) === key(nuevo) && key(n) !== key(de));
         let final = destino || nuevo;
         let filaDe = a.list.find((x) => key(x.nombre) === key(de));
@@ -1709,62 +1852,105 @@
         });
         news = unirTextos(news, de, final);
         altas = unirTextos(altas, de, final);
+        if (destino) empresas = empresas.filter((x) => key(x.nombre) !== key(de));
+        empresas = unirNombres(empresas, de, final);
         Object.values(excepciones).forEach((personas) => renombrarClave(personas, de, final));
         renombrarEnEstado(de, final);
+        if (empresa !== undefined) fijarEmpresa(final, empresa);
         a.hp = null;
         a.warn = null;
         apuntarRenombre(de, final);
-        let guardado = [set(K.p, pending), set(K.n, news), set(K.al, altas), set(K.x, excepciones), set(K.rn, renombres)];
+        let guardado = [
+          set(K.p, pending),
+          set(K.n, news),
+          set(K.al, altas),
+          set(K.x, excepciones),
+          set(K.rn, renombres),
+          set(K.em, empresas),
+        ];
         draft();
         render();
         return { guardado: guardado.every(Boolean), fusion: !!destino, duplicadas, final };
       }
-      // Aviso que se enseña tras corregir un nombre.
-      function avisoRenombre(de, r) {
+      // Aviso que se enseña tras corregir un nombre (y, si se cambió, la empresa).
+      function avisoRenombre(de, r, empresa) {
         if (!r.guardado) return 'No se pudo guardar el cambio en este aparato (¿navegación privada o memoria llena?).';
+        let conEmpresa = empresa === undefined ? '' : empresa ? ', empresa «' + empresa + '»' : ', sin empresa';
         let aviso = r.fusion
-          ? '«' + de + '» y «' + r.final + '» pasan a ser la misma persona. Se juntarán al pasarlo al PC.'
-          : 'Nombre corregido: «' + de + '» ahora es «' + r.final + '». Queda apuntado para el PC.';
+          ? '«' + de + '» y «' + r.final + '» pasan a ser la misma persona' + conEmpresa + '. Se juntarán al pasarlo al PC.'
+          : 'Nombre corregido: «' + de + '» ahora es «' + r.final + '»' + conEmpresa + '. Queda apuntado para el PC.';
         if (r.duplicadas) {
           let salian = r.duplicadas === 1 ? 'En 1 jornada salían los dos' : 'En ' + r.duplicadas + ' jornadas salían los dos';
           aviso += ' ' + salian + '; se ha dejado una sola anotación.';
         }
         return aviso;
       }
-      // «Guardar nombre» (y «Sí, son la misma persona» con confirmado = true): comprueba el nombre escrito,
-      // pregunta si ya es de otra persona y, si todo va bien, lo corrige.
+      // «Guardar» (y «Sí, son la misma persona» con confirmado = true): comprueba el nombre y la empresa elegidos,
+      // pregunta si el nombre ya es de otra persona y, si todo va bien, lo corrige. Solo toca la empresa si se ha
+      // cambiado en el desplegable.
       function guardarRenombre(confirmado) {
         if (!a.ren) return;
         let de = a.ren.nombre;
         let valor = clean(a.ren.valor);
         let motivo = valor ? motivoNombre(valor) : '';
         let otro = cat().find((n) => key(n) === key(valor) && key(n) !== key(de));
+        let elegida = leerEmpresa(a.ren.empresa, a.ren.otra);
+        let cambiaEmpresa = !elegida.error && key(elegida.empresa) !== key(empresaDe(de));
         a.ren.error = '';
         a.ren.pregunta = '';
-        if (valor === de) {
-          a.ren = null;
-        } else if (!valor || motivo) {
+        if (valor !== de && (!valor || motivo)) {
           a.ren.error = valor ? 'Ese nombre no vale: ' + motivo + '.' : 'Escribe el nombre.';
-        } else if (otro && !confirmado) {
+        } else if (elegida.error) {
+          a.ren.error = elegida.error;
+        } else if (valor === de && !cambiaEmpresa) {
+          a.ren = null;
+        } else if (valor !== de && otro && !confirmado) {
           a.ren.pregunta =
             'Ya hay un «' + otro + '». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.';
         } else {
           a.ren = null;
-          toast(avisoRenombre(de, renombrar(de, valor)));
+          let empresaNueva = cambiaEmpresa ? elegida.empresa : undefined;
+          if (valor === de) {
+            let guardada = fijarEmpresa(de, empresaNueva);
+            draft();
+            render();
+            toast(
+              guardada
+                ? empresaNueva
+                  ? 'Empresa de «' + de + '»: ahora «' + empresaNueva + '». Queda apuntado para el PC.'
+                  : '«' + de + '» se queda sin empresa. Queda apuntado para el PC.'
+                : 'No se pudo guardar el cambio en este aparato (¿navegación privada o memoria llena?).',
+            );
+          } else {
+            toast(avisoRenombre(de, renombrar(de, valor, empresaNueva), empresaNueva));
+          }
           return;
         }
         refrescar();
       }
-      // Líneas del resumen de «Añadir varios nombres»: una por cada cosa que haya (entran, ya estaban, no
-      // valen, se parecen a alguien) o, si no hay nada, un aviso. Los nombres van escapados.
+      // Líneas del resumen de «Añadir varios nombres»: una por cada cosa que haya (entran, ya estaban, se les pone
+      // empresa, ya tienen otra, no valen, se parecen a alguien) o, si no hay nada, un aviso. Los nombres van escapados.
       function resumenVariosHTML(resumen) {
         if (!resumen) return '';
-        let { entran, estaban, novalen, parecidos } = resumen;
+        let { entran, estaban, novalen, parecidos, conEmpresa, puestas, otras } = resumen;
         let nombres = (lista) => lista.map((x) => E(x)).join(', ');
         let cuantos = (lista, uno, varios) => (lista.length === 1 ? uno : varios) + ' ' + lista.length + ': ';
         let lineas = [];
-        if (entran.length) lineas.push(['entran', cuantos(entran, 'Entra', 'Entran') + nombres(entran) + '.']);
+        if (entran.length) {
+          let con = conEmpresa ? ' ' + conEmpresa + ' con empresa.' : '';
+          lineas.push(['entran', cuantos(entran, 'Entra', 'Entran') + nombres(entran) + '.' + con]);
+        }
         if (estaban.length) lineas.push(['estaban', cuantos(estaban, 'Ya estaba', 'Ya estaban') + nombres(estaban) + '.']);
+        if (puestas.length) {
+          let casos = puestas.map((x) => E(x.nombre) + ' (' + E(x.empresa) + ')').join(', ');
+          let inicio = puestas.length === 1 ? 'Se le pone la empresa a 1: ' : 'Se les pone la empresa a ' + puestas.length + ': ';
+          lineas.push(['puestas', inicio + casos + '.']);
+        }
+        if (otras.length) {
+          let casos = otras.map((x) => '«' + E(x.nombre) + '» (' + E(x.actual) + ', no ' + E(x.escrita) + ')').join('; ');
+          let inicio = otras.length === 1 ? 'Ya tiene otra empresa: ' : 'Ya tienen otra empresa: ';
+          lineas.push(['otras', inicio + casos + '. Para cambiarla usa el lápiz ✎.']);
+        }
         if (novalen.length) {
           let casos = novalen.map((x) => '«' + E(x.nombre) + '» (' + E(x.motivo) + ')').join('; ');
           lineas.push(['novalen', cuantos(novalen, 'No vale', 'No valen') + casos + '.']);
@@ -1779,32 +1965,60 @@
         let divs = lineas.map((linea) => `<div data-res="${linea[0]}">${linea[1]}</div>`);
         return `<div class="aviso">${divs.join('')}</div>`;
       }
-      // «Añadir a la base»: reparte las líneas del cuadro en entran (nombres nuevos, sin jornada), ya
-      // estaban, no valen y se parecen a alguien; en el cuadro solo quedan las dos últimas para corregirlas.
+      // Una línea de «Añadir varios nombres»: el nombre y, si lleva coma, la empresa (lo que va tras la última
+      // coma). Sin coma, o con la empresa vacía, no hay empresa.
+      function partirLinea(linea) {
+        let texto = clean(linea);
+        let coma = texto.lastIndexOf(',');
+        if (coma === -1) return { texto, nombre: texto, empresa: '' };
+        return { texto, nombre: clean(texto.slice(0, coma)), empresa: clean(texto.slice(coma + 1)) };
+      }
+      // «Añadir a la base»: reparte las líneas del cuadro en entran (nombres nuevos, sin jornada, con su
+      // empresa si la llevan), ya estaban, no valen y se parecen a alguien; en el cuadro solo quedan las dos
+      // últimas clases para corregirlas. A quien ya estaba sin empresa se le pone la que se escribió.
       function añadirVarios() {
         if (!a.varios) return;
-        let resumen = { entran: [], estaban: [], novalen: [], parecidos: [] };
+        let resumen = { entran: [], estaban: [], novalen: [], parecidos: [], conEmpresa: 0, puestas: [], otras: [] };
         let porCorregir = [];
         let vistos = new Set();
         a.varios.texto.split(/\r?\n/).forEach((linea) => {
-          let nombre = clean(linea);
-          if (!nombre || vistos.has(key(nombre))) return;
+          let { texto, nombre, empresa } = partirLinea(linea);
+          if (!nombre && !empresa) return;
+          if (!nombre) {
+            resumen.novalen.push({ nombre: texto, motivo: 'falta el nombre' });
+            porCorregir.push(texto);
+            return;
+          }
+          if (vistos.has(key(nombre))) return;
           vistos.add(key(nombre));
           let motivo = motivoNombre(nombre);
+          let motivoEmpresa = !motivo && empresa ? motivoNombre(empresa) : '';
           let existente = cat().find((x) => key(x) === key(nombre));
-          let parecido = motivo || existente ? null : similar(nombre);
-          if (motivo) {
-            resumen.novalen.push({ nombre, motivo });
-            porCorregir.push(nombre);
+          let parecido = motivo || motivoEmpresa || existente ? null : similar(nombre);
+          if (motivo || motivoEmpresa) {
+            resumen.novalen.push({ nombre, motivo: motivo || 'la empresa no vale: ' + motivoEmpresa });
+            porCorregir.push(texto);
           } else if (existente) {
             resumen.estaban.push(existente);
+            let escrita = canonEmpresa(empresa);
+            let actual = empresaDe(existente);
+            if (escrita && !actual) {
+              fijarEmpresa(existente, escrita);
+              resumen.puestas.push({ nombre: existente, empresa: escrita });
+            } else if (escrita && key(actual) !== key(escrita)) {
+              resumen.otras.push({ nombre: existente, actual, escrita });
+            }
           } else if (parecido) {
             resumen.parecidos.push({ nombre, con: parecido });
-            porCorregir.push(nombre);
+            porCorregir.push(texto);
           } else {
             resumen.entran.push(nombre);
             news.push(nombre);
             altas.push(nombre);
+            if (empresa) {
+              fijarEmpresa(nombre, empresa);
+              resumen.conEmpresa++;
+            }
           }
         });
         let guardado = [set(K.n, news), set(K.al, altas)];
@@ -1964,7 +2178,7 @@
       function obrasConEnvio() {
         let todas = [...new Set([a.obra, ...Object.keys(state.obras), ...pending.map((j) => j.obra)])];
         let ids = todas.filter((id) => id && hayQueEnviar(sinEnviarDe(id)));
-        if (!ids.length && a.obra && (renombres.length || altas.length)) ids = [a.obra];
+        if (!ids.length && a.obra && (renombres.length || altas.length || empresas.length)) ids = [a.obra];
         return ids;
       }
       // Frase de una jornada sin enviar: «Viviendas · vie 23/10 — Ana, Beto (15 h)».
@@ -1983,6 +2197,7 @@
         if (especiales) partes.push(uno(especiales, 'horario especial', 'horarios especiales'));
         if (renombres.length) partes.push(uno(renombres.length, 'nombre corregido', 'nombres corregidos'));
         if (altas.length) partes.push(uno(altas.length, 'nombre nuevo', 'nombres nuevos'));
+        partes.push(...textosEmpresas());
         if (partes.length < 2) return partes.join('');
         return partes.slice(0, -1).join(', ') + ' y ' + partes[partes.length - 1];
       }
@@ -2004,7 +2219,7 @@
       }
       // Bloque de los nombres corregidos y nuevos, que viajan dentro del fichero de cualquier obra.
       function envioNombresHTML() {
-        if (!renombres.length && !altas.length) return '';
+        if (!renombres.length && !altas.length && !empresas.length) return '';
         let lineas = [];
         if (renombres.length) {
           let cambios = renombres.map((cambio) => '«' + cambio.de + '» → «' + cambio.a + '»').join(', ');
@@ -2012,6 +2227,12 @@
         }
         if (altas.length)
           lineas.push(`<li>${E(uno(altas.length, 'nombre nuevo', 'nombres nuevos') + ': ' + altas.join(', '))}</li>`);
+        if (empresas.length) {
+          let cambios = empresas
+            .map((x) => (clean(x.empresa) ? '«' + x.nombre + '» → «' + x.empresa + '»' : '«' + x.nombre + '» sin empresa'))
+            .join(', ');
+          lineas.push(`<li>${E(textosEmpresas().join(' y ') + ': ' + cambios)}</li>`);
+        }
         return (
           `<div class="envio" id="envio-nombres"><h3>Nombres</h3><ul>${lineas.join('')}</ul>` +
           `<p class="nota">Van dentro del fichero de la obra que prepares.</p></div>`
@@ -2046,7 +2267,7 @@
         );
       }
       // Arma el contenido del fichero de una obra (mismo contrato de siempre): jornadas, horario
-      // semanal si cambió, horarios especiales, nombres corregidos y nombres nuevos.
+      // semanal si cambió, horarios especiales, nombres corregidos, nombres nuevos y empresas.
       function armarFichero(id) {
         let datos = sinEnviarDe(id);
         let horario = hor(id);
@@ -2063,7 +2284,9 @@
           };
         if (Object.keys(datos.propios).length) lote.excepciones_horario = JSON.parse(JSON.stringify(datos.propios));
         if (renombres.length) lote.renombres = renombres.map((cambio) => ({ de: cambio.de, a: cambio.a }));
-        if (altas.length) lote.altas = altas.slice();
+        let altasDelFichero = altas.concat(nuevasConEmpresa());
+        if (altasDelFichero.length) lote.altas = altasDelFichero;
+        if (empresas.length) lote.empresas = empresas.map((x) => ({ nombre: x.nombre, empresa: x.empresa }));
         lote.jornadas = datos.jornadas.map((jornada) => ({
           ambito: jornada.ambito,
           fecha: jornada.fecha,
@@ -2142,7 +2365,14 @@
           let persona = a.list[+datos.ren];
           if (persona) {
             a.hp = null;
-            a.ren = { nombre: persona.nombre, valor: persona.nombre, error: '', pregunta: '' };
+            a.ren = {
+              nombre: persona.nombre,
+              valor: persona.nombre,
+              error: '',
+              pregunta: '',
+              empresa: empresaDe(persona.nombre),
+              otra: '',
+            };
             refrescar();
             document.querySelector('#ren-campo')?.focus();
           }
@@ -2255,40 +2485,56 @@
             render();
             return;
           }
+          let elegida = leerEmpresa(
+            document.querySelector('#nuevo-empresa')?.value || '',
+            document.querySelector('#nuevo-empresa-otra')?.value,
+          );
+          if (elegida.error) {
+            a.nuevoError = elegida.error;
+            render();
+            return;
+          }
           let igual =
             cat().find((existente) => key(existente) === key(nombre)) ||
             a.list.find((persona) => key(persona.nombre) === key(nombre))?.nombre;
           if (igual) {
             addName(igual);
+            let aviso = empresaParaExistente(igual, elegida.empresa);
             changed(false);
+            if (aviso) toast(aviso);
             return;
           }
           let parecido = similar(nombre);
           if (parecido) {
-            a.warn = { neo: nombre, old: parecido };
+            a.warn = { neo: nombre, old: parecido, empresa: elegida.empresa };
             render();
             return;
           }
           news.push(nombre);
           set(K.n, news);
           addName(nombre);
+          if (elegida.empresa) fijarEmpresa(nombre, elegida.empresa);
           changed(false);
           return;
         }
         // Confirma el aviso de nombre parecido: reutiliza el nombre ya existente en el catálogo
         if (datos.usar) {
           addName(datos.usar);
+          let aviso = empresaParaExistente(datos.usar, a.warn?.empresa || '');
           a.warn = null;
           changed(false);
+          if (aviso) toast(aviso);
           return;
         }
         // Descarta el aviso de nombre parecido y fuerza la creación del nombre nuevo tal como se
         // escribió
         if (datos.crear) {
           let nombre = clean(datos.crear);
+          let empresa = a.warn?.empresa || '';
           news.push(nombre);
           set(K.n, news);
           addName(nombre);
+          if (empresa) fijarEmpresa(nombre, empresa);
           a.warn = null;
           changed(false);
           return;
@@ -2378,6 +2624,22 @@
       });
       document.addEventListener('change', (evento) => {
         let campo = evento.target;
+        // Desplegable de empresa del lápiz: «Otra empresa…» enseña el campo para escribirla
+        if (campo.id === 'ren-empresa' && a.ren) {
+          a.ren.empresa = campo.value;
+          refrescar();
+          if (campo.value === OTRA_EMPRESA) document.querySelector('#ren-empresa-otra')?.focus();
+          return;
+        }
+        // Desplegable de empresa del nombre nuevo: lo mismo, sin repintar para no perder lo escrito
+        if (campo.id === 'nuevo-empresa') {
+          let otra = document.querySelector('#nuevo-empresa-otra');
+          if (otra) {
+            otra.hidden = campo.value !== OTRA_EMPRESA;
+            if (!otra.hidden) otra.focus();
+          }
+          return;
+        }
         // Cambio de obra seleccionada: actualiza la obra activa y recarga la lista de presentes
         if (campo.id === 'obra' || campo.id === 'obra-j') {
           a.obra = campo.value;
@@ -2430,6 +2692,10 @@
           a.ren.valor = evento.target.value;
           return;
         }
+        if (evento.target.id === 'ren-empresa-otra' && a.ren) {
+          a.ren.otra = evento.target.value;
+          return;
+        }
         if (evento.target.id === 'varios-texto' && a.varios) {
           a.varios.texto = evento.target.value;
           return;
@@ -2441,7 +2707,7 @@
         }
       });
       document.addEventListener('keydown', (evento) => {
-        if (evento.target.id === 'ren-campo' && evento.key === 'Enter') {
+        if ((evento.target.id === 'ren-campo' || evento.target.id === 'ren-empresa-otra') && evento.key === 'Enter') {
           evento.preventDefault();
           guardarRenombre(false);
         }
@@ -2489,6 +2755,7 @@
         publicados = new Set((state.catalogo || []).map((x) => key(x.nombre)));
         olvidarRenombres();
         aplicarRenombresAlEstado();
+        olvidarEmpresas();
         reconcile();
         a.obra = Object.keys(state.obras).find((obra) => !state.obras[obra].cerrada) || '';
         if (!restore()) loadList();

@@ -125,6 +125,12 @@ def textos_del_pc():
         {"_controles", "_guarda_controles", "_seccion_h", "_lineas_resumen_controles", "_controles_aplicables", "_plural"},
     )
     textos += _constantes(MOTOR_IA / "generar_todos.py", {"_controles_horarios_de_obra"})
+    # Campo Empresa (08c2a): las frases de cada cambio de empresa, las de lo que se deja sin separar y lo que imprime `separar-empresas`.
+    for accion in ("puesta", "cambiada", "quitada", "sin_cambios"):
+        textos.append(po.texto_empresa(accion, "Ana", "Manueles", "Catersystem"))
+    for codigo in ("nombre_vacio", "sin_letras", "sufijo_aut", "no_vale", "mismo_nombre", "ya_tiene_empresa", "coincide_con_otro", "otro"):
+        textos.append(po.texto_separar(codigo, "Javi @AUT", "AUT"))
+    textos += _constantes(MOTOR_IA / "personal_obra.py", {"_cli_separar_empresas"})
     return textos
 
 
@@ -185,6 +191,14 @@ def _estado():
             "ultima": {"vivienda": None, "garaje": None}, "jornadas": []}
     return {"version": 1, "generado": "2026-10-23T08:00:00+02:00", "jornada_base_h": 7.5,
             "catalogo": [_trab(1, "Mikel"), _trab(2, "Txomin"), _trab(3, "Rafa")], "obras": {"olabeaga": obra, "mungia": otra}}
+
+
+def _estado_empresas():
+    """El estado de la tablet con empresas en la base: Mikel de Manueles, Txomin sin empresa y Rafa autónomo."""
+    estado = _estado()
+    for persona, empresa in zip(estado["catalogo"], ("Manueles", "", "Rafa @AUT")):
+        persona["empresa"] = empresa
+    return estado
 
 
 @unittest.skipUnless(_OK, "NO se ha revisado el lenguaje de las pantallas de la tablet: %s" % _MOTIVO)
@@ -289,6 +303,98 @@ class TestLenguajeDeLaApp(unittest.TestCase):
         problemas = revisar(recogidos, "app")
         self.assertEqual([], sorted(set(problemas)), "\n".join(sorted(set(problemas))[:30]))
 
+    def test_el_campo_empresa_de_la_app_tampoco_usa_palabras_de_programador(self):
+        """Recorre todos los estados del campo Empresa (08c2a): desplegables, errores, avisos, resúmenes y «Enviar al PC»."""
+        from playwright.sync_api import sync_playwright
+
+        base = Path(os.environ.get("P3_TMP") or tempfile.gettempdir()) / ("lenguaje_emp_" + uuid.uuid4().hex[:8])
+        base.mkdir(parents=True)
+        self.addCleanup(shutil.rmtree, str(base), True)
+        for nombre in ("generador_personal.html", "personal_calculo.js"):
+            shutil.copy(APP_DIR / nombre, base / nombre)
+        (base / "personal_estado.js").write_text(
+            "window.SAGARDE_PERSONAL = " + json.dumps(_estado_empresas(), ensure_ascii=False) + ";\n", encoding="utf-8")
+        url = "file:///" + str(base).replace(os.sep, "/").replace(" ", "%20") + "/generador_personal.html"
+        recogidos = []
+        with sync_playwright() as p:
+            nav = p.chromium.launch()
+            ctx = nav.new_context(viewport={"width": 390, "height": 844}, timezone_id="Europe/Madrid", locale="es-ES", accept_downloads=True)
+            ctx.add_init_script(FECHA_FIJA)
+            pg = ctx.new_page()
+            pg.set_default_timeout(4000)
+            errores = []
+            pg.on("pageerror", lambda e: errores.append(str(e)))
+
+            def mirar():
+                recogidos.extend(pg.evaluate(JS_TEXTOS))
+
+            def clic(sel):
+                pg.click(sel, timeout=4000)
+                mirar()
+
+            pg.goto(url)
+            pg.wait_for_selector("#obra")
+            mirar()
+            # nombre nuevo: «Otra empresa…» sin escribir, con un teléfono, y bien; el nombre de alguien que ya está con otra empresa
+            pg.select_option("#nuevo-empresa", "__otra__")
+            mirar()
+            pg.fill("#nuevo", "Nerea")
+            clic("button[data-nuevo]")
+            pg.fill("#nuevo", "Nerea")
+            pg.select_option("#nuevo-empresa", "__otra__")
+            pg.fill("#nuevo-empresa-otra", "612 345 678")
+            clic("button[data-nuevo]")
+            pg.fill("#nuevo", "Nerea")
+            pg.select_option("#nuevo-empresa", "Manueles")
+            clic("button[data-nuevo]")
+            pg.fill("#nuevo", "mikel")
+            pg.select_option("#nuevo-empresa", "Rafa @AUT")
+            clic("button[data-nuevo]")
+            pg.fill("#nuevo", "Txomi")
+            clic("button[data-nuevo]")
+            clic("button[data-usar]")
+            # lápiz: solo la empresa, sin empresa, y nombre + empresa nueva con sus errores
+            clic("button[data-ren='0']")
+            pg.select_option("#ren-empresa", "Sagarde")
+            mirar()
+            clic("button[data-ren-guardar]")
+            clic("button[data-ren='0']")
+            pg.select_option("#ren-empresa", "")
+            clic("button[data-ren-guardar]")
+            clic("button[data-ren='0']")
+            pg.fill("#ren-campo", "Mikel Z")
+            pg.select_option("#ren-empresa", "__otra__")
+            clic("button[data-ren-guardar]")
+            pg.fill("#ren-empresa-otra", "Obras Z")
+            clic("button[data-ren-guardar]")
+            # varios nombres con empresa: entran, ya estaban, se les pone, ya tienen otra, no valen y parecidos
+            clic("button[data-varios]")
+            pg.fill("#varios-texto", "Iker, Manueles\nMikel Z, Sagarde\nTxomin, Sagarde\nRafa, Manueles\n, Ona\nLuz, 612345678\nTxomi, Sagarde")
+            clic("button[data-varios-ok]")
+            # las mismas frases en singular y en plural: uno que ya tiene otra empresa, y dos a los que se les pone la empresa
+            pg.fill("#varios-texto", "Mikel Z, Sagarde\nUno\nDos")
+            clic("button[data-varios-ok]")
+            pg.fill("#varios-texto", "Uno, Manueles\nDos, Manueles")
+            clic("button[data-varios-ok]")
+            clic("button[data-varios-cerrar]")
+            # enviar al PC con empresas y el recuadro «Listo»
+            clic('nav button[data-v="enviar"]')
+            with pg.expect_download(timeout=5000):
+                pg.click("button[data-preparar]")
+            mirar()
+            nav.close()
+        self.assertEqual([], errores, "errores de JavaScript mientras se recorría el campo Empresa")
+        texto = "\n".join(recogidos)
+        # Un recuento de cero es una alarma: el recorrido tiene que haber pasado de verdad por cada estado nuevo.
+        for esperado in ("Sin empresa", "Otra empresa…", "Escribe la empresa.", "Esa empresa no vale: parece un teléfono.",
+                         "ya tiene la empresa «Manueles»", "Empresa de «Mikel»: ahora «Sagarde»", "se queda sin empresa",
+                         "Nombre corregido: «Mikel» ahora es «Mikel Z», empresa «Obras Z»", "con empresa.",
+                         "Se le pone la empresa a 1", "Se les pone la empresa a 2", "Ya tiene otra empresa: «Mikel Z»", "Ya tienen otra empresa", "falta el nombre", "4 empresas puestas"):
+            self.assertIn(esperado, texto, "el recorrido no ha llegado a este texto: «%s»" % esperado)
+        self.assertGreater(len(set(recogidos)), 40)
+        problemas = revisar(recogidos, "app (empresas)")
+        self.assertEqual([], sorted(set(problemas)), "\n".join(sorted(set(problemas))[:30]))
+
 
 class TestLenguajeDelPC(unittest.TestCase):
     def test_los_avisos_y_las_lineas_del_pc_no_usan_palabras_de_programador(self):
@@ -301,7 +407,7 @@ class TestLenguajeDelPC(unittest.TestCase):
         codigos = _codigos_de_texto_aviso()
         self.assertGreater(len(codigos), 25, "no se han encontrado los códigos de personal_obra.texto_aviso: %s" % codigos)
         for esperado in ("alta_nueva", "nombre_parecido", "suma_diaria_alta", "fecha_futura", "reemplazo", "traza_no_escrita",
-                         "renombre_coincide_con_otro"):
+                         "renombre_coincide_con_otro", "empresa_invalida", "empresa_sin_persona"):
             self.assertIn(esperado, codigos)
 
 

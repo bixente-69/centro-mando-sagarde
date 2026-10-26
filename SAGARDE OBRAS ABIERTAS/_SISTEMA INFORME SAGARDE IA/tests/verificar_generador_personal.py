@@ -6,6 +6,7 @@ Monta una carpeta de pruebas con la app, personal_calculo.js y un personal_estad
 fecha en el 23/10/2026 y recorre el flujo completo. El lote que exporta la app se valida con personal_obra.py
 (P1). Viene del verificador de staging (paso 06): solo cambia de dónde salen la app, P1 y la carpeta de pruebas.
 P3_SOLO_08C=1 = modo rápido del paso 08c: solo las escenas T80 en adelante (lápiz, desplegable completo, varios nombres).
+P3_SOLO_08C2A=1 = modo rápido del paso 08c2a: solo las escenas T120 en adelante (el campo Empresa: crear, lápiz, varios nombres, lista, «Enviar al PC»).
 P3_SOLO_08D=1 = modo rápido del paso 08d: solo las escenas T90 en adelante (día nuevo con la gente anterior marcada, «Enviar al PC», nombre del fichero).
 P3_APP = carpeta que tiene generador_personal.html, personal_calculo.js y personal_obra.py (por defecto, el motor)."""
 import copy
@@ -667,6 +668,10 @@ with sync_playwright() as p:
 
     def con_escena(nombre, datos, fn, **kw):
         """Ejecuta una escena; cualquier excepción se convierte en un fallo legible y no tumba las demás."""
+        if os.environ.get('P3_SOLO_08C2A') == '1':     # modo del paso 08c2a: solo las escenas T120 en adelante (el campo Empresa)
+            m = re.match(r'T(\d+)', nombre)
+            if not (m and int(m.group(1)) >= 120):
+                return
         if os.environ.get('P3_SOLO_08D') == '1':     # modo del paso 08d: solo las escenas T90 en adelante
             m = re.match(r'T(\d+)', nombre)
             if not (m and int(m.group(1)) >= 90):
@@ -1571,7 +1576,7 @@ with sync_playwright() as p:
         return None
 
     def t63(nombre, retraso, con_copia, fn):
-        if os.environ.get('P3_SOLO_08C') == '1' or os.environ.get('P3_SOLO_08D') == '1':
+        if os.environ.get('P3_SOLO_08C') == '1' or os.environ.get('P3_SOLO_08D') == '1' or os.environ.get('P3_SOLO_08C2A') == '1':
             return
         e = srv = None
         try:
@@ -1921,7 +1926,7 @@ with sync_playwright() as p:
         return '#v-app .row[data-nombre="%s"] button[data-ren]' % nombre
 
     def renombra(e, de, nuevo, si=True):
-        """Abre el lápiz de `de`, escribe el nombre nuevo, pulsa «Guardar nombre» y, si pregunta, «Sí…»."""
+        """Abre el lápiz de `de`, escribe el nombre nuevo, pulsa «Guardar» y, si pregunta, «Sí…»."""
         e.clic(lapiz(de))
         e.pg.fill('#ren-campo', nuevo)
         e.clic('button[data-ren-guardar]')
@@ -2065,7 +2070,7 @@ with sync_playwright() as p:
         ok(e.filas() == ['Mikel', 'Txomin', 'Rafa'] and e.marcados() == ['Mikel', 'Rafa'], 'T82 preparación: %s %s' % (e.filas(), e.marcados()))
         e.clic(lapiz('Rafa'))
         ok(e.valor('#ren-campo') == 'Rafa' and e.pg.evaluate("document.activeElement.id") == 'ren-campo', 'T82 el lápiz abre un campo con el nombre actual y el cursor dentro: %r' % e.valor('#ren-campo'))
-        ok('Guardar nombre' in e.txt('button[data-ren-guardar]') and 'Cancelar' in e.txt('button[data-ren-cancelar]') and e.pg.evaluate("document.querySelectorAll('#ren-campo').length") == 1, 'T82 el campo lleva «Guardar nombre» y «Cancelar»: %r %r' % (e.txt('button[data-ren-guardar]'), e.txt('button[data-ren-cancelar]')))
+        ok(e.txt('button[data-ren-guardar]') == 'Guardar' and 'Cancelar' in e.txt('button[data-ren-cancelar]') and e.pg.evaluate("document.querySelectorAll('#ren-campo').length") == 1, 'T82 el campo lleva «Guardar» (guarda nombre y empresa) y «Cancelar»: %r %r' % (e.txt('button[data-ren-guardar]'), e.txt('button[data-ren-cancelar]')))
         e.clic('button[data-ren-cancelar]')
         ok(e.pg.query_selector('#ren-campo') is None and e.filas() == ['Mikel', 'Txomin', 'Rafa'] and not ls(e, 'renombres') and e.pg.query_selector('#cambios-nombres') is None, 'T82 «Cancelar» cierra el campo sin cambiar nada: %s %s' % (e.filas(), ls(e, 'renombres')))
         e.clic(lapiz('Rafa'))
@@ -2790,6 +2795,429 @@ with sync_playwright() as p:
         ok(caja[1] >= 48 and caja[0] >= 150, 'T114 el botón es grande para el dedo: %s' % caja)
     for ancho in (320, 820):
         con_escena('T114', ESTADO1, t114, ancho=ancho, alto=900, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', ['Mikel'])]))
+
+    # ======================================================================================================================
+    # Bloque del paso 08c2a: el campo Empresa (crear, lápiz, varios nombres, lista, «Enviar al PC»). Escenas T120 en adelante
+    # (P3_SOLO_08C2A=1 corre solo estas). Fecha fija: viernes 23/10/2026. Datos inventados.
+    # ======================================================================================================================
+    def pe(i, n, emp=''):
+        return {'id': 'T%04d' % i, 'nombre': n, 'categoria': '', 'empresa': emp, 'activo': True}
+
+    PERS = [('Ana', 'Manueles'), ('Beto', 'Manueles'), ('Carlos', 'CATERSYSTEM'), ('Dani', ''), ('Eli', 'Eli @AUT')]
+
+    def est10(personas=None, filas=None, ultima=None):
+        personas = PERS if personas is None else personas
+        nombres = [n for n, _ in personas]
+        ult = u('2026-10-22', *nombres) if ultima is None else ultima
+        fil = viv('2026-10-22', *nombres) if filas is None else filas
+        return {'version': 1, 'generado': '2026-10-23T08:00:00+02:00', 'jornada_base_h': 7.5,
+                'catalogo': [pe(i + 1, n, em) for i, (n, em) in enumerate(personas)],
+                'obras': {'olabeaga': obra_est(OB, fil, ultima={'vivienda': ult, 'garaje': None})}}
+
+    def emp_fila(e, nombre):
+        return e.txt('#v-app .row[data-nombre="%s"] .emp' % nombre)
+
+    def opciones_emp(e, sel):
+        return e.pg.eval_on_selector_all(sel + ' option', 'e=>e.map(o=>[o.value,o.textContent.trim()])')
+
+    def crear(e, nombre, empresa=None, otra=None):
+        """Escribe el nombre, elige la empresa (de la lista o «Otra empresa…» con su texto) y pulsa «Crear»."""
+        e.pg.fill('#nuevo', nombre)
+        if empresa is not None:
+            e.pg.select_option('#nuevo-empresa', empresa)
+        if otra is not None:
+            e.pg.fill('#nuevo-empresa-otra', otra)
+        e.clic('button[data-nuevo]')
+
+    def e2e_emp(lote, previas=None, personas=None):
+        """Aplica DE VERDAD el fichero sobre un PC de pruebas que ya tiene a las personas del estado (con las empresas que se
+        indiquen en `previas`). Devuelve (resultado, {nombre: empresa} de las personas vigentes, catálogo completo)."""
+        if P1 is None:
+            return None, None, None
+        raiz = os.path.join(SANDBOX, 'pc_' + uuid.uuid4().hex[:6])
+        os.makedirs(raiz)
+        obras = {'olabeaga': '2026 OLABEAGA BILBAO'}
+        nombres = [n for n, _ in (PERS if personas is None else personas)]
+        r0 = P1.ingerir_lote(lote_de_filas('olabeaga', viv('2026-10-22', *nombres)), raiz, obras, '2026-10-23', escribir=True,
+                             ahora='2026-10-22T22:00:00+02:00')
+        ok(r0['ok'], 'e2e: el PC de pruebas no se pudo preparar: %s' % json.dumps(r0, ensure_ascii=False)[:300])
+        if previas:
+            r1 = P1.ingerir_lote({'tipo': 'lote_personal', 'version': 1, 'obra': 'olabeaga', 'jornadas': [],
+                                  'empresas': [{'nombre': n, 'empresa': em} for n, em in previas.items()]},
+                                 raiz, obras, '2026-10-23', escribir=True, ahora='2026-10-22T23:00:00+02:00')
+            ok(r1['ok'], 'e2e: no se pudieron poner las empresas de partida: %s' % r1)
+        r = P1.ingerir_lote(copy.deepcopy(lote), raiz, obras, '2026-10-23', escribir=True, ahora='2026-10-23T22:00:00+02:00')
+        cat = P1.cargar_catalogo(raiz)
+        return r, {t['nombre']: t.get('empresa') for t in cat['trabajadores'] if t.get('fusionado_en') is None}, cat
+
+    # --- T120: la empresa sale en pequeño al lado del nombre; quien no tiene, nada; el nombre sigue siendo solo el nombre
+    def t120(e):
+        e.ir()
+        ok(e.filas() == ['Ana', 'Beto', 'Carlos', 'Dani', 'Eli'], 'T120 lista: %s' % e.filas())
+        ok(emp_fila(e, 'Ana') == 'Manueles' and emp_fila(e, 'Carlos') == 'CATERSYSTEM' and emp_fila(e, 'Eli') == 'Eli @AUT',
+           'T120 la empresa sale al lado del nombre: %r %r %r' % (emp_fila(e, 'Ana'), emp_fila(e, 'Carlos'), emp_fila(e, 'Eli')))
+        ok(e.pg.query_selector('#v-app .row[data-nombre="Dani"] .emp') is None and e.pg.query_selector('#v-app .row[data-nombre="Dani"] .nw.con-emp') is None,
+           'T120 quien no tiene empresa no lleva nada')
+        caja = e.pg.evaluate('''()=>{const f=document.querySelector('#v-app .row[data-nombre="Carlos"]');const n=f.querySelector('.nm').getBoundingClientRect();
+          const m=f.querySelector('.emp').getBoundingClientRect();const l=f.querySelector('.lap').getBoundingClientRect();
+          return {debajo: m.top >= n.bottom - 1, alto: Math.round(m.height), ancho: Math.round(m.width), lapizALaDerecha: l.left >= m.right - 1,
+                  con: !!f.querySelector('.nw.con-emp')}}''')
+        ok(caja['con'] and caja['debajo'] and caja['alto'] <= 20 and caja['lapizALaDerecha'],
+           'T120 la empresa va debajo del nombre, en UNA línea (no partida letra a letra) y con el lápiz a la derecha: %s' % caja)
+        ok(e.txt('#v-app .row[data-nombre="Ana"] .nm') == 'Ana', 'T120 el nombre es solo el nombre: %r' % e.txt('#v-app .row[data-nombre="Ana"] .nm'))
+        px = e.pg.eval_on_selector('#v-app .row[data-nombre="Ana"] .emp', 'x=>[parseFloat(getComputedStyle(x).fontSize), getComputedStyle(x).color]')
+        px_nombre = e.pg.eval_on_selector('#v-app .row[data-nombre="Ana"] .nm', 'x=>parseFloat(getComputedStyle(x).fontSize)')
+        ok(px[0] < px_nombre and px[0] >= 11.5, 'T120 la empresa es más pequeña que el nombre pero se lee: %s frente a %s' % (px, px_nombre))
+        ok(emp_fila(e, 'Ana') == 'Manueles' and e.pg.evaluate("document.querySelector('#addsel').innerText").count('Manueles') == 0,
+           'T120 el desplegable de la base no repite la empresa')
+    con_escena('T120', est10(), t120)
+
+    # --- T121: el desplegable de «Nombre nuevo»: Sin empresa, las usadas (una vez cada una, ordenadas), Sagarde y «Otra empresa…»
+    def t121(e):
+        e.ir()
+        ok(opciones_emp(e, '#nuevo-empresa') == [['', 'Sin empresa'], ['CATERSYSTEM', 'CATERSYSTEM'], ['Eli @AUT', 'Eli @AUT'], ['Manueles', 'Manueles'],
+                                                 ['Sagarde', 'Sagarde'], ['__otra__', 'Otra empresa…']],
+           'T121 opciones: %s' % opciones_emp(e, '#nuevo-empresa'))
+        ok(e.valor('#nuevo-empresa') == '', 'T121 por defecto «Sin empresa» (no se da por hecho que sea de Sagarde)')
+        ok(not e.pg.is_visible('#nuevo-empresa-otra'), 'T121 el campo de «otra empresa» no se ve hasta elegirlo')
+        e.pg.select_option('#nuevo-empresa', '__otra__')
+        ok(e.pg.is_visible('#nuevo-empresa-otra') and e.pg.evaluate("document.activeElement.id") == 'nuevo-empresa-otra',
+           'T121 «Otra empresa…» enseña el campo y lo deja listo para escribir')
+        e.pg.fill('#nuevo', 'Fran')
+        e.pg.select_option('#nuevo-empresa', 'Manueles')
+        ok(not e.pg.is_visible('#nuevo-empresa-otra') and e.valor('#nuevo') == 'Fran', 'T121 al volver a una empresa de la lista se esconde y no se pierde lo escrito')
+        ok(e.pg.evaluate("document.querySelector('#nuevo-empresa').previousElementSibling.textContent") == 'Empresa del nombre nuevo', 'T121 el desplegable lleva su rótulo')
+    con_escena('T121', est10(), t121)
+
+    # --- T122: crear a alguien con una empresa de la lista: sale marcado con la empresa, se apunta y viaja en el fichero
+    def t122(e):
+        e.ir()
+        crear(e, 'Fran', 'Manueles')
+        ok('Fran' in e.filas() and 'Fran' in e.marcados() and emp_fila(e, 'Fran') == 'Manueles', 'T122 Fran sale marcado con su empresa: %s %r' % (e.marcados(), emp_fila(e, 'Fran')))
+        ok(ls(e, 'empresas') == [{'nombre': 'Fran', 'empresa': 'Manueles'}] and ls(e, 'nuevos') == ['Fran'], 'T122 se apunta en el aparato: %s %s' % (ls(e, 'empresas'), ls(e, 'nuevos')))
+        ok(cambios(e) == '1 empresa puesta sin enviar al PC', 'T122 lo dice en la pantalla de anotar: %r' % cambios(e))
+        ok(e.valor('#nuevo-empresa') == '' and e.valor('#nuevo') == '', 'T122 el formulario queda limpio')
+        e.clic('button[data-guardar]')
+        lote = e.exportar() or {}
+        ok(lote.get('altas') == ['Fran'] and lote.get('empresas') == [{'nombre': 'Fran', 'empresa': 'Manueles'}] and 'renombres' not in lote,
+           'T122 el fichero lleva a Fran como nombre nuevo (para que la empresa tenga a quién ponerse) y su empresa: %s' % json.dumps(lote, ensure_ascii=False)[:400])
+        valida_con_p1(lote)
+        r, por_nombre, cat = e2e_emp(lote)
+        ok(r is None or (r['ok'] and por_nombre.get('Fran') == 'Manueles' and [x['accion'] for x in r['empresas']] == ['puesta']),
+           'T122 el PC crea a Fran con su empresa: %s' % por_nombre)
+        ok(e.listo().endswith('con 1 jornada y 1 empresa puesta. Ahora mándalo al PC.'), 'T122 el recuadro lo cuenta en llano: %r' % e.listo())
+    con_escena('T122', est10(), t122)
+
+    # --- T123: «Otra empresa…»: la escribe; si ya existe con otra grafía se usa la que ya está; vacía o con un teléfono no vale
+    def t123(e):
+        e.ir()
+        crear(e, 'Gaia', '__otra__', 'Obras Nuevas SL')
+        ok(emp_fila(e, 'Gaia') == 'Obras Nuevas SL' and ls(e, 'empresas') == [{'nombre': 'Gaia', 'empresa': 'Obras Nuevas SL'}], 'T123 empresa nueva: %r %s' % (emp_fila(e, 'Gaia'), ls(e, 'empresas')))
+        ok(['Obras Nuevas SL', 'Obras Nuevas SL'] in opciones_emp(e, '#nuevo-empresa'), 'T123 la empresa nueva ya sale en la lista para la siguiente persona: %s' % opciones_emp(e, '#nuevo-empresa'))
+        crear(e, 'Hugo', '__otra__', '  catersystem ')
+        ok(emp_fila(e, 'Hugo') == 'CATERSYSTEM', 'T123 «catersystem» es la misma empresa que «CATERSYSTEM»: se usa la que ya consta (%r)' % emp_fila(e, 'Hugo'))
+        crear(e, 'Iker', '__otra__', 'obras nuevas sl')
+        ok(emp_fila(e, 'Iker') == 'Obras Nuevas SL', 'T123 también con una empresa que acaba de escribirse aquí (%r)' % emp_fila(e, 'Iker'))
+        antes = e.filas()
+        crear(e, 'Jon', '__otra__', '')
+        ok(e.txt('#nuevo-aviso') == 'Escribe la empresa.' and e.filas() == antes and 'Jon' not in ls(e, 'nuevos'), 'T123 «Otra empresa…» sin escribir nada no crea a nadie: %r' % e.txt('#nuevo-aviso'))
+        crear(e, 'Jon', '__otra__', '612 345 678')
+        ok(e.txt('#nuevo-aviso') == 'Esa empresa no vale: parece un teléfono.' and e.filas() == antes, 'T123 una empresa con un teléfono no vale: %r' % e.txt('#nuevo-aviso'))
+        crear(e, 'Jon', '__otra__', 'x@y.es')
+        ok(e.txt('#nuevo-aviso') == 'Esa empresa no vale: parece un correo.' and e.filas() == antes, 'T123 ni con un correo: %r' % e.txt('#nuevo-aviso'))
+        crear(e, 'Jon', '__otra__', 'a<b')
+        ok(e.txt('#nuevo-aviso') == 'Esa empresa no vale: lleva los signos < o >.' and e.filas() == antes, 'T123 ni con < o >: %r' % e.txt('#nuevo-aviso'))
+        e.pg.fill('#nuevo', 'Jon')
+        e.pg.select_option('#nuevo-empresa', '__otra__')
+        e.pg.evaluate("v=>{document.getElementById('nuevo-empresa-otra').value=v}", 'x' * 61)   # fill() respeta el maxlength: se fuerza el valor
+        e.clic('button[data-nuevo]')
+        ok(e.txt('#nuevo-aviso') == 'Esa empresa no vale: tiene más de 60 letras.' and e.filas() == antes, 'T123 ni de más de 60 letras: %r' % e.txt('#nuevo-aviso'))
+        crear(e, 'Eli @AUT', 'Sagarde')
+        crear(e, 'Nuria', '__otra__', 'Nuria @AUT')
+        ok(emp_fila(e, 'Nuria') == 'Nuria @AUT', 'T123 un autónomo se crea con su «@AUT»: %r' % emp_fila(e, 'Nuria'))
+    con_escena('T123', est10(), t123)
+
+    # --- T124: «Crear» con el nombre de alguien que ya está: no lo duplica; la empresa solo se le pone si no tenía, y nunca se cambia sin avisar
+    def t124(e):
+        e.ir()
+        crear(e, 'ana', 'Manueles')
+        ok(e.marcados() == ['Ana'] and ls(e, 'empresas') in (None, []) and 'ya tiene' not in e.toast(), 'T124 misma empresa: lo marca y no apunta nada: %s %s' % (e.marcados(), ls(e, 'empresas')))
+        crear(e, 'ANA', 'CATERSYSTEM')
+        ok(e.txt('#toast') == '«Ana» ya tiene la empresa «Manueles»: para cambiarla usa el lápiz ✎.' and emp_fila(e, 'Ana') == 'Manueles' and ls(e, 'empresas') in (None, []),
+           'T124 otra empresa: avisa y NO la cambia: %r %r %s' % (e.txt('#toast'), emp_fila(e, 'Ana'), ls(e, 'empresas')))
+        crear(e, 'dani', 'Sagarde')
+        ok(emp_fila(e, 'Dani') == 'Sagarde' and ls(e, 'empresas') == [{'nombre': 'Dani', 'empresa': 'Sagarde'}] and 'Dani' in e.marcados(),
+           'T124 quien no tenía empresa la recibe: %r %s' % (emp_fila(e, 'Dani'), ls(e, 'empresas')))
+        ok(ls(e, 'nuevos') in (None, []), 'T124 y no se crea un nombre nuevo: %s' % ls(e, 'nuevos'))
+    con_escena('T124', est10(), t124)
+
+    # --- T125: el aviso «Se parece a…» no pierde la empresa elegida
+    def t125(e):
+        e.ir()
+        crear(e, 'Anaa', 'Sagarde')
+        ok('Se parece a «Ana»' in e.txt('#nuevo-aviso'), 'T125 avisa del parecido: %r' % e.txt('#nuevo-aviso'))
+        e.clic('#nuevo-aviso [data-crear="Anaa"]')
+        ok(emp_fila(e, 'Anaa') == 'Sagarde' and ls(e, 'empresas') == [{'nombre': 'Anaa', 'empresa': 'Sagarde'}], 'T125 «No, crear» conserva la empresa: %r %s' % (emp_fila(e, 'Anaa'), ls(e, 'empresas')))
+        crear(e, 'Betoo', 'CATERSYSTEM')
+        e.clic('#nuevo-aviso [data-usar="Beto"]')
+        ok(e.txt('#toast') == '«Beto» ya tiene la empresa «Manueles»: para cambiarla usa el lápiz ✎.' and 'Betoo' not in e.filas() and emp_fila(e, 'Beto') == 'Manueles',
+           'T125 «Sí» (es Beto) no cambia la empresa de Beto y lo dice: %r' % e.txt('#toast'))
+        crear(e, 'Danii', 'Sagarde')
+        e.clic('#nuevo-aviso [data-usar="Dani"]')
+        ok(emp_fila(e, 'Dani') == 'Sagarde', 'T125 «Sí» (es Dani, que no tenía) le pone la empresa: %r' % emp_fila(e, 'Dani'))
+    con_escena('T125', est10(), t125)
+
+    # --- T126: el lápiz muestra la empresa de ahora; cambiarla solo cambia la empresa; volver a la de siempre no deja nada apuntado
+    def t126(e):
+        e.ir()
+        e.clic(lapiz('Ana'))
+        ok(e.valor('#ren-empresa') == 'Manueles' and e.valor('#ren-campo') == 'Ana', 'T126 el lápiz abre con la empresa de ahora: %r %r' % (e.valor('#ren-empresa'), e.valor('#ren-campo')))
+        ok(opciones_emp(e, '#ren-empresa')[0] == ['', 'Sin empresa'] and opciones_emp(e, '#ren-empresa')[-1] == ['__otra__', 'Otra empresa…'], 'T126 opciones del lápiz: %s' % opciones_emp(e, '#ren-empresa'))
+        ok(e.txt('button[data-ren-guardar]') == 'Guardar', 'T126 el botón dice «Guardar» (guarda nombre y empresa)')
+        e.clic('button[data-ren-cancelar]')
+        e.clic(lapiz('Dani'))
+        ok(e.valor('#ren-empresa') == '', 'T126 quien no tiene empresa sale en «Sin empresa»')
+        e.clic('button[data-ren-guardar]')
+        ok(e.pg.query_selector('#ren-campo') is None and e.txt('#toast') == '', 'T126 guardar sin cambiar nada cierra sin avisar de nada: %r' % e.txt('#toast'))
+        ok(ls(e, 'empresas') in (None, []) and ls(e, 'renombres') in (None, []), 'T126 y no apunta nada: %s %s' % (ls(e, 'empresas'), ls(e, 'renombres')))
+        e.clic(lapiz('Ana'))
+        e.pg.select_option('#ren-empresa', 'CATERSYSTEM')
+        ok(e.valor('#ren-campo') == 'Ana', 'T126 cambiar el desplegable no toca lo escrito en el nombre')
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#toast') == 'Empresa de «Ana»: ahora «CATERSYSTEM». Queda apuntado para el PC.' and emp_fila(e, 'Ana') == 'CATERSYSTEM' and e.filas()[0] == 'Ana',
+           'T126 solo cambia la empresa: %r %r' % (e.txt('#toast'), emp_fila(e, 'Ana')))
+        ok(ls(e, 'empresas') == [{'nombre': 'Ana', 'empresa': 'CATERSYSTEM'}] and ls(e, 'renombres') in (None, []) and cambios(e) == '1 empresa puesta sin enviar al PC',
+           'T126 queda apuntada: %s %r' % (ls(e, 'empresas'), cambios(e)))
+        e.clic(lapiz('Ana'))
+        e.pg.select_option('#ren-empresa', '')
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#toast') == '«Ana» se queda sin empresa. Queda apuntado para el PC.' and e.pg.query_selector('#v-app .row[data-nombre="Ana"] .emp') is None
+           and ls(e, 'empresas') == [{'nombre': 'Ana', 'empresa': ''}] and cambios(e) == '1 empresa quitada sin enviar al PC',
+           'T126 «Sin empresa» la quita (y el PC debe enterarse): %r %s %r' % (e.txt('#toast'), ls(e, 'empresas'), cambios(e)))
+        e.clic(lapiz('Ana'))
+        e.pg.select_option('#ren-empresa', 'Manueles')
+        e.clic('button[data-ren-guardar]')
+        ok(emp_fila(e, 'Ana') == 'Manueles' and ls(e, 'empresas') == [], 'T126 volver a la empresa de siempre no deja nada apuntado: %s' % ls(e, 'empresas'))
+        ok(cambios(e) == '', 'T126 y no se cuenta nada: %r' % cambios(e))
+    con_escena('T126', est10(), t126)
+
+    # --- T127: nombre y empresa a la vez: viajan los dos, el PC no crea a nadie y no hace falta «nombre nuevo»
+    def t127(e):
+        e.ir()
+        e.clic(lapiz('Ana'))
+        e.pg.fill('#ren-campo', 'Ana María')
+        e.pg.select_option('#ren-empresa', 'Sagarde')
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#toast') == 'Nombre corregido: «Ana» ahora es «Ana María», empresa «Sagarde». Queda apuntado para el PC.' and 'Ana María' in e.filas() and emp_fila(e, 'Ana María') == 'Sagarde',
+           'T127 aviso y fila: %r %s %r' % (e.txt('#toast'), e.filas(), emp_fila(e, 'Ana María')))
+        ok(ls(e, 'renombres') == [{'de': 'Ana', 'a': 'Ana María'}] and ls(e, 'empresas') == [{'nombre': 'Ana María', 'empresa': 'Sagarde'}], 'T127 se apuntan las dos cosas: %s %s' % (ls(e, 'renombres'), ls(e, 'empresas')))
+        ok(cambios(e) == '1 nombre corregido · 1 empresa puesta sin enviar al PC', 'T127 contadores: %r' % cambios(e))
+        e.clic('#v-app .row[data-nombre="Ana María"] .x')
+        e.clic('button[data-guardar]')
+        lote = e.exportar() or {}
+        ok(lote.get('renombres') == [{'de': 'Ana', 'a': 'Ana María'}] and lote.get('empresas') == [{'nombre': 'Ana María', 'empresa': 'Sagarde'}] and 'altas' not in lote,
+           'T127 el fichero lleva el cambio de nombre y la empresa, sin altas: %s' % json.dumps(lote, ensure_ascii=False)[:400])
+        valida_con_p1(lote)
+        r, por_nombre, cat = e2e_emp(lote)
+        ok(r is None or (r['ok'] and por_nombre.get('Ana María') == 'Sagarde' and 'Ana' not in por_nombre and len(por_nombre) == 5),
+           'T127 el PC renombra a la misma persona y le pone la empresa: %s' % por_nombre)
+    con_escena('T127', est10(), t127)
+
+    # --- T128: corregir solo el nombre arrastra la empresa (la publicada y la que está por enviar)
+    def t128(e):
+        e.ir()
+        renombra(e, 'Beto', 'Beto Zubi')
+        ok(emp_fila(e, 'Beto Zubi') == 'Manueles' and ls(e, 'empresas') in (None, []), 'T128 la empresa publicada se va con el nombre sin apuntar nada: %r %s' % (emp_fila(e, 'Beto Zubi'), ls(e, 'empresas')))
+        ok(e.txt('#toast') == 'Nombre corregido: «Beto» ahora es «Beto Zubi». Queda apuntado para el PC.', 'T128 el aviso de antes, sin empresa: %r' % e.txt('#toast'))
+        e.clic(lapiz('Carlos'))
+        e.pg.select_option('#ren-empresa', 'Sagarde')
+        e.clic('button[data-ren-guardar]')
+        renombra(e, 'Carlos', 'Carlos Ruiz')
+        ok(ls(e, 'empresas') == [{'nombre': 'Carlos Ruiz', 'empresa': 'Sagarde'}] and emp_fila(e, 'Carlos Ruiz') == 'Sagarde', 'T128 la empresa apuntada se va con el nombre: %s %r' % (ls(e, 'empresas'), emp_fila(e, 'Carlos Ruiz')))
+        ok(ls(e, 'renombres') == [{'de': 'Beto', 'a': 'Beto Zubi'}, {'de': 'Carlos', 'a': 'Carlos Ruiz'}], 'T128 renombres: %s' % ls(e, 'renombres'))
+    con_escena('T128', est10(), t128)
+
+    # --- T129: «Otra empresa…» en el lápiz: se escribe, se comprueba y no se pierde lo que había escrito en el nombre
+    def t129(e):
+        e.ir()
+        e.clic(lapiz('Dani'))
+        e.pg.fill('#ren-campo', 'Dani Z')
+        e.pg.select_option('#ren-empresa', '__otra__')
+        ok(e.pg.is_visible('#ren-empresa-otra') and e.pg.evaluate("document.activeElement.id") == 'ren-empresa-otra' and e.valor('#ren-campo') == 'Dani Z',
+           'T129 «Otra empresa…» enseña el campo y no pierde el nombre')
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#ren-error') == 'Escribe la empresa.' and e.valor('#ren-campo') == 'Dani Z' and e.valor('#ren-empresa') == '__otra__', 'T129 sin escribir la empresa: %r' % e.txt('#ren-error'))
+        e.pg.fill('#ren-empresa-otra', '612 345 678')
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#ren-error') == 'Esa empresa no vale: parece un teléfono.' and e.valor('#ren-empresa-otra') == '612 345 678', 'T129 con un teléfono: %r' % e.txt('#ren-error'))
+        e.pg.fill('#ren-empresa-otra', 'Obras Nuevas SL')
+        e.pg.press('#ren-empresa-otra', 'Enter')
+        ok(e.pg.query_selector('#ren-campo') is None and 'Dani Z' in e.filas() and emp_fila(e, 'Dani Z') == 'Obras Nuevas SL', 'T129 con Intro también guarda: %s %r' % (e.filas(), emp_fila(e, 'Dani Z')))
+        ok(ls(e, 'empresas') == [{'nombre': 'Dani Z', 'empresa': 'Obras Nuevas SL'}] and ls(e, 'renombres') == [{'de': 'Dani', 'a': 'Dani Z'}], 'T129 apuntado: %s %s' % (ls(e, 'empresas'), ls(e, 'renombres')))
+        e.clic(lapiz('Eli'))
+        e.pg.fill('#ren-campo', 'x@y.es')
+        e.pg.select_option('#ren-empresa', '__otra__')
+        e.pg.fill('#ren-empresa-otra', '')
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#ren-error') == 'Ese nombre no vale: parece un correo.', 'T129 si falla el nombre se dice primero: %r' % e.txt('#ren-error'))
+    con_escena('T129', est10(), t129)
+
+    # --- T130: «Añadir varios nombres» con «Nombre, Empresa» (lo que va tras la ÚLTIMA coma)
+    TEXTO130 = 'Fran, Manueles\nGaia, Obras Nuevas SL\nHugo\nIker,\n, Ona\nAna, CATERSYSTEM\nDani, Sagarde\nBeto, manueles\nLuz, 612345678\nAnaa, Sagarde'
+
+    def t130(e):
+        e.ir()
+        e.clic('button[data-varios]')
+        e.pg.fill('#varios-texto', TEXTO130)
+        e.clic('button[data-varios-ok]')
+        res = {k: e.txt('[data-res="%s"]' % k) for k in ('entran', 'estaban', 'puestas', 'otras', 'novalen', 'parecidos')}
+        ok(res['entran'] == 'Entran 4: Fran, Gaia, Hugo, Iker. 2 con empresa.', 'T130 entran: %r' % res['entran'])
+        ok(res['estaban'] == 'Ya estaban 3: Ana, Dani, Beto.', 'T130 ya estaban: %r' % res['estaban'])
+        ok(res['puestas'] == 'Se le pone la empresa a 1: Dani (Sagarde).', 'T130 a quien no tenía se le pone: %r' % res['puestas'])
+        ok(res['otras'] == 'Ya tiene otra empresa: «Ana» (Manueles, no CATERSYSTEM). Para cambiarla usa el lápiz ✎.', 'T130 a quien ya tiene otra NO se le cambia: %r' % res['otras'])
+        ok(res['novalen'] == 'No valen 2: «, Ona» (falta el nombre); «Luz» (la empresa no vale: parece un teléfono).', 'T130 no valen: %r' % res['novalen'])
+        ok(res['parecidos'].startswith('Se parece a alguien que ya está 1: «Anaa» (se parece a «Ana»).'), 'T130 parecidos: %r' % res['parecidos'])
+        ok(e.valor('#varios-texto') == ', Ona\nLuz, 612345678\nAnaa, Sagarde', 'T130 en el cuadro quedan las líneas por corregir, enteras (con su empresa): %r' % e.valor('#varios-texto'))
+        ok(ls(e, 'altas') == ['Fran', 'Gaia', 'Hugo', 'Iker'] and ls(e, 'nuevos') == ['Fran', 'Gaia', 'Hugo', 'Iker'], 'T130 altas y nuevos: %s %s' % (ls(e, 'altas'), ls(e, 'nuevos')))
+        ok(ls(e, 'empresas') == [{'nombre': 'Fran', 'empresa': 'Manueles'}, {'nombre': 'Gaia', 'empresa': 'Obras Nuevas SL'}, {'nombre': 'Dani', 'empresa': 'Sagarde'}],
+           'T130 empresas apuntadas: %s' % ls(e, 'empresas'))
+        ok(cambios(e) == '4 nombres nuevos · 3 empresas puestas sin enviar al PC', 'T130 contadores: %r' % cambios(e))
+        lote = e.exportar() or {}
+        ok(lote.get('altas') == ['Fran', 'Gaia', 'Hugo', 'Iker'] and len(lote.get('empresas', [])) == 3 and lote.get('jornadas') == [], 'T130 el fichero: %s' % json.dumps(lote, ensure_ascii=False)[:400])
+        valida_con_p1(lote)
+        r, por_nombre, cat = e2e_emp(lote)
+        ok(r is None or (r['ok'] and por_nombre.get('Fran') == 'Manueles' and por_nombre.get('Gaia') == 'Obras Nuevas SL' and por_nombre.get('Dani') == 'Sagarde' and por_nombre.get('Hugo') == ''),
+           'T130 el PC los crea con su empresa: %s' % por_nombre)
+    con_escena('T130', est10(), t130)
+
+    # --- T131: una coma dentro del nombre vale (la empresa es lo que va tras la última); sin coma, sin empresa
+    def t131(e):
+        e.ir()
+        e.clic('button[data-varios]')
+        e.pg.fill('#varios-texto', 'García, Pedro, Manueles\nSolo Nombre\nMarta ,Sagarde')
+        e.clic('button[data-varios-ok]')
+        ok(ls(e, 'altas') == ['García, Pedro', 'Solo Nombre', 'Marta'] and ls(e, 'empresas') == [{'nombre': 'García, Pedro', 'empresa': 'Manueles'}, {'nombre': 'Marta', 'empresa': 'Sagarde'}],
+           'T131 coma dentro del nombre: %s %s' % (ls(e, 'altas'), ls(e, 'empresas')))
+        ok(e.txt('[data-res="entran"]') == 'Entran 3: García, Pedro, Solo Nombre, Marta. 2 con empresa.', 'T131 resumen: %r' % e.txt('[data-res="entran"]'))
+    con_escena('T131', est10(), t131)
+
+    # --- T132: «Enviar al PC» cuenta las empresas en el bloque de nombres y en el recuadro «Listo»
+    def t132(e):
+        e.ir()
+        e.clic('nav button[data-v="enviar"]')
+        lis = e.pg.eval_on_selector_all('#envio-nombres li', 'e=>e.map(l=>l.textContent.trim())')
+        ok(lis == ['2 empresas puestas y 1 empresa quitada: «Ana» → «CATERSYSTEM», «Dani» → «Sagarde», «Beto» sin empresa'], 'T132 bloque de nombres: %s' % lis)
+        e.exportar()
+        ok(e.listo().endswith('con 1 jornada, 2 empresas puestas y 1 empresa quitada. Ahora mándalo al PC.'), 'T132 recuadro: %r' % e.listo())
+    emp132 = [{'nombre': 'Ana', 'empresa': 'CATERSYSTEM'}, {'nombre': 'Dani', 'empresa': 'Sagarde'}, {'nombre': 'Beto', 'empresa': ''}]
+    con_escena('T132', est10(), t132, init=sembrar_varios({'sgd_personal_empresas': emp132, 'sgd_personal_pendientes': [pend9('2026-10-22', ['Ana'])]}))
+
+    # --- T132b: solo empresas (sin jornadas): también hay bloque y botón, y el fichero lleva las empresas y ninguna jornada
+    def t132b(e):
+        e.ir()
+        e.clic('nav button[data-v="enviar"]')
+        ok(e.txt('#resumen-envio') == 'Tienes cambios sin enviar:' and e.pg.query_selector('button[data-preparar="olabeaga"]') is not None, 'T132b solo con empresas hay bloque y botón: %r' % e.txt('#resumen-envio'))
+        lote = e.exportar() or {}
+        ok(lote.get('empresas') == [{'nombre': 'Ana', 'empresa': 'CATERSYSTEM'}] and lote.get('jornadas') == [] and 'altas' not in lote and e.listo().endswith('con 1 empresa puesta. Ahora mándalo al PC.'),
+           'T132b fichero y recuadro: %s %r' % (lote, e.listo()))
+        valida_con_p1(lote)
+        r, por_nombre, cat = e2e_emp(lote)
+        ok(r is None or (r['ok'] and por_nombre.get('Ana') == 'CATERSYSTEM' and por_nombre.get('Beto') == '' and len(por_nombre) == 5), 'T132b el PC le pone la empresa a Ana: %s' % por_nombre)
+    con_escena('T132b', est10(), t132b, init=sembrar('sgd_personal_empresas', [{'nombre': 'Ana', 'empresa': 'CATERSYSTEM'}]))
+
+    # --- T133: las empresas apuntadas se olvidan cuando el estado publicado ya las trae (sin tildes ni mayúsculas); las demás se quedan
+    def t133(e):
+        e.ir()
+        ok(ls(e, 'empresas') == [{'nombre': 'Dani', 'empresa': 'Sagarde'}], 'T133 queda solo lo que el PC aún no trae: %s' % ls(e, 'empresas'))
+        ok(emp_fila(e, 'Ana') == 'Manueles' and emp_fila(e, 'Dani') == 'Sagarde' and e.pg.query_selector('#v-app .row[data-nombre="Beto"] .emp') is None, 'T133 la lista: %r %r' % (emp_fila(e, 'Ana'), emp_fila(e, 'Dani')))
+    pub133 = [('Ana', 'Manueles'), ('Beto', ''), ('Carlos', 'CATERSYSTEM'), ('Dani', ''), ('Eli', 'Eli @AUT')]
+    ls133 = [{'nombre': 'Ana', 'empresa': 'MANUELES'}, {'nombre': 'Beto', 'empresa': ''}, {'nombre': 'Dani', 'empresa': 'Sagarde'}]
+    con_escena('T133', est10(pub133), t133, init=sembrar('sgd_personal_empresas', ls133))
+
+    # --- T133b: una misma empresa con dos grafías (una apuntada a mano) sale una sola vez en los desplegables
+    def t133b(e):
+        e.ir()
+        ok(opciones_emp(e, '#nuevo-empresa').count(['Manueles', 'Manueles']) == 1 and ['MANUELES', 'MANUELES'] not in opciones_emp(e, '#nuevo-empresa'),
+           'T133b la empresa sale una sola vez, con la grafía que ya constaba: %s' % opciones_emp(e, '#nuevo-empresa'))
+    con_escena('T133b', est10(), t133b, init=sembrar('sgd_personal_empresas', [{'nombre': 'Dani', 'empresa': 'MANUELES'}]))
+
+    # --- T134: sin usar nada de lo nuevo el fichero es el de siempre (ni «empresas» ni «altas»)
+    def t134(e):
+        e.ir()
+        e.clic('#v-app .row[data-nombre="Ana"] .x')
+        e.clic('#v-app .row[data-nombre="Carlos"] .x')
+        e.clic('button[data-guardar]')
+        lote = e.exportar() or {}
+        ok(sorted(lote) == ['jornadas', 'obra', 'tipo', 'version'] and [p['nombre'] for p in lote['jornadas'][0]['presentes']] == ['Ana', 'Carlos'],
+           'T134 el fichero solo lleva lo de siempre: %s' % sorted(lote))
+        ok('1 jornada.' in e.listo() and 'empresa' not in e.listo(), 'T134 y el recuadro no habla de empresas: %r' % e.listo())
+        ok(cambios(e) == '', 'T134 ni hay contadores de nombres: %r' % cambios(e))
+    con_escena('T134', est10(), t134)
+
+    # --- T135: al juntar a dos personas manda la empresa de la que ya existía con ese nombre
+    def t135(e):
+        e.ir()
+        e.clic(lapiz('Dani'))
+        e.pg.select_option('#ren-empresa', 'Sagarde')
+        e.clic('button[data-ren-guardar]')
+        renombra(e, 'Dani', 'Ana')
+        ok(e.filas().count('Ana') == 1 and 'Dani' not in e.filas() and emp_fila(e, 'Ana') == 'Manueles', 'T135 la que ya era Ana conserva su empresa: %s %r' % (e.filas(), emp_fila(e, 'Ana')))
+        ok(ls(e, 'empresas') in (None, []), 'T135 y la empresa que estaba por enviar para Dani desaparece: %s' % ls(e, 'empresas'))
+        ok('pasan a ser la misma persona' in e.txt('#toast') and 'empresa' not in e.txt('#toast'), 'T135 aviso de unión sin hablar de empresa: %r' % e.txt('#toast'))
+    con_escena('T135', est10(), t135)
+
+    # --- T136: lo que se escribe a mano en la empresa nunca se interpreta como HTML
+    RARA = '<b>x</b> & "y" \'z\''
+    def t136(e):
+        e.ir()
+        ok(emp_fila(e, 'Ana') == RARA and e.pg.evaluate("document.querySelectorAll('#v-app .emp *').length") == 0, 'T136 la empresa sale como texto en la lista: %r' % emp_fila(e, 'Ana'))
+        e.clic(lapiz('Ana'))
+        ok(e.pg.evaluate("document.querySelectorAll('#ren-empresa *:not(option)').length") == 0 and e.valor('#ren-empresa') == RARA, 'T136 y en el desplegable del lápiz: %r' % e.valor('#ren-empresa'))
+        e.clic('button[data-ren-cancelar]')
+        ok(e.pg.evaluate("document.querySelectorAll('#nuevo-empresa *:not(option)').length") == 0, 'T136 y en el de nombre nuevo')
+    con_escena('T136', est10([('Ana', RARA), ('Beto', '')]), t136)
+
+    # --- T137: lo que haya en sgd_personal_empresas, por dañado que esté, no tumba la app y solo se queda lo que vale
+    def t137(e):
+        e.ir()
+        ok(e.filas() == ['Ana', 'Beto', 'Carlos', 'Dani', 'Eli'] and ls(e, 'empresas') == [{'nombre': 'Dani', 'empresa': 'Sagarde'}], 'T137 solo queda lo válido: %s' % ls(e, 'empresas'))
+    mala137 = [{'nombre': 'Dani', 'empresa': 'Sagarde'}, {'nombre': 5, 'empresa': 'X'}, {'nombre': 'Ana'}, {'nombre': '', 'empresa': 'X'}, 'cadena', None, {'nombre': 'Beto', 'empresa': 7}]
+    con_escena('T137', est10(), t137, init=sembrar('sgd_personal_empresas', mala137))
+
+    def t137b(e):
+        e.ir()
+        ok(e.filas() == ['Ana', 'Beto', 'Carlos', 'Dani', 'Eli'] and ls(e, 'empresas') == [], 'T137 un valor que no es una lista no tumba la app y queda vacío: %s' % ls(e, 'empresas'))
+    con_escena('T137 no lista', est10(), t137b, init=sembrar('sgd_personal_empresas', {'a': 1}))
+
+    # --- T138: alguien creado aquí con empresa y corregido antes de enviarlo: va como nombre nuevo con su empresa y SIN cambio de nombre
+    def t138(e):
+        e.ir()
+        crear(e, 'Fran', 'Manueles')
+        renombra(e, 'Fran', 'Franco')
+        ok(ls(e, 'renombres') in (None, []) and ls(e, 'empresas') == [{'nombre': 'Franco', 'empresa': 'Manueles'}] and ls(e, 'nuevos') == ['Franco'],
+           'T138 un nombre que el PC nunca vio no se apunta como cambio: %s %s %s' % (ls(e, 'renombres'), ls(e, 'empresas'), ls(e, 'nuevos')))
+        lote = e.exportar() or {}
+        ok(lote.get('altas') == ['Franco'] and lote.get('empresas') == [{'nombre': 'Franco', 'empresa': 'Manueles'}] and 'renombres' not in lote, 'T138 fichero: %s' % json.dumps(lote, ensure_ascii=False)[:300])
+        r, por_nombre, cat = e2e_emp(lote)
+        ok(r is None or (r['ok'] and por_nombre.get('Franco') == 'Manueles' and 'Fran' not in por_nombre), 'T138 el PC: %s' % por_nombre)
+    con_escena('T138', est10(), t138)
+
+    # --- T139: la pantalla cabe y se puede pulsar en un móvil estrecho (320 px) y en una tableta (820 px)
+    def t139(e):
+        e.ir()
+        e.clic(lapiz('Ana'))
+        e.pg.select_option('#ren-empresa', '__otra__')
+        cajas = e.pg.evaluate("""()=>{const q=s=>{const x=document.querySelector(s);if(!x)return null;const r=x.getBoundingClientRect();return [Math.round(r.width),Math.round(r.height)]};
+          return {sel:q('#ren-empresa'),otra:q('#ren-empresa-otra'),nuevo:q('#nuevo-empresa'),crear:q('button[data-nuevo]'),nuevoCampo:q('#nuevo'),guardar:q('button[data-ren-guardar]'),
+                  ancho:document.documentElement.scrollWidth<=window.innerWidth+1}}""")
+        ok(cajas['ancho'] and cajas['sel'][1] >= 44 and cajas['otra'][1] >= 44 and cajas['nuevo'][1] >= 44 and cajas['crear'][1] >= 48 and cajas['crear'][0] >= cajas['nuevoCampo'][0] - 2 and cajas['guardar'][1] >= 48,
+           'T139 todo cabe y se puede pulsar con el dedo a %s px: %s' % (e.pg.viewport_size['width'], cajas))
+        e.clic('button[data-ren-cancelar]')
+        ok(e.pg.evaluate("document.documentElement.scrollWidth <= window.innerWidth + 1"), 'T139 la lista con empresas no se sale de ancho')
+    for ancho in (320, 820):
+        con_escena('T139', est10([('Ana', 'Construcciones y Reformas Muñoz de Bilbao S.L.'), ('Beto', 'CATERSYSTEM'), ('Carlos', '')]), t139, ancho=ancho, alto=900)
+
+    # Fin del bloque del paso 08c2a
 
     # Fin del bloque del paso 08d
 

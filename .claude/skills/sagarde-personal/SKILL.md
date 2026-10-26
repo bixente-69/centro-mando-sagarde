@@ -83,6 +83,25 @@ py -3.11 personal_obra.py renombrar T0002 "Mikel" --escribir
 Si el nombre nuevo ya es de otra persona no se cambia y dice que hay que **fusionar**. El nombre antiguo
 queda como «nombre anterior»: un fichero viejo que todavía lo traiga cae en la misma persona.
 
+## Empresa de cada persona (desde el 08c2a)
+
+Cada persona tiene **una** empresa, o «Sin empresa» (no se da por hecho que sea de Sagarde: puede ser autónomo). Un
+autónomo es una empresa que acaba en «@AUT» («Javi @AUT»). La tablet la apunta (campo Empresa al crear, lápiz ✎ y
+«Nombre, Empresa» en «Añadir varios nombres») y viaja en `empresas` dentro del control horario; el PC la aplica
+después de los cambios de nombre y de los nombres nuevos y antes de las jornadas. Una persona, una empresa, para
+todas sus obras. Se compara sin tildes ni mayúsculas y se guarda con la grafía de la primera vez.
+
+Los nombres que ya llevan la empresa dentro («Alejo (Manueles)», «Javi @ CATERSYSTEM») se separan con vista
+previa; **solo se aplica con el «sí» de Bixente** (renombra a toda la persona, el nombre viejo queda como anterior,
+y no toca ninguna jornada):
+
+```bash
+py -3.11 personal_obra.py separar-empresas              # vista previa: no guarda nada
+py -3.11 personal_obra.py separar-empresas --aplicar    # solo tras su «sí»
+```
+Lo dudoso (nombre que quedaría vacío, nombre que ya existe, dos que quedarían iguales, un sufijo «@AUT», alguien que ya
+tiene otra empresa) **no se toca y se enseña**; para juntar dos personas, `fusionar`.
+
 ## Fusionar nombres duplicados
 
 Mikel / Mikell son la misma persona: se funde el **origen** en el **destino** por sus ids

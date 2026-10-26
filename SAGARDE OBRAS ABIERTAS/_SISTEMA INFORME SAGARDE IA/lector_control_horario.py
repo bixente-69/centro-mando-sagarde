@@ -44,6 +44,9 @@ AVISOS_A_REVISAR = (
 
 AMBITOS = {"vivienda": "viviendas", "garaje": "garajes"}
 
+# Lo que hace una línea de `empresas` cuando de verdad cambia algo (el resto es «sin_cambios» o «sin_persona»).
+CAMBIOS_DE_EMPRESA = ("puesta", "cambiada", "quitada")
+
 # Frases de lo que decide este módulo (las de personal_obra salen de `po.texto_aviso`).
 TEXTOS = {
     "ya_aplicado": "Este control horario ya está aplicado: no se hace nada.",
@@ -191,6 +194,10 @@ def _sitios_con_datos_privados(lote):
     altas = lote.get("altas") if isinstance(lote.get("altas"), list) else []
     if any(_parece_privado(n) for n in altas):
         sitios.append("nombres nuevos")
+    empresas = lote.get("empresas") if isinstance(lote.get("empresas"), list) else []
+    if any(isinstance(e, dict) and (_parece_privado(e.get("nombre")) or _parece_privado(e.get("empresa")))
+           for e in empresas):
+        sitios.append("empresas")
     return sitios
 
 
@@ -216,6 +223,7 @@ def _ficha_vacia(f):
         "jornadas": [],
         "renombres": [],
         "personas_nuevas": [],
+        "empresas": [],
         "horarios_propios": [],
         "rechazadas": 0,
         "sin_efecto": False,
@@ -276,6 +284,12 @@ def _resumen_texto(ficha):
         partes.append(_plural(len(cambiados), "cambio de nombre", "cambios de nombre"))
     if ficha["personas_nuevas"]:
         partes.append(_plural(len(ficha["personas_nuevas"]), "persona nueva", "personas nuevas"))
+    puestas = [e for e in ficha["empresas"] if e["accion"] in ("puesta", "cambiada")]
+    if puestas:
+        partes.append(_plural(len(puestas), "empresa puesta", "empresas puestas"))
+    quitadas = [e for e in ficha["empresas"] if e["accion"] == "quitada"]
+    if quitadas:
+        partes.append(_plural(len(quitadas), "empresa quitada", "empresas quitadas"))
     if ficha["horarios_propios"]:
         partes.append(_plural(len(ficha["horarios_propios"]), "horario especial", "horarios especiales"))
     if ficha["rechazadas"]:
@@ -303,6 +317,7 @@ def _simular(obra_id, lote, ficha, estado, hoy, raiz, obras, ahora):
     ficha["rechazadas"] = sum(1 for j in ficha["jornadas"] if j["estado"] == "rechazada")
     ficha["renombres"] = list(r["renombres"])
     ficha["personas_nuevas"] = [dict(a) for a in r["altas"]]
+    ficha["empresas"] = [dict(e) for e in r["empresas"] if e["accion"] in CAMBIOS_DE_EMPRESA]
     ficha["horarios_propios"] = [x for x in r["excepciones"] if x["accion"] != "sin_cambios"]
     ficha["avisos"] = [_motivo(a["codigo"], a["detalle"]) for a in r["avisos_lote"]]
     for j in ficha["jornadas"]:
@@ -310,6 +325,7 @@ def _simular(obra_id, lote, ficha, estado, hoy, raiz, obras, ahora):
     aplica = [j for j in ficha["jornadas"] if j["estado"] == "aceptada"]
     # Aparte de las jornadas, el fichero puede traer cambios de nombre, nombres nuevos u horarios.
     hay_otra_cosa = bool(lote.get("renombres") or lote.get("altas") or lote.get("excepciones_horario"))
+    hay_otra_cosa = hay_otra_cosa or bool(lote.get("empresas"))
     hay_otra_cosa = hay_otra_cosa or "horario_semanal" in lote
     if ficha["rechazadas"] and not aplica and not hay_otra_cosa:
         return _cerrar(ficha, RECHAZADO, _motivo("todo_rechazado")), None
