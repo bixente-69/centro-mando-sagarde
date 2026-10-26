@@ -1,6 +1,6 @@
 ---
 name: sagarde-personal
-description: Personal en obra de Sagarde. Ingerir las jornadas que exporta la tablet (lote_personal_*.json), dar de alta una obra en Personal, fusionar nombres duplicados, entender los avisos (alta_nueva, nombre_parecido, suma_diaria_alta…) y actualizar el estado de la tablet y el ranking. Usar cuando Bixente pase un fichero lote_personal, hable de quién trabajó un día, de horas extra, del ranking de personal o de la pestaña Personal.
+description: Personal en obra de Sagarde. Cómo entra un CONTROL HORARIO de la tablet (se deja en REVISIONES y se dice «actualiza la obra»), entender sus avisos (nombre parecido, más de 12 h, fecha futura, jornada que sustituye…), corregir un nombre, fusionar nombres duplicados y actualizar el estado de la tablet y el ranking. Usar cuando Bixente hable de un control horario, de quién trabajó un día, de horas, del ranking de personal o de la pestaña Personal.
 ---
 
 # Personal en obra (jornadas, trabajadores, ranking)
@@ -31,45 +31,57 @@ Todo en `SAGARDE OBRAS ABIERTAS/` salvo lo indicado.
 | Módulo de datos / integración | `_SISTEMA INFORME SAGARDE IA/personal_obra.py`, `personal_integracion.py` |
 | Cálculo (una sola implementación) | `_SISTEMA INFORME SAGARDE IA/personal_calculo.js` |
 | Pestaña e informe | `_SISTEMA INFORME SAGARDE IA/panel_personal.py` |
-| Para Bixente (arrastrar el lote) | `_SISTEMA INFORME SAGARDE IA/Ingerir_Personal.bat` |
+| Lector de los controles horarios (detectar, vista previa, aplicar) | `_SISTEMA INFORME SAGARDE IA/lector_control_horario.py` |
+| Dónde los deja Bixente | `<carpeta obra>/REVISIONES/CONTROL HORARIO <OBRA> <DDMMAAAA>.json` (**no se publican**) |
 
 Las obras archivadas conservan su `personal_obra.json` (viaja con la carpeta) y el ranking las
 sigue contando, marcadas `cerrada`. **Nunca borrar ese fichero al cerrar una obra.**
 
-## Primera vez en una obra: darla de alta en Personal
+## Cómo entra un control horario (desde el 25/10/2026: igual que una revisión)
 
-La tablet solo ofrece las obras que figuran en `personal_estado.js`, y una obra figura si ya tiene
-su `personal_obra.json`. Sin este paso no se puede anotar la primera jornada:
+La tablet descarga `CONTROL HORARIO <OBRA> <DDMMAAAA>.json` (por dentro sigue siendo el «lote» de siempre).
+Bixente lo deja **a mano en `<carpeta obra>/REVISIONES/`** y dice **«actualiza la obra X»**. No hay `.bat`
+ni comando aparte ni alta manual de la obra: **el primer fichero crea el `personal_obra.json` de la obra**.
+
+1. `py -3.11 _SISTEMA/MOTOR/scripts/actualizar_obra.py <id>` (vista previa; no escribe) enseña en llano lo que
+   trae cada fichero: jornadas, personas nuevas, avisos y horas antes/después. Sin controles dice
+   «No hay controles horarios nuevos».
+2. `… --escribir` los aplica antes de regenerar la obra; el informe lleva la sección **H) CONTROL HORARIO**.
+3. `Actualizar_Sagarde.bat` (solo cuando él lo pida) también aplica los controles **limpios** al generar cada
+   obra; los dudosos o inválidos no se aplican y salen como `[AVISO PERSONAL]` con el nombre del fichero. El
+   auditor del paso 0 avisa de cada control sin aplicar.
+
+Cada fichero queda en una de cuatro situaciones: **ya aplicado** (su SHA256 consta en
+`personal_jornadas.jsonl`; una copia con otro nombre cuenta igual), **listo**, **hay que mirarlo** (no se
+aplica; código 3, y se libera con `--aceptar-controles N`) o **no vale** (no se aplica; código 2). Los
+ficheros se aplican en orden de la fecha del nombre; **la última manda**.
+
+| Lo que sale en pantalla | Qué es |
+|---|---|
+| «Nombre nuevo: «X» no estaba en la base; se añade.» | Informativo. Si es una errata de otro nombre, ver el siguiente. |
+| «Se parecen: «A» y «B». ¿Es la misma persona?» | **Hay que mirarlo.** Si lo es, **fusionar** después de guardar. |
+| «X suma más de 12 horas ese día entre todas las obras.» | **Hay que mirarlo**; preguntar a Bixente. |
+| «La jornada es de una fecha que aún no ha llegado (dd/mm): ¿es una errata?» | **Hay que mirarlo.** |
+| «Ya había una jornada de ese día en esa obra: la nueva la sustituye.» | **Hay que mirarlo** (es una corrección; al aceptarla manda la nueva). |
+| «No se ha cambiado «A»: «B» ya es otra persona de la base…» | **Hay que mirarlo**; juntarlas con `fusionar`. |
+| ««A» es un nombre antiguo de «B»: se ha tomado como la misma persona.» | Informativo (un fichero viejo con el nombre de antes). |
+
+**No vale** (no se aplica y se dice): fichero ilegible o que no es un control horario; la obra que lleva
+dentro no es la de la carpeta donde está (no se mezclan obras); un nombre que parece DNI, teléfono o correo;
+datos de personal de la obra ilegibles. Una **jornada** inválida suelta (horas fuera de 0–24, más de 24 h
+entre todas las obras, una persona dos veces…) se rechaza y **las demás entran**.
+
+## Corregir un nombre
+
+Desde la tablet el cambio de nombre viaja dentro del control horario. Para una corrección puntual desde el PC
+(siempre vista previa primero; no hace falta tocar nada más, el nombre cambia en todas las obras):
 
 ```bash
-py -3.11 "SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_integracion.py" iniciar-obra olabeaga --escribir
+py -3.11 personal_obra.py renombrar "Mikell" "Mikel"            # vista previa
+py -3.11 personal_obra.py renombrar T0002 "Mikel" --escribir
 ```
-(sin `--escribir` solo simula; si ya existe no lo toca). El estado se actualiza solo la siguiente
-vez que se genera o se ingiere; para tenerlo ya: `… personal_integracion.py exportar-estado --escribir`.
-
-## Ingerir una jornada
-
-1. La tablet exporta `lote_personal_<obra>.json`. Bixente lo **arrastra encima de
-   `Ingerir_Personal.bat`** (o: `py -3.11 personal_integracion.py ingerir <fichero>`).
-2. Hace una **simulación** y enseña los avisos. Escribe **S** + Intro para guardar; cualquier otra
-   cosa cancela sin tocar nada.
-3. Guarda, actualiza `personal_estado.js` y **regenera solo el panel de esa obra** (si el lote no
-   trae datos nuevos, no regenera). **No publica.**
-
-| Aviso | Qué significa y qué hacer |
-|---|---|
-| `alta_nueva <nombre>` | El nombre no estaba en la base y se da de alta. Si es una errata de otro, ver el siguiente. |
-| `nombre_parecido A ~ B` | Parecido a uno que ya existe. Si es la misma persona, **fusionar** después de guardar. |
-| `suma_diaria_alta` | Alguien suma más de 12 h ese día entre todas las obras y ámbitos. Preguntar a Bixente. |
-| `fecha_futura <fecha>` | La jornada es posterior a hoy: casi seguro una errata de fecha. |
-| `reemplazo` | La jornada ya existía (misma obra, ámbito y fecha) y se sustituye: es una corrección. |
-| `traza_no_escrita` | Lo guardado está bien; solo falló añadir la línea al `.jsonl`. |
-
-Se **rechaza una jornada** (las demás del lote entran) por `suma_diaria_invalida` (> 24 h por
-persona y día), `horas_invalidas`, `presente_duplicado`, `nombre_invalido`, `sin_presentes` o
-`jornada_repetida_en_lote`. Se **rechaza el lote entero** por `obra_invalida` (no es una obra
-abierta del registro), `tipo_desconocido`, `version_desconocida`, `horario_invalido` o
-`excepcion_invalida`: la consola lo dice (`RECHAZADO lote <código>`) y no se escribe nada.
+Si el nombre nuevo ya es de otra persona no se cambia y dice que hay que **fusionar**. El nombre antiguo
+queda como «nombre anterior»: un fichero viejo que todavía lo traiga cae en la misma persona.
 
 ## Fusionar nombres duplicados
 
@@ -97,7 +109,7 @@ lo que diga el recuadro `[X]` y se vuelve a lanzar. Comprobarlo a mano:
 ## Qué NO hacer
 
 - Editar a mano `personal_obra.json`, el catálogo o la traza (el esquema es cerrado; los
-  cambios van por `ingerir`/`fusionar`). Un `.xlsx`/JSON editado a mano ya rompió una obra entera.
+  cambios van por «actualiza la obra», `fusionar` o `renombrar`). Un `.xlsx`/JSON editado a mano ya rompió una obra entera.
 - Lanzar `Actualizar_Sagarde.bat` sin que Bixente lo pida (hace `git add -A` y publica en `main`).
 - Pasar datos reales de personal a una IA gratuita o a un subagente: solo datos inventados.
 - Usar `personal_obra.py exportar-estado --obras …` en el entorno real (ese modo es para pruebas:

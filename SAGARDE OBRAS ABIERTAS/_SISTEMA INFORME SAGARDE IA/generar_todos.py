@@ -1756,6 +1756,24 @@ def _personal_para_panel(obra):
     return filas
 
 
+def _controles_horarios_de_obra(obra):
+    """Aplica los CONTROL HORARIO limpios de <obra>/REVISIONES antes de construir su panel (idempotente) y avisa
+    de los que NO se aplican (dudosos o inválidos): entran como entran las revisiones, sin ningun paso aparte.
+
+    Nunca lanza: un fallo se avisa y el panel sale con los datos de personal que ya habia. Siempre imprime una
+    linea (aunque no haya controles): un recuento de 0 es una alarma, no silencio."""
+    try:
+        import personal_integracion
+        r = personal_integracion.aplicar_controles_limpios(obra['id'], OBRAS_ABIERTAS_DIR)
+    except Exception as exc:
+        print(f"  [AVISO PERSONAL] {obra['nombre']}: no se pudieron mirar los controles horarios "
+              f"({type(exc).__name__}: {exc}). El panel sale con los datos de personal que ya habia.")
+        return None
+    for linea in r['lineas']:
+        print(linea)
+    return r
+
+
 def exportar_personal_estado():
     """Escribe personal_estado.js (tablet y ranking) con TODAS las obras del registro y
     las archivadas. Se llama al final, junto al index y el resumen; regenerar_obra.py
@@ -2072,6 +2090,7 @@ def main(hacer_pdf=True):
                 salida_cierre, obra=obra['nombre'])
             if not os.path.isfile(salida_cierre):
                 cierre_expediente.guardar(salida_cierre, cierre_datos)
+            _controles_horarios_de_obra(obra)
             personal = _personal_para_panel(obra)
             res = panel_obra.generar_panel(
                 obra=obra['nombre'], subtitulo=obra['subtitulo'], historial=historial,

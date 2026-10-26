@@ -93,6 +93,20 @@ py -3.11 _SISTEMA/MOTOR/scripts/actualizar_obra.py <id_obra> --escribir  # aplic
    completa NO hace falta si no se ha tocado código (tarda ~2 min y regenera PDFs de
    Mungia).
 
+5. **Control horario (desde el 25/10/2026, paso 08b).** Un `CONTROL HORARIO <OBRA> <DDMMAAAA>.json` que
+   Bixente deja en `<obra>/REVISIONES/` entra con este mismo comando, **sin ningún paso aparte**: la
+   simulación lo enseña en llano (qué trae, personas nuevas, avisos y horas antes/después; sin controles
+   dice «No hay controles horarios nuevos»), `--escribir` lo aplica antes de regenerar la obra y el informe
+   lleva la sección **H) CONTROL HORARIO** (lo aplicado, lo que no se aplica y por qué, y los datos de
+   personal de las demás obras `IDENTICO`). Si trae algo que hay que mirar (nombre parecido, más de 12 h,
+   fecha futura, una jornada que sustituye o anula otra, un cambio de nombre que choca con otra persona) la
+   guarda sale con el código **3** y **no se aplica nada** (ni controles ni hojas): leer la lista, contrastar
+   con Bixente y repetir con `--aceptar-controles N` (`N` = el nº de avisos que dice la propia guarda; con
+   otra cifra la guarda sigue). Un fichero que no vale (ilegible, de otra obra, con un nombre que parece
+   DNI/teléfono/correo…) no se aplica, se dice y deja el informe en `G) REVISAR` (código 2). Detalle y
+   operaciones sobre nombres: skill `sagarde-personal`. El `.bat` también aplica los controles **limpios**
+   (nunca los dudosos, que salen como `[AVISO PERSONAL]` con el nombre del fichero).
+
 Lo que sigue es el procedimiento manual: úsalo solo como referencia o si el comando falla.
 
 ## Procedimiento manual (referencia / plan B)

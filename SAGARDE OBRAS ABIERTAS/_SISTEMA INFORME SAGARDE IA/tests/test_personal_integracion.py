@@ -116,14 +116,35 @@ class TestFilasParaPanel(Base):
 
 
 class TestExportarEstado(Base):
-    def test_sin_datos_en_ninguna_obra_no_crea_el_fichero(self):
+    def test_sin_datos_en_ninguna_obra_ofrece_igualmente_todas_las_obras_del_registro(self):
+        """REESCRITA en el 08b. Antes: «sin datos en ninguna obra no se crea el fichero». Ahora la tablet tiene que
+        poder ofrecer TODAS las obras abiertas desde el primer día: el alta manual de la obra (`iniciar-obra`) se
+        retiró y el primer CONTROL HORARIO crea los datos de la obra solo."""
         r = pi.exportar_estado_real(self.raiz)
+        self.assertTrue(r["escrito"])
+        self.assertEqual({"obraa": 0, "obrab": 0}, r["obras"])
+        e = self.estado()
+        self.assertEqual({"obraa", "obrab"}, set(e["obras"]))
+        for obra in e["obras"].values():
+            self.assertEqual([], obra["jornadas"])
+            self.assertEqual({"vivienda": None, "garaje": None}, obra["ultima"])
+            self.assertFalse(obra["cerrada"])
+
+    def test_no_hay_obras_en_el_registro_no_se_escribe_nada(self):
+        with mock.patch.object(pi, "obras_registro", return_value=({}, {})):
+            r = pi.exportar_estado_real(self.raiz)
         self.assertFalse(r["escrito"])
         self.assertFalse((self.motor / "personal_estado.js").exists())
-        self.assertIn("sin datos", r["motivo"])
+        self.assertIn("ninguna obra", r["motivo"])
+
+    def test_una_obra_sin_fichero_de_personal_no_se_crea_en_disco(self):
+        """Ofrecer la obra en el estado NO escribe su personal_obra.json (eso solo lo hace el primer fichero)."""
+        pi.exportar_estado_real(self.raiz)
+        self.assertFalse(self.ruta_obra("obraa").exists())
+        self.assertFalse(self.ruta_obra("obrab").exists())
 
     def test_escribe_con_todas_las_obras_del_registro_aunque_solo_una_tenga_datos(self):
-        pi.iniciar_obra("obrab", self.raiz, escribir=True)
+        # 08b: ya no hay `iniciar_obra`; «obrab» figura sin fichero propio.
         self.ingerir(L_A)
         r = pi.exportar_estado_real(self.raiz)
         self.assertTrue(r["escrito"])
@@ -194,31 +215,18 @@ class TestExportarEstado(Base):
         self.assertEqual("conflicto_en_jornada", r["error"])
 
 
-class TestIniciarObra(Base):
-    def test_crea_un_fichero_valido_y_sin_jornadas(self):
-        r = pi.iniciar_obra("obraa", self.raiz, escribir=True)
-        self.assertTrue(r["creada"])
-        self.assertEqual([], po.cargar_obra(str(self.raiz), ABIERTAS, "obraa")["jornadas"])
-        self.assertEqual([], po.comprobar(str(self.raiz), ABIERTAS))
+class TestAltaManualRetirada(Base):
+    """08b: se retiran `iniciar_obra` / `iniciar-obra` (alta manual de la obra en Personal). Sus 5 pruebas
+    (crea un fichero válido, la simulación no escribe, no pisa datos, rechaza obras ajenas al registro y la obra
+    iniciada aparece en el estado) dejan de tener objeto: el primer CONTROL HORARIO crea el fichero de la obra
+    (lo prueba test_personal_obra_08a / test_lector_control_horario) y el estado ya ofrece todas las obras."""
 
-    def test_simulacion_no_escribe(self):
-        r = pi.iniciar_obra("obraa", self.raiz)
-        self.assertFalse(r["creada"])
-        self.assertFalse(self.ruta_obra("obraa").exists())
+    def test_el_alta_manual_ya_no_existe(self):
+        for nombre in ("iniciar_obra", "cmd_ingerir", "_confirmar"):
+            self.assertFalse(hasattr(pi, nombre), nombre)
 
-    def test_no_pisa_una_obra_que_ya_tiene_datos(self):
-        self.ingerir(L_A)
-        antes = self.ruta_obra("obraa").read_bytes()
-        r = pi.iniciar_obra("obraa", self.raiz, escribir=True)
-        self.assertFalse(r["creada"])
-        self.assertEqual(antes, self.ruta_obra("obraa").read_bytes())
-
-    def test_una_obra_que_no_es_del_registro_se_rechaza(self):
-        with self.assertRaises(ValueError):
-            pi.iniciar_obra("no_existe", self.raiz, escribir=True)
-
-    def test_la_obra_iniciada_aparece_en_el_estado_para_la_tablet(self):
-        pi.iniciar_obra("obraa", self.raiz, escribir=True)
+    def test_la_obra_sin_alta_aparece_en_el_estado_para_la_tablet(self):
+        """Sustituye a «la obra iniciada aparece en el estado»: ahora aparece sin iniciarla."""
         pi.exportar_estado_real(self.raiz)
         self.assertEqual([], self.estado()["obras"]["obraa"]["jornadas"])
 
@@ -461,52 +469,13 @@ class TestLineaDeComandos(Base):
                     codigo = pi.main(list(argv))
         return codigo, salida.getvalue()
 
-    def escribir_lote(self, l):
-        ruta = self.top / "lote.json"
-        ruta.write_text(json.dumps(l), encoding="utf-8")
-        return str(ruta)
-
-    def test_ingerir_con_confirmacion_escribe_exporta_y_no_publica(self):
-        fichero = self.escribir_lote(L_A)
-        codigo, texto = self.correr("ingerir", fichero, "--raiz", str(self.raiz), "--hoy", "2026-10-23",
-                                    "--sin-panel", entrada="s")
-        self.assertEqual(0, codigo, texto)
-        self.assertIn("SIMULACI", texto)
-        self.assertTrue(self.ruta_obra("obraa").is_file())
-        self.assertEqual(4, len(self.estado()["obras"]["obraa"]["jornadas"]))
-        self.assertIn("NO se ha publicado nada", texto)
-
-    def test_ingerir_regenera_el_panel_de_la_obra_solo_si_hay_datos_nuevos(self):
-        """El .bat regenera la obra del lote; un lote repetido no cambia nada y no regenera."""
-        scripts = self.top / "_SISTEMA" / "MOTOR" / "scripts"
-        scripts.mkdir(parents=True)
-        marca = self.top / "regenerada.txt"
-        (scripts / "regenerar_obra.py").write_text(
-            "import sys\nopen(%r, 'a').write(sys.argv[1] + '\\n')\n" % str(marca), encoding="utf-8")
-        fichero = self.escribir_lote(L_A)
-        args = ("ingerir", fichero, "--raiz", str(self.raiz), "--hoy", "2026-10-23", "--si")
-        self.assertEqual(0, self.correr(*args)[0])
-        self.assertEqual("obraa\n", marca.read_text(encoding="utf-8"))
-        marca.unlink()
-        codigo, texto = self.correr(*args)
-        self.assertEqual(0, codigo)
-        self.assertFalse(marca.exists(), "un lote ya ingerido no debe regenerar nada")
-        self.assertIn("No hay datos nuevos", texto)
-
-    def test_ingerir_sin_confirmar_no_escribe_nada(self):
-        fichero = self.escribir_lote(L_A)
-        codigo, texto = self.correr("ingerir", fichero, "--raiz", str(self.raiz), "--hoy", "2026-10-23",
-                                    "--sin-panel", entrada="n")
-        self.assertEqual(3, codigo)
-        self.assertFalse(self.ruta_obra("obraa").exists())
-        self.assertFalse((self.motor / "personal_estado.js").exists())
-
-    def test_ingerir_un_fichero_que_no_es_json_no_escribe(self):
-        ruta = self.top / "roto.json"
-        ruta.write_text("{no", encoding="utf-8")
-        codigo, _ = self.correr("ingerir", str(ruta), "--raiz", str(self.raiz), "--si", "--sin-panel")
-        self.assertEqual(1, codigo)
-        self.assertFalse((self.motor / "personal_estado.js").exists())
+    def test_ya_no_hay_ingerir_ni_iniciar_obra(self):
+        """08b. Sustituye a las 4 pruebas de `ingerir` (con confirmación, regenera solo si hay datos nuevos, sin
+        confirmar no escribe, un fichero que no es JSON no escribe): ese camino propio se retiró y los controles
+        horarios entran con «actualiza la obra» y con el .bat (lo prueban test_controles_horarios_08b y el lector)."""
+        for comando in (["ingerir", "x.json"], ["iniciar-obra", "obraa"]):
+            with self.subTest(comando=comando), contextlib.redirect_stderr(io.StringIO()), self.assertRaises(SystemExit):
+                pi.main(comando + ["--raiz", str(self.raiz)])
 
     def test_auditar_devuelve_2_si_hay_errores(self):
         self.ingerir(L_A)

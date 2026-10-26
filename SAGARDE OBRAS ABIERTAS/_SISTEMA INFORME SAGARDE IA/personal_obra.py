@@ -1127,9 +1127,11 @@ def totales_control(raiz, obras, obra=None, estado=None):
     return {"horas": h, "extra": e, "dias": len(ds), "trabajadores": len(ns), "por_trabajador": por}
 
 
-def exportar_estado(raiz, obras, nombres_obra=None, cerradas=(), generado=None, escribir=False):
-    """Genera personal_estado.js con el estado para la app.
-    Exporta catálogo activo, últimas jornadas y filas.
+def exportar_estado(
+    raiz, obras, nombres_obra=None, cerradas=(), generado=None, escribir=False, incluir_vacias=False
+):
+    """Genera personal_estado.js con el estado para la app: catálogo activo, últimas jornadas y filas.
+    Con `incluir_vacias` también salen las obras que aún no tienen `personal_obra.json` (sin jornadas).
     """
     c = cargar_catalogo(raiz)
     mp, rs = _maps(c)
@@ -1141,7 +1143,8 @@ def exportar_estado(raiz, obras, nombres_obra=None, cerradas=(), generado=None, 
     ]
     obs = {}
     for o in obras:
-        if not _rop(raiz, obras, o).exists():
+        # Por defecto solo salen las obras con datos; la tablet necesita ofrecerlas todas (`incluir_vacias`).
+        if not incluir_vacias and not _rop(raiz, obras, o).exists():
             continue
         d = cargar_obra(raiz, obras, o)
         ex = {}

@@ -43,12 +43,12 @@ CON_REGLA_PROPIA = {
     f"{OTRA_OBRA}/personal_obra.json": "personal_obra.json",
     f"{OTRA_OBRA}/personal_jornadas.jsonl": "personal_jornadas.jsonl",
     f"{MOTOR}/tests/verificar_personal_calculo.js": "verificar_personal_calculo.js",
-    f"{MOTOR}/Ingerir_Personal.bat": "Ingerir_Personal.bat",
 }
 POR_REGLA_GENERAL = [
     f"{MOTOR}/personal_obra.py",
     f"{MOTOR}/panel_personal.py",
     f"{MOTOR}/personal_integracion.py",
+    f"{MOTOR}/lector_control_horario.py",
     f"{MOTOR}/generador_personal.html",
     f"{MOTOR}/personal_sagarde.html",
 ]
@@ -60,6 +60,14 @@ NO_DECLARADOS = [
     f"{OBRA}/personal_notas.json",
     f"{OBRA}/personal_jornadas.json",
     f"{OBRA}/personal_obra.json.bak",
+    # 08b: el camino viejo («Ingerir_Personal.bat») se retiró y ya no se versiona.
+    f"{MOTOR}/Ingerir_Personal.bat",
+    # Los CONTROL HORARIO que Bixente deja en REVISIONES llevan nombres y horas: NO se publican (sus datos ya
+    # están en personal_jornadas.jsonl). Se prueban con varias formas del nombre que puede dar el navegador.
+    "SAGARDE OBRAS ABIERTAS/2026 OLABEAGA BILBAO/REVISIONES/CONTROL HORARIO 2026 OLABEAGA BILBAO 25102026.json",
+    "SAGARDE OBRAS ABIERTAS/2026 OLABEAGA BILBAO/REVISIONES/CONTROL HORARIO 2026 OLABEAGA BILBAO 25102026 (1).json",
+    "SAGARDE OBRAS ABIERTAS/2026 OLABEAGA BILBAO/REVISIONES/control horario 2026 olabeaga bilbao 25102026.JSON",
+    "SAGARDE OBRAS ABIERTAS/2025 GERNIKA 32V/REVISIONES/CONTROL HORARIO 2025 GERNIKA 32V 01112026.json",
     "SAGARDE OBRAS ABIERTAS/personal_obra.json",  # fuera de «INFORME SAGARDE IA»
     "SAGARDE (OLD)/OBRAS CERRADAS/2025 X/INFORME SAGARDE IA/personal_obra.json",
 ]

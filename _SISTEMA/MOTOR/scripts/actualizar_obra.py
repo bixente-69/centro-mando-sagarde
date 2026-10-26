@@ -4,6 +4,13 @@
 Por defecto solo simula. ``--escribir`` aplica las hojas pendientes, vuelve a
 simular las de vivienda, regenera exclusivamente la obra y verifica que no se
 hayan movido las demás.
+
+Los ``CONTROL HORARIO`` de la tablet entran igual que las hojas: se dejan en
+``<obra>/REVISIONES`` y este comando los detecta, los enseña (vista previa), los
+aplica con ``--escribir`` antes de regenerar la obra y los cuenta en la sección H
+del informe. Los que hay que mirar (nombre parecido, más de 12 h, fecha futura,
+una jornada que sustituye a otra...) paran con el código 3 hasta que se acepten
+con ``--aceptar-controles N``.
 """
 from __future__ import annotations
 
@@ -987,6 +994,164 @@ def _lineas_retrocesos(retro: Retrocesos) -> list[str]:
     return lineas
 
 
+# ─── Control horario (los CONTROL HORARIO de la tablet, en REVISIONES) ──────────────────────────────
+def _plural(n: int, uno: str, varios: str) -> str:
+    return f"{n} {uno if n == 1 else varios}"
+
+
+def _controles(obra: dict, *, escribir: bool = False, aceptar: bool = False) -> dict:
+    """Controles horarios de <obra>/REVISIONES: vista previa o, con `escribir`, aplicados.
+    Un fallo del propio módulo se cuenta como error de la actualización, no se traga."""
+    try:
+        import personal_integracion
+
+        return personal_integracion.controles_horarios(
+            obra["id"], OBRAS_DIR, escribir=escribir, aceptar=aceptar
+        )
+    except Exception as exc:
+        raise ErrorActualizacion(
+            f"No se pudieron revisar los controles horarios: {type(exc).__name__}: {exc}"
+        ) from exc
+
+
+def _lineas_controles(controles: dict) -> list[str]:
+    import personal_integracion
+
+    return personal_integracion.lineas_controles(controles)
+
+
+def _guarda_controles(controles: dict | None, aceptadas: Iterable[int]) -> tuple[bool, list[str]]:
+    """La guarda de los controles horarios «a revisar»: (aceptar, líneas a enseñar).
+
+    Se libera solo con ``--aceptar-controles N``, con N = el número de avisos que dice la propia guarda tras leer
+    la lista; con otra cifra la guarda sigue. Mientras sigue, NO se aplica nada (ni los controles ni las hojas)."""
+    n = controles["avisos_a_revisar"] if controles else 0
+    if not n:
+        return False, []
+    aceptadas = list(aceptadas)
+    if n in aceptadas:
+        return True, []
+    lineas = [
+        "REVISION HUMANA OBLIGATORIA: CONTROL HORARIO",
+        f"- Hay {_plural(n, 'aviso', 'avisos')} en los controles horarios que hay que mirar; "
+        "no se aplica nada hasta que lo aceptes.",
+    ]
+    lineas.extend("  " + linea for linea in _lineas_controles(controles))
+    lineas.append(f"Para aceptarlos, tras leerlos: --aceptar-controles {n}")
+    if aceptadas:
+        dadas = ", ".join(str(x) for x in aceptadas)
+        lineas.append(
+            f"La cifra dada ({dadas}) no coincide con la de la guarda ({n}): la guarda sigue."
+        )
+    return False, lineas
+
+
+def _controles_aplicables(controles: dict | None, aceptar: bool) -> int:
+    """Cuántos ficheros de control horario se aplicarían: los listos y, si se aceptan, los «a revisar»."""
+    if not controles:
+        return 0
+    cuenta = controles["cuenta"]
+    return cuenta["listo"] + (cuenta["a_revisar"] if aceptar else 0)
+
+
+def sha_personal_otras_obras(obras, obra_id: str, obras_dir) -> dict[str, str]:
+    """SHA-256 de los datos de personal (obra + traza) de las demás obras; «SIN DATOS» si no tienen."""
+    raiz = Path(obras_dir)
+    resultado = {}
+    for obra in obras:
+        otro_id = obra.get("id")
+        if otro_id == obra_id:
+            continue
+        h = hashlib.sha256()
+        hay = False
+        for nombre in ("personal_obra.json", "personal_jornadas.jsonl"):
+            ruta = raiz / obra["carpeta_obra"] / "INFORME SAGARDE IA" / nombre
+            if ruta.is_file():
+                hay = True
+                h.update(nombre.encode("utf-8"))
+                try:
+                    h.update(ruta.read_bytes())
+                except OSError as exc:
+                    raise ErrorActualizacion(f"No se pudo leer {ruta}: {exc}") from exc
+        resultado[otro_id] = h.hexdigest() if hay else "SIN DATOS"
+    return resultado
+
+
+def _personas_en_catalogo() -> int | None:
+    """Personas vigentes del catálogo de trabajadores (None si todavía no existe)."""
+    ruta = MOTOR_IA_DIR / "personal_catalogo.json"
+    if not ruta.is_file():
+        return None
+    datos = _leer_json(ruta)
+    return sum(1 for t in datos.get("trabajadores", []) if t.get("fusionado_en") is None)
+
+
+def _seccion_h(
+    controles: dict | None,
+    error_controles: str | None,
+    sha_antes: dict[str, str],
+    sha_despues: dict[str, str],
+    personas_antes: int | None,
+    personas_despues: int | None,
+) -> tuple[list[str], list[str]]:
+    """Sección H del informe de verificación: (líneas, motivos para revisar)."""
+    lineas = ["H) CONTROL HORARIO"]
+    motivos: list[str] = []
+    if error_controles:
+        lineas.append("  ERROR: " + error_controles)
+        motivos.append(error_controles)
+    elif controles is not None:
+        lineas.extend("  " + linea for linea in _lineas_controles(controles))
+        rechazados = controles["cuenta"]["rechazado"]
+        if rechazados:
+            motivos.append(
+                f"{_plural(rechazados, 'control horario NO vale', 'controles horarios NO valen')} "
+                "y no se han aplicado (ver H)"
+            )
+        sin_aceptar = controles["cuenta"]["a_revisar"]
+        if sin_aceptar:
+            motivos.append(
+                f"{_plural(sin_aceptar, 'control horario sin aplicar', 'controles horarios sin aplicar')} "
+                "por exigir revisión (ver H)"
+            )
+    if personas_antes is not None or personas_despues is not None:
+        lineas.append(f"  Personas en la lista de trabajadores: antes {personas_antes}; después {personas_despues}.")
+    lineas.append("  Datos de personal de las demás obras:")
+    for obra_id in sorted(sha_antes):
+        igual = sha_antes[obra_id] == sha_despues.get(obra_id)
+        lineas.append(
+            f"    {obra_id}: {sha_antes[obra_id][:16]} -> {str(sha_despues.get(obra_id))[:16]} "
+            f"[{'IDENTICO' if igual else 'CAMBIO'}]"
+        )
+    cambiadas = [o for o in sha_antes if sha_antes[o] != sha_despues.get(o)]
+    cambiadas += [o for o in sha_despues if o not in sha_antes]
+    if cambiadas:
+        motivos.append(
+            "ERROR (efecto colateral) en los datos de personal de: " + ", ".join(sorted(set(cambiadas)))
+        )
+    return lineas, motivos
+
+
+def _revisar_controles(obra: dict) -> tuple[dict | None, str | None]:
+    """Vista previa de los controles horarios de la obra: (controles, error). No lanza."""
+    try:
+        return _controles(obra), None
+    except ErrorActualizacion as exc:
+        return None, str(exc)
+
+
+def _lineas_resumen_controles(controles: dict | None, error: str | None) -> list[str]:
+    """Las líneas de la vista previa de control horario; siempre dice algo (nunca silencio)."""
+    if error:
+        return ["CONTROL HORARIO — ERROR: " + error]
+    return ["CONTROL HORARIO"] + ["  " + linea for linea in _lineas_controles(controles)]
+
+
+def _hay_problema_controles(controles: dict | None, error: str | None) -> bool:
+    """Un control horario inválido o que no se pudo revisar es un problema aunque no frene nada."""
+    return bool(error) or bool(controles and controles["cuenta"]["rechazado"])
+
+
 def _guardar_informe(obra_id: str, lineas: Iterable[str], instante: datetime) -> Path:
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
     ruta = LOGS_DIR / f"actualizacion_{obra_id}_{instante:%Y%m%d_%H%M}.txt"
@@ -1129,7 +1294,14 @@ def _informe_fallo(
     return ruta
 
 
-def _escribir(obra: dict, args, deteccion_inicial: DeteccionHojas) -> int:
+def _escribir(
+    obra: dict,
+    args,
+    deteccion_inicial: DeteccionHojas,
+    controles: dict | None = None,
+    error_controles: str | None = None,
+    aceptar_controles: bool = False,
+) -> int:
     inicio = time.perf_counter()
     instante = datetime.now()
     fases: dict[str, float] = {}
@@ -1146,6 +1318,8 @@ def _escribir(obra: dict, args, deteccion_inicial: DeteccionHojas) -> int:
 
     t = time.perf_counter()
     sha_antes = sha_fichas_otras_obras(OBRAS, obra["id"], OBRAS_DIR)
+    sha_personal_antes = sha_personal_otras_obras(OBRAS, obra["id"], OBRAS_DIR)
+    personas_antes = _personas_en_catalogo()
     if not INDEX_PATH.is_file():
         raise ErrorActualizacion(f"No existe el índice global: {INDEX_PATH}")
     index_antes = INDEX_PATH.read_text(encoding="utf-8")
@@ -1156,6 +1330,7 @@ def _escribir(obra: dict, args, deteccion_inicial: DeteccionHojas) -> int:
     aplicadas_vivienda = []
     aplicadas_garaje = []
     aceptadas = []
+    controles_aplicados = None
     with tempfile.TemporaryDirectory(prefix=f"sagarde_actualizar_{obra['id']}_") as tmp:
         copias = _copiar_fichas_temporales(carpeta_obra, Path(tmp))
         copias_por_nombre = {copia.name: copia for copia in copias}
@@ -1258,9 +1433,23 @@ def _escribir(obra: dict, args, deteccion_inicial: DeteccionHojas) -> int:
                 lineas.append(f"Garaje aplicado una vez y fecha comprobada: {hoja.ruta.name}.")
             fases["garaje"] = time.perf_counter() - t
 
-            if not aplicadas_vivienda and not aplicadas_garaje:
+            if _controles_aplicables(controles, aceptar_controles):
+                t = time.perf_counter()
+                controles_aplicados = _controles(obra, escribir=True, aceptar=aceptar_controles)
+                aplicados = controles_aplicados["cuenta"]["aplicado"]
+                lineas.append(
+                    "Control horario aplicado: "
+                    + _plural(aplicados, "fichero", "ficheros")
+                    + " (la sección H lo detalla)."
+                )
+                fases["control horario"] = time.perf_counter() - t
+            controles_ok = bool(
+                controles_aplicados and controles_aplicados["cuenta"]["aplicado"]
+            )
+            if not aplicadas_vivienda and not aplicadas_garaje and not controles_ok:
                 raise ErrorActualizacion(
-                    "La detección encontró pendientes, pero ninguna hoja llegó a aplicarse."
+                    "La detección encontró pendientes, pero ninguna hoja ni control horario "
+                    "llegó a aplicarse."
                 )
 
             t = time.perf_counter()
@@ -1350,6 +1539,19 @@ def _escribir(obra: dict, args, deteccion_inicial: DeteccionHojas) -> int:
             "Estructura aceptada mediante --aceptar-estructura: "
             + ", ".join(sorted(set(aceptadas)))
         )
+    # H) Control horario: lo aplicado, lo que no se aplica y por qué, y que las demás obras no se han movido.
+    lineas_h, motivos_h = _seccion_h(
+        controles_aplicados or controles,
+        error_controles,
+        sha_personal_antes,
+        sha_personal_otras_obras(OBRAS, obra["id"], OBRAS_DIR),
+        personas_antes,
+        _personas_en_catalogo(),
+    )
+    for motivo in motivos_h:
+        motivos_revisar.append(motivo)
+        if motivo.startswith("ERROR"):
+            print(f"{ROJO}{motivo}{RESET}")
     fases["verificación"] = time.perf_counter() - t
     lineas.extend(["", "F) TIEMPOS"])
     for nombre, segundos in fases.items():
@@ -1359,6 +1561,7 @@ def _escribir(obra: dict, args, deteccion_inicial: DeteccionHojas) -> int:
     if motivos_revisar:
         for motivo in motivos_revisar:
             lineas.append("  - " + motivo)
+    lineas.extend([""] + lineas_h)
     lineas.append(MENSAJE_PUBLICACION)
     try:
         ruta_informe = _guardar_informe(obra["id"], lineas, instante)
@@ -1389,6 +1592,17 @@ def construir_parser() -> argparse.ArgumentParser:
             "transiciones antes -> después (se puede repetir)."
         ),
     )
+    parser.add_argument(
+        "--aceptar-controles",
+        type=int,
+        action="append",
+        default=[],
+        metavar="N",
+        help=(
+            "Acepta los controles horarios que hay que mirar SOLO si N coincide con el "
+            "número de avisos que dice la propia guarda, tras leer la lista (se puede repetir)."
+        ),
+    )
     parser.add_argument("--forzar-fecha", metavar="DD/MM/AAAA")
     grupo = parser.add_mutually_exclusive_group()
     grupo.add_argument("--solo-vivienda", action="store_true")
@@ -1410,24 +1624,50 @@ def main(argv=None) -> int:
         if not carpeta_obra.is_dir():
             raise ErrorActualizacion(f"No existe la carpeta de obra: {carpeta_obra}")
         _imprimir_ignoradas(deteccion)
-        if not deteccion.vivienda and not deteccion.garaje:
-            if args.forzar_fecha:
-                raise ErrorActualizacion(
-                    f"No hay ninguna hoja seleccionable con fecha {args.forzar_fecha}."
-                )
-            print(f"{obra['nombre']}: NO hay hojas nuevas.")
-            print(MENSAJE_PUBLICACION)
-            return 0
+        hay_hojas = bool(deteccion.vivienda or deteccion.garaje)
+        if not hay_hojas and args.forzar_fecha:
+            raise ErrorActualizacion(
+                f"No hay ninguna hoja seleccionable con fecha {args.forzar_fecha}."
+            )
+        controles, error_controles = _revisar_controles(obra)
+        aceptar_controles, lineas_guarda = _guarda_controles(controles, args.aceptar_controles)
+        hay_controles = bool(_controles_aplicables(controles, aceptar_controles))
         if not args.escribir:
             codigo = _simular(
                 obra,
                 deteccion,
                 aceptar_estructura=args.aceptar_estructura,
                 aceptar_hoja_grande=args.aceptar_hoja_grande,
-            )
+            ) if hay_hojas else 0
+            if not hay_hojas:
+                print(f"{obra['nombre']}: NO hay hojas nuevas.")
+            # La guarda ya lleva la lista de controles: no se repite.
+            if not lineas_guarda:
+                for linea in _lineas_resumen_controles(controles, error_controles):
+                    print(linea)
+            for linea in lineas_guarda:
+                print(linea)
+            if lineas_guarda:
+                codigo = 3
+            elif codigo == 0 and _hay_problema_controles(controles, error_controles):
+                codigo = 2
             print(MENSAJE_PUBLICACION)
             return codigo
-        return _escribir(obra, args, deteccion)
+        if lineas_guarda:
+            for linea in lineas_guarda:
+                print(linea)
+            print("No se ha escrito nada.")
+            print(MENSAJE_PUBLICACION)
+            return 3
+        if not hay_hojas and not hay_controles:
+            print(f"{obra['nombre']}: NO hay hojas nuevas.")
+            for linea in _lineas_resumen_controles(controles, error_controles):
+                print(linea)
+            print(MENSAJE_PUBLICACION)
+            return 2 if _hay_problema_controles(controles, error_controles) else 0
+        return _escribir(
+            obra, args, deteccion, controles, error_controles, aceptar_controles
+        )
     except RequiereRevisionHumana as exc:
         _mostrar_guardas(exc.analisis)
         print(MENSAJE_PUBLICACION)

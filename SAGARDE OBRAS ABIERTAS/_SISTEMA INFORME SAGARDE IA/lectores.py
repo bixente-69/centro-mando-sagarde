@@ -228,14 +228,22 @@ def listar_documentos(carpeta_obra, base_href_desde):
     inflaba "Documentos" con JSON internos de la propia lectura -9 ficheros
     de sobra en Bolueta el 24/08/2026- y Bixente veia la pestaña como si no
     se hubiera actualizado.
+
+    Tampoco cuenta un `CONTROL HORARIO ... .json` de `REVISIONES` (Bixente,
+    25/10/2026): es un dato de entrada de la tablet, no un papel de la obra.
     """
+    from lector_control_horario import es_control_horario
+
     docs = []
     if not os.path.isdir(carpeta_obra):
         return docs
     for root, dirs, files in os.walk(carpeta_obra):
         dirs[:] = [d for d in dirs if d != 'INFORME SAGARDE IA' and d != '_SISTEMA']
+        en_revisiones = os.path.basename(root).casefold() == 'revisiones'
         for fn in files:
             if fn.startswith('~$') or fn.lower() in ('plot.log',):
+                continue
+            if en_revisiones and es_control_horario(fn):
                 continue
             ruta_abs = os.path.join(root, fn)
             ext = os.path.splitext(fn)[1]

@@ -83,10 +83,6 @@ VARIOS/APPS SAGARDE/
 # .js dentro de tests/: sin esta linea no se versiona y la prueba falla en una copia limpia.
 !SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/tests/verificar_personal_calculo.js
 
-# Herramienta local de personal: Bixente arrastra el lote de la tablet encima. Se versiona
-# para que llegue a la carpeta real al fusionar la rama; no es nada de la web.
-!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/Ingerir_Personal.bat
-
 # Ficha de obra: fuente de verdad de estructura y estados (una por obra)
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/ficha_obra.json
 

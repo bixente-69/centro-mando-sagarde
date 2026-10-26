@@ -121,6 +121,13 @@ def _clave_orden(f):
     return (f.get("fecha_nombre") or "", f.get("copia", 0), f.get("nombre", "").casefold())
 
 
+def es_control_horario(nombre):
+    """True si el nombre es el de un control horario de la tablet: `CONTROL HORARIO <algo>.json` (mayúsculas
+    indiferentes). Es la regla única: la usan `listar` y la lista de documentos de la obra."""
+    minuscula = nombre.casefold()
+    return minuscula.startswith("control horario") and minuscula.endswith(".json")
+
+
 def listar(carpeta_revisiones):
     """Ficheros `CONTROL HORARIO*.json` de una carpeta (mayúsculas indiferentes, cualquier sufijo).
     Devuelve, en orden de aplicación, dicts con nombre, ruta, sha256 (None si no se pudo leer), fecha_nombre,
@@ -132,9 +139,7 @@ def listar(carpeta_revisiones):
     out = []
     for p in carpeta.iterdir():
         nombre = p.name
-        if not (nombre.casefold().startswith("control horario") and nombre.casefold().endswith(".json")):
-            continue
-        if not p.is_file():
+        if not es_control_horario(nombre) or not p.is_file():
             continue
         fecha, copia = _fecha_del_nombre(nombre)
         ficha = {
@@ -419,6 +424,7 @@ def _aplicar_uno(obra_id, ficha, hoy, raiz, obras, ahora):
         lote, raiz, obras, hoy, escribir=True, ahora=ahora, sha256=ficha["sha256"], fichero=ficha["nombre"]
     )
     ficha["escrito"] = bool(r["escrito"])
+    ficha["aplicado"] = True
     anotado = ficha["sha256"] in po.shas_recibidos(raiz, obras, obra_id)
     if not anotado:
         ficha["motivos"].append(_motivo("no_anotado"))
@@ -447,6 +453,7 @@ def aplicar(obra_id, ficheros, hoy, raiz, obras, aceptar=False, ahora=None):
     avisos = [dict(a, fichero=f["nombre"]) for f in aplicados + no_aplicados for a in f["avisos"]]
     return {
         "obra": obra_id,
+        "ficheros": analisis["ficheros"],
         "aplicados": aplicados,
         "no_aplicados": no_aplicados,
         "ya_aplicados": ya_aplicados,
