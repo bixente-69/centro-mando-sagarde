@@ -408,6 +408,63 @@
       #toast.on {
         opacity: 1;
       }
+      /* ---- Corregir nombres y varios nombres: lápiz, campo de edición y cuadro de varios nombres ---- */
+      .nw {
+        flex: 1;
+        min-width: 96px;
+        display: flex;
+        align-items: center;
+        gap: 2px;
+      }
+      .nw .nm {
+        flex: 1;
+        min-width: 0;
+      }
+      .lap {
+        flex: none;
+        width: 44px;
+        min-height: 44px;
+        border: 0;
+        background: none;
+        font-size: 20px;
+        color: #1f5fa8;
+      }
+      .row.ren input {
+        flex-basis: 100%;
+      }
+      .row.ren .actions,
+      .row.ren .aviso {
+        flex-basis: 100%;
+        margin: 0;
+      }
+      .row.ren .actions .btn {
+        flex: 1;
+      }
+      textarea {
+        width: 100%;
+        min-height: 120px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 10px;
+        background: #fff;
+        font: inherit;
+        resize: vertical;
+      }
+      .varios {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+        margin: 10px 0;
+      }
+      .varios .nota {
+        margin: 4px 0 8px;
+      }
+      .varios .actions .btn {
+        flex: 1;
+      }
+      #varios-resumen div[data-res] {
+        margin: 6px 0;
+      }
       @media (max-width: 400px) {
         main {
           padding: 7px;
@@ -476,6 +533,8 @@
           x: LS + 'excepciones',
           a: LS + 'aviso_instalar',
           r: LS + 'rotos',
+          rn: LS + 'renombres',
+          al: LS + 'altas',
         };
       // Lee y parsea un valor JSON de localStorage; devuelve el valor por defecto d si no existe o
       // falla
@@ -581,6 +640,22 @@
           )
         );
       }
+      // Valida un nombre de trabajador y devuelve el motivo si no es válido o cadena vacía si vale
+      function motivoNombre(nombre) {
+        let s = clean(nombre);
+        if (s.length > 60) return 'tiene más de 60 letras';
+        if (/[\u0000-\u001f\u007f-\u009f]/.test(s)) return 'lleva caracteres raros';
+        if (/[<>]/.test(s)) return 'lleva los signos < o >';
+        const DNI = /(^|[^A-Za-z0-9])\d{8}[- ]?[A-Za-z](?![A-Za-z0-9])/;
+        const NIE = /(^|[^A-Za-z0-9])[XYZxyz][- ]?\d{7}[- ]?[A-Za-z](?![A-Za-z0-9])/;
+        const TELEFONO = /(^|[^\d.])(?:\+?34[\s.-]?)?[6789](?:[\s.-]?\d){8}(?!\d)/;
+        const CORREO = /[^\s@"']+@[^\s@"']+\.[^\s@"']+/;
+        if (DNI.test(s)) return 'parece un DNI';
+        if (NIE.test(s)) return 'parece un NIE';
+        if (TELEFONO.test(s)) return 'parece un teléfono';
+        if (CORREO.test(s)) return 'parece un correo';
+        return '';
+      }
       // ---------------------------------------------------------------------------
       // Estado y reconciliación: estado publicado, pendientes, borrador, horarios propios y
       // reconcile
@@ -595,6 +670,9 @@
         news = get(K.n, []),
         hours = get(K.h, {}),
         excepciones = get(K.x, {}),
+        renombres = get(K.rn, []),
+        altas = get(K.al, []),
+        publicados = new Set(),
         rotos = 0;
       if (!Array.isArray(pending)) pending = [];
       // Vigilante de integridad: separa las jornadas pendientes válidas de las dañadas en
@@ -612,6 +690,18 @@
         set(K.p, pending);
       }
       news = Array.isArray(news) ? news.filter((x) => typeof x === 'string') : [];
+      renombres = Array.isArray(renombres)
+        ? renombres.filter(
+            (r) =>
+              r &&
+              typeof r === 'object' &&
+              typeof r.de === 'string' &&
+              clean(r.de) &&
+              typeof r.a === 'string' &&
+              clean(r.a),
+          )
+        : [];
+      altas = Array.isArray(altas) ? altas.filter((x) => typeof x === 'string' && clean(x)) : [];
       if (!hours || typeof hours !== 'object' || Array.isArray(hours)) hours = {};
       // Objeto «llano»: ni null ni lista.
       function objetoSimple(valor) {
@@ -663,6 +753,9 @@
         reset: false,
         hp: null,
         auto: false,
+        ren: null,
+        varios: null,
+        nuevoError: '',
       };
       // Devuelve la lista unificada y ordenada alfabéticamente de nombres de trabajadores
       // (publicados y nuevos creados)
@@ -773,9 +866,11 @@
           });
           if (!Object.keys(personas).length) delete excepciones[id];
         });
+        altas = altas.filter((x) => !state?.catalogo?.some((c) => key(c.nombre) === key(x)));
         set(K.p, pending);
         set(K.h, hours);
         set(K.x, excepciones);
+        set(K.al, altas);
       }
       // Guarda o actualiza el horario propio de un trabajador en la obra activa y ajusta sus horas
       // si estaba presente
@@ -928,11 +1023,37 @@
         if (x) x.on = true;
         else a.list.push({ nombre: n, on: true, horas: null });
       }
-      // Nombres del catálogo que aún no están en la lista, filtrados por lo escrito en el buscador.
-      function libres(q = '') {
-        let used = new Set(a.list.map((x) => key(x.nombre))),
-          k = key(q);
-        return cat().filter((x) => !used.has(key(x)) && (!k || key(x).includes(k)));
+      // Genera las opciones HTML del desplegable con todas las personas activas filtradas
+      function opcionesHTML(filtro = '') {
+        let m = new Map();
+        (state?.catalogo || []).forEach((x) => {
+          if (x.activo !== false) m.set(key(x.nombre), x.nombre);
+        });
+        news.forEach((x) => {
+          if (!m.has(key(x))) m.set(key(x), x);
+        });
+        let lista = [...m.values()].sort((x, y) => x.localeCompare(y, 'es'));
+        let kFiltro = key(filtro);
+        if (kFiltro) lista = lista.filter((x) => key(x).includes(kFiltro));
+        let enLista = new Set(a.list.map((x) => key(x.nombre)));
+        return lista
+          .map((nombre) => {
+            let yaEsta = enLista.has(key(nombre));
+            return yaEsta
+              ? `<option value="${E(nombre)}" disabled>${E(nombre)} (ya está)</option>`
+              : `<option value="${E(nombre)}">${E(nombre)}</option>`;
+          })
+          .join('');
+      }
+      // Genera el texto del aviso de cambios de nombres pendientes de pasar al PC
+      function cambiosNombresHTML() {
+        let partes = [];
+        if (renombres.length)
+          partes.push(`${renombres.length} ${renombres.length === 1 ? 'nombre corregido' : 'nombres corregidos'}`);
+        if (altas.length)
+          partes.push(`${altas.length} ${altas.length === 1 ? 'nombre nuevo' : 'nombres nuevos'}`);
+        if (!partes.length) return '';
+        return `<div id="cambios-nombres" class="nota">${E(partes.join(' · '))} por pasar al PC</div>`;
       }
       // Combina las filas de jornadas publicadas con las pendientes locales de la obra para los
       // cálculos del informe
@@ -960,11 +1081,28 @@
           );
         return [...m.values()].flat();
       }
+      // Fila de una persona mientras se corrige su nombre: el campo, «Guardar nombre» y «Cancelar», y debajo
+      // el error o la pregunta si los hay.
+      function filaEdicionHTML(persona) {
+        let error = a.ren.error ? `<div class="aviso" id="ren-error" role="alert">${E(a.ren.error)}</div>` : '';
+        let pregunta = a.ren.pregunta
+          ? `<div class="aviso" id="ren-pregunta"><span data-texto>${E(a.ren.pregunta)}</span>` +
+            `<div class="actions"><button class="btn sec" data-ren-si>Sí, son la misma persona</button>` +
+            `<button class="btn ghost" data-ren-no>No</button></div></div>`
+          : '';
+        return (
+          `<div class="row ren" data-nombre="${E(persona.nombre)}"><input id="ren-campo" maxlength="60" ` +
+          `autocomplete="off" aria-label="Nombre correcto" value="${E(a.ren.valor)}"><div class="actions">` +
+          `<button class="btn pri" data-ren-guardar>Guardar nombre</button>` +
+          `<button class="btn ghost" data-ren-cancelar>Cancelar</button></div>${error}${pregunta}</div>`
+        );
+      }
       // Genera el marcado HTML de las filas de trabajadores, con control de asistencia, horas,
       // horas extra y horario propio
       function rowsHTML() {
         return a.list
           .map((persona, indice) => {
+            if (a.ren && a.ren.nombre === persona.nombre) return filaEdicionHTML(persona);
             // Horas base según el horario de esa persona hoy; la hora extra es el exceso sobre
             // dicha base
             let baseDia = horarioDe(persona.nombre) || 0;
@@ -1003,8 +1141,10 @@
                 : '';
             return (
               `<div class="row ${persona.on ? '' : 'off'}" data-nombre="${E(persona.nombre)}">` +
-              `<button class="x ${persona.on ? 'on' : ''}" data-x="${E(indice)}">X</button><span ` +
-              `class="nm">${E(persona.nombre)}</span>` +
+              `<button class="x ${persona.on ? 'on' : ''}" data-x="${E(indice)}">X</button>` +
+              `<span class="nw"><span class="nm">${E(persona.nombre)}</span>` +
+              `<button class="lap" data-ren="${E(indice)}" aria-label="Corregir el nombre de ` +
+              `${E(persona.nombre)}">✎</button></span>` +
               `${
                 persona.on
                   ? `<span class="step"><button data-i="${E(indice)}" data-d="-0.5">−</button><output ` +
@@ -1097,13 +1237,10 @@
           `todos</button><button class="btn ghost sm" data-todos="0">Desmarcar todos</button>` +
           `</div><div id="lista">${rowsHTML()}</div><label class="fld">Añadir de la ` +
           `base</label><input id="filtro" placeholder="Buscar por nombre"><div class="add">` +
-          `<select id="addsel">` +
-          `${libres()
-            .map((nombre) => `<option>${E(nombre)}</option>`)
-            .join('')}` +
-          `</select><button class="btn sec" data-add>Añadir</button></div><label ` +
-          `class="fld">Nombre nuevo</label><div class="add"><input id="nuevo" maxlength="60">` +
+          `<select id="addsel">${opcionesHTML()}</select><button class="btn sec" data-add>Añadir</button>` +
+          `</div><label class="fld">Nombre nuevo</label><div class="add"><input id="nuevo" maxlength="60">` +
           `<button class="btn sec" data-nuevo>Crear</button></div><div id="nuevo-aviso">` +
+          `${a.nuevoError ? `<div class="aviso">${E(a.nuevoError)}</div>` : ''}` +
           `${
             a.warn
               ? `<div class="aviso">Se parece a «${E(a.warn.old)}». ¿Es la misma persona?<div ` +
@@ -1112,7 +1249,19 @@
                 `crear</button></div></div>`
               : ''
           }` +
-          `</div><details id="horario"><summary>Horario semanal</summary><div class="hor">` +
+          `</div><div class="actions"><button class="btn ghost" data-varios>Añadir varios nombres</button></div>` +
+          `${
+            a.varios
+              ? `<div class="varios" id="varios"><b>Añadir varios nombres</b><p class="nota">` +
+                `Escribe un nombre en cada línea. Entran en la base sin anotarles ningún día.</p>` +
+                `<textarea id="varios-texto" rows="6" placeholder="Un nombre por línea" ` +
+                `aria-label="Nombres, uno por línea">${E(a.varios.texto)}</textarea>` +
+                `<div class="actions"><button class="btn pri" data-varios-ok>Añadir a la base</button>` +
+                `<button class="btn ghost" data-varios-cerrar>Cerrar</button></div>` +
+                `<div id="varios-resumen">${resumenVariosHTML(a.varios.resumen)}</div></div>`
+              : ''
+          }` +
+          `<details id="horario"><summary>Horario semanal</summary><div class="hor">` +
           `${[
             ['Lun', 1],
             ['Mar', 2],
@@ -1131,7 +1280,7 @@
           `</div><div id="aviso-horario" class="nota"></div></details><div class="sum" ` +
           `id="resumen">${sumHTML()}</div><button class="btn pri full" data-guardar>Guardar ` +
           `jornada</button><div class="pending"><b id="pendientes" data-n="${E(pending.length)}` +
-          `">${pending.length} jornada(s) pendiente(s) de pasar al PC</b></div>` +
+          `">${pending.length} jornada(s) pendiente(s) de pasar al PC</b>${cambiosNombresHTML()}</div>` +
           `${
             a.reset
               ? '<div id="confirmar-reset" class="aviso">¿Borrar lo que llevas a medias?<div ' +
@@ -1350,11 +1499,215 @@
       // Notifica un cambio en obra, ámbito o fecha: recarga la lista, guarda el borrador automático
       // y repinta la vista
       function changed(cargar = true) {
+        a.nuevoError = '';
         if (cargar) {
           a.hp = null;
+          a.ren = null;
           loadList();
         }
         draft();
+        render();
+      }
+      // ---------------------------------------------------------------------------
+      // Corregir nombres: lápiz, cambios de nombre por pasar al PC y varios nombres a la vez
+      // ---------------------------------------------------------------------------
+      // Cambia de por final (comparando con key) en una lista de objetos con nombre y quita los repetidos
+      // que resulten: de cada nombre repetido queda el que ya se llamaba final antes del cambio (si
+      // ninguno, el primero). grupo(x) separa listas mezcladas, p. ej. por ámbito y fecha.
+      function unirNombres(lista, de, final, grupo = () => '') {
+        let yaEra = new Set(lista.filter((x) => key(x.nombre) === key(final)));
+        lista.forEach((x) => {
+          if (key(x.nombre) === key(de)) x.nombre = final;
+        });
+        let elegido = new Map();
+        lista.forEach((x) => {
+          let clave = grupo(x) + '|' + key(x.nombre);
+          let otro = elegido.get(clave);
+          if (!otro || (yaEra.has(x) && !yaEra.has(otro))) elegido.set(clave, x);
+        });
+        return lista.filter((x) => elegido.get(grupo(x) + '|' + key(x.nombre)) === x);
+      }
+      // Cambia de por final en una lista de textos y quita los repetidos (queda el primero).
+      function unirTextos(lista, de, final) {
+        let vistos = new Set();
+        return lista
+          .map((x) => (key(x) === key(de) ? final : x))
+          .filter((x) => !vistos.has(key(x)) && vistos.add(key(x)));
+      }
+      // Cambia de por final en las claves de un objeto indexado por nombre; si ya hay una clave con el
+      // nombre final, manda la que ya estaba.
+      function renombrarClave(objeto, de, final) {
+        let claveDe = Object.keys(objeto).find((clave) => key(clave) === key(de));
+        if (claveDe === undefined) return;
+        let valor = objeto[claveDe];
+        delete objeto[claveDe];
+        if (!Object.keys(objeto).some((clave) => key(clave) === key(final))) objeto[final] = valor;
+      }
+      // Cambia de por final en la copia que hay en memoria del estado publicado por el PC.
+      function renombrarEnEstado(de, final) {
+        if (!state) return;
+        state.catalogo = unirNombres(state.catalogo || [], de, final);
+        Object.values(state.obras || {}).forEach((obra) => {
+          obra.jornadas = unirNombres(obra.jornadas || [], de, final, (fila) => fila.ambito + '|' + fila.fecha);
+          ['vivienda', 'garaje'].forEach((ambito) => {
+            let ultima = obra.ultima?.[ambito];
+            if (ultima?.presentes) ultima.presentes = unirNombres(ultima.presentes, de, final);
+          });
+          if (objetoSimple(obra.excepciones_horario)) renombrarClave(obra.excepciones_horario, de, final);
+        });
+      }
+      // ¿Hay algo por enviar que lleve ese nombre: una jornada guardada con esa persona o un nombre nuevo?
+      function lleva(nombre) {
+        let clave = key(nombre);
+        let enJornada = (jornada) =>
+          !jornada.anulada && jornada.presentes.some((persona) => key(persona.nombre) === clave);
+        return pending.some(enJornada) || altas.some((x) => key(x) === clave);
+      }
+      // Al abrir, olvida los cambios de nombre que ya no hacen falta: los que el PC ya hizo (el estado
+      // publicado trae el nombre nuevo y ya no el viejo) y los que no tienen nada que llevar.
+      function olvidarRenombres() {
+        renombres = renombres.filter((cambio) => {
+          let conoceElViejo = publicados.has(key(cambio.de));
+          if (!conoceElViejo && publicados.has(key(cambio.a))) return false;
+          return conoceElViejo || lleva(cambio.a);
+        });
+        set(K.rn, renombres);
+      }
+      // Al abrir, repite en la copia del estado publicado los cambios de nombre que el PC aún no ha hecho.
+      function aplicarRenombresAlEstado() {
+        renombres.forEach((cambio) => renombrarEnEstado(cambio.de, cambio.a));
+      }
+      // Apunta el cambio de nombre para el PC. Dos cambios seguidos de la misma persona se juntan en uno;
+      // si se vuelve al nombre de partida no queda nada; un nombre que el PC no conoce y que ninguna
+      // jornada ni nombre nuevo lleva no se apunta (no ha salido del aparato).
+      function apuntarRenombre(de, final) {
+        let anterior = renombres.findIndex((cambio) => key(cambio.a) === key(de));
+        if (anterior !== -1 && !publicados.has(key(de))) {
+          if (renombres[anterior].de === final) renombres.splice(anterior, 1);
+          else renombres[anterior] = { de: renombres[anterior].de, a: final };
+        } else if (publicados.has(key(de)) || lleva(final)) {
+          renombres.push({ de, a: final });
+        }
+      }
+      // Corrige el nombre de la persona que ahora se llama de, en todo lo que hay en el aparato, y lo
+      // apunta para el PC. Si el nombre nuevo ya es de otra persona, las dos pasan a ser una. Devuelve si
+      // se pudo guardar, si fue una unión, cuántas jornadas guardadas tenían a los dos y el nombre final.
+      function renombrar(de, nuevo) {
+        let destino = cat().find((n) => key(n) === key(nuevo) && key(n) !== key(de));
+        let final = destino || nuevo;
+        let filaDe = a.list.find((x) => key(x.nombre) === key(de));
+        let filaFinal = a.list.find((x) => key(x.nombre) === key(final) && x !== filaDe);
+        // Si solo estaba marcada la fila que desaparece, la que queda hereda la marca y las horas.
+        if (filaDe?.on && filaFinal && !filaFinal.on) Object.assign(filaFinal, { on: true, horas: filaDe.horas });
+        a.list = unirNombres(a.list, de, final);
+        let duplicadas = 0;
+        pending.forEach((jornada) => {
+          let antes = jornada.presentes.length;
+          jornada.presentes = unirNombres(jornada.presentes, de, final);
+          if (jornada.presentes.length < antes) duplicadas++;
+        });
+        news = unirTextos(news, de, final);
+        altas = unirTextos(altas, de, final);
+        Object.values(excepciones).forEach((personas) => renombrarClave(personas, de, final));
+        renombrarEnEstado(de, final);
+        a.hp = null;
+        a.warn = null;
+        apuntarRenombre(de, final);
+        let guardado = [set(K.p, pending), set(K.n, news), set(K.al, altas), set(K.x, excepciones), set(K.rn, renombres)];
+        draft();
+        render();
+        return { guardado: guardado.every(Boolean), fusion: !!destino, duplicadas, final };
+      }
+      // Aviso que se enseña tras corregir un nombre.
+      function avisoRenombre(de, r) {
+        if (!r.guardado) return 'No se pudo guardar el cambio en este aparato (¿navegación privada o memoria llena?).';
+        let aviso = r.fusion
+          ? '«' + de + '» y «' + r.final + '» pasan a ser la misma persona. Se juntarán al pasarlo al PC.'
+          : 'Nombre corregido: «' + de + '» ahora es «' + r.final + '». Queda apuntado para el PC.';
+        if (r.duplicadas) aviso += ' En ' + r.duplicadas + ' jornada(s) salían los dos; se ha dejado una sola anotación.';
+        return aviso;
+      }
+      // «Guardar nombre» (y «Sí, son la misma persona» con confirmado = true): comprueba el nombre escrito,
+      // pregunta si ya es de otra persona y, si todo va bien, lo corrige.
+      function guardarRenombre(confirmado) {
+        if (!a.ren) return;
+        let de = a.ren.nombre;
+        let valor = clean(a.ren.valor);
+        let motivo = valor ? motivoNombre(valor) : '';
+        let otro = cat().find((n) => key(n) === key(valor) && key(n) !== key(de));
+        a.ren.error = '';
+        a.ren.pregunta = '';
+        if (valor === de) {
+          a.ren = null;
+        } else if (!valor || motivo) {
+          a.ren.error = valor ? 'Ese nombre no vale: ' + motivo + '.' : 'Escribe el nombre.';
+        } else if (otro && !confirmado) {
+          a.ren.pregunta =
+            'Ya hay un «' + otro + '». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.';
+        } else {
+          a.ren = null;
+          toast(avisoRenombre(de, renombrar(de, valor)));
+          return;
+        }
+        refrescar();
+      }
+      // Líneas del resumen de «Añadir varios nombres»: una por cada cosa que haya (entran, ya estaban, no
+      // valen, se parecen a alguien) o, si no hay nada, un aviso. Los nombres van escapados.
+      function resumenVariosHTML(resumen) {
+        if (!resumen) return '';
+        let { entran, estaban, novalen, parecidos } = resumen;
+        let nombres = (lista) => lista.map((x) => E(x)).join(', ');
+        let cuantos = (lista, uno, varios) => (lista.length === 1 ? uno : varios) + ' ' + lista.length + ': ';
+        let lineas = [];
+        if (entran.length) lineas.push(['entran', cuantos(entran, 'Entra', 'Entran') + nombres(entran) + '.']);
+        if (estaban.length) lineas.push(['estaban', cuantos(estaban, 'Ya estaba', 'Ya estaban') + nombres(estaban) + '.']);
+        if (novalen.length) {
+          let casos = novalen.map((x) => '«' + E(x.nombre) + '» (' + E(x.motivo) + ')').join('; ');
+          lineas.push(['novalen', cuantos(novalen, 'No vale', 'No valen') + casos + '.']);
+        }
+        if (parecidos.length) {
+          let casos = parecidos.map((x) => '«' + E(x.nombre) + '» (se parece a «' + E(x.con) + '»)').join('; ');
+          let cierre = parecidos.length === 1 ? 'Si es otra persona, créala' : 'Si son otras personas, créalas';
+          let inicio = cuantos(parecidos, 'Se parece a alguien que ya está', 'Se parecen a alguien que ya está');
+          lineas.push(['parecidos', inicio + casos + '. ' + cierre + ' con «Nombre nuevo».']);
+        }
+        if (!lineas.length) lineas.push(['nada', 'No hay ningún nombre que añadir.']);
+        let divs = lineas.map((linea) => `<div data-res="${linea[0]}">${linea[1]}</div>`);
+        return `<div class="aviso">${divs.join('')}</div>`;
+      }
+      // «Añadir a la base»: reparte las líneas del cuadro en entran (nombres nuevos, sin jornada), ya
+      // estaban, no valen y se parecen a alguien; en el cuadro solo quedan las dos últimas para corregirlas.
+      function añadirVarios() {
+        if (!a.varios) return;
+        let resumen = { entran: [], estaban: [], novalen: [], parecidos: [] };
+        let porCorregir = [];
+        let vistos = new Set();
+        a.varios.texto.split(/\r?\n/).forEach((linea) => {
+          let nombre = clean(linea);
+          if (!nombre || vistos.has(key(nombre))) return;
+          vistos.add(key(nombre));
+          let motivo = motivoNombre(nombre);
+          let existente = cat().find((x) => key(x) === key(nombre));
+          let parecido = motivo || existente ? null : similar(nombre);
+          if (motivo) {
+            resumen.novalen.push({ nombre, motivo });
+            porCorregir.push(nombre);
+          } else if (existente) {
+            resumen.estaban.push(existente);
+          } else if (parecido) {
+            resumen.parecidos.push({ nombre, con: parecido });
+            porCorregir.push(nombre);
+          } else {
+            resumen.entran.push(nombre);
+            news.push(nombre);
+            altas.push(nombre);
+          }
+        });
+        let guardado = [set(K.n, news), set(K.al, altas)];
+        if (!guardado.every(Boolean))
+          toast('No se pudo guardar el cambio en este aparato (¿navegación privada o memoria llena?).');
+        a.varios.resumen = resumen;
+        a.varios.texto = porCorregir.join('\n');
         render();
       }
       // ---------------------------------------------------------------------------
@@ -1475,8 +1828,8 @@
         let propios = objetoSimple(excepciones[a.obra]) ? excepciones[a.obra] : {};
         let numeroPropios = Object.keys(propios).length;
         // Rechaza exportar si no hay jornadas pendientes ni cambios en el horario de obra ni
-        // horarios propios
-        if (!jornadas.length && !horarioCambiado && !numeroPropios)
+        // horarios propios ni cambios de nombres
+        if (!jornadas.length && !horarioCambiado && !numeroPropios && !renombres.length && !altas.length)
           return toast('No hay jornadas pendientes en esta obra');
         // Construye el lote_personal según el contrato P1: jornadas por nombre, horario semanal y
         // excepciones
@@ -1492,6 +1845,8 @@
             dom: horario[0],
           };
         if (numeroPropios) lote.excepciones_horario = JSON.parse(JSON.stringify(propios));
+        if (renombres.length) lote.renombres = renombres.map((r) => ({ de: r.de, a: r.a }));
+        if (altas.length) lote.altas = altas.slice();
         lote.jornadas = jornadas.map((jornada) => ({
           ambito: jornada.ambito,
           fecha: jornada.fecha,
@@ -1522,7 +1877,9 @@
             jornadas.length +
             ' jornada(s) de ' +
             state.obras[a.obra].nombre +
-            (numeroPropios ? ' y ' + numeroPropios + ' horario(s) propio(s)' : ''),
+            (numeroPropios ? ' y ' + numeroPropios + ' horario(s) propio(s)' : '') +
+            (renombres.length ? ' · ' + renombres.length + ' nombre(s) corregido(s)' : '') +
+            (altas.length ? ' · ' + altas.length + ' nombre(s) nuevo(s)' : ''),
         );
       }
       // ---------------------------------------------------------------------------
@@ -1562,6 +1919,47 @@
           a.hp = null;
           a.list.forEach((persona) => (persona.on = datos.todos === '1'));
           changed(false);
+          return;
+        }
+        // Lápiz de edición rápida: abre el editor de nombre para la persona seleccionada
+        if (datos.ren !== undefined) {
+          let persona = a.list[+datos.ren];
+          if (persona) {
+            a.hp = null;
+            a.ren = { nombre: persona.nombre, valor: persona.nombre, error: '', pregunta: '' };
+            refrescar();
+            document.querySelector('#ren-campo')?.focus();
+          }
+          return;
+        }
+        // Guardar nombre corregido en la fila de edición
+        if (datos.renGuardar !== undefined) return guardarRenombre(false);
+        // Cancelar la edición de nombre en la fila
+        if (datos.renCancelar !== undefined) {
+          a.ren = null;
+          refrescar();
+          return;
+        }
+        // Confirmar que son la misma persona al renombrar
+        if (datos.renSi !== undefined) return guardarRenombre(true);
+        // Rechazar la fusión de personas al renombrar
+        if (datos.renNo !== undefined) {
+          a.ren.pregunta = '';
+          refrescar();
+          return;
+        }
+        // Abrir el panel de añadir varios nombres
+        if (datos.varios !== undefined) {
+          a.varios = { texto: '', resumen: null };
+          render();
+          return;
+        }
+        // Procesar los nombres introducidos en el panel de varios nombres
+        if (datos.variosOk !== undefined) return añadirVarios();
+        // Cerrar el panel de añadir varios nombres
+        if (datos.variosCerrar !== undefined) {
+          a.varios = null;
+          render();
           return;
         }
         // Botón X de asistencia: activa o desactiva la presencia; al activar fija las horas base
@@ -1621,8 +2019,9 @@
         // Añade a la lista de presentes el trabajador seleccionado en el desplegable de la base
         if (datos.add !== undefined) {
           let selector = document.querySelector('#addsel');
-          if (selector.value) {
-            addName(selector.value);
+          let val = selector ? selector.value : '';
+          if (val && !a.list.some((x) => key(x.nombre) === key(val))) {
+            addName(val);
             changed(false);
           }
           return;
@@ -1630,8 +2029,16 @@
         // Crea un trabajador con nombre nuevo; comprueba si ya existe o si se parece a uno del
         // catálogo
         if (datos.nuevo !== undefined) {
-          let nombre = clean(document.querySelector('#nuevo').value);
+          a.nuevoError = '';
+          let raw = document.querySelector('#nuevo')?.value;
+          let nombre = clean(raw);
           if (!nombre) return;
+          let motivo = motivoNombre(nombre);
+          if (motivo) {
+            a.nuevoError = 'Ese nombre no vale: ' + motivo + '.';
+            render();
+            return;
+          }
           let igual =
             cat().find((existente) => key(existente) === key(nombre)) ||
             a.list.find((persona) => key(persona.nombre) === key(nombre))?.nombre;
@@ -1803,11 +2210,25 @@
         }
       });
       document.addEventListener('input', (evento) => {
+        if (evento.target.id === 'ren-campo' && a.ren) {
+          a.ren.valor = evento.target.value;
+          return;
+        }
+        if (evento.target.id === 'varios-texto' && a.varios) {
+          a.varios.texto = evento.target.value;
+          return;
+        }
         // Filtrado dinámico del desplegable de trabajadores disponibles según el texto tecleado
-        if (evento.target.id === 'filtro')
-          document.querySelector('#addsel').innerHTML = libres(evento.target.value)
-            .map((nombre) => `<option>${E(nombre)}</option>`)
-            .join('');
+        if (evento.target.id === 'filtro') {
+          let addsel = document.querySelector('#addsel');
+          if (addsel) addsel.innerHTML = opcionesHTML(evento.target.value);
+        }
+      });
+      document.addEventListener('keydown', (evento) => {
+        if (evento.target.id === 'ren-campo' && evento.key === 'Enter') {
+          evento.preventDefault();
+          guardarRenombre(false);
+        }
       });
       // ---------------------------------------------------------------------------
       // Arranque: inicialización con init, carga de estado y temporizadores
@@ -1849,6 +2270,9 @@
           }
         }
         if (!state) return render();
+        publicados = new Set((state.catalogo || []).map((x) => key(x.nombre)));
+        olvidarRenombres();
+        aplicarRenombresAlEstado();
         reconcile();
         a.obra = Object.keys(state.obras).find((obra) => !state.obras[obra].cerrada) || '';
         if (!restore()) loadList();

@@ -5,6 +5,7 @@ Lo lanza tests/test_generador_personal.py (≈ 7 min); también se puede ejecuta
 Monta una carpeta de pruebas con la app, personal_calculo.js y un personal_estado.js inventado, fija la
 fecha en el 23/10/2026 y recorre el flujo completo. El lote que exporta la app se valida con personal_obra.py
 (P1). Viene del verificador de staging (paso 06): solo cambia de dónde salen la app, P1 y la carpeta de pruebas.
+P3_SOLO_08C=1 = modo rápido del paso 08c: solo las escenas T80 en adelante (lápiz, desplegable completo, varios nombres).
 P3_APP = carpeta que tiene generador_personal.html, personal_calculo.js y personal_obra.py (por defecto, el motor)."""
 import copy
 import functools
@@ -612,6 +613,10 @@ with sync_playwright() as p:
 
     def con_escena(nombre, datos, fn, **kw):
         """Ejecuta una escena; cualquier excepción se convierte en un fallo legible y no tumba las demás."""
+        if os.environ.get('P3_SOLO_08C') == '1':     # modo del paso 08c: solo las escenas T80 en adelante (las comprobaciones estáticas corren siempre)
+            m = re.match(r'T(\d+)', nombre)
+            if not (m and int(m.group(1)) >= 80):
+                return
         if os.environ.get('P3_SOLO_NUEVAS') == '1':     # modo de las mutaciones del paso 01b: solo lo nuevo (T52 en adelante) y las dos escenas viejas que tocan lo nuevo
             m = re.match(r'T(\d+)', nombre)
             if m and int(m.group(1)) < 52 and not nombre.startswith(('T23b', 'T27')):
@@ -1506,6 +1511,8 @@ with sync_playwright() as p:
         return None
 
     def t63(nombre, retraso, con_copia, fn):
+        if os.environ.get('P3_SOLO_08C') == '1':
+            return
         e = srv = None
         try:
             e, srv, t0 = abrir_lento(retraso, con_copia)
@@ -1811,6 +1818,502 @@ with sync_playwright() as p:
             valida_con_p1(e.exportar() or {})
         con_escena('T72', estado_con({'olabeaga': obra_est('2026 OLABEAGA', [], ultima={'vivienda': {'fecha': '2026-10-22', 'presentes': pres(raro)}, 'garaje': None})}, [raro]), t72)
 
+    # ======================================================================================================================
+    # Paso 08c: corregir un nombre (lápiz ✎), toda la base en el desplegable y «Añadir varios nombres».
+    # Escenas T80–T89. Con P3_SOLO_08C=1 solo corren estas (y las comprobaciones estáticas). Cada una usa datos inventados
+    # y, cuando hay fichero, lo comprueba con P1 y lo APLICA de verdad sobre un PC de pruebas (e2e_p1).
+    # ======================================================================================================================
+    CAT8 = ['Mikel', 'Txomin', 'Rafa', 'Andoni', 'Josu', 'José', 'Iñaki', 'Pepe', 'Zuri']
+    FILAS8 = [fila('2026-10-12', 'vivienda', 'Rafa', 7.5),
+              fila('2026-10-21', 'vivienda', 'Mikel', 7.5), fila('2026-10-21', 'vivienda', 'Txomin', 7.5),
+              fila('2026-10-22', 'vivienda', 'Mikel', 7.5), fila('2026-10-22', 'vivienda', 'Txomin', 7.5),
+              fila('2026-10-16', 'garaje', 'Andoni', 7.5)]
+
+    def est8(filas=None, catalogo=None, excep=None, ultima_viv=None):
+        """Obra Olabeaga con Mikel y Txomin en la última jornada de viviendas; Zuri está de baja (activo: false)."""
+        e8 = estado_con({
+            'olabeaga': obra_est('2026 OLABEAGA', FILAS8 if filas is None else filas, excep=excep, ultima={
+                'vivienda': ultima_viv or {'fecha': '2026-10-22', 'presentes': pres('Mikel', 'Txomin')},
+                'garaje': {'fecha': '2026-10-16', 'presentes': pres('Andoni')}}),
+            'mungia': obra_est('2026 MUNGIA', [fila('2026-10-21', 'vivienda', 'Pepe', 7.5)],
+                               ultima={'vivienda': {'fecha': '2026-10-21', 'presentes': pres('Pepe')}, 'garaje': None})},
+            CAT8 if catalogo is None else catalogo)
+        for t in e8['catalogo']:
+            if t['nombre'] == 'Zuri':
+                t['activo'] = False
+        return e8
+
+    def sembrar_varios(claves):
+        """Como sembrar(), pero con varias claves de localStorage a la vez (solo en la primera carga)."""
+        ordenes = ''.join("localStorage.setItem('%s',%s);" % (k, json.dumps(json.dumps(v))) for k, v in claves.items())
+        return "if(!localStorage.getItem('_s')){localStorage.setItem('_s','1');%s}" % ordenes
+
+    def ls(e, clave):
+        return e.pg.evaluate("k=>JSON.parse(localStorage.getItem(k)||'null')", 'sgd_personal_' + clave)
+
+    def opciones(e):
+        return e.pg.eval_on_selector_all('#addsel option', 'e=>e.map(o=>[o.textContent.trim(),o.disabled])')
+
+    def nombres_opciones(e):
+        return [o[0] for o in opciones(e)]
+
+    def lapiz(nombre):
+        return '#v-app .row[data-nombre="%s"] button[data-ren]' % nombre
+
+    def renombra(e, de, nuevo, si=True):
+        """Abre el lápiz de `de`, escribe el nombre nuevo, pulsa «Guardar nombre» y, si pregunta, «Sí…»."""
+        e.clic(lapiz(de))
+        e.pg.fill('#ren-campo', nuevo)
+        e.clic('button[data-ren-guardar]')
+        if si and e.pg.query_selector('button[data-ren-si]'):
+            e.clic('button[data-ren-si]')
+
+    def cambios(e):
+        return e.txt('#cambios-nombres')
+
+    def lote_de_filas(obra, filas, excep=None):
+        grupos = {}
+        for f in filas:
+            grupos.setdefault((f['ambito'], f['fecha']), []).append({'nombre': f['nombre'], 'horas': f['horas'], 'extra': f.get('extra', 0)})
+        lote = {'tipo': 'lote_personal', 'version': 1, 'obra': obra, 'jornadas': [
+            {'ambito': am, 'fecha': fe, 'presentes': pr, 'anulada': False, 'notas': '', 'registrado': fe + 'T18:00:00.000Z'}
+            for (am, fe), pr in sorted(grupos.items(), key=lambda x: x[0][1])]}
+        if excep:
+            lote['excepciones_horario'] = excep
+        return lote
+
+    def e2e_p1(lote, filas=None, excep=None):
+        """Aplica DE VERDAD el fichero de la app sobre un PC de pruebas que ya tiene lo publicado (las filas del estado).
+        Devuelve (resultado, catálogo, filas planas de Olabeaga); (None, None, None) si no se pudo cargar P1."""
+        if P1 is None:
+            return None, None, None
+        raiz = os.path.join(SANDBOX, 'pc_' + uuid.uuid4().hex[:6])
+        os.makedirs(raiz)
+        obras = {'olabeaga': '2026 OLABEAGA BILBAO'}
+        r0 = P1.ingerir_lote(lote_de_filas('olabeaga', FILAS8 if filas is None else filas, excep), raiz, obras, '2026-10-23',
+                             escribir=True, ahora='2026-10-22T22:00:00+02:00')
+        ok(r0['ok'], 'e2e: el PC de pruebas no se pudo preparar: %s' % json.dumps(r0, ensure_ascii=False)[:300])
+        r = P1.ingerir_lote(copy.deepcopy(lote), raiz, obras, '2026-10-23', escribir=True, ahora='2026-10-23T22:00:00+02:00')
+        return r, P1.cargar_catalogo(raiz), P1.aplanar(raiz, obras, 'olabeaga')
+
+    def codigos_avisos(r):
+        return [x['codigo'] for x in r.get('avisos_lote', [])] + [x['codigo'] for j in r.get('jornadas', []) for x in j.get('avisos', [])]
+
+    # --- T80: «Añadir de la base» lista TODA la base activa (D4)
+    def t80(e):
+        e.ir()
+        ok(e.filas() == ['Mikel', 'Txomin'], 'T80 lista de partida: %s' % e.filas())
+        todos = [['Andoni', False], ['Iñaki', False], ['José', False], ['Josu', False], ['Mikel (ya está)', True], ['Pepe', False], ['Rafa', False], ['Txomin (ya está)', True]]
+        ok(opciones(e) == todos, 'T80 el desplegable debe listar TODA la base activa por orden alfabético, con «(ya está)» (y sin poder elegirse) en quien ya sale en pantalla, y sin Zuri (de baja): %s' % opciones(e))
+        ok(e.valor('#addsel') == 'Andoni', 'T80 queda seleccionada la primera persona que se puede añadir: %r' % e.valor('#addsel'))
+        for q, esperado in (('jose', ['José']), ('JOSÉ', ['José']), ('inaki', ['Iñaki']), ('IÑAKI', ['Iñaki']), ('jos', ['José', 'Josu']),
+                            ('mik', ['Mikel (ya está)']), ('zzz', []), ('zuri', [])):
+            e.pg.fill('#filtro', q)
+            ok(nombres_opciones(e) == esperado, 'T80 el buscador (sin distinguir tildes ni mayúsculas) con «%s» debe dejar %s: %s' % (q, esperado, nombres_opciones(e)))
+        e.pg.fill('#filtro', 'mik')
+        ok(e.valor('#addsel') == '', 'T80 si solo quedan personas que ya están, no queda nada seleccionado: %r' % e.valor('#addsel'))
+        e.clic('button[data-add]')
+        ok(e.filas() == ['Mikel', 'Txomin'] and e.marcados() == [], 'T80 «Añadir» sin nadie que se pueda añadir no hace nada: %s %s' % (e.filas(), e.marcados()))
+        e.pg.fill('#filtro', '')
+        e.pg.evaluate("document.getElementById('addsel').value='Txomin'")
+        ok(e.valor('#addsel') == 'Txomin', 'T80 preparación: se ha podido forzar la opción desactivada: %r' % e.valor('#addsel'))
+        e.clic('button[data-add]')
+        ok(e.filas() == ['Mikel', 'Txomin'] and e.marcados() == [], 'T80 quien ya está en pantalla no se añade otra vez ni se marca desde el desplegable, aunque se fuerce el valor: %s %s' % (e.filas(), e.marcados()))
+        e.pg.select_option('#addsel', 'Andoni')
+        e.clic('button[data-add]')
+        ok(e.filas() == ['Mikel', 'Txomin', 'Andoni'] and e.marcados() == ['Andoni'], 'T80 añadir de la base pone a la persona en la lista y marcada: %s %s' % (e.filas(), e.marcados()))
+        ok(['Andoni (ya está)', True] in opciones(e) and len(opciones(e)) == 8, 'T80 tras añadir, esa persona pasa a «(ya está)» y la base sigue completa (8): %s' % opciones(e))
+        e.clic('button[data-amb="garaje"]')
+        d = dict(opciones(e))
+        ok(e.filas() == ['Andoni'] and d.get('Andoni (ya está)') is True and d.get('Mikel') is False and d.get('Txomin') is False and len(d) == 8, 'T80 el desplegable sigue a la lista de pantalla (garajes): %s' % opciones(e))
+        e.clic('button[data-amb="vivienda"]')
+        e.obra('mungia')
+        d = dict(opciones(e))
+        ok(e.filas() == ['Pepe'] and d.get('Pepe (ya está)') is True and d.get('Andoni') is False and len(d) == 8, 'T80 y a la de la otra obra: %s %s' % (e.filas(), opciones(e)))
+        e.pg.fill('#nuevo', 'Begoña')
+        e.clic('button[data-nuevo]')
+        ok(['Begoña (ya está)', True] in opciones(e), 'T80 un nombre recién creado también sale en el desplegable (y como «ya está» mientras esté en pantalla): %s' % nombres_opciones(e))
+    con_escena('T80', est8(), t80)
+
+    # --- T81: «Añadir varios nombres»: un nombre por línea, resumen, y viajan en el fichero como altas (D4)
+    def t81(e):
+        e.ir()
+        ok(e.pg.query_selector('#varios') is None and e.pg.query_selector('#cambios-nombres') is None, 'T81 el cuadro de varios nombres empieza cerrado y sin contador de cambios')
+        ok('Añadir varios nombres' in e.txt('button[data-varios]'), 'T81 falta el botón «Añadir varios nombres» (button[data-varios]): %r' % e.txt('button[data-varios]'))
+        e.clic('button[data-varios]')
+        ok(e.pg.query_selector('#varios textarea#varios-texto') is not None and e.pg.query_selector('button[data-varios-ok]') is not None and e.pg.query_selector('button[data-varios-cerrar]') is not None, 'T81 el cuadro lleva textarea#varios-texto y los botones data-varios-ok y data-varios-cerrar')
+        ok('Añadir a la base' in e.txt('button[data-varios-ok]') and 'Cerrar' in e.txt('button[data-varios-cerrar]'), 'T81 textos de los botones: %r %r' % (e.txt('button[data-varios-ok]'), e.txt('button[data-varios-cerrar]')))
+        ok('un nombre en cada línea' in e.txt('#varios').lower(), 'T81 explica que va un nombre en cada línea: %r' % e.txt('#varios'))
+        largo = 'N' * 61
+        lineas = ['Ane', '', '  Iker  ', 'ane', 'Mikel', 'rafa', 'Jon   Ander', 'Iker', 'x@y.es', '12345678Z', '600123456', '<b>x</b>', largo, 'Mikell', 'Al', '   ']
+        e.pg.fill('#varios-texto', '\n'.join(lineas))
+        e.clic('button[data-varios-ok]')
+        ok(e.txt('[data-res="entran"]') == 'Entran 4: Ane, Iker, Jon Ander, Al.', 'T81 resumen de los que entran (limpios, sin repetidos ni líneas vacías): %r' % e.txt('[data-res="entran"]'))
+        ok(e.txt('[data-res="estaban"]') == 'Ya estaban 2: Mikel, Rafa.', 'T81 resumen de los que ya estaban (con la grafía de la base): %r' % e.txt('[data-res="estaban"]'))
+        ok(e.txt('[data-res="novalen"]') == 'No valen 5: «x@y.es» (parece un correo); «12345678Z» (parece un DNI); «600123456» (parece un teléfono); «<b>x</b>» (lleva los signos < o >); «%s» (tiene más de 60 letras).' % largo, 'T81 resumen de los que no valen, cada uno con su motivo: %r' % e.txt('[data-res="novalen"]'))
+        ok(e.txt('[data-res="parecidos"]') == 'Se parece a alguien que ya está 1: «Mikell» (se parece a «Mikel»). Si es otra persona, créala con «Nombre nuevo».', 'T81 resumen de los parecidos: %r' % e.txt('[data-res="parecidos"]'))
+        ok(e.pg.evaluate("document.querySelectorAll('#varios-resumen [data-res] *').length") == 0, 'T81 los nombres del resumen salen como texto, sin crear elementos (se escapan)')
+        ok(e.valor('#varios-texto') == '\n'.join(['x@y.es', '12345678Z', '600123456', '<b>x</b>', largo, 'Mikell']), 'T81 en el cuadro solo quedan las líneas que NO entraron y hay que corregir (no valen y parecidos): %r' % e.valor('#varios-texto'))
+        ok(ls(e, 'altas') == ['Ane', 'Iker', 'Jon Ander', 'Al'], 'T81 los que entran se apuntan en sgd_personal_altas: %s' % ls(e, 'altas'))
+        ok(all(n in (ls(e, 'nuevos') or []) for n in ('Ane', 'Iker', 'Jon Ander', 'Al')), 'T81 y se guardan como nombres nuevos del aparato: %s' % ls(e, 'nuevos'))
+        nombres = [n for n in nombres_opciones(e)]
+        ok(all(n in nombres for n in ('Al', 'Ane', 'Iker', 'Jon Ander')) and not any(n.startswith(('x@', 'Mikell', '<')) for n in nombres), 'T81 los que entran quedan disponibles en el desplegable, y solo ellos: %s' % nombres)
+        ok(e.filas() == ['Mikel', 'Txomin'], 'T81 entrar en la base no mete a nadie en la lista de pantalla: %s' % e.filas())
+        ok(cambios(e) == '4 nombres nuevos por pasar al PC', 'T81 contador de cambios por pasar al PC: %r' % cambios(e))
+        e.pg.fill('#varios-texto', 'ane\nBegoña\n')
+        e.clic('button[data-varios-ok]')
+        ok(e.txt('[data-res="estaban"]') == 'Ya estaba 1: Ane.' and e.txt('[data-res="entran"]') == 'Entra 1: Begoña.' and e.valor('#varios-texto') == '', 'T81 singular y vaciado del cuadro: %r %r %r' % (e.txt('[data-res="estaban"]'), e.txt('[data-res="entran"]'), e.valor('#varios-texto')))
+        e.pg.fill('#varios-texto', '  \n\n   ')
+        e.clic('button[data-varios-ok]')
+        ok(e.txt('[data-res="nada"]') == 'No hay ningún nombre que añadir.' and ls(e, 'altas') == ['Ane', 'Iker', 'Jon Ander', 'Al', 'Begoña'], 'T81 un cuadro vacío lo dice y no apunta nada: %r %s' % (e.txt('[data-res="nada"]'), ls(e, 'altas')))
+        e.clic('button[data-varios-cerrar]')
+        ok(e.pg.query_selector('#varios') is None and ls(e, 'altas') is not None and cambios(e) == '5 nombres nuevos por pasar al PC', 'T81 «Cerrar» esconde el cuadro y no pierde nada: %r' % cambios(e))
+        lote = e.exportar() or {}
+        ok(set(lote) == {'tipo', 'version', 'obra', 'altas', 'jornadas'} and lote.get('altas') == ['Ane', 'Iker', 'Jon Ander', 'Al', 'Begoña'] and lote.get('jornadas') == [], 'T81 con solo nombres nuevos el fichero lleva altas y ninguna jornada: %s' % {k: lote.get(k) for k in lote})
+        valida_con_p1(lote)
+        r, cat8, filas8 = e2e_p1(lote)
+        ok(r is not None and r['ok'] and sorted(x['nombre'] for x in r['altas']) == ['Al', 'Ane', 'Begoña', 'Iker', 'Jon Ander'], 'T81 el PC da de alta a los 5 sin jornada: %s' % (json.dumps(r, ensure_ascii=False)[:400] if r else r))
+        ok(r is not None and not any(f['nombre'] in ('Al', 'Ane', 'Iker', 'Begoña', 'Jon Ander') for f in filas8), 'T81 y no les inventa ninguna jornada')
+        ok('5 nombre(s) nuevo(s)' in e.toast(), 'T81 el aviso de enviar cuenta los nombres nuevos: %r' % e.toast())
+        e.pg.reload()
+        e.pg.wait_for_selector('#obra')
+        ok(ls(e, 'altas') == ['Ane', 'Iker', 'Jon Ander', 'Al', 'Begoña'] and 'Ane' in nombres_opciones(e), 'T81 al recargar siguen apuntados y disponibles: %s' % ls(e, 'altas'))
+    con_escena('T81', est8(), t81)
+
+    def t81b(e):
+        e.ir()
+        ok(ls(e, 'altas') == ['Ane'], 'T81b al abrir, el nombre que el PC ya publicó (Josu) se olvida de lo que falta por enviar y el otro se conserva: %s' % ls(e, 'altas'))
+        ok(cambios(e) == '1 nombre nuevo por pasar al PC', 'T81b contador en singular: %r' % cambios(e))
+    con_escena('T81b', est8(), t81b, init=sembrar_varios({'sgd_personal_altas': ['Ane', 'Josu'], 'sgd_personal_nuevos': ['Ane', 'Josu']}))
+
+    def t81c(e):
+        e.ir()
+        e.clic('button[data-varios]')
+        e.pg.fill('#varios-texto', chr(10).join(['Zé &lt;i&gt;', 'Tom &amp; Jerry']))
+        e.clic('button[data-varios-ok]')
+        ok(e.txt('[data-res="entran"]') == 'Entran 2: Zé &lt;i&gt;, Tom &amp; Jerry.', 'T81c el resumen enseña los nombres tal como se escribieron (un nombre con &lt; o &amp; no se interpreta): %r' % e.txt('[data-res="entran"]'))
+        ok(e.pg.evaluate("document.querySelectorAll('#varios-resumen [data-res] *').length") == 0, 'T81c y sin crear elementos')
+    con_escena('T81c', est8(), t81c)
+
+    # --- T82: el lápiz ✎ corrige un nombre en TODO lo que hay en el aparato y lo apunta para el PC (D3)
+    def t82(e):
+        e.ir()
+        ok(e.pg.eval_on_selector_all('#v-app .row', 'e=>e.length>0&&e.every(r=>r.querySelector("button[data-ren]"))'), 'T82 cada persona de la lista lleva su lápiz (button[data-ren])')
+        ok('✎' in e.txt(lapiz('Mikel')) and 'Mikel' in (e.pg.get_attribute(lapiz('Mikel'), 'aria-label') or ''), 'T82 el lápiz se ve como ✎ y su aria-label dice de quién es: %r %r' % (e.txt(lapiz('Mikel')), e.pg.get_attribute(lapiz('Mikel'), 'aria-label')))
+        e.anotar('Mikel')
+        e.anotar('Rafa')
+        ok(e.filas() == ['Mikel', 'Txomin', 'Rafa'] and e.marcados() == ['Mikel', 'Rafa'], 'T82 preparación: %s %s' % (e.filas(), e.marcados()))
+        e.clic(lapiz('Rafa'))
+        ok(e.valor('#ren-campo') == 'Rafa' and e.pg.evaluate("document.activeElement.id") == 'ren-campo', 'T82 el lápiz abre un campo con el nombre actual y el cursor dentro: %r' % e.valor('#ren-campo'))
+        ok('Guardar nombre' in e.txt('button[data-ren-guardar]') and 'Cancelar' in e.txt('button[data-ren-cancelar]') and e.pg.evaluate("document.querySelectorAll('#ren-campo').length") == 1, 'T82 el campo lleva «Guardar nombre» y «Cancelar»: %r %r' % (e.txt('button[data-ren-guardar]'), e.txt('button[data-ren-cancelar]')))
+        e.clic('button[data-ren-cancelar]')
+        ok(e.pg.query_selector('#ren-campo') is None and e.filas() == ['Mikel', 'Txomin', 'Rafa'] and not ls(e, 'renombres') and e.pg.query_selector('#cambios-nombres') is None, 'T82 «Cancelar» cierra el campo sin cambiar nada: %s %s' % (e.filas(), ls(e, 'renombres')))
+        e.clic(lapiz('Rafa'))
+        e.pg.fill('#ren-campo', 'Rafa')
+        e.clic('button[data-ren-guardar]')
+        ok(e.pg.query_selector('#ren-campo') is None and not ls(e, 'renombres'), 'T82 guardar el mismo nombre cierra el campo y no apunta nada: %s' % ls(e, 'renombres'))
+        e.clic(lapiz('Rafa'))
+        e.pg.fill('#ren-campo', '  Rafael  ')
+        e.clic('button[data-ren-guardar]')
+        ok(e.filas() == ['Mikel', 'Txomin', 'Rafael'] and e.marcados() == ['Mikel', 'Rafael'] and e.horas('Rafael') == '7,5 h', 'T82 el nombre cambia en la lista (limpio, en el mismo sitio y conservando marca y horas): %s %s %s' % (e.filas(), e.marcados(), e.horas('Rafael')))
+        ok(e.txt('#toast') == 'Nombre corregido: «Rafa» ahora es «Rafael». Queda apuntado para el PC.', 'T82 aviso: %r' % e.txt('#toast'))
+        ok(ls(e, 'renombres') == [{'de': 'Rafa', 'a': 'Rafael'}], 'T82 se apunta el renombre {de, a} con el nombre limpio de espacios: %s' % ls(e, 'renombres'))
+        ok(cambios(e) == '1 nombre corregido por pasar al PC', 'T82 contador: %r' % cambios(e))
+        ok(['Rafael (ya está)', True] in opciones(e) and 'Rafa' not in nombres_opciones(e), 'T82 el desplegable ya trae el nombre nuevo: %s' % nombres_opciones(e))
+        ok(ls(e, 'borrador')['lista'][2]['nombre'] == 'Rafael', 'T82 el borrador guardado lleva el nombre nuevo: %s' % ls(e, 'borrador'))
+        e.clic('button[data-guardar]')
+        ok([p['nombre'] for p in ls(e, 'pendientes')[0]['presentes']] == ['Mikel', 'Rafael'], 'T82 la jornada guardada lleva el nombre nuevo: %s' % ls(e, 'pendientes'))
+        e.clic('button[data-v="informe"]')
+        fi = e.informe()
+        ok('Rafael' in [f.split(' ')[0] for f in fi] and 'Rafa' not in [f.split(' ')[0] for f in fi] and tokens(fi, 'Rafael')[1] == '2', 'T82 el informe cuenta las jornadas ya publicadas de Rafa bajo el nombre nuevo (1 publicada + la de hoy = 2 días): %s' % fi)
+        e.clic('button[data-v="app"]')
+        lote = e.exportar() or {}
+        ok(set(lote) == {'tipo', 'version', 'obra', 'renombres', 'jornadas'} and lote.get('renombres') == [{'de': 'Rafa', 'a': 'Rafael'}], 'T82 el fichero lleva el renombre dentro: %s' % {k: lote.get(k) for k in lote})
+        ok([p['nombre'] for p in lote.get('jornadas', [{}])[0].get('presentes', [])] == ['Mikel', 'Rafael'], 'T82 y la jornada con el nombre nuevo: %s' % lote.get('jornadas'))
+        valida_con_p1(lote)
+        r, cat8, filas8 = e2e_p1(lote)
+        ok(r is not None and r['ok'] and r['renombres'][0]['accion'] == 'renombrado' and 'alta_nueva' not in codigos_avisos(r), 'T82 el PC lo aplica como un cambio de nombre y NO da de alta a nadie nuevo: %s' % (json.dumps(r, ensure_ascii=False)[:500] if r else r))
+        if r is not None:
+            p = [t for t in cat8['trabajadores'] if t['nombre'] == 'Rafael']
+            ok(len(p) == 1 and p[0].get('nombres_anteriores') == ['Rafa'], 'T82 la misma persona conserva su nombre anterior: %s' % p)
+            ok(sorted((f['fecha'], f['nombre']) for f in filas8 if f['nombre'] in ('Rafael', 'Rafa')) == [('2026-10-12', 'Rafael'), ('2026-10-23', 'Rafael')], 'T82 sus jornadas, las de antes y la nueva, quedan bajo el nombre nuevo: %s' % [f for f in filas8 if 'af' in f['nombre']])
+        e.pg.reload()
+        e.pg.wait_for_selector('#obra')
+        ok('Rafael' in e.filas() and 'Rafa' not in e.filas() and ls(e, 'renombres') == [{'de': 'Rafa', 'a': 'Rafael'}], 'T82 al recargar (el PC aún no ha publicado nada) el nombre nuevo sigue en pantalla y apuntado: %s %s' % (e.filas(), ls(e, 'renombres')))
+        e.clic('button[data-v="informe"]')
+        ok('Rafael' in [f.split(' ')[0] for f in e.informe()] and 'Rafa' not in [f.split(' ')[0] for f in e.informe()], 'T82 y el informe lo sigue viendo con el nombre nuevo: %s' % e.informe())
+    con_escena('T82', est8(), t82)
+
+    # --- T82b: el campo se niega a guardar lo que el PC rechazaría; no se pierde lo escrito
+    def t82b(e):
+        e.ir()
+        casos = (('', 'Escribe el nombre.'), ('   ', 'Escribe el nombre.'), ('rafa@x.com', 'Ese nombre no vale: parece un correo.'),
+                 ('12345678Z', 'Ese nombre no vale: parece un DNI.'), ('X1234567L', 'Ese nombre no vale: parece un NIE.'), ('600123456', 'Ese nombre no vale: parece un teléfono.'),
+                 ('Rafa <b>', 'Ese nombre no vale: lleva los signos < o >.'), ('N' * 61, 'Ese nombre no vale: tiene más de 60 letras.'),
+                 ('Ra\u0007fa', 'Ese nombre no vale: lleva caracteres raros.'))
+        e.anotar('Rafa')
+        e.clic(lapiz('Rafa'))
+        for valor, mensaje in casos:
+            e.pg.evaluate("v=>{const i=document.getElementById('ren-campo');i.value=v;i.dispatchEvent(new Event('input',{bubbles:true}))}", valor)
+            e.clic('button[data-ren-guardar]')
+            ok(e.txt('#ren-error') == mensaje and e.valor('#ren-campo') == valor and e.filas() == ['Mikel', 'Txomin', 'Rafa'] and not ls(e, 'renombres'), 'T82b «%s» debe dar «%s», dejar el campo como estaba y no cambiar nada: %r %r' % (valor[:20], mensaje, e.txt('#ren-error'), e.valor('#ren-campo')))
+        e.pg.fill('#ren-campo', 'Rafael')
+        e.pg.keyboard.press('Enter')
+        ok(e.pg.query_selector('#ren-campo') is None and e.pg.query_selector('#ren-error') is None and 'Rafael' in e.filas(), 'T82b con un nombre bueno se guarda (también con Intro) y desaparece el error: %s' % e.filas())
+        e.pg.fill('#nuevo', 'x@y.es')
+        e.clic('button[data-nuevo]')
+        ok('Ese nombre no vale: parece un correo.' in e.txt('#nuevo-aviso') and 'x@y.es' not in e.filas(), 'T82b «Nombre nuevo» aplica las mismas reglas: %r %s' % (e.txt('#nuevo-aviso'), e.filas()))
+    con_escena('T82b', est8(), t82b)
+
+    # --- T83: si el nombre nuevo ya es de otra persona, se pregunta y, con «Sí», se apunta para juntarlos en el PC
+    def t83(e):
+        e.ir()
+        e.anotar('Mikel')
+        e.clic(lapiz('Txomin'))
+        e.pg.fill('#ren-campo', 'mikel')
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «Mikel». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.', 'T83 la pregunta: %r' % e.txt('#ren-pregunta [data-texto]'))
+        ok('Sí, son la misma persona' in e.txt('button[data-ren-si]') and e.txt('button[data-ren-no]') == 'No', 'T83 botones de la pregunta: %r %r' % (e.txt('button[data-ren-si]'), e.txt('button[data-ren-no]')))
+        ok(e.filas() == ['Mikel', 'Txomin'] and not ls(e, 'renombres'), 'T83 hasta que se contesta no cambia nada: %s %s' % (e.filas(), ls(e, 'renombres')))
+        e.clic('button[data-ren-no]')
+        ok(e.pg.query_selector('#ren-pregunta') is None and e.valor('#ren-campo') == 'mikel' and e.filas() == ['Mikel', 'Txomin'] and not ls(e, 'renombres'), 'T83 «No» no apunta nada: cierra la pregunta y deja el campo para cambiar el nombre: %s' % ls(e, 'renombres'))
+        e.clic('button[data-ren-guardar]')
+        e.clic('button[data-ren-si]')
+        ok(e.filas() == ['Mikel'] and e.marcados() == ['Mikel'], 'T83 con «Sí» las dos filas pasan a ser una, con el nombre de la base: %s %s' % (e.filas(), e.marcados()))
+        ok(ls(e, 'renombres') == [{'de': 'Txomin', 'a': 'Mikel'}], 'T83 se apunta con la grafía que ya tiene la base: %s' % ls(e, 'renombres'))
+        ok(e.txt('#toast') == '«Txomin» y «Mikel» pasan a ser la misma persona. Se juntarán al pasarlo al PC.', 'T83 aviso: %r' % e.txt('#toast'))
+        e.clic('button[data-v="informe"]')
+        fi = e.informe()
+        ok('Txomin' not in [f.split(' ')[0] for f in fi] and tokens(fi, 'Mikel')[1] == '2' and tokens(fi, 'Mikel')[2] == '15', 'T83 en el informe, sus días y horas no se duplican (las dos anotaciones del mismo día cuentan una vez): %s' % fi)
+        e.clic('button[data-v="app"]')
+        lote = e.exportar() or {}
+        ok(lote.get('renombres') == [{'de': 'Txomin', 'a': 'Mikel'}] and lote.get('jornadas') == [], 'T83 el fichero lleva el renombre: %s' % {k: lote.get(k) for k in lote})
+        valida_con_p1(lote)
+        r, cat8, filas8 = e2e_p1(lote)
+        ok(r is not None and not r['lote_rechazado'] and r['renombres'][0]['accion'] == 'coincide_con_otro' and 'fusionar' in (r['renombres'][0]['orden'] or '') and 'renombre_coincide_con_otro' in codigos_avisos(r), 'T83 el PC no lo aplica solo: avisa y da la orden de fusionar: %s' % (json.dumps(r, ensure_ascii=False)[:500] if r else r))
+    con_escena('T83', est8(), t83)
+
+    def t83b(e):
+        e.ir()
+        e.anotar('Txomin')
+        e.pulsar('Txomin', 1, '0.5')
+        renombra(e, 'Txomin', 'MIKEL')
+        ok(e.filas() == ['Mikel'] and e.marcados() == ['Mikel'] and e.horas('Mikel') == '8 h', 'T83b si solo estaba marcado el renombrado, la fila que queda conserva su marca y sus horas: %s %s %s' % (e.filas(), e.marcados(), e.horas('Mikel')))
+        e.clic('button[data-guardar]')
+        renombra(e, 'Mikel', 'Mikel B')
+        ok(ls(e, 'renombres') == [{'de': 'Txomin', 'a': 'Mikel'}, {'de': 'Mikel', 'a': 'Mikel B'}], 'T83b corregir luego el nombre de quien ya existía en la base NO se junta con el apunte anterior (son dos personas distintas para el PC hasta que las junte): %s' % ls(e, 'renombres'))
+    con_escena('T83b', est8(), t83b)
+
+    def t83c(e):
+        e.ir()
+        e.clic('button[data-todos="1"]')
+        e.pulsar('Txomin', 2, '0.5')
+        e.clic('button[data-guardar]')
+        renombra(e, 'Txomin', 'Mikel')
+        pj = ls(e, 'pendientes')
+        ok(e.filas() == ['Mikel'] and [p['nombre'] for p in pj[0]['presentes']] == ['Mikel'] and pj[0]['presentes'][0]['horas'] == 7.5, 'T83c una jornada guardada en la que salían los dos se queda con una sola anotación, la de quien ya tenía ese nombre: %s' % pj)
+        ok('salían los dos' in e.txt('#toast'), 'T83c y se avisa de ello: %r' % e.txt('#toast'))
+        valida_con_p1(e.exportar() or {})
+    con_escena('T83c', est8(), t83c)
+
+    # --- T84: el nombre cambia también en la memoria de horarios propios, que va por nombre
+    def t84(e):
+        e.ir()
+        e.anotar('Aitor')
+        e.anotar('Gorka')
+        guardar_propio(e, 'Gorka', {'vie': 9})
+        ok(json.loads(propio_ls(e) or '{}') == {'olabeaga': {'Gorka': {'vie': 9}}}, 'T84 preparación: solo Gorka tiene un horario propio recordado (el de Aitor es el publicado): %r' % propio_ls(e))
+        renombra(e, 'Gorka', 'Gorka B')
+        ok(json.loads(propio_ls(e) or '{}') == {'olabeaga': {'Gorka B': {'vie': 9}}} and chip(e, 'Gorka B', True) == 'horario propio 9 h', 'T84 el horario propio recordado sigue a la persona con su nombre nuevo: %r %r' % (propio_ls(e), chip(e, 'Gorka B', True)))
+        renombra(e, 'Aitor', 'Aitor Z')
+        ok(chip(e, 'Aitor Z', True) == 'horario propio 9 h' and json.loads(propio_ls(e) or '{}') == {'olabeaga': {'Gorka B': {'vie': 9}}}, 'T84 el horario propio PUBLICADO de Aitor también sigue a su nombre nuevo, sin inventar nada que enviar: %r %r' % (chip(e, 'Aitor Z', True), propio_ls(e)))
+        e.clic('button[data-guardar]')
+        lote = e.exportar() or {}
+        ok(lote.get('excepciones_horario') == {'Gorka B': {'vie': 9}} and lote.get('renombres') == [{'de': 'Gorka', 'a': 'Gorka B'}, {'de': 'Aitor', 'a': 'Aitor Z'}], 'T84 el fichero lleva los dos renombres (en orden) y solo el horario propio nuevo: %s' % {k: lote.get(k) for k in lote})
+        valida_con_p1(lote)
+        r, cat8, filas8 = e2e_p1(lote, FILAS8 + [fila('2026-10-20', 'vivienda', 'Aitor', 9), fila('2026-10-20', 'vivienda', 'Gorka', 7.5)], {'Aitor': {'vie': 9}})
+        ok(r is not None and r['ok'] and [x['accion'] for x in r['renombres']] == ['renombrado', 'renombrado'] and 'alta_nueva' not in codigos_avisos(r), 'T84 el PC aplica los dos cambios de nombre y no da de alta a nadie: %s' % (json.dumps(r, ensure_ascii=False)[:500] if r else r))
+    con_escena('T84', est8(catalogo=CAT8 + ['Aitor', 'Gorka'], excep={'Aitor': {'vie': 9}}), t84)
+
+    # --- T85: lo apuntado se olvida cuando el estado publicado ya lo trae; si no, se reaplica al abrir
+    def t85a(e):
+        e.ir()
+        ok('Rafael' in nombres_opciones(e) and 'Rafa' not in nombres_opciones(e) and ls(e, 'renombres') == [{'de': 'Rafa', 'a': 'Rafael'}] and cambios(e) == '1 nombre corregido por pasar al PC', 'T85a el PC aún no lo ha hecho: al abrir se ve el nombre nuevo y sigue apuntado: %s %s' % (nombres_opciones(e), ls(e, 'renombres')))
+        e.clic('button[data-v="informe"]')
+        ok('Rafael' in [f.split(' ')[0] for f in e.informe()] and 'Rafa' not in [f.split(' ')[0] for f in e.informe()], 'T85a y el informe ya lo ve con el nombre nuevo: %s' % e.informe())
+    con_escena('T85a', est8(), t85a, init=sembrar('sgd_personal_renombres', [{'de': 'Rafa', 'a': 'Rafael'}]))
+
+    def t85b(e):
+        e.ir()
+        ok(not ls(e, 'renombres') and e.pg.query_selector('#cambios-nombres') is None, 'T85b el estado publicado ya trae «Rafael» y no «Rafa»: el renombre apuntado se olvida: %s' % ls(e, 'renombres'))
+    filas85 = [dict(f, nombre='Rafael') if f['nombre'] == 'Rafa' else f for f in FILAS8]
+    con_escena('T85b', est8(filas=filas85, catalogo=['Rafael' if n == 'Rafa' else n for n in CAT8]), t85b, init=sembrar('sgd_personal_renombres', [{'de': 'Rafa', 'a': 'Rafael'}]))
+
+    def t85i(e):
+        e.ir()
+        ok(not ls(e, 'renombres') and e.pg.query_selector('#cambios-nombres') is None, 'T85i el PC ya hizo el cambio (trae «Rafael» y ya no «Rafa»): se olvida aunque una jornada guardada siga llevando el nombre nuevo: %s' % ls(e, 'renombres'))
+    pj85i = [{'obra': 'olabeaga', 'ambito': 'vivienda', 'fecha': '2026-10-23', 'presentes': [{'nombre': 'Rafael', 'horas': 8, 'extra': 0.5}], 'anulada': False, 'notas': '', 'registrado': '2026-10-23T08:00:00.000Z'}]
+    con_escena('T85i', est8(filas=filas85, catalogo=['Rafael' if n == 'Rafa' else n for n in CAT8]), t85i,
+               init=sembrar_varios({'sgd_personal_renombres': [{'de': 'Rafa', 'a': 'Rafael'}], 'sgd_personal_pendientes': pj85i}))
+
+    def t85c(e):
+        e.ir()
+        ok(ls(e, 'renombres') == [{'de': 'Txomin', 'a': 'Mikel'}] and e.filas() == ['Mikel'], 'T85c si el estado publicado trae a las dos personas (aún sin juntar), se conserva lo apuntado y se ve ya como una: %s %s' % (ls(e, 'renombres'), e.filas()))
+    con_escena('T85c', est8(), t85c, init=sembrar('sgd_personal_renombres', [{'de': 'Txomin', 'a': 'Mikel'}]))
+
+    def t85d(e):
+        e.ir()
+        ok(not ls(e, 'renombres'), 'T85d un renombre de un nombre que el PC no conoce y que ninguna jornada ni alta lleva no tiene nada que enviar y se olvida: %s' % ls(e, 'renombres'))
+    con_escena('T85d', est8(), t85d, init=sembrar('sgd_personal_renombres', [{'de': 'Fantasma', 'a': 'Fantasma 2'}]))
+
+    def t85e(e):
+        e.ir()
+        ok(ls(e, 'renombres') == [{'de': 'Fantasma', 'a': 'Fantasma 2'}], 'T85e pero si una jornada guardada lleva el nombre nuevo, se conserva (puede que el PC ya tenga al antiguo por un envío anterior): %s' % ls(e, 'renombres'))
+    pj85 = [{'obra': 'olabeaga', 'ambito': 'vivienda', 'fecha': '2026-10-22', 'presentes': [{'nombre': 'Fantasma 2', 'horas': 7.5, 'extra': 0}], 'anulada': False, 'notas': '', 'registrado': '2026-10-22T18:00:00.000Z'}]
+    con_escena('T85e', est8(), t85e, init=sembrar_varios({'sgd_personal_renombres': [{'de': 'Fantasma', 'a': 'Fantasma 2'}], 'sgd_personal_pendientes': pj85}))
+
+    def t85f(e):
+        e.ir()
+        renombra(e, 'Mikel', 'Miguel')
+        renombra(e, 'Miguel', 'Mikelo')
+        ok(ls(e, 'renombres') == [{'de': 'Mikel', 'a': 'Mikelo'}], 'T85f dos cambios seguidos sobre la misma persona se apuntan como uno: de lo que conoce el PC al último nombre: %s' % ls(e, 'renombres'))
+        renombra(e, 'Txomin', 'Txomín')
+        ok(ls(e, 'renombres') == [{'de': 'Mikel', 'a': 'Mikelo'}, {'de': 'Txomin', 'a': 'Txomín'}] and cambios(e) == '2 nombres corregidos por pasar al PC', 'T85f y dos personas distintas, dos apuntes en orden: %s %r' % (ls(e, 'renombres'), cambios(e)))
+        renombra(e, 'Mikelo', 'Mikel')
+        ok(ls(e, 'renombres') == [{'de': 'Txomin', 'a': 'Txomín'}] and e.filas() == ['Mikel', 'Txomín'], 'T85f si se vuelve al nombre de antes de todo, ya no hay nada que apuntar de esa persona: %s %s' % (ls(e, 'renombres'), e.filas()))
+        renombra(e, 'Mikel', 'mikel')
+        ok(ls(e, 'renombres') == [{'de': 'Txomin', 'a': 'Txomín'}, {'de': 'Mikel', 'a': 'mikel'}], 'T85f cambiar solo mayúsculas o tildes también es un cambio que hay que apuntar: %s' % ls(e, 'renombres'))
+    con_escena('T85f', est8(), t85f)
+
+    def t85g(e):
+        e.ir()
+        e.pg.fill('#nuevo', 'Begoña')
+        e.clic('button[data-nuevo]')
+        renombra(e, 'Begoña', 'Begoña B')
+        ok(not ls(e, 'renombres') and 'Begoña B' in (ls(e, 'nuevos') or []) and 'Begoña' not in (ls(e, 'nuevos') or []) and e.pg.query_selector('#cambios-nombres') is None, 'T85g un nombre nuevo que no ha salido del aparato se corrige sin apuntar nada para el PC: %s %s' % (ls(e, 'renombres'), ls(e, 'nuevos')))
+        e.clic('button[data-guardar]')
+        renombra(e, 'Begoña B', 'Begoña C')
+        ok(ls(e, 'renombres') == [{'de': 'Begoña B', 'a': 'Begoña C'}] and [p['nombre'] for p in ls(e, 'pendientes')[0]['presentes']] == ['Begoña C'], 'T85g pero si una jornada guardada lo lleva (puede haberse enviado ya), sí se apunta: %s %s' % (ls(e, 'renombres'), ls(e, 'pendientes')))
+    con_escena('T85g', est8(), t85g)
+
+    def t83d(e):
+        e.ir()
+        e.clic('button[data-todos="1"]')
+        e.pulsar('Mikel', 2, '0.5')
+        e.clic('button[data-guardar]')
+        renombra(e, 'Mikel', 'Txomin')
+        pj = ls(e, 'pendientes')
+        ok(e.filas() == ['Txomin'] and [(p['nombre'], p['horas']) for p in pj[0]['presentes']] == [('Txomin', 7.5)], 'T83d si salían los dos, queda la anotación de quien ya tenía ese nombre aunque vaya después en la lista: %s %s' % (e.filas(), pj))
+        ok(ls(e, 'renombres') == [{'de': 'Mikel', 'a': 'Txomin'}], 'T83d se apunta la unión: %s' % ls(e, 'renombres'))
+    con_escena('T83d', est8(), t83d)
+
+    def t82c(e):
+        e.ir()
+        e.clic(lapiz('Mikel'))
+        e.pg.fill('#ren-campo', 'Mik')
+        e.clic('#v-app .row[data-nombre="Txomin"] .x')
+        ok(e.valor('#ren-campo') == 'Mik' and 'Txomin' in e.marcados(), 'T82c marcar a otra persona no cierra el campo ni pierde lo escrito: %r %s' % (e.valor('#ren-campo'), e.marcados()))
+        e.clic('button[data-amb="garaje"]')
+        ok(e.pg.query_selector('#ren-campo') is None and e.filas() == ['Andoni'], 'T82c cambiar de viviendas a garajes cierra el campo (la lista es otra): %s' % e.filas())
+        e.clic(lapiz('Andoni'))
+        e.fecha('2026-10-19')
+        ok(e.pg.query_selector('#ren-campo') is None, 'T82c cambiar de fecha cierra el campo')
+        e.clic(lapiz('Andoni'))
+        e.obra('mungia')
+        ok(e.pg.query_selector('#ren-campo') is None, 'T82c cambiar de obra cierra el campo')
+    con_escena('T82c', est8(), t82c)
+
+    def t85h(e):
+        e.ir()
+        e.clic('button[data-varios]')
+        e.pg.fill('#varios-texto', chr(10).join(['Ane', 'Iker']))
+        e.clic('button[data-varios-ok]')
+        e.pg.select_option('#addsel', 'Ane')
+        e.clic('button[data-add]')
+        renombra(e, 'Ane', 'Anita')
+        ok(ls(e, 'altas') == ['Anita', 'Iker'] and ls(e, 'renombres') == [{'de': 'Ane', 'a': 'Anita'}], 'T85h un nombre nuevo (sin jornada) que ya pudo salir en un envío se corrige apuntando el cambio y con el nombre nuevo en la lista de nuevos: %s %s' % (ls(e, 'altas'), ls(e, 'renombres')))
+        renombra(e, 'Anita', 'Iker')
+        ok(ls(e, 'altas') == ['Iker'] and (ls(e, 'nuevos') or []).count('Iker') == 1 and cambios(e) == '1 nombre corregido · 1 nombre nuevo por pasar al PC', 'T85h si el nombre corregido ya era de otro nombre nuevo, no quedan repetidos: %s %s %r' % (ls(e, 'altas'), ls(e, 'nuevos'), cambios(e)))
+        lote = e.exportar() or {}
+        ok(lote.get('altas') == ['Iker'] and lote.get('renombres') == [{'de': 'Ane', 'a': 'Iker'}], 'T85h el fichero lleva las dos cosas: %s' % {k: lote.get(k) for k in lote})
+        valida_con_p1(lote)
+    con_escena('T85h', est8(), t85h)
+
+    # --- T86: el fichero y el aviso de enviar con los cambios nuevos
+    def t86(e):
+        e.ir()
+        ok(e.exportar(esperar=False) is None and 'no hay' in e.toast(), 'T86 sin nada que enviar sigue sin descargarse nada: %r' % e.toast())
+        renombra(e, 'Mikel', 'Mikelo')
+        lote = e.exportar() or {}
+        ok(set(lote) == {'tipo', 'version', 'obra', 'renombres', 'jornadas'} and lote['jornadas'] == [] and lote['renombres'] == [{'de': 'Mikel', 'a': 'Mikelo'}], 'T86 solo con un nombre corregido el fichero se envía igualmente, sin jornadas: %s' % lote)
+        ok('0 jornada(s)' in e.toast() and '1 nombre(s) corregido(s)' in e.toast(), 'T86 el aviso cuenta lo enviado: %r' % e.toast())
+        valida_con_p1(lote)
+    con_escena('T86', est8(), t86)
+
+    # --- T87: si el aparato no deja guardar, no se dice que está hecho
+    def t87(e):
+        e.ir()
+        renombra(e, 'Mikel', 'Mikelo')
+        ok('no se pudo' in e.toast() and 'nombre corregido' not in e.toast(), 'T87 sin poder escribir en el aparato, corregir un nombre lo avisa en vez de decir que está hecho: %r' % e.toast())
+        e.clic('button[data-varios]')
+        e.pg.fill('#varios-texto', 'Ane')
+        e.clic('button[data-varios-ok]')
+        ok('no se pudo' in e.toast(), 'T87 y lo mismo con varios nombres: %r' % e.toast())
+    con_escena('T87', est8(), t87, init=sin_ls)
+
+    # --- T88: medidas táctiles, letra y desbordamiento (móvil 390 y 320, tablet 820)
+    def t88(e):
+        e.ir()
+        e.clic('#v-app .row[data-nombre="Mikel"] .x')
+        m = e.pg.evaluate("""() => { const q = s => [...document.querySelectorAll(s)].map(e => { const r = e.getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height)]; });
+           return {lapiz: q('#v-app button[data-ren]'), ancho: document.documentElement.scrollWidth, ventana: innerWidth, filas: q('#v-app .row')}; }""")
+        ok(all(w >= 40 and h >= 44 for w, h in m['lapiz']) and len(m['lapiz']) == 2, 'T88 los lápices miden al menos 40 de ancho y 44 de alto: %s' % m['lapiz'])
+        ok(m['ancho'] <= m['ventana'] + 1, 'T88 con los lápices no hay desplazamiento lateral: %s > %s' % (m['ancho'], m['ventana']))
+        e.clic(lapiz('Mikel'))
+        e.pg.fill('#ren-campo', 'x@y.es')
+        e.clic('button[data-ren-guardar]')
+        m = e.pg.evaluate("""() => { const q = s => [...document.querySelectorAll(s)].map(e => { const r = e.getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height)]; });
+           const f = document.querySelector('#v-app .row.ren').getBoundingClientRect();
+           return {campo: q('#ren-campo'), botones: q('#v-app .row.ren .btn'), letra: parseFloat(getComputedStyle(document.querySelector('#ren-campo')).fontSize),
+                   dentro: [Math.round(f.left), Math.round(f.right), innerWidth], ancho: document.documentElement.scrollWidth, error: q('#ren-error')}; }""")
+        ok(all(h >= 46 for w, h in m['campo']) and all(h >= 48 for w, h in m['botones']) and len(m['botones']) == 2 and m['letra'] >= 16, 'T88 el campo del nombre mide ≥ 46 px de alto con letra ≥ 16 px y sus dos botones ≥ 48: %s %s %s' % (m['campo'], m['botones'], m['letra']))
+        ok(m['dentro'][0] >= 0 and m['dentro'][1] <= m['dentro'][2] and m['ancho'] <= m['dentro'][2] + 1 and len(m['error']) == 1, 'T88 el campo con su error cabe en pantalla: %s' % m['dentro'])
+        e.clic('button[data-ren-cancelar]')
+        e.clic('button[data-varios]')
+        m = e.pg.evaluate("""() => { const q = s => [...document.querySelectorAll(s)].map(e => { const r = e.getBoundingClientRect(); return [Math.round(r.width), Math.round(r.height)]; });
+           const v = document.querySelector('#varios').getBoundingClientRect();
+           return {area: q('#varios-texto'), botones: q('#varios .btn'), letra: parseFloat(getComputedStyle(document.querySelector('#varios-texto')).fontSize), boton: q('button[data-varios]'),
+                   dentro: [Math.round(v.left), Math.round(v.right), innerWidth], ancho: document.documentElement.scrollWidth}; }""")
+        ok(m['area'][0][1] >= 100 and m['letra'] >= 16 and all(h >= 48 for w, h in m['botones']) and len(m['botones']) == 2, 'T88 el cuadro de varios nombres es cómodo: alto ≥ 100, letra ≥ 16, botones ≥ 48: %s %s %s' % (m['area'], m['letra'], m['botones']))
+        ok(m['dentro'][0] >= 0 and m['dentro'][1] <= m['dentro'][2] and m['ancho'] <= m['dentro'][2] + 1, 'T88 el cuadro de varios nombres cabe en pantalla: %s' % m['dentro'])
+    con_escena('T88', est8(), t88)
+    con_escena('T88 estrecho', est8(), t88, ancho=320, alto=640)
+    con_escena('T88 tablet', est8(), t88, ancho=820, alto=1180)
+
+    # --- T89: todo lo que viene de los datos se escapa también en lo nuevo
+    def t89(e):
+        e.ir()
+        ok(e.pg.evaluate("[...document.querySelectorAll('#v-app .row')].some(r=>r.dataset.nombre.includes('<b>'))"), 'T89 preparación: el nombre raro está en la lista')
+        ok(e.pg.evaluate("document.querySelectorAll('#v-app .nm *').length") == 0 and e.pg.evaluate("[...document.querySelectorAll('#v-app .nm')].map(n=>n.textContent)")[0] == raro, 'T89 el nombre raro sale en la lista como texto y sin crear elementos')
+        e.pg.click('#v-app .row button[data-ren]')
+        ok(e.valor('#ren-campo') == raro and e.pg.evaluate("document.querySelectorAll('#v-app .row.ren b, #v-app .row.ren i').length") == 0, 'T89 el campo lleva el nombre raro tal cual y no se crea ningún elemento a partir de él: %r' % e.valor('#ren-campo'))
+        e.clic('button[data-ren-cancelar]')
+        e.clic(lapiz('Mikel'))
+        e.pg.fill('#ren-campo', raro2)
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «%s». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.' % raro2 and e.pg.evaluate("document.querySelectorAll('#ren-pregunta [data-texto] *').length") == 0, 'T89 la pregunta enseña el nombre con comillas y & como texto: %r' % e.txt('#ren-pregunta [data-texto]'))
+        e.clic('button[data-ren-si]')
+        ok(raro2 in e.txt('#toast') and e.pg.evaluate("document.querySelectorAll('#toast *').length") == 0 and 'Mikel' not in e.filas() and raro2 in e.filas(), 'T89 al juntarlos el aviso lleva los nombres como texto: %r %s' % (e.txt('#toast'), e.filas()))
+        ok(ls(e, 'renombres') == [{'de': 'Mikel', 'a': raro2}], 'T89 y se apunta con las comillas intactas: %s' % ls(e, 'renombres'))
+        e.pg.click('#v-app .row button[data-ren]')
+        e.pg.fill('#ren-campo', 'x')
+        e.clic('button[data-ren-guardar]')
+        ok('x' in e.filas() and raro not in e.filas() and ls(e, 'renombres')[1] == {'de': raro, 'a': 'x'}, 'T89 corregir el nombre raro funciona y se apunta tal cual: %s %s' % (e.filas(), ls(e, 'renombres')))
+        ok(raro in e.txt('#toast') and e.pg.evaluate("document.querySelectorAll('#toast *').length") == 0 and e.pg.evaluate("document.querySelectorAll('#v-app .nm *').length") == 0, 'T89 el aviso lleva el nombre raro como texto: %r' % e.txt('#toast'))
+    raro2 = "O'Brien \"el Rubio\" &amp; Co &lt;i&gt;"
+    con_escena('T89', estado_con({'olabeaga': obra_est('2026 OLABEAGA', [], ultima={'vivienda': {'fecha': '2026-10-22', 'presentes': pres(raro, raro2, 'Mikel')}, 'garaje': None})}, [raro, raro2, 'Mikel']), t89)
+
+    # Fin del bloque del paso 08c
     ok(not errs, 'errores de JavaScript: %s' % errs)
     b.close()
 
