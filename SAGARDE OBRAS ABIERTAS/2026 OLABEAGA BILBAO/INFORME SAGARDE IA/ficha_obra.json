@@ -9375,27 +9375,27 @@
   "materiales": {
     "ultimo_mes": "Octubre26",
     "ultima_fecha": "26/10/2026",
-    "dias_desde": 3,
+    "dias_desde": 1,
     "meses": [
       "Octubre26"
     ],
     "n_items": 39,
     "aviso": null,
     "_meta": {
-      "actualizado": "25/10/2026 15:59"
+      "actualizado": "27/10/2026 06:48"
     }
   },
   "documentos": {
-    "total": 40,
+    "total": 41,
     "por_categoria": {
       "Excel": 2,
       "Imágenes": 6,
       "Otros": 14,
-      "PDF": 15,
+      "PDF": 16,
       "Planos y gráfica": 3
     },
     "_meta": {
-      "actualizado": "25/10/2026 15:59"
+      "actualizado": "27/10/2026 06:48"
     }
   },
   "contactos": []
