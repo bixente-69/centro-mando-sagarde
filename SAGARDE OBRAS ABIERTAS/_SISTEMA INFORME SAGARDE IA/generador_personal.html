@@ -582,6 +582,144 @@
         padding: 10px;
         margin: 10px 0;
       }
+      .btn-volver-portal {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: var(--header);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        padding: 8px 14px;
+        border-radius: 8px;
+        margin-bottom: 8px;
+        min-height: 40px;
+      }
+      .btn-volver-portal:active {
+        background: #123a63;
+      }
+      .criterio-busqueda {
+        display: flex;
+        gap: 6px;
+        margin-bottom: 6px;
+      }
+      .criterio-busqueda select {
+        flex: 0 0 135px;
+        min-height: 46px;
+      }
+      .criterio-busqueda input {
+        flex: 1;
+      }
+      .cal-box {
+        background: #fff;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+        margin: 10px 0;
+      }
+      .cal-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        font-weight: 700;
+      }
+      .cal-head .nav-cal {
+        width: 36px;
+        height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        font-size: 18px;
+        cursor: pointer;
+      }
+      .cal-grid {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 4px;
+        text-align: center;
+      }
+      .cal-sem {
+        font-size: 11px;
+        font-weight: 700;
+        color: var(--muted);
+        padding: 4px 0;
+      }
+      .cal-vacio {
+        aspect-ratio: 1;
+        min-height: 36px;
+      }
+      .cal-dia {
+        aspect-ratio: 1;
+        min-height: 36px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+      .cal-dia.hoy {
+        border: 2px solid var(--accent);
+      }
+      .cal-dia.on {
+        background: var(--header);
+        color: #fff;
+        border-color: var(--header);
+        font-weight: 700;
+      }
+      .dias-marcados {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top: 1px dashed var(--line);
+        font-size: 12px;
+      }
+      .dias-marcados .chip {
+        background: #e3efff;
+        color: #1f5fa8;
+        font-size: 12px;
+        padding: 3px 8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+      .dias-marcados .chip button {
+        border: 0;
+        background: none;
+        color: inherit;
+        font-weight: 800;
+        padding: 0;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .chip.warn-obra {
+        background: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffeeba;
+        font-size: 11px;
+        padding: 2px 6px;
+        border-radius: 10px;
+      }
+      .aviso-doble-obra {
+        background: #fff8e6;
+        border: 2px solid #f1c40f;
+        border-radius: 12px;
+        padding: 14px;
+        margin: 12px 0;
+      }
+      .aviso-doble-obra h3 {
+        margin: 0 0 8px;
+        font-size: 15px;
+        color: #9a6700;
+      }
       @media (max-width: 400px) {
         main {
           padding: 7px;
@@ -618,6 +756,9 @@
   </head>
   <body>
     <nav class="tabs">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+        <a class="btn-volver-portal" href="../../index.html" onclick="irAlPortal(event)">← Volver al Portal Sagarde</a>
+      </div>
       <div class="seg">
         <button data-v="app" class="on">Anotar</button><button data-v="jornadas">Jornadas</button
         ><button data-v="informe">Informe</button><button data-v="enviar">Enviar al PC</button>
@@ -654,6 +795,7 @@
           rn: LS + 'renombres',
           al: LS + 'altas',
           em: LS + 'empresas',
+          uh: LS + 'ultimas_horas',
         };
       // Lee y parsea un valor JSON de localStorage; devuelve el valor por defecto d si no existe o
       // falla
@@ -1253,15 +1395,118 @@
           return z !== k && z.length >= 3 && (lev(k, z) <= 1 || k.includes(z) || z.includes(k));
         });
       }
-      // Marca como presente a una persona de la lista o, si no estaba, la añade.
+      // Vuelve al Portal de Sagarde según desde dónde se haya entrado
+      function irAlPortal(evento) {
+        if (evento) evento.preventDefault();
+        if (document.referrer && (document.referrer.includes('PORTAL SAGARDE') || document.referrer.includes('_SISTEMA'))) {
+          window.location.href = '../../_SISTEMA/PORTAL SAGARDE.html';
+        } else {
+          window.location.href = '../../index.html';
+        }
+      }
+      // Devuelve las obras donde ha trabajado una persona
+      function obrasDe(nombre) {
+        let k = key(nombre);
+        let res = [];
+        if (state?.obras) {
+          Object.entries(state.obras).forEach(([id, ob]) => {
+            let jors = ob.jornadas || [];
+            if (jors.some((j) => (j.presentes || []).some((p) => key(p.nombre) === k) || key(j.nombre) === k)) {
+              res.push({ id, nombre: ob.nombre || id });
+            }
+          });
+        }
+        pending.forEach((j) => {
+          if (j.presentes && j.presentes.some((p) => key(p.nombre) === k)) {
+            if (!res.some((r) => r.id === j.obra)) {
+              res.push({ id: j.obra, nombre: nombreObra(j.obra) });
+            }
+          }
+        });
+        return res;
+      }
+      // Horarios predefinidos de la última vez que trabajó la persona
+      function ultimoHorarioDe(nombre, obra = a.obra, fecha = a.fecha) {
+        let kn = key(nombre);
+        let uhMap = get(K.uh, {});
+        if (uhMap && uhMap[kn] !== undefined && uhMap[kn] > 0) {
+          return uhMap[kn];
+        }
+        let prop = propioEfectivo(nombre, obra);
+        let diaSem = HK[dow(fecha)];
+        if (prop && Object.prototype.hasOwnProperty.call(prop, diaSem) && prop[diaSem] > 0) {
+          return prop[diaSem];
+        }
+        let jorsObra = [...(pub(obra) || [])];
+        pending
+          .filter((j) => j.obra === obra && !j.anulada)
+          .forEach((j) => {
+            (j.presentes || []).forEach((p) => jorsObra.push({ ...p, fecha: j.fecha }));
+          });
+        let anteriores = jorsObra
+          .filter((f) => key(f.nombre) === kn && f.fecha < fecha && f.horas > 0)
+          .sort((x, y) => y.fecha.localeCompare(x.fecha));
+        if (anteriores.length && anteriores[0].horas > 0) {
+          return anteriores[0].horas;
+        }
+        let todasJors = [];
+        filasDeTodasLasObras().forEach((filas, clave) => {
+          let [ob, amb, f] = clave.split('|');
+          if (f < fecha) {
+            filas.forEach((p) => {
+              if (key(p.nombre) === kn && p.horas > 0) todasJors.push({ horas: p.horas, fecha: f });
+            });
+          }
+        });
+        todasJors.sort((x, y) => y.fecha.localeCompare(x.fecha));
+        if (todasJors.length && todasJors[0].horas > 0) {
+          return todasJors[0].horas;
+        }
+        let baseObra = hor(obra)[dow(fecha)];
+        return baseObra > 0 ? baseObra : null;
+      }
+      // Busca si un operario de la misma empresa está anotado en otra obra en la misma fecha
+      function buscarCoincidenciasOtrasObras(nombre, fecha, obraActual = a.obra) {
+        let kn = key(nombre);
+        let emp = key(empresaDe(nombre));
+        let coincidencias = [];
+        let todas = filasDeTodasLasObras();
+        todas.forEach((filas, clave) => {
+          let [ob, amb, f] = clave.split('|');
+          if (f !== fecha || ob === obraActual) return;
+          filas.forEach((persona) => {
+            if (key(persona.nombre) === kn && persona.horas > 0) {
+              let pEmp = key(empresaDe(persona.nombre));
+              if (!emp || !pEmp || emp === pEmp) {
+                coincidencias.push({
+                  obra: ob,
+                  obraNombre: nombreObra(ob),
+                  ambito: amb,
+                  horas: persona.horas,
+                });
+              }
+            }
+          });
+        });
+        return coincidencias;
+      }
+      // Marca como presente a una persona de la lista o, si no estaba, la añade con su horario predefinido
       function addName(n) {
         n = cat().find((x) => key(x) === key(n)) || clean(n);
         let x = a.list.find((x) => key(x.nombre) === key(n));
-        if (x) x.on = true;
-        else a.list.push({ nombre: n, on: true, horas: null });
+        let ult = ultimoHorarioDe(n, a.obra, a.fecha);
+        let baseDia = horarioDe(n, a.fecha);
+        let horasDefecto = (ult !== null && ult !== undefined && ult > 0) ? ult : (baseDia > 0 ? baseDia : null);
+        if (x) {
+          x.on = true;
+          x.horas = horasDefecto;
+        } else {
+          a.list.push({ nombre: n, on: true, horas: horasDefecto });
+        }
       }
       // Genera las opciones HTML del desplegable con todas las personas activas filtradas
-      function opcionesHTML(filtro = '') {
+      // Muestra la empresa junto al nombre y permite buscar por nombre, empresa, obra, horas o todo
+      function opcionesHTML(filtro = '', criterio = a.filtroCriterio || 'nombre') {
         let m = new Map();
         (state?.catalogo || []).forEach((x) => {
           if (x.activo !== false) m.set(key(x.nombre), x.nombre);
@@ -1271,14 +1516,35 @@
         });
         let lista = [...m.values()].sort((x, y) => x.localeCompare(y, 'es'));
         let kFiltro = key(filtro);
-        if (kFiltro) lista = lista.filter((x) => key(x).includes(kFiltro));
+        if (kFiltro) {
+          lista = lista.filter((nombre) => {
+            let kn = key(nombre);
+            let ke = key(empresaDe(nombre));
+            if (criterio === 'nombre') return kn.includes(kFiltro);
+            if (criterio === 'empresa') return ke.includes(kFiltro);
+            if (criterio === 'obra') {
+              let obs = obrasDe(nombre);
+              return obs.some((o) => key(o.id).includes(kFiltro) || key(o.nombre).includes(kFiltro));
+            }
+            if (criterio === 'horas') {
+              let h = String(horarioDe(nombre));
+              let uh = String(ultimoHorarioDe(nombre) || '');
+              return h.includes(kFiltro) || uh.includes(kFiltro);
+            }
+            let obs = obrasDe(nombre);
+            let matchObra = obs.some((o) => key(o.id).includes(kFiltro) || key(o.nombre).includes(kFiltro));
+            return kn.includes(kFiltro) || ke.includes(kFiltro) || matchObra || String(horarioDe(nombre)).includes(kFiltro);
+          });
+        }
         let enLista = new Set(a.list.map((x) => key(x.nombre)));
         return lista
           .map((nombre) => {
             let yaEsta = enLista.has(key(nombre));
+            let emp = empresaDe(nombre);
+            let etiqueta = emp ? `${nombre} · ${emp}` : nombre;
             return yaEsta
-              ? `<option value="${E(nombre)}" disabled>${E(nombre)} (ya está)</option>`
-              : `<option value="${E(nombre)}">${E(nombre)}</option>`;
+              ? `<option value="${E(nombre)}" disabled>${E(etiqueta)} (ya está)</option>`
+              : `<option value="${E(nombre)}">${E(etiqueta)}</option>`;
           })
           .join('');
       }
@@ -1326,9 +1592,61 @@
         let partes = fecha.split('-');
         return dias[dow(fecha)] + ' ' + partes[2] + '/' + partes[1];
       }
-      // Rótulo que avisa de que la lista sale marcada con la gente de otra jornada; solo mientras la
-      // fecha no tenga jornada guardada.
+      function placeholderBusqueda(criterio) {
+        if (criterio === 'empresa') return 'Buscar por empresa...';
+        if (criterio === 'obra') return 'Buscar por obra...';
+        if (criterio === 'horas') return 'Buscar por horas (ej. 7.5)...';
+        if (criterio === 'todo') return 'Buscar por nombre, empresa, obra o horas...';
+        return 'Buscar por nombre...';
+      }
+      // Genera el calendario interactivo para marcar uno o varios días diferentes
+      function calendarioHTML() {
+        let [ano, mes] = (a.calMes || a.fecha.slice(0, 7)).split('-').map(Number);
+        let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        let primerDia = new Date(ano, mes - 1, 1).getDay();
+        let primerDiaCol = (primerDia === 0 ? 6 : primerDia - 1);
+        let totalDias = new Date(ano, mes, 0).getDate();
+        let z = (n) => String(n).padStart(2, '0');
+        let celdas = [];
+        for (let i = 0; i < primerDiaCol; i++) {
+          celdas.push('<span class="cal-vacio"></span>');
+        }
+        for (let d = 1; d <= totalDias; d++) {
+          let fStr = `${ano}-${z(mes)}-${z(d)}`;
+          let on = (a.fechas || [a.fecha]).includes(fStr) ? ' on' : '';
+          let hoyClass = fStr === today() ? ' hoy' : '';
+          celdas.push(`<button type="button" class="cal-dia${on}${hoyClass}" data-cal-dia="${fStr}">${d}</button>`);
+        }
+        let marcadas = (a.fechas || [a.fecha]).sort();
+        let listaMarcadas = marcadas.length > 1
+          ? `<div class="dias-marcados"><span>Días marcados (${marcadas.length}):</span> ${marcadas.map((f) => `<span class="chip">${fdia(f)} <button type="button" data-quitar-dia="${f}">×</button></span>`).join('')}</div>`
+          : '';
+        return (
+          `<div class="cal-box" id="cal-box">` +
+          `<div class="cal-head">` +
+          `<button type="button" class="nav-cal" data-cal-nav="-1">‹</button>` +
+          `<span>${meses[mes - 1]} ${ano}</span>` +
+          `<button type="button" class="nav-cal" data-cal-nav="1">›</button>` +
+          `</div>` +
+          `<div class="cal-grid">` +
+          `<span class="cal-sem">L</span><span class="cal-sem">M</span><span class="cal-sem">X</span>` +
+          `<span class="cal-sem">J</span><span class="cal-sem">V</span><span class="cal-sem">S</span><span class="cal-sem">D</span>` +
+          celdas.join('') +
+          `</div>` +
+          listaMarcadas +
+          `</div>`
+        );
+      }
+      // Rótulo que avisa de los días marcados o de que la lista sale marcada con la jornada anterior
       function rotuloHTML() {
+        if (a.fechas && a.fechas.length > 1) {
+          let ordenadas = [...a.fechas].sort();
+          return (
+            `<div class="rotulo" id="rotulo-marcados" style="border-left:4px solid var(--accent)">` +
+            `<b>📅 ${ordenadas.length} días marcados:</b> ${ordenadas.map(diaLargo).join(', ')}.<br>` +
+            `<small>El horario y operarios que guardes se aplicarán a <b>todos los días marcados</b>.</small></div>`
+          );
+        }
         let guardada = current() || rowsKey({ obra: a.obra, ambito: a.amb, fecha: a.fecha }).length;
         if (!a.prefill || guardada) return '';
         return (
@@ -1399,6 +1717,10 @@
             let chipPropio = tienePropio(persona.nombre)
               ? `<span class="chip propio">horario especial ${N(baseDia)} h</span>`
               : '';
+            let enOtrasHoy = buscarCoincidenciasOtrasObras(persona.nombre, a.fecha, a.obra);
+            let chipOtras = enOtrasHoy.length
+              ? `<span class="chip warn-obra" title="También registrado hoy en: ${enOtrasHoy.map((o) => o.obraNombre).join(', ')}">⚠️ En otra obra hoy (${enOtrasHoy.map((o) => o.obraNombre + ': ' + N(o.horas) + ' h').join(', ')})</span>`
+              : '';
             let propio = propioEfectivo(persona.nombre);
             let dias = [
               ['Lun', 'lun', 1],
@@ -1441,6 +1763,7 @@
                     `${baseDia === 0 && persona.horas === null ? '¿horas?' : N(horas) + ' h'}</output>` +
                     `<button data-i="${E(indice)}" data-d="0.5">+</button></span><div class="sub">` +
                     `${chipPropio}${extra ? `<span class="chip">+${N(extra)} h extra</span>` : ''}` +
+                    `${chipOtras}` +
                     `<button class="hpb" data-hp-abrir="${E(indice)}">Horario especial</button></div>` +
                     `${editor}`
                   : ''
@@ -1483,6 +1806,35 @@
       // ---------------------------------------------------------------------------
       // Genera la vista principal de anotación: selectores de obra, ámbito y fecha, lista, altas y
       // horario semanal
+            function rotuloDobleObraHTML() {
+        let dobles = [];
+        a.list.filter((p) => p.on).forEach((persona) => {
+          let fechasCheck = (a.fechas && a.fechas.length) ? a.fechas : [a.fecha];
+          fechasCheck.forEach((f) => {
+            let enOtras = buscarCoincidenciasOtrasObras(persona.nombre, f, a.obra);
+            if (enOtras.length) {
+              dobles.push({
+                nombre: persona.nombre,
+                empresa: empresaDe(persona.nombre),
+                fecha: f,
+                enOtras,
+              });
+            }
+          });
+        });
+        if (!dobles.length) return '';
+        return (
+          `<div class="aviso-doble-obra" id="aviso-doble-obra">` +
+          `⚠️ <b>Aviso:</b> ${dobles
+            .map(
+              (d) =>
+                `<b>${E(d.nombre)}</b>${d.empresa ? ' (' + E(d.empresa) + ')' : ''} figura el ` +
+                `${fdia(d.fecha)} en ` +
+                d.enOtras.map((o) => `<b>${E(o.obraNombre)}</b> (${N(o.horas)} h)`).join(', '),
+            )
+            .join('; ')}. Revisa que sea correcto (ej. mañana en una y tarde en otra).</div>`
+        );
+      }
       function appView() {
         let horario = hor();
         let mostrarAviso = !matchMedia('(display-mode: standalone)').matches && !get(K.a, false);
@@ -1509,8 +1861,8 @@
           `</select><label class="fld">Qué anotas</label><div class="seg"><button ` +
           `data-amb="vivienda" class="${a.amb === 'vivienda' ? 'on' : ''}">Viviendas</button>` +
           `<button data-amb="garaje" class="${a.amb === 'garaje' ? 'on' : ''}">Garajes</button>` +
-          `</div><label class="fld">Fecha</label><input id="fecha" type="date" value="` +
-          `${E(a.fecha)}"><div class="chips">` +
+          `</div><label class="fld">Fecha y calendario (puedes marcar varios días)</label><input id="fecha" type="date" value="` +
+          `${E(a.fecha)}">${calendarioHTML()}<div class="chips">` +
           `${[
             ['0', 'Hoy'],
             ['-1', 'Ayer'],
@@ -1522,12 +1874,19 @@
                 `data-dia="${E(opcion[0])}">${opcion[1]}</button>`,
             )
             .join('')}` +
+          `<button class="btn ghost sm" data-limpiar-dias>Solo hoy</button>` +
           `</div>${rotuloHTML()}<div class="actions"><button class="btn ghost sm" data-todos="1">Marcar ` +
           `todos</button><button class="btn ghost sm" data-todos="0">Desmarcar todos</button>` +
-          `</div><div id="lista">${rowsHTML()}</div><label class="fld">Añadir de la ` +
-          `base</label><input id="filtro" placeholder="Buscar por nombre"><div class="add">` +
-          `<select id="addsel">${opcionesHTML()}</select><button class="btn sec" data-add>Añadir</button>` +
-          `</div><label class="fld">Nombre nuevo</label><input id="nuevo" maxlength="60">` +
+          `</div><div id="lista">${rowsHTML()}</div><label class="fld">Añadir de la base</label>` +
+          `<div class="criterio-busqueda"><select id="filtro-criterio" aria-label="Criterio de búsqueda">` +
+          `<option value="nombre" ${(a.filtroCriterio || 'nombre') === 'nombre' ? 'selected' : ''}>Por nombre</option>` +
+          `<option value="empresa" ${a.filtroCriterio === 'empresa' ? 'selected' : ''}>Por empresa</option>` +
+          `<option value="obra" ${a.filtroCriterio === 'obra' ? 'selected' : ''}>Por obra</option>` +
+          `<option value="horas" ${a.filtroCriterio === 'horas' ? 'selected' : ''}>Por horas</option>` +
+          `<option value="todo" ${a.filtroCriterio === 'todo' ? 'selected' : ''}>Por todo</option>` +
+          `</select><input id="filtro" value="${E(a.filtroTexto || '')}" placeholder="${E(placeholderBusqueda(a.filtroCriterio))}"></div>` +
+          `<div class="add"><select id="addsel">${opcionesHTML(a.filtroTexto || '', a.filtroCriterio || 'nombre')}</select>` +
+          `<button class="btn sec" data-add>Añadir</button></div><label class="fld">Nombre nuevo</label><input id="nuevo" maxlength="60">` +
           `<label class="fld">Empresa del nombre nuevo</label><select id="nuevo-empresa" aria-label="Empresa del ` +
           `nombre nuevo">${opcionesEmpresaHTML('')}</select><input id="nuevo-empresa-otra" maxlength="60" ` +
           `autocomplete="off" placeholder="Nombre de la empresa" aria-label="Nombre de la empresa" hidden>` +
@@ -1570,7 +1929,7 @@
                 `${E(dia[1])}" value="${E(horario[dia[1]])}"></label>`,
             )
             .join('')}` +
-          `</div><div id="aviso-horario" class="nota"></div></details><div class="sum" ` +
+          `</div><div id="aviso-horario" class="nota"></div></details>${rotuloDobleObraHTML()}<div class="sum" ` +
           `id="resumen">${sumHTML()}</div><button class="btn pri full" data-guardar>Guardar ` +
           `jornada</button><div class="pending"><b id="pendientes" data-n="${E(pending.length)}` +
           `">Sin enviar al PC: ${uno(pending.length, 'jornada', 'jornadas')}</b>` +
@@ -2113,38 +2472,102 @@
       // bloquear) por encima de 12 h.
       function save() {
         let presentes = a.list.filter((persona) => persona.on);
-        // Rechaza guardar si no hay ningún trabajador marcado como presente en la jornada
         if (!presentes.length) return toast('No hay ninguna persona presente');
         let sinHoras = presentes.filter(
           (persona) => horarioDe(persona.nombre) === 0 && persona.horas === null,
         );
-        // En días sin horario fijado (0 h), las horas trabajadas son obligatorias y no pueden ser
-        // null
         if (sinHoras.length)
           return toast('Faltan las horas de: ' + sinHoras.map((persona) => persona.nombre).join(', '));
-        let jornada = {
-          obra: a.obra,
-          ambito: a.amb,
-          fecha: a.fecha,
-          presentes: presentes.map((persona) => {
-            let baseDia = horarioDe(persona.nombre);
+
+        let fechasAGuardar = (a.fechas && a.fechas.length) ? [...a.fechas] : [a.fecha];
+
+        // 1. Validar regla estricta de no superar 24 h en ningún día entre todas las obras
+        for (let f of fechasAGuardar) {
+          let otras = filasDeTodasLasObras();
+          otras.delete(a.obra + '|' + a.amb + '|' + f);
+          let anteriores = new Map();
+          otras.forEach((personas, clave) => {
+            if (!clave.endsWith('|' + f)) return;
+            personas.forEach((persona) =>
+              anteriores.set(
+                key(persona.nombre),
+                R((anteriores.get(key(persona.nombre)) || 0) + persona.horas),
+              ),
+            );
+          });
+          let totalesDia = presentes.map((persona) => {
+            let baseDia = horarioDe(persona.nombre, f);
             let horasPersona = R(persona.horas === null ? baseDia : persona.horas);
             return {
               nombre: persona.nombre,
-              horas: horasPersona,
-              extra: R(Math.max(0, horasPersona - baseDia)),
+              total: R((anteriores.get(key(persona.nombre)) || 0) + horasPersona),
+              fecha: f,
             };
-          }),
-          anulada: false,
-          notas: '',
-          registrado: new Date().toISOString(),
-        };
-        // Suma las horas de cada persona en todas las demás obras y ámbitos en la misma fecha
+          });
+          let excesos = totalesDia.filter((p) => p.total > 24);
+          if (excesos.length) {
+            return toast(
+              'No se guarda: ' +
+                excesos
+                  .map(
+                    (p) =>
+                      p.nombre +
+                      ' pasaría de 24 h ese día (' +
+                      N(p.total) +
+                      ' h entre todas las obras)',
+                  )
+                  .join('; '),
+            );
+          }
+        }
+
+        // 2. Guardar todas las jornadas de las fechas marcadas
+        fechasAGuardar.forEach((f) => {
+          let jornada = {
+            obra: a.obra,
+            ambito: a.amb,
+            fecha: f,
+            presentes: presentes.map((persona) => {
+              let baseDia = horarioDe(persona.nombre, f);
+              let horasPersona = R(persona.horas === null ? baseDia : persona.horas);
+              return {
+                nombre: persona.nombre,
+                horas: horasPersona,
+                extra: R(Math.max(0, horasPersona - baseDia)),
+              };
+            }),
+            anulada: false,
+            notas: '',
+            registrado: new Date().toISOString(),
+          };
+          pending = pending.filter((guardada) => jk(guardada) !== jk(jornada));
+          pending.push(jornada);
+        });
+
+        // 3. Recordar los horarios predefinidos para la próxima vez
+        let ultimas = get(K.uh, {});
+        presentes.forEach((persona) => {
+          let baseDia = horarioDe(persona.nombre, a.fecha);
+          let h = persona.horas === null ? baseDia : persona.horas;
+          if (h > 0) ultimas[key(persona.nombre)] = h;
+        });
+        set(K.uh, ultimas);
+
+        let guardada = set(K.p, pending);
+        render();
+
+        if (!guardada)
+          return toast(
+            'No se pudo guardar en este aparato (¿navegación privada o memoria llena?). Envía ya ' +
+              'la jornada al PC para no perder lo apuntado.',
+          );
+
+        // Sumar horas en todas las obras en la fecha principal para avisar si supera 12 h
         let otras = filasDeTodasLasObras();
-        otras.delete(jk(jornada));
+        otras.delete(a.obra + '|' + a.amb + '|' + a.fecha);
         let anteriores = new Map();
         otras.forEach((personas, clave) => {
-          if (!clave.endsWith('|' + jornada.fecha)) return;
+          if (!clave.endsWith('|' + a.fecha)) return;
           personas.forEach((persona) =>
             anteriores.set(
               key(persona.nombre),
@@ -2152,49 +2575,41 @@
             ),
           );
         });
-        let totales = jornada.presentes.map((persona) => ({
-          nombre: persona.nombre,
-          total: R((anteriores.get(key(persona.nombre)) || 0) + persona.horas),
-        }));
-        let excesos = totales.filter((persona) => persona.total > 24);
-        // Rechazo estricto si una persona supera 24 h en el mismo día sumando todas las obras
-        if (excesos.length)
-          return toast(
-            'No se guarda: ' +
-              excesos
-                .map(
-                  (persona) =>
-                    persona.nombre +
-                    ' pasaría de 24 h ese día (' +
-                    N(persona.total) +
-                    ' h entre todas las obras)',
-                )
-                .join('; '),
+        let totales = presentes.map((persona) => {
+          let baseDia = horarioDe(persona.nombre, a.fecha);
+          let horasPersona = R(persona.horas === null ? baseDia : persona.horas);
+          return {
+            nombre: persona.nombre,
+            total: R((anteriores.get(key(persona.nombre)) || 0) + horasPersona),
+          };
+        });
+        let avisos = totales.filter((p) => p.total > 12);
+
+        if (fechasAGuardar.length > 1) {
+          toast(
+            '✓ Guardadas ' +
+              fechasAGuardar.length +
+              ' jornadas para ' +
+              presentes.length +
+              ' ' +
+              (presentes.length === 1 ? 'operario' : 'operarios'),
           );
-        pending = pending.filter((guardada) => jk(guardada) !== jk(jornada));
-        pending.push(jornada);
-        // Guarda la jornada en localStorage (la anterior con la misma clave obra|ámbito|fecha ya se
-        // ha quitado).
-        let guardada = set(K.p, pending);
-        render();
-        if (!guardada)
-          return toast(
-            'No se pudo guardar en este aparato (¿navegación privada o memoria llena?). Envía ya ' +
-              'la jornada al PC para no perder lo apuntado.',
-          );
-        let avisos = totales.filter((persona) => persona.total > 12);
-        // Aviso preventivo si una persona supera 12 h en el día entre todas las obras, pero permite
-        // guardar
-        if (avisos.length)
-          return toast(
+        } else if (avisos.length) {
+          toast(
             'Jornada guardada. Aviso: ' +
               avisos
                 .map(
-                  (persona) => persona.nombre + ' suma ' + N(persona.total) + ' h ese día (todas las obras)',
+                  (p) =>
+                    p.nombre +
+                    ' suma ' +
+                    N(p.total) +
+                    ' h ese día (todas las obras)',
                 )
                 .join('; '),
           );
-        toast('Jornada guardada en este aparato ✓');
+        } else {
+          toast('Jornada guardada en este aparato ✓');
+        }
       }
       // ---------------------------------------------------------------------------
       // Enviar al PC: lo que hay sin enviar, el nombre del fichero y su descarga
@@ -2413,7 +2828,68 @@
         // Chips de fecha rápida: cambia la fecha a Hoy (0), Ayer (-1) o Anteayer (-2)
         if (datos.dia !== undefined) {
           a.fecha = add(today(), +datos.dia);
+          a.fechas = [a.fecha];
+          a.calMes = a.fecha.slice(0, 7);
           changed();
+          return;
+        }
+        // Día del calendario interactivo
+        if (datos.calDia) {
+          let dia = datos.calDia;
+          a.fechas = a.fechas && a.fechas.length ? a.fechas : [a.fecha];
+          if (a.fechas.includes(dia)) {
+            if (a.fechas.length > 1) {
+              a.fechas = a.fechas.filter((d) => d !== dia);
+              a.fecha = a.fechas[0];
+            }
+          } else {
+            a.fechas.push(dia);
+            a.fecha = dia;
+          }
+          changed(false);
+          return;
+        }
+        // Quitar un día marcado
+        if (datos.quitarDia) {
+          let dia = datos.quitarDia;
+          if (a.fechas && a.fechas.length > 1) {
+            a.fechas = a.fechas.filter((d) => d !== dia);
+            a.fecha = a.fechas[0];
+            changed(false);
+          }
+          return;
+        }
+        // Navegación de mes del calendario
+        if (datos.calNav) {
+          let [ano, mes] = (a.calMes || a.fecha.slice(0, 7)).split('-').map(Number);
+          mes += +datos.calNav;
+          if (mes < 1) { mes = 12; ano--; }
+          if (mes > 12) { mes = 1; ano++; }
+          let z = (n) => String(n).padStart(2, '0');
+          a.calMes = `${ano}-${z(mes)}`;
+          render();
+          return;
+        }
+        // Limpiar días: dejar solo hoy
+        if (datos.limpiarDias !== undefined) {
+          a.fecha = today();
+          a.fechas = [a.fecha];
+          a.calMes = a.fecha.slice(0, 7);
+          changed();
+          return;
+        }
+        // Confirmar aviso de operario en dos obras el mismo día
+        if (datos.dobleObraSi !== undefined) {
+          a.dobleObraConfirmada = true;
+          a.avisoDobleObra = null;
+          save();
+          return;
+        }
+        // Cancelar aviso de operario en dos obras
+        if (datos.dobleObraNo !== undefined) {
+          a.avisoDobleObra = null;
+          a.dobleObraConfirmada = false;
+          render();
           return;
         }
         // Botones de acción masiva: marca o desmarca a todos los trabajadores de la lista
@@ -2709,6 +3185,15 @@
           changed();
           return;
         }
+        // Selector de criterio de búsqueda
+        if (campo.id === 'filtro-criterio') {
+          a.filtroCriterio = campo.value;
+          let fi = document.querySelector('#filtro');
+          if (fi) fi.placeholder = placeholderBusqueda(campo.value);
+          let addsel = document.querySelector('#addsel');
+          if (addsel) addsel.innerHTML = opcionesHTML(fi?.value || '', campo.value);
+          return;
+        }
         // Cambio manual del selector de fecha: valida el formato YYYY-MM-DD y actualiza la lista
         if (campo.id === 'fecha') {
           if (!fechaOk(campo.value)) {
@@ -2716,6 +3201,8 @@
             return;
           }
           a.fecha = campo.value;
+          a.fechas = [a.fecha];
+          a.calMes = a.fecha.slice(0, 7);
           changed();
           return;
         }
@@ -2765,8 +3252,9 @@
         }
         // Filtrado dinámico del desplegable de trabajadores disponibles según el texto tecleado
         if (evento.target.id === 'filtro') {
+          a.filtroTexto = evento.target.value;
           let addsel = document.querySelector('#addsel');
-          if (addsel) addsel.innerHTML = opcionesHTML(evento.target.value);
+          if (addsel) addsel.innerHTML = opcionesHTML(evento.target.value, a.filtroCriterio || 'nombre');
         }
       });
       document.addEventListener('keydown', (evento) => {

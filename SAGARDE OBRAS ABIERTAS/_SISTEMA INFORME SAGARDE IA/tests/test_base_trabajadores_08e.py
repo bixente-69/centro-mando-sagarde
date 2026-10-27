@@ -230,7 +230,7 @@ class TestLaPestanaEnElNavegador(unittest.TestCase):
             opciones = pg.eval_on_selector_all('#addsel option', 'o=>o.map(x=>x.textContent.trim().replace(/ \\(ya está\\)$/, ""))')
             nav.close()
         self.assertEqual([], errores, 'la tablet no debe dar errores con claves de más en el catálogo')
-        self.assertEqual(['Ana', 'Beto', 'Carla Ruiz', 'Dani'], sorted(opciones),
+        self.assertEqual(['Ana · Manueles', 'Beto', 'Carla Ruiz · CATERSYSTEM', 'Dani · Dani @AUT'], sorted(opciones),
                          'sale toda la base activa, sin la persona de baja ni la ficha juntada («Beto B»)')
 
     def test_ningun_texto_de_la_pestana_lleva_palabras_de_programador(self):

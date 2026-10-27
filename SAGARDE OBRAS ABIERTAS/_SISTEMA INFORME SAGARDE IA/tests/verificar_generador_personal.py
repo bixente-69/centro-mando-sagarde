@@ -2874,8 +2874,8 @@ with sync_playwright() as p:
         px = e.pg.eval_on_selector('#v-app .row[data-nombre="Ana"] .emp', 'x=>[parseFloat(getComputedStyle(x).fontSize), getComputedStyle(x).color]')
         px_nombre = e.pg.eval_on_selector('#v-app .row[data-nombre="Ana"] .nm', 'x=>parseFloat(getComputedStyle(x).fontSize)')
         ok(px[0] < px_nombre and px[0] >= 11.5, 'T120 la empresa es más pequeña que el nombre pero se lee: %s frente a %s' % (px, px_nombre))
-        ok(emp_fila(e, 'Ana') == 'Manueles' and e.pg.evaluate("document.querySelector('#addsel').innerText").count('Manueles') == 0,
-           'T120 el desplegable de la base no repite la empresa')
+        ok(emp_fila(e, 'Ana') == 'Manueles' and e.pg.evaluate("document.querySelector('#addsel').innerText").count('Manueles') >= 1,
+           'T120 el desplegable de la base muestra la empresa junto al nombre')
     con_escena('T120', est10(), t120)
 
     # --- T121: el desplegable de «Nombre nuevo»: Sin empresa, las usadas (una vez cada una, ordenadas), Sagarde y «Otra empresa…»
