@@ -1,0 +1,139 @@
+{
+ "version": 1,
+ "obra": "mungia",
+ "jornada_base_h": 7.5,
+ "horario_semanal": {
+  "lun": 7.5,
+  "mar": 7.5,
+  "mie": 7.5,
+  "jue": 7.5,
+  "vie": 7.5,
+  "sab": 0,
+  "dom": 0
+ },
+ "excepciones_horario": {
+  "T0004": {
+   "lun": 8,
+   "mar": 8,
+   "mie": 8,
+   "jue": 8,
+   "vie": 8
+  },
+  "T0005": {
+   "lun": 8,
+   "mar": 8,
+   "mie": 8,
+   "jue": 8,
+   "vie": 8
+  },
+  "T0006": {
+   "lun": 8,
+   "mar": 8,
+   "mie": 8,
+   "jue": 8,
+   "vie": 8
+  }
+ },
+ "jornadas": [
+  {
+   "fecha": "2026-10-27",
+   "ambito": "garaje",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0004",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0005",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0006",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:27:35.256Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-28",
+   "ambito": "garaje",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0004",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0005",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0006",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:27:35.256Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-29",
+   "ambito": "garaje",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0004",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0005",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0006",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:27:35.257Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-30",
+   "ambito": "garaje",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0004",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0005",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0006",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:27:35.257Z",
+   "origen": "movil"
+  }
+ ]
+}

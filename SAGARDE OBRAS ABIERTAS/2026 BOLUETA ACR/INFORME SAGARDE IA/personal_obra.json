@@ -1,0 +1,338 @@
+{
+ "version": 1,
+ "obra": "bolueta",
+ "jornada_base_h": 7.5,
+ "horario_semanal": {
+  "lun": 7.5,
+  "mar": 7.5,
+  "mie": 7.5,
+  "jue": 7.5,
+  "vie": 7.5,
+  "sab": 0,
+  "dom": 0
+ },
+ "excepciones_horario": {
+  "T0002": {
+   "lun": 9,
+   "mar": 9,
+   "mie": 9,
+   "jue": 9,
+   "vie": 7
+  },
+  "T0007": {
+   "lun": 9,
+   "mar": 9,
+   "mie": 9,
+   "jue": 9,
+   "vie": 7
+  },
+  "T0008": {
+   "lun": 9,
+   "mar": 9,
+   "mie": 9,
+   "jue": 9,
+   "vie": 7
+  },
+  "T0009": {
+   "lun": 9,
+   "mar": 9,
+   "mie": 9,
+   "jue": 9,
+   "vie": 7
+  },
+  "T0010": {
+   "lun": 9,
+   "mar": 9,
+   "mie": 9,
+   "jue": 9,
+   "vie": 7
+  },
+  "T0011": {
+   "lun": 9,
+   "mar": 9,
+   "mie": 9,
+   "jue": 9,
+   "vie": 7
+  },
+  "T0012": {
+   "lun": 9,
+   "mar": 9,
+   "mie": 9,
+   "jue": 9,
+   "vie": 7
+  },
+  "T0013": {
+   "lun": 9,
+   "mar": 9,
+   "mie": 9,
+   "jue": 9,
+   "vie": 7
+  },
+  "T0014": {
+   "lun": 9,
+   "mar": 9,
+   "mie": 9,
+   "jue": 9,
+   "vie": 7
+  },
+  "T0015": {
+   "lun": 9,
+   "mar": 9,
+   "mie": 9,
+   "jue": 9,
+   "vie": 7
+  }
+ },
+ "jornadas": [
+  {
+   "fecha": "2026-10-19",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0002",
+     "horas": 7.5,
+     "extra": 0
+    },
+    {
+     "id": "T0013",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0014",
+     "horas": 9,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T14:06:39.952Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-20",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0002",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0013",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0014",
+     "horas": 9,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T14:24:21.430Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-26",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0007",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0008",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0009",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0010",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0011",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0012",
+     "horas": 9,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:24:07.717Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-27",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0007",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0008",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0009",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0010",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0011",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0012",
+     "horas": 9,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:24:07.718Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-28",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0007",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0008",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0009",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0010",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0011",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0012",
+     "horas": 9,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:24:07.718Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-29",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0007",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0008",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0009",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0010",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0011",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0012",
+     "horas": 9,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:24:07.718Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-30",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0007",
+     "horas": 7,
+     "extra": 0
+    },
+    {
+     "id": "T0008",
+     "horas": 7,
+     "extra": 0
+    },
+    {
+     "id": "T0009",
+     "horas": 7,
+     "extra": 0
+    },
+    {
+     "id": "T0010",
+     "horas": 7,
+     "extra": 0
+    },
+    {
+     "id": "T0011",
+     "horas": 7,
+     "extra": 0
+    },
+    {
+     "id": "T0012",
+     "horas": 7,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:24:07.718Z",
+   "origen": "movil"
+  }
+ ]
+}

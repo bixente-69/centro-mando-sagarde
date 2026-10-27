@@ -46,6 +46,20 @@
    "mie": 8,
    "jue": 8,
    "vie": 8
+  },
+  "T0013": {
+   "lun": 8,
+   "mar": 8,
+   "mie": 8,
+   "jue": 8,
+   "vie": 8
+  },
+  "T0014": {
+   "lun": 8,
+   "mar": 8,
+   "mie": 8,
+   "jue": 8,
+   "vie": 8
   }
  },
  "jornadas": [
@@ -297,6 +311,146 @@
     }
    ],
    "registrado": "2026-10-27T05:59:35.324Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-27",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0001",
+     "horas": 7.5,
+     "extra": 0
+    },
+    {
+     "id": "T0002",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0003",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0013",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0014",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:29:26.859Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-28",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0001",
+     "horas": 7.5,
+     "extra": 0
+    },
+    {
+     "id": "T0002",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0003",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0013",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0014",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:29:26.859Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-29",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0001",
+     "horas": 7.5,
+     "extra": 0
+    },
+    {
+     "id": "T0002",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0003",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0013",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0014",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:29:26.859Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-10-30",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0001",
+     "horas": 7.5,
+     "extra": 0
+    },
+    {
+     "id": "T0002",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0003",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0013",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0014",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-27T19:29:26.860Z",
    "origen": "movil"
   }
  ]

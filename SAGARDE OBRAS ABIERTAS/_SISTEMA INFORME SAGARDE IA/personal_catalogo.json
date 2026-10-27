@@ -69,6 +69,87 @@
    "nombres_anteriores": [
     "Nestor (Manueles)"
    ]
+  },
+  {
+   "id": "T0007",
+   "nombre": "Danger (M)",
+   "categoria": "",
+   "empresa": "MARIOS",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0008",
+   "nombre": "Juan Carlos (M)",
+   "categoria": "",
+   "empresa": "MARIOS",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0009",
+   "nombre": "Alexey (M)",
+   "categoria": "",
+   "empresa": "MARIOS",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0010",
+   "nombre": "Marko (M)",
+   "categoria": "",
+   "empresa": "MARIOS",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0011",
+   "nombre": "Libanny (M)",
+   "categoria": "",
+   "empresa": "MARIOS",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0012",
+   "nombre": "William (M)",
+   "categoria": "",
+   "empresa": "MARIOS",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0013",
+   "nombre": "Zuleiman",
+   "categoria": "",
+   "empresa": "CATERSYSTEM",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0014",
+   "nombre": "Hssain",
+   "categoria": "",
+   "empresa": "CATERSYSTEM",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0015",
+   "nombre": "Mario Eduardo (M)",
+   "categoria": "",
+   "empresa": "MARIOS",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null
   }
  ]
 }
