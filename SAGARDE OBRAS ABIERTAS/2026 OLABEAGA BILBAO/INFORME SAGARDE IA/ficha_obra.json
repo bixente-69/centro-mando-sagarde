@@ -9,10 +9,16 @@
     "carpeta": "2026 OLABEAGA BILBAO",
     "tipo_obra": "viviendas",
     "_meta": {
-      "actualizado": "30/09/2026 22:31",
+      "actualizado": "25/10/2026 15:59",
       "origen": "hoja de alta REVISION 2026 OLABEAGA 27092026.html; direccion: INFORME_TECNICO_OBRA_OLABEAGA.md, lineas 17 y 185"
     },
-    "direccion": "Camino de la Ventosa nº 3, Barrio Olabeaga (Basurto-Zorroza), 48013 Bilbao (Bizkaia)"
+    "direccion": "Camino de la Ventosa nº 3, Barrio Olabeaga (Basurto-Zorroza), 48013 Bilbao (Bizkaia). GPS: 43.264558, -2.955062",
+    "cliente": "GRUPO EIBAR",
+    "promotora": "GRUPO EIBAR (Eibar Residencial / Promociones Grupo Eibar)",
+    "constructora": "GRUPO EIBAR",
+    "jefe_obra": "[No localizado en documentación — pendiente de confirmar]",
+    "fecha_inicio": "Noviembre 2025 (Puesta a tierra 19/11/2025; fase garajes en curso 2026)",
+    "fecha_fin": "[No localizado en documentación — pendiente de confirmar]"
   },
   "estructura": {
     "bloques": [
@@ -9356,32 +9362,40 @@
       "ubicaciones_nuevas": 0,
       "ubicaciones_retiradas": 0,
       "celdas_retiradas": 0
+    },
+    {
+      "id": "rev_21102026",
+      "fecha": "21/10/2026",
+      "procesada": "25/10/2026 15:59",
+      "celdas": 1295,
+      "cambios": 0
     }
   ],
   "dudas": [],
   "materiales": {
     "ultimo_mes": "Octubre26",
-    "ultima_fecha": "21/10/2026",
-    "dias_desde": 0,
+    "ultima_fecha": "26/10/2026",
+    "dias_desde": 3,
     "meses": [
       "Octubre26"
     ],
-    "n_items": 35,
+    "n_items": 39,
     "aviso": null,
     "_meta": {
-      "actualizado": "21/10/2026 15:40"
+      "actualizado": "25/10/2026 15:59"
     }
   },
   "documentos": {
-    "total": 27,
+    "total": 40,
     "por_categoria": {
       "Excel": 2,
-      "Otros": 12,
-      "PDF": 10,
+      "Imágenes": 6,
+      "Otros": 14,
+      "PDF": 15,
       "Planos y gráfica": 3
     },
     "_meta": {
-      "actualizado": "20/10/2026 16:05"
+      "actualizado": "25/10/2026 15:59"
     }
   },
   "contactos": []

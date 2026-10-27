@@ -1,0 +1,32 @@
+{
+ "version": 1,
+ "obra": "olabeaga",
+ "jornada_base_h": 7.5,
+ "horario_semanal": {
+  "lun": 7.5,
+  "mar": 7.5,
+  "mie": 7.5,
+  "jue": 7.5,
+  "vie": 7.5,
+  "sab": 0,
+  "dom": 0
+ },
+ "excepciones_horario": {},
+ "jornadas": [
+  {
+   "fecha": "2026-10-23",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0001",
+     "horas": 7.5,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-10-25T14:53:38.047Z",
+   "origen": "movil"
+  }
+ ]
+}

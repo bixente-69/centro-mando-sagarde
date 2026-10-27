@@ -1,0 +1,14 @@
+{
+ "version": 1,
+ "trabajadores": [
+  {
+   "id": "T0001",
+   "nombre": "Asensio",
+   "categoria": "",
+   "empresa": "",
+   "activo": true,
+   "alta": "2026-10-25",
+   "fusionado_en": null
+  }
+ ]
+}

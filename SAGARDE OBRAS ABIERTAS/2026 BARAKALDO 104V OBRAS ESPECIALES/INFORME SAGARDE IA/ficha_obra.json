@@ -9,9 +9,16 @@
     "carpeta": "2026 BARAKALDO 104V OBRAS ESPECIALES",
     "tipo_obra": "viviendas",
     "_meta": {
-      "actualizado": "08/10/2026 18:42",
+      "actualizado": "27/10/2026 06:33",
       "origen": "hoja de alta REVISION 104V BARAKALDO OBRAS ESPECIALES 08102026.html"
-    }
+    },
+    "direccion": "Bloque 1, Unidad de Ejecución UE-12 Rontegui, Barakaldo (Bizkaia), CP 48903. GPS: 43°16'48\" N, 2°58'12\" O",
+    "cliente": "[No localizado en documentación — pendiente de confirmar] (la carpeta se llama \"OBRAS ESPECIALES\"; los anexos no dicen si es la constructora)",
+    "promotora": "RIBERA DE BARAKALDO, S. COOP. — CIF F-44708196 — Avda. Sabino Arana nº 47, bajo, 48013 Bilbao",
+    "constructora": "[No localizado en documentación — pendiente de confirmar]",
+    "jefe_obra": "[No localizado en documentación — pendiente de confirmar]",
+    "fecha_inicio": "[No localizado en documentación — pendiente de confirmar] (proyecto de ejecución feb-2025; planos de instalaciones rev01 abril 2025; el Estudio de Seguridad y Salud estima 28 meses de obra y 35 trabajadores en punta)",
+    "fecha_fin": "[No localizado en documentación — pendiente de confirmar] (28 meses estimados en el Estudio de Seguridad y Salud, sin fecha de inicio)"
   },
   "estructura": {
     "bloques": [
@@ -1179,7 +1186,8 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Inicio de obra",
-        "orden": 10
+        "orden": 10,
+        "deps": []
       },
       {
         "id": "rozas_timbres",
@@ -1187,7 +1195,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Inicio de obra",
-        "orden": 20
+        "orden": 20,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "montante_electrica",
@@ -1195,7 +1209,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Infraestructura",
-        "orden": 30
+        "orden": 30,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "montante_teleco",
@@ -1203,7 +1223,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Infraestructura",
-        "orden": 40
+        "orden": 40,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "montante_sscc",
@@ -1211,7 +1237,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Infraestructura",
-        "orden": 50
+        "orden": 50,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "tubeado_zzcc",
@@ -1219,7 +1251,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Infraestructura",
-        "orden": 60
+        "orden": 60,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cableado_zzcc",
@@ -1227,7 +1265,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Infraestructura",
-        "orden": 70
+        "orden": 70,
+        "deps": [
+          {
+            "id": "tubeado_zzcc",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "suelo_radiante",
@@ -1235,7 +1279,13 @@
         "ambito": "vivienda",
         "propiedad": "coordinacion",
         "fase": "Obra previa",
-        "orden": 80
+        "orden": 80,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "suelo_recrecido",
@@ -1243,7 +1293,13 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Obra previa",
-        "orden": 90
+        "orden": 90,
+        "deps": [
+          {
+            "id": "suelo_radiante",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "perfilado_pladur",
@@ -1251,7 +1307,13 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Pladur",
-        "orden": 100
+        "orden": 100,
+        "deps": [
+          {
+            "id": "suelo_recrecido",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "primera_cara_pladur",
@@ -1259,7 +1321,13 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Pladur",
-        "orden": 110
+        "orden": 110,
+        "deps": [
+          {
+            "id": "perfilado_pladur",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cuadros_presentados",
@@ -1267,7 +1335,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 120
+        "orden": 120,
+        "deps": [
+          {
+            "id": "tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "tubeado",
@@ -1275,7 +1349,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 130
+        "orden": 130,
+        "deps": [
+          {
+            "id": "primera_cara_pladur",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cableado",
@@ -1283,7 +1363,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 140
+        "orden": 140,
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "telecableado",
@@ -1291,7 +1377,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 150
+        "orden": 150,
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "portero",
@@ -1299,7 +1391,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 160
+        "orden": 160,
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "termostatos",
@@ -1307,7 +1405,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 170
+        "orden": 170,
+        "deps": [
+          {
+            "id": "tubeado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "segunda_cara_pladur",
@@ -1315,7 +1419,21 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Pladur",
-        "orden": 180
+        "orden": 180,
+        "deps": [
+          {
+            "id": "primera_cara_pladur",
+            "minimo": 1
+          },
+          {
+            "id": "cableado",
+            "minimo": 1
+          },
+          {
+            "id": "telecableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "doblar_cajas",
@@ -1323,7 +1441,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Recuperación tras Pladur",
-        "orden": 190
+        "orden": 190,
+        "deps": [
+          {
+            "id": "segunda_cara_pladur",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "embornado",
@@ -1331,7 +1455,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Conexiones",
-        "orden": 200
+        "orden": 200,
+        "deps": [
+          {
+            "id": "cableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "telembornado",
@@ -1339,7 +1469,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Conexiones",
-        "orden": 210
+        "orden": 210,
+        "deps": [
+          {
+            "id": "telecableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "derivacion_individual",
@@ -1347,7 +1483,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Cierre técnico",
-        "orden": 220
+        "orden": 220,
+        "deps": [
+          {
+            "id": "montante_electrica",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cuadro_mecanizado",
@@ -1355,7 +1497,17 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Cierre técnico",
-        "orden": 230
+        "orden": 230,
+        "deps": [
+          {
+            "id": "cuadros_presentados",
+            "minimo": 1
+          },
+          {
+            "id": "cableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "techos_zzcc",
@@ -1363,7 +1515,8 @@
         "ambito": "zona_comun",
         "propiedad": "externo",
         "fase": "Acabados previos",
-        "orden": 237
+        "orden": 237,
+        "deps": []
       },
       {
         "id": "techos",
@@ -1371,7 +1524,13 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Acabados previos",
-        "orden": 240
+        "orden": 240,
+        "deps": [
+          {
+            "id": "segunda_cara_pladur",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "enchapado",
@@ -1379,7 +1538,13 @@
         "ambito": "vivienda",
         "propiedad": "externo",
         "fase": "Acabados previos",
-        "orden": 250
+        "orden": 250,
+        "deps": [
+          {
+            "id": "segunda_cara_pladur",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "pintura_primera",
@@ -1387,7 +1552,17 @@
         "ambito": "dinamico",
         "propiedad": "externo",
         "fase": "Pintura",
-        "orden": 260
+        "orden": 260,
+        "deps": [
+          {
+            "id": "techos",
+            "minimo": 1
+          },
+          {
+            "id": "enchapado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "mecanizado",
@@ -1395,7 +1570,17 @@
         "ambito": "dinamico",
         "propiedad": "propio",
         "fase": "Mecanismos",
-        "orden": 270
+        "orden": 270,
+        "deps": [
+          {
+            "id": "doblar_cajas",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_primera",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "telemecanizado",
@@ -1403,7 +1588,21 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Mecanismos",
-        "orden": 280
+        "orden": 280,
+        "deps": [
+          {
+            "id": "doblar_cajas",
+            "minimo": 1
+          },
+          {
+            "id": "telecableado",
+            "minimo": 1
+          },
+          {
+            "id": "pintura_primera",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "pintura_segunda",
@@ -1411,7 +1610,13 @@
         "ambito": "dinamico",
         "propiedad": "externo",
         "fase": "Pintura final",
-        "orden": 290
+        "orden": 290,
+        "deps": [
+          {
+            "id": "pintura_primera",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "placas_tapas",
@@ -1419,7 +1624,25 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Remates finales",
-        "orden": 300
+        "orden": 300,
+        "deps": [
+          {
+            "id": "pintura_segunda",
+            "minimo": 1
+          },
+          {
+            "id": "mecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "telemecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "cuadro_mecanizado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "fachada_terminada",
@@ -1427,7 +1650,8 @@
         "ambito": "edificio",
         "propiedad": "externo",
         "fase": "Fachada",
-        "orden": 305
+        "orden": 305,
+        "deps": []
       },
       {
         "id": "apliques",
@@ -1435,7 +1659,13 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Remates exteriores",
-        "orden": 310
+        "orden": 310,
+        "deps": [
+          {
+            "id": "fachada_terminada",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "agujeros_iluminacion_zzcc",
@@ -1443,7 +1673,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Iluminación final",
-        "orden": 315
+        "orden": 315,
+        "deps": [
+          {
+            "id": "techos_zzcc",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "pintura_zzcc",
@@ -1451,7 +1687,13 @@
         "ambito": "zona_comun",
         "propiedad": "externo",
         "fase": "Pintura ZZCC",
-        "orden": 318
+        "orden": 318,
+        "deps": [
+          {
+            "id": "agujeros_iluminacion_zzcc",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "casquillos_bombillas",
@@ -1459,7 +1701,21 @@
         "ambito": "vivienda",
         "propiedad": "propio",
         "fase": "Entrega",
-        "orden": 320
+        "orden": 320,
+        "deps": [
+          {
+            "id": "pintura_segunda",
+            "minimo": 1
+          },
+          {
+            "id": "cuadro_mecanizado",
+            "minimo": 1
+          },
+          {
+            "id": "derivacion_individual",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "iluminacion_rellanos",
@@ -1467,7 +1723,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Entrega",
-        "orden": 330
+        "orden": 330,
+        "deps": [
+          {
+            "id": "pintura_zzcc",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "fv_paneles_instalacion",
@@ -1475,7 +1737,8 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Fotovoltaica",
-        "orden": 400
+        "orden": 400,
+        "deps": []
       },
       {
         "id": "fv_paneles_cableado",
@@ -1483,7 +1746,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Fotovoltaica",
-        "orden": 401
+        "orden": 401,
+        "deps": [
+          {
+            "id": "fv_paneles_instalacion",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "fv_paneles_tierra",
@@ -1491,7 +1760,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Fotovoltaica",
-        "orden": 402
+        "orden": 402,
+        "deps": [
+          {
+            "id": "fv_paneles_cableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "fv_strings_cableado",
@@ -1499,7 +1774,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Fotovoltaica",
-        "orden": 403
+        "orden": 403,
+        "deps": [
+          {
+            "id": "fv_paneles_tierra",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "fv_equipos_protecciones",
@@ -1507,7 +1788,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Fotovoltaica",
-        "orden": 404
+        "orden": 404,
+        "deps": [
+          {
+            "id": "fv_strings_cableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "fv_puesta_marcha",
@@ -1515,7 +1802,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Fotovoltaica",
-        "orden": 405
+        "orden": 405,
+        "deps": [
+          {
+            "id": "fv_equipos_protecciones",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cub_soporte_antena",
@@ -1523,7 +1816,8 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Antena/pararrayos",
-        "orden": 410
+        "orden": 410,
+        "deps": []
       },
       {
         "id": "cub_soporte_pararrayos",
@@ -1531,7 +1825,8 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Antena/pararrayos",
-        "orden": 411
+        "orden": 411,
+        "deps": []
       },
       {
         "id": "cub_antena_instalacion",
@@ -1539,7 +1834,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Antena/pararrayos",
-        "orden": 412
+        "orden": 412,
+        "deps": [
+          {
+            "id": "cub_soporte_antena",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cub_pararrayos_instalacion",
@@ -1547,7 +1848,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Antena/pararrayos",
-        "orden": 413
+        "orden": 413,
+        "deps": [
+          {
+            "id": "cub_soporte_pararrayos",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cub_antena_cableado",
@@ -1555,7 +1862,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Antena/pararrayos",
-        "orden": 414
+        "orden": 414,
+        "deps": [
+          {
+            "id": "cub_antena_instalacion",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cub_pararrayos_cableado",
@@ -1563,7 +1876,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Antena/pararrayos",
-        "orden": 415
+        "orden": 415,
+        "deps": [
+          {
+            "id": "cub_pararrayos_instalacion",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "cub_antena_tierra",
@@ -1571,7 +1890,13 @@
         "ambito": "edificio",
         "propiedad": "propio",
         "fase": "Cubierta — Antena/pararrayos",
-        "orden": 416
+        "orden": 416,
+        "deps": [
+          {
+            "id": "cub_antena_cableado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_tabicado",
@@ -1579,7 +1904,8 @@
         "ambito": "zona_comun",
         "propiedad": "externo",
         "fase": "Obra civil",
-        "orden": 500
+        "orden": 500,
+        "deps": []
       },
       {
         "id": "garaje_lucido",
@@ -1587,7 +1913,13 @@
         "ambito": "zona_comun",
         "propiedad": "externo",
         "fase": "Obra civil",
-        "orden": 505
+        "orden": 505,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_falso_techo",
@@ -1595,7 +1927,13 @@
         "ambito": "zona_comun",
         "propiedad": "externo",
         "fase": "Obra civil",
-        "orden": 510
+        "orden": 510,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_tubeado_emp",
@@ -1603,7 +1941,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 520
+        "orden": 520,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_cableado_emp",
@@ -1611,7 +1955,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 525
+        "orden": 525,
+        "deps": [
+          {
+            "id": "garaje_tubeado_emp",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_tubeado_visto",
@@ -1619,7 +1969,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 530
+        "orden": 530,
+        "deps": [
+          {
+            "id": "garaje_lucido",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_cableado_visto",
@@ -1627,7 +1983,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Instalación interior",
-        "orden": 535
+        "orden": 535,
+        "deps": [
+          {
+            "id": "garaje_tubeado_visto",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_pintura_1_recinto",
@@ -1635,7 +1997,13 @@
         "ambito": "zona_comun",
         "propiedad": "externo",
         "fase": "Pintura",
-        "orden": 550
+        "orden": 550,
+        "deps": [
+          {
+            "id": "garaje_lucido",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_alum_fijo_coloc_recinto",
@@ -1643,7 +2011,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Equipos",
-        "orden": 560
+        "orden": 560,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_enchufe_coloc",
@@ -1651,7 +2025,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Equipos",
-        "orden": 566
+        "orden": 566,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_cuadro_tubeado_cableado",
@@ -1659,7 +2039,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Cuadros",
-        "orden": 580
+        "orden": 580,
+        "deps": [
+          {
+            "id": "garaje_tabicado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_cuadro_colocacion",
@@ -1667,7 +2053,17 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Cuadros",
-        "orden": 585
+        "orden": 585,
+        "deps": [
+          {
+            "id": "garaje_cuadro_tubeado_cableado",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_pintura_2_recinto",
@@ -1675,7 +2071,13 @@
         "ambito": "zona_comun",
         "propiedad": "externo",
         "fase": "Pintura",
-        "orden": 587
+        "orden": 587,
+        "deps": [
+          {
+            "id": "garaje_pintura_1_recinto",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_cuadro_embornado",
@@ -1683,7 +2085,17 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Cuadros",
-        "orden": 590
+        "orden": 590,
+        "deps": [
+          {
+            "id": "garaje_cuadro_colocacion",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_cuadro_rotulacion",
@@ -1691,7 +2103,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Cuadros",
-        "orden": 595
+        "orden": 595,
+        "deps": [
+          {
+            "id": "garaje_cuadro_embornado",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_cuadro_equipo_tubeado_cableado",
@@ -1699,7 +2117,13 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Cuadros",
-        "orden": 600
+        "orden": 600,
+        "deps": [
+          {
+            "id": "garaje_cuadro_colocacion",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_alum_fijo_embornado_recinto",
@@ -1707,7 +2131,17 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Equipos",
-        "orden": 620
+        "orden": 620,
+        "deps": [
+          {
+            "id": "garaje_alum_fijo_coloc_recinto",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ]
       },
       {
         "id": "garaje_enchufe_embornado",
@@ -1715,7 +2149,17 @@
         "ambito": "zona_comun",
         "propiedad": "propio",
         "fase": "Equipos",
-        "orden": 626
+        "orden": 626,
+        "deps": [
+          {
+            "id": "garaje_enchufe_coloc",
+            "minimo": 1
+          },
+          {
+            "id": "garaje_pintura_2_recinto",
+            "minimo": 1
+          }
+        ]
       }
     ],
     "_meta": {
@@ -22435,10 +22879,29 @@
       "ubicaciones_nuevas": 0,
       "ubicaciones_retiradas": 0,
       "celdas_retiradas": 0
+    },
+    {
+      "id": "rev_08102026",
+      "fecha": "08/10/2026",
+      "procesada": "27/10/2026 06:33",
+      "celdas": 3922,
+      "cambios": 0
     }
   ],
   "dudas": [],
   "materiales": {},
-  "documentos": {},
+  "documentos": {
+    "total": 200,
+    "por_categoria": {
+      "Excel": 1,
+      "Imágenes": 141,
+      "Otros": 4,
+      "PDF": 44,
+      "Planos y gráfica": 10
+    },
+    "_meta": {
+      "actualizado": "27/10/2026 06:33"
+    }
+  },
   "contactos": []
 }
