@@ -9,6 +9,66 @@
    "activo": true,
    "alta": "2026-10-25",
    "fusionado_en": null
+  },
+  {
+   "id": "T0002",
+   "nombre": "Wilson",
+   "categoria": "",
+   "empresa": "CATERSYSTEM",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null,
+   "nombres_anteriores": [
+    "Wilson @ CATERSYSTEM"
+   ]
+  },
+  {
+   "id": "T0003",
+   "nombre": "Javi",
+   "categoria": "",
+   "empresa": "CATERSYSTEM",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null,
+   "nombres_anteriores": [
+    "Javi @ CATERSYSTEM"
+   ]
+  },
+  {
+   "id": "T0004",
+   "nombre": "Alejo",
+   "categoria": "",
+   "empresa": "Manueles",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null,
+   "nombres_anteriores": [
+    "Alejo (Manueles)"
+   ]
+  },
+  {
+   "id": "T0005",
+   "nombre": "Manuel",
+   "categoria": "",
+   "empresa": "Manueles",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null,
+   "nombres_anteriores": [
+    "Manuel (Manueles)"
+   ]
+  },
+  {
+   "id": "T0006",
+   "nombre": "Nestor",
+   "categoria": "",
+   "empresa": "Manueles",
+   "activo": true,
+   "alta": "2026-10-27",
+   "fusionado_en": null,
+   "nombres_anteriores": [
+    "Nestor (Manueles)"
+   ]
   }
  ]
 }
