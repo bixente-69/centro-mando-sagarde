@@ -1145,9 +1145,11 @@
       // Horario propio de esa persona publicado por el PC ({} si no tiene).
       function publicadoPropio(nombre, id = a.obra) {
         let publicados = state?.obras?.[id]?.excepciones_horario;
-        if (!objetoSimple(publicados)) return {};
-        let entrada = Object.entries(publicados).find(([publicado]) => key(publicado) === key(nombre));
-        return entrada && objetoSimple(entrada[1]) ? entrada[1] : {};
+        // Si no tiene horario especial de esta obra, usa su horario preferido de la base.
+        let entradaObra = objetoSimple(publicados) && Object.entries(publicados).find(([publicado]) => key(publicado) === key(nombre));
+        if (entradaObra && objetoSimple(entradaObra[1])) return entradaObra[1];
+        let ficha = (state?.catalogo || []).find((c) => key(c.nombre) === key(nombre));
+        return ficha && objetoSimple(ficha.horario_preferido) ? ficha.horario_preferido : {};
       }
       // Horario propio recordado en este aparato: null si no hay nada; {} significa «quitado» y
       // manda sobre lo publicado.

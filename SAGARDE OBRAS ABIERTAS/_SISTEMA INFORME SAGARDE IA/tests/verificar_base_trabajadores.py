@@ -206,7 +206,7 @@ def ejecutar_escenario_principal(browser, motor, tz, carpetas):
                 if (tdNom && tdNom.firstChild) {
                     nombre = tdNom.firstChild.textContent.trim();
                 }
-                const empEl = tdNom ? tdNom.querySelector('.nom-emp') : null;
+                const empEl = tr.querySelector('td.b-emp .nom-emp') || (tdNom ? tdNom.querySelector('.nom-emp') : null);
                 const empresa = empEl ? empEl.textContent.trim() : '';
                 const etiquetas = tdNom
                     ? Array.from(tdNom.querySelectorAll('.chip')).map(c => c.textContent.trim())

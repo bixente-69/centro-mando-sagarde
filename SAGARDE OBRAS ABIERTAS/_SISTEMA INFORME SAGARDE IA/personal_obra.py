@@ -19,12 +19,15 @@ HOR = {"lun": 7.5, "mar": 7.5, "mie": 7.5, "jue": 7.5, "vie": 7.5, "sab": 0, "do
 # presente guardado) los usa `comprobar` para señalar campos fuera del esquema.
 LK = {
     "tipo", "version", "obra", "horario_semanal", "excepciones_horario", "jornadas",
-    "dispositivo", "renombres", "altas", "empresas",
+    "dispositivo", "renombres", "altas", "empresas", "categorias", "horarios_preferidos",
 }
 JK = {"ambito", "fecha", "presentes", "anulada", "notas", "registrado"}
 PK = {"nombre", "horas", "extra"}
 CK = {"version", "trabajadores"}
-TK = {"id", "nombre", "categoria", "empresa", "activo", "alta", "fusionado_en", "nombres_anteriores"}
+TK = {
+    "id", "nombre", "categoria", "empresa", "activo", "alta",
+    "fusionado_en", "nombres_anteriores", "horario_preferido",
+}
 OK = {"version", "obra", "jornada_base_h", "horario_semanal", "excepciones_horario", "jornadas"}
 GJK = {"fecha", "ambito", "anulada", "notas", "presentes", "registrado", "origen"}
 GPK = {"id", "horas", "extra"}
@@ -361,6 +364,20 @@ def validar_lote(lote, obras):
         )
     ):
         e.append("empresa_invalida")
+    categorias = lote.get("categorias")
+    if "categorias" in lote and (
+        not isinstance(categorias, list)
+        or any(
+            not isinstance(x, dict)
+            or set(x) != {"nombre", "categoria"}
+            or not nombre_publicable(x.get("nombre"))
+            or not empresa_valida(x.get("categoria"))
+            for x in categorias
+        )
+    ):
+        e.append("categoria_invalida")
+    if "horarios_preferidos" in lote and not _excepciones_validas(lote["horarios_preferidos"]):
+        e.append("horario_preferido_invalido")
     return e
 
 
@@ -599,7 +616,7 @@ def ingerir_lote(
         "ok": not errores_lote, "escrito": False, "lote_rechazado": errores_lote,
         "avisos_lote": [], "jornadas": [], "altas": [], "excepciones": [],
         "renombres": [], "altas_pedidas": [], "obra_creada": False, "recibido": False,
-        "empresas": [],
+        "empresas": [], "categorias": [], "horarios_preferidos": [],
     }
     # Rechazo de lote completo: si la cabecera o el esquema general fallan no se procesa nada.
     if errores_lote:
@@ -715,6 +732,83 @@ def ingerir_lote(
             "nombre": persona["nombre"], "id": identificador, "accion": cambio["accion"],
             "antes": cambio["antes"], "despues": cambio["despues"],
         })
+
+    # Paso 2c: categorías/oficios por persona.
+    for item in lote.get("categorias", []):
+        nombre = limpiar_nombre(item["nombre"])
+        categoria = limpiar_nombre(item["categoria"])
+        identificador, modo, mp = _buscar_nombre(nombre, cat)
+        if identificador is None:
+            res["avisos_lote"].append({"codigo": "categoria_sin_persona", "detalle": nombre})
+            res["categorias"].append({
+                "nombre": nombre, "id": None, "accion": "sin_persona", "antes": "", "despues": categoria,
+            })
+            continue
+        persona = mp[identificador]
+        if modo == "anterior":
+            detalle = f"{nombre} -> {persona['nombre']}"
+            res["avisos_lote"].append({"codigo": "nombre_anterior_usado", "detalle": detalle})
+        antes = limpiar_nombre(persona.get("categoria"))
+        if clave_nombre(categoria) == clave_nombre(antes):
+            accion = "sin_cambios"
+            despues = antes
+        else:
+            persona["categoria"] = categoria
+            despues = categoria
+            accion = "quitada" if not categoria else ("puesta" if not antes else "cambiada")
+            cambio_cat = True
+            tr = _traza_base(ts, oid, "categoria", lote.get("dispositivo"))
+            tr.update({"id": identificador, "nombre": persona["nombre"], "de": antes, "a": despues})
+            trazas.append(tr)
+        res["categorias"].append({
+            "nombre": persona["nombre"], "id": identificador, "accion": accion,
+            "antes": antes, "despues": despues,
+        })
+
+    # Paso 2d: horarios preferidos de la persona en la base (valen para todas las obras salvo horario propio en una obra).
+    for original, horario in lote.get("horarios_preferidos", {}).items():
+        nombre = limpiar_nombre(original)
+        identificador, modo, mp = _buscar_nombre(nombre, cat)
+        if identificador is None and horario:
+            parecido = next((
+                p for p in cat["trabajadores"]
+                if _similar(clave_nombre(nombre), clave_nombre(p["nombre"]))
+            ), None)
+            if parecido:
+                res["avisos_lote"].append({
+                    "codigo": "nombre_parecido", "detalle": nombre + " ~ " + parecido["nombre"],
+                })
+            persona = _persona_nueva(cat, nombre, hoy)
+            identificador = persona["id"]
+            mp[identificador] = persona
+            res["altas"].append({"id": identificador, "nombre": nombre})
+            res["avisos_lote"].append({"codigo": "alta_nueva", "detalle": nombre})
+            cambio_cat = True
+        elif identificador is not None and modo == "anterior":
+            res["avisos_lote"].append({
+                "codigo": "nombre_anterior_usado",
+                "detalle": f"{nombre} -> {mp[identificador]['nombre']}",
+            })
+        if identificador is None:
+            res["horarios_preferidos"].append({"nombre": nombre, "id": None, "accion": "sin_cambios"})
+            continue
+        persona = mp[identificador]
+        nuevo = {d: _num(horario[d]) for d in DIAS if d in horario} if horario else None
+        actual = persona.get("horario_preferido") or None
+        if nuevo == actual:
+            accion = "sin_cambios"
+        else:
+            if nuevo is None:
+                persona.pop("horario_preferido", None)
+                accion = "quitada"
+            else:
+                persona["horario_preferido"] = nuevo
+                accion = "fijada"
+            cambio_cat = True
+            tr = _traza_base(ts, oid, "horario_preferido", lote.get("dispositivo"))
+            tr.update({"id": identificador, "nombre": persona["nombre"], "accion_horario": accion})
+            trazas.append(tr)
+        res["horarios_preferidos"].append({"nombre": persona["nombre"], "id": identificador, "accion": accion})
 
     # Paso 3: normaliza cada jornada y cuenta repeticiones de clave dentro del propio lote.
     normas = []
@@ -1402,6 +1496,8 @@ def exportar_estado(
             ficha["nombres_anteriores"] = list(t["nombres_anteriores"])
         if juntados.get(t["id"]):
             ficha["fusionados"] = juntados[t["id"]]
+        if t.get("horario_preferido"):
+            ficha["horario_preferido"] = {d: t["horario_preferido"][d] for d in DIAS if d in t["horario_preferido"]}
         cats.append(ficha)
     obs = {}
     for o in obras:
@@ -1484,6 +1580,14 @@ def comprobar(raiz, obras):
                 out.append(f"{pc}: nombres_anteriores invalidos")
         if t.get("empresa") is not None and not empresa_valida(t["empresa"]):
             out.append(f"{pc}: empresa invalida")
+        if "horario_preferido" in t and t["horario_preferido"] is not None:
+            hp = t["horario_preferido"]
+            if (
+                not isinstance(hp, dict)
+                or any(dia not in DIAS for dia in hp)
+                or any(_num(h) is None for h in hp.values())
+            ):
+                out.append(f"{pc}: horario_preferido invalido")
     if any(v > 1 for v in ks.values()):
         out.append(f"{pc}: nombres no fusionados duplicados")
     for o in obras:
@@ -1551,6 +1655,8 @@ def texto_aviso(codigo, detalle=None):
         "renombre_invalido": "Un cambio de nombre viene mal escrito.",
         "alta_invalida": "Un nombre de la lista de nuevos viene mal escrito.",
         "empresa_invalida": "Una empresa viene mal escrita.",
+        "categoria_invalida": "El oficio o categoría viene mal escrito.",
+        "horario_preferido_invalido": "Un horario preferido viene mal escrito.",
         "ambito_invalido": "Una jornada no dice si es de viviendas o de garajes.",
         "fecha_invalida": "Una jornada tiene una fecha que no existe.",
         "sin_presentes": "Una jornada no tiene a nadie apuntado.",
@@ -1604,6 +1710,10 @@ def texto_aviso(codigo, detalle=None):
         if isinstance(detalle, str) and detalle:
             return f"«{detalle}» no estaba en la base: no se le puede poner empresa."
         return "Una empresa era para alguien que no estaba en la base: no se ha puesto."
+    if codigo == "categoria_sin_persona":
+        if isinstance(detalle, str) and detalle:
+            return f"«{detalle}» no estaba en la base: no se le puede poner oficio."
+        return "Un oficio era para alguien que no estaba en la base: no se ha puesto."
     if codigo == "nombre_anterior_usado":
         if isinstance(detalle, str) and " -> " in detalle:
             anterior, actual = detalle.split(" -> ", 1)

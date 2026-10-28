@@ -191,12 +191,12 @@ function agregar(filas) {
   let hayFilasValidas = false;
 
   for (const f of filas) {
-    const estado = clasificarFila(f);
-    if (estado === 'sinHoras') {
+    const resultadoFila = clasificarFila(f);
+    if (resultadoFila === 'sinHoras') {
       filasSinHoras++;
       continue;
     }
-    if (estado === 'invalida') {
+    if (resultadoFila === 'invalida') {
       filasInvalidas++;
       continue;
     }
@@ -527,7 +527,7 @@ function textoAvisoEmpresas(resultado) {
 
 // 10. htmlPorEmpresa(resultado, clases): el bloque «Por empresa» que enseñan los cuatro sitios (pestaña, informe,
 // ranking y tablet), escrito UNA sola vez para que todos digan lo mismo. `clases` da la clase de cada pieza en cada
-// sitio: { bloque, titulo, aviso, scroll, tabla, nota, pct } (`pct` = título de la columna del %).
+// sitio: { bloque, titulo, aviso, scroll, tabla, nota, pct, ordenPor, ordenDir }.
 // Vacío si no hay datos.
 const MARCAS_HTML = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
 
@@ -540,6 +540,50 @@ function numeroCorto(x) {
   return (typeof x === 'number' && Number.isFinite(x)) ? String(Math.round(x * 10) / 10).replace('.', ',') : '–';
 }
 
+function ordenarEmpresas(empresas, por, dir) {
+  const copia = Array.isArray(empresas) ? empresas.slice() : [];
+  const campo = por || 'horas';
+  const dirPorDefecto = (campo === 'nombre' || campo === 'empresa' || campo === 'tipo') ? 'asc' : 'desc';
+  const dirEfectiva = (dir === 'asc' || dir === 'desc') ? dir : dirPorDefecto;
+  const s = dirEfectiva === 'asc' ? 1 : -1;
+  const alfabetico = (a, b) => a.nombre.localeCompare(b.nombre, 'es');
+
+  return copia.sort((a, b) => {
+    if (a.sinEmpresa !== b.sinEmpresa) return a.sinEmpresa ? 1 : -1;
+    if (campo === 'nombre' || campo === 'empresa') {
+      return s * alfabetico(a, b);
+    }
+    if (campo === 'tipo') {
+      const ta = a.tipo || (a.autonomo ? 'Autónomo (@AUT)' : 'Empresa');
+      const tb = b.tipo || (b.autonomo ? 'Autónomo (@AUT)' : 'Empresa');
+      return s * ta.localeCompare(tb, 'es') || (b.horas - a.horas) || alfabetico(a, b);
+    }
+    if (campo === 'enBase') {
+      return s * ((a.enBase || 0) - (b.enBase || 0)) || (b.horas - a.horas) || alfabetico(a, b);
+    }
+    if (campo === 'personas') {
+      return s * ((a.personas || 0) - (b.personas || 0)) || (b.horas - a.horas) || alfabetico(a, b);
+    }
+    if (campo === 'dias') {
+      return s * ((a.dias || 0) - (b.dias || 0)) || (b.horas - a.horas) || alfabetico(a, b);
+    }
+    if (campo === 'obras') {
+      const oa = Array.isArray(a.obras) ? a.obras.length : 0;
+      const ob = Array.isArray(b.obras) ? b.obras.length : 0;
+      return s * (oa - ob) || s * (a.horas - b.horas) || alfabetico(a, b);
+    }
+    if (campo === 'ultima') {
+      const ua = a.ultima || null;
+      const ub = b.ultima || null;
+      if ((ua === null) !== (ub === null)) return ua === null ? 1 : -1;
+      if (ua !== ub) return s * (ua < ub ? -1 : 1);
+      return alfabetico(a, b);
+    }
+    // 'horas' o 'pct'
+    return s * ((a.horas || 0) - (b.horas || 0)) || alfabetico(a, b);
+  });
+}
+
 function htmlPorEmpresa(res, clases) {
   if (!res || !res.total || !Array.isArray(res.empresas) || res.empresas.length === 0) return '';
   const c = clases || {};
@@ -550,14 +594,35 @@ function htmlPorEmpresa(res, clases) {
     '<td class="n">' + personas + '</td><td class="n">' + dias + '</td>' +
     '<td class="n">' + numeroCorto(horas) + '</td><td class="n">' + porciento(pct) + '</td></tr>';
 
+  const colActiva = c.ordenPor || '';
+  const dirActiva = c.ordenDir || '';
+  const attrTh = (col, esNum) => {
+    let s = '';
+    if (esNum) s += ' class="n"';
+    if (c.ordenable) {
+      s += ' data-col-emp="' + col + '"';
+      if (colActiva === col && (dirActiva === 'asc' || dirActiva === 'desc')) {
+        s += ' data-dir="' + dirActiva + '"';
+      }
+    }
+    return s;
+  };
+
+  const listaEmpresas = (c.ordenable && colActiva)
+    ? ordenarEmpresas(res.empresas, colActiva, dirActiva)
+    : res.empresas;
+
   const aviso = textoAvisoEmpresas(res);
   let html = '<div' + clase('bloque') + ' data-por-empresa>';
   html += '<h4' + clase('titulo') + '>Por empresa</h4>';
   if (aviso) html += '<p' + clase('aviso') + '>⚠ ' + escaparTexto(aviso) + '</p>';
-  html += '<div' + clase('scroll') + '><table' + clase('tabla') + '><thead><tr><th>Empresa</th>' +
-    '<th class="n">Personas</th><th class="n">Días</th><th class="n">Horas</th>' +
-    '<th class="n">' + escaparTexto(c.pct || '% impacto') + '</th></tr></thead><tbody>';
-  res.empresas.forEach(l => {
+  html += '<div' + clase('scroll') + '><table' + clase('tabla') + '><thead><tr>' +
+    '<th' + attrTh('nombre', false) + '>Empresa</th>' +
+    '<th' + attrTh('personas', true) + '>Personas</th>' +
+    '<th' + attrTh('dias', true) + '>Días</th>' +
+    '<th' + attrTh('horas', true) + '>Horas</th>' +
+    '<th' + attrTh('pct', true) + '>' + escaparTexto(c.pct || '% impacto') + '</th></tr></thead><tbody>';
+  listaEmpresas.forEach(l => {
     html += fila(l.nombre, l.personas, l.dias, l.horas, l.pct, l.sinEmpresa ? 'emp-sin' : '');
   });
   html += '</tbody><tfoot>' + fila('Total', res.total.personas, res.total.dias, res.total.horas,
@@ -584,7 +649,7 @@ function esFechaISO(fecha) {
   return aTextoISO(aFechaUTC(fecha)) === fecha;
 }
 
-// 9. baseTrabajadores(filas, catalogo): una línea por persona de la base, tenga o no jornadas. Horas, días, obras y última
+// 11. baseTrabajadores(filas, catalogo): una línea por persona de la base, tenga o no jornadas. Horas, días, obras y última
 // jornada salen de las MISMAS filas y con las mismas reglas que el ranking (una fila sin horas o inválida no se cuenta y se
 // avisa); de la ficha de la base salen la empresa y el historial de nombres (renombres y fusiones). Nada se pierde en
 // silencio: alguien con jornadas que no está en la base sale igual (con `sinFicha`), y lo raro de la base se cuenta en `avisos`.
@@ -613,6 +678,10 @@ function baseTrabajadores(filas, catalogo) {
   const nuevaLinea = (nombre, ficha) => ({
     nombre,
     empresa: ficha ? empresaDeFila(ficha) : '',
+    categoria: ficha && typeof ficha.categoria === 'string' ? limpiarTexto(ficha.categoria) : '',
+    horarioPreferido: (ficha && ficha.horario_preferido && typeof ficha.horario_preferido === 'object')
+      ? ficha.horario_preferido
+      : null,
     activo: !(ficha && ficha.activo === false),
     anteriores: [],
     fusionados: [],
@@ -649,9 +718,9 @@ function baseTrabajadores(filas, catalogo) {
   });
 
   (Array.isArray(filas) ? filas : []).forEach(f => {
-    const estado = clasificarFila(f);
-    if (estado === 'sinHoras') { avisos.filasSinHoras++; return; }
-    if (estado === 'invalida') { avisos.filasInvalidas++; return; }
+    const resultadoFila = clasificarFila(f);
+    if (resultadoFila === 'sinHoras') { avisos.filasSinHoras++; return; }
+    if (resultadoFila === 'invalida') { avisos.filasInvalidas++; return; }
 
     const clave = claveNombre(f.nombre);
     let linea = porClave.get(clave);
@@ -680,6 +749,11 @@ function baseTrabajadores(filas, catalogo) {
     if (esFechaISO(f.fecha) && (linea.ultima === null || f.fecha > linea.ultima)) linea.ultima = f.fecha;
   });
 
+  let sumaHoras = 0;
+  let sumaExtra = 0;
+  let cuentaConJornadas = 0;
+  let cuentaSinJornadas = 0;
+
   const personas = Array.from(porClave.values()).map(linea => {
     linea.dias = linea._dias.size;
     linea.obras = Array.from(linea._obras.values())
@@ -688,39 +762,305 @@ function baseTrabajadores(filas, catalogo) {
     linea.ultimaObras = linea.obras.filter(o => linea.ultima !== null && o.ultima === linea.ultima).map(o => o.obra).sort();
     delete linea._dias;
     delete linea._obras;
+    sumaHoras += linea.horas;
+    sumaExtra += linea.extra;
+    if (linea.conJornadas) cuentaConJornadas++;
+    else cuentaSinJornadas++;
     return linea;
   });
   personas.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
 
   const total = {
     personas: personas.length,
-    conJornadas: personas.filter(p => p.conJornadas).length,
-    sinJornadas: personas.filter(p => !p.conJornadas).length,
-    horas: personas.reduce((s, p) => s + p.horas, 0),
-    extra: personas.reduce((s, p) => s + p.extra, 0)
+    conJornadas: cuentaConJornadas,
+    sinJornadas: cuentaSinJornadas,
+    horas: sumaHoras,
+    extra: sumaExtra
   };
   return { personas, total, avisos };
 }
 
-// 10. ordenarBase(personas, por): copia ordenada. 'nombre' = alfabético sin tildes; 'horas' = más horas primero;
-// 'ultima' = jornada más reciente primero. Con el mismo valor manda el nombre; quien no tiene jornadas va siempre al final.
-function ordenarBase(personas, por) {
+// 12. ordenarBase(personas, por, dir): copia ordenada por cualquier columna de la base.
+// 'nombre', 'empresa', 'obras', 'dias', 'horas', 'ultima', 'historia'.
+// Sin `dir`, mantiene el orden por defecto ('nombre'/'empresa'/'historia' asc; 'horas'/'dias'/'obras'/'ultima' desc).
+// Quien no tiene jornadas (o no tiene empresa / historia en esa columna) va siempre al final.
+function ordenarBase(personas, por, dir) {
   const alfabetico = (a, b) => a.nombre.localeCompare(b.nombre, 'es');
   const copia = Array.isArray(personas) ? personas.slice() : [];
-  if (por === 'horas') {
+  const campo = por || 'nombre';
+  const dirPorDefecto = (campo === 'horas' || campo === 'dias' || campo === 'obras' || campo === 'ultima') ? 'desc' : 'asc';
+  const dirEfectiva = (dir === 'asc' || dir === 'desc') ? dir : dirPorDefecto;
+  const s = dirEfectiva === 'asc' ? 1 : -1;
+
+  if (campo === 'horas') {
     return copia.sort((a, b) => {
       if (a.conJornadas !== b.conJornadas) return a.conJornadas ? -1 : 1;
-      return (b.horas - a.horas) || alfabetico(a, b);
+      return s * (a.horas - b.horas) || alfabetico(a, b);
     });
   }
-  if (por === 'ultima') {
+  if (campo === 'dias') {
+    return copia.sort((a, b) => {
+      if (a.conJornadas !== b.conJornadas) return a.conJornadas ? -1 : 1;
+      return s * (a.dias - b.dias) || s * (a.horas - b.horas) || alfabetico(a, b);
+    });
+  }
+  if (campo === 'obras') {
+    return copia.sort((a, b) => {
+      if (a.conJornadas !== b.conJornadas) return a.conJornadas ? -1 : 1;
+      const oa = Array.isArray(a.obras) ? a.obras.length : 0;
+      const ob = Array.isArray(b.obras) ? b.obras.length : 0;
+      return s * (oa - ob) || s * (a.horas - b.horas) || alfabetico(a, b);
+    });
+  }
+  if (campo === 'ultima') {
     return copia.sort((a, b) => {
       if ((a.ultima === null) !== (b.ultima === null)) return a.ultima === null ? 1 : -1;
-      if (a.ultima !== b.ultima) return a.ultima < b.ultima ? 1 : -1;
+      if (a.ultima !== b.ultima) return s * (a.ultima < b.ultima ? -1 : 1);
       return alfabetico(a, b);
     });
   }
-  return copia.sort(alfabetico);
+  if (campo === 'empresa') {
+    return copia.sort((a, b) => {
+      const ea = limpiarTexto(a.empresa);
+      const eb = limpiarTexto(b.empresa);
+      if (Boolean(ea) !== Boolean(eb)) return ea ? -1 : 1;
+      return s * ea.localeCompare(eb, 'es') || alfabetico(a, b);
+    });
+  }
+  if (campo === 'historia') {
+    return copia.sort((a, b) => {
+      const ha = ((a.anteriores && a.anteriores.length) || 0) + ((a.fusionados && a.fusionados.length) || 0);
+      const hb = ((b.anteriores && b.anteriores.length) || 0) + ((b.fusionados && b.fusionados.length) || 0);
+      if ((ha > 0) !== (hb > 0)) return ha > 0 ? -1 : 1;
+      const ta = [].concat(a.anteriores || [], a.fusionados || []).join(' ');
+      const tb = [].concat(b.anteriores || [], b.fusionados || []).join(' ');
+      return s * ta.localeCompare(tb, 'es') || alfabetico(a, b);
+    });
+  }
+  return copia.sort((a, b) => s * alfabetico(a, b));
+}
+
+// 13. ordenarRanking(trabajadores, por, dir): copia ordenada de las filas de trabajadores del ranking.
+function ordenarRanking(trabajadores, por, dir) {
+  const alfabetico = (a, b) => a.nombre.localeCompare(b.nombre, 'es');
+  const copia = Array.isArray(trabajadores) ? trabajadores.slice() : [];
+  const campo = por || 'horas';
+  const dirPorDefecto = (campo === 'nombre' || campo === 'empresa') ? 'asc' : 'desc';
+  const dirEfectiva = (dir === 'asc' || dir === 'desc') ? dir : dirPorDefecto;
+  const s = dirEfectiva === 'asc' ? 1 : -1;
+
+  if (campo === 'nombre') {
+    return copia.sort((a, b) => s * alfabetico(a, b));
+  }
+  if (campo === 'empresa') {
+    return copia.sort((a, b) => {
+      const ea = limpiarTexto(a.empresa);
+      const eb = limpiarTexto(b.empresa);
+      if (Boolean(ea) !== Boolean(eb)) return ea ? -1 : 1;
+      return s * ea.localeCompare(eb, 'es') || (b.horas - a.horas) || alfabetico(a, b);
+    });
+  }
+  if (campo === 'dias') {
+    return copia.sort((a, b) => s * (a.dias - b.dias) || s * (a.horas - b.horas) || alfabetico(a, b));
+  }
+  if (campo === 'obras') {
+    return copia.sort((a, b) => {
+      const oa = a.obras ? Object.keys(a.obras).length : 0;
+      const ob = b.obras ? Object.keys(b.obras).length : 0;
+      return s * (oa - ob) || s * (a.horas - b.horas) || alfabetico(a, b);
+    });
+  }
+  // 'pos', 'horas' o 'pct'
+  return copia.sort((a, b) => s * (a.horas - b.horas) || alfabetico(a, b));
+}
+
+// 14. resumenEmpresas(filas, catalogo): vista completa de empresas cruzando la base de trabajadores y las jornadas
+// filtradas. Incluye empresas que están en la base aunque aún no tengan jornadas en el periodo, desglose de obras y
+// plantilla de cada empresa.
+function resumenEmpresas(filas, catalogo) {
+  const base = baseTrabajadores(filas, catalogo);
+  const porEmp = agregarPorEmpresa(filas);
+  const totalHoras = porEmp.total ? porEmp.total.horas : 0;
+
+  const grupos = new Map();
+  const asegurarGrupo = textoEmpresa => {
+    const limpio = empresaDeFila({ empresa: textoEmpresa });
+    const clave = claveEmpresa(limpio);
+    const sinEmpresa = clave === '';
+    let g = grupos.get(clave);
+    if (!g) {
+      const autonomo = !sinEmpresa && esAutonomo(limpio);
+      g = {
+        nombre: sinEmpresa ? ETIQUETA_SIN_EMPRESA : limpio,
+        clave,
+        sinEmpresa,
+        autonomo,
+        tipo: sinEmpresa ? ETIQUETA_SIN_EMPRESA : (autonomo ? 'Autónomo (@AUT)' : 'Empresa'),
+        enBase: 0,
+        activosEnBase: 0,
+        personasSet: new Set(),
+        diasSet: new Set(),
+        horas: 0,
+        extra: 0,
+        obrasMap: new Map(),
+        ultima: null,
+        trabajadoresMap: new Map()
+      };
+      grupos.set(clave, g);
+    }
+    return g;
+  };
+
+  // 1) Personas de la base
+  base.personas.forEach(p => {
+    if (!p.sinFicha) {
+      const g = asegurarGrupo(p.empresa);
+      g.enBase++;
+      if (p.activo) g.activosEnBase++;
+      g.trabajadoresMap.set(claveNombre(p.nombre), {
+        nombre: p.nombre,
+        empresa: g.sinEmpresa ? '' : g.nombre,
+        categoria: p.categoria || '',
+        horarioPreferido: p.horarioPreferido || null,
+        activo: p.activo,
+        enBase: true,
+        conJornadas: p.conJornadas,
+        dias: p.dias,
+        horas: p.horas,
+        extra: p.extra,
+        obras: p.obras,
+        ultima: p.ultima,
+        ultimaObras: p.ultimaObras,
+        anteriores: p.anteriores,
+        fusionados: p.fusionados
+      });
+    }
+  });
+
+  // 2) Jornadas del periodo
+  (Array.isArray(filas) ? filas : []).forEach(f => {
+    if (clasificarFila(f) !== 'valida') return;
+    const g = asegurarGrupo(empresaDeFila(f));
+    const extraVal = (f.extra !== undefined && f.extra !== null) ? f.extra : 0;
+    const diaDePersona = f.nombre + '\n' + f.fecha;
+    g.personasSet.add(f.nombre);
+    if (f.fecha) g.diasSet.add(diaDePersona);
+    g.horas += f.horas;
+    g.extra += extraVal;
+    if (esFechaISO(f.fecha) && (g.ultima === null || f.fecha > g.ultima)) {
+      g.ultima = f.fecha;
+    }
+    if (f.obra) {
+      let o = g.obrasMap.get(f.obra);
+      if (!o) {
+        o = { obra: f.obra, diasSet: new Set(), personasSet: new Set(), horas: 0, ultima: null };
+        g.obrasMap.set(f.obra, o);
+      }
+      o.horas += f.horas;
+      o.personasSet.add(f.nombre);
+      if (f.fecha) o.diasSet.add(diaDePersona);
+      if (esFechaISO(f.fecha) && (o.ultima === null || f.fecha > o.ultima)) o.ultima = f.fecha;
+    }
+    const cNom = claveNombre(f.nombre);
+    if (!g.trabajadoresMap.has(cNom)) {
+      const pBase = base.personas.find(x => claveNombre(x.nombre) === cNom);
+      if (pBase) {
+        g.trabajadoresMap.set(cNom, {
+          nombre: pBase.nombre,
+          empresa: g.sinEmpresa ? '' : g.nombre,
+          categoria: pBase.categoria || '',
+          horarioPreferido: pBase.horarioPreferido || null,
+          activo: pBase.activo,
+          enBase: !pBase.sinFicha,
+          conJornadas: pBase.conJornadas,
+          dias: pBase.dias,
+          horas: pBase.horas,
+          extra: pBase.extra,
+          obras: pBase.obras,
+          ultima: pBase.ultima,
+          ultimaObras: pBase.ultimaObras,
+          anteriores: pBase.anteriores,
+          fusionados: pBase.fusionados
+        });
+      }
+    }
+  });
+
+  let empresasRegulares = 0;
+  let autonomosTotal = 0;
+  let enBaseConEmpresa = 0;
+  let enBaseSinEmpresa = 0;
+
+  const empresas = Array.from(grupos.values()).map(g => {
+    if (g.sinEmpresa) {
+      enBaseSinEmpresa += g.enBase;
+    } else {
+      enBaseConEmpresa += g.enBase;
+      if (g.autonomo) autonomosTotal++;
+      else empresasRegulares++;
+    }
+    const obras = Array.from(g.obrasMap.values())
+      .map(o => ({
+        obra: o.obra,
+        dias: o.diasSet.size,
+        personas: o.personasSet.size,
+        horas: o.horas,
+        ultima: o.ultima
+      }))
+      .sort((a, b) => (b.horas - a.horas) || (a.obra < b.obra ? -1 : a.obra > b.obra ? 1 : 0));
+    const ultimaObras = obras.filter(o => g.ultima !== null && o.ultima === g.ultima).map(o => o.obra).sort();
+    const trabajadores = ordenarBase(Array.from(g.trabajadoresMap.values()), 'horas', 'desc');
+    return {
+      nombre: g.nombre,
+      clave: g.clave,
+      sinEmpresa: g.sinEmpresa,
+      autonomo: g.autonomo,
+      tipo: g.tipo,
+      enBase: g.enBase,
+      activosEnBase: g.activosEnBase,
+      personas: g.personasSet.size,
+      dias: g.diasSet.size,
+      horas: g.horas,
+      extra: g.extra,
+      pct: totalHoras > 0 ? (100 * g.horas / totalHoras) : null,
+      obras,
+      ultima: g.ultima,
+      ultimaObras,
+      trabajadores
+    };
+  });
+
+  const ordenadas = ordenarEmpresas(empresas, 'horas', 'desc');
+  return {
+    empresas: ordenadas,
+    autonomos: porEmp.autonomos,
+    avisos: porEmp.avisos,
+    totales: {
+      empresas: empresasRegulares,
+      autonomos: autonomosTotal,
+      enBaseConEmpresa,
+      enBaseSinEmpresa,
+      enBaseTotal: enBaseConEmpresa + enBaseSinEmpresa,
+      personasConJornadas: porEmp.total ? porEmp.total.personas : 0,
+      dias: porEmp.total ? porEmp.total.dias : 0,
+      horas: totalHoras
+    }
+  };
+}
+
+// 15. empresasConocidas(filas, catalogo): lista ordenada de nombres de empresa conocidos (sin «Sin empresa»).
+function empresasConocidas(filas, catalogo) {
+  const mapa = new Map();
+  const anadir = raw => {
+    const limpio = empresaDeFila({ empresa: raw });
+    if (!limpio) return;
+    const k = claveEmpresa(limpio);
+    if (!mapa.has(k)) mapa.set(k, limpio);
+  };
+  anadir('Sagarde');
+  (Array.isArray(catalogo) ? catalogo : []).forEach(c => anadir(c && c.empresa));
+  (Array.isArray(filas) ? filas : []).forEach(f => anadir(f && f.empresa));
+  return Array.from(mapa.values()).sort((a, b) => a.localeCompare(b, 'es'));
 }
 
 const API = {
@@ -736,8 +1076,13 @@ const API = {
   textoAvisoEmpresas,
   htmlPorEmpresa,
   claveNombre,
+   claveEmpresa,
   baseTrabajadores,
-  ordenarBase
+  ordenarBase,
+  ordenarRanking,
+  ordenarEmpresas,
+  resumenEmpresas,
+  empresasConocidas
 };
 
 if (typeof module !== 'undefined' && module.exports) { module.exports = API; }

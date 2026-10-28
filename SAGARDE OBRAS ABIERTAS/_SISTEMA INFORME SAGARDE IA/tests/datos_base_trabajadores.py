@@ -56,7 +56,7 @@ ESTADO_PRINCIPAL = estado(
 NOMBRES = ['Ana', 'Beto', 'Carla Ruiz', 'Dani', 'Eli', ZOE]   # por orden alfabético (el de la página al abrirla)
 
 # Cabecera de la tabla (textContent de cada <th>, en este orden)
-CABECERA = ['Nombre', 'Obras donde ha trabajado', 'Días', 'Horas', 'Última jornada', 'Nombres de antes']
+CABECERA = ['Nombre', 'Empresa', 'Obras donde ha trabajado', 'Días', 'Horas', 'Última jornada', 'Nombres de antes']
 
 # Cifras generales: (número, rótulo) de cada .kpi
 # horas totales = 21 (Ana) + 11,5 (Beto) + 16 (Carla Ruiz) + 4 (Zoe) = 52,5
