@@ -190,6 +190,13 @@ def exportar_estado_real(raiz=None, escribir=True, ahora=None):
     contenido no cambia (así no se genera un cambio de git por cada regeneración)."""
     raiz = _raiz(raiz)
     obras, nombres, cerradas, avisos = universo(raiz)
+    if escribir and obras:
+        hoy_iso = dt.date.today().isoformat()
+        for carpeta_base in (raiz / MOTOR, raiz):
+            if carpeta_base.is_dir():
+                cands = [f for f in lector.listar(carpeta_base) if f["nombre"].casefold().startswith("base trabajadores sagarde")]
+                if cands:
+                    lector.aplicar("sagarde", cands, hoy_iso, str(raiz), obras, ahora=ahora)
     destino = raiz / MOTOR / "personal_estado.js"
     res = {"escrito": False, "motivo": "", "obras": {}, "avisos": list(avisos)}
     if not obras:

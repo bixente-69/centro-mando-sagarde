@@ -153,25 +153,25 @@ class TestIngestaCategoriasYHorariosPreferidos(unittest.TestCase):
         self.assertEqual(iker["horario_preferido"]["lun"], 8)
         self.assertTrue(iker["activo"])
 
-        # Comprobar baja de empleado (quitar de la base activa)
+        # Comprobar baja de empleado con fichero BASE TRABAJADORES SAGARDE (sin nombre de obra ni carpeta de obra)
         lote_baja = {
             "tipo": "lote_personal",
             "version": 1,
-            "obra": "olabeaga",
+            "obra": "sagarde",
             "jornadas": [],
             "dispositivo": "Personal Sagarde PC",
             "bajas": ["Unai Bilbao"],
         }
-        ruta_baja = self.tmp / "2026 OLABEAGA BILBAO" / "REVISIONES" / "CONTROL HORARIO 2026 OLABEAGA BILBAO 29102026.json"
+        ruta_baja = self.tmp / "BASE TRABAJADORES SAGARDE 29102026.json"
         ruta_baja.write_text(json.dumps(lote_baja, ensure_ascii=False, indent=2), encoding="utf-8")
 
-        candidatos2 = lc.listar(ruta_baja.parent)
-        analisis2 = lc.analizar("olabeaga", candidatos2, "2026-10-29", self.tmp, self.obras)
-        ficha_baja = next(f for f in analisis2["ficheros"] if f["nombre"].endswith("29102026.json"))
+        candidatos2 = lc.listar(self.tmp)
+        analisis2 = lc.analizar("sagarde", candidatos2, "2026-10-29", self.tmp, self.obras)
+        ficha_baja = next(f for f in analisis2["ficheros"] if f["nombre"].startswith("BASE TRABAJADORES SAGARDE"))
         self.assertEqual(ficha_baja["estado"], lc.LISTO, ficha_baja)
         self.assertIn("1 persona quitada", ficha_baja["resumen"])
 
-        aplicado2 = lc.aplicar("olabeaga", candidatos2, "2026-10-29", self.tmp, self.obras)
+        aplicado2 = lc.aplicar("sagarde", candidatos2, "2026-10-29", self.tmp, self.obras)
         self.assertFalse(aplicado2["frena"], aplicado2)
         js2 = po.exportar_estado(self.tmp, self.obras, incluir_vacias=True)
         payload2 = json.loads(js2.split("window.SAGARDE_PERSONAL = ", 1)[1].rstrip(";\n"))
@@ -280,8 +280,9 @@ class TestNavegadorPersonalSagardeNuevasFunciones(unittest.TestCase):
                 with page.expect_download() as dl_info:
                     page.click("#btn-gen-descargar")
                 dl = dl_info.value
-                self.assertTrue(dl.suggested_filename.startswith("CONTROL HORARIO "))
+                self.assertTrue(dl.suggested_filename.startswith("BASE TRABAJADORES SAGARDE "))
                 contenido_descargado = json.loads(Path(dl.path()).read_text(encoding="utf-8"))
+                self.assertEqual(contenido_descargado["obra"], "sagarde")
                 self.assertEqual(contenido_descargado["altas"], ["Koldo Agirre"])
                 self.assertEqual(contenido_descargado["bajas"], ["Ana"])
                 self.assertEqual(

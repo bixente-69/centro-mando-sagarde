@@ -87,6 +87,8 @@ def _sis(r, n):
 
 
 def _rop(r, ob, o, n="personal_obra.json"):
+    if o == "sagarde" and "sagarde" not in ob:
+        return _sis(r, n)
     return Path(r) / ob[o] / "INFORME SAGARDE IA" / n
 
 
@@ -327,7 +329,13 @@ def validar_lote(lote, obras):
         e.append("tipo_desconocido")
     if lote.get("version") != 1 or isinstance(lote.get("version"), bool):
         e.append("version_desconocida")
-    if not isinstance(lote.get("obra"), str) or lote["obra"] not in obras:
+    es_base_sagarde = (
+        lote.get("obra") in (None, "", "sagarde")
+        and not lote.get("jornadas")
+        and "horario_semanal" not in lote
+        and "excepciones_horario" not in lote
+    )
+    if not es_base_sagarde and (not isinstance(lote.get("obra"), str) or lote["obra"] not in obras):
         e.append("obra_invalida")
     if set(lote) - LK:
         e.append("campo_desconocido")
@@ -626,8 +634,10 @@ def ingerir_lote(
     # Rechazo de lote completo: si la cabecera o el esquema general fallan no se procesa nada.
     if errores_lote:
         return res
-    oid = lote["obra"]
-    no_existia = estado is None and not _rop(raiz, obras, oid).exists()
+
+    oid = lote.get("obra") or "sagarde"
+    es_solo_base = oid == "sagarde" and "sagarde" not in obras
+    no_existia = False if es_solo_base else (estado is None and not _rop(raiz, obras, oid).exists())
     # Copias de trabajo del catálogo y de las obras (del disco, o del `estado` en memoria): se opera en ellas
     # de forma aislada y solo al final se persisten o se devuelven al `estado`.
     if estado is None:
@@ -636,7 +646,11 @@ def ingerir_lote(
     else:
         cat = copy.deepcopy(estado["cat"])
         ods = copy.deepcopy(estado["ods"])
-    od = ods[oid]
+    od = (
+        {"version": 1, "obra": oid, "jornada_base_h": 7.5, "horario_semanal": dict(HOR), "excepciones_horario": {}, "jornadas": []}
+        if es_solo_base
+        else ods[oid]
+    )
     cambio_cat = False
     cambio_obra = False
     trazas = []

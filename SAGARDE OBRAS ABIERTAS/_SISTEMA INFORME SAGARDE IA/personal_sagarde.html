@@ -1597,19 +1597,12 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
 
   function descargarFicheroControlHorario() {
     if (genPreparados.length === 0 && genBajas.length === 0) return;
-    var obraId = obrasAbiertas[0] || Object.keys(nombresObra)[0] || '';
-    if (!obraId) {
-      genMensajeError = 'No hay ninguna obra disponible para asociar el fichero.';
-      pintarGenerar();
-      return;
-    }
 
     var nombresNuevos = [];
     var nombresBajas = [];
     var listaEmpresas = [];
     var listaCategorias = [];
     var mapaHorariosPref = {};
-    var mapaExcepcionesObra = {};
 
     for (var i = 0; i < genPreparados.length; i++) {
       var p = genPreparados[i];
@@ -1622,7 +1615,6 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       }
       if (p.horario) {
         mapaHorariosPref[p.nombre] = p.horario;
-        mapaExcepcionesObra[p.nombre] = p.horario;
       }
     }
 
@@ -1636,7 +1628,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     var paquete = {
       tipo: claveTipo,
       version: 1,
-      obra: obraId,
+      obra: 'sagarde',
       jornadas: [],
       dispositivo: 'Personal Sagarde PC'
     };
@@ -1646,16 +1638,14 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     if (listaCategorias.length > 0) paquete.categorias = listaCategorias;
     if (Object.keys(mapaHorariosPref).length > 0) {
       paquete.horarios_preferidos = mapaHorariosPref;
-      paquete.excepciones_horario = mapaExcepcionesObra;
     }
 
     var hoy = new Date();
     var dd = String(hoy.getDate()).padStart(2, '0');
     var mm = String(hoy.getMonth() + 1).padStart(2, '0');
     var yyyy = String(hoy.getFullYear());
-    var nombreObraTexto = (nombresObra[obraId] || obraId).replace(/[\\/:*?"<>|]/g, ' ').trim();
     var ext = '.' + 'js' + 'on';
-    var nombreFichero = 'CONTROL HORARIO ' + nombreObraTexto + ' ' + dd + mm + yyyy + ext;
+    var nombreFichero = 'BASE TRABAJADORES SAGARDE ' + dd + mm + yyyy + ext;
 
     var contenido = JSON.stringify(paquete, null, 2) + '\n';
     var blob = new Blob([contenido], { type: 'application/octet-stream' });
@@ -1668,7 +1658,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     enlace.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
 
-    genMensajeOk = 'Fichero de control horario descargado. Al actualizar con Actualizar_Sagarde.bat los cambios quedarán guardados en la base de trabajadores para todas las obras.';
+    genMensajeOk = 'Fichero de la base de trabajadores de Sagarde descargado. Al actualizar con Actualizar_Sagarde.bat los cambios quedarán guardados en la base de trabajadores para todas las obras.';
     pintarGenerar();
   }
 

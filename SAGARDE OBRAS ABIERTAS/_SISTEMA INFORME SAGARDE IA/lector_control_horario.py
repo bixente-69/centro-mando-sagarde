@@ -128,7 +128,10 @@ def es_control_horario(nombre):
     """True si el nombre es el de un control horario de la tablet: `CONTROL HORARIO <algo>.json` (mayúsculas
     indiferentes). Es la regla única: la usan `listar` y la lista de documentos de la obra."""
     minuscula = nombre.casefold()
-    return minuscula.startswith("control horario") and minuscula.endswith(".json")
+    return (
+        (minuscula.startswith("control horario") or minuscula.startswith("base trabajadores sagarde"))
+        and minuscula.endswith(".json")
+    )
 
 
 def listar(carpeta_revisiones):
@@ -213,6 +216,8 @@ def _sitios_con_datos_privados(lote):
 
 def _totales(estado, raiz, obras, obra_id):
     """Horas, días y trabajadores de la obra en un estado en memoria (None si aún no hay jornadas)."""
+    if obra_id not in obras:
+        return None
     t = po.totales_control(raiz, obras, obra_id, estado=estado)
     if t is None:
         return None
@@ -319,7 +324,7 @@ def _resumen_texto(ficha):
 
 def _simular(obra_id, lote, ficha, estado, hoy, raiz, obras, ahora):
     """Aplica el lote a una COPIA del estado y clasifica el resultado. Devuelve (ficha, estado nuevo o None)."""
-    previas = {(j["ambito"], j["fecha"]): j for j in estado["ods"][obra_id]["jornadas"]}
+    previas = {(j["ambito"], j["fecha"]): j for j in estado["ods"].get(obra_id, {}).get("jornadas", [])}
     prueba = copy.deepcopy(estado)
     r = po.ingerir_lote(
         copy.deepcopy(lote),
@@ -388,7 +393,7 @@ def _analizar_uno(obra_id, f, hoy, raiz, obras, estado, recibidos, vistos, ahora
     if not isinstance(lote, dict) or lote.get("tipo") != "lote_personal":
         return _cerrar(ficha, RECHAZADO, _motivo("tipo_desconocido")), None
     de_otra_obra = lote.get("obra")
-    if isinstance(de_otra_obra, str) and de_otra_obra in obras and de_otra_obra != obra_id:
+    if isinstance(de_otra_obra, str) and de_otra_obra != "sagarde" and de_otra_obra in obras and de_otra_obra != obra_id:
         return _cerrar(ficha, RECHAZADO, _motivo("obra_distinta", obras[de_otra_obra])), None
     sitios = _sitios_con_datos_privados(lote)
     if sitios:
@@ -403,11 +408,13 @@ def analizar(obra_id, ficheros, hoy, raiz, obras, aceptar=False, ahora=None):
     """Vista previa de los ficheros de una obra: no escribe NADA.
     Los aplica en cadena sobre una copia en memoria (los «a revisar» solo si `aceptar`), como lo hará `aplicar`.
     """
-    if obra_id not in obras:
+    if obra_id not in obras and obra_id != "sagarde":
         raise ValueError("obra desconocida: %s" % obra_id)
     try:
         estado = po.cargar_estado(raiz, obras)
-        recibidos = set(po.shas_recibidos(raiz, obras, obra_id))
+        recibidos = set(po.shas_recibidos(raiz, obras, "sagarde"))
+        if obra_id in obras:
+            recibidos |= set(po.shas_recibidos(raiz, obras, obra_id))
     except (OSError, ValueError) as exc:
         # Sin poder leer los datos, o sin saber qué se aplicó ya, aplicar podría pisar o duplicar: no se toca
         # nada y se dice.
@@ -465,7 +472,10 @@ def _aplicar_uno(obra_id, ficha, hoy, raiz, obras, ahora):
     )
     ficha["escrito"] = bool(r["escrito"])
     ficha["aplicado"] = True
-    anotado = ficha["sha256"] in po.shas_recibidos(raiz, obras, obra_id)
+    anotados = set(po.shas_recibidos(raiz, obras, "sagarde"))
+    if obra_id in obras:
+        anotados |= set(po.shas_recibidos(raiz, obras, obra_id))
+    anotado = ficha["sha256"] in anotados
     if not anotado:
         ficha["motivos"].append(_motivo("no_anotado"))
     return ficha
