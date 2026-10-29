@@ -205,6 +205,9 @@ def _sitios_con_datos_privados(lote):
     preferidos = lote.get("horarios_preferidos")
     if isinstance(preferidos, dict) and any(_parece_privado(n) for n in preferidos):
         sitios.append("horarios preferidos")
+    bajas = lote.get("bajas") if isinstance(lote.get("bajas"), list) else []
+    if any(_parece_privado(n) for n in bajas):
+        sitios.append("personas quitadas")
     return sitios
 
 
@@ -234,6 +237,7 @@ def _ficha_vacia(f):
         "categorias": [],
         "horarios_propios": [],
         "horarios_preferidos": [],
+        "bajas": [],
         "rechazadas": 0,
         "sin_efecto": False,
         "resumen": "",
@@ -306,6 +310,8 @@ def _resumen_texto(ficha):
         partes.append(_plural(len(oficios_puestos), "oficio puesto", "oficios puestos"))
     if ficha.get("horarios_preferidos"):
         partes.append(_plural(len(ficha["horarios_preferidos"]), "horario preferido", "horarios preferidos"))
+    if ficha.get("bajas"):
+        partes.append(_plural(len(ficha["bajas"]), "persona quitada", "personas quitadas"))
     if ficha["rechazadas"]:
         partes.append(_plural(ficha["rechazadas"], "jornada que no vale", "jornadas que no valen"))
     return ", ".join(partes) if partes else "no trae nada nuevo"
@@ -335,6 +341,7 @@ def _simular(obra_id, lote, ficha, estado, hoy, raiz, obras, ahora):
     ficha["horarios_propios"] = [x for x in r["excepciones"] if x["accion"] != "sin_cambios"]
     ficha["categorias"] = [dict(c) for c in r.get("categorias", []) if c["accion"] in CAMBIOS_DE_EMPRESA]
     ficha["horarios_preferidos"] = [x for x in r.get("horarios_preferidos", []) if x["accion"] != "sin_cambios"]
+    ficha["bajas"] = [dict(b) for b in r.get("bajas", []) if b["accion"] == "baja"]
     ficha["avisos"] = [_motivo(a["codigo"], a["detalle"]) for a in r["avisos_lote"]]
     for j in ficha["jornadas"]:
         ficha["avisos"] += j["avisos"]
@@ -343,7 +350,7 @@ def _simular(obra_id, lote, ficha, estado, hoy, raiz, obras, ahora):
     hay_otra_cosa = bool(lote.get("renombres") or lote.get("altas") or lote.get("excepciones_horario"))
     hay_otra_cosa = hay_otra_cosa or bool(lote.get("empresas"))
     hay_otra_cosa = hay_otra_cosa or "horario_semanal" in lote
-    hay_otra_cosa = hay_otra_cosa or bool(lote.get("categorias") or lote.get("horarios_preferidos"))
+    hay_otra_cosa = hay_otra_cosa or bool(lote.get("categorias") or lote.get("horarios_preferidos") or lote.get("bajas"))
     if ficha["rechazadas"] and not aplica and not hay_otra_cosa:
         return _cerrar(ficha, RECHAZADO, _motivo("todo_rechazado")), None
     ficha["resumen"] = _resumen_texto(ficha)

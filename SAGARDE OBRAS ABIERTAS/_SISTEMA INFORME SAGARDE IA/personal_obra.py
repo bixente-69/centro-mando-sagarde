@@ -19,7 +19,7 @@ HOR = {"lun": 7.5, "mar": 7.5, "mie": 7.5, "jue": 7.5, "vie": 7.5, "sab": 0, "do
 # presente guardado) los usa `comprobar` para señalar campos fuera del esquema.
 LK = {
     "tipo", "version", "obra", "horario_semanal", "excepciones_horario", "jornadas",
-    "dispositivo", "renombres", "altas", "empresas", "categorias", "horarios_preferidos",
+    "dispositivo", "renombres", "altas", "bajas", "empresas", "categorias", "horarios_preferidos",
 }
 JK = {"ambito", "fecha", "presentes", "anulada", "notas", "registrado"}
 PK = {"nombre", "horas", "extra"}
@@ -352,6 +352,11 @@ def validar_lote(lote, obras):
         not isinstance(altas, list) or any(not nombre_publicable(x) for x in altas)
     ):
         e.append("alta_invalida")
+    bajas = lote.get("bajas")
+    if "bajas" in lote and (
+        not isinstance(bajas, list) or any(not nombre_publicable(x) for x in bajas)
+    ):
+        e.append("baja_invalida")
     empresas = lote.get("empresas")
     if "empresas" in lote and (
         not isinstance(empresas, list)
@@ -616,7 +621,7 @@ def ingerir_lote(
         "ok": not errores_lote, "escrito": False, "lote_rechazado": errores_lote,
         "avisos_lote": [], "jornadas": [], "altas": [], "excepciones": [],
         "renombres": [], "altas_pedidas": [], "obra_creada": False, "recibido": False,
-        "empresas": [], "categorias": [], "horarios_preferidos": [],
+        "empresas": [], "categorias": [], "horarios_preferidos": [], "bajas": [],
     }
     # Rechazo de lote completo: si la cabecera o el esquema general fallan no se procesa nada.
     if errores_lote:
@@ -702,6 +707,14 @@ def ingerir_lote(
                     "codigo": "nombre_anterior_usado",
                     "detalle": f"{nombre} -> {mp[identificador]['nombre']}",
                 })
+            if mp[identificador].get("activo") is False:
+                mp[identificador]["activo"] = True
+                accion = "alta"
+                cambio_cat = True
+                res["altas"].append({"id": identificador, "nombre": mp[identificador]["nombre"]})
+                tr = _traza_base(ts, oid, "alta_persona", lote.get("dispositivo"))
+                tr.update({"id": identificador, "nombre": mp[identificador]["nombre"]})
+                trazas.append(tr)
         res["altas_pedidas"].append({"nombre": nombre, "id": identificador, "accion": accion})
 
     # Paso 2b: empresas, una por persona. Van después de los renombres y las altas (quien se acaba de crear o de
@@ -801,14 +814,41 @@ def ingerir_lote(
             if nuevo is None:
                 persona.pop("horario_preferido", None)
                 accion = "quitada"
+                accion_traza = "horario_preferido_quitado"
             else:
                 persona["horario_preferido"] = nuevo
                 accion = "fijada"
+                accion_traza = "horario_preferido"
             cambio_cat = True
-            tr = _traza_base(ts, oid, "horario_preferido", lote.get("dispositivo"))
-            tr.update({"id": identificador, "nombre": persona["nombre"], "accion_horario": accion})
+            tr = _traza_base(ts, oid, accion_traza, lote.get("dispositivo"))
+            tr.update({"id": identificador, "nombre": persona["nombre"]})
             trazas.append(tr)
         res["horarios_preferidos"].append({"nombre": persona["nombre"], "id": identificador, "accion": accion})
+
+    # Paso 2e: bajas de trabajadores en la base (se marcan inactivos sin borrar su id para conservar el historial).
+    for original in lote.get("bajas", []):
+        nombre = limpiar_nombre(original)
+        identificador, modo, mp = _buscar_nombre(nombre, cat)
+        if identificador is None:
+            res["avisos_lote"].append({"codigo": "baja_sin_persona", "detalle": nombre})
+            res["bajas"].append({"nombre": nombre, "id": None, "accion": "sin_persona"})
+            continue
+        persona = mp[identificador]
+        if modo == "anterior":
+            res["avisos_lote"].append({
+                "codigo": "nombre_anterior_usado",
+                "detalle": f"{nombre} -> {persona['nombre']}",
+            })
+        if persona.get("activo") is False:
+            accion = "sin_cambios"
+        else:
+            persona["activo"] = False
+            accion = "baja"
+            cambio_cat = True
+            tr = _traza_base(ts, oid, "baja_persona", lote.get("dispositivo"))
+            tr.update({"id": identificador, "nombre": persona["nombre"]})
+            trazas.append(tr)
+        res["bajas"].append({"nombre": persona["nombre"], "id": identificador, "accion": accion})
 
     # Paso 3: normaliza cada jornada y cuenta repeticiones de clave dentro del propio lote.
     normas = []
@@ -1654,6 +1694,7 @@ def texto_aviso(codigo, detalle=None):
         "excepcion_invalida": "Un horario especial viene mal escrito.",
         "renombre_invalido": "Un cambio de nombre viene mal escrito.",
         "alta_invalida": "Un nombre de la lista de nuevos viene mal escrito.",
+        "baja_invalida": "Un nombre de la lista de personas a quitar viene mal escrito.",
         "empresa_invalida": "Una empresa viene mal escrita.",
         "categoria_invalida": "El oficio o categoría viene mal escrito.",
         "horario_preferido_invalido": "Un horario preferido viene mal escrito.",
@@ -1714,6 +1755,10 @@ def texto_aviso(codigo, detalle=None):
         if isinstance(detalle, str) and detalle:
             return f"«{detalle}» no estaba en la base: no se le puede poner oficio."
         return "Un oficio era para alguien que no estaba en la base: no se ha puesto."
+    if codigo == "baja_sin_persona":
+        if isinstance(detalle, str) and detalle:
+            return f"«{detalle}» no estaba en la base: no hay nadie a quien quitar."
+        return "Un nombre que se quería quitar no estaba en la base."
     if codigo == "nombre_anterior_usado":
         if isinstance(detalle, str) and " -> " in detalle:
             anterior, actual = detalle.split(" -> ", 1)

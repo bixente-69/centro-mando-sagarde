@@ -4,11 +4,11 @@
   "obra": "2026 OBRA PRUEBA",
   "revision": "25/09/2026",
   "sin_base": false,
-  "edad_revision_dias": 33,
+  "edad_revision_dias": 34,
   "revision_caducada": true,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "28/10/2026 07:13",
+  "generado": "29/10/2026 11:20",
   "resumen": {
     "listos": 0,
     "verificar": 0,
@@ -638,6 +638,6 @@
     "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmaciÃ³n.",
     "El orden sigue la secuencia lÃ³gica definida en CATALOGO_TAJOS.json.",
-    "La revisiÃ³n es del 25/09/2026 (33 dÃ­as). Los tajos conservan su clasificaciÃ³n; confirmar en obra antes de ejecutar."
+    "La revisiÃ³n es del 25/09/2026 (34 dÃ­as). Los tajos conservan su clasificaciÃ³n; confirmar en obra antes de ejecutar."
   ]
 }

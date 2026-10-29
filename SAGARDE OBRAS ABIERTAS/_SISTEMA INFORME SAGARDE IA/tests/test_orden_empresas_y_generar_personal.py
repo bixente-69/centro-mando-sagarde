@@ -151,6 +151,32 @@ class TestIngestaCategoriasYHorariosPreferidos(unittest.TestCase):
         self.assertEqual(iker["empresa"], "Electrovizcaya")
         self.assertEqual(iker["categoria"], "Oficial 1ª")
         self.assertEqual(iker["horario_preferido"]["lun"], 8)
+        self.assertTrue(iker["activo"])
+
+        # Comprobar baja de empleado (quitar de la base activa)
+        lote_baja = {
+            "tipo": "lote_personal",
+            "version": 1,
+            "obra": "olabeaga",
+            "jornadas": [],
+            "dispositivo": "Personal Sagarde PC",
+            "bajas": ["Unai Bilbao"],
+        }
+        ruta_baja = self.tmp / "2026 OLABEAGA BILBAO" / "REVISIONES" / "CONTROL HORARIO 2026 OLABEAGA BILBAO 29102026.json"
+        ruta_baja.write_text(json.dumps(lote_baja, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        candidatos2 = lc.listar(ruta_baja.parent)
+        analisis2 = lc.analizar("olabeaga", candidatos2, "2026-10-29", self.tmp, self.obras)
+        ficha_baja = next(f for f in analisis2["ficheros"] if f["nombre"].endswith("29102026.json"))
+        self.assertEqual(ficha_baja["estado"], lc.LISTO, ficha_baja)
+        self.assertIn("1 persona quitada", ficha_baja["resumen"])
+
+        aplicado2 = lc.aplicar("olabeaga", candidatos2, "2026-10-29", self.tmp, self.obras)
+        self.assertFalse(aplicado2["frena"], aplicado2)
+        js2 = po.exportar_estado(self.tmp, self.obras, incluir_vacias=True)
+        payload2 = json.loads(js2.split("window.SAGARDE_PERSONAL = ", 1)[1].rstrip(";\n"))
+        unai = next(c for c in payload2["catalogo"] if c["nombre"] == "Unai Bilbao")
+        self.assertFalse(unai["activo"])
 
 
 class TestNavegadorPersonalSagardeNuevasFunciones(unittest.TestCase):
@@ -221,9 +247,23 @@ class TestNavegadorPersonalSagardeNuevasFunciones(unittest.TestCase):
                 )
                 self.assertEqual(emp_asc[0], "CATERSYSTEM")
 
-                # 4. Pestaña Generar personal: crear trabajador con empresa nueva y horario 8h y descargar fichero
+                # 4. Pestaña Generar personal: sin selector de obra, muestra los trabajadores de la empresa y permite quitar o añadir
                 page.click('#pestanas [data-v="generar"]')
                 page.wait_for_selector("#gen-empresa")
+                self.assertIsNone(page.query_selector("#gen-obra"))
+
+                # Al elegir Manueles aparecen los trabajadores ya almacenados en Manueles (Ana)
+                page.select_option("#gen-empresa", "Manueles")
+                almacenados_manueles = page.eval_on_selector_all(
+                    "#tabla-empresa-actual tbody tr td.b-nom",
+                    "els => els.map(e => e.textContent.trim())",
+                )
+                self.assertEqual(almacenados_manueles, ["Ana"])
+
+                # Quitar empleado almacenado (Ana)
+                page.click('#tabla-empresa-actual [data-gen-baja="Ana"]')
+
+                # Añadir trabajador nuevo en una empresa nueva con horario 8h
                 page.select_option("#gen-empresa", "__nueva__")
                 page.fill("#gen-empresa-nueva", "Montajes Norte")
                 page.select_option("#gen-horario-tipo", "8h")
@@ -235,7 +275,7 @@ class TestNavegadorPersonalSagardeNuevasFunciones(unittest.TestCase):
                     "#tabla-generar tbody tr td.b-nom",
                     "els => els.map(e => e.textContent.trim())",
                 )
-                self.assertEqual(prep, ["Koldo Agirre"])
+                self.assertEqual(prep, ["Ana", "Koldo Agirre"])
 
                 with page.expect_download() as dl_info:
                     page.click("#btn-gen-descargar")
@@ -243,6 +283,7 @@ class TestNavegadorPersonalSagardeNuevasFunciones(unittest.TestCase):
                 self.assertTrue(dl.suggested_filename.startswith("CONTROL HORARIO "))
                 contenido_descargado = json.loads(Path(dl.path()).read_text(encoding="utf-8"))
                 self.assertEqual(contenido_descargado["altas"], ["Koldo Agirre"])
+                self.assertEqual(contenido_descargado["bajas"], ["Ana"])
                 self.assertEqual(
                     contenido_descargado["empresas"],
                     [{"nombre": "Koldo Agirre", "empresa": "Montajes Norte"}],
@@ -252,6 +293,11 @@ class TestNavegadorPersonalSagardeNuevasFunciones(unittest.TestCase):
                     [{"nombre": "Koldo Agirre", "categoria": "Oficial 1ª"}],
                 )
                 self.assertEqual(contenido_descargado["horarios_preferidos"]["Koldo Agirre"]["lun"], 8)
+
+                # Comprobar que ningún texto de Generar personal usa palabras de programador (incluido «base de datos»)
+                from test_lenguaje_electricista import JS_TEXTOS, revisar
+                textos_gen = page.evaluate(JS_TEXTOS)
+                self.assertEqual(revisar(textos_gen, "Generar personal"), [])
 
                 browser.close()
 

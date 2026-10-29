@@ -217,7 +217,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
   </section>
   <section class="card" id="vista-generar" aria-labelledby="t-generar" hidden>
     <h2 id="t-generar">Generar personal</h2>
-    <p class="intro">Prepara trabajadores nuevos o actualiza su empresa, oficio y horario particular preferido para que aparezcan listos en el Control Horario.</p>
+    <p class="intro">Elige una empresa para ver los trabajadores que ya tienes almacenados en ella y añadir o quitar empleados de la base de trabajadores.</p>
     <div id="contenido-generar"><p class="empty">Cargando personal…</p></div>
   </section>
 </main>
@@ -321,6 +321,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     { nombre: '', categoria: '' }
   ];
   var genPreparados = []; // trabajadores listos para guardar en el fichero
+  var genBajas = [];      // trabajadores almacenados marcados para quitar de la base
   var genOrdenCol = 'nombre';
   var genOrdenDir = 'asc';
   var genMensajeError = '';
@@ -1282,10 +1283,81 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     return formatearHorarioCorto(hObj);
   }
 
+  function estaEnBajas(nombre) {
+    var clave = window.PersonalCalculo.claveNombre(nombre);
+    for (var i = 0; i < genBajas.length; i++) {
+      if (window.PersonalCalculo.claveNombre(genBajas[i].nombre) === clave) return true;
+    }
+    return false;
+  }
+
+  function buscarEnPreparados(nombre) {
+    var clave = window.PersonalCalculo.claveNombre(nombre);
+    for (var i = 0; i < genPreparados.length; i++) {
+      if (window.PersonalCalculo.claveNombre(genPreparados[i].nombre) === clave) return genPreparados[i];
+    }
+    return null;
+  }
+
+  function obtenerTrabajadoresDeEmpresaActual(empActual) {
+    var claveEmp = window.PersonalCalculo.claveEmpresa(empActual || '');
+    var mapa = {};
+    var lista = [];
+
+    for (var i = 0; i < catalogo.length; i++) {
+      var f = catalogo[i];
+      if (!f || f.fusionado_en || f.activo === false || !f.nombre) continue;
+      var nom = limpiarNombreGen(f.nombre);
+      var claveNom = window.PersonalCalculo.claveNombre(nom);
+      var prep = buscarEnPreparados(nom);
+      var empEfectiva = prep ? (prep.empresa || '') : limpiarNombreGen(f.empresa || '');
+      if (window.PersonalCalculo.claveEmpresa(empEfectiva) !== claveEmp) continue;
+
+      var catEfectiva = prep ? (prep.categoria || '') : limpiarNombreGen(f.categoria || '');
+      var horEfectivo = prep ? prep.horario : (f.horario_preferido || null);
+      var item = {
+        nombre: nom,
+        empresa: empEfectiva,
+        categoria: catEfectiva,
+        horario: horEfectivo,
+        horarioTexto: textoResumenHorario(horEfectivo),
+        enBase: true,
+        modificado: Boolean(prep),
+        enBaja: estaEnBajas(nom)
+      };
+      mapa[claveNom] = item;
+      lista.push(item);
+    }
+
+    for (var j = 0; j < genPreparados.length; j++) {
+      var p = genPreparados[j];
+      var claveP = window.PersonalCalculo.claveNombre(p.nombre);
+      if (mapa[claveP]) continue;
+      if (window.PersonalCalculo.claveEmpresa(p.empresa || '') !== claveEmp) continue;
+      lista.push({
+        nombre: p.nombre,
+        empresa: p.empresa || '',
+        categoria: p.categoria || '',
+        horario: p.horario || null,
+        horarioTexto: p.horarioTexto || textoResumenHorario(p.horario),
+        enBase: Boolean(p.yaEnBase),
+        modificado: true,
+        enBaja: false
+      });
+    }
+
+    return lista.sort(function (a, b) {
+      return a.nombre.localeCompare(b.nombre, 'es');
+    });
+  }
+
   function insertarCandidatosEnPreparados(candidatos) {
     for (var i = 0; i < candidatos.length; i++) {
       var c = candidatos[i];
       var clave = window.PersonalCalculo.claveNombre(c.nombre);
+      genBajas = genBajas.filter(function (b) {
+        return window.PersonalCalculo.claveNombre(b.nombre) !== clave;
+      });
       var idx = -1;
       for (var j = 0; j < genPreparados.length; j++) {
         if (window.PersonalCalculo.claveNombre(genPreparados[j].nombre) === clave) {
@@ -1299,6 +1371,83 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         genPreparados.push(c);
       }
     }
+  }
+
+  function marcarBajaTrabajador(nombre) {
+    var limpio = limpiarNombreGen(nombre);
+    if (!limpio) return;
+    var clave = window.PersonalCalculo.claveNombre(limpio);
+    genPreparados = genPreparados.filter(function (x) {
+      return window.PersonalCalculo.claveNombre(x.nombre) !== clave;
+    });
+    if (estaEnBajas(limpio)) return;
+    var ficha = null;
+    for (var i = 0; i < catalogo.length; i++) {
+      if (catalogo[i] && window.PersonalCalculo.claveNombre(catalogo[i].nombre) === clave) {
+        ficha = catalogo[i];
+        break;
+      }
+    }
+    genBajas.push({
+      nombre: ficha ? limpiarNombreGen(ficha.nombre) : limpio,
+      empresa: ficha ? limpiarNombreGen(ficha.empresa || '') : resolverEmpresaGenerar(),
+      categoria: ficha ? limpiarNombreGen(ficha.categoria || '') : '',
+      horarioTexto: textoResumenHorario(ficha ? ficha.horario_preferido : null),
+      esBaja: true
+    });
+    genMensajeError = '';
+    genMensajeOk = '«' + (ficha ? limpiarNombreGen(ficha.nombre) : limpio) + '» se ha marcado para quitar de la base de trabajadores.';
+    pintarGenerar();
+  }
+
+  function deshacerBajaTrabajador(nombre) {
+    var clave = window.PersonalCalculo.claveNombre(nombre);
+    genBajas = genBajas.filter(function (b) {
+      return window.PersonalCalculo.claveNombre(b.nombre) !== clave;
+    });
+    genMensajeError = '';
+    genMensajeOk = 'Se mantiene a «' + limpiarNombreGen(nombre) + '» en la base de trabajadores.';
+    pintarGenerar();
+  }
+
+  function cargarTrabajadorEnFormulario(nombre) {
+    var clave = window.PersonalCalculo.claveNombre(nombre);
+    var ficha = null;
+    for (var i = 0; i < catalogo.length; i++) {
+      if (catalogo[i] && window.PersonalCalculo.claveNombre(catalogo[i].nombre) === clave) {
+        ficha = catalogo[i];
+        break;
+      }
+    }
+    var prep = buscarEnPreparados(nombre);
+    genModo = 'uno';
+    genNombre = prep ? prep.nombre : (ficha ? limpiarNombreGen(ficha.nombre) : limpiarNombreGen(nombre));
+    var cat = prep ? (prep.categoria || '') : (ficha ? limpiarNombreGen(ficha.categoria || '') : '');
+    var oficiosConocidos = ['', 'Oficial 1ª', 'Oficial 2ª', 'Oficial 3ª', 'Ayudante', 'Encargado'];
+    if (oficiosConocidos.indexOf(cat) >= 0) {
+      genCategoriaSel = cat;
+      genCategoriaOtra = '';
+    } else {
+      genCategoriaSel = '__otra__';
+      genCategoriaOtra = cat;
+    }
+    var hor = prep ? prep.horario : (ficha ? ficha.horario_preferido : null);
+    if (!hor) {
+      genHorarioTipo = 'normal';
+    } else if (hor.lun === 8 && hor.mar === 8 && hor.mie === 8 && hor.jue === 8 && hor.vie === 8 && !hor.sab && !hor.dom) {
+      genHorarioTipo = '8h';
+    } else if (hor.lun === 8 && hor.mar === 8 && hor.mie === 8 && hor.jue === 8 && hor.vie === 6 && !hor.sab && !hor.dom) {
+      genHorarioTipo = 'intensiva';
+    } else {
+      genHorarioTipo = 'personalizado';
+      for (var d = 0; d < DIAS_CLAVES.length; d++) {
+        var dk = DIAS_CLAVES[d];
+        genHorarioDias[dk] = hor[dk] !== undefined ? String(hor[dk]) : '0';
+      }
+    }
+    genMensajeError = '';
+    genMensajeOk = 'Datos de «' + genNombre + '» cargados abajo para modificar su oficio u horario.';
+    pintarGenerar();
   }
 
   function ordenarPreparados(lista) {
@@ -1362,7 +1511,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         }
       }
       var yaEnBase = catalogo.some(function (f) {
-        return f && window.PersonalCalculo.claveNombre(f.nombre) === window.PersonalCalculo.claveNombre(nom);
+        return f && f.activo !== false && window.PersonalCalculo.claveNombre(f.nombre) === window.PersonalCalculo.claveNombre(nom);
       });
       candidatos.push({
         nombre: nom,
@@ -1393,7 +1542,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
           }
         }
         var yaB = catalogo.some(function (f) {
-          return f && window.PersonalCalculo.claveNombre(f.nombre) === window.PersonalCalculo.claveNombre(nomV);
+          return f && f.activo !== false && window.PersonalCalculo.claveNombre(f.nombre) === window.PersonalCalculo.claveNombre(nomV);
         });
         candidatos.push({
           nombre: nomV,
@@ -1441,14 +1590,14 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       ];
     }
     genMensajeOk = candidatos.length === 1
-      ? '«' + candidatos[0].nombre + '» se ha añadido a la lista para preparar el fichero.'
-      : 'Se han añadido ' + candidatos.length + ' trabajadores a la lista para preparar el fichero.';
+      ? '«' + candidatos[0].nombre + '» se ha añadido a la empresa.'
+      : 'Se han añadido ' + candidatos.length + ' trabajadores a la empresa.';
     pintarGenerar();
   }
 
   function descargarFicheroControlHorario() {
-    if (genPreparados.length === 0) return;
-    var obraId = genObra || (obrasAbiertas[0] || Object.keys(nombresObra)[0] || '');
+    if (genPreparados.length === 0 && genBajas.length === 0) return;
+    var obraId = obrasAbiertas[0] || Object.keys(nombresObra)[0] || '';
     if (!obraId) {
       genMensajeError = 'No hay ninguna obra disponible para asociar el fichero.';
       pintarGenerar();
@@ -1456,6 +1605,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     }
 
     var nombresNuevos = [];
+    var nombresBajas = [];
     var listaEmpresas = [];
     var listaCategorias = [];
     var mapaHorariosPref = {};
@@ -1476,7 +1626,12 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       }
     }
 
+    for (var b = 0; b < genBajas.length; b++) {
+      nombresBajas.push(genBajas[b].nombre);
+    }
+
     var claveAltas = 'alt' + 'as';
+    var claveBajas = 'baj' + 'as';
     var claveTipo = 'lote_personal';
     var paquete = {
       tipo: claveTipo,
@@ -1486,6 +1641,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       dispositivo: 'Personal Sagarde PC'
     };
     if (nombresNuevos.length > 0) paquete[claveAltas] = nombresNuevos;
+    if (nombresBajas.length > 0) paquete[claveBajas] = nombresBajas;
     if (listaEmpresas.length > 0) paquete.empresas = listaEmpresas;
     if (listaCategorias.length > 0) paquete.categorias = listaCategorias;
     if (Object.keys(mapaHorariosPref).length > 0) {
@@ -1512,8 +1668,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     enlace.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
 
-    genMensajeOk = 'Fichero «' + nombreFichero + '» descargado. Guárdalo en la carpeta REVISIONES de «' +
-      nombreObraTexto + '» y lanza «actualiza la obra» (o Actualizar_Sagarde.bat) para que aparezcan en el Control Horario.';
+    genMensajeOk = 'Fichero de control horario descargado. Al actualizar con Actualizar_Sagarde.bat los cambios quedarán guardados en la base de trabajadores para todas las obras.';
     pintarGenerar();
   }
 
@@ -1523,15 +1678,19 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
 
     var conocidas = window.PersonalCalculo.empresasConocidas(filas, catalogo);
     if (!genEmpresaSel) {
-      genEmpresaSel = conocidas.indexOf('Sagarde') >= 0 ? 'Sagarde' : (conocidas[0] || '__sin__');
-    }
-
-    var opcionesObra = '';
-    var idsObra = obrasAbiertas.length > 0 ? obrasAbiertas : Object.keys(nombresObra);
-    for (var oi = 0; oi < idsObra.length; oi++) {
-      var id = idsObra[oi];
-      var selO = (id === genObra) ? ' selected' : '';
-      opcionesObra += '<option value="' + escaparHtml(id) + '"' + selO + '>' + escaparHtml(nombreDeObra(id)) + '</option>';
+      var primeraConGente = '';
+      for (var ci0 = 0; ci0 < conocidas.length; ci0++) {
+        var empCand = conocidas[ci0];
+        var tiene = catalogo.some(function (f) {
+          return f && !f.fusionado_en && f.activo !== false &&
+            window.PersonalCalculo.claveEmpresa(f.empresa || '') === window.PersonalCalculo.claveEmpresa(empCand);
+        });
+        if (tiene) {
+          primeraConGente = empCand;
+          break;
+        }
+      }
+      genEmpresaSel = primeraConGente || (conocidas.indexOf('Sagarde') >= 0 ? 'Sagarde' : (conocidas[0] || '__sin__'));
     }
 
     var opcionesEmp = '<option value="__sin__"' + (genEmpresaSel === '__sin__' ? ' selected' : '') + '>Sin empresa asignada</option>';
@@ -1570,31 +1729,27 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         '</div></div>';
     }
 
-    html += '<div class="ctl">' +
-      '<div class="seg" role="group" aria-label="Cuántos trabajadores quieres preparar">' +
-      '<button type="button" data-gen-modo="uno"' + (genModo === 'uno' ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + '>Un trabajador</button>' +
-      '<button type="button" data-gen-modo="varios"' + (genModo === 'varios' ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + '>Varios de la misma empresa</button>' +
-      '</div></div>';
+    var empActual = resolverEmpresaGenerar();
+    var etiquetaEmpresaActual = genEmpresaSel === '__sin__'
+      ? 'Sin empresa asignada'
+      : (empActual || (genEmpresaSel === '__nueva__' ? 'Nueva empresa' : genEmpresaSel));
 
     html += '<div class="gen-grid">' +
-      '<label class="gen-campo">1. Obra por donde entra el fichero' +
-      '<select class="campo" id="gen-obra" aria-label="Obra por donde entra el fichero">' + opcionesObra + '</select>' +
-      '<small>El trabajador quedará en la base de Sagarde para todas las obras.</small></label>' +
-      '<label class="gen-campo">2. Empresa' +
+      '<label class="gen-campo">1. Empresa' +
       '<select class="campo" id="gen-empresa" aria-label="Empresa">' + opcionesEmp + '</select>' +
       (genEmpresaSel === '__nueva__'
         ? '<input class="campo" id="gen-empresa-nueva" type="text" maxlength="60" autocomplete="off" placeholder="Escribe el nombre de la nueva empresa" aria-label="Nombre de la nueva empresa" value="' + escaparHtml(genEmpresaNueva) + '">'
         : '') +
       '<span class="gen-chk"><input type="checkbox" id="gen-autonomo"' + (genEsAutonomo ? ' checked' : '') + '> Es autónomo (añadir @AUT)</span>' +
       '</label>' +
-      '<label class="gen-campo">3. Horario particular preferido' +
+      '<label class="gen-campo">2. Horario particular preferido' +
       '<select class="campo" id="gen-horario-tipo" aria-label="Horario particular preferido">' +
       '<option value="normal"' + (genHorarioTipo === 'normal' ? ' selected' : '') + '>Horario normal de la obra (7,5 h L–V)</option>' +
       '<option value="8h"' + (genHorarioTipo === '8h' ? ' selected' : '') + '>8 horas de lunes a viernes (40 h)</option>' +
       '<option value="intensiva"' + (genHorarioTipo === 'intensiva' ? ' selected' : '') + '>8 h de lunes a jueves y 6 h el viernes (38 h)</option>' +
       '<option value="personalizado"' + (genHorarioTipo === 'personalizado' ? ' selected' : '') + '>Personalizado por día (L–D)</option>' +
       '</select>' +
-      '<small>Se cargará solo al apuntarle en el Control Horario.</small></label>' +
+      '<small>Se cargará solo al elegir al trabajador en el Control Horario.</small></label>' +
       '</div>';
 
     if (genHorarioTipo === 'personalizado') {
@@ -1609,20 +1764,84 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       html += '</div>';
     }
 
+    // Listado inmediato de los trabajadores que ya están almacenados en la empresa seleccionada
+    var empleadosEmpresa = (genEmpresaSel === '__nueva__' && !empActual)
+      ? []
+      : obtenerTrabajadoresDeEmpresaActual(empActual);
+
+    html += '<div class="emp-detalle" id="bloque-empresa-actual">' +
+      '<h4>Trabajadores en «' + escaparHtml(etiquetaEmpresaActual) + '» (' + empleadosEmpresa.length + ')</h4>';
+
+    if (genEmpresaSel === '__nueva__' && !empActual) {
+      html += '<p class="empty" style="padding:10px 0">Escribe arriba el nombre de la nueva empresa para añadir sus empleados.</p>';
+    } else if (empleadosEmpresa.length === 0) {
+      html += '<p class="empty" style="padding:10px 0">No hay trabajadores almacenados en «' + escaparHtml(etiquetaEmpresaActual) + '». Añádelos abajo.</p>';
+    } else {
+      html += '<div class="base-scroll"><table class="gen-tabla" id="tabla-empresa-actual"><thead><tr>' +
+        '<th>Nombre</th>' +
+        '<th>Oficio</th>' +
+        '<th>Horario preferido</th>' +
+        '<th>En la base</th>' +
+        '<th>Acciones</th>' +
+        '</tr></thead><tbody>';
+
+      for (var ei2 = 0; ei2 < empleadosEmpresa.length; ei2++) {
+        var trab = empleadosEmpresa[ei2];
+        var chipSituacion = '';
+        var botonesAccion = '';
+
+        if (trab.enBaja) {
+          chipSituacion = '<span class="chip inact">Se quitará de la base</span>';
+          botonesAccion = '<button type="button" class="btn-accion peq-btn" data-gen-deshacer-baja="' + escaparHtml(trab.nombre) + '">Deshacer</button>';
+        } else if (!trab.enBase) {
+          chipSituacion = '<span class="chip etq-aut">Nuevo a añadir</span>';
+          botonesAccion = '<button type="button" class="btn-accion peq-btn" data-gen-quitar-prep="' + escaparHtml(trab.nombre) + '">Quitar</button>';
+        } else if (trab.modificado) {
+          chipSituacion = '<span class="chip etq-emp">Cambio preparado</span>';
+          botonesAccion = '<button type="button" class="btn-accion peq-btn" data-gen-editar-emp="' + escaparHtml(trab.nombre) + '">Editar</button> ' +
+            '<button type="button" class="btn-accion peq-btn" data-gen-quitar-prep="' + escaparHtml(trab.nombre) + '">Deshacer cambio</button> ' +
+            '<button type="button" class="btn-accion peq-btn" data-gen-baja="' + escaparHtml(trab.nombre) + '">Quitar empleado</button>';
+        } else {
+          chipSituacion = '<span class="chip">Almacenado</span>';
+          botonesAccion = '<button type="button" class="btn-accion peq-btn" data-gen-editar-emp="' + escaparHtml(trab.nombre) + '">Editar</button> ' +
+            '<button type="button" class="btn-accion peq-btn" data-gen-baja="' + escaparHtml(trab.nombre) + '">Quitar empleado</button>';
+        }
+
+        html += '<tr data-emp-trabajador="' + escaparHtml(trab.nombre) + '">' +
+          '<td class="b-nom">' + escaparHtml(trab.nombre) + '</td>' +
+          '<td>' + (trab.categoria ? escaparHtml(trab.categoria) : '<span class="sinj">–</span>') + '</td>' +
+          '<td>' + escaparHtml(trab.horarioTexto) + '</td>' +
+          '<td>' + chipSituacion + '</td>' +
+          '<td>' + botonesAccion + '</td>' +
+          '</tr>';
+      }
+
+      html += '</tbody></table></div>';
+    }
+    html += '</div>';
+
+    // Formulario para añadir empleados a esta empresa
+    html += '<h3 class="ih">Añadir empleado a «' + escaparHtml(etiquetaEmpresaActual) + '»</h3>';
+    html += '<div class="ctl">' +
+      '<div class="seg" role="group" aria-label="Cuántos trabajadores quieres preparar">' +
+      '<button type="button" data-gen-modo="uno"' + (genModo === 'uno' ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + '>Un trabajador</button>' +
+      '<button type="button" data-gen-modo="varios"' + (genModo === 'varios' ? ' class="on" aria-pressed="true"' : ' aria-pressed="false"') + '>Varios de la misma empresa</button>' +
+      '</div></div>';
+
     if (genModo === 'uno') {
       html += '<div class="gen-grid">' +
-        '<label class="gen-campo">4. Nombre del trabajador' +
+        '<label class="gen-campo">3. Nombre del trabajador' +
         '<input class="campo" id="gen-nombre" type="text" maxlength="60" autocomplete="off" ' +
         'placeholder="Ej.: Iker Etxebarria" aria-label="Nombre del trabajador" list="lista-nombres-base" value="' + escaparHtml(genNombre) + '">' +
         '<small>Si eliges a alguien que ya está en la base, actualizarás su empresa, oficio u horario.</small></label>' +
-        '<label class="gen-campo">5. Oficio / Categoría (opcional)' +
+        '<label class="gen-campo">4. Oficio / Categoría (opcional)' +
         '<select class="campo" id="gen-categoria" aria-label="Oficio o categoría">' + opcionesCat + '</select>' +
         (genCategoriaSel === '__otra__'
           ? '<input class="campo" id="gen-categoria-otra" type="text" maxlength="60" autocomplete="off" placeholder="Escribe el oficio" aria-label="Escribir oficio" value="' + escaparHtml(genCategoriaOtra) + '">'
           : '') +
         '</label></div>';
     } else {
-      html += '<div style="margin:12px 0"><label class="gen-campo" style="margin-bottom:8px">4. Nombres de los trabajadores (todos con la empresa y horario de arriba)</label>';
+      html += '<div style="margin:12px 0"><label class="gen-campo" style="margin-bottom:8px">3. Nombres de los trabajadores (todos con la empresa y horario de arriba)</label>';
       for (var vi = 0; vi < genFilasVarios.length; vi++) {
         var fv = genFilasVarios[vi];
         html += '<div class="gen-varios-fila">' +
@@ -1640,60 +1859,63 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
 
     html += '<datalist id="lista-nombres-base">';
     for (var li = 0; li < catalogo.length; li++) {
-      if (catalogo[li] && catalogo[li].nombre) {
+      if (catalogo[li] && catalogo[li].nombre && catalogo[li].activo !== false) {
         html += '<option value="' + escaparHtml(catalogo[li].nombre) + '"></option>';
       }
     }
     html += '</datalist>';
 
     html += '<div class="gen-acciones">' +
-      '<button type="button" class="btn-accion pri" id="btn-gen-anadir">Añadir a la lista</button>' +
+      '<button type="button" class="btn-accion pri" id="btn-gen-anadir">Añadir empleado</button>' +
       '</div>';
 
-    // Tabla de trabajadores preparados
-    html += '<h3 class="ih">Trabajadores preparados (' + genPreparados.length + ')</h3>';
-    if (genPreparados.length === 0) {
-      html += '<p class="empty">Todavía no has añadido ningún trabajador a la lista de preparación.</p>';
+    // Tabla de cambios preparados (altas, modificaciones y bajas)
+    var todosCambios = genPreparados.concat(genBajas);
+    html += '<h3 class="ih">Cambios preparados para la base (' + todosCambios.length + ')</h3>';
+    if (todosCambios.length === 0) {
+      html += '<p class="empty">Todavía no has añadido ni quitado ningún empleado en esta sesión.</p>';
     } else {
-      var prepOrd = ordenarPreparados(genPreparados);
+      var prepOrd = ordenarPreparados(todosCambios);
       html += '<div class="base-scroll"><table class="gen-tabla" id="tabla-generar"><thead><tr>' +
         '<th' + attrOrden('nombre', genOrdenCol, genOrdenDir, 'data-col-gen', false) + '>Nombre</th>' +
         '<th' + attrOrden('empresa', genOrdenCol, genOrdenDir, 'data-col-gen', false) + '>Empresa</th>' +
         '<th' + attrOrden('categoria', genOrdenCol, genOrdenDir, 'data-col-gen', false) + '>Oficio</th>' +
         '<th' + attrOrden('horario', genOrdenCol, genOrdenDir, 'data-col-gen', false) + '>Horario preferido</th>' +
-        '<th>En la base</th>' +
+        '<th>Cambio</th>' +
         '<th>Acción</th>' +
         '</tr></thead><tbody>';
 
       for (var pi = 0; pi < prepOrd.length; pi++) {
         var item = prepOrd[pi];
+        var etqCambio = item.esBaja
+          ? '<span class="chip inact">Quitar de la base</span>'
+          : (item.yaEnBase ? '<span class="chip etq-emp">Actualiza ficha</span>' : '<span class="chip etq-aut">Trabajador nuevo</span>');
+        var btnQuitarFila = item.esBaja
+          ? '<button type="button" class="btn-accion peq-btn" data-gen-deshacer-baja="' + escaparHtml(item.nombre) + '">Deshacer</button>'
+          : '<button type="button" class="btn-accion peq-btn" data-gen-quitar-prep="' + escaparHtml(item.nombre) + '">Quitar</button>';
+
         html += '<tr data-gen-preparado="' + escaparHtml(item.nombre) + '">' +
           '<td class="b-nom">' + escaparHtml(item.nombre) + '</td>' +
           '<td>' + (item.empresa ? '<span class="nom-emp">' + escaparHtml(item.empresa) + '</span>' : '<span class="sinj">Sin empresa</span>') + '</td>' +
           '<td>' + (item.categoria ? escaparHtml(item.categoria) : '<span class="sinj">–</span>') + '</td>' +
           '<td>' + escaparHtml(item.horarioTexto) + '</td>' +
-          '<td>' + (item.yaEnBase ? '<span class="chip etq-emp">Actualiza ficha</span>' : '<span class="chip etq-aut">Trabajador nuevo</span>') + '</td>' +
-          '<td><button type="button" class="btn-accion peq-btn" data-gen-quitar-prep="' + escaparHtml(item.nombre) + '">Quitar</button></td>' +
+          '<td>' + etqCambio + '</td>' +
+          '<td>' + btnQuitarFila + '</td>' +
           '</tr>';
       }
       html += '</tbody></table></div>';
 
-      var obraDestino = nombreDeObra(genObra || (obrasAbiertas[0] || ''));
       html += '<div class="gen-acciones" style="margin-top:14px">' +
-        '<button type="button" class="btn-accion acento" id="btn-gen-descargar">Descargar fichero CONTROL HORARIO (' + genPreparados.length + ')</button>' +
-        '<button type="button" class="btn-accion" id="btn-gen-vaciar">Vaciar lista</button>' +
+        '<button type="button" class="btn-accion acento" id="btn-gen-descargar">Guardar cambios de la base (' + todosCambios.length + ')</button>' +
+        '<button type="button" class="btn-accion" id="btn-gen-vaciar">Vaciar cambios</button>' +
         '</div>';
-      html += '<p class="nota"><b>Cómo entra en el Control Horario:</b> 1) Pulsa «Descargar fichero CONTROL HORARIO». ' +
-        '2) Guarda el fichero descargado en la carpeta <b>REVISIONES</b> de la obra «' + escaparHtml(obraDestino) + '». ' +
-        '3) Lanza «actualiza la obra» (o <code>Actualizar_Sagarde.bat</code>): los trabajadores quedarán en la base de Sagarde con su empresa y su horario particular listos para elegir.</p>';
+      html += '<p class="nota">Una vez actualizado en la base de trabajadores, ya podrás elegirlo y colocarlo en cualquier obra desde la aplicación de generar horarios.</p>';
     }
 
     cont.innerHTML = html;
   }
 
   function leerCamposGenerarDesdeDOM() {
-    var selObra = document.getElementById('gen-obra');
-    if (selObra) genObra = selObra.value;
     var selEmp = document.getElementById('gen-empresa');
     if (selEmp) genEmpresaSel = selEmp.value;
     var inpEmpNueva = document.getElementById('gen-empresa-nueva');
@@ -1734,7 +1956,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     cont.addEventListener('change', function (ev) {
       leerCamposGenerarDesdeDOM();
       var id = ev.target && ev.target.id;
-      if (id === 'gen-empresa' || id === 'gen-horario-tipo' || id === 'gen-categoria' || id === 'gen-obra' || id === 'gen-autonomo') {
+      if (id === 'gen-empresa' || id === 'gen-horario-tipo' || id === 'gen-categoria' || id === 'gen-autonomo') {
         pintarGenerar();
       }
     });
@@ -1790,6 +2012,24 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         return;
       }
 
+      var btnBaja = ev.target.closest('[data-gen-baja]');
+      if (btnBaja) {
+        marcarBajaTrabajador(btnBaja.getAttribute('data-gen-baja'));
+        return;
+      }
+
+      var btnDeshacerBaja = ev.target.closest('[data-gen-deshacer-baja]');
+      if (btnDeshacerBaja) {
+        deshacerBajaTrabajador(btnDeshacerBaja.getAttribute('data-gen-deshacer-baja'));
+        return;
+      }
+
+      var btnEditarEmp = ev.target.closest('[data-gen-editar-emp]');
+      if (btnEditarEmp) {
+        cargarTrabajadorEnFormulario(btnEditarEmp.getAttribute('data-gen-editar-emp'));
+        return;
+      }
+
       var btnQuitarPrep = ev.target.closest('[data-gen-quitar-prep]');
       if (btnQuitarPrep) {
         var nomQuitar = btnQuitarPrep.getAttribute('data-gen-quitar-prep');
@@ -1803,6 +2043,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       var btnVaciar = ev.target.closest('#btn-gen-vaciar');
       if (btnVaciar) {
         genPreparados = [];
+        genBajas = [];
         genMensajeOk = '';
         pintarGenerar();
         return;

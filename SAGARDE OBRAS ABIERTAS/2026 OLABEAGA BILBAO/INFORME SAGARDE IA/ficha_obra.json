@@ -9391,15 +9391,15 @@
   "dudas": [],
   "materiales": {
     "ultimo_mes": "Octubre26",
-    "ultima_fecha": "26/10/2026",
-    "dias_desde": 2,
+    "ultima_fecha": "29/10/2026",
+    "dias_desde": 0,
     "meses": [
       "Octubre26"
     ],
-    "n_items": 39,
+    "n_items": 46,
     "aviso": null,
     "_meta": {
-      "actualizado": "28/10/2026 07:13"
+      "actualizado": "29/10/2026 11:20"
     }
   },
   "documentos": {
