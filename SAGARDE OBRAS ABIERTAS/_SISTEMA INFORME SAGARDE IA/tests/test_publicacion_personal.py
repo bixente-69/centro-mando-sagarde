@@ -38,6 +38,12 @@ CON_REGLA_PROPIA = {
     f"{MOTOR}/personal_calculo.js": "personal_calculo.js",
     f"{MOTOR}/personal_estado.js": "personal_estado.js",
     f"{MOTOR}/personal_catalogo.json": "personal_catalogo.json",
+    # MA3: la tablet se abre sin cobertura (service worker, manifest e iconos de la pantalla de inicio)
+    f"{MOTOR}/personal_sw.js": "personal_sw.js",
+    f"{MOTOR}/personal_manifest.json": "personal_manifest.json",
+    f"{MOTOR}/personal_icono_192.png": "personal_icono_192.png",
+    f"{MOTOR}/personal_icono_512.png": "personal_icono_512.png",
+    f"{MOTOR}/personal_icono_apple.png": "personal_icono_apple.png",
     f"{OBRA}/personal_obra.json": "personal_obra.json",
     f"{OBRA}/personal_jornadas.jsonl": "personal_jornadas.jsonl",
     f"{OTRA_OBRA}/personal_obra.json": "personal_obra.json",
@@ -59,6 +65,8 @@ NO_DECLARADOS = [
     f"{MOTOR}/personal_borrador.json",
     f"{MOTOR}/personal_estado.json",
     f"{MOTOR}/personal_copia.js",
+    f"{MOTOR}/personal_sw_viejo.js",  # MA3: solo se publica el service worker declarado
+    f"{MOTOR}/personal_icono_256.png",
     f"{OBRA}/personal_notas.json",
     f"{OBRA}/personal_jornadas.json",
     f"{OBRA}/personal_obra.json.bak",

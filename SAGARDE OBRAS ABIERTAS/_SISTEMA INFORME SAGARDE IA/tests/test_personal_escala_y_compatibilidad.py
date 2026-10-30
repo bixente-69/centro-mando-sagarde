@@ -332,14 +332,14 @@ function modoVerdad() {
     t.A.pending = [{ obra: 'obra-gama', ambito: 'garaje', fecha: D, anulada: false, notas: '', registrado: 'x', presentes: [{ nombre: 'Bruno', horas: 5, extra: 0 }] }];
     igual('tras un fallo en un repintado, los nombres salen al día', t.A.canon('recien llegado'), 'Recien Llegado');
     igual('tras un fallo en un repintado, las filas salen al día', [...t.A.filasDeTodasLasObras().keys()].length, 3);
-    // un render que revienta de verdad (falta personal_calculo.js) tampoco deja memoria
-    const copia = t.ctx.PersonalCalculo; t.ctx.PersonalCalculo = undefined;
+    // un render que revienta de verdad (el cálculo falla; MA3: si FALTA personal_calculo.js ya no revienta) tampoco deja memoria
+    const copia = t.ctx.PersonalCalculo; t.ctx.PersonalCalculo = { ...copia, filtrar: () => { throw new Error('calculo roto'); } };
     Object.assign(t.A.a, { obra: 'obra-alfa', amb: 'vivienda', fecha: D, fechas: [D] }); t.A.loadList();
     let lanzo = false; try { t.A.render(); } catch (e) { lanzo = true; }
     t.ctx.PersonalCalculo = copia;
     t.A.news = ['Recien Llegado', 'Otro Mas'];
     igual('tras un render que falla, los nombres salen al día', t.A.canon('otro mas'), 'Otro Mas');
-    if (!lanzo) fallos.push('el render sin personal_calculo.js debía fallar para probar esto, y no falló');
+    if (!lanzo) fallos.push('el render con el cálculo roto debía fallar para probar esto, y no falló');
   } else fallos.push('falta conMemoria');
   return { fallos, datos: {} };
 }

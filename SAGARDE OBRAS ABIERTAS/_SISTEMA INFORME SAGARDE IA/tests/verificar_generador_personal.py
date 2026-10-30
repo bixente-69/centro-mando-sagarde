@@ -2805,7 +2805,7 @@ with sync_playwright() as p:
         e.clic('#v-app button[data-v="enviar"]')
         ok(e.pg.is_visible('#enviar'), 'T112 «Enviar al PC» (abajo) abre la pantalla de enviar')
         e.clic('nav button[data-v="app"]')
-        ok(e.txt('.bar small') == 'Funciona sin cobertura: sí', 'T112 cabecera: %r' % e.txt('.bar small'))
+        ok(e.txt('.bar small') == 'Con cobertura: datos al día', 'T112 cabecera (MA3: la etiqueta ya no es fija; con la lista recién llegada dice «Con cobertura»): %r' % e.txt('.bar small'))
         e.clic('button[data-reset]')
         ok(e.txt('#confirmar-reset').startswith('¿Borrar lo que llevas a medias?'), 'T112 pregunta antes de borrar: %r' % e.txt('#confirmar-reset'))
     con_escena('T112', ESTADO1, t112)

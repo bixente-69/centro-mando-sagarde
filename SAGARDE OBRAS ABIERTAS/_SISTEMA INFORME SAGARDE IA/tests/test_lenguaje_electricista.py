@@ -522,6 +522,32 @@ class TestLenguajeDelPC(unittest.TestCase):
             self.assertIn(esperado, codigos)
 
 
+class TestLenguajeSinCobertura(unittest.TestCase):
+    """MA3: los textos de cobertura (etiquetas y avisos) que Bixente lee en un garaje sin red, en lenguaje de electricista."""
+
+    def _textos(self):
+        html = (APP_DIR / "generador_personal.html").read_text(encoding="utf-8")
+        bloque = re.search(r"const COB = \{(.*?)\n      \};", html, re.S)
+        self.assertIsNotNone(bloque, "no se encuentra el bloque «const COB» con los textos de cobertura")
+        pares = re.findall(r'^\s+(\w+): ("(?:[^"\\]|\\.)*"),$', bloque.group(1), re.M)
+        return {nombre: json.loads(valor) for nombre, valor in pares}
+
+    def test_los_textos_de_cobertura_no_usan_palabras_de_programador(self):
+        textos = self._textos()
+        self.assertEqual(8, len(textos), "una lista vacía o corta de textos es una alarma, no «no aplica»: %s" % sorted(textos))
+        problemas = revisar([t.replace("{fecha}", "28/10").replace("{n}", "3") for t in textos.values()], "cobertura")
+        self.assertEqual([], problemas, problemas)
+
+    def test_las_tres_etiquetas_dicen_lo_que_toca(self):
+        t = self._textos()
+        self.assertTrue(t["con"].startswith("Con cobertura:"), t["con"])
+        self.assertTrue(t["sin"].startswith("Sin cobertura:") and "{fecha}" in t["sin"], t["sin"])
+        self.assertTrue(t["nada"].startswith("Sin datos todavía:") and "cobertura" in t["nada"], t["nada"])
+        self.assertIn("{n}", t["sinLista"])
+        self.assertIn("a salvo", t["sinLista"])
+        self.assertIn("primera vez", t["informe"])
+
+
 class TestElDetectorDeLenguaje(unittest.TestCase):
     """El detector tiene que saltar con lo que se prohíbe (si no, la guarda que «no encuentra nada» no prueba nada)."""
 
@@ -536,7 +562,8 @@ class TestElDetectorDeLenguaje(unittest.TestCase):
 
     def test_no_salta_con_lenguaje_de_electricista(self):
         for texto in ["Enviar al PC", "Sin enviar al PC: 3 jornadas", "Borrar lo que llevo a medias", "horario especial 9 h",
-                      "Lista de trabajadores y obras al día: 25/10/2026 15:59", "Funciona sin cobertura: sí",
+                      "Lista de trabajadores y obras al día: 25/10/2026 15:59", "Con cobertura: datos al día",
+                      "Sin cobertura: usando la lista del 28/10",
                       "Es importante mirar la carpeta REVISIONES", "Nombre nuevo: «Asensio» no estaba en la base; se añade.",
                       "Por empresa", "Sin empresa", "Total autónomos (@AUT)", "Hay una persona con más de una empresa (Ana)"]:
             self.assertEqual([], palabras_prohibidas(texto), texto)

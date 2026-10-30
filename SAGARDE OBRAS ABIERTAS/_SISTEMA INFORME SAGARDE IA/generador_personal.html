@@ -4,6 +4,12 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>Personal en obra</title>
+    <link rel="manifest" href="personal_manifest.json" />
+    <link rel="apple-touch-icon" href="personal_icono_apple.png" />
+    <meta name="theme-color" content="#0b1f3a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Personal en obra" />
     <style>
       /* ---- Horario propio: estilos del editor y selector de horario específico por trabajador ---- */
       /* Estos estilos van antes del bloque principal por historia; se deja el orden porque la
@@ -131,6 +137,19 @@
         display: flex;
         justify-content: space-between;
         font-weight: 700;
+      }
+      .bar-estado {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2px;
+        text-align: right;
+        max-width: 66%;
+      }
+      .bar-estado small {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.3;
       }
       .pad,
       .card {
@@ -769,6 +788,23 @@
         document.head.appendChild(s);
       })();
     </script>
+    <script>
+      // Para abrir la tablet sin cobertura: guarda la página y sus datos (ver personal_sw.js).
+      // Alcance estrecho: solo esta página, no el resto de la carpeta.
+      if ("serviceWorker" in navigator && (location.protocol === "https:" || location.protocol === "http:")) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("personal_sw.js", { scope: "./generador_personal.html" }).then(
+            function () {
+              window.__sw = "listo";
+            },
+            function () {
+              window.__sw = "error";
+              if (typeof iniciada !== "undefined" && iniciada) render();
+            },
+          );
+        });
+      }
+    </script>
   </head>
   <body>
     <nav class="tabs">
@@ -781,12 +817,7 @@
       </div>
     </nav>
     <main>
-      <section id="sin-estado" hidden>
-        <div class="card">
-          <h2>Todavía no hay lista de obras y trabajadores…</h2>
-          <p>Abre la app con cobertura al menos una vez.</p>
-        </div>
-      </section>
+      <section id="sin-estado" hidden></section>
       <section id="v-app" class="view"></section>
       <section id="v-jornadas" class="view" hidden></section>
       <section id="v-informe" class="view" hidden></section>
@@ -813,6 +844,17 @@
           em: LS + 'empresas',
           uh: LS + 'ultimas_horas',
         };
+      // Textos de cobertura (en llano; los tres primeros los aprobó Bixente).
+      const COB = {
+        con: "Con cobertura: datos al día",
+        sin: "Sin cobertura: usando la lista del {fecha}",
+        sinFecha: "Sin cobertura: usando la lista guardada",
+        nada: "Sin datos todavía: abre la tablet una vez con cobertura",
+        nadaTitulo: "Todavía no hay lista de obras ni de trabajadores",
+        informe: "Informe necesita cobertura la primera vez. Lo demás sigue funcionando: puedes anotar y enviar.",
+        sinLista: "Jornadas sin enviar: {n}. Están a salvo en la tablet. Necesitas cobertura para cargar la lista y poder seguir.",
+        sinPreparar: "Para usar la tablet sin cobertura, primero tienes que abrirla una vez con cobertura.",
+      };
       // Lee y parsea un valor JSON de localStorage; devuelve el valor por defecto d si no existe o
       // falla
       function get(k, d) {
@@ -943,6 +985,7 @@
       // única obra|ámbito|fecha.
       let state = null,
         origin = '',
+        datosDe = '',
         pending = get(K.p, []),
         news = get(K.n, []),
         hours = get(K.h, {}),
@@ -2005,14 +2048,48 @@
             .join('; ')}. Revisa que sea correcto (ej. mañana en una y tarde en otra).</div>`
         );
       }
+      // «28/10» a partir de la fecha de generación de la lista («2026-10-28T…»); vacío si no se entiende.
+      function diaMes(generado) {
+        let g = String(generado || '');
+        return /^[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(g) ? g.slice(8, 10) + "/" + g.slice(5, 7) : "";
+      }
+      // Etiqueta de la barra: dice la verdad sobre la cobertura y de qué día son los datos.
+      function etiquetaCobertura() {
+        if (!state) return COB.nada;
+        if (datosDe === "red") return COB.con;
+        let dia = diaMes(state.generado);
+        return dia ? COB.sin.replace("{fecha}", dia) : COB.sinFecha;
+      }
+      // Barra de arriba: nombre de la tablet, etiqueta de cobertura y, si toca, el borrador.
+      function barraHTML() {
+        return (
+          '<div class="bar"><span>Personal en obra</span><div class="bar-estado">' +
+          '<small id="estado-cobertura">' + E(etiquetaCobertura()) + "</small>" +
+          (a.auto ? '<small id="estado-borrador">Borrador guardado automáticamente</small>' : "") +
+          "</div></div>"
+        );
+      }
+      // Si no se pudo preparar la tablet para abrirse sin cobertura, se dice (nunca en silencio).
+      function avisoSinPrepararHTML() {
+        return window.__sw === "error" ? `<div class="aviso" id="aviso-sin-preparar">${E(COB.sinPreparar)}</div>` : "";
+      }
+      // Tarjeta cuando no hay ninguna lista guardada: qué falta y, si hay jornadas sin enviar, que están a salvo.
+      function sinEstadoHTML() {
+        let n = pending.length;
+        return (
+          `<div class="card"><h2>${E(COB.nadaTitulo)}</h2><p>${E(COB.nada)}</p>` +
+          (n ? `<p class="aviso" id="sin-estado-jornadas">${E(COB.sinLista.replace("{n}", n))}</p>` : "") +
+          "</div>"
+        );
+      }
       function appView() {
         let horario = hor();
         let mostrarAviso = !matchMedia('(display-mode: standalone)').matches && !get(K.a, false);
         let obras = Object.entries(state.obras).filter((entrada) => !entrada[1].cerrada);
         return (
-          `<div class="bar"><span>Personal en obra</span><small>` +
-          `${a.auto ? 'Borrador guardado automáticamente' : 'Funciona sin cobertura: sí'}</small></div><div ` +
+          `${barraHTML()}<div ` +
           `class="origin" id="estado-origen">${E(origin)}</div><div class="pad">` +
+          `${avisoSinPrepararHTML()}` +
           `${
             mostrarAviso
               ? '<div class="aviso" id="aviso-instalar"><button data-cerrar-aviso>×</button>Conviene ' +
@@ -2234,6 +2311,9 @@
       // Genera la vista de informe con agregados de horas, días, porcentaje de impacto, la suma por
       // empresa y barras gráficas relativas
       function infoView() {
+        // Si personal_calculo.js no llegó (primera vez sin cobertura) solo esta pantalla se queda sin cuentas.
+        if (typeof PersonalCalculo === "undefined")
+          return `<div class="card" id="informe-sin-calculo"><h2>Informe de personal</h2><p class="aviso">${E(COB.informe)}</p></div>`;
         // Cada fila lleva la empresa de su persona tal como la ve esta tablet (lo apuntado aquí manda).
         let filas = PersonalCalculo.filtrar(rowState(), {
           obra: a.obra,
@@ -2322,6 +2402,7 @@
       // Lo mismo sin memoria de repintado: las pruebas lo comparan con render.
       function renderSinMemoria() {
         if (!state) {
+          document.querySelector('#sin-estado').innerHTML = sinEstadoHTML();
           document.querySelector('#sin-estado').hidden = false;
           document.querySelectorAll('.view').forEach((vista) => (vista.hidden = true));
           return;
@@ -2333,8 +2414,8 @@
         if (a.obra) document.querySelector('#v-app').innerHTML = appView();
         else
           document.querySelector('#v-app').innerHTML =
-            '<div class="bar"><span>Personal en obra</span><small>Funciona sin cobertura: sí</small></div><div ' +
-            'class="origin" id="estado-origen">' +
+            barraHTML() +
+            '<div class="origin" id="estado-origen">' +
             E(origin) +
             ('</div><div class="pad" id="sin-obras"><h2>No hay obras abiertas</h2><p>Cuando haya ' +
               'una obra abierta con personal aparecerá aquí.</p></div>');
@@ -3662,6 +3743,8 @@
         if (window.__pub && window.SAGARDE_PERSONAL?.obras) {
           state = window.SAGARDE_PERSONAL;
           set(K.e, state);
+          // personal_sw.js marca con __sgdOrigen = "copia" el estado que sirve desde su caché (sin cobertura).
+          datosDe = window.__sgdOrigen === 'copia' ? 'copia' : 'red';
           let generado = state.generado || '';
           let coincidencia = generado.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
           let fechaLegible = coincidencia
@@ -3675,12 +3758,16 @@
               ':' +
               coincidencia[5]
             : generado;
-          origin = 'Lista de trabajadores y obras al día' + (generado ? ': ' + fechaLegible : '');
+          origin =
+            datosDe === 'red'
+              ? 'Lista de trabajadores y obras al día' + (generado ? ': ' + fechaLegible : '')
+              : 'Se usa la lista guardada en este aparato';
         } else {
           // Si no hay conexión o se superó el tiempo de espera, arranca con la copia local de
           // respaldo
           if (copia?.obras) {
             state = copia;
+            datosDe = 'copia';
             origin =
               'Se usa la lista guardada en este aparato' +
               (porEspera ? ' · la lista nueva tarda en llegar' : '');
