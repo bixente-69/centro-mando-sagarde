@@ -1194,9 +1194,11 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
 
   /* ================= PESTAÑA 4: GENERAR PERSONAL ================= */
 
-  var PATRON_DNI = /(?<![A-Za-z0-9])\d{8}[- ]?[A-Za-z](?![A-Za-z0-9])/;
-  var PATRON_NIE = /(?<![A-Za-z0-9])[XYZxyz][- ]?\d{7}[- ]?[A-Za-z](?![A-Za-z0-9])/;
-  var PATRON_TEL = /(?<![\d.])(?:\+?34[\s.-]?)?[6789](?:[\s.-]?\d){8}(?!\d)/;
+  // Sin «lookbehind» a propósito: Safari anterior a 16.4 no lo entiende y, si no compila, no carga el script
+  // entero (se quedarían muertos esta pestaña y el ranking). «(^|[^…])» mira el mismo carácter de antes.
+  var PATRON_DNI = /(^|[^A-Za-z0-9])\d{8}[- ]?[A-Za-z](?![A-Za-z0-9])/;
+  var PATRON_NIE = /(^|[^A-Za-z0-9])[XYZxyz][- ]?\d{7}[- ]?[A-Za-z](?![A-Za-z0-9])/;
+  var PATRON_TEL = /(^|[^\d.])(?:\+?34[\s.-]?)?[6789](?:[\s.-]?\d){8}(?!\d)/;
   var PATRON_CORREO = /[^\s@"']+@[^\s@"']+\.[^\s@"']+/;
 
   function limpiarNombreGen(x) {

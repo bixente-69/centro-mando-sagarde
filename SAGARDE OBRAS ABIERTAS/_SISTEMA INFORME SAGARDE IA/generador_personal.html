@@ -1027,20 +1027,40 @@
         prefill: null,
         listo: null,
       };
-      // Devuelve la lista unificada y ordenada alfabéticamente de nombres de trabajadores
-      // (publicados y nuevos creados)
-      function cat() {
+      // Memoria de UN repintado. Mientras se construye una pantalla nada cambia (las vistas solo leen),
+      // así que el índice de nombres y las filas de todas las obras se calculan una sola vez y se tiran
+      // al salir. Fuera de un repintado no hay memoria: guardar, anular o corregir un nombre cambian
+      // los datos y la pantalla siguiente parte de cero, sin nada que invalidar.
+      let memoria = null;
+      function conMemoria(construir) {
+        if (memoria) return construir();
+        memoria = { nombres: null, filas: null };
+        try {
+          return construir();
+        } finally {
+          memoria = null;
+        }
+      }
+      // Nombres de trabajadores (publicados y nuevos creados) por su clave sin tildes ni mayúsculas.
+      function indiceNombres() {
+        if (memoria && memoria.nombres) return memoria.nombres;
         let m = new Map();
         (state?.catalogo || []).forEach((x) => m.set(key(x.nombre), x.nombre));
         news.forEach((x) => {
           if (!m.has(key(x))) m.set(key(x), x);
         });
-        return [...m.values()].sort((x, y) => x.localeCompare(y, 'es'));
+        if (memoria) memoria.nombres = m;
+        return m;
+      }
+      // Devuelve la lista unificada y ordenada alfabéticamente de nombres de trabajadores
+      // (publicados y nuevos creados)
+      function cat() {
+        return [...indiceNombres().values()].sort((x, y) => x.localeCompare(y, 'es'));
       }
       // Nombre tal como está en el catálogo o en los nuevos si coincide sin tildes ni mayúsculas;
       // si no, el nombre limpio.
       function canon(n) {
-        return cat().find((x) => key(x) === key(n)) || clean(n);
+        return indiceNombres().get(key(n)) || clean(n);
       }
       // ---------------------------------------------------------------------------
       // Empresas: cada persona tiene una (o ninguna); se elige de una lista y se apunta para el PC
@@ -1119,9 +1139,9 @@
       // normalizado.
       function pub(ob = a.obra) {
         let o = state?.obras?.[ob];
-        return o && Array.isArray(o.jornadas)
-          ? o.jornadas.map((x) => ({ ...x, obra: ob, nombre: canon(x.nombre) }))
-          : [];
+        if (!o || !Array.isArray(o.jornadas)) return [];
+        let nombres = indiceNombres();
+        return o.jornadas.map((x) => ({ ...x, obra: ob, nombre: nombres.get(key(x.nombre)) || clean(x.nombre) }));
       }
       // Clave única de una jornada: obra|ámbito|fecha.
       function jk(x) {
@@ -1707,6 +1727,10 @@
       // Genera el marcado HTML de las filas de trabajadores, con control de asistencia, horas,
       // horas extra y horario propio
       function rowsHTML() {
+        return conMemoria(rowsHTMLSinMemoria);
+      }
+      // Lo mismo sin memoria de repintado: las pruebas lo comparan con rowsHTML.
+      function rowsHTMLSinMemoria() {
         return a.list
           .map((persona, indice) => {
             if (a.ren && a.ren.nombre === persona.nombre) return filaEdicionHTML(persona);
@@ -2139,6 +2163,10 @@
       // Actualiza el DOM mostrando la vista activa (app, jornadas o informe) y el estado de
       // selección de pestañas
       function render() {
+        conMemoria(renderSinMemoria);
+      }
+      // Lo mismo sin memoria de repintado: las pruebas lo comparan con render.
+      function renderSinMemoria() {
         if (!state) {
           document.querySelector('#sin-estado').hidden = false;
           document.querySelectorAll('.view').forEach((vista) => (vista.hidden = true));
@@ -2458,6 +2486,12 @@
       // Reúne las jornadas de todas las obras (publicadas y pendientes) para verificar acumulados
       // diarios de horas
       function filasDeTodasLasObras() {
+        if (!memoria) return filasSinMemoria();
+        if (!memoria.filas) memoria.filas = filasSinMemoria();
+        // Una copia: quien la recibe puede quitarle jornadas sin tocar la memoria del repintado.
+        return new Map(memoria.filas);
+      }
+      function filasSinMemoria() {
         let jornadas = new Map();
         Object.keys(state.obras).forEach((obra) => {
           pub(obra).forEach((fila) => {
