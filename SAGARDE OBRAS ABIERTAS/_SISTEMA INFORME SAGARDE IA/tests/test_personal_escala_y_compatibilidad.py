@@ -71,7 +71,7 @@ function cargar(motor, almacenInicial) {
   const elementos = new Map();
   const nuevoElemento = () => ({
     classList: { add() {}, remove() {}, toggle() {} }, style: {}, dataset: {}, value: '',
-    querySelector: () => null, querySelectorAll: () => [], appendChild() {}, addEventListener() {}, focus() {},
+    querySelector: () => null, querySelectorAll: () => [], appendChild() {}, addEventListener() {}, focus() {}, scrollIntoView() {}, remove() {},
     set innerHTML(v) { this._h = v; }, get innerHTML() { return this._h || ''; },
     set textContent(v) { this._t = v; }, get textContent() { return this._t || ''; },
     set hidden(v) { this._hid = v; }, get hidden() { return !!this._hid; },
@@ -226,8 +226,10 @@ function modoEscenas() {
     { obra: 'obra-beta', ambito: 'vivienda', fecha: ultimo, anulada: true, presentes: [], notas: '', registrado: 'x' },
   ];
   ir('obra-alfa', 'vivienda', ultimo); rec('con jornadas sin enviar');
-  ir('obra-gama', 'vivienda', ultimo); marcar(5); A.save(); rec('tras guardar');
-  ir('obra-gama', 'vivienda', ultimo, fechas.slice(-2)); marcar(4); A.save(); rec('tras guardar dos días');
+  // MA2: si al guardar sale el aviso de antes de guardar (el día ya tenía gente), se confirma como lo haría la persona.
+  const guardarConfirmando = () => { A.save(); if (A.a.aviso) A.save({ modo: 'seguir', firma: A.a.aviso.firma }); };
+  ir('obra-gama', 'vivienda', ultimo); marcar(5); guardarConfirmando(); rec('tras guardar');
+  ir('obra-gama', 'vivienda', ultimo, fechas.slice(-2)); marcar(4); guardarConfirmando(); rec('tras guardar dos días');
   A.pending = A.pending.filter((j) => A.jk(j) !== 'obra-alfa|vivienda|' + ultimo).concat([
     { obra: 'obra-alfa', ambito: 'vivienda', fecha: ultimo, anulada: true, presentes: [], notas: '', registrado: 'x' }]);
   ir('obra-alfa', 'vivienda', ultimo); rec('tras anular');

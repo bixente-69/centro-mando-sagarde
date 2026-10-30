@@ -7,6 +7,7 @@ fecha en el 23/10/2026 y recorre el flujo completo. El lote que exporta la app s
 (P1). Viene del verificador de staging (paso 06): solo cambia de dónde salen la app, P1 y la carpeta de pruebas.
 P3_SOLO_08C=1 = modo rápido del paso 08c: solo las escenas T80 en adelante (lápiz, desplegable completo, varios nombres).
 P3_SOLO_08C2A=1 = modo rápido del paso 08c2a: solo las escenas T120 en adelante (el campo Empresa: crear, lápiz, varios nombres, lista, «Enviar al PC»).
+P3_SOLO_MA2=1 = modo rápido del paso MA2: solo las escenas T150 en adelante (anotar sin pisar lo ya guardado, fin de semana, días futuros, horas al añadir).
 P3_SOLO_08C2B=1 = modo rápido del paso 08c2b: solo las escenas T140 en adelante (la suma por empresa y la empresa junto al nombre en el Informe).
 P3_SOLO_08D=1 = modo rápido del paso 08d: solo las escenas T90 en adelante (día nuevo con la gente anterior marcada, «Enviar al PC», nombre del fichero).
 P3_APP = carpeta que tiene generador_personal.html, personal_calculo.js y personal_obra.py (por defecto, el motor)."""
@@ -457,6 +458,8 @@ with sync_playwright() as p:
         clic('#v-app .row[data-nombre="Mikel"] .step button >> nth=0')
         ok(txt('#v-app .row[data-nombre="Mikel"] .step output') == '7,5 h', 'el primer toque fija 7,5 h: %r' % txt('#v-app .row[data-nombre="Mikel"] .step output'))
         clic('button[data-guardar]')
+        ok(pg.query_selector('#aviso-guardar') is not None and pendientes() == antes, 'MA2: guardar un sábado de futuro sin horario enseña el aviso y todavía no guarda nada: %r' % pendientes())
+        clic('#aviso-guardar button[data-guardar-modo="seguir"]')
         ok(pendientes() == str(int(antes) + 1), 'con horas puestas, guardar sí guarda el sábado: %r' % pendientes())
         sab = [j for j in exportar().get('jornadas', []) if j['fecha'] == '2026-10-24']
         ok(sab and sab[0]['presentes'][0]['horas'] == 7.5 and sab[0]['presentes'][0].get('extra') == 7.5, 'el sábado todo cuenta como extra: %s' % sab)
@@ -669,6 +672,10 @@ with sync_playwright() as p:
 
     def con_escena(nombre, datos, fn, **kw):
         """Ejecuta una escena; cualquier excepción se convierte en un fallo legible y no tumba las demás."""
+        if os.environ.get('P3_SOLO_MA2') == '1':     # modo del paso MA2: solo las escenas T150 en adelante (anotar sin pisar, fin de semana, días futuros, horas al añadir)
+            m = re.match(r'T(\d+)', nombre)
+            if not (m and int(m.group(1)) >= 150):
+                return
         if os.environ.get('P3_SOLO_08C2B') == '1':     # modo del paso 08c2b: solo las escenas T140 en adelante (la suma por empresa en el Informe)
             m = re.match(r'T(\d+)', nombre)
             if not (m and int(m.group(1)) >= 140):
@@ -1684,6 +1691,8 @@ with sync_playwright() as p:
             e.clic('#v-app .row[data-nombre="Gorka"] .x')
             ok(e.txt('.sum') == '1 presente · 4 h', 'T69 con solo Aitor el sábado no faltan horas: %r' % e.txt('.sum'))
             e.clic('button[data-guardar]')
+            ok([x.get_attribute('data-aviso') for x in e.pg.query_selector_all('#aviso-guardar li')] == ['futuro'], 'T69 (MA2) con horario propio el sábado no avisa de fin de semana, solo de que aún no ha llegado')
+            e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
             ok(e.pendientes() == '1', 'T69 se puede guardar el sábado con el horario propio: %r %r' % (e.pendientes(), e.toast()))
             a = [p for j in (e.exportar() or {}).get('jornadas', []) for p in j['presentes']]
             ok(a and a[0]['horas'] == 4 and a[0]['extra'] == 0, 'T69 el sábado de Aitor son 4 h normales: %s' % a)
@@ -1714,6 +1723,7 @@ with sync_playwright() as p:
                 e.clic('#v-app .row[data-nombre="%s"] .x' % n)
             ok(e.marcados() == ['Aitor'] and e.txt('.sum') == '1 presente · 4 h', 'T69b el sábado con «Marcar todos» y solo Aitor marcado: 4 h (su horario propio), sin «faltan horas»: %r %s' % (e.txt('.sum'), e.marcados()))
             e.clic('button[data-guardar]')
+            e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')     # MA2: el 24/10 aún no ha llegado (hoy es 23/10)
             ok(e.pendientes() == '1' and 'faltan' not in e.toast(), 'T69b se guarda sin pedir horas: %r %r' % (e.pendientes(), e.toast()))
         con_escena('T69b', est5({'Aitor': {'sab': 4}}), t69b)
 
@@ -3343,6 +3353,274 @@ with sync_playwright() as p:
     con_escena('T147', est10(filas=filas_147, ultima=u('2026-10-22', 'Dani')), t147)
 
     # Fin del bloque del paso 08c2b
+
+    # ===== Paso MA2: anotar sin pisar lo ya guardado (varios días, fin de semana, días futuros, horas a 0) y horas al añadir =====
+    # Hoy es el viernes 23/10/2026. En olabeaga el jueves 22/10 ya tiene anotados a Ana, Beto, Carlos, Dani y Eli (enviados al PC).
+    PEND_MA2 = 'pendientes'
+
+    def marcar_dias(e, fechas, principal):
+        """Deja marcados esos días del calendario con la fecha principal indicada (como si se hubieran tocado)."""
+        e.pg.evaluate("([f,p])=>{a.fechas=f;a.fecha=p;a.calMes=p.slice(0,7);render()}", [fechas, principal])
+
+    def solo(e, *nombres):
+        """Deja marcados exactamente esos nombres de la lista (tocando la X de los que sobran o faltan)."""
+        for n in e.filas():
+            if (n in nombres) != (n in e.marcados()):
+                e.clic('#v-app .row[data-nombre="%s"] .x' % n)
+
+    def lineas_aviso(e):
+        return e.pg.eval_on_selector_all('#aviso-guardar li', 'e=>e.map(l=>[l.dataset.aviso,l.innerText.trim().replace(/\\s+/g," ")])')
+
+    def botones_aviso(e):
+        return e.pg.eval_on_selector_all('#aviso-guardar button', 'e=>e.map(b=>b.dataset.guardarModo)')
+
+    def guardadas(e):
+        return ls(e, PEND_MA2) or []
+
+    def por_fecha(e):
+        return {j['fecha']: [(p['nombre'], p['horas'], p['extra']) for p in j['presentes']] for j in guardadas(e)}
+
+    def hay_aviso(e):
+        return e.pg.query_selector('#aviso-guardar') is not None
+
+    # --- T150: un día que ya tiene gente enviada al PC: avisa, no guarda nada hasta confirmar y luego dice qué sustituyó
+    def t150(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')     # la lista sigue siendo la del 23/10: no enseña lo que hay el 22/10
+        solo(e, 'Ana', 'Beto', 'Carlos', 'Dani')
+        e.clic('button[data-guardar]')
+        ok(hay_aviso(e), 'T150 con el 22/10 ya anotado sale el aviso de antes de guardar')
+        ok(guardadas(e) == [] and e.pendientes() == '0', 'T150 con el aviso a la vista NO se ha guardado nada: %s' % guardadas(e))
+        lineas = lineas_aviso(e)
+        ok([x[0] for x in lineas] == ['ocupado'], 'T150 una sola línea, la del día ocupado: %s' % lineas)
+        texto = lineas[0][1] if lineas else ''
+        ok('jue 22/10 ya hay 5 personas (ya en el PC): Ana, Beto, Carlos, Dani y Eli.' in texto and 'se queda fuera Eli' in texto,
+           'T150 el aviso dice qué día, cuánta gente, si ya está en el PC, quién estaba y quién se queda fuera: %r' % texto)
+        ok(botones_aviso(e) == ['seguir', 'cancelar'], 'T150 con un solo día no se ofrece «saltar»: %s' % botones_aviso(e))
+        e.pg.evaluate("save({ modo: 'seguir', firma: 'firma de un aviso viejo' })")
+        ok(guardadas(e) == [] and hay_aviso(e), 'T150 la respuesta de un aviso que ya no es este no guarda nada: %s' % guardadas(e))
+        ok(e.txt('#aviso-guardar button[data-guardar-modo="seguir"]') == 'Sustituir y guardar', 'T150 el botón dice «Sustituir y guardar»')
+        e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+        ok(por_fecha(e) == {'2026-10-22': [('Ana', 7.5, 0), ('Beto', 7.5, 0), ('Carlos', 7.5, 0), ('Dani', 7.5, 0)]}, 'T150 tras confirmar queda la jornada nueva: %s' % por_fecha(e))
+        ok(not hay_aviso(e), 'T150 tras confirmar el aviso desaparece')
+        resumen = e.txt('#resumen-guardado')
+        ok('jue 22/10' in resumen and 'sustituida' in resumen and 'antes Ana, Beto, Carlos, Dani y Eli, ahora Ana, Beto, Carlos y Dani' in resumen,
+           'T150 el resumen dice qué se sustituyó y por quién: %r' % resumen)
+        ok('Guardada' not in e.txt('#toast') and 'Jornada guardada' not in e.txt('#toast'), 'T150 al sustituir, el mensaje no dice «Guardada(s)»: %r' % e.txt('#toast'))
+    con_escena('T150', est10(), t150)
+
+    # --- T151: un día con jornada sin enviar: avisa de que está sin enviar y «No guardar nada» deja todo exactamente como estaba
+    def t151(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')
+        antes = guardadas(e)
+        ok(len(antes) == 1 and e.pendientes() == '1', 'T151 hay una jornada sin enviar sembrada: %s' % antes)
+        solo(e, 'Ana', 'Beto', 'Carlos')
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        texto = lineas[0][1] if lineas else ''
+        ok(len(lineas) == 1 and 'jue 22/10 ya hay 2 personas (sin enviar al PC): Ana y Beto.' in texto and 'se suma Carlos' in texto,
+           'T151 el aviso dice que ese día ya estaba sin enviar con Ana y Beto y que se suma Carlos: %s' % lineas)
+        e.clic('#aviso-guardar button[data-guardar-modo="cancelar"]')
+        ok(guardadas(e) == antes, 'T151 cancelar deja la jornada anterior exactamente igual: %s' % guardadas(e))
+        ok(not hay_aviso(e) and e.txt('#toast') == 'No se ha guardado nada.', 'T151 cancelar cierra el aviso y lo dice: %r' % e.txt('#toast'))
+        e.clic('button[data-guardar]')
+        ok(hay_aviso(e), 'T151 al volver a pulsar Guardar el aviso sale otra vez (no se guardó nada)')
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')
+        solo(e, 'Ana', 'Carlos')
+        e.clic('button[data-guardar]')
+        ok('se queda fuera Beto y se suma Carlos.' in (lineas_aviso(e) or [['', '']])[0][1], 'T151 quita a uno y suma a otro: %s' % lineas_aviso(e))
+        solo(e, 'Ana', 'Beto')
+        e.clic('#v-app .row[data-nombre="Ana"] button[data-d="0.5"]')
+        e.clic('button[data-guardar]')
+        ok('Si sigues, cambian las horas de ese día.' in (lineas_aviso(e) or [['', '']])[0][1], 'T151 la misma gente con otras horas: %s' % lineas_aviso(e))
+        e.fecha('2026-10-21')
+        ok(not hay_aviso(e), 'T151 cambiar de día cierra el aviso')
+    con_escena('T151', est10(), t151, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', ['Ana', 'Beto'])]))
+
+    # --- T152: dos días marcados con el calendario, uno ocupado: «Saltar» guarda solo el vacío y el resumen dice qué saltó
+    def t152(e):
+        e.ir()
+        e.clic('button[data-cal-dia="2026-10-21"]')
+        e.clic('button[data-cal-dia="2026-10-22"]')
+        e.clic('button[data-quitar-dia="2026-10-23"]')
+        solo(e, 'Ana', 'Beto')
+        e.clic('button[data-guardar]')
+        ok([x[0] for x in lineas_aviso(e)] == ['ocupado'] and 'jue 22/10' in lineas_aviso(e)[0][1], 'T152 solo el 22/10 está ocupado (el 21/10 no): %s' % lineas_aviso(e))
+        ok(botones_aviso(e) == ['seguir', 'saltar', 'cancelar'], 'T152 con un día libre se ofrece «saltar»: %s' % botones_aviso(e))
+        ok(guardadas(e) == [], 'T152 con el aviso a la vista no se ha guardado ningún día')
+        e.clic('#aviso-guardar button[data-guardar-modo="saltar"]')
+        ok(por_fecha(e) == {'2026-10-21': [('Ana', 7.5, 0), ('Beto', 7.5, 0)]}, 'T152 solo se guarda el día vacío: %s' % por_fecha(e))
+        resumen = e.txt('#resumen-guardado')
+        ok('1 jornada guardada: mié 21/10.' in resumen and '1 jornada sin guardar porque ya tenía gente: jue 22/10.' in resumen,
+           'T152 el resumen dice qué se guardó y qué se saltó: %r' % resumen)
+        ok('Guardadas' not in e.txt('#toast'), 'T152 el mensaje no presume de «Guardadas»: %r' % e.txt('#toast'))
+    con_escena('T152', est10(), t152)
+
+    # --- T153: los mismos dos días, «Sustituir y guardar»: guarda los dos, lo dice con exactitud y el fichero para el PC es válido
+    def t153(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-21', '2026-10-22'], '2026-10-21')
+        solo(e, 'Ana', 'Beto')
+        e.clic('button[data-guardar]')
+        e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+        ok(sorted(por_fecha(e)) == ['2026-10-21', '2026-10-22'], 'T153 se guardan los dos días: %s' % sorted(por_fecha(e)))
+        resumen = e.txt('#resumen-guardado')
+        ok('1 jornada guardada: mié 21/10.' in resumen and 'jue 22/10 sustituida' in resumen, 'T153 el resumen separa lo nuevo de lo sustituido: %r' % resumen)
+        ok('Guardadas 2' not in e.txt('#toast') and 'Guardadas 2' not in resumen, 'T153 nunca «Guardadas 2 jornadas» cuando una sustituyó a otra: %r' % e.txt('#toast'))
+        lote = e.exportar()
+        ok(lote and [j['fecha'] for j in lote['jornadas']] == ['2026-10-21', '2026-10-22'], 'T153 el fichero para el PC lleva las dos jornadas: %s' % (lote or {}).get('jornadas'))
+        if lote:
+            valida_con_p1(lote)
+        e.clic('#resumen-guardado button[data-cerrar-resumen]')
+        ok(e.pg.query_selector('#resumen-guardado') is None, 'T153 «Entendido» cierra el resumen')
+    con_escena('T153', est10(), t153)
+
+    # --- T154: fin de semana y día que aún no ha llegado con las horas sin tocar: avisa de todo, y si sigue lo guarda con 0 horas a la vista
+    def t154(e):
+        e.ir(previa=True)     # la lista sale marcada con la gente del 22/10 y con las horas SIN tocar (siguen el horario de cada día)
+        marcar_dias(e, ['2026-10-23', '2026-10-24', '2026-10-25'], '2026-10-23')
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        ok([x[0] for x in lineas] == ['finde', 'futuro', 'cero_horas', 'cero_horas', 'ayuda'], 'T154 líneas del aviso: %s' % lineas)
+        d = dict((x[0], x[1]) for x in lineas)
+        ok(d.get('finde') == 'El sáb 24/10 y dom 25/10 son fin de semana y esta obra no tiene horario esos días.', 'T154 línea de fin de semana: %r' % d.get('finde'))
+        ok(d.get('futuro') == 'Estos días todavía no han llegado: sáb 24/10 y dom 25/10.', 'T154 línea de días futuros: %r' % d.get('futuro'))
+        ok(any('El sáb 24/10: Ana, Beto, Carlos, Dani y Eli se guardarían con 0 horas.' == x[1] for x in lineas), 'T154 línea de 0 horas del sábado: %s' % lineas)
+        ok(botones_aviso(e) == ['seguir', 'cancelar'] and e.txt('#aviso-guardar button[data-guardar-modo="seguir"]') == 'Guardar así', 'T154 botones: %s' % botones_aviso(e))
+        ok(guardadas(e) == [], 'T154 con el aviso a la vista no se ha guardado nada')
+        e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+        g = por_fecha(e)
+        cinco = [(n, 7.5, 0) for n, _ in PERS]
+        ok(g.get('2026-10-23') == cinco and g.get('2026-10-24') == [(n, 0, 0) for n, _ in PERS] and g.get('2026-10-25') == [(n, 0, 0) for n, _ in PERS],
+           'T154 el viernes con 7,5 h y el fin de semana con 0 h, a la vista: %s' % g)
+        resumen = e.txt('#resumen-guardado')
+        ok('sáb 24/10 (fin de semana, todavía no había llegado, 0 horas: Ana, Beto, Carlos, Dani y Eli)' in resumen and '3 jornadas guardadas' in resumen, 'T154 el resumen cuenta lo avisado: %r' % resumen)
+    con_escena('T154', est10(), t154)
+
+    # --- T155: con las horas puestas a mano el fin de semana avisa pero no hay línea de 0 horas
+    def t155(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-23', '2026-10-24'], '2026-10-23')
+        solo(e, 'Ana')
+        e.clic('#v-app .row[data-nombre="Ana"] button[data-d="0.5"]')
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        ok([x[0] for x in lineas] == ['finde', 'futuro'], 'T155 con horas puestas no hay línea de 0 horas: %s' % lineas)
+        e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+        g = por_fecha(e)
+        ok(g.get('2026-10-24') == [('Ana', 8, 8)] and g.get('2026-10-23') == [('Ana', 8, 0.5)], 'T155 el sábado guarda las horas puestas: %s' % g)
+    con_escena('T155', est10(), t155)
+
+    # --- T156: solo un día futuro laborable: una línea, sin «saltar»; y un día ya pasado y vacío no avisa de nada
+    def t156(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-27'], '2026-10-27')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok([x[0] for x in lineas_aviso(e)] == ['futuro'] and lineas_aviso(e)[0][1] == 'El mar 27/10 todavía no ha llegado.', 'T156 línea de día futuro: %s' % lineas_aviso(e))
+        ok(botones_aviso(e) == ['seguir', 'cancelar'], 'T156 botones: %s' % botones_aviso(e))
+        e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+        ok(por_fecha(e) == {'2026-10-27': [('Ana', 7.5, 0)]}, 'T156 al seguir se guarda: %s' % por_fecha(e))
+        marcar_dias(e, ['2026-10-20'], '2026-10-20')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and '2026-10-20' in por_fecha(e) and e.txt('#toast') == 'Jornada guardada en este aparato ✓', 'T156 un día pasado, vacío y laborable se guarda sin aviso, con el mensaje de siempre: %r' % e.txt('#toast'))
+    con_escena('T156', est10(), t156)
+
+    # --- T157: corregir el día que se está viendo (la lista salió de él) no pide confirmación: es lo de siempre
+    def t157(e):
+        e.ir()
+        e.fecha('2026-10-22')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and e.txt('#toast') == 'Jornada guardada en este aparato ✓', 'T157 guardar el mismo día sin cambiar nada no avisa: %r' % e.txt('#toast'))
+        solo(e, 'Ana', 'Beto')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and por_fecha(e) == {'2026-10-22': [('Ana', 7.5, 0), ('Beto', 7.5, 0)]}, 'T157 quitar gente del día que se está viendo se guarda sin avisar: %s' % por_fecha(e))
+        marcar_dias(e, ['2026-10-21', '2026-10-22'], '2026-10-22')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and sorted(por_fecha(e)) == ['2026-10-21', '2026-10-22'], 'T157 el día visto y otro vacío: sin aviso: %s' % sorted(por_fecha(e)))
+    con_escena('T157', est10(), t157)
+
+    # --- T159: con UN solo día marcado, si la lista no salió de ese día (se quitó el otro del calendario) también avisa
+    def t159(e):
+        e.ir()
+        e.clic('button[data-cal-dia="2026-10-22"]')
+        e.clic('button[data-quitar-dia="2026-10-23"]')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        ok([x[0] for x in lineas] == ['ocupado'] and 'jue 22/10 ya hay 5 personas' in lineas[0][1] and 'se quedan fuera Beto, Carlos, Dani y Eli' in lineas[0][1],
+           'T159 un solo día ocupado con una lista de otro día: %s' % lineas)
+        ok(guardadas(e) == [], 'T159 no se ha guardado nada')
+        e.pg.evaluate("save({ modo: 'saltar', firma: a.aviso.firma })")
+        ok(guardadas(e) == [] and e.txt('#toast') == 'No se ha guardado ningún día: todos ya tenían gente.', 'T159 «saltar» con todos los días ocupados no guarda nada y lo dice: %r' % e.txt('#toast'))
+        ok('1 jornada sin guardar porque ya tenía gente: jue 22/10.' in e.txt('#resumen-guardado'), 'T159 y el resumen lo cuenta: %r' % e.txt('#resumen-guardado'))
+    con_escena('T159', est10(), t159)
+
+    # --- T160: un día que la lista no enseña pero que ya estaba exactamente igual no avisa (se guarda con el mensaje de siempre)
+    def t160(e):
+        e.ir(previa=True)
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')
+        e.pg.evaluate("a.list.forEach(p => { p.horas = 7.5; })")
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and e.txt('#toast') == 'Jornada guardada en este aparato ✓', 'T160 el 22/10 ya tenía a esos cinco con 7,5 h: no avisa: %r' % e.txt('#toast'))
+    con_escena('T160', est10(), t160)
+
+    # --- T162: con muchas personas en el día el aviso las nombra todas hasta siete y, si hay más, «… y N más»
+    def t162(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok('ya hay 7 personas (ya en el PC): P1, P2, P3, P4, P5, P6 y P7.' in (lineas_aviso(e) or [['', '']])[0][1], 'T162 con siete personas las nombra todas: %s' % lineas_aviso(e))
+    n162 = ['P%d' % i for i in range(1, 8)]
+    con_escena('T162', est10(personas=[('Ana', '')] + [(n, '') for n in n162], filas=viv('2026-10-22', *n162), ultima=u('2026-10-22', 'Ana')), t162)
+
+    def t162b(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok('ya hay 9 personas (ya en el PC): P1, P2, P3, P4, P5, P6 y 3 más.' in (lineas_aviso(e) or [['', '']])[0][1], 'T162 con nueve personas nombra seis y cuenta el resto: %s' % lineas_aviso(e))
+    n162b = ['P%d' % i for i in range(1, 10)]
+    con_escena('T162b', est10(personas=[('Ana', '')] + [(n, '') for n in n162b], filas=viv('2026-10-22', *n162b), ultima=u('2026-10-22', 'Ana')), t162b)
+
+    # --- T161: un sábado ya pasado: con horario propio de ese día no avisa de fin de semana; sin él, sí
+    def t161(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-17'], '2026-10-17')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and por_fecha(e) == {'2026-10-17': [('Ana', 4, 0)]}, 'T161 Ana tiene horario propio de 4 h los sábados: sin aviso y con 4 h normales: %s' % por_fecha(e))
+        marcar_dias(e, ['2026-10-10'], '2026-10-10')
+        solo(e, 'Beto')
+        e.clic('#v-app .row[data-nombre="Beto"] .step button >> nth=0')
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        ok(lineas == [['finde', 'El sáb 10/10 es fin de semana y esta obra no tiene horario ese día.']], 'T161 Beto no tiene horario ese sábado: avisa de fin de semana (y no de 0 horas porque puso sus horas): %s' % lineas)
+    s161 = est10()
+    s161['obras']['olabeaga']['excepciones_horario'] = {'Ana': {'sab': 4}}
+    con_escena('T161', s161, t161)
+
+    # --- T158: al añadir a alguien de la base sale con las horas de su horario de ESE día, no con las de la última vez (y sin extra)
+    def t158(e):
+        e.ir()
+        e.pg.select_option('#addsel', 'Zoe')
+        e.clic('button[data-add]')
+        ok(e.horas('Zoe') == '6 h', 'T158 Zoe, un viernes con horario propio de 6 h, sale con 6 h y no con las 9 h de la última vez: %r' % e.horas('Zoe'))
+        ok('extra' not in e.txt('#v-app .row[data-nombre="Zoe"] .sub'), 'T158 no sale ninguna hora extra por sorpresa: %r' % e.txt('#v-app .row[data-nombre="Zoe"] .sub'))
+        e.fecha('2026-10-24')
+        e.pg.select_option('#addsel', 'Yago')
+        e.clic('button[data-add]')
+        ok(e.horas('Yago') == '¿horas?', 'T158 un sábado sin horario nadie sale con horas inventadas: %r' % e.horas('Yago'))
+        e.clic('button[data-guardar]')
+        ok(e.txt('#toast').startswith('Faltan las horas de: Yago'), 'T158 y se piden las horas antes de guardar: %r' % e.txt('#toast'))
+    s158 = est10(personas=PERS + [('Yago', ''), ('Zoe', '')], filas=viv('2026-10-22', *[n for n, _ in PERS]), ultima=u('2026-10-22', *[n for n, _ in PERS]))
+    s158['obras']['olabeaga']['excepciones_horario'] = {'Zoe': {'vie': 6}}
+    con_escena('T158', s158, t158, init=sembrar('sgd_personal_ultimas_horas', {'zoe': 9, 'yago': 9}))
+
+    # Fin del bloque del paso MA2
 
     # Fin del bloque del paso 08d
 

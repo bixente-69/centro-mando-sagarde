@@ -304,6 +304,73 @@ class TestLenguajeDeLaApp(unittest.TestCase):
         problemas = revisar(recogidos, "app")
         self.assertEqual([], sorted(set(problemas)), "\n".join(sorted(set(problemas))[:30]))
 
+    def test_los_avisos_de_antes_de_guardar_no_usan_palabras_de_programador(self):
+        """Paso MA2: el aviso de antes de guardar (día con gente, fin de semana, día futuro, 0 horas), sus tres respuestas y el
+        resumen de lo guardado, sustituido y saltado se escriben en lenguaje de electricista."""
+        from playwright.sync_api import sync_playwright
+
+        base = Path(os.environ.get("P3_TMP") or tempfile.gettempdir()) / ("lenguaje_avisos_" + uuid.uuid4().hex[:8])
+        base.mkdir(parents=True)
+        self.addCleanup(shutil.rmtree, str(base), True)
+        for nombre in ("generador_personal.html", "personal_calculo.js"):
+            shutil.copy(APP_DIR / nombre, base / nombre)
+        (base / "personal_estado.js").write_text("window.SAGARDE_PERSONAL = " + json.dumps(_estado(), ensure_ascii=False) + ";\n", encoding="utf-8")
+        url = "file:///" + str(base).replace(os.sep, "/").replace(" ", "%20") + "/generador_personal.html"
+        recogidos = []
+        with sync_playwright() as p:
+            nav = p.chromium.launch()
+            ctx = nav.new_context(viewport={"width": 390, "height": 844}, timezone_id="Europe/Madrid", locale="es-ES")
+            ctx.add_init_script(FECHA_FIJA)
+            pg = ctx.new_page()
+            pg.set_default_timeout(4000)
+            errores = []
+            pg.on("pageerror", lambda e: errores.append(str(e)))
+
+            def mirar():
+                recogidos.extend(pg.evaluate(JS_TEXTOS))
+
+            def clic(sel):
+                pg.click(sel, timeout=4000)
+                mirar()
+
+            def preparar(dias, principal):
+                # días marcados con la lista de siempre, solo Mikel y con las horas sin tocar (siguen el horario de cada día)
+                pg.evaluate("([d, p]) => { a.fechas = d; a.fecha = p; a.calMes = p.slice(0, 7); a.list.forEach((x) => { x.on = x.nombre === 'Mikel'; x.horas = null; }); render(); }", [dias, principal])
+
+            pg.goto(url)
+            pg.wait_for_selector("#obra")
+            todos = ["2026-10-21", "2026-10-22", "2026-10-24", "2026-10-25"]
+            # 1) los cuatro avisos a la vez; se salta lo que ya tenía gente
+            preparar(todos, "2026-10-21")
+            clic("button[data-guardar]")
+            self.assertTrue(pg.query_selector("#aviso-guardar"), "no ha salido el aviso de antes de guardar")
+            clic('#aviso-guardar button[data-guardar-modo="saltar"]')
+            # 2) los mismos días otra vez: ahora se sustituye lo que había
+            preparar(["2026-10-21", "2026-10-22"], "2026-10-21")
+            pg.evaluate("a.list.forEach((x) => { x.on = x.nombre === 'Txomin'; x.horas = null; }); render()")
+            clic("button[data-guardar]")
+            clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+            clic("#resumen-guardado button[data-cerrar-resumen]")
+            # 3) un aviso y «No guardar nada»
+            preparar(["2026-10-21", "2026-10-22"], "2026-10-21")
+            clic("button[data-guardar]")
+            clic('#aviso-guardar button[data-guardar-modo="cancelar"]')
+            # 4) todos los días ocupados y «saltar» a mano: no se guarda ninguno
+            preparar(["2026-10-21"], "2026-10-22")
+            pg.evaluate("a.list.forEach((x) => { x.on = x.nombre === 'Mikel'; x.horas = null; }); a.listaDe = null; render()")
+            clic("button[data-guardar]")
+            pg.evaluate("save({ modo: 'saltar', firma: a.aviso.firma })")
+            mirar()
+            nav.close()
+        self.assertEqual([], errores, "errores de JavaScript mientras se recorrían los avisos")
+        todo = " ".join(recogidos)
+        for frase in ("Todavía no se ha guardado nada", "ya hay 2 personas (ya en el PC)", "son fin de semana", "todavía no han llegado", "se guardaría con 0 horas",
+                      "Si no quieres 0 horas", "Sustituir y guardar", "Saltar los días que ya tienen gente", "No guardar nada", "Así ha quedado",
+                      "jornadas guardadas", "sustituida", "sin guardar porque ya tenía", "No se ha guardado nada.", "No se ha guardado ningún día"):
+            self.assertIn(frase, todo, "falta en lo revisado: " + frase)
+        problemas = revisar(recogidos, "avisos de antes de guardar")
+        self.assertEqual([], sorted(set(problemas)), "\n".join(sorted(set(problemas))[:30]))
+
     def test_el_campo_empresa_de_la_app_tampoco_usa_palabras_de_programador(self):
         """Recorre todos los estados del campo Empresa (08c2a): desplegables, errores, avisos, resúmenes y «Enviar al PC»."""
         from playwright.sync_api import sync_playwright

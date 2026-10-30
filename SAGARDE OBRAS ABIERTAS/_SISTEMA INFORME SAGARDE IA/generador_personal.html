@@ -288,6 +288,22 @@
         background: none;
         font-size: 20px;
       }
+      /* Aviso de antes de guardar y resumen de lo guardado: lista de frases y botones a todo el ancho */
+      .aviso-guardar {
+        border-left: 4px solid #d9822b;
+      }
+      .aviso-guardar ul,
+      #resumen-guardado ul {
+        margin: 6px 0;
+        padding-left: 20px;
+      }
+      .aviso-guardar li,
+      #resumen-guardado li {
+        margin: 4px 0;
+      }
+      .aviso-guardar .actions .btn {
+        flex: 1 1 100%;
+      }
       .sum {
         font-weight: 700;
         margin: 14px 0;
@@ -1026,6 +1042,9 @@
         nuevoError: '',
         prefill: null,
         listo: null,
+        aviso: null,
+        guardado: null,
+        listaDe: null,
       };
       // Memoria de UN repintado. Mientras se construye una pantalla nada cambia (las vistas solo leen),
       // así que el índice de nombres y las filas de todas las obras se calculan una sola vez y se tiran
@@ -1329,6 +1348,8 @@
       // con las horas normales de la fecha, sin extra) o de sugeridos
       function loadList() {
         a.prefill = null;
+        // De qué jornada sale la lista que se ve: guardar ESE día es corregir lo que se está viendo, no pisarlo.
+        a.listaDe = { obra: a.obra, ambito: a.amb, fecha: a.fecha };
         if (!state.obras[a.obra]) {
           a.list = [];
           return;
@@ -1512,13 +1533,14 @@
         });
         return coincidencias;
       }
-      // Marca como presente a una persona de la lista o, si no estaba, la añade con su horario predefinido
+      // Marca como presente a una persona de la lista o, si no estaba, la añade con las horas de su horario
+      // de ese día (las de la obra o su horario especial). Nunca con las de la última vez: así no sale una
+      // hora extra que nadie ha decidido. Un día sin horario (un sábado) queda sin horas, y se piden.
       function addName(n) {
         n = cat().find((x) => key(x) === key(n)) || clean(n);
         let x = a.list.find((x) => key(x.nombre) === key(n));
-        let ult = ultimoHorarioDe(n, a.obra, a.fecha);
         let baseDia = horarioDe(n, a.fecha);
-        let horasDefecto = (ult !== null && ult !== undefined && ult > 0) ? ult : (baseDia > 0 ? baseDia : null);
+        let horasDefecto = baseDia > 0 ? baseDia : null;
         if (x) {
           x.on = true;
           x.horas = horasDefecto;
@@ -1674,6 +1696,128 @@
         return (
           `<div class="rotulo" id="rotulo-marcados">` +
           `${E('Marcados según la jornada del ' + diaLargo(a.prefill) + ': quita a quien no haya venido.')}</div>`
+        );
+      }
+      // «Ana, Beto y Carlos» (una sola persona: tal cual; ninguna: texto vacío).
+      function unirY(lista) {
+        return lista.length < 2 ? lista.join('') : lista.slice(0, -1).join(', ') + ' y ' + lista[lista.length - 1];
+      }
+      // Hasta siete nombres seguidos; si hay más, «Ana, Beto, Carlos, Dani, Eli, Fran y 3 más».
+      function nombresCortos(nombres) {
+        const MAXIMO = 6;
+        if (nombres.length <= MAXIMO + 1) return unirY(nombres);
+        return nombres.slice(0, MAXIMO).join(', ') + ' y ' + (nombres.length - MAXIMO) + ' más';
+      }
+      // Lo que cambia un día si se sustituye lo anotado: quién se queda fuera y quién se suma (los nombres sin
+      // tildes ni mayúsculas, como en toda la tablet) y, si es la misma gente, que lo que cambia son las horas.
+      function queCambiaAlSustituir(anteriores, nombres) {
+        let fuera = anteriores.filter((n) => !nombres.some((m) => key(m) === key(n)));
+        let suman = nombres.filter((m) => !anteriores.some((n) => key(m) === key(n)));
+        let partes = [];
+        if (fuera.length) partes.push('se queda' + (fuera.length === 1 ? '' : 'n') + ' fuera ' + unirY(fuera));
+        if (suman.length) partes.push('se suma' + (suman.length === 1 ? '' : 'n') + ' ' + unirY(suman));
+        return partes.length ? partes.join(' y ') : 'cambian las horas de ese día';
+      }
+      // Aviso de ANTES de guardar. Mientras está a la vista no se ha guardado nada: dice qué días ya tienen
+      // gente (y quién), cuáles caen en fin de semana en una obra sin horario ese día, cuáles aún no han
+      // llegado y a quién se le guardaría 0 horas, y deja elegir. Los botones vuelven a llamar a save.
+      function avisoGuardarHTML() {
+        if (!a.aviso) return '';
+        let dias = a.aviso.plan.dias;
+        let con = (codigo) => dias.filter((d) => d.avisos.includes(codigo));
+        let ocupados = con('ocupado');
+        let finde = con('finde');
+        let futuros = con('futuro');
+        let ceros = con('cero_horas');
+        let lineas = [];
+        ocupados.forEach((d) =>
+          lineas.push([
+            'ocupado',
+            'El ' + fdia(d.fecha) + ' ya hay ' + uno(d.anteriores.length, 'persona', 'personas') +
+              (d.origen === 'sin_enviar' ? ' (sin enviar al PC)' : ' (ya en el PC)') + ': ' + nombresCortos(d.anteriores) +
+              '. Si sigues, ' + queCambiaAlSustituir(d.anteriores, a.aviso.nombres) + '.',
+          ]),
+        );
+        if (finde.length)
+          lineas.push([
+            'finde',
+            'El ' + unirY(finde.map((d) => fdia(d.fecha))) +
+              (finde.length === 1
+                ? ' es fin de semana y esta obra no tiene horario ese día.'
+                : ' son fin de semana y esta obra no tiene horario esos días.'),
+          ]);
+        if (futuros.length)
+          lineas.push([
+            'futuro',
+            futuros.length === 1
+              ? 'El ' + fdia(futuros[0].fecha) + ' todavía no ha llegado.'
+              : 'Estos días todavía no han llegado: ' + unirY(futuros.map((d) => fdia(d.fecha))) + '.',
+          ]);
+        ceros.forEach((d) =>
+          lineas.push([
+            'cero_horas',
+            'El ' + fdia(d.fecha) + ': ' + unirY(d.sinHoras) +
+              (d.sinHoras.length === 1 ? ' se guardaría con 0 horas.' : ' se guardarían con 0 horas.'),
+          ]),
+        );
+        if (ceros.length) lineas.push(['ayuda', 'Si no quieres 0 horas, ponles sus horas con el + y el − y vuelve a guardar.']);
+        let hayLibres = dias.length > ocupados.length;
+        return (
+          `<div class="aviso aviso-guardar" id="aviso-guardar" role="alert"><b>Todavía no se ha guardado nada. ` +
+          `Mira esto antes:</b><ul>` +
+          lineas.map((linea) => `<li data-aviso="${E(linea[0])}">${E(linea[1])}</li>`).join('') +
+          `</ul><div class="actions"><button class="btn pri" data-guardar-modo="seguir">` +
+          `${ocupados.length ? 'Sustituir y guardar' : 'Guardar así'}</button>` +
+          `${
+            ocupados.length && hayLibres
+              ? '<button class="btn sec" data-guardar-modo="saltar">Saltar los días que ya tienen gente</button>'
+              : ''
+          }` +
+          `<button class="btn ghost" data-guardar-modo="cancelar">No guardar nada</button></div></div>`
+        );
+      }
+      // Cómo se llama un día en el resumen: «sáb 24/10» y, entre paréntesis, lo que se avisó o que ya estaba igual.
+      function etiquetaDiaGuardado(dia) {
+        let notas = [];
+        if (dia.accion === 'igual') notas.push('ya estaba igual');
+        if (dia.finde) notas.push('fin de semana');
+        if (dia.futuro) notas.push('todavía no había llegado');
+        if (dia.sinHoras.length) notas.push('0 horas: ' + unirY(dia.sinHoras));
+        return fdia(dia.fecha) + (notas.length ? ' (' + notas.join(', ') + ')' : '');
+      }
+      // Lo que ha pasado al guardar cuando hubo algún aviso de por medio, una frase por cosa: jornadas guardadas,
+      // una línea por cada jornada sustituida (quién estaba y quién queda) y las que no se han guardado. Es lo que se
+      // enseña debajo del botón Guardar. nombres = las personas que se han guardado.
+      function resumenDeGuardado(plan, resultado, nombres) {
+        let delPlan = (fecha) => plan.dias.find((d) => d.fecha === fecha);
+        let guardadas = resultado.guardar.filter((f) => !resultado.sustituidas.includes(f));
+        let lineas = [];
+        if (guardadas.length)
+          lineas.push(
+            '✓ ' + uno(guardadas.length, 'jornada guardada', 'jornadas guardadas') + ': ' +
+              unirY(guardadas.map((f) => etiquetaDiaGuardado(delPlan(f)))) + '.',
+          );
+        resultado.sustituidas.forEach((f) =>
+          lineas.push(
+            '↻ ' + etiquetaDiaGuardado(delPlan(f)) + ' sustituida: antes ' + nombresCortos(delPlan(f).anteriores) +
+              ', ahora ' + nombresCortos(nombres) + '.',
+          ),
+        );
+        if (resultado.saltadas.length)
+          lineas.push(
+            '✕ ' + uno(resultado.saltadas.length, 'jornada sin guardar', 'jornadas sin guardar') +
+              (resultado.saltadas.length === 1 ? ' porque ya tenía gente: ' : ' porque ya tenían gente: ') +
+              unirY(resultado.saltadas.map((f) => fdia(f))) + '.',
+          );
+        return lineas;
+      }
+      // El resumen de lo que acaba de pasar al guardar, hasta que se toque otra cosa o se pulse «Entendido».
+      function resumenGuardadoHTML() {
+        if (!a.guardado) return '';
+        return (
+          `<div class="rotulo" id="resumen-guardado" role="status"><b>Así ha quedado:</b><ul>` +
+          a.guardado.map((linea) => `<li>${E(linea)}</li>`).join('') +
+          `</ul><div class="actions"><button class="btn ghost sm" data-cerrar-resumen>Entendido</button></div></div>`
         );
       }
       // Combina las filas de jornadas publicadas con las pendientes locales de la obra para los
@@ -1957,7 +2101,7 @@
             .join('')}` +
           `</div><div id="aviso-horario" class="nota"></div></details>${rotuloDobleObraHTML()}<div class="sum" ` +
           `id="resumen">${sumHTML()}</div><button class="btn pri full" data-guardar>Guardar ` +
-          `jornada</button><div class="pending"><b id="pendientes" data-n="${E(pending.length)}` +
+          `jornada</button>${avisoGuardarHTML()}${resumenGuardadoHTML()}<div class="pending"><b id="pendientes" data-n="${E(pending.length)}` +
           `">Sin enviar al PC: ${uno(pending.length, 'jornada', 'jornadas')}</b>` +
           `${cambiosNombresHTML()}</div>` +
           `${
@@ -2195,6 +2339,8 @@
       // y repinta la vista
       function changed(cargar = true) {
         a.nuevoError = '';
+        a.aviso = null;
+        a.guardado = null;
         if (cargar) {
           a.hp = null;
           a.ren = null;
@@ -2503,10 +2649,153 @@
         pending.forEach((jornada) => jornadas.set(jk(jornada), jornada.anulada ? [] : jornada.presentes));
         return jornadas;
       }
+      // ---------------------------------------------------------------------------
+      // Antes de guardar: qué días merecen un aviso (lógica pura, sin pantalla)
+      // ---------------------------------------------------------------------------
+      // Dice qué avisos tiene cada día marcado antes de guardar: gente que se pisaría, fin de semana en una
+      // obra sin horario ese día, día que aún no ha llegado y personas que se guardarían con 0 horas.
+      //   entrada = { hoy, dias: [{ fecha, horarioObra, existente: null | { origen, personas }, nuevas }] }
+      //   (origen: 'sin_enviar' o 'en_el_pc'; personas y nuevas: [{ nombre, horas }]).
+      // Devuelve { dias: [{ fecha, accion, origen, anteriores, finde, futuro, sinHoras, avisos }], hayAvisos, firma }.
+      // accion: 'nuevo' (día vacío), 'igual' (ya estaba exactamente así) o 'sustituye' (pisaría a otra gente).
+      // La firma cambia si cambia cualquier cosa de lo que se avisa: sirve para no guardar algo distinto de lo
+      // que se enseñó.
+      function planificarGuardado(entrada) {
+        // Clave de un nombre: sin espacios de más, sin tildes y en minúsculas.
+        const claveNombre = (nombre) =>
+          String(nombre ?? '')
+            .trim()
+            .replace(/\s+/g, ' ')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase();
+        // Persona y horas como un solo texto, para comparar listas sin importar el orden.
+        const parDe = (persona) =>
+          claveNombre(persona.nombre) +
+          '|' +
+          (Number.isFinite(persona.horas) ? Math.round(persona.horas * 100) / 100 : '?');
+        const mismasPersonas = (izquierda, derecha) => {
+          const x = izquierda.map(parDe).sort();
+          const y = derecha.map(parDe).sort();
+          return x.length === y.length && x.every((par, i) => par === y[i]);
+        };
+        // 0 = domingo … 6 = sábado, sin depender de la zona horaria.
+        const diaDeLaSemana = (fecha) => {
+          const [anio, mes, dia] = fecha.split('-').map(Number);
+          return new Date(Date.UTC(anio, mes - 1, dia)).getUTCDay();
+        };
+
+        const vistas = new Set();
+        const dias = [];
+        entrada.dias.forEach((dato) => {
+          if (vistas.has(dato.fecha)) return;
+          vistas.add(dato.fecha);
+          const anteriores = ((dato.existente && dato.existente.personas) || []).map((persona) => persona.nombre);
+          const hayGente = anteriores.length > 0;
+          let accion = 'nuevo';
+          if (hayGente) accion = mismasPersonas(dato.existente.personas, dato.nuevas) ? 'igual' : 'sustituye';
+          const finde = [0, 6].includes(diaDeLaSemana(dato.fecha)) && !(dato.horarioObra > 0);
+          const futuro = dato.fecha > entrada.hoy;
+          const sinHoras = dato.nuevas
+            .filter((persona) => typeof persona.horas !== 'number' || !Number.isFinite(persona.horas) || persona.horas <= 0)
+            .map((persona) => persona.nombre);
+          const avisos = [];
+          if (accion === 'sustituye') avisos.push('ocupado');
+          if (finde) avisos.push('finde');
+          if (futuro) avisos.push('futuro');
+          if (sinHoras.length) avisos.push('cero_horas');
+          dias.push({
+            fecha: dato.fecha,
+            accion,
+            origen: hayGente ? dato.existente.origen : null,
+            anteriores,
+            finde,
+            futuro,
+            sinHoras,
+            avisos,
+            nuevas: dato.nuevas.map((persona) => [persona.nombre, persona.horas]),
+          });
+        });
+        dias.sort((x, y) => (x.fecha < y.fecha ? -1 : x.fecha > y.fecha ? 1 : 0));
+        const firma = JSON.stringify(dias.map((d) => [d.fecha, d.accion, d.avisos, d.anteriores, d.nuevas]));
+        dias.forEach((d) => delete d.nuevas);
+        return { dias, hayAvisos: dias.some((d) => d.avisos.length > 0), firma };
+      }
+      // Traduce lo que decide la persona ante el aviso ('seguir', 'saltar' o 'cancelar') en los días que se
+      // guardan: { guardar, sustituidas, saltadas, cancelado } con las fechas en el orden del plan. Cualquier
+      // otra respuesta cuenta como cancelar: ante la duda no se guarda nada.
+      function aplicarDecision(plan, modo) {
+        const fechasCon = (condicion) => plan.dias.filter(condicion).map((d) => d.fecha);
+        if (modo === 'seguir')
+          return {
+            guardar: fechasCon(() => true),
+            sustituidas: fechasCon((d) => d.accion === 'sustituye'),
+            saltadas: [],
+            cancelado: false,
+          };
+        if (modo === 'saltar')
+          return {
+            guardar: fechasCon((d) => d.accion !== 'sustituye'),
+            sustituidas: [],
+            saltadas: fechasCon((d) => d.accion === 'sustituye'),
+            cancelado: false,
+          };
+        return { guardar: [], sustituidas: [], saltadas: [], cancelado: true };
+      }
+      // Lo que se guardaría de cada persona presente en esa fecha: sus horas (o las de su horario de ese día si
+      // no se han tocado) y, como extra, lo que pasa de ese horario.
+      function presentesDelDia(presentes, f) {
+        return presentes.map((persona) => {
+          let baseDia = horarioDe(persona.nombre, f);
+          let horasPersona = R(persona.horas === null ? baseDia : persona.horas);
+          return {
+            nombre: persona.nombre,
+            horas: horasPersona,
+            extra: R(Math.max(0, horasPersona - baseDia)),
+          };
+        });
+      }
+      // Los datos que necesita planificarGuardado: por cada fecha, lo que esa obra y ese ámbito ya tienen anotado
+      // (lo sin enviar manda sobre lo que ya tiene el PC; una anulada deja el día vacío) y lo que se guardaría.
+      // El día del que salió la lista que se está viendo cuenta como vacío: cambiarlo es corregir lo que se ve, y
+      // pedir confirmación en cada corrección sería ruido. Los demás días, que la lista no enseña, sí avisan.
+      function diasParaPlan(fechas, presentes) {
+        let delPc = new Map();
+        pub().forEach((fila) => {
+          if (fila.ambito !== a.amb || !fechas.includes(fila.fecha)) return;
+          if (!delPc.has(fila.fecha)) delPc.set(fila.fecha, []);
+          delPc.get(fila.fecha).push({ nombre: fila.nombre, horas: +fila.horas });
+        });
+        let abierta = a.listaDe && a.listaDe.obra === a.obra && a.listaDe.ambito === a.amb ? a.listaDe.fecha : null;
+        return fechas.map((f) => {
+          let sinEnviar = pending.find((j) => jk(j) === a.obra + '|' + a.amb + '|' + f);
+          let existente = null;
+          if (f === abierta) existente = null;
+          else if (sinEnviar) {
+            if (!sinEnviar.anulada && sinEnviar.presentes.length)
+              existente = {
+                origen: 'sin_enviar',
+                personas: sinEnviar.presentes.map((p) => ({ nombre: canon(p.nombre), horas: +p.horas })),
+              };
+          } else if (delPc.has(f)) existente = { origen: 'en_el_pc', personas: delPc.get(f) };
+          // Un sábado o domingo «tiene horario» si lo tiene la obra o alguna de las personas marcadas (su horario
+          // especial): si no, es un día en el que nadie tiene horas fijadas.
+          let horarioDelDia = Math.max(hor()[dow(f)], ...presentes.map((persona) => horarioDe(persona.nombre, f)));
+          return {
+            fecha: f,
+            horarioObra: horarioDelDia,
+            existente,
+            nuevas: presentesDelDia(presentes, f).map((p) => ({ nombre: p.nombre, horas: p.horas })),
+          };
+        });
+      }
       // Valida y guarda la jornada en pendientes de localStorage: exige las horas en los días sin
       // horario, rechaza si alguien pasa de 24 h ese día entre todas las obras y avisa (sin
-      // bloquear) por encima de 12 h.
-      function save() {
+      // bloquear) por encima de 12 h. Antes de escribir nada mira si algún día pisaría a gente ya
+      // anotada, cae en fin de semana sin horario, aún no ha llegado o dejaría a alguien con 0 horas:
+      // en ese caso NO guarda, enseña el aviso y espera la respuesta (decision = { modo, firma }, que
+      // llega desde los botones del aviso). Con la respuesta de un aviso ya cambiado vuelve a avisar.
+      function save(decision) {
         let presentes = a.list.filter((persona) => persona.on);
         if (!presentes.length) return toast('No hay ninguna persona presente');
         let sinHoras = presentes.filter(
@@ -2557,21 +2846,40 @@
           }
         }
 
-        // 2. Guardar todas las jornadas de las fechas marcadas
-        fechasAGuardar.forEach((f) => {
+        // 2. Mirar qué días merecen un aviso ANTES de escribir nada. Si hay alguno no se guarda: se enseña el aviso
+        // y solo se sigue con la respuesta de la persona (los botones del aviso vuelven a llamar a save).
+        let plan = planificarGuardado({ hoy: today(), dias: diasParaPlan(fechasAGuardar, presentes) });
+        let modo = 'seguir';
+        if (plan.hayAvisos) {
+          if (!decision || decision.firma !== plan.firma) {
+            a.guardado = null;
+            a.aviso = { firma: plan.firma, plan, nombres: presentes.map((persona) => persona.nombre) };
+            render();
+            document.querySelector('#aviso-guardar')?.scrollIntoView({ block: 'nearest' });
+            return;
+          }
+          modo = decision.modo;
+        }
+        a.aviso = null;
+        let resultado = aplicarDecision(plan, modo);
+        if (resultado.cancelado) {
+          a.guardado = null;
+          render();
+          return toast('No se ha guardado nada.');
+        }
+        if (!resultado.guardar.length) {
+          a.guardado = resumenDeGuardado(plan, resultado, presentes.map((persona) => persona.nombre));
+          render();
+          return toast('No se ha guardado ningún día: todos ya tenían gente.');
+        }
+
+        // 3. Guardar las jornadas de los días que toca
+        resultado.guardar.forEach((f) => {
           let jornada = {
             obra: a.obra,
             ambito: a.amb,
             fecha: f,
-            presentes: presentes.map((persona) => {
-              let baseDia = horarioDe(persona.nombre, f);
-              let horasPersona = R(persona.horas === null ? baseDia : persona.horas);
-              return {
-                nombre: persona.nombre,
-                horas: horasPersona,
-                extra: R(Math.max(0, horasPersona - baseDia)),
-              };
-            }),
+            presentes: presentesDelDia(presentes, f),
             anulada: false,
             notas: '',
             registrado: new Date().toISOString(),
@@ -2580,7 +2888,7 @@
           pending.push(jornada);
         });
 
-        // 3. Recordar los horarios predefinidos para la próxima vez
+        // 4. Recordar los horarios predefinidos para la próxima vez
         let ultimas = get(K.uh, {});
         presentes.forEach((persona) => {
           let baseDia = horarioDe(persona.nombre, a.fecha);
@@ -2590,6 +2898,12 @@
         set(K.uh, ultimas);
 
         let guardada = set(K.p, pending);
+        // Si hubo algún aviso de por medio, el resumen dice con exactitud qué días se han guardado, cuáles se
+        // han sustituido (y quién estaba) y cuáles se han saltado.
+        a.guardado =
+          guardada && plan.hayAvisos
+            ? resumenDeGuardado(plan, resultado, presentes.map((persona) => persona.nombre))
+            : null;
         render();
 
         if (!guardada)
@@ -2621,7 +2935,10 @@
         });
         let avisos = totales.filter((p) => p.total > 12);
 
-        if (fechasAGuardar.length > 1) {
+        let aviso12h = avisos.map((p) => p.nombre + ' suma ' + N(p.total) + ' h ese día (todas las obras)').join('; ');
+        if (plan.hayAvisos) {
+          toast('Guardado. Mira abajo qué se ha guardado, sustituido o saltado.' + (aviso12h ? ' Aviso: ' + aviso12h : ''));
+        } else if (fechasAGuardar.length > 1) {
           toast(
             '✓ Guardadas ' +
               fechasAGuardar.length +
@@ -3116,6 +3433,22 @@
         }
         // Botón guardar jornada: valida horas y límites y guarda la jornada en pendientes
         if (datos.guardar !== undefined) return save();
+        // Respuesta al aviso de antes de guardar: guardar así (sustituyendo), saltar los días que ya tienen
+        // gente o no guardar nada. Con una respuesta de un aviso que ya cambió, save vuelve a avisar.
+        if (datos.guardarModo !== undefined) {
+          if (datos.guardarModo === 'cancelar') {
+            a.aviso = null;
+            render();
+            return toast('No se ha guardado nada.');
+          }
+          return save({ modo: datos.guardarModo, firma: a.aviso && a.aviso.firma });
+        }
+        // Cierra el resumen de lo que se acaba de guardar
+        if (datos.cerrarResumen !== undefined) {
+          a.guardado = null;
+          render();
+          return;
+        }
         // Botón «Preparar el fichero para el PC» de una obra: lo descarga y deja el recuadro «Listo»
         if (datos.preparar !== undefined) return prepararFichero(datos.preparar);
         // Botón empezar de cero: solicita confirmación para borrar el borrador de la jornada en
