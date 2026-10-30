@@ -143,6 +143,13 @@ esperaDia('E03 igual + futuro: solo futuro, la acción sigue siendo igual',
   dia('2026-10-27', { existente: exi('sin_enviar', ['Ana', 7.5]) }),
   { accion: 'igual', origen: 'sin_enviar', anteriores: ['Ana'], futuro: true, avisos: ['futuro'] });
 
+// ---- E2. día ya anotado (el que se está corrigiendo): sin aviso de fin de semana ni de día futuro ----
+esperaDia('E21 yaAnotado: un sábado sin horario no avisa de finde ni de futuro', dia('2026-10-24', { horarioObra: 0, yaAnotado: true }), {});
+esperaDia('E22 yaAnotado: un día futuro laborable no avisa', dia('2026-10-27', { yaAnotado: true }), {});
+esperaDia('E23 yaAnotado sigue avisando de 0 horas', dia('2026-10-24', { horarioObra: 0, yaAnotado: true, nuevas: [{ nombre: 'Ana', horas: 0 }] }), { sinHoras: ['Ana'], avisos: ['cero_horas'] });
+esperaDia('E24 yaAnotado sigue avisando si pisa a otra gente', dia('2026-10-27', { yaAnotado: true, existente: exi('en_el_pc', ['Pedro', 7.5]) }), { accion: 'sustituye', origen: 'en_el_pc', anteriores: ['Pedro'], avisos: ['ocupado'] });
+esperaDia('E25 yaAnotado false o ausente = como siempre', dia('2026-10-27', { yaAnotado: false }), { futuro: true, avisos: ['futuro'] });
+
 // ---- F. varios días, orden, repetidos, hayAvisos ----
 caso('F01 sale ordenado por fecha', () => {
   const p = plan([dia('2026-10-22'), dia('2026-10-20'), dia('2026-10-21')]);

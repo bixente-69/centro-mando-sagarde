@@ -2121,13 +2121,23 @@
         let partes = fecha.split('-');
         return dias[dow(fecha)] + ' ' + partes[2] + '/' + partes[1];
       }
-      // Genera la vista de histórico de jornadas recientes y pendientes con opciones para reabrir o
-      // anular cada una
+      // Primer día desde el que Jornadas enseña lo ya anotado: el 1 del mes pasado o, si es más atrás que 14 días, ese.
+      // Así a final de mes, o cuando llegan los partes, se puede corregir cualquier día del mes y del anterior.
+      function inicioDeJornadas() {
+        let partes = today().split('-').map(Number);
+        let anio = partes[1] === 1 ? partes[0] - 1 : partes[0];
+        let mes = partes[1] === 1 ? 12 : partes[1] - 1;
+        let primeroDelMesPasado = anio + '-' + String(mes).padStart(2, '0') + '-01';
+        let hace14 = add(today(), -14);
+        return primeroDelMesPasado < hace14 ? primeroDelMesPasado : hace14;
+      }
+      // Genera la vista de histórico de jornadas (desde inicioDeJornadas hasta los días futuros ya anotados) y
+      // pendientes con opciones para reabrir o anular cada una
       function jornadasView() {
         let jornadas = new Map();
-        let limite = add(today(), -14);
+        let limite = inicioDeJornadas();
         pub()
-          .filter((fila) => fila.fecha >= limite && fila.fecha <= today())
+          .filter((fila) => fila.fecha >= limite)
           .forEach((fila) => {
             let clave = fila.ambito + '|' + fila.fecha;
             if (!jornadas.has(clave))
@@ -2654,8 +2664,9 @@
       // ---------------------------------------------------------------------------
       // Dice qué avisos tiene cada día marcado antes de guardar: gente que se pisaría, fin de semana en una
       // obra sin horario ese día, día que aún no ha llegado y personas que se guardarían con 0 horas.
-      //   entrada = { hoy, dias: [{ fecha, horarioObra, existente: null | { origen, personas }, nuevas }] }
-      //   (origen: 'sin_enviar' o 'en_el_pc'; personas y nuevas: [{ nombre, horas }]).
+      //   entrada = { hoy, dias: [{ fecha, horarioObra, existente: null | { origen, personas }, nuevas, yaAnotado }] }
+      //   (origen: 'sin_enviar' o 'en_el_pc'; personas y nuevas: [{ nombre, horas }]; yaAnotado, opcional: ese día ya
+      //   tenía jornada y es el que se está corrigiendo, así que no se avisa de fin de semana ni de día futuro).
       // Devuelve { dias: [{ fecha, accion, origen, anteriores, finde, futuro, sinHoras, avisos }], hayAvisos, firma }.
       // accion: 'nuevo' (día vacío), 'igual' (ya estaba exactamente así) o 'sustituye' (pisaría a otra gente).
       // La firma cambia si cambia cualquier cosa de lo que se avisa: sirve para no guardar algo distinto de lo
@@ -2694,8 +2705,8 @@
           const hayGente = anteriores.length > 0;
           let accion = 'nuevo';
           if (hayGente) accion = mismasPersonas(dato.existente.personas, dato.nuevas) ? 'igual' : 'sustituye';
-          const finde = [0, 6].includes(diaDeLaSemana(dato.fecha)) && !(dato.horarioObra > 0);
-          const futuro = dato.fecha > entrada.hoy;
+          const finde = !dato.yaAnotado && [0, 6].includes(diaDeLaSemana(dato.fecha)) && !(dato.horarioObra > 0);
+          const futuro = !dato.yaAnotado && dato.fecha > entrada.hoy;
           const sinHoras = dato.nuevas
             .filter((persona) => typeof persona.horas !== 'number' || !Number.isFinite(persona.horas) || persona.horas <= 0)
             .map((persona) => persona.nombre);
@@ -2769,22 +2780,25 @@
         let abierta = a.listaDe && a.listaDe.obra === a.obra && a.listaDe.ambito === a.amb ? a.listaDe.fecha : null;
         return fechas.map((f) => {
           let sinEnviar = pending.find((j) => jk(j) === a.obra + '|' + a.amb + '|' + f);
-          let existente = null;
-          if (f === abierta) existente = null;
-          else if (sinEnviar) {
+          let real = null;
+          if (sinEnviar) {
             if (!sinEnviar.anulada && sinEnviar.presentes.length)
-              existente = {
+              real = {
                 origen: 'sin_enviar',
                 personas: sinEnviar.presentes.map((p) => ({ nombre: canon(p.nombre), horas: +p.horas })),
               };
-          } else if (delPc.has(f)) existente = { origen: 'en_el_pc', personas: delPc.get(f) };
+          } else if (delPc.has(f)) real = { origen: 'en_el_pc', personas: delPc.get(f) };
+          // El día abierto no cuenta como «ya hay gente» (se está viendo) y, si ya tenía jornada, tampoco avisa de
+          // fin de semana ni de día futuro: eso ya se avisó cuando se anotó.
+          let esLaAbierta = f === abierta;
           // Un sábado o domingo «tiene horario» si lo tiene la obra o alguna de las personas marcadas (su horario
           // especial): si no, es un día en el que nadie tiene horas fijadas.
           let horarioDelDia = Math.max(hor()[dow(f)], ...presentes.map((persona) => horarioDe(persona.nombre, f)));
           return {
             fecha: f,
             horarioObra: horarioDelDia,
-            existente,
+            existente: esLaAbierta ? null : real,
+            yaAnotado: esLaAbierta && real !== null,
             nuevas: presentesDelDia(presentes, f).map((p) => ({ nombre: p.nombre, horas: p.horas })),
           };
         });
@@ -3482,9 +3496,10 @@
             fecha: elemento.dataset.fecha,
           };
           if (datos.abrir !== undefined) {
-            Object.assign(a, jornada, { v: 'app' });
-            loadList();
-            draft();
+            // Se abre UN día: los días que estuvieran marcados en el calendario no se arrastran al guardar.
+            // (jornada lleva «ambito» pero la tablet usa «amb»: sin ese cambio abría siempre el ámbito de antes).
+            Object.assign(a, jornada, { v: 'app', amb: jornada.ambito, fechas: [jornada.fecha], calMes: jornada.fecha.slice(0, 7) });
+            changed();
           } else a.confirm = jornada;
           render();
           return;

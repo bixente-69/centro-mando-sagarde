@@ -386,8 +386,9 @@ with sync_playwright() as p:
         items = pg.eval_on_selector_all('#v-jornadas .jor-item', 'e=>e.map(i=>[i.dataset.obra,i.dataset.ambito,i.dataset.fecha,i.classList.contains("pendiente")])')
         claves = {(a, f) for o, a, f, pe in items}
         esperado = {('vivienda', '2026-10-23'), ('vivienda', '2026-10-22'), ('vivienda', '2026-10-21'), ('garaje', '2026-10-16'),
-                    ('garaje', '2026-10-15'), ('vivienda', '2026-10-12'), ('vivienda', '2026-10-10')}
-        ok(claves == esperado, 'jornadas listadas (pendientes + publicadas de los últimos 14 días): %s' % sorted(claves))
+                    ('garaje', '2026-10-15'), ('vivienda', '2026-10-12'), ('vivienda', '2026-10-10'),
+                    ('vivienda', '2026-10-06'), ('vivienda', '2026-10-05'), ('vivienda', '2026-09-03'), ('vivienda', '2026-09-02'), ('vivienda', '2026-09-01')}
+        ok(claves == esperado, 'jornadas listadas (pendientes + publicadas desde el día 1 del mes pasado, MA2): %s' % sorted(claves))
         ok([pe for o, a, f, pe in items if (a, f) == ('vivienda', '2026-10-23')] == [True], 'la jornada sin ingerir debe llevar la clase pendiente')
         clic('#v-jornadas .jor-item[data-ambito="vivienda"][data-fecha="2026-10-22"] button[data-abrir]')
         ok(valor('#fecha') == '2026-10-22' and marcados() == ['Mikel', 'Txomin'], 'abrir una jornada la carga en el formulario: %s %s' % (valor('#fecha'), marcados()))
@@ -788,14 +789,32 @@ with sync_playwright() as p:
         ok('anulada' in item, 'T19 una jornada anulada pendiente debe decir «anulada» en la lista: %r' % item)
     con_escena('T19', ESTADO1, t19)
 
-    # --- T20: ventana de Jornadas: de hoy−14 a hoy, ambos incluidos; ni más viejas ni futuras
+    # --- T20: ventana de Jornadas (MA2): desde el día 1 del mes pasado (o 14 días atrás si es más antiguo) hasta los días futuros ya anotados
     def t20(e):
         e.ir()
         e.clic('button[data-v="jornadas"]')
         cl = e.pg.eval_on_selector_all('#v-jornadas .jor-item', 'e=>e.map(i=>i.dataset.fecha)')
-        ok(sorted(cl) == ['2026-10-09', '2026-10-10', '2026-10-23'], 'T20 jornadas listadas (14 días hacia atrás desde hoy, sin futuras): %s' % cl)
-    f20 = [fila(f, 'vivienda', 'Mikel', 7.5) for f in ('2026-10-08', '2026-10-09', '2026-10-10', '2026-10-23', '2026-10-24')]
+        ok(sorted(cl) == ['2026-09-01', '2026-10-08', '2026-10-09', '2026-10-10', '2026-10-23', '2026-10-24'],
+           'T20 jornadas listadas (desde el 01/09, con las futuras ya anotadas; el 31/08 no): %s' % cl)
+    f20 = [fila(f, 'vivienda', 'Mikel', 7.5) for f in ('2026-08-31', '2026-09-01', '2026-10-08', '2026-10-09', '2026-10-10', '2026-10-23', '2026-10-24')]
     con_escena('T20', estado_con({'olabeaga': obra_est('2026 OLABEAGA', f20)}, ['Mikel']), t20)
+
+    # --- T20b/T20c: la ventana a principios de mes (los 14 días no llegan al mes pasado) y en el cambio de año
+    def t20b(e):
+        e.ir()
+        e.clic('button[data-v="jornadas"]')
+        cl = e.pg.eval_on_selector_all('#v-jornadas .jor-item', 'e=>e.map(i=>i.dataset.fecha)')
+        ok(sorted(cl) == ['2026-10-01', '2026-11-03'], 'T20b el 03/11 la lista llega al 01/10 y no al 30/09: %s' % cl)
+    f20b = [fila(f, 'vivienda', 'Mikel', 7.5) for f in ('2026-09-30', '2026-10-01', '2026-11-03')]
+    con_escena('T20b', estado_con({'olabeaga': obra_est('2026 OLABEAGA', f20b)}, ['Mikel']), t20b, hoy='2026-11-03T10:00:00+01:00')
+
+    def t20c(e):
+        e.ir()
+        e.clic('button[data-v="jornadas"]')
+        cl = e.pg.eval_on_selector_all('#v-jornadas .jor-item', 'e=>e.map(i=>i.dataset.fecha)')
+        ok(sorted(cl) == ['2026-12-01', '2027-01-10'], 'T20c el 10/01/2027 la lista llega al 01/12/2026 y no al 30/11: %s' % cl)
+    f20c = [fila(f, 'vivienda', 'Mikel', 7.5) for f in ('2026-11-30', '2026-12-01', '2027-01-10')]
+    con_escena('T20c', estado_con({'olabeaga': obra_est('2026 OLABEAGA', f20c)}, ['Mikel']), t20c, hoy='2027-01-10T10:00:00+01:00')
 
     # --- T21: obra inicial = primera NO cerrada; sin ninguna obra abierta no hay error y se explica
     def t21(e):
@@ -3619,6 +3638,119 @@ with sync_playwright() as p:
     s158 = est10(personas=PERS + [('Yago', ''), ('Zoe', '')], filas=viv('2026-10-22', *[n for n, _ in PERS]), ultima=u('2026-10-22', *[n for n, _ in PERS]))
     s158['obras']['olabeaga']['excepciones_horario'] = {'Zoe': {'vie': 6}}
     con_escena('T158', s158, t158, init=sembrar('sgd_personal_ultimas_horas', {'zoe': 9, 'yago': 9}))
+
+    # --- Corregir UN día concreto más adelante (requisito de Bixente, 30/10): se abre desde Jornadas y solo cambia ese día
+    def abrir_dia(e, fecha, ambito='vivienda'):
+        e.clic('nav button[data-v="jornadas"]')
+        e.clic('.jor-item[data-fecha="%s"][data-ambito="%s"] button[data-abrir]' % (fecha, ambito))
+
+    def dias_de_jornadas(e):
+        e.clic('nav button[data-v="jornadas"]')
+        fechas = e.pg.eval_on_selector_all('#v-jornadas .jor-item', 'e=>e.map(x=>x.dataset.fecha)')
+        e.clic('nav button[data-v="app"]')
+        return fechas
+
+    CINCO = [n for n, _ in PERS]
+
+    # --- T163: tres días anotados de golpe (sin enviar); se reabre el 2.º, se quita a uno y solo cambia ese día
+    def t163(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-19', '2026-10-20', '2026-10-21'], '2026-10-19')
+        solo(e, *CINCO)
+        e.clic('button[data-guardar]')
+        antes = {j['fecha']: j for j in guardadas(e)}
+        ok(sorted(antes) == ['2026-10-19', '2026-10-20', '2026-10-21'] and not hay_aviso(e), 'T163 se guardan los tres días sin aviso: %s' % sorted(antes))
+        abrir_dia(e, '2026-10-20')
+        ok(sorted(e.marcados()) == sorted(CINCO), 'T163 al abrir el 20/10 salen los cinco marcados: %s' % e.marcados())
+        solo(e, 'Ana', 'Beto', 'Carlos', 'Dani')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e), 'T163 corregir el día que se está viendo no asusta con un aviso: %s' % lineas_aviso(e))
+        despues = {j['fecha']: j for j in guardadas(e)}
+        ok(sorted(despues) == sorted(antes) and [p['nombre'] for p in despues['2026-10-20']['presentes']] == ['Ana', 'Beto', 'Carlos', 'Dani'],
+           'T163 el 20/10 queda con cuatro: %s' % por_fecha(e))
+        ok(despues['2026-10-19'] == antes['2026-10-19'] and despues['2026-10-21'] == antes['2026-10-21'], 'T163 los días 19 y 21 NO se tocan (ni la hora en que se guardaron)')
+    con_escena('T163', est10(), t163)
+
+    # --- T164: días ya enviados al PC; se marcan varios días sin guardarlos y aun así abrir uno solo cambia ese
+    def t164(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-19', '2026-10-20', '2026-10-21'], '2026-10-19')
+        abrir_dia(e, '2026-10-20')
+        solo(e, 'Ana', 'Beto', 'Carlos', 'Dani')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e), 'T164 sin aviso al corregir un día ya enviado: %s' % lineas_aviso(e))
+        ok(por_fecha(e) == {'2026-10-20': [(n, 7.5, 0) for n in CINCO[:4]]} and e.pendientes() == '1',
+           'T164 solo se guarda el 20/10 (los días marcados antes no se arrastran): %s' % por_fecha(e))
+    f164 = viv('2026-10-19', *CINCO) + viv('2026-10-20', *CINCO) + viv('2026-10-21', *CINCO)
+    con_escena('T164', est10(filas=f164, ultima=u('2026-10-21', *CINCO)), t164)
+
+    # --- T165: un día de hace más de 14 días (fin de mes, cuando llegan los partes) sale en Jornadas y se corrige igual
+    def t165(e):
+        e.ir()
+        dias = dias_de_jornadas(e)
+        ok('2026-09-30' in dias and '2026-09-01' in dias and '2026-08-31' not in dias,
+           'T165 Jornadas llega hasta el día 1 del mes pasado (01/09) y no más atrás: %s' % dias)
+        abrir_dia(e, '2026-09-30')
+        solo(e, 'Ana', 'Beto', 'Carlos', 'Dani')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and por_fecha(e) == {'2026-09-30': [(n, 7.5, 0) for n in CINCO[:4]]}, 'T165 se corrige el 30/09 sin aviso: %s' % por_fecha(e))
+    f165 = viv('2026-08-31', *CINCO) + viv('2026-09-01', *CINCO) + viv('2026-09-30', *CINCO) + viv('2026-10-22', *CINCO)
+    con_escena('T165', est10(filas=f165), t165)
+
+    # --- T166: un día futuro ya anotado (enviado al PC o sin enviar) sale en Jornadas y se corrige sin el aviso de «aún no ha llegado»
+    def t166(e):
+        e.ir()
+        dias = dias_de_jornadas(e)
+        ok(dias[:2] == ['2026-10-28', '2026-10-27'], 'T166 los días futuros ya anotados salen en Jornadas, los más lejanos primero: %s' % dias)
+        abrir_dia(e, '2026-10-27')
+        solo(e, 'Ana', 'Beto', 'Carlos', 'Dani')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and [x[0] for x in por_fecha(e)['2026-10-27']] == ['Ana', 'Beto', 'Carlos', 'Dani'], 'T166 corregir un día futuro ya anotado no avisa: %s %s' % (lineas_aviso(e), por_fecha(e)))
+        abrir_dia(e, '2026-10-28')
+        solo(e, 'Ana', 'Beto', 'Carlos')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and [x[0] for x in por_fecha(e)['2026-10-28']] == ['Ana', 'Beto', 'Carlos'] and len(por_fecha(e)['2026-10-27']) == 4, 'T166 lo mismo con uno sin enviar: %s %s' % (lineas_aviso(e), por_fecha(e)))
+    f166 = viv('2026-10-22', *CINCO) + viv('2026-10-27', *CINCO)
+    con_escena('T166', est10(filas=f166), t166, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-28', CINCO)]))
+
+    # --- T167: una persona pasa a otra obra el mismo día: sale el aviso de doble obra y quitarla de la primera no deja nada huérfano
+    def t167(e):
+        e.ir()
+        e.obra('mungia')
+        e.fecha('2026-10-22')
+        e.pg.select_option('#addsel', 'Ana')
+        e.clic('button[data-add]')
+        aviso = e.txt('#aviso-doble-obra')
+        ok('Ana' in aviso and 'jue 22/10' in aviso and 'OLABEAGA' in aviso.upper(), 'T167 al añadirla en la otra obra sale el aviso de doble obra: %r' % aviso)
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and e.pendientes() == '1', 'T167 se guarda en la segunda obra: %r' % e.pendientes())
+        e.obra('olabeaga')
+        e.fecha('2026-10-22')
+        solo(e, 'Beto', 'Carlos', 'Dani', 'Eli')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and e.pendientes() == '2', 'T167 se corrige la primera obra: %r' % e.pendientes())
+        j = {(x['obra'], x['fecha']): [p['nombre'] for p in x['presentes']] for x in guardadas(e)}
+        ok(j == {('mungia', '2026-10-22'): ['Ana'], ('olabeaga', '2026-10-22'): ['Beto', 'Carlos', 'Dani', 'Eli']}, 'T167 cada obra queda con lo suyo: %s' % j)
+        e.obra('mungia')
+        e.fecha('2026-10-22')
+        ok(e.pg.query_selector('#aviso-doble-obra') is None, 'T167 ya no queda aviso de doble obra: %r' % e.txt('#aviso-doble-obra'))
+    s167 = est10()
+    s167['obras']['mungia'] = obra_est('2026 MUNGIA', [])
+    con_escena('T167', s167, t167)
+
+    # --- T168: abrir desde Jornadas un día de GARAJES (con la tablet en viviendas) abre el garaje, no las viviendas de ese día
+    def t168(e):
+        e.ir()
+        ok(e.pg.query_selector('button[data-amb="vivienda"].on') is not None, 'T168 se parte de viviendas')
+        abrir_dia(e, '2026-10-22', 'garaje')
+        ok(e.pg.query_selector('button[data-amb="garaje"].on') is not None and sorted(e.marcados()) == ['Ana', 'Beto'],
+           'T168 se abre el garaje del 22/10 con su gente (Ana y Beto), no las viviendas: %s' % e.marcados())
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and [(j['ambito'], j['fecha']) for j in guardadas(e)] == [('garaje', '2026-10-22')],
+           'T168 se guarda el garaje y las viviendas de ese día no se tocan: %s' % [(j['ambito'], j['fecha']) for j in guardadas(e)])
+    s168 = est10(filas=viv('2026-10-22', *CINCO) + gar('2026-10-22', 'Ana', 'Beto'))
+    con_escena('T168', s168, t168)
 
     # Fin del bloque del paso MA2
 
