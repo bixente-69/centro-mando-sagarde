@@ -352,7 +352,8 @@ class TestAltas(Base):
         r = self.ing(lote([], altas=['Mikel', 'andoni', 'TXOMÍN']), escribir=True)
         self.assertEqual([(e['id'], e['accion']) for e in r['altas_pedidas']],
                          [('T0001', 'sin_cambios'), ('T0003', 'sin_cambios'), ('T0002', 'sin_cambios')])
-        self.assertEqual(r['avisos_lote'], [])
+        # MA4b: un nombre «nuevo» que ya estaba se avisa (antes callaba); sigue sin escribirse nada.
+        self.assertEqual(r['avisos_lote'], [{'codigo': 'alta_ya_existia', 'detalle': d} for d in ('Mikel', 'Andoni', 'Txomin')])
         self.assertFalse(r['escrito'])
         self.assertEqual(self.hashes(), h)
 
@@ -465,7 +466,7 @@ class TestNombresAnteriores(Base):
         self.ing(lote([], renombres=[ren('Txomin', 'Mikel')]), escribir=True)
         r = self.ing(lote([], altas=['Mikel']))
         self.assertEqual((r['altas_pedidas'][0]['id'], r['altas_pedidas'][0]['accion']), ('T0002', 'sin_cambios'))
-        self.assertEqual(r['avisos_lote'], [])
+        self.assertEqual(r['avisos_lote'], [{'codigo': 'alta_ya_existia', 'detalle': 'Mikel'}], 'MA4b: ya no es un silencio')
 
     def test_comprobar_nombres_anteriores(self):
         self.sembrar()
@@ -813,6 +814,15 @@ class TestTextos(unittest.TestCase):
          '«Mikel» es un nombre antiguo de «Mikel Etxeberria»: se ha tomado como la misma persona.'),
         # 08c2a: el campo Empresa
         ('empresa_sin_persona', 'Fantasma', '«Fantasma» no estaba en la base: no se le puede poner empresa.'),
+        # MA4b: dos personas con el mismo nombre no se funden en silencio
+        ('empresa_cambiada', 'Mikel | Manueles | Catersystem',
+         '«Mikel» pasa de la empresa «Manueles» a «Catersystem»: todas sus horas ya apuntadas se contarán en «Catersystem». '
+         'Si es otra persona con el mismo nombre, hay que ponerle un apellido o una inicial en la tablet.'),
+        ('alta_ya_existia', 'Mikel',
+         '«Mikel» ya estaba en la base: este fichero lo daba por nuevo y se ha tomado como la misma persona.'),
+        ('alta_de_baja', 'Mikel',
+         '«Mikel» estaba de baja y este fichero lo da por nuevo: vuelve a la lista. '
+         'Si es otra persona con el mismo nombre, hay que ponerle un apellido o una inicial.'),
     ]
     RECHAZOS = {
         'lote_invalido': 'El fichero no tiene el formato esperado.',

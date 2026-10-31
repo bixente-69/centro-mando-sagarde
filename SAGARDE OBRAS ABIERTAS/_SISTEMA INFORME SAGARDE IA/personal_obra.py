@@ -722,6 +722,9 @@ def ingerir_lote(
                     "detalle": f"{nombre} -> {mp[identificador]['nombre']}",
                 })
             if mp[identificador].get("activo") is False:
+                # Alguien de baja que el fichero da por nuevo: puede ser otra persona con el mismo nombre. Se vuelve a
+                # dar de alta (como siempre) pero el lector frena el fichero para mirarlo.
+                res["avisos_lote"].append({"codigo": "alta_de_baja", "detalle": mp[identificador]["nombre"]})
                 mp[identificador]["activo"] = True
                 accion = "alta"
                 cambio_cat = True
@@ -729,6 +732,9 @@ def ingerir_lote(
                 tr = _traza_base(ts, oid, "alta_persona", lote.get("dispositivo"))
                 tr.update({"id": identificador, "nombre": mp[identificador]["nombre"]})
                 trazas.append(tr)
+            elif modo != "anterior":
+                # Un nombre «nuevo» que ya estaba en la base se toma como la misma persona: antes sin decir nada.
+                res["avisos_lote"].append({"codigo": "alta_ya_existia", "detalle": mp[identificador]["nombre"]})
         res["altas_pedidas"].append({"nombre": nombre, "id": identificador, "accion": accion})
 
     # Paso 2b: empresas, una por persona. Van después de los renombres y las altas (quien se acaba de crear o de
@@ -748,6 +754,11 @@ def ingerir_lote(
             detalle = f"{nombre} -> {persona['nombre']}"
             res["avisos_lote"].append({"codigo": "nombre_anterior_usado", "detalle": detalle})
         cambio = _aplicar_empresa(cat, persona, empresa)
+        if cambio["accion"] == "cambiada":
+            # Tenía otra empresa: todas sus horas ya apuntadas pasan a contarse en la nueva. Puede ser otra persona
+            # con el mismo nombre (dos tablets, «Generar personal»): el lector frena el fichero para mirarlo.
+            detalle = " | ".join((persona["nombre"], cambio["antes"], cambio["despues"]))
+            res["avisos_lote"].append({"codigo": "empresa_cambiada", "detalle": detalle})
         if cambio["accion"] != "sin_cambios":
             cambio_cat = True
             tr = _traza_base(ts, oid, "empresa", lote.get("dispositivo"))
@@ -1735,6 +1746,24 @@ def texto_aviso(codigo, detalle=None):
         if isinstance(detalle, str) and detalle:
             return f"Nombre nuevo: «{detalle}» no estaba en la base; se añade."
         return "Hay un nombre nuevo que no estaba en la base; se añade."
+    if codigo == "empresa_cambiada":
+        otra = "Si es otra persona con el mismo nombre, hay que ponerle un apellido o una inicial en la tablet."
+        partes = detalle.split(" | ", 2) if isinstance(detalle, str) else []
+        if len(partes) == 3 and all(partes):
+            nombre, antes, despues = partes
+            return (f"«{nombre}» pasa de la empresa «{antes}» a «{despues}»: todas sus horas ya apuntadas "
+                    f"se contarán en «{despues}». {otra}")
+        return f"Una persona cambia de empresa: todas sus horas ya apuntadas se contarán en la nueva. {otra}"
+    if codigo == "alta_ya_existia":
+        if isinstance(detalle, str) and detalle:
+            return (f"«{detalle}» ya estaba en la base: este fichero lo daba por nuevo y se ha tomado "
+                    "como la misma persona.")
+        return "Un nombre que este fichero daba por nuevo ya estaba en la base: se ha tomado como la misma persona."
+    if codigo == "alta_de_baja":
+        otra = "Si es otra persona con el mismo nombre, hay que ponerle un apellido o una inicial."
+        if isinstance(detalle, str) and detalle:
+            return f"«{detalle}» estaba de baja y este fichero lo da por nuevo: vuelve a la lista. {otra}"
+        return f"Alguien que estaba de baja vuelve a la lista porque este fichero lo da por nuevo. {otra}"
     if codigo == "nombre_parecido":
         if isinstance(detalle, str) and " ~ " in detalle:
             primero, segundo = detalle.split(" ~ ", 1)

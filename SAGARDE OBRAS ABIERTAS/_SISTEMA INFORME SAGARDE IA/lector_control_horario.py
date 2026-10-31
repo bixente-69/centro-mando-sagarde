@@ -33,13 +33,16 @@ import personal_obra as po  # noqa: E402
 YA_APLICADO, LISTO, A_REVISAR, RECHAZADO = "ya_aplicado", "listo", "a_revisar", "rechazado"
 
 # Avisos de personal_obra que obligan a MIRAR el fichero antes de aplicarlo: nunca se aplican ni se descartan
-# en silencio. El resto de avisos (alta_nueva, nombre_anterior_usado, renombre_sin_origen) solo se cuentan.
+# en silencio. El resto de avisos (alta_nueva, alta_ya_existia, nombre_anterior_usado, renombre_sin_origen) solo se cuentan.
+# `empresa_cambiada` y `alta_de_baja` (MA4b): puede ser otra persona con el mismo nombre; aceptarlos es cosa de Bixente.
 AVISOS_A_REVISAR = (
     "nombre_parecido",
     "suma_diaria_alta",
     "fecha_futura",
     "reemplazo",
     "renombre_coincide_con_otro",
+    "empresa_cambiada",
+    "alta_de_baja",
 )
 
 AMBITOS = {"vivienda": "viviendas", "garaje": "garajes"}
@@ -302,9 +305,12 @@ def _resumen_texto(ficha):
         partes.append(_plural(len(cambiados), "cambio de nombre", "cambios de nombre"))
     if ficha["personas_nuevas"]:
         partes.append(_plural(len(ficha["personas_nuevas"]), "persona nueva", "personas nuevas"))
-    puestas = [e for e in ficha["empresas"] if e["accion"] in ("puesta", "cambiada")]
+    puestas = [e for e in ficha["empresas"] if e["accion"] == "puesta"]
     if puestas:
         partes.append(_plural(len(puestas), "empresa puesta", "empresas puestas"))
+    cambiadas = [e for e in ficha["empresas"] if e["accion"] == "cambiada"]
+    if cambiadas:
+        partes.append(_plural(len(cambiadas), "empresa cambiada", "empresas cambiadas"))
     quitadas = [e for e in ficha["empresas"] if e["accion"] == "quitada"]
     if quitadas:
         partes.append(_plural(len(quitadas), "empresa quitada", "empresas quitadas"))
