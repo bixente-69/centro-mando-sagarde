@@ -7,6 +7,7 @@ fecha en el 23/10/2026 y recorre el flujo completo. El lote que exporta la app s
 (P1). Viene del verificador de staging (paso 06): solo cambia de dónde salen la app, P1 y la carpeta de pruebas.
 P3_SOLO_08C=1 = modo rápido del paso 08c: solo las escenas T80 en adelante (lápiz, desplegable completo, varios nombres).
 P3_SOLO_08C2A=1 = modo rápido del paso 08c2a: solo las escenas T120 en adelante (el campo Empresa: crear, lápiz, varios nombres, lista, «Enviar al PC»).
+P3_SOLO_MA4C=1 = modo rápido del paso MA4c: solo las escenas T170 en adelante (dos personas con el mismo nombre: la pregunta «¿es el mismo?», el lápiz, varios nombres).
 P3_SOLO_MA2=1 = modo rápido del paso MA2: solo las escenas T150 en adelante (anotar sin pisar lo ya guardado, fin de semana, días futuros, horas al añadir).
 P3_SOLO_08C2B=1 = modo rápido del paso 08c2b: solo las escenas T140 en adelante (la suma por empresa y la empresa junto al nombre en el Informe).
 P3_SOLO_08D=1 = modo rápido del paso 08d: solo las escenas T90 en adelante (día nuevo con la gente anterior marcada, «Enviar al PC», nombre del fichero).
@@ -673,6 +674,10 @@ with sync_playwright() as p:
 
     def con_escena(nombre, datos, fn, **kw):
         """Ejecuta una escena; cualquier excepción se convierte en un fallo legible y no tumba las demás."""
+        if os.environ.get('P3_SOLO_MA4C') == '1':     # modo del paso MA4c: solo las escenas T170 en adelante (dos personas con el mismo nombre)
+            m = re.match(r'T(\d+)', nombre)
+            if not (m and int(m.group(1)) >= 170):
+                return
         if os.environ.get('P3_SOLO_MA2') == '1':     # modo del paso MA2: solo las escenas T150 en adelante (anotar sin pisar, fin de semana, días futuros, horas al añadir)
             m = re.match(r'T(\d+)', nombre)
             if not (m and int(m.group(1)) >= 150):
@@ -2172,7 +2177,7 @@ with sync_playwright() as p:
         e.clic(lapiz('Txomin'))
         e.pg.fill('#ren-campo', 'mikel')
         e.clic('button[data-ren-guardar]')
-        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «Mikel». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.', 'T83 la pregunta: %r' % e.txt('#ren-pregunta [data-texto]'))
+        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «Mikel» y estás corrigiendo a «Txomin». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.', 'T83 la pregunta: %r' % e.txt('#ren-pregunta [data-texto]'))
         ok('Sí, son la misma persona' in e.txt('button[data-ren-si]') and e.txt('button[data-ren-no]') == 'No', 'T83 botones de la pregunta: %r %r' % (e.txt('button[data-ren-si]'), e.txt('button[data-ren-no]')))
         ok(e.filas() == ['Mikel', 'Txomin'] and not ls(e, 'renombres'), 'T83 hasta que se contesta no cambia nada: %s %s' % (e.filas(), ls(e, 'renombres')))
         e.clic('button[data-ren-no]')
@@ -2401,7 +2406,7 @@ with sync_playwright() as p:
         e.clic(lapiz('Mikel'))
         e.pg.fill('#ren-campo', raro2)
         e.clic('button[data-ren-guardar]')
-        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «%s». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.' % raro2 and e.pg.evaluate("document.querySelectorAll('#ren-pregunta [data-texto] *').length") == 0, 'T89 la pregunta enseña el nombre con comillas y & como texto: %r' % e.txt('#ren-pregunta [data-texto]'))
+        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «%s» y estás corrigiendo a «Mikel». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.' % raro2 and e.pg.evaluate("document.querySelectorAll('#ren-pregunta [data-texto] *').length") == 0, 'T89 la pregunta enseña el nombre con comillas y & como texto: %r' % e.txt('#ren-pregunta [data-texto]'))
         e.clic('button[data-ren-si]')
         ok(raro2 in e.txt('#toast') and e.pg.evaluate("document.querySelectorAll('#toast *').length") == 0 and 'Mikel' not in e.filas() and raro2 in e.filas(), 'T89 al juntarlos el aviso lleva los nombres como texto: %r %s' % (e.txt('#toast'), e.filas()))
         ok(ls(e, 'renombres') == [{'de': 'Mikel', 'a': raro2}], 'T89 y se apunta con las comillas intactas: %s' % ls(e, 'renombres'))
@@ -2978,8 +2983,11 @@ with sync_playwright() as p:
         crear(e, 'ana', 'Manueles')
         ok(e.marcados() == ['Ana'] and ls(e, 'empresas') in (None, []) and 'ya tiene' not in e.toast(), 'T124 misma empresa: lo marca y no apunta nada: %s %s' % (e.marcados(), ls(e, 'empresas')))
         crear(e, 'ANA', 'CATERSYSTEM')
-        ok(e.txt('#toast') == '«Ana» ya tiene la empresa «Manueles»: para cambiarla usa el lápiz ✎.' and emp_fila(e, 'Ana') == 'Manueles' and ls(e, 'empresas') in (None, []),
-           'T124 otra empresa: avisa y NO la cambia: %r %r %s' % (e.txt('#toast'), emp_fila(e, 'Ana'), ls(e, 'empresas')))
+        ok(e.txt('#pregunta-homonimo [data-texto]') == 'Ya hay un «Ana» (Manueles). ¿Es el mismo?' and emp_fila(e, 'Ana') == 'Manueles' and ls(e, 'empresas') in (None, []),
+           'T124 otra empresa: pregunta (MA4c) y NO la cambia: %r %r %s' % (e.txt('#pregunta-homonimo [data-texto]'), emp_fila(e, 'Ana'), ls(e, 'empresas')))
+        e.clic('button[data-hom-si]')
+        ok(e.txt('#toast') == 'Se ha apuntado a «Ana» (Manueles). Su empresa no se cambia: para cambiarla usa el lápiz ✎.' and emp_fila(e, 'Ana') == 'Manueles' and ls(e, 'empresas') in (None, []),
+           'T124 «Sí, es el mismo» tampoco la cambia: %r %r %s' % (e.txt('#toast'), emp_fila(e, 'Ana'), ls(e, 'empresas')))
         crear(e, 'dani', 'Sagarde')
         ok(emp_fila(e, 'Dani') == 'Sagarde' and ls(e, 'empresas') == [{'nombre': 'Dani', 'empresa': 'Sagarde'}] and 'Dani' in e.marcados(),
            'T124 quien no tenía empresa la recibe: %r %s' % (emp_fila(e, 'Dani'), ls(e, 'empresas')))
@@ -3105,14 +3113,14 @@ with sync_playwright() as p:
         e.clic('button[data-varios]')
         e.pg.fill('#varios-texto', TEXTO130)
         e.clic('button[data-varios-ok]')
-        res = {k: e.txt('[data-res="%s"]' % k) for k in ('entran', 'estaban', 'puestas', 'otras', 'novalen', 'parecidos')}
+        res = {k: e.txt('[data-res="%s"]' % k) for k in ('entran', 'estaban', 'puestas', 'homonimos', 'novalen', 'parecidos')}
         ok(res['entran'] == 'Entran 4: Fran, Gaia, Hugo, Iker. 2 con empresa.', 'T130 entran: %r' % res['entran'])
-        ok(res['estaban'] == 'Ya estaban 3: Ana, Dani, Beto.', 'T130 ya estaban: %r' % res['estaban'])
+        ok(res['estaban'] == 'Ya estaban 2: Dani, Beto.', 'T130 ya estaban (Ana ya no: tiene otra empresa y es un posible homónimo): %r' % res['estaban'])
         ok(res['puestas'] == 'Se le pone la empresa a 1: Dani (Sagarde).', 'T130 a quien no tenía se le pone: %r' % res['puestas'])
-        ok(res['otras'] == 'Ya tiene otra empresa: «Ana» (Manueles, no CATERSYSTEM). Para cambiarla usa el lápiz ✎.', 'T130 a quien ya tiene otra NO se le cambia: %r' % res['otras'])
+        ok(res['homonimos'] == 'Ya hay un «Ana» (Manueles): «Ana» no entra. Si es otra persona, escríbela con un apellido o una inicial («Ana B., CATERSYSTEM»); si es la misma, quita la línea.', 'T130 a quien ya tiene otra NO se le cambia y su línea se queda (MA4c): %r' % res['homonimos'])
         ok(res['novalen'] == 'No valen 2: «, Ona» (falta el nombre); «Luz» (la empresa no vale: parece un teléfono).', 'T130 no valen: %r' % res['novalen'])
         ok(res['parecidos'].startswith('Se parece a alguien que ya está 1: «Anaa» (se parece a «Ana»).'), 'T130 parecidos: %r' % res['parecidos'])
-        ok(e.valor('#varios-texto') == ', Ona\nLuz, 612345678\nAnaa, Sagarde', 'T130 en el cuadro quedan las líneas por corregir, enteras (con su empresa): %r' % e.valor('#varios-texto'))
+        ok(e.valor('#varios-texto') == ', Ona\nAna, CATERSYSTEM\nLuz, 612345678\nAnaa, Sagarde', 'T130 en el cuadro quedan las líneas por corregir, enteras (con su empresa): %r' % e.valor('#varios-texto'))
         ok(ls(e, 'altas') == ['Fran', 'Gaia', 'Hugo', 'Iker'] and ls(e, 'nuevos') == ['Fran', 'Gaia', 'Hugo', 'Iker'], 'T130 altas y nuevos: %s %s' % (ls(e, 'altas'), ls(e, 'nuevos')))
         ok(ls(e, 'empresas') == [{'nombre': 'Fran', 'empresa': 'Manueles'}, {'nombre': 'Gaia', 'empresa': 'Obras Nuevas SL'}, {'nombre': 'Dani', 'empresa': 'Sagarde'}],
            'T130 empresas apuntadas: %s' % ls(e, 'empresas'))
@@ -3751,6 +3759,277 @@ with sync_playwright() as p:
            'T168 se guarda el garaje y las viviendas de ese día no se tocan: %s' % [(j['ambito'], j['fecha']) for j in guardadas(e)])
     s168 = est10(filas=viv('2026-10-22', *CINCO) + gar('2026-10-22', 'Ana', 'Beto'))
     con_escena('T168', s168, t168)
+
+    # ======================================================================================================================
+    # Bloque del paso MA4c: dos personas con el mismo nombre. La pregunta «¿es el mismo o es otra persona?» al crear, el lápiz,
+    # «Añadir varios nombres» y el recuadro de dos iguales publicados. Escenas T170 en adelante (P3_SOLO_MA4C=1 corre solo
+    # estas). Fecha fija: viernes 23/10/2026. Datos inventados; Ander está de baja.
+    # ======================================================================================================================
+    HOM = [('Rafa', 'Alfa Instalaciones'), ('Pepe', ''), ('Luis', 'Beta Montajes'), ('Ander', 'Gamma Electrica'), ('Zoilo', 'Sagarde')]
+    PREVIAS_HOM = {'Rafa': 'Alfa Instalaciones', 'Luis': 'Beta Montajes', 'Ander': 'Gamma Electrica', 'Zoilo': 'Sagarde'}
+
+    def est170(personas=None, bajas=('Ander',), lista=('Rafa', 'Pepe', 'Luis')):
+        s = est10(personas=HOM if personas is None else personas, filas=viv('2026-10-22', *lista), ultima=u('2026-10-22', *lista))
+        for t in s['catalogo']:
+            if t['nombre'] in bajas:
+                t['activo'] = False
+        return s
+
+    def pregunta(e):
+        return e.txt('#pregunta-homonimo [data-texto]')
+
+    def sin_rastro(e):
+        return all(ls(e, c) in (None, []) for c in ('nuevos', 'altas', 'empresas', 'renombres'))
+
+    def sin_desborde(e, cual):
+        ancho = e.pg.evaluate("[document.documentElement.scrollWidth, window.innerWidth]")
+        ok(ancho[0] <= ancho[1], 'T17x a 390 px no desborda (%s): %s' % (cual, ancho))
+
+    # --- T170: «Rafa» con otra empresa, existiendo «Rafa (Alfa Instalaciones)»: pregunta y NO crea nada hasta que responde
+    def t170(e):
+        e.ir()
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and e.pg.query_selector('#aviso-dos-iguales') is None, 'T170 al abrir no hay pregunta ni recuadro de dos iguales')
+        filas0 = e.filas()
+        crear(e, 'Rafa', 'Beta Montajes')
+        ok(pregunta(e) == 'Ya hay un «Rafa» (Alfa Instalaciones). ¿Es el mismo?', 'T170 la pregunta dice a quién se parece y con qué empresa: %r' % pregunta(e))
+        ok(e.txt('#pregunta-homonimo [data-hom-si]') == 'Sí, es el mismo' and e.txt('#pregunta-homonimo [data-hom-no]') == 'No, es otra persona',
+           'T170 los dos botones con las palabras de Bixente: %r %r' % (e.txt('#pregunta-homonimo [data-hom-si]'), e.txt('#pregunta-homonimo [data-hom-no]')))
+        ok(sin_rastro(e) and e.filas() == filas0, 'T170 mientras no responde no se ha creado ni apuntado nada: %s %s' % (e.filas(), [ls(e, c) for c in ('nuevos', 'altas', 'empresas')]))
+        sin_desborde(e, 'pregunta')
+        e.clic('button[data-todos="1"]')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None, 'T170 hacer otra cosa en la pantalla quita la pregunta (como el resto de avisos)')
+        # con tilde, mayúsculas y espacios de más es la misma pregunta (la clave no distingue)
+        crear(e, ' RAFÁ ', 'Beta Montajes')
+        ok(pregunta(e) == 'Ya hay un «Rafa» (Alfa Instalaciones). ¿Es el mismo?', 'T170 «RAFÁ» con tilde/espacios es el mismo nombre: %r' % pregunta(e))
+    con_escena('T170', est170(), t170)
+
+    # --- T171: sin conflicto de empresa NO pregunta: misma empresa o sin empresa → se apunta al que está (texto A); «Rafaa» sigue siendo «parecido»
+    def t171(e):
+        e.ir()
+        crear(e, 'Rafa', 'Alfa Instalaciones')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and 'Rafa' in e.marcados(), 'T171 misma empresa: sin pregunta y apuntado: %s' % e.marcados())
+        texto_a = '«Rafa» (Alfa Instalaciones) ya estaba en la base: lo he apuntado en la lista. Si es otra persona, créala con un apellido o una inicial («Rafa B.»).'
+        ok(e.txt('#toast') == texto_a, 'T171 texto A: %r' % e.txt('#toast'))
+        e.clic('#v-app .row[data-nombre="Rafa"] .x')
+        ok('Rafa' not in e.marcados(), 'T171 se desmarca para la siguiente comprobación')
+        crear(e, 'rafa')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and 'Rafa' in e.marcados() and e.txt('#toast') == texto_a, 'T171 sin empresa: sin pregunta, apuntado y texto A: %r' % e.txt('#toast'))
+        ok(sin_rastro(e), 'T171 no se apunta nada para el PC: %s' % [ls(e, c) for c in ('nuevos', 'altas', 'empresas')])
+        # sin empresa en la base el texto A omite el paréntesis
+        crear(e, 'Pepe')
+        ok(e.txt('#toast') == '«Pepe» ya estaba en la base: lo he apuntado en la lista. Si es otra persona, créala con un apellido o una inicial («Pepe B.»).', 'T171 texto A sin empresa: %r' % e.txt('#toast'))
+        # un nombre solo PARECIDO sigue con el aviso de siempre y sin la pregunta nueva
+        crear(e, 'Rafaa', 'Beta Montajes')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and 'Se parece a «Rafa». ¿Es la misma persona?' in e.txt('#nuevo-aviso'), 'T171 «Rafaa» sigue avisando «Se parece a…»: %r' % e.txt('#nuevo-aviso'))
+    con_escena('T171', est170(), t171)
+
+    # --- T172: «Pepe» no tiene empresa en la base y se escribe Beta → se le pone Beta y NO pregunta nada
+    def t172(e):
+        e.ir()
+        crear(e, 'Pepe', 'Beta Montajes')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and e.pg.query_selector('#otra-persona') is None, 'T172 no hay pregunta de ninguna clase')
+        ok(ls(e, 'empresas') == [{'nombre': 'Pepe', 'empresa': 'Beta Montajes'}], 'T172 se le pone la empresa: %s' % ls(e, 'empresas'))
+        ok('Pepe' in e.marcados() and ls(e, 'nuevos') in (None, []), 'T172 apuntado en la lista y sin nombre nuevo: %s %s' % (e.marcados(), ls(e, 'nuevos')))
+    con_escena('T172', est170(), t172)
+
+    # --- T173: «Sí, es el mismo» apunta al que está, no cambia su empresa y lo dice
+    def t173(e):
+        e.ir()
+        crear(e, 'Rafa', 'Beta Montajes')
+        e.clic('button[data-hom-si]')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and 'Rafa' in e.marcados(), 'T173 queda apuntado Rafa: %s' % e.marcados())
+        ok(sin_rastro(e), 'T173 «empresas» sigue vacío (la empresa no se cambia): %s' % [ls(e, c) for c in ('nuevos', 'altas', 'empresas')])
+        ok(e.txt('#toast') == 'Se ha apuntado a «Rafa» (Alfa Instalaciones). Su empresa no se cambia: para cambiarla usa el lápiz ✎.', 'T173 el aviso lo dice: %r' % e.txt('#toast'))
+        ok(emp_fila(e, 'Rafa') == 'Alfa Instalaciones', 'T173 sigue en Alfa: %r' % emp_fila(e, 'Rafa'))
+    con_escena('T173', est170(), t173)
+
+    # --- T174: «No, es otra persona» + «Rafa B.» → persona nueva con la empresa escrita, «Rafa» intacto, y el fichero vale para el PC
+    def t174(e):
+        e.ir()
+        crear(e, 'Rafa', 'Beta Montajes')
+        e.clic('button[data-hom-no]')
+        ok(e.txt('#otra-persona [data-texto]') == 'Ponle algo que lo distinga del otro «Rafa»: un apellido o una inicial. Por ejemplo «Rafa B.» o «Rafa Pérez».', 'T174 texto B2: %r' % e.txt('#otra-persona [data-texto]'))
+        ok(e.valor('#homonimo-campo') == 'Rafa ' and e.pg.evaluate("document.activeElement.id") == 'homonimo-campo', 'T174 el campo sale con «Rafa » y con el cursor dentro: %r' % e.valor('#homonimo-campo'))
+        sin_desborde(e, 'otra persona')
+        for malo in ('', 'Rafa', 'rafa', ' RAFÁ '):
+            e.pg.fill('#homonimo-campo', malo)
+            e.clic('button[data-hom-crear]')
+            ok(e.txt('#homonimo-error') == 'Tiene que ser distinto de «Rafa»: añade un apellido o una inicial.' and sin_rastro(e), 'T174 %r no vale: %r' % (malo, e.txt('#homonimo-error')))
+        e.pg.fill('#homonimo-campo', 'Luis')
+        e.clic('button[data-hom-crear]')
+        ok(e.txt('#homonimo-error') == 'Ya hay un «Luis». Elige otro.' and sin_rastro(e), 'T174 uno que ya existe: %r' % e.txt('#homonimo-error'))
+        e.pg.fill('#homonimo-campo', 'zoilo')    # «Zoilo» está en la base pero no en la lista de hoy: la clave no distingue mayúsculas
+        e.clic('button[data-hom-crear]')
+        ok(e.txt('#homonimo-error') == 'Ya hay un «Zoilo». Elige otro.' and sin_rastro(e), 'T174 uno que ya existe con otras mayúsculas y fuera de la lista: %r' % e.txt('#homonimo-error'))
+        e.pg.fill('#homonimo-campo', 'x@y.es')
+        e.clic('button[data-hom-crear]')
+        ok(e.txt('#homonimo-error') == 'Ese nombre no vale: parece un correo.' and sin_rastro(e), 'T174 uno que no se puede publicar: %r' % e.txt('#homonimo-error'))
+        e.pg.fill('#homonimo-campo', 'Rafa B.')
+        e.clic('button[data-hom-crear]')
+        ok(e.pg.query_selector('#otra-persona') is None and 'Rafa B.' in e.marcados() and 'Rafa' not in e.marcados(), 'T174 se crea y se marca «Rafa B.», no «Rafa»: %s' % e.marcados())
+        ok(ls(e, 'nuevos') == ['Rafa B.'] and ls(e, 'empresas') == [{'nombre': 'Rafa B.', 'empresa': 'Beta Montajes'}], 'T174 apuntado como nombre nuevo con su empresa: %s %s' % (ls(e, 'nuevos'), ls(e, 'empresas')))
+        ok(emp_fila(e, 'Rafa B.') == 'Beta Montajes' and emp_fila(e, 'Rafa') == 'Alfa Instalaciones', 'T174 cada uno con su empresa: %r %r' % (emp_fila(e, 'Rafa B.'), emp_fila(e, 'Rafa')))
+        lote = e.exportar()
+        ok(lote and lote.get('altas') == ['Rafa B.'] and lote.get('empresas') == [{'nombre': 'Rafa B.', 'empresa': 'Beta Montajes'}] and not lote.get('renombres'),
+           'T174 el fichero lleva «Rafa B.» como nombre nuevo con Beta y nada de «Rafa»: %s' % json.dumps(lote, ensure_ascii=False)[:300])
+        valida_con_p1(lote)
+        r, emps, _ = e2e_emp(lote, previas=PREVIAS_HOM, personas=HOM)
+        if r is not None:
+            codigos = [x['codigo'] for x in r['avisos_lote']]
+            ok(emps.get('Rafa') == 'Alfa Instalaciones' and emps.get('Rafa B.') == 'Beta Montajes' and 'empresa_cambiada' not in codigos and 'alta_ya_existia' not in codigos,
+               'T174 en el PC: Rafa sigue en Alfa y «Rafa B.» es otra persona de Beta, sin avisos de cambio: %s %s' % (emps, codigos))
+    con_escena('T174', est170(), t174)
+
+    # --- T175: «Cancelar» no deja rastro; un nombre que ya creaste sale como «Ya hay un «Rafa B.». Elige otro.»; Enter también crea
+    def t175(e):
+        e.ir()
+        crear(e, 'Rafa', 'Beta Montajes')
+        e.clic('button[data-hom-no]')
+        e.pg.fill('#homonimo-campo', 'Rafa B.')
+        e.clic('button[data-hom-cancelar]')
+        ok(sin_rastro(e) and e.pg.query_selector('#otra-persona') is None and e.pg.query_selector('#pregunta-homonimo') is None, 'T175 «Cancelar» no deja pregunta ni rastro: %s' % [ls(e, c) for c in ('nuevos', 'altas', 'empresas')])
+        crear(e, 'Rafa', 'Beta Montajes')
+        e.clic('button[data-hom-no]')
+        e.pg.fill('#homonimo-campo', 'Rafa B.')
+        e.pg.press('#homonimo-campo', 'Enter')
+        ok(ls(e, 'nuevos') == ['Rafa B.'], 'T175 Enter en el campo crea: %s' % ls(e, 'nuevos'))
+        crear(e, 'Rafa', 'Beta Montajes')
+        ok(pregunta(e) == 'Ya hay un «Rafa» (Alfa Instalaciones). ¿Es el mismo?', 'T175 con «Rafa B.» ya creado, «Rafa» + Beta sigue preguntando: %r' % pregunta(e))
+        e.clic('button[data-hom-no]')
+        e.pg.fill('#homonimo-campo', 'rafa b.')
+        e.clic('button[data-hom-crear]')
+        ok(e.txt('#homonimo-error') == 'Ya hay un «Rafa B.». Elige otro.' and ls(e, 'nuevos') == ['Rafa B.'], 'T175 «rafa b.» ya existe (mayúsculas distintas): %r %s' % (e.txt('#homonimo-error'), ls(e, 'nuevos')))
+    con_escena('T175', est170(), t175)
+
+    # --- T176: «Ander» está de baja → pregunta C; «No» + apellido crea a otro y el de baja sigue de baja; «Sí» lo apunta sin tocar nada
+    def t176(e):
+        e.ir()
+        crear(e, 'Ander')
+        ok(pregunta(e) == '«Ander» estaba de baja. ¿Es el mismo, que vuelve?', 'T176 pregunta C: %r' % pregunta(e))
+        e.clic('button[data-hom-no]')
+        e.pg.fill('#homonimo-campo', 'Ander G.')
+        e.clic('button[data-hom-crear]')
+        ok(ls(e, 'nuevos') == ['Ander G.'] and 'Ander G.' in e.marcados() and 'Ander' not in e.filas(), 'T176 se crea «Ander G.» y «Ander» no aparece: %s %s' % (ls(e, 'nuevos'), e.filas()))
+        ok(not any(o.startswith('Ander ·') or o == 'Ander' for o in nombres_opciones(e)), 'T176 el de baja sigue sin salir en el desplegable: %s' % nombres_opciones(e))
+        crear(e, 'ander', 'Alfa Instalaciones')
+        ok(pregunta(e) == '«Ander» estaba de baja. ¿Es el mismo, que vuelve?', 'T176 también con otra empresa escrita: %r' % pregunta(e))
+        e.clic('button[data-hom-si]')
+        ok('Ander' in e.marcados() and ls(e, 'empresas') in (None, []), 'T176 «Sí» lo apunta sin cambiarle la empresa: %s %s' % (e.marcados(), ls(e, 'empresas')))
+        ok(e.txt('#toast') == 'Se ha apuntado a «Ander» (Gamma Electrica). Su empresa no se cambia: para cambiarla usa el lápiz ✎.', 'T176 aviso: %r' % e.txt('#toast'))
+    con_escena('T176', est170(), t176)
+
+    # --- T177: «Añadir varios nombres»: «Rafa, Beta» no entra y se queda en el cuadro (texto E); «Rafa B., Beta» sí entra
+    def t177(e):
+        e.ir()
+        e.clic('button[data-varios]')
+        e.pg.fill('#varios-texto', 'Rafa, Beta Montajes' + chr(10) + 'Rafa B., Beta Montajes' + chr(10) + 'Pepe' + chr(10) + 'Luis, Beta Montajes')
+        e.clic('button[data-varios-ok]')
+        ok(e.txt('[data-res="homonimos"]') == 'Ya hay un «Rafa» (Alfa Instalaciones): «Rafa» no entra. Si es otra persona, escríbela con un apellido o una inicial («Rafa B., Beta Montajes»); si es la misma, quita la línea.',
+           'T177 texto E: %r' % e.txt('[data-res="homonimos"]'))
+        ok(e.valor('#varios-texto') == 'Rafa, Beta Montajes', 'T177 la línea se queda en el cuadro para corregirla: %r' % e.valor('#varios-texto'))
+        ok(ls(e, 'nuevos') == ['Rafa B.'] and ls(e, 'altas') == ['Rafa B.'] and ls(e, 'empresas') == [{'nombre': 'Rafa B.', 'empresa': 'Beta Montajes'}],
+           'T177 solo «Rafa B.» entra, con su empresa, y «Rafa» no cambia: %s %s %s' % (ls(e, 'nuevos'), ls(e, 'altas'), ls(e, 'empresas')))
+        ok(e.txt('[data-res="estaban"]') == 'Ya estaban 2: Pepe, Luis.' and e.pg.query_selector('[data-res="otras"]') is None, 'T177 «Pepe» y «Luis» (misma empresa) siguen como «ya estaban»: %r' % e.txt('[data-res="estaban"]'))
+        sin_desborde(e, 'varios')
+        # si no se corrige no pasa nada: la línea sigue y no se guarda nada más
+        e.clic('button[data-varios-ok]')
+        ok(ls(e, 'nuevos') == ['Rafa B.'] and e.valor('#varios-texto') == 'Rafa, Beta Montajes', 'T177 volver a pulsar sin corregir no añade nada: %s' % ls(e, 'nuevos'))
+        e.pg.fill('#varios-texto', 'Rafa Gómez, Gamma Electrica')
+        e.clic('button[data-varios-ok]')
+        ok(ls(e, 'nuevos') == ['Rafa B.', 'Rafa Gómez'], 'T177 corregida la línea (otra empresa y un apellido), entra: %s' % ls(e, 'nuevos'))
+    con_escena('T177', est170(), t177)
+
+    # --- T177b: dos líneas con otra empresa → el texto E en plural
+    def t177b(e):
+        e.ir()
+        e.clic('button[data-varios]')
+        e.pg.fill('#varios-texto', 'Rafa, Beta Montajes' + chr(10) + 'Luis, Alfa Instalaciones')
+        e.clic('button[data-varios-ok]')
+        ok(e.txt('[data-res="homonimos"]') == 'Ya hay estos nombres con otra empresa: «Rafa» (Alfa Instalaciones), «Luis» (Beta Montajes). No entran. Si son otras personas, escríbelas con un apellido o una inicial («Rafa B., Beta Montajes»); si son las mismas, quita las líneas.',
+           'T177b texto E en plural: %r' % e.txt('[data-res="homonimos"]'))
+        ok(e.valor('#varios-texto') == 'Rafa, Beta Montajes' + chr(10) + 'Luis, Alfa Instalaciones' and sin_rastro(e), 'T177b las dos líneas se quedan y no se toca nada: %r' % e.valor('#varios-texto'))
+    con_escena('T177b', est170(), t177b)
+
+    # --- T178: lápiz «Pepe» → «Rafa» (existe): la pregunta dice las dos empresas; «No» enseña la ayuda D; «Pepe» → «Rafa B.» renombra
+    def t178(e):
+        e.ir()
+        e.clic(lapiz('Pepe'))
+        e.pg.fill('#ren-campo', 'Rafa')
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «Rafa» (Alfa Instalaciones) y estás corrigiendo a «Pepe» (Beta Montajes). ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.',
+           'T178 la pregunta dice la empresa de cada uno: %r' % e.txt('#ren-pregunta [data-texto]'))
+        e.clic('button[data-ren-no]')
+        ok(e.pg.query_selector('#ren-pregunta') is None and e.txt('#ren-ayuda') == 'Si son dos personas distintas, ponle un apellido o una inicial: «Rafa B.».',
+           'T178 «No» enseña la ayuda D: %r' % e.txt('#ren-ayuda'))
+        sin_desborde(e, 'lápiz')
+        e.pg.fill('#ren-campo', 'Rafa B.')
+        e.clic('button[data-ren-guardar]')
+        ok(ls(e, 'renombres') == [{'de': 'Pepe', 'a': 'Rafa B.'}] and 'Rafa B.' in e.filas() and 'Rafa' in e.filas() and e.pg.query_selector('#ren-ayuda') is None,
+           'T178 «Pepe» pasa a «Rafa B.» y «Rafa» sigue: %s %s' % (ls(e, 'renombres'), e.filas()))
+    con_escena('T178', est170(personas=[('Rafa', 'Alfa Instalaciones'), ('Pepe', 'Beta Montajes'), ('Luis', 'Beta Montajes'), ('Ander', 'Gamma Electrica'), ('Zoilo', 'Sagarde')]), t178)
+
+    # --- T178b: el lápiz con «Sí» sigue juntando (como siempre); sin empresa en ninguno la pregunta no lleva paréntesis
+    def t178b(e):
+        e.ir()
+        e.clic(lapiz('Pepe'))
+        e.pg.fill('#ren-campo', 'Luis')
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «Luis» (Beta Montajes) y estás corrigiendo a «Pepe». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.', 'T178b %r' % e.txt('#ren-pregunta [data-texto]'))
+        e.clic('button[data-ren-si]')
+        ok(ls(e, 'renombres') == [{'de': 'Pepe', 'a': 'Luis'}], 'T178b «Sí» junta: %s' % ls(e, 'renombres'))
+    con_escena('T178b', est170(), t178b)
+
+    # --- T179: con «Rafa» y «Rafa B.» el desplegable y la lista enseñan a los dos, cada uno con su empresa, y se pueden elegir
+    def t179(e):
+        e.ir()
+        etiquetas = nombres_opciones(e)
+        ok('Rafa B. · Beta Montajes' in etiquetas and 'Rafa · Alfa Instalaciones (ya está)' in etiquetas, 'T179 el desplegable enseña «Rafa B.» con su empresa: %s' % etiquetas)
+        e.pg.select_option('#addsel', 'Rafa B.')
+        e.clic('button[data-add]')
+        ok(sorted(x for x in e.filas() if x.startswith('Rafa')) == ['Rafa', 'Rafa B.'], 'T179 la lista tiene a los dos: %s' % e.filas())
+        ok(emp_fila(e, 'Rafa') == 'Alfa Instalaciones' and emp_fila(e, 'Rafa B.') == 'Beta Montajes', 'T179 cada uno con su empresa: %r %r' % (emp_fila(e, 'Rafa'), emp_fila(e, 'Rafa B.')))
+    con_escena('T179', est170(personas=HOM + [('Rafa B.', 'Beta Montajes')]), t179)
+
+    # --- T180: doble obra y 24 h: «Rafa» en una obra y «Rafa B.» en otra el mismo día son dos personas (sin aviso falso ni bloqueo falso)
+    def t180(e):
+        e.ir()
+        e.obra('mungia')
+        e.fecha('2026-10-22')
+        e.pg.select_option('#addsel', 'Rafa B.')
+        e.clic('button[data-add]')
+        ok(e.pg.query_selector('#aviso-doble-obra') is None and e.pg.query_selector('.warn-obra') is None, 'T180 «Rafa B.» no avisa de doble obra por culpa de «Rafa»: %r' % e.txt('#aviso-doble-obra'))
+        e.pulsar('Rafa B.', 19, '0.5')      # 17 h: si se juntara con las 7,5 h de «Rafa» en Olabeaga serían 24,5 h
+        e.clic('button[data-guardar]')
+        ok('no se guarda' not in e.toast() and e.pendientes() == '1', 'T180 17 h de «Rafa B.» + 7,5 h de «Rafa» no bloquea el 24 h: %r %r' % (e.toast(), e.pendientes()))
+        # control: «Rafa» a secas en la otra obra sí avisa de doble obra
+        e.pg.select_option('#addsel', 'Rafa')
+        e.clic('button[data-add]')
+        ok(e.pg.query_selector('.warn-obra') is not None, 'T180 control: la misma persona en las dos obras sí avisa')
+    s180 = est170(personas=HOM + [('Rafa B.', '')], lista=('Rafa', 'Pepe', 'Luis'))   # sin empresa: el aviso de doble obra solo mira el nombre
+    s180['obras']['mungia'] = obra_est('2026 MUNGIA', [])
+    con_escena('T180', s180, t180)
+
+    # --- T181: el estado publicado trae DOS «Rafa» → recuadro visible con el texto F (antes se escondía uno en silencio); sin duplicados, nada
+    def t181(e):
+        e.ir()
+        ok(e.txt('#aviso-dos-iguales') == 'En la lista del PC hay dos personas llamadas «Rafa» (Alfa Instalaciones y Beta Montajes) y la tablet solo puede enseñar a una. Cámbiale el nombre a una de ellas desde el PC.',
+           'T181 recuadro F: %r' % e.txt('#aviso-dos-iguales'))
+        sin_desborde(e, 'dos iguales')
+    con_escena('T181', est170(personas=[('Rafa', 'Alfa Instalaciones'), ('Rafa', 'Beta Montajes'), ('Luis', 'Beta Montajes')], bajas=(), lista=('Rafa', 'Luis')), t181)
+
+    # --- T182: «Sí» y «No» no pisan otras cosas: con la pregunta abierta, volver a «Crear» otro nombre la sustituye
+    def t182(e):
+        e.ir()
+        crear(e, 'Rafa', 'Beta Montajes')
+        crear(e, 'Luis', 'Alfa Instalaciones')
+        ok(pregunta(e) == 'Ya hay un «Luis» (Beta Montajes). ¿Es el mismo?' and len(e.pg.query_selector_all('#pregunta-homonimo')) == 1, 'T182 la pregunta nueva sustituye a la vieja: %r' % pregunta(e))
+        e.clic('button[data-hom-no]')
+        e.pg.fill('#homonimo-campo', 'Luis M.')
+        e.clic('button[data-hom-crear]')
+        ok(ls(e, 'nuevos') == ['Luis M.'] and ls(e, 'empresas') == [{'nombre': 'Luis M.', 'empresa': 'Alfa Instalaciones'}], 'T182 se crea «Luis M.» con Alfa (la empresa de la última pregunta): %s %s' % (ls(e, 'nuevos'), ls(e, 'empresas')))
+    con_escena('T182', est170(), t182)
+
+    # Fin del bloque del paso MA4c
 
     # Fin del bloque del paso MA2
 

@@ -1083,6 +1083,7 @@
         ren: null,
         varios: null,
         nuevoError: '',
+        homonimo: null,
         prefill: null,
         listo: null,
         aviso: null,
@@ -1472,14 +1473,159 @@
       }
       // Devuelve un nombre ya existente (catálogo o lista actual) que se parezca al nuevo sin ser
       // el mismo: ambos de 3 letras o más (sin tildes) y a distancia ≤ 1, o uno contenido en el
-      // otro; null si no hay ninguno.
-      function similar(n) {
-        let k = key(n);
-        if (k.length < 3) return null;
-        return [...cat(), ...a.list.map((x) => x.nombre)].find((x) => {
-          let z = key(x);
-          return z !== k && z.length >= 3 && (lev(k, z) <= 1 || k.includes(z) || z.includes(k));
+      // otro; null si no hay ninguno. Las pruebas de que es otra persona (una inicial detrás, otra empresa) las pone
+      // clasificarNombreEscrito, que es quien decide.
+      function similar(n, empresa = '') {
+        let r = clasificarNombreEscrito({ nombre: n, empresa, base: personasDeLaBase(), enLista: a.list.map((x) => x.nombre) });
+        return r.tipo === 'parecido' ? r.existente : null;
+      }
+      // «Nombre B.» o «Nombre B» (el mismo nombre más una inicial) es justo como se distingue a otra persona: no cuenta como
+      // parecido. Los dos textos van ya sin tildes ni mayúsculas.
+      function masUnaInicial(largo, corto) {
+        let resto = largo.slice(corto.length + 1);
+        return largo.startsWith(corto + ' ') && (resto.length === 1 || (resto.length === 2 && resto[1] === '.'));
+      }
+      // Qué hacer con un nombre recién escrito (lógica pura: sin pantalla ni reloj). Recibe el nombre, la empresa escrita
+      // junto a él, las personas de la base [{ nombre, empresa, activo }] y los nombres de la lista de hoy. Devuelve
+      // { tipo, existente }:
+      //   nuevo                → no está ni se parece a nadie
+      //   parecido             → no está, pero se parece a «existente»
+      //   mismo                → está (activo) y no hay conflicto de empresa: la escrita está vacía, es la misma o él no tiene
+      //   otra_persona_posible → está (activo) con una empresa distinta de la escrita: hay que preguntar
+      //   de_baja              → está, pero de baja: hay que preguntar
+      function clasificarNombreEscrito({ nombre, empresa, base, enLista }) {
+        const k = key(nombre);
+        const personas = Array.isArray(base) ? base : [];
+        const lista = Array.isArray(enLista) ? enLista : [];
+        if (!k) return { tipo: 'nuevo', existente: null };
+        const iguales = personas.filter((x) => key(x.nombre) === k);
+        const activos = iguales.filter((x) => x.activo !== false);
+        // Con dos activos del mismo nombre se prefiere el de la empresa escrita.
+        const activo = activos.find((x) => key(empresa) && key(x.empresa) === key(empresa)) || activos[0];
+        if (activo) {
+          const escrita = key(empresa);
+          const suya = key(activo.empresa);
+          return { tipo: escrita && suya && escrita !== suya ? 'otra_persona_posible' : 'mismo', existente: activo.nombre };
+        }
+        if (iguales.length) return { tipo: 'de_baja', existente: iguales[0].nombre };
+        const enEsta = lista.find((x) => key(x) === k);
+        if (enEsta !== undefined) return { tipo: 'mismo', existente: enEsta };
+        if (k.length >= 3) {
+          // Dos pruebas de que es otra persona y no una errata: el mismo nombre más una inicial, y que uno sea el
+          // nombre del otro con más palabras pero de empresas distintas (los nombres de la lista de hoy no tienen empresa).
+          const candidatos = [...personas.map((x) => ({ nombre: x.nombre, empresa: x.empresa })), ...lista.filter((x) => !personas.some((p) => key(p.nombre) === key(x))).map((x) => ({ nombre: x }))];
+          const parecido = candidatos.find((x) => {
+            const z = key(x.nombre);
+            if (z === k || z.length < 3 || masUnaInicial(k, z) || masUnaInicial(z, k)) return false;
+            const otraEmpresa = key(empresa) && key(x.empresa) && key(empresa) !== key(x.empresa);
+            return lev(k, z) <= 1 || (!otraEmpresa && (k.includes(z) || z.includes(k)));
+          });
+          if (parecido) return { tipo: 'parecido', existente: parecido.nombre };
+        }
+        return { tipo: 'nuevo', existente: null };
+      }
+      // Las personas de la base tal como las ve la tablet: nombre, empresa de ahora y si siguen en la base.
+      function personasDeLaBase() {
+        let activas = new Set();
+        (state?.catalogo || []).forEach((x) => {
+          if (x.activo !== false) activas.add(key(x.nombre));
         });
+        news.forEach((x) => activas.add(key(x)));
+        return cat().map((nombre) => ({ nombre, empresa: empresaDe(nombre), activo: activas.has(key(nombre)) }));
+      }
+      // «Nombre» (Empresa), o solo «Nombre» si no tiene empresa.
+      function conSuEmpresa(nombre) {
+        let empresa = empresaDe(nombre);
+        return '«' + nombre + '»' + (empresa ? ' (' + empresa + ')' : '');
+      }
+      // La primera palabra de un nombre: la que va antes del primer espacio.
+      function primerNombre(texto) {
+        return clean(texto).split(' ')[0];
+      }
+      // El nombre escrito ya estaba: se ha apuntado al que está y se dice cómo crear a otro.
+      function textoYaEstaba(existente) {
+        return (
+          conSuEmpresa(existente) +
+          ' ya estaba en la base: lo he apuntado en la lista. Si es otra persona, créala con un apellido o una inicial («' +
+          primerNombre(existente) +
+          ' B.»).'
+        );
+      }
+      // Pregunta que sale bajo «Nombre nuevo» cuando el nombre ya existe con otra empresa o está de baja y, si dice que
+      // es otra persona, el campo para ponerle un apellido o una inicial.
+      function homonimoHTML() {
+        let h = a.homonimo;
+        if (!h) return '';
+        if (h.fase === 'pregunta') {
+          let texto =
+            h.tipo === 'de_baja'
+              ? '«' + h.existente + '» estaba de baja. ¿Es el mismo, que vuelve?'
+              : 'Ya hay un ' + conSuEmpresa(h.existente) + '. ¿Es el mismo?';
+          return (
+            `<div class="aviso" id="pregunta-homonimo"><span data-texto>${E(texto)}</span><div class="actions">` +
+            `<button class="btn sec" data-hom-si>Sí, es el mismo</button>` +
+            `<button class="btn ghost" data-hom-no>No, es otra persona</button></div></div>`
+          );
+        }
+        let primero = primerNombre(h.existente);
+        let consejo =
+          'Ponle algo que lo distinga del otro «' + h.existente + '»: un apellido o una inicial. Por ejemplo «' +
+          primero + ' B.» o «' + primero + ' Pérez».';
+        let error = h.error ? `<div class="aviso" id="homonimo-error" role="alert">${E(h.error)}</div>` : '';
+        return (
+          `<div class="aviso" id="otra-persona"><span data-texto>${E(consejo)}</span>` +
+          `<input id="homonimo-campo" maxlength="60" autocomplete="off" aria-label="Nombre de la otra persona" ` +
+          `value="${E(h.valor)}"><div class="actions"><button class="btn pri" data-hom-crear>Crear</button>` +
+          `<button class="btn ghost" data-hom-cancelar>Cancelar</button></div>${error}</div>`
+        );
+      }
+      // «Crear» a la otra persona: su nombre tiene que ser distinto de todos los que ya hay y publicable. Si vale, entra por
+      // el camino de siempre de «Nombre nuevo», con la empresa que se escribió.
+      function crearOtraPersona() {
+        let h = a.homonimo;
+        if (!h || h.fase !== 'otra') return;
+        let valor = clean(h.valor);
+        let motivo = valor ? motivoNombre(valor) : '';
+        let ya = valor ? cat().find((n) => key(n) === key(valor)) || a.list.find((p) => key(p.nombre) === key(valor))?.nombre : '';
+        h.error = '';
+        if (!valor || key(valor) === key(h.existente) || key(valor) === key(h.nombre))
+          h.error = 'Tiene que ser distinto de «' + h.existente + '»: añade un apellido o una inicial.';
+        else if (motivo) h.error = 'Ese nombre no vale: ' + motivo + '.';
+        else if (ya) h.error = 'Ya hay un «' + ya + '». Elige otro.';
+        if (h.error) {
+          render();
+          document.querySelector('#homonimo-campo')?.focus();
+          return;
+        }
+        a.homonimo = null;
+        news.push(valor);
+        set(K.n, news);
+        addName(valor);
+        if (h.empresa) fijarEmpresa(valor, h.empresa);
+        changed(false);
+      }
+      // Aviso de personas con el mismo nombre en la lista que publica el PC: la tablet solo puede enseñar a una de cada nombre.
+      function avisoDosIgualesHTML() {
+        let grupos = new Map();
+        (state?.catalogo || []).forEach((x) => {
+          let k = key(x.nombre);
+          if (!k) return;
+          if (!grupos.has(k)) grupos.set(k, []);
+          grupos.get(k).push(x);
+        });
+        let repetidos = [...grupos.values()].filter((g) => g.length > 1);
+        if (!repetidos.length) return '';
+        let casos = repetidos.map((g) => {
+          let empresas = g.map((x) => clean(x.empresa)).filter(Boolean);
+          return '«' + clean(g[0].nombre) + '»' + (empresas.length ? ' (' + empresas.join(' y ') + ')' : '');
+        });
+        let texto =
+          repetidos.length === 1 && repetidos[0].length === 2
+            ? 'En la lista del PC hay dos personas llamadas ' + casos[0] +
+              ' y la tablet solo puede enseñar a una. Cámbiale el nombre a una de ellas desde el PC.'
+            : 'En la lista del PC hay personas con el mismo nombre: ' + casos.join(', ') +
+              '. La tablet solo puede enseñar a una de cada nombre. Cámbiales el nombre desde el PC.';
+        return `<div class="aviso" id="aviso-dos-iguales" role="alert">${E(texto)}</div>`;
       }
       // Vuelve al Portal de Sagarde según desde dónde se haya entrado
       function irAlPortal(evento) {
@@ -1898,6 +2044,9 @@
             `<div class="actions"><button class="btn sec" data-ren-si>Sí, son la misma persona</button>` +
             `<button class="btn ghost" data-ren-no>No</button></div></div>`
           : '';
+        let ayuda = a.ren.ayuda
+          ? `<div class="aviso" id="ren-ayuda"><span data-texto>${E(a.ren.ayuda)}</span></div>`
+          : '';
         let otra =
           a.ren.empresa === OTRA_EMPRESA
             ? `<input id="ren-empresa-otra" maxlength="60" autocomplete="off" placeholder="Nombre de la empresa" ` +
@@ -1908,7 +2057,7 @@
           `autocomplete="off" aria-label="Nombre correcto" value="${E(a.ren.valor)}">` +
           `<select id="ren-empresa" aria-label="Empresa">${opcionesEmpresaHTML(a.ren.empresa)}</select>${otra}` +
           `<div class="actions"><button class="btn pri" data-ren-guardar>Guardar</button>` +
-          `<button class="btn ghost" data-ren-cancelar>Cancelar</button></div>${error}${pregunta}</div>`
+          `<button class="btn ghost" data-ren-cancelar>Cancelar</button></div>${error}${pregunta}${ayuda}</div>`
         );
       }
       // Genera el marcado HTML de las filas de trabajadores, con control de asistencia, horas,
@@ -2090,6 +2239,7 @@
           `${barraHTML()}<div ` +
           `class="origin" id="estado-origen">${E(origin)}</div><div class="pad">` +
           `${avisoSinPrepararHTML()}` +
+          `${avisoDosIgualesHTML()}` +
           `${
             mostrarAviso
               ? '<div class="aviso" id="aviso-instalar"><button data-cerrar-aviso>×</button>Conviene ' +
@@ -2147,6 +2297,7 @@
                 `crear</button></div></div>`
               : ''
           }` +
+          `${homonimoHTML()}` +
           `</div><div class="actions"><button class="btn ghost" data-varios>Añadir varios nombres</button></div>` +
           `${
             a.varios
@@ -2430,6 +2581,7 @@
       // y repinta la vista
       function changed(cargar = true) {
         a.nuevoError = '';
+        a.homonimo = null;
         a.aviso = null;
         a.guardado = null;
         if (cargar) {
@@ -2587,6 +2739,7 @@
         let cambiaEmpresa = !elegida.error && key(elegida.empresa) !== key(empresaDe(de));
         a.ren.error = '';
         a.ren.pregunta = '';
+        a.ren.ayuda = '';
         if (valor !== de && (!valor || motivo)) {
           a.ren.error = valor ? 'Ese nombre no vale: ' + motivo + '.' : 'Escribe el nombre.';
         } else if (elegida.error) {
@@ -2595,7 +2748,8 @@
           a.ren = null;
         } else if (valor !== de && otro && !confirmado) {
           a.ren.pregunta =
-            'Ya hay un «' + otro + '». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.';
+            'Ya hay un ' + conSuEmpresa(otro) + ' y estás corrigiendo a ' + conSuEmpresa(de) +
+            '. ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.';
         } else {
           a.ren = null;
           let empresaNueva = cambiaEmpresa ? elegida.empresa : undefined;
@@ -2621,7 +2775,7 @@
       // empresa, ya tienen otra, no valen, se parecen a alguien) o, si no hay nada, un aviso. Los nombres van escapados.
       function resumenVariosHTML(resumen) {
         if (!resumen) return '';
-        let { entran, estaban, novalen, parecidos, conEmpresa, puestas, otras } = resumen;
+        let { entran, estaban, novalen, parecidos, conEmpresa, puestas, homonimos } = resumen;
         let nombres = (lista) => lista.map((x) => E(x)).join(', ');
         let cuantos = (lista, uno, varios) => (lista.length === 1 ? uno : varios) + ' ' + lista.length + ': ';
         let lineas = [];
@@ -2635,10 +2789,18 @@
           let inicio = puestas.length === 1 ? 'Se le pone la empresa a 1: ' : 'Se les pone la empresa a ' + puestas.length + ': ';
           lineas.push(['puestas', inicio + casos + '.']);
         }
-        if (otras.length) {
-          let casos = otras.map((x) => '«' + E(x.nombre) + '» (' + E(x.actual) + ', no ' + E(x.escrita) + ')').join('; ');
-          let inicio = otras.length === 1 ? 'Ya tiene otra empresa: ' : 'Ya tienen otra empresa: ';
-          lineas.push(['otras', inicio + casos + '. Para cambiarla usa el lápiz ✎.']);
+        if (homonimos.length) {
+          let primero = homonimos[0];
+          let ejemplo = '«' + E(primerNombre(primero.nombre)) + ' B., ' + E(primero.escrita) + '»';
+          let casos = homonimos.map((x) => '«' + E(x.nombre) + '» (' + E(x.actual) + ')').join(', ');
+          lineas.push([
+            'homonimos',
+            homonimos.length === 1
+              ? 'Ya hay un «' + E(primero.nombre) + '» (' + E(primero.actual) + '): «' + E(primero.nombre) + '» no entra. ' +
+                'Si es otra persona, escríbela con un apellido o una inicial (' + ejemplo + '); si es la misma, quita la línea.'
+              : 'Ya hay estos nombres con otra empresa: ' + casos + '. No entran. ' +
+                'Si son otras personas, escríbelas con un apellido o una inicial (' + ejemplo + '); si son las mismas, quita las líneas.',
+          ]);
         }
         if (novalen.length) {
           let casos = novalen.map((x) => '«' + E(x.nombre) + '» (' + E(x.motivo) + ')').join('; ');
@@ -2667,7 +2829,7 @@
       // últimas clases para corregirlas. A quien ya estaba sin empresa se le pone la que se escribió.
       function añadirVarios() {
         if (!a.varios) return;
-        let resumen = { entran: [], estaban: [], novalen: [], parecidos: [], conEmpresa: 0, puestas: [], otras: [] };
+        let resumen = { entran: [], estaban: [], novalen: [], parecidos: [], conEmpresa: 0, puestas: [], homonimos: [] };
         let porCorregir = [];
         let vistos = new Set();
         a.varios.texto.split(/\r?\n/).forEach((linea) => {
@@ -2683,19 +2845,23 @@
           let motivo = motivoNombre(nombre);
           let motivoEmpresa = !motivo && empresa ? motivoNombre(empresa) : '';
           let existente = cat().find((x) => key(x) === key(nombre));
-          let parecido = motivo || motivoEmpresa || existente ? null : similar(nombre);
+          let parecido = motivo || motivoEmpresa || existente ? null : similar(nombre, canonEmpresa(empresa));
           if (motivo || motivoEmpresa) {
             resumen.novalen.push({ nombre, motivo: motivo || 'la empresa no vale: ' + motivoEmpresa });
             porCorregir.push(texto);
           } else if (existente) {
-            resumen.estaban.push(existente);
             let escrita = canonEmpresa(empresa);
             let actual = empresaDe(existente);
-            if (escrita && !actual) {
-              fijarEmpresa(existente, escrita);
-              resumen.puestas.push({ nombre: existente, empresa: escrita });
-            } else if (escrita && key(actual) !== key(escrita)) {
-              resumen.otras.push({ nombre: existente, actual, escrita });
+            if (escrita && actual && key(actual) !== key(escrita)) {
+              // Otra empresa: puede ser otra persona con el mismo nombre. No entra y la línea se queda para corregirla.
+              resumen.homonimos.push({ nombre: existente, actual, escrita });
+              porCorregir.push(texto);
+            } else {
+              resumen.estaban.push(existente);
+              if (escrita && !actual) {
+                fijarEmpresa(existente, escrita);
+                resumen.puestas.push({ nombre: existente, empresa: escrita });
+              }
             }
           } else if (parecido) {
             resumen.parecidos.push({ nombre, con: parecido });
@@ -3378,6 +3544,8 @@
         // Rechazar la fusión de personas al renombrar
         if (datos.renNo !== undefined) {
           a.ren.pregunta = '';
+          a.ren.ayuda =
+            'Si son dos personas distintas, ponle un apellido o una inicial: «' + primerNombre(a.ren.valor) + ' B.».';
           refrescar();
           return;
         }
@@ -3481,19 +3649,35 @@
             render();
             return;
           }
-          let igual =
-            cat().find((existente) => key(existente) === key(nombre)) ||
-            a.list.find((persona) => key(persona.nombre) === key(nombre))?.nombre;
-          if (igual) {
-            addName(igual);
-            let aviso = empresaParaExistente(igual, elegida.empresa);
-            changed(false);
-            if (aviso) toast(aviso);
+          let clase = clasificarNombreEscrito({
+            nombre,
+            empresa: elegida.empresa,
+            base: personasDeLaBase(),
+            enLista: a.list.map((persona) => persona.nombre),
+          });
+          // Ya existe con otra empresa o está de baja: se pregunta antes de crear o cambiar nada.
+          if (clase.tipo === 'otra_persona_posible' || clase.tipo === 'de_baja') {
+            a.homonimo = {
+              nombre,
+              empresa: elegida.empresa,
+              existente: clase.existente,
+              tipo: clase.tipo,
+              fase: 'pregunta',
+              valor: '',
+              error: '',
+            };
+            render();
             return;
           }
-          let parecido = similar(nombre);
-          if (parecido) {
-            a.warn = { neo: nombre, old: parecido, empresa: elegida.empresa };
+          if (clase.tipo === 'mismo') {
+            addName(clase.existente);
+            let aviso = empresaParaExistente(clase.existente, elegida.empresa);
+            changed(false);
+            toast(aviso || textoYaEstaba(clase.existente));
+            return;
+          }
+          if (clase.tipo === 'parecido') {
+            a.warn = { neo: nombre, old: clase.existente, empresa: elegida.empresa };
             render();
             return;
           }
@@ -3524,6 +3708,34 @@
           if (empresa) fijarEmpresa(nombre, empresa);
           a.warn = null;
           changed(false);
+          return;
+        }
+        // Respuesta a «Ya hay un nombre igual. ¿Es el mismo?»: «Sí» apunta al que ya está sin tocarle la empresa (para eso está el
+        // lápiz ✎); «No» pide un apellido o una inicial para crear a la otra persona; «Cancelar» no deja rastro.
+        if (datos.homSi !== undefined) {
+          let h = a.homonimo;
+          if (!h) return;
+          a.homonimo = null;
+          addName(h.existente);
+          changed(false);
+          toast('Se ha apuntado a ' + conSuEmpresa(h.existente) + '. Su empresa no se cambia: para cambiarla usa el lápiz ✎.');
+          return;
+        }
+        if (datos.homNo !== undefined) {
+          if (!a.homonimo) return;
+          Object.assign(a.homonimo, { fase: 'otra', valor: a.homonimo.nombre + ' ', error: '' });
+          render();
+          let campo = document.querySelector('#homonimo-campo');
+          if (campo) {
+            campo.focus();
+            campo.setSelectionRange(campo.value.length, campo.value.length);
+          }
+          return;
+        }
+        if (datos.homCrear !== undefined) return crearOtraPersona();
+        if (datos.homCancelar !== undefined) {
+          a.homonimo = null;
+          render();
           return;
         }
         // Botón guardar jornada: valida horas y límites y guarda la jornada en pendientes
@@ -3711,6 +3923,10 @@
           a.ren.otra = evento.target.value;
           return;
         }
+        if (evento.target.id === 'homonimo-campo' && a.homonimo) {
+          a.homonimo.valor = evento.target.value;
+          return;
+        }
         if (evento.target.id === 'varios-texto' && a.varios) {
           a.varios.texto = evento.target.value;
           return;
@@ -3723,6 +3939,11 @@
         }
       });
       document.addEventListener('keydown', (evento) => {
+        if (evento.target.id === 'homonimo-campo' && evento.key === 'Enter') {
+          evento.preventDefault();
+          crearOtraPersona();
+          return;
+        }
         if ((evento.target.id === 'ren-campo' || evento.target.id === 'ren-empresa-otra') && evento.key === 'Enter') {
           evento.preventDefault();
           guardarRenombre(false);

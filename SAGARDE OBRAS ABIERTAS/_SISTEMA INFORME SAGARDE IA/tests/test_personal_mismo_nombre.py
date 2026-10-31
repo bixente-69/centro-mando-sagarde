@@ -380,6 +380,37 @@ def setUpModule():
     TMP = _TMP_OBJ.name
 
 
+class TestInicialNoEsErrata(Base):
+    """MA4c: «Nombre B.» (el mismo nombre más una inicial) es como se distingue a otra persona: el PC ya no lo trata como errata
+    de «Nombre», o el fichero que la tablet manda al decir «es otra persona» saldría siempre «a revisar». Una errata («Rafaa») o
+    un apellido («Rafa Pérez») siguen avisando de que se parecen."""
+
+    def codigos(self, l):
+        return [a['codigo'] for a in self.ing(l)['avisos_lote']]
+
+    def test_nombre_mas_inicial_no_avisa_de_parecido(self):
+        self.sembrar(('Rafa', ALFA), ('Luis', BETA))
+        for nuevo in ('Rafa B.', 'Rafa B', 'rafa b.', 'RAFA  C.'):
+            self.assertNotIn('nombre_parecido', self.codigos(lote([], altas=[nuevo], empresas=[emp(nuevo, BETA)])), nuevo)
+        self.assertIn('alta_nueva', self.codigos(lote([], altas=['Rafa B.'], empresas=[emp('Rafa B.', BETA)])))
+
+    def test_el_fichero_de_otra_persona_con_inicial_sale_listo(self):
+        self.sembrar(('Rafa', ALFA), ('Luis', BETA))
+        r = self.ing(lote([], altas=['Rafa B.'], empresas=[emp('Rafa B.', BETA)]))
+        self.assertTrue(r['ok'] and not r['lote_rechazado'], r)
+        self.assertEqual([a['codigo'] for a in r['avisos_lote']], ['alta_nueva'], r['avisos_lote'])
+
+    def test_la_inicial_tambien_vale_al_reves(self):
+        self.sembrar(('Rafa B.', BETA))
+        self.assertNotIn('nombre_parecido', self.codigos(lote([], altas=['Rafa'], empresas=[emp('Rafa', ALFA)])))
+
+    def test_una_errata_un_apellido_o_dos_letras_siguen_avisando(self):
+        self.sembrar(('Rafa', ALFA), ('Luis', BETA))
+        for nuevo in ('Rafaa', 'Rafa Pérez', 'Rafa Bl', 'Rafas'):
+            self.assertIn('nombre_parecido', self.codigos(lote([], altas=[nuevo], empresas=[emp(nuevo, BETA)])), nuevo)
+
+
+
 def tearDownModule():
     _TMP_OBJ.cleanup()
 

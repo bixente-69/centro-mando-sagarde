@@ -306,3 +306,33 @@ viejas fijaban el comportamiento que el diseño cambia a propósito y se han act
 códigos nuevos) y `test_personal_empresas_08c2a` (`test_cambiada_y_quitada…`: el resumen pasa de «2 empresas puestas, 1 empresa quitada» a
 «1 empresa puesta, 1 empresa cambiada, 1 empresa quitada»). (4) Pruebas nuevas: `tests/test_personal_mismo_nombre.py` (30). No se tocó `personal_calculo.js`, `exportar_estado`, `comprobar` ni nada de las pantallas.
 
+## 13. Implementación de MA4c (31/10/2026) — lo que se hizo y en qué se desvía del diseño
+
+Hecho tal cual §6.2–6.4 en la tablet (`generador_personal.html`: función pura `clasificarNombreEscrito`, pregunta B/C con «Sí, es el mismo» /
+«No, es otra persona», campo del apellido o la inicial con sus errores, lápiz con la empresa de cada uno y la ayuda D, «Añadir varios nombres»
+con la categoría `homonimos` y el texto E, recuadro F de dos iguales publicados) y en «Generar personal» (`personal_sagarde.html`: pregunta G con
+tres botones, el mensaje final H, el texto I). El fichero que sale **no cambia de forma**. Desviaciones y precisiones, todas por lo que
+destapó ejecutar los casos:
+1. **«Nombre B.» (el mismo nombre más una inicial) ya no es «parecido».** Sin esto, el texto A y el texto E mandaban escribir «Rafa B.» y la
+   pantalla (y después el PC) lo frenaban con «Se parece a «Rafa»»: la pregunta no acababa nunca (casos 28 y 22 del §7). La regla (`masUnaInicial`)
+   está en la función pura de la tablet, en `buscarParecidoEnBase` de «Generar» y en `_similar` de `personal_obra.py` (única línea de P1 tocada
+   fuera de MA4b: sin ella el fichero de «es otra persona» salía siempre «a revisar»). Una errata («Rafaa») y un apellido («Rafa Pérez») siguen avisando.
+2. **Con empresas distintas, que un nombre contenga al otro no cuenta como parecido** (solo en las pantallas; la errata a distancia 1 sí cuenta
+   siempre): así «Rafa Gómez, Beta» entra por «Añadir varios» aunque exista «Rafa (Alfa)», como dice el texto E («un apellido o una inicial»). En el
+   PC no hay empresa a mano al comparar, así que «Rafa Pérez» sigue saliendo «a revisar» con «Se parecen…»: es lo que Bixente aceptó el 25/10
+   (nada dudoso se aplica ni se descarta en silencio).
+3. **Los nombres de la lista de hoy que ya están en la base no cuentan dos veces** en el parecido (si no, perdían la empresa y el §2 no se cumplía).
+4. **Texto I solo cuando de verdad no hay nada que hacer.** El §6.3 decía «con la misma empresa no hace falta añadirlo», pero el botón «Editar» de la
+   tabla carga a alguien en el formulario para cambiarle el oficio o el horario con «Añadir empleado» y eso hay que seguir pudiendo hacerlo: con la
+   misma empresa y otro oficio u horario se prepara el cambio (texto J: «queda preparado el cambio de su oficio u horario»). Solo si no cambia nada sale I.
+5. **«Generar» también pregunta** cuando se pide dejar a alguien SIN empresa (quitarla en silencio era el mismo fallo), cuando el nombre ya está
+   preparado (no guardado) con otra empresa, y si estaba de baja («Sí» = vuelve a la base; viaja como nombre nuevo y el PC lo frena para mirarlo).
+   En «Varios de la misma empresa» se pregunta línea por línea y nada se prepara hasta responder a todas; «Cancelar» tira todo el intento.
+6. La fila preparada pone el chip «Cambia de empresa» y, en la columna Empresa, «antes: <empresa>» (el «de… a…» entero no cabe a 390 px); el mensaje
+   H lo dice entero. Textos nuevos de «Generar» (no estaban en el §6.4): J, «vuelve a la base», «se queda sin empresa», «Ya has preparado a…».
+7. El «Sí» de la tablet no hace nada con la empresa escrita (ni aun si la persona no tenía): es lo que dice el diseño; completar la empresa de
+   quien no tiene sigue siendo el camino sin pregunta.
+8. Pruebas nuevas: `tests/test_personal_mismo_nombre_pantallas.py` (función pura, 70 casos en Node + comprobaciones del código), escenas T170–T182
+   en `tests/verificar_generador_personal.py` (`P3_SOLO_MA4C=1`), 11 pruebas en `tests/test_orden_empresas_y_generar_personal.py`, 2 recorridos en
+   `tests/test_lenguaje_electricista.py` y 4 pruebas del PC en `tests/test_personal_mismo_nombre.py`. Cuatro escenas viejas (T83, T89, T124, T130) y
+   una prueba de lenguaje fijaban el comportamiento que el diseño cambia a propósito y se actualizaron.

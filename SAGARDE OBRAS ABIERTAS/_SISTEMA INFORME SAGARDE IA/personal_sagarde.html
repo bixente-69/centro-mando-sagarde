@@ -327,6 +327,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
   var genMensajeError = '';
   var genMensajeOk = '';
   var genAvisoParecido = null; // { candidatos: [...], texto: '...' }
+  var genPregunta = null;      // «¿es el mismo o es otra persona?» en curso: { clave, nombre, existente, tipo, antes, empresaNueva, fase, valor, error, decisiones, forzar }
 
   /* ================= LECTURA DE DATOS ================= */
 
@@ -1230,14 +1231,24 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     return z[z.length - 1];
   }
 
-  function buscarParecidoEnBase(nombre) {
+  // «Nombre B.» o «Nombre B» (el mismo nombre más una inicial) es justo como se distingue a otra persona: no cuenta como parecido.
+  function masUnaInicial(largo, corto) {
+    var resto = largo.slice(corto.length + 1);
+    return largo.indexOf(corto + ' ') === 0 && (resto.length === 1 || (resto.length === 2 && resto.charAt(1) === '.'));
+  }
+
+  function buscarParecidoEnBase(nombre, empresa) {
     var c1 = window.PersonalCalculo.claveNombre(nombre);
     if (c1.length < 3) return null;
+    var e1 = window.PersonalCalculo.claveEmpresa(empresa || '');
     for (var i = 0; i < catalogo.length; i++) {
       var existente = catalogo[i] && catalogo[i].nombre ? limpiarNombreGen(catalogo[i].nombre) : '';
       var c2 = window.PersonalCalculo.claveNombre(existente);
-      if (c2 && c1 !== c2 && c2.length >= 3) {
-        if (distanciaEdicion(c1, c2) <= 1 || c1.indexOf(c2) >= 0 || c2.indexOf(c1) >= 0) {
+      if (c2 && c1 !== c2 && c2.length >= 3 && !masUnaInicial(c1, c2) && !masUnaInicial(c2, c1)) {
+        // Con empresas distintas, que un nombre contenga al otro no basta para pensar que es la misma persona.
+        var e2 = window.PersonalCalculo.claveEmpresa(catalogo[i].empresa || '');
+        var otraEmpresa = e1 !== '' && e2 !== '' && e1 !== e2;
+        if (distanciaEdicion(c1, c2) <= 1 || (!otraEmpresa && (c1.indexOf(c2) >= 0 || c2.indexOf(c1) >= 0))) {
           return existente;
         }
       }
@@ -1469,9 +1480,162 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     });
   }
 
-  function intentarAnadirTrabajadores(forzarParecidos) {
+  // Qué hacer con un trabajador recién escrito en «Generar personal» (la tablet usa la misma idea):
+  //   nuevo          → no está en la base (ni preparado con otra empresa)
+  //   misma_empresa  → ya está, con la empresa que se escribe (puede cambiarle el oficio o el horario)
+  //   completa       → ya está y no tiene empresa: se le pone la escrita
+  //   otra_empresa   → ya está con otra empresa (o se pide dejarlo sin empresa): hay que preguntar
+  //   de_baja        → estaba de baja: hay que preguntar
+  function clasificarCandidatoGenerar(c) {
+    var clave = window.PersonalCalculo.claveNombre(c.nombre);
+    var claveEmp = window.PersonalCalculo.claveEmpresa(c.empresa || '');
+    var activa = null;
+    var baja = null;
+    for (var i = 0; i < catalogo.length; i++) {
+      var f = catalogo[i];
+      if (!f || !f.nombre || window.PersonalCalculo.claveNombre(f.nombre) !== clave) continue;
+      if (f.activo !== false) {
+        activa = f;
+        break;
+      }
+      if (!baja) baja = f;
+    }
+    var prep = buscarEnPreparados(c.nombre);
+    if (activa) {
+      var antes = limpiarNombreGen(activa.empresa || '');
+      var claveVigente = window.PersonalCalculo.claveEmpresa(prep ? (prep.empresa || '') : antes);
+      var tipo = claveVigente === claveEmp ? 'misma_empresa' : (claveVigente === '' ? 'completa' : 'otra_empresa');
+      return { tipo: tipo, ficha: activa, nombreExistente: limpiarNombreGen(activa.nombre), antes: antes };
+    }
+    if (baja) {
+      return { tipo: 'de_baja', ficha: baja, nombreExistente: limpiarNombreGen(baja.nombre), antes: limpiarNombreGen(baja.empresa || '') };
+    }
+    if (prep && !prep.yaEnBase) {
+      var clavePrep = window.PersonalCalculo.claveEmpresa(prep.empresa || '');
+      if (clavePrep !== '' && clavePrep !== claveEmp) {
+        return { tipo: 'otra_empresa', ficha: null, nombreExistente: prep.nombre, antes: prep.empresa, enPreparados: true };
+      }
+    }
+    return { tipo: 'nuevo' };
+  }
+
+  function mismoHorarioGen(x, y) {
+    for (var i = 0; i < DIAS_CLAVES.length; i++) {
+      var k = DIAS_CLAVES[i];
+      if (Number((x && x[k]) || 0) !== Number((y && y[k]) || 0)) return false;
+    }
+    return true;
+  }
+
+  // ¿Lo que se ha escrito cambia algo de la ficha de quien ya está con esa empresa? (oficio u horario)
+  function cambiaLaFicha(c, ficha) {
+    if (c.categoria && c.categoria !== limpiarNombreGen(ficha.categoria || '')) return true;
+    if (c.horario && !mismoHorarioGen(c.horario, ficha.horario_preferido)) return true;
+    return false;
+  }
+
+  function nombreYaExisteGen(valor) {
+    var clave = window.PersonalCalculo.claveNombre(valor);
+    for (var i = 0; i < catalogo.length; i++) {
+      if (catalogo[i] && catalogo[i].nombre && window.PersonalCalculo.claveNombre(catalogo[i].nombre) === clave) {
+        return limpiarNombreGen(catalogo[i].nombre);
+      }
+    }
+    var prep = buscarEnPreparados(valor);
+    return prep ? prep.nombre : '';
+  }
+
+  // La pregunta «¿es el mismo o es otra persona?» y, si dice que es otra, el campo para ponerle un apellido o una inicial.
+  function preguntaGenerarHTML() {
+    var q = genPregunta;
+    if (!q) return '';
+    if (q.fase === 'pregunta') {
+      var texto;
+      var botonSi;
+      if (q.tipo === 'de_baja') {
+        texto = '«' + q.existente + '» estaba de baja. ¿Es el mismo, que vuelve?';
+        botonSi = 'Sí, es el mismo: vuelve';
+      } else {
+        var destino = q.empresaNueva ? 'pasa a «' + q.empresaNueva + '»' : 'se queda sin empresa';
+        var donde = q.enPreparados ? 'Ya has preparado a «' + q.existente + '»' : 'Ya hay un «' + q.existente + '» en la base';
+        texto = donde + (q.antes ? ' (' + q.antes + ')' : '') + '. ¿Es el mismo, que ' + destino + '?';
+        botonSi = 'Sí, es el mismo: ' + destino;
+      }
+      return '<div class="aviso" id="gen-pregunta" role="alert">' +
+        '<p style="margin:0 0 8px" data-texto>' + escaparHtml(texto) + '</p>' +
+        '<div class="gen-acciones" style="margin:0">' +
+        '<button type="button" class="btn-accion pri" id="btn-gen-hom-si">' + escaparHtml(botonSi) + '</button>' +
+        '<button type="button" class="btn-accion" id="btn-gen-hom-no">No, es otra persona</button>' +
+        '<button type="button" class="btn-accion" id="btn-gen-hom-cancelar">Cancelar</button>' +
+        '</div></div>';
+    }
+    var primero = q.existente.split(' ')[0];
+    var consejo = 'Ponle algo que lo distinga del otro «' + q.existente + '»: un apellido o una inicial. Por ejemplo «' +
+      primero + ' B.» o «' + primero + ' Pérez».';
+    return '<div class="aviso" id="gen-otra-persona" role="alert">' +
+      '<p style="margin:0 0 8px" data-texto>' + escaparHtml(consejo) + '</p>' +
+      '<input class="campo" id="gen-hom-campo" type="text" maxlength="60" autocomplete="off" ' +
+      'aria-label="Nombre de la otra persona" value="' + escaparHtml(q.valor) + '">' +
+      (q.error ? '<p class="aviso" id="gen-hom-error" role="alert" style="margin:8px 0 0">' + escaparHtml(q.error) + '</p>' : '') +
+      '<div class="gen-acciones" style="margin:8px 0 0">' +
+      '<button type="button" class="btn-accion pri" id="btn-gen-hom-crear">Crear</button>' +
+      '<button type="button" class="btn-accion" id="btn-gen-hom-cancelar">Cancelar</button>' +
+      '</div></div>';
+  }
+
+  function enfocarCampoOtraPersona() {
+    var campo = document.getElementById('gen-hom-campo');
+    if (campo) {
+      campo.focus();
+      campo.setSelectionRange(campo.value.length, campo.value.length);
+    }
+  }
+
+  // Respuesta a la pregunta: «mismo» sigue adelante con la persona que ya está (cambia su empresa o la devuelve a la base);
+  // «otra» pide el apellido o la inicial.
+  function responderPreguntaGenerar(respuesta) {
+    var q = genPregunta;
+    if (!q) return;
+    if (respuesta === 'mismo') {
+      q.decisiones[q.clave] = { tipo: 'mismo' };
+      intentarAnadirTrabajadores(q.forzar, q.decisiones);
+      return;
+    }
+    q.fase = 'otra';
+    q.valor = q.nombre + ' ';
+    q.error = '';
+    pintarGenerar();
+    enfocarCampoOtraPersona();
+  }
+
+  // «Crear» a la otra persona: tiene que llevar un nombre distinto de todos los que ya hay y que se pueda publicar.
+  function crearOtraPersonaGenerar() {
+    var q = genPregunta;
+    if (!q || q.fase !== 'otra') return;
+    var valor = limpiarNombreGen(q.valor);
+    var clave = window.PersonalCalculo.claveNombre(valor);
+    q.error = '';
+    if (!valor || clave === window.PersonalCalculo.claveNombre(q.existente) || clave === window.PersonalCalculo.claveNombre(q.nombre)) {
+      q.error = 'Tiene que ser distinto de «' + q.existente + '»: añade un apellido o una inicial.';
+    } else {
+      var errNombre = validarTextoPublicable(valor, 'el nombre del trabajador');
+      var ya = errNombre ? '' : nombreYaExisteGen(valor);
+      if (errNombre) q.error = errNombre;
+      else if (ya) q.error = 'Ya hay un «' + ya + '». Elige otro.';
+    }
+    if (q.error) {
+      pintarGenerar();
+      enfocarCampoOtraPersona();
+      return;
+    }
+    q.decisiones[q.clave] = { tipo: 'otra', nombre: valor };
+    intentarAnadirTrabajadores(q.forzar, q.decisiones);
+  }
+
+  function intentarAnadirTrabajadores(forzarParecidos, decisiones) {
     genMensajeError = '';
     genMensajeOk = '';
+    if (!decisiones) genPregunta = null;
     var emp = resolverEmpresaGenerar();
     if (genEmpresaSel === '__nueva__' && !emp) {
       genMensajeError = 'Escribe el nombre de la empresa nueva o elige otra del desplegable.';
@@ -1566,7 +1730,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       var avisosSim = [];
       for (var s = 0; s < candidatos.length; s++) {
         if (!candidatos[s].yaEnBase) {
-          var par = buscarParecidoEnBase(candidatos[s].nombre);
+          var par = buscarParecidoEnBase(candidatos[s].nombre, candidatos[s].empresa);
           if (par) avisosSim.push('«' + candidatos[s].nombre + '» se parece a «' + par + '»');
         }
       }
@@ -1581,7 +1745,78 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     }
 
     genAvisoParecido = null;
-    insertarCandidatosEnPreparados(candidatos);
+
+    // Quien ya está en la base con otra empresa, o de baja, no se mueve sin preguntar: «¿es el mismo o es otra persona?»
+    var clases = [];
+    for (var h = 0; h < candidatos.length; h++) {
+      var clase = clasificarCandidatoGenerar(candidatos[h]);
+      clases.push(clase);
+      var claveH = window.PersonalCalculo.claveNombre(candidatos[h].nombre);
+      if ((clase.tipo === 'otra_empresa' || clase.tipo === 'de_baja') && !(decisiones && decisiones[claveH])) {
+        genPregunta = {
+          clave: claveH,
+          nombre: candidatos[h].nombre,
+          existente: clase.nombreExistente,
+          tipo: clase.tipo,
+          antes: clase.antes,
+          empresaNueva: candidatos[h].empresa,
+          enPreparados: Boolean(clase.enPreparados),
+          fase: 'pregunta',
+          valor: '',
+          error: '',
+          decisiones: decisiones || {},
+          forzar: Boolean(forzarParecidos)
+        };
+        pintarGenerar();
+        return;
+      }
+    }
+
+    var finales = [];
+    var frases = [];
+    var todoNuevo = true;
+    var textoEmpresa = function (e) { return e ? '«' + e + '»' : 'sin empresa'; };
+    for (var f = 0; f < candidatos.length; f++) {
+      var c = candidatos[f];
+      var cl = clases[f];
+      var dec = decisiones ? decisiones[window.PersonalCalculo.claveNombre(c.nombre)] : null;
+      if (dec && dec.tipo === 'otra') {
+        // Otra persona con el mismo nombre: entra con el apellido o la inicial que se le ha puesto y la otra no se toca.
+        c.nombre = dec.nombre;
+        c.yaEnBase = false;
+        finales.push(c);
+        frases.push('«' + c.nombre + '» se ha añadido a la empresa.');
+        todoNuevo = false;
+        continue;
+      }
+      if (cl.tipo === 'nuevo') {
+        finales.push(c);
+        frases.push('«' + c.nombre + '» se ha añadido a la empresa.');
+        continue;
+      }
+      todoNuevo = false;
+      c.nombre = cl.nombreExistente;
+      if (cl.tipo === 'de_baja') {
+        c.vuelve = true;
+        finales.push(c);
+        frases.push('«' + c.nombre + '» vuelve a la base (queda preparado; todavía no se ha enviado).');
+      } else if (cl.tipo === 'misma_empresa') {
+        if (cambiaLaFicha(c, cl.ficha)) {
+          finales.push(c);
+          frases.push('«' + c.nombre + '» ya estaba en ' + textoEmpresa(cl.antes) + ': queda preparado el cambio de su oficio u horario (todavía no se ha enviado).');
+        } else {
+          frases.push('«' + c.nombre + '» ya está en ' + textoEmpresa(cl.antes) + ': no hace falta añadirlo.');
+        }
+      } else {
+        // La empresa cambia (de nada a una, o de una a otra): se dice de dónde a dónde.
+        if (!cl.enPreparados) c.pasaDe = cl.antes;
+        finales.push(c);
+        frases.push('«' + c.nombre + '» ' + (c.empresa ? (cl.antes ? 'pasa de ' + textoEmpresa(cl.antes) + ' a ' + textoEmpresa(c.empresa) : 'pasa a ' + textoEmpresa(c.empresa)) : 'se queda sin empresa') + ' (queda preparado; todavía no se ha enviado).');
+      }
+    }
+
+    genPregunta = null;
+    insertarCandidatosEnPreparados(finales);
     if (genModo === 'uno') {
       genNombre = '';
     } else {
@@ -1591,9 +1826,11 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         { nombre: '', categoria: '' }
       ];
     }
-    genMensajeOk = candidatos.length === 1
-      ? '«' + candidatos[0].nombre + '» se ha añadido a la empresa.'
-      : 'Se han añadido ' + candidatos.length + ' trabajadores a la empresa.';
+    genMensajeOk = todoNuevo
+      ? (candidatos.length === 1
+        ? '«' + candidatos[0].nombre + '» se ha añadido a la empresa.'
+        : 'Se han añadido ' + candidatos.length + ' trabajadores a la empresa.')
+      : frases.join(' ');
     pintarGenerar();
   }
 
@@ -1720,6 +1957,8 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         '<button type="button" class="btn-accion" id="btn-gen-cancelar-parecido">Cancelar</button>' +
         '</div></div>';
     }
+
+    html += preguntaGenerarHTML();
 
     var empActual = resolverEmpresaGenerar();
     var etiquetaEmpresaActual = genEmpresaSel === '__sin__'
@@ -1881,14 +2120,19 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         var item = prepOrd[pi];
         var etqCambio = item.esBaja
           ? '<span class="chip inact">Quitar de la base</span>'
-          : (item.yaEnBase ? '<span class="chip etq-emp">Actualiza ficha</span>' : '<span class="chip etq-aut">Trabajador nuevo</span>');
+          : (item.pasaDe !== undefined
+            ? '<span class="chip etq-emp">Cambia de empresa</span>'
+            : (item.vuelve
+              ? '<span class="chip etq-aut">Vuelve a la base</span>'
+              : (item.yaEnBase ? '<span class="chip etq-emp">Actualiza ficha</span>' : '<span class="chip etq-aut">Trabajador nuevo</span>')));
         var btnQuitarFila = item.esBaja
           ? '<button type="button" class="btn-accion peq-btn" data-gen-deshacer-baja="' + escaparHtml(item.nombre) + '">Deshacer</button>'
           : '<button type="button" class="btn-accion peq-btn" data-gen-quitar-prep="' + escaparHtml(item.nombre) + '">Quitar</button>';
 
         html += '<tr data-gen-preparado="' + escaparHtml(item.nombre) + '">' +
           '<td class="b-nom">' + escaparHtml(item.nombre) + '</td>' +
-          '<td>' + (item.empresa ? '<span class="nom-emp">' + escaparHtml(item.empresa) + '</span>' : '<span class="sinj">Sin empresa</span>') + '</td>' +
+          '<td>' + (item.empresa ? '<span class="nom-emp">' + escaparHtml(item.empresa) + '</span>' : '<span class="sinj">Sin empresa</span>') +
+          (item.pasaDe !== undefined ? '<div class="sinj">antes: ' + escaparHtml(item.pasaDe || 'sin empresa') + '</div>' : '') + '</td>' +
           '<td>' + (item.categoria ? escaparHtml(item.categoria) : '<span class="sinj">–</span>') + '</td>' +
           '<td>' + escaparHtml(item.horarioTexto) + '</td>' +
           '<td>' + etqCambio + '</td>' +
@@ -1922,6 +2166,8 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     if (selCat) genCategoriaSel = selCat.value;
     var inpCatOtra = document.getElementById('gen-categoria-otra');
     if (inpCatOtra) genCategoriaOtra = inpCatOtra.value;
+    var inpHom = document.getElementById('gen-hom-campo');
+    if (inpHom && genPregunta) genPregunta.valor = inpHom.value;
 
     var inputsDias = document.querySelectorAll('#contenido-generar [data-gen-dia]');
     for (var i = 0; i < inputsDias.length; i++) {
@@ -1949,12 +2195,20 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       leerCamposGenerarDesdeDOM();
       var id = ev.target && ev.target.id;
       if (id === 'gen-empresa' || id === 'gen-horario-tipo' || id === 'gen-categoria' || id === 'gen-autonomo') {
+        genPregunta = null;
         pintarGenerar();
       }
     });
 
     cont.addEventListener('input', function () {
       leerCamposGenerarDesdeDOM();
+    });
+
+    cont.addEventListener('keydown', function (ev) {
+      if (ev.target && ev.target.id === 'gen-hom-campo' && ev.key === 'Enter') {
+        ev.preventDefault();
+        crearOtraPersonaGenerar();
+      }
     });
 
     cont.addEventListener('click', function (ev) {
@@ -1964,6 +2218,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       if (btnModo) {
         genModo = btnModo.getAttribute('data-gen-modo');
         genMensajeError = '';
+        genPregunta = null;
         pintarGenerar();
         return;
       }
@@ -1988,6 +2243,31 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       var btnAnadir = ev.target.closest('#btn-gen-anadir');
       if (btnAnadir) {
         intentarAnadirTrabajadores(false);
+        return;
+      }
+
+      var btnHomSi = ev.target.closest('#btn-gen-hom-si');
+      if (btnHomSi) {
+        responderPreguntaGenerar('mismo');
+        return;
+      }
+
+      var btnHomNo = ev.target.closest('#btn-gen-hom-no');
+      if (btnHomNo) {
+        responderPreguntaGenerar('otra');
+        return;
+      }
+
+      var btnHomCrear = ev.target.closest('#btn-gen-hom-crear');
+      if (btnHomCrear) {
+        crearOtraPersonaGenerar();
+        return;
+      }
+
+      var btnHomCancelar = ev.target.closest('#btn-gen-hom-cancelar');
+      if (btnHomCancelar) {
+        genPregunta = null;
+        pintarGenerar();
         return;
       }
 

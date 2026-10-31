@@ -206,9 +206,19 @@ def _dist(a, b):
     return z[-1]
 
 
+def _mas_una_inicial(largo, corto):
+    """«Nombre B.» o «Nombre B»: el mismo nombre más una inicial es como se distingue a otra persona, no una errata.
+    Las dos claves ya vienen sin tildes ni mayúsculas."""
+    resto = largo[len(corto) + 1:]
+    return largo.startswith(corto + " ") and (len(resto) == 1 or (len(resto) == 2 and resto[1] == "."))
+
+
 def _similar(a, b):
-    """Parecidas: ambas de >= 3 letras y a distancia <= 1 o una dentro de la otra."""
-    return len(a) >= 3 and len(b) >= 3 and (_dist(a, b) <= 1 or a in b or b in a)
+    """Parecidas: ambas de >= 3 letras y a distancia <= 1 o una dentro de la otra (salvo «Nombre» y «Nombre B.»)."""
+    return (
+        len(a) >= 3 and len(b) >= 3 and not _mas_una_inicial(a, b) and not _mas_una_inicial(b, a)
+        and (_dist(a, b) <= 1 or a in b or b in a)
+    )
 
 
 def _newid(ts):

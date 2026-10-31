@@ -418,6 +418,7 @@ class TestLenguajeDeLaApp(unittest.TestCase):
             pg.fill("#nuevo", "mikel")
             pg.select_option("#nuevo-empresa", "Rafa @AUT")
             clic("button[data-nuevo]")
+            clic("button[data-hom-si]")             # MA4c: «Ya hay un «Mikel» (Manueles). ¿Es el mismo?» → «Sí»
             pg.fill("#nuevo", "Txomi")
             clic("button[data-nuevo]")
             clic("button[data-usar]")
@@ -455,13 +456,121 @@ class TestLenguajeDeLaApp(unittest.TestCase):
         texto = "\n".join(recogidos)
         # Un recuento de cero es una alarma: el recorrido tiene que haber pasado de verdad por cada estado nuevo.
         for esperado in ("Sin empresa", "Otra empresa…", "Escribe la empresa.", "Esa empresa no vale: parece un teléfono.",
-                         "ya tiene la empresa «Manueles»", "Empresa de «Mikel»: ahora «Sagarde»", "se queda sin empresa",
+                         "Ya hay un «Mikel» (Manueles). ¿Es el mismo?", "Se ha apuntado a «Mikel» (Manueles). Su empresa no se cambia", "Empresa de «Mikel»: ahora «Sagarde»", "se queda sin empresa",
                          "Nombre corregido: «Mikel» ahora es «Mikel Z», empresa «Obras Z»", "con empresa.",
-                         "Se le pone la empresa a 1", "Se les pone la empresa a 2", "Ya tiene otra empresa: «Mikel Z»", "Ya tienen otra empresa", "falta el nombre", "4 empresas puestas"):
+                         "Se le pone la empresa a 1", "Se les pone la empresa a 2", "Ya hay un «Mikel Z» (Obras Z): «Mikel Z» no entra", "Ya hay estos nombres con otra empresa", "falta el nombre", "4 empresas puestas"):
             self.assertIn(esperado, texto, "el recorrido no ha llegado a este texto: «%s»" % esperado)
         self.assertGreater(len(set(recogidos)), 40)
         problemas = revisar(recogidos, "app (empresas)")
         self.assertEqual([], sorted(set(problemas)), "\n".join(sorted(set(problemas))[:30]))
+
+    def test_las_preguntas_de_dos_personas_con_el_mismo_nombre_no_usan_palabras_de_programador(self):
+        """MA4c: recorre la pregunta «¿es el mismo o es otra persona?» de la tablet (sí, no, errores, cancelar, de baja), la ayuda del
+        lápiz, «Añadir varios nombres» con un nombre que ya existe y el recuadro de dos iguales publicados."""
+        from playwright.sync_api import sync_playwright
+
+        base = Path(os.environ.get("P3_TMP") or tempfile.gettempdir()) / ("lenguaje_hom_" + uuid.uuid4().hex[:8])
+        base.mkdir(parents=True)
+        self.addCleanup(shutil.rmtree, str(base), True)
+        for nombre in ("generador_personal.html", "personal_calculo.js"):
+            shutil.copy(APP_DIR / nombre, base / nombre)
+        estado = _estado_empresas()
+        estado["catalogo"].append({"id": "T0090", "nombre": "Zuri", "categoria": "", "empresa": "Manueles", "activo": False})
+        (base / "personal_estado.js").write_text("window.SAGARDE_PERSONAL = " + json.dumps(estado, ensure_ascii=False) + ";" + chr(10), encoding="utf-8")
+        url = "file:///" + str(base).replace(os.sep, "/").replace(" ", "%20") + "/generador_personal.html"
+        recogidos = []
+        with sync_playwright() as p:
+            nav = p.chromium.launch()
+            ctx = nav.new_context(viewport={"width": 390, "height": 844}, timezone_id="Europe/Madrid", locale="es-ES")
+            ctx.add_init_script(FECHA_FIJA)
+            pg = ctx.new_page()
+            pg.set_default_timeout(4000)
+            errores = []
+            pg.on("pageerror", lambda e: errores.append(str(e)))
+
+            def mirar():
+                recogidos.extend(pg.evaluate(JS_TEXTOS))
+
+            def clic(sel):
+                pg.click(sel, timeout=4000)
+                mirar()
+
+            pg.goto(url)
+            pg.wait_for_selector("#obra")
+            mirar()
+            # nombre nuevo con otra empresa: pregunta, «No», errores, «Cancelar», «No» + apellido
+            pg.fill("#nuevo", "Mikel")
+            pg.select_option("#nuevo-empresa", "Rafa @AUT")
+            clic("button[data-nuevo]")
+            clic("button[data-hom-no]")
+            for malo in ("Mikel", "Txomin", "x@y.es"):
+                pg.fill("#homonimo-campo", malo)
+                clic("button[data-hom-crear]")
+            clic("button[data-hom-cancelar]")
+            pg.fill("#nuevo", "Mikel")
+            pg.select_option("#nuevo-empresa", "Rafa @AUT")
+            clic("button[data-nuevo]")
+            clic("button[data-hom-no]")
+            pg.fill("#homonimo-campo", "Mikel B.")
+            clic("button[data-hom-crear]")
+            # sin conflicto: lo apunta y dice cómo crear a otro; de baja: pregunta y «Sí»
+            pg.fill("#nuevo", "txomin")
+            clic("button[data-nuevo]")
+            pg.fill("#nuevo", "Zuri")
+            clic("button[data-nuevo]")
+            clic("button[data-hom-si]")
+            # lápiz: «Ya hay un… ¿Son la misma persona?» y «No» con su ayuda
+            clic("button[data-ren='0']")
+            pg.fill("#ren-campo", "Txomin")
+            clic("button[data-ren-guardar]")
+            clic("button[data-ren-no]")
+            # varios: uno que ya existe con otra empresa (singular) y dos (plural)
+            clic("button[data-varios]")
+            pg.fill("#varios-texto", "Mikel, Sagarde")
+            clic("button[data-varios-ok]")
+            pg.fill("#varios-texto", "Mikel, Sagarde" + chr(10) + "Rafa, Manueles")
+            clic("button[data-varios-ok]")
+            nav.close()
+        self.assertEqual([], errores, "errores de JavaScript mientras se recorría la pregunta de dos personas con el mismo nombre")
+        texto = chr(10).join(recogidos)
+        for esperado in ("¿Es el mismo?", "Sí, es el mismo", "No, es otra persona", "Ponle algo que lo distinga del otro «Mikel»",
+                         "Tiene que ser distinto de «Mikel»: añade un apellido o una inicial.", "Ya hay un «Txomin». Elige otro.",
+                         "Ese nombre no vale: parece un correo.", "ya estaba en la base: lo he apuntado en la lista",
+                         "estaba de baja. ¿Es el mismo, que vuelve?", "Se ha apuntado a «Zuri»",
+                         "y estás corrigiendo a «Mikel»", "Si son dos personas distintas, ponle un apellido o una inicial",
+                         "no entra. Si es otra persona, escríbela con un apellido o una inicial",
+                         "Ya hay estos nombres con otra empresa"):
+            self.assertIn(esperado, texto, "el recorrido no ha llegado a este texto: «%s»" % esperado)
+        problemas = revisar(recogidos, "app (dos personas con el mismo nombre)")
+        self.assertEqual([], sorted(set(problemas)), chr(10).join(sorted(set(problemas))[:30]))
+
+    def test_el_aviso_de_dos_iguales_publicados_no_usa_palabras_de_programador(self):
+        from playwright.sync_api import sync_playwright
+
+        base = Path(os.environ.get("P3_TMP") or tempfile.gettempdir()) / ("lenguaje_dos_" + uuid.uuid4().hex[:8])
+        base.mkdir(parents=True)
+        self.addCleanup(shutil.rmtree, str(base), True)
+        for nombre in ("generador_personal.html", "personal_calculo.js"):
+            shutil.copy(APP_DIR / nombre, base / nombre)
+        estado = _estado_empresas()
+        estado["catalogo"] += [{"id": "T0092", "nombre": "Rafa", "categoria": "", "empresa": "Sagarde", "activo": True},
+                               {"id": "T0093", "nombre": "Rafa", "categoria": "", "empresa": "Manueles", "activo": True},
+                               {"id": "T0094", "nombre": "Rafa", "categoria": "", "empresa": "", "activo": True}]
+        (base / "personal_estado.js").write_text("window.SAGARDE_PERSONAL = " + json.dumps(estado, ensure_ascii=False) + ";" + chr(10), encoding="utf-8")
+        url = "file:///" + str(base).replace(os.sep, "/").replace(" ", "%20") + "/generador_personal.html"
+        with sync_playwright() as p:
+            nav = p.chromium.launch()
+            ctx = nav.new_context(viewport={"width": 390, "height": 844}, timezone_id="Europe/Madrid", locale="es-ES")
+            ctx.add_init_script(FECHA_FIJA)
+            pg = ctx.new_page()
+            pg.set_default_timeout(4000)
+            pg.goto(url)
+            pg.wait_for_selector("#obra")
+            recogidos = pg.evaluate(JS_TEXTOS)
+            nav.close()
+        texto = chr(10).join(recogidos)
+        self.assertIn("En la lista del PC hay personas con el mismo nombre", texto)
+        self.assertEqual([], sorted(set(revisar(recogidos, "app (dos iguales)"))))
 
 
 class TestLenguajeDeLaSumaPorEmpresa(unittest.TestCase):
