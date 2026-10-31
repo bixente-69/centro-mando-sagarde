@@ -2,7 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content" />
     <title>Personal en obra</title>
     <link rel="manifest" href="personal_manifest.json" />
     <link rel="apple-touch-icon" href="personal_icono_apple.png" />
@@ -71,6 +71,8 @@
         --ok: #2e9e5b;
         --warn: #e07b1a;
         --line: #d8dce4;
+        --tabs-h: calc(57px + env(safe-area-inset-top));
+        --barra-h: calc(68px + env(safe-area-inset-bottom));
       }
       * {
         box-sizing: border-box;
@@ -91,14 +93,27 @@
         position: sticky;
         top: 0;
         z-index: 9;
-        padding: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: var(--tabs-h);
+        padding: calc(6px + env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) 6px max(8px, env(safe-area-inset-left));
         background: #fff;
         border-bottom: 1px solid var(--line);
       }
+      .tabs .seg {
+        flex: 1;
+        min-width: 0;
+      }
       main {
-        max-width: 520px;
+        max-width: 1100px;
         margin: auto;
-        padding: 10px;
+        padding: 10px max(10px, env(safe-area-inset-right)) 10px max(10px, env(safe-area-inset-left));
+      }
+      .view:not(#v-app) {
+        max-width: 760px;
+        margin-left: auto;
+        margin-right: auto;
       }
       .view[hidden] {
         display: none;
@@ -204,7 +219,7 @@
         border: 1px solid var(--line);
       }
       .sm {
-        min-height: 42px;
+        min-height: 44px;
         padding: 7px 10px;
       }
       /* ---- Chips: selectores rápidos de fecha y contenedores flexibles de acciones ---- */
@@ -306,6 +321,9 @@
         border: 0;
         background: none;
         font-size: 20px;
+        min-width: 44px;
+        min-height: 44px;
+        margin: -10px -10px -10px 6px;
       }
       /* Aviso de antes de guardar y resumen de lo guardado: lista de frases y botones a todo el ancho */
       .aviso-guardar {
@@ -481,7 +499,7 @@
         pointer-events: none;
         position: fixed;
         left: 50%;
-        bottom: 20px;
+        bottom: calc(var(--barra-h) + 12px);
         transform: translateX(-50%);
         background: var(--header);
         color: #fff;
@@ -626,10 +644,13 @@
         font-size: 13px;
         font-weight: 700;
         text-decoration: none;
-        padding: 8px 14px;
+        justify-content: center;
+        flex: none;
+        width: 44px;
+        padding: 0;
         border-radius: 8px;
-        margin-bottom: 8px;
-        min-height: 40px;
+        margin: 0;
+        min-height: 44px;
       }
       .btn-volver-portal:active {
         background: #123a63;
@@ -650,7 +671,7 @@
         background: #fff;
         border: 1px solid var(--line);
         border-radius: 12px;
-        padding: 12px;
+        padding: 8px;
         margin: 10px 0;
       }
       .cal-head {
@@ -661,8 +682,8 @@
         font-weight: 700;
       }
       .cal-head .nav-cal {
-        width: 36px;
-        height: 36px;
+        width: 44px;
+        height: 44px;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: #fff;
@@ -672,7 +693,7 @@
       .cal-grid {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
+        gap: 2px;
         text-align: center;
       }
       .cal-sem {
@@ -682,12 +703,10 @@
         padding: 4px 0;
       }
       .cal-vacio {
-        aspect-ratio: 1;
-        min-height: 36px;
+        min-height: 44px;
       }
       .cal-dia {
-        aspect-ratio: 1;
-        min-height: 36px;
+        min-height: 44px;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: #fff;
@@ -757,7 +776,7 @@
       }
       @media (max-width: 400px) {
         main {
-          padding: 7px;
+          padding: 6px max(6px, env(safe-area-inset-right)) 6px max(6px, env(safe-area-inset-left));
         }
         .card,
         .pad {
@@ -771,6 +790,136 @@
         }
         table.data th {
           font-size: 9px;
+        }
+      }
+      /* ---- Pantallas: el móvil de pie (una columna, calendario plegado, «Guardar» siempre a la vista) y la tablet (dos columnas) ---- */
+      html {
+        scroll-padding-top: calc(var(--tabs-h) + 8px);
+        scroll-padding-bottom: calc(var(--barra-h) + 12px);
+      }
+      input,
+      select,
+      textarea {
+        font-size: 16px;
+      }
+      summary {
+        min-height: 44px;
+        padding: 11px 0;
+        cursor: pointer;
+      }
+      .tabs .seg button {
+        font-size: 14px;
+        line-height: 1.15;
+        padding: 4px 3px;
+      }
+      .vp-texto {
+        display: none;
+      }
+      #v-app {
+        padding-bottom: calc(var(--barra-h) + 12px);
+      }
+      .fecha-fila {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .fecha-fila input {
+        flex: 1 1 140px;
+        width: auto;
+        min-width: 0;
+      }
+      .cal-toggle {
+        flex: 1 1 150px;
+        min-height: 46px;
+        padding: 6px 8px;
+        font-size: 15px;
+        line-height: 1.2;
+      }
+      .seg button[data-m] {
+        min-width: 56px;
+      }
+      .dias-marcados .chip {
+        padding-right: 0;
+      }
+      .dias-marcados .chip button {
+        min-width: 44px;
+        min-height: 44px;
+        font-size: 18px;
+      }
+      .barra-guardar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: min(100%, 1100px);
+        margin: 0 auto;
+        padding: 8px max(10px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+        background: #fff;
+        border-top: 1px solid var(--line);
+        box-shadow: 0 -2px 8px #0b1f3a1a;
+      }
+      .barra-guardar .sum {
+        flex: 1;
+        min-width: 0;
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.25;
+      }
+      .barra-guardar .btn {
+        flex: none;
+        min-width: 150px;
+      }
+      @media (max-width: 767px) {
+        .cal-box.plegado {
+          display: none;
+        }
+        .cal-box {
+          margin-left: -4px;
+          margin-right: -4px;
+          padding: 4px;
+        }
+        #v-app .pad {
+          padding: 8px;
+        }
+      }
+      @media (min-width: 640px) {
+        .vp-texto {
+          display: inline;
+        }
+        .btn-volver-portal {
+          width: auto;
+          padding: 0 14px;
+        }
+        .tabs .seg button {
+          font-size: 15px;
+        }
+      }
+      @media (min-width: 768px) {
+        .cal-toggle {
+          display: none;
+        }
+        .fecha-fila input {
+          flex-basis: 100%;
+        }
+        #v-app .cols {
+          display: grid;
+          grid-template-columns: minmax(340px, 38%) minmax(0, 1fr);
+          gap: 18px;
+          align-items: start;
+        }
+        #v-app .col-izq {
+          position: sticky;
+          top: calc(var(--tabs-h) + 8px);
+          max-height: calc(100vh - var(--tabs-h) - var(--barra-h) - 24px);
+          max-height: calc(100dvh - var(--tabs-h) - var(--barra-h) - 24px);
+          overflow-y: auto;
+        }
+        .barra-guardar {
+          border-radius: 14px 14px 0 0;
         }
       }
     </style>
@@ -808,9 +957,9 @@
   </head>
   <body>
     <nav class="tabs">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <a class="btn-volver-portal" href="../../index.html" onclick="irAlPortal(event)">← Volver al Portal Sagarde</a>
-      </div>
+      <a class="btn-volver-portal" href="../../index.html" onclick="irAlPortal(event)" aria-label="Volver al Portal Sagarde"
+        ><span aria-hidden="true">←</span><span class="vp-texto">Volver al Portal Sagarde</span></a
+      >
       <div class="seg">
         <button data-v="app" class="on">Anotar</button><button data-v="jornadas">Jornadas</button
         ><button data-v="informe">Informe</button><button data-v="enviar">Enviar al PC</button>
@@ -843,6 +992,7 @@
           al: LS + 'altas',
           em: LS + 'empresas',
           uh: LS + 'ultimas_horas',
+          ob: LS + 'ultima_obra',
         };
       // Textos de cobertura (en llano; los tres primeros los aprobó Bixente).
       const COB = {
@@ -1855,7 +2005,7 @@
           ? `<div class="dias-marcados"><span>Días marcados (${marcadas.length}):</span> ${marcadas.map((f) => `<span class="chip">${fdia(f)} <button type="button" data-quitar-dia="${f}">×</button></span>`).join('')}</div>`
           : '';
         return (
-          `<div class="cal-box" id="cal-box">` +
+          `<div class="cal-box${a.calAbierto ? '' : ' plegado'}" id="cal-box">` +
           `<div class="cal-head">` +
           `<button type="button" class="nav-cal" data-cal-nav="-1">‹</button>` +
           `<span>${meses[mes - 1]} ${ano}</span>` +
@@ -2231,10 +2381,70 @@
           "</div>"
         );
       }
+      // «OBRA PRUEBA» solo sirve para probar: no sale en los desplegables salvo con ?pruebas=1 en la dirección
+      // (o si ya se está usando o tiene jornadas sin enviar).
+      function esObraDePrueba(id) {
+        return id === 'prueba';
+      }
+      function pruebasVisibles() {
+        try {
+          return new URLSearchParams(location.search).get('pruebas') === '1';
+        } catch (e) {
+          return false;
+        }
+      }
+      function obrasAbiertas() {
+        return Object.entries(state.obras).filter(
+          (entrada) =>
+            !entrada[1].cerrada &&
+            (!esObraDePrueba(entrada[0]) ||
+              pruebasVisibles() ||
+              entrada[0] === a.obra ||
+              pending.some((jornada) => jornada.obra === entrada[0])),
+        );
+      }
+      // La obra con la que se abre la tablet: la última que se usó aquí; si no hay (primera vez o se borró lo
+      // que se llevaba a medias), la que tiene la jornada anotada más reciente; si ninguna tiene, la primera.
+      function obraPorDefecto() {
+        let abiertas = Object.entries(state.obras).filter(
+          (entrada) => !entrada[1].cerrada && (!esObraDePrueba(entrada[0]) || pruebasVisibles()),
+        );
+        let ids = abiertas.map((entrada) => entrada[0]);
+        let ultima = get(K.ob, '');
+        if (typeof ultima === 'string' && ids.includes(ultima)) return ultima;
+        let mejor = '';
+        let mejorFecha = '';
+        abiertas.forEach((entrada) => {
+          ['vivienda', 'garaje'].forEach((ambito) => {
+            let ultimaJornada = entrada[1].ultima && entrada[1].ultima[ambito];
+            if (ultimaJornada && fechaOk(ultimaJornada.fecha) && ultimaJornada.fecha > mejorFecha) {
+              mejorFecha = ultimaJornada.fecha;
+              mejor = entrada[0];
+            }
+          });
+        });
+        return mejor || ids[0] || '';
+      }
+      // Botón que abre o pliega el calendario: dice qué día está elegido, o cuántos días están marcados.
+      function calToggleHTML() {
+        let dias = a.fechas && a.fechas.length ? a.fechas : [a.fecha];
+        let texto =
+          dias.length > 1
+            ? dias.length + ' días marcados'
+            : (a.fecha === today() ? 'Hoy · ' : a.fecha === add(today(), -1) ? 'Ayer · ' : '') + diaLargo(a.fecha);
+        return (
+          '<button type="button" class="btn ghost cal-toggle" id="cal-toggle" data-cal-abrir aria-expanded="' +
+          (a.calAbierto ? 'true' : 'false') +
+          '" aria-controls="cal-box">' +
+          E(texto) +
+          (a.calAbierto ? '&nbsp;▴' : '&nbsp;▾') +
+          '</button>'
+        );
+      }
       function appView() {
         let horario = hor();
         let mostrarAviso = !matchMedia('(display-mode: standalone)').matches && !get(K.a, false);
-        let obras = Object.entries(state.obras).filter((entrada) => !entrada[1].cerrada);
+        let obras = obrasAbiertas();
         return (
           `${barraHTML()}<div ` +
           `class="origin" id="estado-origen">${E(origin)}</div><div class="pad">` +
@@ -2247,7 +2457,7 @@
                 'usa en 7 días.</div>'
               : ''
           }` +
-          `<label class="fld">Obra</label><select id="obra">` +
+          `<div class="cols"><div class="col-izq"><label class="fld">Obra</label><select id="obra">` +
           `${obras
             .map(
               (entrada) =>
@@ -2258,8 +2468,8 @@
           `</select><label class="fld">Qué anotas</label><div class="seg"><button ` +
           `data-amb="vivienda" class="${a.amb === 'vivienda' ? 'on' : ''}">Viviendas</button>` +
           `<button data-amb="garaje" class="${a.amb === 'garaje' ? 'on' : ''}">Garajes</button>` +
-          `</div><label class="fld">Fecha y calendario (puedes marcar varios días)</label><input id="fecha" type="date" value="` +
-          `${E(a.fecha)}">${calendarioHTML()}<div class="chips">` +
+          `</div><label class="fld">Fecha y calendario (puedes marcar varios días)</label><div class="fecha-fila"><input id="fecha" type="date" value="` +
+          `${E(a.fecha)}">${calToggleHTML()}</div>${calendarioHTML()}<div class="chips">` +
           `${[
             ['0', 'Hoy'],
             ['-1', 'Ayer'],
@@ -2272,7 +2482,7 @@
             )
             .join('')}` +
           `<button class="btn ghost sm" data-limpiar-dias>Solo hoy</button>` +
-          `</div>${rotuloHTML()}<div class="actions"><button class="btn ghost sm" data-todos="1">Marcar ` +
+          `</div></div><div class="col-der">${rotuloHTML()}<div class="actions"><button class="btn ghost sm" data-todos="1">Marcar ` +
           `todos</button><button class="btn ghost sm" data-todos="0">Desmarcar todos</button>` +
           `</div><div id="lista">${rowsHTML()}</div><label class="fld">Añadir de la base</label>` +
           `<div class="criterio-busqueda"><select id="filtro-criterio" aria-label="Criterio de búsqueda">` +
@@ -2281,9 +2491,9 @@
           `<option value="obra" ${a.filtroCriterio === 'obra' ? 'selected' : ''}>Por obra</option>` +
           `<option value="horas" ${a.filtroCriterio === 'horas' ? 'selected' : ''}>Por horas</option>` +
           `<option value="todo" ${a.filtroCriterio === 'todo' ? 'selected' : ''}>Por todo</option>` +
-          `</select><input id="filtro" value="${E(a.filtroTexto || '')}" placeholder="${E(placeholderBusqueda(a.filtroCriterio))}"></div>` +
+          `</select><input id="filtro" inputmode="search" enterkeyhint="search" autocomplete="off" value="${E(a.filtroTexto || '')}" placeholder="${E(placeholderBusqueda(a.filtroCriterio))}"></div>` +
           `<div class="add"><select id="addsel">${opcionesHTML(a.filtroTexto || '', a.filtroCriterio || 'nombre')}</select>` +
-          `<button class="btn sec" data-add>Añadir</button></div><label class="fld">Nombre nuevo</label><input id="nuevo" maxlength="60">` +
+          `<button class="btn sec" data-add>Añadir</button></div><label class="fld">Nombre nuevo</label><input id="nuevo" maxlength="60" autocomplete="off" autocapitalize="words" enterkeyhint="done">` +
           `<label class="fld">Empresa del nombre nuevo</label><select id="nuevo-empresa" aria-label="Empresa del ` +
           `nombre nuevo">${opcionesEmpresaHTML('')}</select><input id="nuevo-empresa-otra" maxlength="60" ` +
           `autocomplete="off" placeholder="Nombre de la empresa" aria-label="Nombre de la empresa" hidden>` +
@@ -2323,13 +2533,12 @@
           ]
             .map(
               (dia) =>
-                `<label>${dia[0]}<input type="number" min="0" max="24" step=".5" data-hor="` +
+                `<label>${dia[0]}<input type="number" inputmode="decimal" autocomplete="off" min="0" max="24" step=".5" data-hor="` +
                 `${E(dia[1])}" value="${E(horario[dia[1]])}"></label>`,
             )
             .join('')}` +
-          `</div><div id="aviso-horario" class="nota"></div></details>${rotuloDobleObraHTML()}<div class="sum" ` +
-          `id="resumen">${sumHTML()}</div><button class="btn pri full" data-guardar>Guardar ` +
-          `jornada</button>${avisoGuardarHTML()}${resumenGuardadoHTML()}<div class="pending"><b id="pendientes" data-n="${E(pending.length)}` +
+          `</div><div id="aviso-horario" class="nota"></div></details>${rotuloDobleObraHTML()}` +
+          `${avisoGuardarHTML()}${resumenGuardadoHTML()}<div class="pending"><b id="pendientes" data-n="${E(pending.length)}` +
           `">Sin enviar al PC: ${uno(pending.length, 'jornada', 'jornadas')}</b>` +
           `${cambiosNombresHTML()}</div>` +
           `${
@@ -2340,7 +2549,9 @@
               : '<div class="actions"><button class="btn sec" data-v="enviar">Enviar al PC</button>' +
                 '<button class="btn ghost" data-reset>Borrar lo que llevo a medias</button></div>'
           }` +
-          `</div>`
+          `</div></div>` +
+          `<div class="barra-guardar" id="barra-guardar"><div class="sum" id="resumen">${sumHTML()}</div>` +
+          `<button class="btn pri" data-guardar>Guardar jornada</button></div>`
         );
       }
       // Fecha corta con el día de la semana, p. ej. «vie 23/10».
@@ -2378,8 +2589,7 @@
         let lista = [...jornadas.values()].sort((izquierda, derecha) =>
           derecha.fecha.localeCompare(izquierda.fecha),
         );
-        let opciones = Object.entries(state.obras)
-          .filter((entrada) => !entrada[1].cerrada)
+        let opciones = obrasAbiertas()
           .map(
             (entrada) =>
               `<option value="${E(entrada[0])}" ${entrada[0] === a.obra ? 'selected' : ''}>` +
@@ -3447,6 +3657,12 @@
           changed();
           return;
         }
+        // Abrir o plegar el calendario (en el móvil va plegado para que la lista de gente se vea al abrir)
+        if (datos.calAbrir !== undefined) {
+          a.calAbierto = !a.calAbierto;
+          render();
+          return;
+        }
         // Día del calendario interactivo
         if (datos.calDia) {
           let dia = datos.calDia;
@@ -3859,6 +4075,7 @@
         // Cambio de obra seleccionada: actualiza la obra activa y recarga la lista de presentes
         if (campo.id === 'obra' || campo.id === 'obra-j') {
           a.obra = campo.value;
+          set(K.ob, a.obra);
           changed();
           return;
         }
@@ -4000,7 +4217,7 @@
         aplicarRenombresAlEstado();
         olvidarEmpresas();
         reconcile();
-        a.obra = Object.keys(state.obras).find((obra) => !state.obras[obra].cerrada) || '';
+        a.obra = obraPorDefecto();
         if (!restore()) loadList();
         render();
         if (rotos > 0)

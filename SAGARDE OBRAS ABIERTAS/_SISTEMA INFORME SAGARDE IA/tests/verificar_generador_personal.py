@@ -3468,6 +3468,7 @@ with sync_playwright() as p:
     # --- T152: dos días marcados con el calendario, uno ocupado: «Saltar» guarda solo el vacío y el resumen dice qué saltó
     def t152(e):
         e.ir()
+        e.clic('#cal-toggle')   # en el móvil el calendario va plegado (MA6): se abre con el botón de la fecha
         e.clic('button[data-cal-dia="2026-10-21"]')
         e.clic('button[data-cal-dia="2026-10-22"]')
         e.clic('button[data-quitar-dia="2026-10-23"]')
@@ -3572,6 +3573,7 @@ with sync_playwright() as p:
     # --- T159: con UN solo día marcado, si la lista no salió de ese día (se quitó el otro del calendario) también avisa
     def t159(e):
         e.ir()
+        e.clic('#cal-toggle')
         e.clic('button[data-cal-dia="2026-10-22"]')
         e.clic('button[data-quitar-dia="2026-10-23"]')
         solo(e, 'Ana')
