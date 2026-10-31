@@ -34,6 +34,7 @@ APP_DIR = Path(os.environ.get("P3_APP") or TESTS.parent)
 if str(MOTOR_IA) not in sys.path:
     sys.path.insert(0, str(MOTOR_IA))
 
+import datos_base_trabajadores as D  # noqa: E402
 import lector_control_horario as lector  # noqa: E402
 import personal_integracion as pi  # noqa: E402
 import personal_obra as po  # noqa: E402
@@ -655,6 +656,162 @@ class TestLenguajeSinCobertura(unittest.TestCase):
         self.assertIn("{n}", t["sinLista"])
         self.assertIn("a salvo", t["sinLista"])
         self.assertIn("primera vez", t["informe"])
+
+
+@unittest.skipUnless(_OK, "NO se ha revisado el lenguaje de «Generar personal»: %s" % _MOTIVO)
+class TestLenguajeDeGenerarPersonal(unittest.TestCase):
+    """MA5: la guarda mira la pestaña «Generar personal» de personal_sagarde.html en un navegador de verdad, como hace con la tablet.
+    Recorre cada estado (vacío, empresa nueva, añadir, errores, parecidos, preguntas, bajas, editar, quitar oficio y horario, lista
+    preparada, fichero guardado y sus tres pasos, «¿seguro?», lo recuperado al recargar, lo ya aplicado, almacenamiento bloqueado,
+    lo guardado que no se puede leer, página sin datos o sin cálculo). Una lista vacía de textos es una alarma, no un «no aplica»:
+    se exige un mínimo de textos distintos y que hayan salido las frases que cada estado tiene que enseñar."""
+
+    # Frases que TIENEN que haber salido en el recorrido: si falta una, la guarda no ha pasado por ese estado.
+    ESPERADOS = [
+        "Tienes 3 cambios sin enviar", "¿Seguro?", "carpeta REVISIONES de cualquier obra", "actualiza la obra", "Quitar oficio",
+        "Volver a horario normal", "se ha marcado para quitar de la base de trabajadores", "¿Es el mismo, que", "Ponle algo que lo distinga",
+        "Se han recuperado", "ya está aplicado", "no deja guardar lo preparado", "no se ha podido leer", "Escribe al menos el nombre",
+        "parece un DNI, un teléfono o un correo", "Revisa las horas del horario personalizado", "Todavía no hay datos de personal publicados",
+        "No se pudo cargar personal_calculo.js", "no se han podido recuperar", "se parece a", "Cambio preparado", "Se quitará de la base",
+        "Trabajador nuevo", "Cambia de empresa", "Quita el oficio", "Fichero guardado con", "Escribe el nombre de la empresa nueva",
+        "no tiene el formato esperado", "se queda sin oficio", "vuelve al horario normal", "Datos de «", "Todavía no has añadido ni quitado",
+    ]
+    MINIMO_DE_TEXTOS = 200
+
+    def test_ningun_estado_de_generar_personal_usa_palabras_de_programador(self):
+        import ayudante_generar as A
+
+        recogidos = []
+
+        def ver(page):
+            recogidos.extend(page.evaluate(JS_TEXTOS))
+
+        def recorrido(page, carpeta):
+            ver(page)                                                      # vacío
+            page.select_option("#gen-empresa", "__nueva__")
+            ver(page)                                                      # empresa nueva sin nombre
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # error: falta la empresa nueva
+            page.fill("#gen-empresa-nueva", "Montajes Norte")
+            page.select_option("#gen-categoria", "__otra__")
+            page.fill("#gen-categoria-otra", "Peón")
+            page.select_option("#gen-horario-tipo", "personalizado")
+            ver(page)                                                      # horario por día
+            page.fill("#gen-nombre", "Koldo Agirre")
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # añadido + lista + «sin enviar»
+            for malo in ("", "12345678Z", "Ana <b>", "Ana ana@correo.es"):  # errores de nombre
+                page.fill("#gen-nombre", malo)
+                page.click("#btn-gen-anadir")
+                ver(page)
+            for dia in ("lun", "mar", "mie", "jue", "vie", "sab", "dom"):
+                page.fill('[data-gen-dia="%s"]' % dia, "")
+            page.fill("#gen-nombre", "Ione Sasia")
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # horario sin horas
+            page.fill('[data-gen-dia="lun"]', "99")
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # horas fuera de 0 a 24
+            page.select_option("#gen-horario-tipo", "normal")
+            page.select_option("#gen-empresa", A.ALFA)
+            page.select_option("#gen-categoria", "")
+            page.fill("#gen-nombre", "Rafaa")
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # se parece a otro
+            page.click("#btn-gen-confirmar-parecido")
+            ver(page)
+            page.click('[data-gen-modo="varios"]')
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # varios, lista vacía
+            page.fill('[data-gen-var-nom="0"]', "Uno Dos")
+            page.fill('[data-gen-var-nom="1"]', "Rafa")
+            page.click("#btn-gen-mas-lineas")
+            ver(page)
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # varios: ya está / añadido
+            page.click('[data-gen-modo="uno"]')
+            A.anadir(page, "Luis", A.ALFA)
+            ver(page)                                                      # pregunta: ¿es el mismo?
+            page.click("#btn-gen-hom-no")
+            ver(page)
+            page.fill("#gen-hom-campo", "Luis")
+            page.click("#btn-gen-hom-crear")
+            ver(page)                                                      # error: tiene que ser distinto
+            page.fill("#gen-hom-campo", "Luis B.")
+            page.click("#btn-gen-hom-crear")
+            ver(page)
+            A.anadir(page, "Luis", A.ALFA)
+            page.click("#btn-gen-hom-si")
+            ver(page)                                                      # el mismo: pasa de Beta a Alfa
+            A.anadir(page, "Ander", A.ALFA)
+            ver(page)                                                      # de baja
+            page.click("#btn-gen-hom-cancelar")
+            ver(page)
+            page.click('[data-gen-quitar-oficio="Rafa"]')
+            ver(page)
+            page.click('[data-gen-quitar-horario="Rafa"]')
+            ver(page)
+            page.click('[data-gen-editar-emp="Rafa"]')
+            ver(page)                                                      # Editar
+            page.select_option("#gen-empresa", "Sagarde")
+            page.click('[data-gen-baja="Zoilo"]')
+            ver(page)                                                      # baja
+            page.click('[data-gen-deshacer-baja="Zoilo"]')
+            ver(page)
+            page.click('[data-gen-baja="Zoilo"]')
+            A.descargar(page)
+            ver(page)                                                      # fichero guardado y sus tres pasos
+            page.click("#btn-gen-vaciar")
+            ver(page)                                                      # ¿seguro?
+            page.click("#btn-gen-vaciar-no")
+            A.recargar(page, carpeta)
+            ver(page)                                                      # recuperado al recargar
+            e = A.estado()
+            e["catalogo"].append(D.ficha(6, "Koldo Agirre", "Montajes Norte", categoria="Peón",
+                                         horario_preferido={"lun": 7.5, "mar": 7.5, "mie": 7.5, "jue": 7.5, "vie": 7.5, "sab": 0, "dom": 0}))
+            A.recargar(page, carpeta, e)
+            ver(page)                                                      # lo que el PC ya aplicó
+            page.click("#btn-gen-vaciar")
+            page.click("#btn-gen-vaciar-si")
+            ver(page)                                                      # vacío otra vez
+
+        errores = A.con_pagina(recorrido)
+        self.assertEqual(errores, [], "errores de JavaScript en la página")
+
+        def memoria_bloqueada(page, carpeta):
+            A.anadir(page, "Nuevo Uno", A.ALFA)
+            ver(page)
+        bloqueo = ("(() => { const t = () => { throw new DOMException('bloqueado', 'SecurityError'); };"
+                   " Object.defineProperty(window, 'localStorage', { get: t, configurable: true }); })();")
+        self.assertEqual(A.con_pagina(memoria_bloqueada, init=bloqueo), [])
+
+        def sembrar(valor):
+            return ("(() => { try { if (!window.sessionStorage.getItem('sembrado')) { window.localStorage.setItem(%s, %s);"
+                    " window.sessionStorage.setItem('sembrado', '1'); } } catch (e) {} })();" % (json.dumps(A.CLAVE_BORRADOR), json.dumps(valor)))
+        self.assertEqual(A.con_pagina(lambda page, carpeta: ver(page), init=sembrar("esto no es un texto guardado")), [])
+        malo = {"version": 1, "guardado": "2026-10-31T09:15:00.000Z", "descargado": None, "bajas": [{"nombre": "<b>x</b>"}],
+                "preparados": [{"nombre": "Bien Uno", "empresa": A.ALFA}, {"nombre": 5}]}
+        self.assertEqual(A.con_pagina(lambda page, carpeta: ver(page), init=sembrar(json.dumps(malo))), [])
+
+        # Páginas que no llegan a enseñar la pestaña: sin datos, con datos de otra versión, sin el cálculo
+        def esperar_texto(page, carpeta):
+            page.wait_for_selector("#contenido-generar .empty, #contenido-generar .aviso", state="attached")
+            ver(page)
+        A.con_pagina(esperar_texto, con_estado=False, ir_a_generar=False)
+        A.con_pagina(esperar_texto, e={"version": 2}, ir_a_generar=False, esperar=False)
+        A.con_pagina(esperar_texto, con_calculo=False, ir_a_generar=False)
+
+        texto = chr(10).join(recogidos)
+        distintos = sorted(set(recogidos))
+        self.assertGreaterEqual(len(distintos), self.MINIMO_DE_TEXTOS, "la guarda de «Generar personal» ha revisado muy pocos textos: %d" % len(distintos))
+        faltan = [f for f in self.ESPERADOS if f not in texto]
+        self.assertEqual(faltan, [], "la guarda no ha pasado por estos estados de «Generar personal»")
+        self.assertEqual([], sorted(set(revisar(recogidos, "Generar personal"))))
+
+    def test_la_guarda_de_generar_lee_la_pagina_que_se_publica(self):
+        self.assertTrue((APP_DIR / "personal_sagarde.html").exists())
+        fuente = Path(__file__).read_text(encoding="utf-8")
+        self.assertIn("personal_sagarde", fuente, "esta guarda tiene que nombrar la página que vigila")
 
 
 class TestElDetectorDeLenguaje(unittest.TestCase):

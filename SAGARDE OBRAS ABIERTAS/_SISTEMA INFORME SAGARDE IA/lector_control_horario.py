@@ -319,8 +319,15 @@ def _resumen_texto(ficha):
     oficios_puestos = [c for c in ficha.get("categorias", []) if c["accion"] in ("puesta", "cambiada")]
     if oficios_puestos:
         partes.append(_plural(len(oficios_puestos), "oficio puesto", "oficios puestos"))
-    if ficha.get("horarios_preferidos"):
-        partes.append(_plural(len(ficha["horarios_preferidos"]), "horario preferido", "horarios preferidos"))
+    oficios_quitados = [c for c in ficha.get("categorias", []) if c["accion"] == "quitada"]
+    if oficios_quitados:
+        partes.append(_plural(len(oficios_quitados), "oficio quitado", "oficios quitados"))
+    horarios_puestos = [h for h in ficha.get("horarios_preferidos", []) if h["accion"] != "quitada"]
+    if horarios_puestos:
+        partes.append(_plural(len(horarios_puestos), "horario preferido", "horarios preferidos"))
+    horarios_quitados = [h for h in ficha.get("horarios_preferidos", []) if h["accion"] == "quitada"]
+    if horarios_quitados:
+        partes.append(_plural(len(horarios_quitados), "horario preferido quitado", "horarios preferidos quitados"))
     if ficha.get("bajas"):
         partes.append(_plural(len(ficha["bajas"]), "persona quitada", "personas quitadas"))
     if ficha["rechazadas"]:

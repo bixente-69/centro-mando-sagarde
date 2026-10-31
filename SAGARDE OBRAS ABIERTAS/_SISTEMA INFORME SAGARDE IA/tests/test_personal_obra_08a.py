@@ -184,7 +184,8 @@ class TestRenombres(Base):
                                            'id_otro': None, 'orden': None}])
         t = self.persona('T0001')
         self.assertEqual((t['nombre'], t['nombres_anteriores']), ('Mikel Etxeberria', ['Mikel']))
-        self.assertEqual(set(t), set(P.TK))
+        # «horario_preferido» solo existe en quien tiene uno propio (P1 lo pone y lo quita): no es parte fija de la ficha.
+        self.assertEqual(set(t), set(P.TK) - {'horario_preferido'})
         self.assertEqual(self.codigos(r['avisos_lote']), [])
         filas = P.aplanar(self.raiz, OBRAS, 'olabeaga')
         self.assertEqual(sorted({f['nombre'] for f in filas}), ['Andoni', 'Mikel Etxeberria', 'Txomin'])
@@ -823,8 +824,16 @@ class TestTextos(unittest.TestCase):
         ('alta_de_baja', 'Mikel',
          '«Mikel» estaba de baja y este fichero lo da por nuevo: vuelve a la lista. '
          'Si es otra persona con el mismo nombre, hay que ponerle un apellido o una inicial.'),
+        # MA5: los de oficios, horarios preferidos y bajas ya tenían su frase en P1, pero esta lista no los recorría
+        ('baja_sin_persona', 'Mikel', '«Mikel» no estaba en la base: no hay nadie a quien quitar.'),
+        ('baja_sin_persona', None, 'Un nombre que se quería quitar no estaba en la base.'),
+        ('categoria_sin_persona', 'Mikel', '«Mikel» no estaba en la base: no se le puede poner oficio.'),
+        ('categoria_sin_persona', None, 'Un oficio era para alguien que no estaba en la base: no se ha puesto.'),
     ]
     RECHAZOS = {
+        'baja_invalida': 'Un nombre de la lista de personas a quitar viene mal escrito.',
+        'categoria_invalida': 'El oficio o categoría viene mal escrito.',
+        'horario_preferido_invalido': 'Un horario preferido viene mal escrito.',
         'lote_invalido': 'El fichero no tiene el formato esperado.',
         'tipo_desconocido': 'Este fichero no es un control horario.',
         'version_desconocida': 'Este control horario es de una versión que este PC no conoce.',

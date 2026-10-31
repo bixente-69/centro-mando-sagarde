@@ -155,8 +155,15 @@ class TestLaPaginaUsaElCalculoCompartido(unittest.TestCase):
 
     def test_es_de_solo_lectura(self):
         pagina = leer('personal_sagarde.html')
-        self.assertNotRegex(pagina, r'fetch\(|XMLHttpRequest|sendBeacon|localStorage|sessionStorage|<form|<textarea|contenteditable',
+        self.assertNotRegex(pagina, r'fetch\(|XMLHttpRequest|sendBeacon|sessionStorage|<form|<textarea|contenteditable',
                             'la base se mira, no se cambia desde el portal (los cambios entran con «actualiza la obra»)')
+        # MA5: lo único que la página guarda en el aparato es el borrador de «Generar personal» (lo preparado y aún sin enviar),
+        # y solo en un sitio marcado; la base, el ranking y las empresas no escriben nada.
+        self.assertEqual(1, pagina.count('BORRADOR DE GENERAR: INICIO'))
+        self.assertEqual(1, pagina.count('BORRADOR DE GENERAR: FIN'))
+        a, b = pagina.index('BORRADOR DE GENERAR: INICIO'), pagina.index('BORRADOR DE GENERAR: FIN')
+        self.assertNotIn('localStorage', pagina[:a] + pagina[b:], 'localStorage solo dentro del bloque del borrador de «Generar personal»')
+        self.assertGreaterEqual(pagina[a:b].count('localStorage'), 2, 'el bloque del borrador guarda y lee de verdad')
 
     def test_el_calculo_publica_las_funciones_nuevas(self):
         calculo = leer('personal_calculo.js')

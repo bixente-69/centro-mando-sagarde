@@ -101,8 +101,8 @@ table.emp-detalle .n{text-align:right;font-variant-numeric:tabular-nums;white-sp
 table.emp-detalle tr.emp-fila{cursor:pointer}
 table.emp-detalle tr.emp-fila:hover{background:#f7f9fc}
 table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
-.emp-fichas{display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px}
-.emp-ficha{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fafbfd}
+.emp-fichas{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;margin-top:16px}
+.emp-ficha{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:#fafbfd;min-width:0}
 .emp-ficha-cab{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px;margin-bottom:8px}
 .emp-ficha-cab h4{margin:0;font-size:16px;color:var(--header)}
 /* Vista Generar personal */
@@ -112,16 +112,16 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
 .campo{min-height:44px;padding:8px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;font-size:14px;background:#fff;color:var(--text);width:100%}
 .gen-dias{display:grid;grid-template-columns:repeat(7,minmax(56px,1fr));gap:8px;margin:10px 0;padding:12px;background:#f4f7fb;border-radius:10px}
 .gen-dias label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:600;text-align:center}
-.gen-dias input{text-align:center;padding:6px 4px;min-height:38px}
+.gen-dias input{text-align:center;padding:6px 4px;min-height:44px}
 .gen-acciones{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}
 .btn-accion{min-height:44px;padding:10px 16px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--text);font:inherit;font-size:14px;font-weight:600;cursor:pointer}
 .btn-accion.pri{background:var(--header);color:#fff;border-color:var(--header)}
 .btn-accion.acento{background:var(--accent);color:#1b1300;border-color:#e09112;font-weight:700}
-.btn-accion.peq-btn{min-height:34px;padding:4px 10px;font-size:12.5px}
+.btn-accion.peq-btn{min-height:44px;padding:4px 12px;font-size:12.5px}
 .btn-accion:disabled{opacity:.45;cursor:default}
 .gen-varios-fila{display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,200px) auto;gap:8px;align-items:center;margin-bottom:8px}
-.gen-chk{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:13.5px;margin-top:6px;cursor:pointer}
-.gen-chk input{width:18px;height:18px}
+.gen-chk{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:13.5px;margin-top:6px;cursor:pointer;min-height:44px}
+.gen-chk input{width:22px;height:22px}
 @media(max-width:640px){
   main{padding:8px}
   .hdr{padding:16px}
@@ -146,6 +146,8 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
   table.emp-tabla{font-size:13px}
   table.emp-tabla th,table.emp-tabla td{padding:7px 4px}
   .pestanas .seg{display:flex;width:100%}
+  .ctl .seg:not([aria-label^="Moverse"]){display:flex;flex-wrap:wrap;width:100%}
+  .ctl .seg:not([aria-label^="Moverse"]) button{flex:1 1 auto}
   .pestanas .seg button{flex:1 1 45%;min-width:0;white-space:normal;line-height:1.2}
   table.base thead{display:none}
   table.base,table.base tbody{display:block}
@@ -165,6 +167,17 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
   .solo-movil{display:inline}
   .gen-dias{grid-template-columns:repeat(4,1fr)}
   .gen-varios-fila{grid-template-columns:1fr}
+  /* Las tablas de Empresas y de Generar personal se vuelven tarjetas: cada dato lleva su etiqueta y nada se sale de la pantalla */
+  table.tarjetas thead{display:none}
+  table.tarjetas,table.tarjetas tbody{display:block}
+  table.tarjetas tr{display:block;padding:10px 2px;border-bottom:1px solid #edf0f4}
+  table.tarjetas td{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 8px;padding:3px 0;border:0;text-align:left;min-width:0}
+  table.tarjetas td[data-etq]::before{content:attr(data-etq);flex:0 0 8.5em;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em}
+  table.tarjetas td.n{text-align:left;white-space:normal}
+  table.tarjetas td.t-tit{font-weight:700;font-size:15px;overflow-wrap:anywhere;min-width:0}
+  table.tarjetas td.t-acc{padding-top:6px}
+  table.tarjetas td:empty{display:none}
+  .emp-ficha{padding:12px}
 }
 </style>
 <script src="personal_calculo.js"></script>
@@ -313,8 +326,9 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
   var genNombre = '';
   var genCategoriaSel = '';
   var genCategoriaOtra = '';
-  var genHorarioTipo = 'normal'; // 'normal' | '8h' | 'intensiva' | 'personalizado'
-  var genHorarioDias = { lun: '7.5', mar: '7.5', mie: '7.5', jue: '7.5', vie: '7.5', sab: '0', dom: '0' };
+  var genHorarioTipo = 'normal'; // 'normal' | el id de un horario de HORARIOS_FIJOS | 'personalizado'
+  var jornadaBaseH = null; // horas de un día normal (lunes a viernes) tal como las publica el PC; null = no se sabe
+  var genHorarioDias = { lun: '', mar: '', mie: '', jue: '', vie: '', sab: '0', dom: '0' }; // de lunes a viernes se rellena con la jornada base
   var genFilasVarios = [
     { nombre: '', categoria: '' },
     { nombre: '', categoria: '' },
@@ -326,6 +340,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
   var genOrdenDir = 'asc';
   var genMensajeError = '';
   var genMensajeOk = '';
+  var genConfirmarVaciar = false; // «¿seguro que quieres empezar de cero?» abierta
   var genAvisoParecido = null; // { candidatos: [...], texto: '...' }
   var genPregunta = null;      // «¿es el mismo o es otra persona?» en curso: { clave, nombre, existente, tipo, antes, empresaNueva, fase, valor, error, decisiones, forzar }
 
@@ -345,6 +360,10 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     if (!sp.obras || typeof sp.obras !== 'object' || Array.isArray(sp.obras)) {
       return 'El fichero personal_estado.js no tiene el formato esperado: falta el listado de obras.';
     }
+
+    jornadaBaseH = (typeof sp.jornada_base_h === 'number' && isFinite(sp.jornada_base_h) && sp.jornada_base_h > 0 && sp.jornada_base_h <= 24)
+      ? sp.jornada_base_h : null;
+    for (var jb = 0; jb < 5; jb++) genHorarioDias[DIAS_CLAVES[jb]] = jornadaBaseH === null ? '' : String(jornadaBaseH);
 
     filas = [];
     nombresObra = {};
@@ -966,7 +985,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       return;
     }
 
-    html += '<div class="emp-scroll"><table class="emp-detalle" id="tabla-empresas-detalle"><thead><tr>' +
+    html += '<div class="emp-scroll"><table class="emp-detalle tarjetas" id="tabla-empresas-detalle"><thead><tr>' +
       '<th' + attrOrden('nombre', ordenEmpDetalleCol, ordenEmpDetalleDir, 'data-col-empdet', false) + '>Empresa</th>' +
       '<th' + attrOrden('tipo', ordenEmpDetalleCol, ordenEmpDetalleDir, 'data-col-empdet', false) + '>Tipo</th>' +
       '<th' + attrOrden('enBase', ordenEmpDetalleCol, ordenEmpDetalleDir, 'data-col-empdet', true) + '>En la base</th>' +
@@ -1001,15 +1020,15 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       }
 
       html += '<tr class="emp-fila' + activa + '" data-clave-emp="' + escaparHtml(emp.clave) + '">' +
-        '<td><b>' + escaparHtml(emp.nombre) + '</b></td>' +
-        '<td>' + chipTipo + '</td>' +
-        '<td class="n">' + emp.enBase + '</td>' +
-        '<td class="n">' + emp.personas + '</td>' +
-        '<td class="n">' + (emp.horas > 0 ? emp.dias : '–') + '</td>' +
-        '<td class="n">' + (emp.horas > 0 ? formatearNum(emp.horas) : '–') + '</td>' +
-        '<td class="n">' + strPct + '</td>' +
-        '<td>' + chipsObras + '</td>' +
-        '<td>' + strUltima + '</td>' +
+        '<td class="t-tit"><b>' + escaparHtml(emp.nombre) + '</b></td>' +
+        '<td data-etq="Tipo">' + chipTipo + '</td>' +
+        '<td class="n" data-etq="En la base">' + emp.enBase + '</td>' +
+        '<td class="n" data-etq="Con jornadas">' + emp.personas + '</td>' +
+        '<td class="n" data-etq="Días">' + (emp.horas > 0 ? emp.dias : '–') + '</td>' +
+        '<td class="n" data-etq="Horas">' + (emp.horas > 0 ? formatearNum(emp.horas) : '–') + '</td>' +
+        '<td class="n" data-etq="% de Sagarde">' + strPct + '</td>' +
+        '<td data-etq="Obras">' + chipsObras + '</td>' +
+        '<td data-etq="Última jornada">' + strUltima + '</td>' +
         '</tr>';
     }
     html += '</tbody></table></div>';
@@ -1042,7 +1061,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       if (plantillaOrd.length === 0) {
         html += '<p class="sinj">Sin trabajadores registrados en esta empresa.</p>';
       } else {
-        html += '<div class="base-scroll"><table class="emp-plantilla"><thead><tr>' +
+        html += '<div class="base-scroll"><table class="emp-plantilla tarjetas"><thead><tr>' +
           '<th' + attrOrden('nombre', ordenPlantillaCol, ordenPlantillaDir, 'data-col-pl', false) + '>Nombre</th>' +
           '<th>Oficio y horario preferido</th>' +
           '<th' + attrOrden('obras', ordenPlantillaCol, ordenPlantillaDir, 'data-col-pl', false) + '>Obras en el periodo</th>' +
@@ -1073,12 +1092,12 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
           }
 
           html += '<tr>' +
-            '<td class="b-nom">' + escaparHtml(p.nombre) + '</td>' +
-            '<td>' + detOficio.join(' ') + '</td>' +
-            '<td>' + obrasP + '</td>' +
-            '<td class="n">' + (p.conJornadas ? p.dias : '–') + '</td>' +
-            '<td class="n">' + (p.conJornadas ? formatearNum(p.horas) : '–') + '</td>' +
-            '<td>' + ultP + '</td>' +
+            '<td class="b-nom t-tit">' + escaparHtml(p.nombre) + '</td>' +
+            '<td data-etq="Oficio y horario">' + detOficio.join(' ') + '</td>' +
+            '<td data-etq="Obras en el periodo">' + obrasP + '</td>' +
+            '<td class="n" data-etq="Días">' + (p.conJornadas ? p.dias : '–') + '</td>' +
+            '<td class="n" data-etq="Horas">' + (p.conJornadas ? formatearNum(p.horas) : '–') + '</td>' +
+            '<td data-etq="Última jornada">' + ultP + '</td>' +
             '</tr>';
         }
         html += '</tbody></table></div>';
@@ -1270,14 +1289,49 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     return raw;
   }
 
+  // Horarios que se eligen con un clic: UNA sola lista (aquí). Para añadir otro basta una línea más: el desplegable, el fichero y el
+  // botón «Editar» salen de ella. El horario normal no está aquí: sale de la jornada base que publica el PC.
+  var HORARIOS_FIJOS = [
+    { id: '8h', texto: '8 horas de lunes a viernes', horas: { lun: 8, mar: 8, mie: 8, jue: 8, vie: 8, sab: 0, dom: 0 } },
+    { id: 'intensiva', texto: '8 h de lunes a jueves y 6 h el viernes', horas: { lun: 8, mar: 8, mie: 8, jue: 8, vie: 6, sab: 0, dom: 0 } }
+  ];
+
+  function copiarHorario(h) {
+    var o = {};
+    for (var i = 0; i < DIAS_CLAVES.length; i++) {
+      if (h && Object.prototype.hasOwnProperty.call(h, DIAS_CLAVES[i])) o[DIAS_CLAVES[i]] = h[DIAS_CLAVES[i]];
+    }
+    return o;
+  }
+
+  function horasDeLaSemana(h) {
+    var t = 0;
+    for (var i = 0; i < DIAS_CLAVES.length; i++) t += Number(h && h[DIAS_CLAVES[i]]) || 0;
+    return t;
+  }
+
+  function horarioFijoPorId(id) {
+    for (var i = 0; i < HORARIOS_FIJOS.length; i++) {
+      if (HORARIOS_FIJOS[i].id === id) return HORARIOS_FIJOS[i];
+    }
+    return null;
+  }
+
+  function horarioFijoDe(h) {
+    for (var i = 0; i < HORARIOS_FIJOS.length; i++) {
+      if (mismoHorarioGen(HORARIOS_FIJOS[i].horas, h)) return HORARIOS_FIJOS[i];
+    }
+    return null;
+  }
+
+  function textoHorarioNormal() {
+    return jornadaBaseH === null ? 'Horario normal de la obra' : 'Horario normal de la obra (' + formatearNum(jornadaBaseH) + ' h L–V)';
+  }
+
   function resolverHorarioObjeto() {
     if (genHorarioTipo === 'normal') return null;
-    if (genHorarioTipo === '8h') {
-      return { lun: 8, mar: 8, mie: 8, jue: 8, vie: 8, sab: 0, dom: 0 };
-    }
-    if (genHorarioTipo === 'intensiva') {
-      return { lun: 8, mar: 8, mie: 8, jue: 8, vie: 6, sab: 0, dom: 0 };
-    }
+    var fijo = horarioFijoPorId(genHorarioTipo);
+    if (fijo) return copiarHorario(fijo.horas);
     var obj = {};
     for (var i = 0; i < DIAS_CLAVES.length; i++) {
       var k = DIAS_CLAVES[i];
@@ -1288,12 +1342,61 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         obj[k] = Math.round(num * 100) / 100;
       }
     }
-    return Object.keys(obj).length > 0 ? obj : null;
+    // Un horario personalizado sin ninguna hora no es «normal»: es un error que se dice, no algo que se calla.
+    return Object.keys(obj).length > 0 ? obj : 'invalido';
   }
 
   function textoResumenHorario(hObj) {
-    if (!hObj) return 'Normal de la obra (7,5 h L–V)';
+    if (!hObj) return jornadaBaseH === null ? 'Normal de la obra' : 'Normal de la obra (' + formatearNum(jornadaBaseH) + ' h L–V)';
     return formatearHorarioCorto(hObj);
+  }
+
+  function fichaDeCatalogo(nombre) {
+    var clave = window.PersonalCalculo.claveNombre(nombre);
+    for (var i = 0; i < catalogo.length; i++) {
+      if (catalogo[i] && window.PersonalCalculo.claveNombre(catalogo[i].nombre) === clave) return catalogo[i];
+    }
+    return null;
+  }
+
+  // Cómo quedará la persona cuando el PC aplique lo preparado: lo que ya tenía en la base con los cambios preparados encima.
+  // Un oficio o un horario vacío en lo preparado quiere decir «no se toca»; solo «quitar» (quitaCategoria / quitaHorario) lo borra.
+  function datosEfectivos(prep, ficha) {
+    var cat = ficha ? limpiarNombreGen(ficha.categoria || '') : '';
+    var hor = ficha && ficha.horario_preferido ? ficha.horario_preferido : null;
+    var emp = ficha ? limpiarNombreGen(ficha.empresa || '') : '';
+    if (prep) {
+      emp = prep.empresa || '';
+      if (prep.quitaCategoria) cat = '';
+      else if (prep.categoria) cat = prep.categoria;
+      if (prep.quitaHorario) hor = null;
+      else if (prep.horario) hor = prep.horario;
+    }
+    return { empresa: emp, categoria: cat, horario: hor };
+  }
+
+  // La fila de lo preparado tal como se ve: oficio y horario son los que tendrá la persona, no solo lo que se tecleó esta vez.
+  function vistaDeCambio(item) {
+    if (item.esBaja) return item;
+    var ef = datosEfectivos(item, fichaDeCatalogo(item.nombre));
+    var v = {};
+    for (var k in item) {
+      if (Object.prototype.hasOwnProperty.call(item, k)) v[k] = item[k];
+    }
+    v.categoria = ef.categoria;
+    v.horarioTexto = textoResumenHorario(ef.horario);
+    return v;
+  }
+
+  function crearBajaDe(limpio) {
+    var ficha = fichaDeCatalogo(limpio);
+    return {
+      nombre: ficha ? limpiarNombreGen(ficha.nombre) : limpio,
+      empresa: ficha ? limpiarNombreGen(ficha.empresa || '') : resolverEmpresaGenerar(),
+      categoria: ficha ? limpiarNombreGen(ficha.categoria || '') : '',
+      horarioTexto: textoResumenHorario(ficha ? ficha.horario_preferido : null),
+      esBaja: true
+    };
   }
 
   function estaEnBajas(nombre) {
@@ -1326,8 +1429,9 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       var empEfectiva = prep ? (prep.empresa || '') : limpiarNombreGen(f.empresa || '');
       if (window.PersonalCalculo.claveEmpresa(empEfectiva) !== claveEmp) continue;
 
-      var catEfectiva = prep ? (prep.categoria || '') : limpiarNombreGen(f.categoria || '');
-      var horEfectivo = prep ? prep.horario : (f.horario_preferido || null);
+      var ef = datosEfectivos(prep, f);
+      var catEfectiva = ef.categoria;
+      var horEfectivo = ef.horario;
       var item = {
         nombre: nom,
         empresa: empEfectiva,
@@ -1379,6 +1483,24 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         }
       }
       if (idx >= 0) {
+        var previo = genPreparados[idx];
+        // Lo que ya estaba preparado y esta vez no se toca se conserva: un oficio preparado no se pierde por preparar luego un horario.
+        if (!c.categoria && !c.quitaCategoria) {
+          if (previo.categoria) c.categoria = previo.categoria;
+          else if (previo.quitaCategoria) c.quitaCategoria = true;
+        }
+        if (!c.horario && !c.quitaHorario) {
+          if (previo.horario) {
+            c.horario = previo.horario;
+            c.horarioTexto = previo.horarioTexto;
+          } else if (previo.quitaHorario) {
+            c.quitaHorario = true;
+          }
+        }
+        if (c.pasaDe === undefined && previo.pasaDe !== undefined &&
+            window.PersonalCalculo.claveEmpresa(previo.pasaDe) !== window.PersonalCalculo.claveEmpresa(c.empresa || '')) {
+          c.pasaDe = previo.pasaDe;
+        }
         genPreparados[idx] = c;
       } else {
         genPreparados.push(c);
@@ -1394,22 +1516,37 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       return window.PersonalCalculo.claveNombre(x.nombre) !== clave;
     });
     if (estaEnBajas(limpio)) return;
-    var ficha = null;
-    for (var i = 0; i < catalogo.length; i++) {
-      if (catalogo[i] && window.PersonalCalculo.claveNombre(catalogo[i].nombre) === clave) {
-        ficha = catalogo[i];
-        break;
-      }
-    }
-    genBajas.push({
-      nombre: ficha ? limpiarNombreGen(ficha.nombre) : limpio,
-      empresa: ficha ? limpiarNombreGen(ficha.empresa || '') : resolverEmpresaGenerar(),
-      categoria: ficha ? limpiarNombreGen(ficha.categoria || '') : '',
-      horarioTexto: textoResumenHorario(ficha ? ficha.horario_preferido : null),
-      esBaja: true
-    });
+    var baja = crearBajaDe(limpio);
+    genBajas.push(baja);
     genMensajeError = '';
-    genMensajeOk = '«' + (ficha ? limpiarNombreGen(ficha.nombre) : limpio) + '» se ha marcado para quitar de la base de trabajadores.';
+    genMensajeOk = '«' + baja.nombre + '» se ha marcado para quitar de la base de trabajadores.';
+    pintarGenerar();
+  }
+
+  // «Quitar oficio» y «Volver a horario normal»: un oficio vacío o el horario «normal» del formulario quieren decir «no lo toques»,
+  // así que quitar es una orden aparte, y el fichero la lleva con todas sus letras (oficio vacío / horario vacío).
+  function prepararQuitar(nombre, que) {
+    var ficha = fichaDeCatalogo(nombre);
+    if (!ficha) return;
+    var nom = limpiarNombreGen(ficha.nombre);
+    var prep = buscarEnPreparados(nom);
+    var c = prep ? JSON.parse(JSON.stringify(prep)) : {
+      nombre: nom, empresa: limpiarNombreGen(ficha.empresa || ''), categoria: '', horario: null,
+      horarioTexto: textoResumenHorario(null), yaEnBase: true
+    };
+    if (que === 'oficio') {
+      c.categoria = '';
+      c.quitaCategoria = true;
+    } else {
+      c.horario = null;
+      c.horarioTexto = textoResumenHorario(null);
+      c.quitaHorario = true;
+    }
+    insertarCandidatosEnPreparados([c]);
+    genPregunta = null;
+    genMensajeError = '';
+    genMensajeOk = '«' + nom + '» ' + (que === 'oficio' ? 'se queda sin oficio' : 'vuelve al horario normal') +
+      ' (queda preparado; todavía no se ha enviado).';
     pintarGenerar();
   }
 
@@ -1435,7 +1572,8 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     var prep = buscarEnPreparados(nombre);
     genModo = 'uno';
     genNombre = prep ? prep.nombre : (ficha ? limpiarNombreGen(ficha.nombre) : limpiarNombreGen(nombre));
-    var cat = prep ? (prep.categoria || '') : (ficha ? limpiarNombreGen(ficha.categoria || '') : '');
+    var ef = datosEfectivos(prep, ficha);
+    var cat = ef.categoria;
     var oficiosConocidos = ['', 'Oficial 1ª', 'Oficial 2ª', 'Oficial 3ª', 'Ayudante', 'Encargado'];
     if (oficiosConocidos.indexOf(cat) >= 0) {
       genCategoriaSel = cat;
@@ -1444,13 +1582,11 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       genCategoriaSel = '__otra__';
       genCategoriaOtra = cat;
     }
-    var hor = prep ? prep.horario : (ficha ? ficha.horario_preferido : null);
+    var hor = ef.horario;
     if (!hor) {
       genHorarioTipo = 'normal';
-    } else if (hor.lun === 8 && hor.mar === 8 && hor.mie === 8 && hor.jue === 8 && hor.vie === 8 && !hor.sab && !hor.dom) {
-      genHorarioTipo = '8h';
-    } else if (hor.lun === 8 && hor.mar === 8 && hor.mie === 8 && hor.jue === 8 && hor.vie === 6 && !hor.sab && !hor.dom) {
-      genHorarioTipo = 'intensiva';
+    } else if (horarioFijoDe(hor)) {
+      genHorarioTipo = horarioFijoDe(hor).id;
     } else {
       genHorarioTipo = 'personalizado';
       for (var d = 0; d < DIAS_CLAVES.length; d++) {
@@ -1834,6 +1970,209 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     pintarGenerar();
   }
 
+  /* BORRADOR DE GENERAR: INICIO (lo único de esta página que usa el almacenamiento del navegador: guarda lo preparado, nada más) */
+  var CLAVE_BORRADOR_GENERAR = 'sagarde_personal_generar_v1';
+  var genMemoriaFalla = false; // el navegador no deja guardar lo preparado
+  var genRecuperado = null;    // lo que se encontró guardado al abrir la página: { n, cuando, aplicados, perdidos, ilegible }
+  var genDescargado = null;    // el fichero que se guardó y la lista tal como estaba entonces: { firma, cuando, nombre, cuantos }
+
+  function leerBorradorGenerar() {
+    var texto;
+    try {
+      texto = window.localStorage.getItem(CLAVE_BORRADOR_GENERAR);
+    } catch (e) {
+      return { ok: false, motivo: 'bloqueado', datos: null };
+    }
+    if (!texto) return { ok: true, datos: null };
+    try {
+      return { ok: true, datos: JSON.parse(texto) };
+    } catch (e2) {
+      return { ok: false, motivo: 'ilegible', datos: null };
+    }
+  }
+
+  function guardarBorradorGenerar() {
+    try {
+      if (genPreparados.length === 0 && genBajas.length === 0) {
+        window.localStorage.removeItem(CLAVE_BORRADOR_GENERAR);
+      } else {
+        window.localStorage.setItem(CLAVE_BORRADOR_GENERAR, JSON.stringify({
+          version: 1, guardado: new Date().toISOString(), preparados: genPreparados, bajas: genBajas, descargado: genDescargado
+        }));
+      }
+      genMemoriaFalla = false;
+    } catch (e) {
+      genMemoriaFalla = true;
+    }
+  }
+  /* BORRADOR DE GENERAR: FIN */
+
+  function horarioValidoGen(h) {
+    if (h === null) return true;
+    if (!h || typeof h !== 'object' || Array.isArray(h)) return false;
+    var ks = Object.keys(h);
+    if (ks.length === 0) return false;
+    for (var i = 0; i < ks.length; i++) {
+      if (DIAS_CLAVES.indexOf(ks[i]) < 0 || typeof h[ks[i]] !== 'number' || !isFinite(h[ks[i]]) || h[ks[i]] < 0 || h[ks[i]] > 24) return false;
+    }
+    return true;
+  }
+
+  // Lo guardado no se fía: se vuelve a comprobar cada cosa como si la acabaras de teclear.
+  function limpiarPreparadoGuardado(x) {
+    if (!x || typeof x !== 'object' || typeof x.nombre !== 'string') return null;
+    var nom = limpiarNombreGen(x.nombre);
+    if (validarTextoPublicable(nom, 'el nombre')) return null;
+    var emp = typeof x.empresa === 'string' ? limpiarNombreGen(x.empresa) : '';
+    if (emp && validarTextoPublicable(emp, 'la empresa')) return null;
+    var cat = typeof x.categoria === 'string' ? limpiarNombreGen(x.categoria) : '';
+    if (cat && validarTextoPublicable(cat, 'el oficio')) return null;
+    var h = x.horario === undefined ? null : x.horario;
+    if (!horarioValidoGen(h)) return null;
+    var hor = h ? copiarHorario(h) : null;
+    var clave = window.PersonalCalculo.claveNombre(nom);
+    var c = {
+      nombre: nom, empresa: emp, categoria: cat, horario: hor, horarioTexto: textoResumenHorario(hor),
+      yaEnBase: catalogo.some(function (f) {
+        return f && f.activo !== false && window.PersonalCalculo.claveNombre(f.nombre) === clave;
+      })
+    };
+    if (x.quitaCategoria === true && !cat) c.quitaCategoria = true;
+    if (x.quitaHorario === true && !hor) c.quitaHorario = true;
+    if (x.vuelve === true) c.vuelve = true;
+    if (typeof x.pasaDe === 'string') c.pasaDe = limpiarNombreGen(x.pasaDe);
+    return c;
+  }
+
+  // ¿El PC ya aplicó este cambio? Entonces la base lo trae publicado y no hace falta guardarlo más.
+  function cambioYaAplicado(c) {
+    var f = fichaDeCatalogo(c.nombre);
+    if (!f || f.activo === false) return false;
+    if (window.PersonalCalculo.claveEmpresa(f.empresa || '') !== window.PersonalCalculo.claveEmpresa(c.empresa || '')) return false;
+    var cat = limpiarNombreGen(f.categoria || '');
+    if (c.quitaCategoria ? cat !== '' : (c.categoria && window.PersonalCalculo.claveNombre(cat) !== window.PersonalCalculo.claveNombre(c.categoria))) return false;
+    if (c.quitaHorario ? Boolean(f.horario_preferido) : (c.horario && !mismoHorarioGen(c.horario, f.horario_preferido))) return false;
+    return true;
+  }
+
+  function bajaYaAplicada(b) {
+    var f = fichaDeCatalogo(b.nombre);
+    return !f || f.activo === false;
+  }
+
+  function restaurarBorradorGenerar() {
+    var lectura = leerBorradorGenerar();
+    if (!lectura.ok) {
+      if (lectura.motivo === 'bloqueado') genMemoriaFalla = true;
+      else genRecuperado = { ilegible: true };
+      return;
+    }
+    var d = lectura.datos;
+    if (!d) return;
+    if (typeof d !== 'object' || d.version !== 1 || !Array.isArray(d.preparados) || !Array.isArray(d.bajas)) {
+      genRecuperado = { ilegible: true };
+      return;
+    }
+    var aplicados = 0;
+    var perdidos = 0;
+    d.preparados.forEach(function (x) {
+      var c = limpiarPreparadoGuardado(x);
+      if (!c) perdidos++;
+      else if (buscarEnPreparados(c.nombre)) perdidos++;
+      else if (cambioYaAplicado(c)) aplicados++;
+      else genPreparados.push(c);
+    });
+    d.bajas.forEach(function (x) {
+      var nom = x && typeof x === 'object' && typeof x.nombre === 'string' ? limpiarNombreGen(x.nombre) : '';
+      if (!nom || validarTextoPublicable(nom, 'el nombre')) {
+        perdidos++;
+        return;
+      }
+      var b = crearBajaDe(nom);
+      if (estaEnBajas(b.nombre) || buscarEnPreparados(b.nombre)) perdidos++;
+      else if (bajaYaAplicada(b)) aplicados++;
+      else genBajas.push(b);
+    });
+    if (d.descargado && typeof d.descargado.firma === 'string' && typeof d.descargado.cuando === 'string' &&
+        typeof d.descargado.nombre === 'string') {
+      genDescargado = d.descargado;
+    }
+    genRecuperado = {
+      n: genPreparados.length + genBajas.length,
+      cuando: typeof d.guardado === 'string' ? d.guardado : '',
+      aplicados: aplicados,
+      perdidos: perdidos
+    };
+  }
+
+  // Lo preparado, en un solo texto que cambia con cualquier cambio de la lista (sirve para saber si el fichero guardado sigue valiendo).
+  function firmaCambios() {
+    var partes = genPreparados.map(function (c) {
+      return ['P', window.PersonalCalculo.claveNombre(c.nombre), window.PersonalCalculo.claveEmpresa(c.empresa || ''), c.categoria || '',
+        c.quitaCategoria ? 1 : 0, JSON.stringify(c.horario || null), c.quitaHorario ? 1 : 0, c.yaEnBase ? 1 : 0].join('|');
+    }).concat(genBajas.map(function (b) {
+      return 'B|' + window.PersonalCalculo.claveNombre(b.nombre);
+    }));
+    return partes.sort().join(';');
+  }
+
+  function fechaHoraCorta(iso) {
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    return String(d.getDate()).padStart(2, '0') + '/' + String(d.getMonth() + 1).padStart(2, '0') + ' a las ' +
+      String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0');
+  }
+
+  function nCambios(n) {
+    return n === 1 ? '1 cambio' : n + ' cambios';
+  }
+
+  // El aviso de arriba de la pestaña: qué hay preparado, si el fichero ya se guardó y los tres pasos que faltan (F8).
+  function bannerBorradorHTML() {
+    var n = genPreparados.length + genBajas.length;
+    var h = '';
+    if (genRecuperado) {
+      if (genRecuperado.ilegible) {
+        h += '<p class="aviso" id="gen-borrador-ilegible" role="alert">⚠ Había una lista de cambios guardada en este aparato, pero no se ha podido leer: ' +
+          'se ha descartado. Si faltaba algo, vuelve a prepararlo.</p>';
+      }
+      if (genRecuperado.n > 0) {
+        var cuando = genRecuperado.cuando ? fechaHoraCorta(genRecuperado.cuando) : '';
+        h += '<p class="nota" id="gen-recuperado" role="status" style="margin:6px 0">Se ' + (genRecuperado.n === 1 ? 'ha recuperado 1 cambio que dejaste' : 'han recuperado ' + genRecuperado.n + ' cambios que dejaste') +
+          ' preparados' + (cuando ? ' (' + cuando + ')' : '') + '.</p>';
+      }
+      if (genRecuperado.aplicados > 0) {
+        h += '<p class="nota" id="gen-ya-aplicados" role="status" style="margin:6px 0">' + nCambios(genRecuperado.aplicados) +
+          (genRecuperado.aplicados === 1 ? ' que habías preparado ya está aplicado' : ' que habías preparado ya están aplicados') +
+          ' en la base y se ha quitado de la lista.</p>';
+      }
+      if (genRecuperado.perdidos > 0) {
+        h += '<p class="aviso" id="gen-borrador-perdidos" role="alert">⚠ ' + nCambios(genRecuperado.perdidos) +
+          (genRecuperado.perdidos === 1 ? ' guardado no se ha podido recuperar' : ' guardados no se han podido recuperar') + ': revisa la lista.</p>';
+      }
+    }
+    if (n > 0) {
+      if (genDescargado && genDescargado.firma === firmaCambios()) {
+        var cuandoF = fechaHoraCorta(genDescargado.cuando);
+        h += '<div class="aviso-ok" id="gen-fichero-guardado" role="status">' +
+          '<p style="margin:0 0 6px"><b>✓ Fichero guardado con ' + nCambios(n) + (cuandoF ? ' (' + cuandoF + ')' : '') + '.</b> Falta llevarlo al PC: ' +
+          'hasta que el PC lo aplique, la base no cambia y estos cambios siguen aquí.</p>' +
+          '<ol class="pasos" id="gen-pasos" style="margin:0 0 0 18px;padding:0">' +
+          '<li>Se ha guardado el fichero «' + escaparHtml(genDescargado.nombre) + '» en las descargas de este aparato.</li>' +
+          '<li>Pásalo al PC como haces con las revisiones y déjalo en la carpeta REVISIONES de cualquier obra.</li>' +
+          '<li>En el PC, pídele a Claude «actualiza la obra» (o ejecuta el .bat).</li></ol></div>';
+      } else {
+        h += '<div class="aviso" id="gen-sin-enviar" role="status">Tienes ' + nCambios(n) + ' sin enviar.' +
+          (genMemoriaFalla ? '' : ' Se guardan en este aparato aunque cierres o recargues la página.') + '</div>';
+      }
+      if (genMemoriaFalla) {
+        h += '<p class="aviso" id="gen-memoria-falla" role="alert">⚠ Este navegador no deja guardar lo preparado: si cierras o recargas la página, se pierde. ' +
+          'Guarda el fichero antes de salir.</p>';
+      }
+    }
+    return h;
+  }
+
   function descargarFicheroControlHorario() {
     if (genPreparados.length === 0 && genBajas.length === 0) return;
 
@@ -1851,9 +2190,13 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       listaEmpresas.push({ nombre: p.nombre, empresa: p.empresa || '' });
       if (p.categoria) {
         listaCategorias.push({ nombre: p.nombre, categoria: p.categoria });
+      } else if (p.quitaCategoria) {
+        listaCategorias.push({ nombre: p.nombre, categoria: '' }); // oficio vacío = «quitar el oficio»
       }
       if (p.horario) {
         mapaHorariosPref[p.nombre] = p.horario;
+      } else if (p.quitaHorario) {
+        mapaHorariosPref[p.nombre] = {}; // horario vacío = «volver al horario normal»
       }
     }
 
@@ -1861,18 +2204,15 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       nombresBajas.push(genBajas[b].nombre);
     }
 
-    var claveAltas = 'alt' + 'as';
-    var claveBajas = 'baj' + 'as';
-    var claveTipo = 'lote_personal';
     var paquete = {
-      tipo: claveTipo,
+      tipo: 'lote_personal',
       version: 1,
       obra: 'sagarde',
       jornadas: [],
       dispositivo: 'Personal Sagarde PC'
     };
-    if (nombresNuevos.length > 0) paquete[claveAltas] = nombresNuevos;
-    if (nombresBajas.length > 0) paquete[claveBajas] = nombresBajas;
+    if (nombresNuevos.length > 0) paquete.altas = nombresNuevos;
+    if (nombresBajas.length > 0) paquete.bajas = nombresBajas;
     if (listaEmpresas.length > 0) paquete.empresas = listaEmpresas;
     if (listaCategorias.length > 0) paquete.categorias = listaCategorias;
     if (Object.keys(mapaHorariosPref).length > 0) {
@@ -1883,8 +2223,8 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     var dd = String(hoy.getDate()).padStart(2, '0');
     var mm = String(hoy.getMonth() + 1).padStart(2, '0');
     var yyyy = String(hoy.getFullYear());
-    var ext = '.' + 'js' + 'on';
-    var nombreFichero = 'BASE TRABAJADORES SAGARDE ' + dd + mm + yyyy + ext;
+    var nombreBase = 'BASE TRABAJADORES SAGARDE ' + dd + mm + yyyy;
+    var nombreFichero = nombreBase + '.json';
 
     var contenido = JSON.stringify(paquete, null, 2) + '\n';
     var blob = new Blob([contenido], { type: 'application/octet-stream' });
@@ -1897,13 +2237,29 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     enlace.remove();
     setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
 
-    genMensajeOk = 'Fichero de la base de trabajadores de Sagarde descargado. Al actualizar con Actualizar_Sagarde.bat los cambios quedarán guardados en la base de trabajadores para todas las obras.';
+    // Lo que viene después no es "listo": el fichero está en las descargas, pero la base no cambia hasta que el PC lo aplique (F8).
+    genMensajeError = '';
+    genMensajeOk = '';
+    genDescargado = { firma: firmaCambios(), cuando: hoy.toISOString(), nombre: nombreBase, cuantos: genPreparados.length + genBajas.length };
     pintarGenerar();
+  }
+
+  // «Quitar oficio» y «Volver a horario normal» solo salen a quien tiene oficio u horario propio.
+  function botonesQuitar(trab) {
+    var h = '';
+    if (trab.categoria) {
+      h += '<button type="button" class="btn-accion peq-btn" data-gen-quitar-oficio="' + escaparHtml(trab.nombre) + '">Quitar oficio</button> ';
+    }
+    if (trab.horario) {
+      h += '<button type="button" class="btn-accion peq-btn" data-gen-quitar-horario="' + escaparHtml(trab.nombre) + '">Volver a horario normal</button> ';
+    }
+    return h;
   }
 
   function pintarGenerar() {
     var cont = document.getElementById('contenido-generar');
     if (!cont) return;
+    guardarBorradorGenerar(); // cada vez que algo cambia, lo preparado queda guardado (antes de pintar, para que el aviso diga la verdad)
 
     var conocidas = window.PersonalCalculo.empresasConocidas(filas, catalogo);
     if (!genEmpresaSel) {
@@ -1945,7 +2301,14 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       opcionesCat += '<option value="' + escaparHtml(oficios[ci][0]) + '"' + sc + '>' + escaparHtml(oficios[ci][1]) + '</option>';
     }
 
-    var html = '';
+    var opcionesHorario = '<option value="normal"' + (genHorarioTipo === 'normal' ? ' selected' : '') + '>' + escaparHtml(textoHorarioNormal()) + '</option>';
+    for (var hf = 0; hf < HORARIOS_FIJOS.length; hf++) {
+      opcionesHorario += '<option value="' + escaparHtml(HORARIOS_FIJOS[hf].id) + '"' + (genHorarioTipo === HORARIOS_FIJOS[hf].id ? ' selected' : '') + '>' +
+        escaparHtml(HORARIOS_FIJOS[hf].texto + ' (' + formatearNum(horasDeLaSemana(HORARIOS_FIJOS[hf].horas)) + ' h)') + '</option>';
+    }
+    opcionesHorario += '<option value="personalizado"' + (genHorarioTipo === 'personalizado' ? ' selected' : '') + '>Personalizado por día (L–D)</option>';
+
+    var html = bannerBorradorHTML();
     if (genMensajeError) html += '<p class="aviso" id="gen-error" role="alert">⚠ ' + escaparHtml(genMensajeError) + '</p>';
     if (genMensajeOk) html += '<div class="aviso-ok" id="gen-ok" role="status">✓ ' + escaparHtml(genMensajeOk) + '</div>';
 
@@ -1966,21 +2329,19 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       : (empActual || (genEmpresaSel === '__nueva__' ? 'Nueva empresa' : genEmpresaSel));
 
     html += '<div class="gen-grid">' +
-      '<label class="gen-campo">1. Empresa' +
+      '<div class="gen-campo"><label for="gen-empresa">1. Empresa</label>' +
       '<select class="campo" id="gen-empresa" aria-label="Empresa">' + opcionesEmp + '</select>' +
       (genEmpresaSel === '__nueva__'
         ? '<input class="campo" id="gen-empresa-nueva" type="text" maxlength="60" autocomplete="off" placeholder="Escribe el nombre de la nueva empresa" aria-label="Nombre de la nueva empresa" value="' + escaparHtml(genEmpresaNueva) + '">'
         : '') +
-      '<span class="gen-chk"><input type="checkbox" id="gen-autonomo"' + (genEsAutonomo ? ' checked' : '') + '> Es autónomo (añadir @AUT)</span>' +
-      '</label>' +
+      // Su propia etiqueta (no dentro de la de la empresa: allí, pulsar el texto abría el desplegable en vez de marcar la casilla)
+      '<label class="gen-chk"><input type="checkbox" id="gen-autonomo"' + (genEsAutonomo ? ' checked' : '') + '> Es autónomo (añadir @AUT)</label>' +
+      '</div>' +
       '<label class="gen-campo">2. Horario particular preferido' +
       '<select class="campo" id="gen-horario-tipo" aria-label="Horario particular preferido">' +
-      '<option value="normal"' + (genHorarioTipo === 'normal' ? ' selected' : '') + '>Horario normal de la obra (7,5 h L–V)</option>' +
-      '<option value="8h"' + (genHorarioTipo === '8h' ? ' selected' : '') + '>8 horas de lunes a viernes (40 h)</option>' +
-      '<option value="intensiva"' + (genHorarioTipo === 'intensiva' ? ' selected' : '') + '>8 h de lunes a jueves y 6 h el viernes (38 h)</option>' +
-      '<option value="personalizado"' + (genHorarioTipo === 'personalizado' ? ' selected' : '') + '>Personalizado por día (L–D)</option>' +
+      opcionesHorario +
       '</select>' +
-      '<small>Se cargará solo al elegir al trabajador en el Control Horario.</small></label>' +
+      '<small>Se cargará solo al elegir al trabajador en el Control Horario. «Horario normal» no cambia el que ya tenga: para quitárselo, usa «Volver a horario normal» en su fila.</small></label>' +
       '</div>';
 
     if (genHorarioTipo === 'personalizado') {
@@ -2008,7 +2369,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     } else if (empleadosEmpresa.length === 0) {
       html += '<p class="empty" style="padding:10px 0">No hay trabajadores almacenados en «' + escaparHtml(etiquetaEmpresaActual) + '». Añádelos abajo.</p>';
     } else {
-      html += '<div class="base-scroll"><table class="gen-tabla" id="tabla-empresa-actual"><thead><tr>' +
+      html += '<div class="base-scroll"><table class="gen-tabla tarjetas" id="tabla-empresa-actual"><thead><tr>' +
         '<th>Nombre</th>' +
         '<th>Oficio</th>' +
         '<th>Horario preferido</th>' +
@@ -2030,20 +2391,22 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         } else if (trab.modificado) {
           chipSituacion = '<span class="chip etq-emp">Cambio preparado</span>';
           botonesAccion = '<button type="button" class="btn-accion peq-btn" data-gen-editar-emp="' + escaparHtml(trab.nombre) + '">Editar</button> ' +
+            botonesQuitar(trab) +
             '<button type="button" class="btn-accion peq-btn" data-gen-quitar-prep="' + escaparHtml(trab.nombre) + '">Deshacer cambio</button> ' +
             '<button type="button" class="btn-accion peq-btn" data-gen-baja="' + escaparHtml(trab.nombre) + '">Quitar empleado</button>';
         } else {
           chipSituacion = '<span class="chip">Almacenado</span>';
           botonesAccion = '<button type="button" class="btn-accion peq-btn" data-gen-editar-emp="' + escaparHtml(trab.nombre) + '">Editar</button> ' +
+            botonesQuitar(trab) +
             '<button type="button" class="btn-accion peq-btn" data-gen-baja="' + escaparHtml(trab.nombre) + '">Quitar empleado</button>';
         }
 
         html += '<tr data-emp-trabajador="' + escaparHtml(trab.nombre) + '">' +
-          '<td class="b-nom">' + escaparHtml(trab.nombre) + '</td>' +
-          '<td>' + (trab.categoria ? escaparHtml(trab.categoria) : '<span class="sinj">–</span>') + '</td>' +
-          '<td>' + escaparHtml(trab.horarioTexto) + '</td>' +
-          '<td>' + chipSituacion + '</td>' +
-          '<td>' + botonesAccion + '</td>' +
+          '<td class="b-nom t-tit">' + escaparHtml(trab.nombre) + '</td>' +
+          '<td data-etq="Oficio">' + (trab.categoria ? escaparHtml(trab.categoria) : '<span class="sinj">–</span>') + '</td>' +
+          '<td data-etq="Horario preferido">' + escaparHtml(trab.horarioTexto) + '</td>' +
+          '<td data-etq="En la base">' + chipSituacion + '</td>' +
+          '<td class="t-acc">' + botonesAccion + '</td>' +
           '</tr>';
       }
 
@@ -2070,6 +2433,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         (genCategoriaSel === '__otra__'
           ? '<input class="campo" id="gen-categoria-otra" type="text" maxlength="60" autocomplete="off" placeholder="Escribe el oficio" aria-label="Escribir oficio" value="' + escaparHtml(genCategoriaOtra) + '">'
           : '') +
+        '<small>«Sin oficio indicado» no cambia el que ya tenga: para quitárselo, usa «Quitar oficio» en su fila.</small>' +
         '</label></div>';
     } else {
       html += '<div style="margin:12px 0"><label class="gen-campo" style="margin-bottom:8px">3. Nombres de los trabajadores (todos con la empresa y horario de arriba)</label>';
@@ -2106,8 +2470,8 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     if (todosCambios.length === 0) {
       html += '<p class="empty">Todavía no has añadido ni quitado ningún empleado en esta sesión.</p>';
     } else {
-      var prepOrd = ordenarPreparados(todosCambios);
-      html += '<div class="base-scroll"><table class="gen-tabla" id="tabla-generar"><thead><tr>' +
+      var prepOrd = ordenarPreparados(todosCambios.map(vistaDeCambio));
+      html += '<div class="base-scroll"><table class="gen-tabla tarjetas" id="tabla-generar"><thead><tr>' +
         '<th' + attrOrden('nombre', genOrdenCol, genOrdenDir, 'data-col-gen', false) + '>Nombre</th>' +
         '<th' + attrOrden('empresa', genOrdenCol, genOrdenDir, 'data-col-gen', false) + '>Empresa</th>' +
         '<th' + attrOrden('categoria', genOrdenCol, genOrdenDir, 'data-col-gen', false) + '>Oficio</th>' +
@@ -2124,26 +2488,37 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
             ? '<span class="chip etq-emp">Cambia de empresa</span>'
             : (item.vuelve
               ? '<span class="chip etq-aut">Vuelve a la base</span>'
-              : (item.yaEnBase ? '<span class="chip etq-emp">Actualiza ficha</span>' : '<span class="chip etq-aut">Trabajador nuevo</span>')));
+              : (item.quitaCategoria || item.quitaHorario
+                ? '<span class="chip etq-emp">' + (item.quitaCategoria && item.quitaHorario ? 'Quita oficio y horario' : (item.quitaCategoria ? 'Quita el oficio' : 'Vuelve a horario normal')) + '</span>'
+                : (item.yaEnBase ? '<span class="chip etq-emp">Actualiza ficha</span>' : '<span class="chip etq-aut">Trabajador nuevo</span>'))));
         var btnQuitarFila = item.esBaja
           ? '<button type="button" class="btn-accion peq-btn" data-gen-deshacer-baja="' + escaparHtml(item.nombre) + '">Deshacer</button>'
           : '<button type="button" class="btn-accion peq-btn" data-gen-quitar-prep="' + escaparHtml(item.nombre) + '">Quitar</button>';
 
         html += '<tr data-gen-preparado="' + escaparHtml(item.nombre) + '">' +
-          '<td class="b-nom">' + escaparHtml(item.nombre) + '</td>' +
-          '<td>' + (item.empresa ? '<span class="nom-emp">' + escaparHtml(item.empresa) + '</span>' : '<span class="sinj">Sin empresa</span>') +
+          '<td class="b-nom t-tit">' + escaparHtml(item.nombre) + '</td>' +
+          '<td data-etq="Empresa">' + (item.empresa ? '<span class="nom-emp">' + escaparHtml(item.empresa) + '</span>' : '<span class="sinj">Sin empresa</span>') +
           (item.pasaDe !== undefined ? '<div class="sinj">antes: ' + escaparHtml(item.pasaDe || 'sin empresa') + '</div>' : '') + '</td>' +
-          '<td>' + (item.categoria ? escaparHtml(item.categoria) : '<span class="sinj">–</span>') + '</td>' +
-          '<td>' + escaparHtml(item.horarioTexto) + '</td>' +
-          '<td>' + etqCambio + '</td>' +
-          '<td>' + btnQuitarFila + '</td>' +
+          '<td data-etq="Oficio">' + (item.categoria ? escaparHtml(item.categoria) : '<span class="sinj">–</span>') + '</td>' +
+          '<td data-etq="Horario preferido">' + escaparHtml(item.horarioTexto) + '</td>' +
+          '<td data-etq="Cambio">' + etqCambio + '</td>' +
+          '<td class="t-acc">' + btnQuitarFila + '</td>' +
           '</tr>';
       }
       html += '</tbody></table></div>';
 
+      if (genConfirmarVaciar) {
+        html += '<div class="aviso" id="gen-confirmar-vaciar" role="alert">' +
+          '<p style="margin:0 0 8px">' + (todosCambios.length === 1 ? 'Vas a borrar el cambio que tienes preparado.' : 'Vas a borrar los ' + todosCambios.length + ' cambios que tienes preparados.') +
+          ' Después no se pueden recuperar. ¿Seguro?</p>' +
+          '<div class="gen-acciones" style="margin:0">' +
+          '<button type="button" class="btn-accion pri" id="btn-gen-vaciar-si">Sí, empezar de cero</button>' +
+          '<button type="button" class="btn-accion" id="btn-gen-vaciar-no">No, conservarlos</button>' +
+          '</div></div>';
+      }
       html += '<div class="gen-acciones" style="margin-top:14px">' +
         '<button type="button" class="btn-accion acento" id="btn-gen-descargar">Guardar cambios de la base (' + todosCambios.length + ')</button>' +
-        '<button type="button" class="btn-accion" id="btn-gen-vaciar">Vaciar cambios</button>' +
+        '<button type="button" class="btn-accion" id="btn-gen-vaciar">Empezar de cero</button>' +
         '</div>';
       html += '<p class="nota">Una vez actualizado en la base de trabajadores, ya podrás elegirlo y colocarlo en cualquier obra desde la aplicación de generar horarios.</p>';
     }
@@ -2213,6 +2588,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
 
     cont.addEventListener('click', function (ev) {
       leerCamposGenerarDesdeDOM();
+      if (!ev.target.closest('#btn-gen-vaciar, #btn-gen-vaciar-si, #btn-gen-vaciar-no')) genConfirmarVaciar = false;
 
       var btnModo = ev.target.closest('[data-gen-modo]');
       if (btnModo) {
@@ -2302,6 +2678,18 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
         return;
       }
 
+      var btnQuitarOficio = ev.target.closest('[data-gen-quitar-oficio]');
+      if (btnQuitarOficio) {
+        prepararQuitar(btnQuitarOficio.getAttribute('data-gen-quitar-oficio'), 'oficio');
+        return;
+      }
+
+      var btnQuitarHorario = ev.target.closest('[data-gen-quitar-horario]');
+      if (btnQuitarHorario) {
+        prepararQuitar(btnQuitarHorario.getAttribute('data-gen-quitar-horario'), 'horario');
+        return;
+      }
+
       var btnQuitarPrep = ev.target.closest('[data-gen-quitar-prep]');
       if (btnQuitarPrep) {
         var nomQuitar = btnQuitarPrep.getAttribute('data-gen-quitar-prep');
@@ -2314,9 +2702,27 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
 
       var btnVaciar = ev.target.closest('#btn-gen-vaciar');
       if (btnVaciar) {
+        genConfirmarVaciar = true;
+        pintarGenerar();
+        return;
+      }
+
+      var btnVaciarNo = ev.target.closest('#btn-gen-vaciar-no');
+      if (btnVaciarNo) {
+        genConfirmarVaciar = false;
+        pintarGenerar();
+        return;
+      }
+
+      var btnVaciarSi = ev.target.closest('#btn-gen-vaciar-si');
+      if (btnVaciarSi) {
         genPreparados = [];
         genBajas = [];
         genMensajeOk = '';
+        genMensajeError = '';
+        genDescargado = null;
+        genRecuperado = null;
+        genConfirmarVaciar = false;
         pintarGenerar();
         return;
       }
@@ -2340,6 +2746,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       }
     });
 
+    restaurarBorradorGenerar();
     pintarGenerar();
   }
 
