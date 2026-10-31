@@ -613,6 +613,9 @@
       .envio li {
         margin: 4px 0;
       }
+      .envio .btn + .btn {
+        margin-top: 8px;
+      }
       .pasos {
         margin: 10px 0;
         padding-left: 22px;
@@ -993,6 +996,7 @@
           em: LS + 'empresas',
           uh: LS + 'ultimas_horas',
           ob: LS + 'ultima_obra',
+          cn: LS + 'sin_compartir',
         };
       // Textos de cobertura (en llano; los tres primeros los aprobó Bixente).
       const COB = {
@@ -1236,6 +1240,7 @@
         homonimo: null,
         prefill: null,
         listo: null,
+        compartirAviso: null,
         aviso: null,
         guardado: null,
         listaDe: null,
@@ -3516,7 +3521,9 @@
         return (
           `<div class="envio" data-obra="${E(id)}"><h3>${E(nombreObra(id))}</h3><ul>${lineas.join('')}</ul>` +
           `<p class="nota">Se llamará «${E(nombreFichero(id))}»</p>` +
-          `<button class="btn pri full" data-preparar="${E(id)}">Preparar el fichero para el PC</button></div>`
+          `<button class="btn pri full" data-preparar="${E(id)}">Preparar el fichero para el PC</button>` +
+          (compartirDisponible(id) ? `<button class="btn sec full" data-compartir="${E(id)}">Enviar con…</button>` : '') +
+          `</div>`
         );
       }
       // Bloque de los nombres corregidos y nuevos, que viajan dentro del fichero de cualquier obra.
@@ -3549,10 +3556,12 @@
           : ids.length
             ? 'Tienes cambios sin enviar:'
             : '';
+        let vias = ids.some(compartirDisponible) ? `<p id="envio-vias">${E(COMP.vias)}</p>` : '';
         let contenido = ids.length
-          ? `<p id="resumen-envio"><b>${E(resumen)}</b></p>${ids.map(envioObraHTML).join('')}${envioNombresHTML()}`
+          ? `<p id="resumen-envio"><b>${E(resumen)}</b></p>${vias}${ids.map(envioObraHTML).join('')}${envioNombresHTML()}`
           : `<div class="aviso" id="nada-que-enviar">No hay nada por enviar: todas las jornadas ya están en el PC.</div>`;
         let listo = a.listo ? `<div class="listo" id="listo" role="status">${E(a.listo)}</div>` : '';
+        if (a.compartirAviso) listo += `<div class="aviso" id="envio-fallo" role="status">${E(a.compartirAviso)}</div>`;
         return (
           `<div class="card" id="enviar"><h2>Enviar las jornadas al PC</h2>` +
           `<p id="para-que"><b>Para qué sirve:</b> la tablet apunta quién ha trabajado cada día, pero las ` +
@@ -3605,14 +3614,24 @@
         }));
         return { lote, nombre: nombreFichero(id), contenido: contenidoEnLlano(datos) };
       }
+      // El fichero de una obra listo para llevarlo al PC, o null si esa obra no tiene nada que enviar.
+      // Lo usan «Preparar el fichero para el PC» y «Enviar con…»: los dos parten del MISMO fichero.
+      function ficheroParaEnviar(id) {
+        if (!state.obras[id] && !pending.some((jornada) => jornada.obra === id)) return null;
+        let fichero = armarFichero(id);
+        return fichero.contenido ? fichero : null;
+      }
+      // Contenido del fichero tal como se escribe (descarga y «Enviar con…» lo sacan de aquí: no pueden diferir).
+      function textoDelFichero(lote) {
+        return JSON.stringify(lote, null, 1);
+      }
       // «Preparar el fichero para el PC»: descarga el fichero de la obra y deja a la vista el recuadro
       // «Listo» con su nombre y lo que lleva.
       function prepararFichero(id) {
-        if (!state.obras[id] && !pending.some((jornada) => jornada.obra === id)) return;
-        let fichero = armarFichero(id);
-        if (!fichero.contenido) return;
+        let fichero = ficheroParaEnviar(id);
+        if (!fichero) return;
         // Genera y dispara la descarga con un objeto Blob temporal
-        let url = URL.createObjectURL(new Blob([JSON.stringify(fichero.lote, null, 1)], { type: 'application/json' }));
+        let url = URL.createObjectURL(new Blob([textoDelFichero(fichero.lote)], { type: 'application/json' }));
         let enlace = document.createElement('a');
         enlace.href = url;
         enlace.download = fichero.nombre + '.json';
@@ -3620,7 +3639,112 @@
         enlace.click();
         enlace.remove();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
+        a.compartirAviso = null;
         a.listo = `Listo. Se ha guardado el fichero «${fichero.nombre}» con ${fichero.contenido}. Ahora mándalo al PC.`;
+        render();
+      }
+      // ---------------------------------------------------------------------------
+      // «Enviar con…» (MA7): el MISMO fichero por la hoja de compartir del aparato (OneDrive, WhatsApp…).
+      // Solo cambia cómo llega el fichero: mismo nombre, mismo contenido, mismo sitio de destino (la
+      // carpeta REVISIONES de la obra). La descarga de siempre sigue ahí. Las cuatro funciones de abajo no
+      // tocan la pantalla ni el reloj: se les pasa el navegador y la clase File (así se prueban solas).
+      // ---------------------------------------------------------------------------
+      // COMPARTIR: inicio
+      // El fichero para la hoja de compartir: mismo nombre y mismo tipo que la descarga.
+      function archivoParaCompartir(ClaseFile, nombre, texto) {
+        return new ClaseFile([texto], nombre + '.json', { type: 'application/json' });
+      }
+      // ¿Sabe este aparato compartir ficheros? Sin soporte (o sin permiso) el botón no se enseña.
+      function sabeCompartir(nav, ClaseFile, nombre) {
+        try {
+          if (!nav || typeof nav.share !== 'function' || typeof nav.canShare !== 'function') return false;
+          return !!nav.canShare({ files: [archivoParaCompartir(ClaseFile, nombre, '{}')] });
+        } catch (error) {
+          return false;
+        }
+      }
+      // Comparte el fichero con la hoja del sistema. NUNCA lanza: devuelve el resultado.
+      //   'compartido'  eligió dónde mandarlo
+      //   'cancelado'   cerró la hoja sin elegir (no es un fallo)
+      //   'denegado'    el aparato no deja compartir este fichero (Chrome no admite el tipo .json)
+      //   'sin_soporte' no sabe compartir ficheros
+      //   'error'       cualquier otra cosa
+      // OJO: hay que llamarla directamente desde el toque del dedo (el navegador no abre la hoja si no).
+      async function compartirFichero(nav, ClaseFile, nombre, texto) {
+        let datos;
+        try {
+          if (!nav || typeof nav.share !== 'function' || typeof nav.canShare !== 'function') return { resultado: 'sin_soporte' };
+          datos = { files: [archivoParaCompartir(ClaseFile, nombre, texto)] };
+          if (!nav.canShare(datos)) return { resultado: 'sin_soporte' };
+        } catch (error) {
+          return { resultado: 'sin_soporte' };
+        }
+        try {
+          await nav.share(datos);
+          return { resultado: 'compartido' };
+        } catch (error) {
+          let nombreError = error && error.name;
+          if (nombreError === 'AbortError') return { resultado: 'cancelado' };
+          if (nombreError === 'NotAllowedError') return { resultado: 'denegado' };
+          return { resultado: 'error' };
+        }
+      }
+      // COMPARTIR: fin
+      const COMP = {
+        vias:
+          'Hay dos maneras de llevar el fichero al PC. «Preparar el fichero para el PC» lo guarda en las ' +
+          'descargas de este aparato (los pasos de abajo). «Enviar con…» abre la lista de aplicaciones de ' +
+          'este aparato: elige OneDrive (o la que uses para pasar cosas al PC) y la carpeta REVISIONES de la ' +
+          'obra. Es el mismo fichero en las dos.',
+        listo:
+          'Listo. Has pasado el fichero «{nombre}» con {contenido} a la aplicación que has elegido. ' +
+          'Comprueba que ha llegado a la carpeta REVISIONES de la obra.',
+        denegado:
+          'Este aparato no deja pasar este fichero con «Enviar con…». Usa «Preparar el fichero para el PC»: ' +
+          'guarda el mismo fichero y no se pierde nada.',
+        error:
+          'No se ha podido abrir «Enviar con…». Vuelve a probar o usa «Preparar el fichero para el PC»: ' +
+          'guarda el mismo fichero y no se pierde nada.',
+      };
+      // Si el aparato rechazó el fichero, el botón se esconde en ese aparato durante 30 días (luego vuelve a
+      // probar: el navegador puede haber cambiado). Se guarda el día del rechazo.
+      function compartirRechazado() {
+        let rechazo = get(K.cn, null);
+        return !!(rechazo && /^\d{4}-\d{2}-\d{2}$/.test(rechazo.desde) && today() <= add(rechazo.desde, 30));
+      }
+      // El navegador y la clase File de este aparato (null si no existen: así nada revienta donde no los hay).
+      function elAparato() {
+        return { nav: typeof navigator === 'undefined' ? null : navigator, ClaseFile: typeof File === 'undefined' ? null : File };
+      }
+      // ¿Se enseña «Enviar con…» en la obra id? Solo si el aparato sabe y no ha rechazado ya el fichero.
+      function compartirDisponible(id) {
+        let aparato = elAparato();
+        return !compartirRechazado() && sabeCompartir(aparato.nav, aparato.ClaseFile, nombreFichero(id));
+      }
+      // Hay un «Enviar con…» en marcha (la hoja del sistema abierta): un segundo toque no abre otra.
+      let compartiendo = false;
+      // «Enviar con…» de una obra. Cualquier otra cosa que el toque se hace antes de llamar a la hoja.
+      async function compartirObra(id) {
+        if (compartiendo) return;
+        let fichero = ficheroParaEnviar(id);
+        if (!fichero) return;
+        compartiendo = true;
+        let respuesta;
+        let aparato = elAparato();
+        try {
+          respuesta = await compartirFichero(aparato.nav, aparato.ClaseFile, fichero.nombre, textoDelFichero(fichero.lote));
+        } finally {
+          compartiendo = false;
+        }
+        let resultado = respuesta.resultado;
+        if (resultado === 'cancelado') return;
+        if (resultado === 'compartido') {
+          a.compartirAviso = null;
+          a.listo = COMP.listo.replace('{nombre}', fichero.nombre).replace('{contenido}', fichero.contenido);
+        } else {
+          if (resultado === 'denegado' || resultado === 'sin_soporte') set(K.cn, { desde: today() });
+          a.compartirAviso = resultado === 'error' ? COMP.error : COMP.denegado;
+        }
         render();
       }
       // ---------------------------------------------------------------------------
@@ -3974,6 +4098,8 @@
         }
         // Botón «Preparar el fichero para el PC» de una obra: lo descarga y deja el recuadro «Listo»
         if (datos.preparar !== undefined) return prepararFichero(datos.preparar);
+        // «Enviar con…»: la hoja de compartir del aparato (debe abrirse en este mismo toque)
+        if (datos.compartir !== undefined) return compartirObra(datos.compartir);
         // Botón empezar de cero: solicita confirmación para borrar el borrador de la jornada en
         // curso
         if (datos.reset !== undefined) {

@@ -658,6 +658,40 @@ class TestLenguajeSinCobertura(unittest.TestCase):
         self.assertIn("primera vez", t["informe"])
 
 
+class TestLenguajeEnviarCon(unittest.TestCase):
+    """MA7: los textos de «Enviar con…» (la explicación de las dos maneras, el «Listo» y los dos avisos) en lenguaje de electricista."""
+
+    def _textos(self):
+        html = (APP_DIR / "generador_personal.html").read_text(encoding="utf-8")
+        bloque = re.search(r"const COMP = \{(.*?)\n      \};", html, re.S)
+        self.assertIsNotNone(bloque, "no se encuentra el bloque «const COMP» con los textos de «Enviar con…»")
+        textos = {}
+        for nombre, cuerpo in re.findall(r"^\s+(\w+):\s*((?:'(?:[^'\\]|\\.)*'(?:\s*\+\s*)?\s*)+),$", bloque.group(1), re.M):
+            textos[nombre] = "".join(json.loads('"' + t.replace('"', '\\"') + '"') for t in re.findall(r"'((?:[^'\\]|\\.)*)'", cuerpo))
+        return textos
+
+    def test_los_textos_de_enviar_con_no_usan_palabras_de_programador(self):
+        textos = self._textos()
+        self.assertEqual(["denegado", "error", "listo", "vias"], sorted(textos), "una lista vacía o corta de textos es una alarma, no «no aplica»: %s" % sorted(textos))
+        problemas = revisar([t.replace("{nombre}", "CONTROL HORARIO X 23102026").replace("{contenido}", "2 jornadas") for t in textos.values()], "enviar con")
+        self.assertEqual([], problemas, problemas)
+
+    def test_dicen_lo_que_toca(self):
+        t = self._textos()
+        self.assertIn("«Enviar con…»", t["vias"])
+        self.assertIn("«Preparar el fichero para el PC»", t["vias"])
+        self.assertIn("REVISIONES", t["vias"])
+        self.assertIn("OneDrive", t["vias"])
+        self.assertIn("mismo fichero", t["vias"])
+        self.assertTrue(t["listo"].startswith("Listo."), t["listo"])
+        self.assertIn("{nombre}", t["listo"])
+        self.assertIn("{contenido}", t["listo"])
+        self.assertIn("REVISIONES", t["listo"])
+        for clave in ("denegado", "error"):
+            self.assertIn("«Preparar el fichero para el PC»", t[clave])
+            self.assertIn("no se pierde nada", t[clave])
+
+
 @unittest.skipUnless(_OK, "NO se ha revisado el lenguaje de «Generar personal»: %s" % _MOTIVO)
 class TestLenguajeDeGenerarPersonal(unittest.TestCase):
     """MA5: la guarda mira la pestaña «Generar personal» de personal_sagarde.html en un navegador de verdad, como hace con la tablet.
