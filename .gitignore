@@ -79,6 +79,16 @@ VARIOS/APPS SAGARDE/
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/personal_obra.json
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/personal_jornadas.jsonl
 
+# Personal en obra (MA3): la tablet se abre SIN cobertura. generador_personal.html registra personal_sw.js (service
+# worker), enlaza personal_manifest.json y los iconos (pantalla de inicio). La lista blanca solo deja pasar .html y .py:
+# sin cada linea el fichero se genera pero nunca se publica y la tablet no abre sin red (sin error visible).
+# tests/test_publicacion_personal.py y tests/test_personal_sin_cobertura.py comprueban que de verdad se publican.
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_sw.js
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_manifest.json
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_icono_192.png
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_icono_512.png
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_icono_apple.png
+
 # El verificador de node de personal_calculo.js (lo lanza tests/test_personal_calculo.py). Es un
 # .js dentro de tests/: sin esta linea no se versiona y la prueba falla en una copia limpia.
 !SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/tests/verificar_personal_calculo.js

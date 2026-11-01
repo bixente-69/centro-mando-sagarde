@@ -2,8 +2,14 @@
 <html lang="es">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content" />
     <title>Personal en obra</title>
+    <link rel="manifest" href="personal_manifest.json" />
+    <link rel="apple-touch-icon" href="personal_icono_apple.png" />
+    <meta name="theme-color" content="#0b1f3a" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Personal en obra" />
     <style>
       /* ---- Horario propio: estilos del editor y selector de horario específico por trabajador ---- */
       /* Estos estilos van antes del bloque principal por historia; se deja el orden porque la
@@ -65,6 +71,8 @@
         --ok: #2e9e5b;
         --warn: #e07b1a;
         --line: #d8dce4;
+        --tabs-h: calc(57px + env(safe-area-inset-top));
+        --barra-h: calc(68px + env(safe-area-inset-bottom));
       }
       * {
         box-sizing: border-box;
@@ -85,14 +93,27 @@
         position: sticky;
         top: 0;
         z-index: 9;
-        padding: 10px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        min-height: var(--tabs-h);
+        padding: calc(6px + env(safe-area-inset-top)) max(8px, env(safe-area-inset-right)) 6px max(8px, env(safe-area-inset-left));
         background: #fff;
         border-bottom: 1px solid var(--line);
       }
+      .tabs .seg {
+        flex: 1;
+        min-width: 0;
+      }
       main {
-        max-width: 520px;
+        max-width: 1100px;
         margin: auto;
-        padding: 10px;
+        padding: 10px max(10px, env(safe-area-inset-right)) 10px max(10px, env(safe-area-inset-left));
+      }
+      .view:not(#v-app) {
+        max-width: 760px;
+        margin-left: auto;
+        margin-right: auto;
       }
       .view[hidden] {
         display: none;
@@ -131,6 +152,19 @@
         display: flex;
         justify-content: space-between;
         font-weight: 700;
+      }
+      .bar-estado {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2px;
+        text-align: right;
+        max-width: 66%;
+      }
+      .bar-estado small {
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.3;
       }
       .pad,
       .card {
@@ -185,7 +219,7 @@
         border: 1px solid var(--line);
       }
       .sm {
-        min-height: 42px;
+        min-height: 44px;
         padding: 7px 10px;
       }
       /* ---- Chips: selectores rápidos de fecha y contenedores flexibles de acciones ---- */
@@ -287,6 +321,25 @@
         border: 0;
         background: none;
         font-size: 20px;
+        min-width: 44px;
+        min-height: 44px;
+        margin: -10px -10px -10px 6px;
+      }
+      /* Aviso de antes de guardar y resumen de lo guardado: lista de frases y botones a todo el ancho */
+      .aviso-guardar {
+        border-left: 4px solid #d9822b;
+      }
+      .aviso-guardar ul,
+      #resumen-guardado ul {
+        margin: 6px 0;
+        padding-left: 20px;
+      }
+      .aviso-guardar li,
+      #resumen-guardado li {
+        margin: 4px 0;
+      }
+      .aviso-guardar .actions .btn {
+        flex: 1 1 100%;
       }
       .sum {
         font-weight: 700;
@@ -446,7 +499,7 @@
         pointer-events: none;
         position: fixed;
         left: 50%;
-        bottom: 20px;
+        bottom: calc(var(--barra-h) + 12px);
         transform: translateX(-50%);
         background: var(--header);
         color: #fff;
@@ -560,6 +613,9 @@
       .envio li {
         margin: 4px 0;
       }
+      .envio .btn + .btn {
+        margin-top: 8px;
+      }
       .pasos {
         margin: 10px 0;
         padding-left: 22px;
@@ -591,10 +647,13 @@
         font-size: 13px;
         font-weight: 700;
         text-decoration: none;
-        padding: 8px 14px;
+        justify-content: center;
+        flex: none;
+        width: 44px;
+        padding: 0;
         border-radius: 8px;
-        margin-bottom: 8px;
-        min-height: 40px;
+        margin: 0;
+        min-height: 44px;
       }
       .btn-volver-portal:active {
         background: #123a63;
@@ -615,7 +674,7 @@
         background: #fff;
         border: 1px solid var(--line);
         border-radius: 12px;
-        padding: 12px;
+        padding: 8px;
         margin: 10px 0;
       }
       .cal-head {
@@ -626,8 +685,8 @@
         font-weight: 700;
       }
       .cal-head .nav-cal {
-        width: 36px;
-        height: 36px;
+        width: 44px;
+        height: 44px;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: #fff;
@@ -637,7 +696,7 @@
       .cal-grid {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 4px;
+        gap: 2px;
         text-align: center;
       }
       .cal-sem {
@@ -647,12 +706,10 @@
         padding: 4px 0;
       }
       .cal-vacio {
-        aspect-ratio: 1;
-        min-height: 36px;
+        min-height: 44px;
       }
       .cal-dia {
-        aspect-ratio: 1;
-        min-height: 36px;
+        min-height: 44px;
         border: 1px solid var(--line);
         border-radius: 8px;
         background: #fff;
@@ -722,7 +779,7 @@
       }
       @media (max-width: 400px) {
         main {
-          padding: 7px;
+          padding: 6px max(6px, env(safe-area-inset-right)) 6px max(6px, env(safe-area-inset-left));
         }
         .card,
         .pad {
@@ -736,6 +793,136 @@
         }
         table.data th {
           font-size: 9px;
+        }
+      }
+      /* ---- Pantallas: el móvil de pie (una columna, calendario plegado, «Guardar» siempre a la vista) y la tablet (dos columnas) ---- */
+      html {
+        scroll-padding-top: calc(var(--tabs-h) + 8px);
+        scroll-padding-bottom: calc(var(--barra-h) + 12px);
+      }
+      input,
+      select,
+      textarea {
+        font-size: 16px;
+      }
+      summary {
+        min-height: 44px;
+        padding: 11px 0;
+        cursor: pointer;
+      }
+      .tabs .seg button {
+        font-size: 14px;
+        line-height: 1.15;
+        padding: 4px 3px;
+      }
+      .vp-texto {
+        display: none;
+      }
+      #v-app {
+        padding-bottom: calc(var(--barra-h) + 12px);
+      }
+      .fecha-fila {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .fecha-fila input {
+        flex: 1 1 140px;
+        width: auto;
+        min-width: 0;
+      }
+      .cal-toggle {
+        flex: 1 1 150px;
+        min-height: 46px;
+        padding: 6px 8px;
+        font-size: 15px;
+        line-height: 1.2;
+      }
+      .seg button[data-m] {
+        min-width: 56px;
+      }
+      .dias-marcados .chip {
+        padding-right: 0;
+      }
+      .dias-marcados .chip button {
+        min-width: 44px;
+        min-height: 44px;
+        font-size: 18px;
+      }
+      .barra-guardar {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: min(100%, 1100px);
+        margin: 0 auto;
+        padding: 8px max(10px, env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+        background: #fff;
+        border-top: 1px solid var(--line);
+        box-shadow: 0 -2px 8px #0b1f3a1a;
+      }
+      .barra-guardar .sum {
+        flex: 1;
+        min-width: 0;
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.25;
+      }
+      .barra-guardar .btn {
+        flex: none;
+        min-width: 150px;
+      }
+      @media (max-width: 767px) {
+        .cal-box.plegado {
+          display: none;
+        }
+        .cal-box {
+          margin-left: -4px;
+          margin-right: -4px;
+          padding: 4px;
+        }
+        #v-app .pad {
+          padding: 8px;
+        }
+      }
+      @media (min-width: 640px) {
+        .vp-texto {
+          display: inline;
+        }
+        .btn-volver-portal {
+          width: auto;
+          padding: 0 14px;
+        }
+        .tabs .seg button {
+          font-size: 15px;
+        }
+      }
+      @media (min-width: 768px) {
+        .cal-toggle {
+          display: none;
+        }
+        .fecha-fila input {
+          flex-basis: 100%;
+        }
+        #v-app .cols {
+          display: grid;
+          grid-template-columns: minmax(340px, 38%) minmax(0, 1fr);
+          gap: 18px;
+          align-items: start;
+        }
+        #v-app .col-izq {
+          position: sticky;
+          top: calc(var(--tabs-h) + 8px);
+          max-height: calc(100vh - var(--tabs-h) - var(--barra-h) - 24px);
+          max-height: calc(100dvh - var(--tabs-h) - var(--barra-h) - 24px);
+          overflow-y: auto;
+        }
+        .barra-guardar {
+          border-radius: 14px 14px 0 0;
         }
       }
     </style>
@@ -753,24 +940,36 @@
         document.head.appendChild(s);
       })();
     </script>
+    <script>
+      // Para abrir la tablet sin cobertura: guarda la página y sus datos (ver personal_sw.js).
+      // Alcance estrecho: solo esta página, no el resto de la carpeta.
+      if ("serviceWorker" in navigator && (location.protocol === "https:" || location.protocol === "http:")) {
+        window.addEventListener("load", function () {
+          navigator.serviceWorker.register("personal_sw.js", { scope: "./generador_personal.html" }).then(
+            function () {
+              window.__sw = "listo";
+            },
+            function () {
+              window.__sw = "error";
+              if (typeof iniciada !== "undefined" && iniciada) render();
+            },
+          );
+        });
+      }
+    </script>
   </head>
   <body>
     <nav class="tabs">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-        <a class="btn-volver-portal" href="../../index.html" onclick="irAlPortal(event)">← Volver al Portal Sagarde</a>
-      </div>
+      <a class="btn-volver-portal" href="../../index.html" onclick="irAlPortal(event)" aria-label="Volver al Portal Sagarde"
+        ><span aria-hidden="true">←</span><span class="vp-texto">Volver al Portal Sagarde</span></a
+      >
       <div class="seg">
         <button data-v="app" class="on">Anotar</button><button data-v="jornadas">Jornadas</button
         ><button data-v="informe">Informe</button><button data-v="enviar">Enviar al PC</button>
       </div>
     </nav>
     <main>
-      <section id="sin-estado" hidden>
-        <div class="card">
-          <h2>Todavía no hay lista de obras y trabajadores…</h2>
-          <p>Abre la app con cobertura al menos una vez.</p>
-        </div>
-      </section>
+      <section id="sin-estado" hidden></section>
       <section id="v-app" class="view"></section>
       <section id="v-jornadas" class="view" hidden></section>
       <section id="v-informe" class="view" hidden></section>
@@ -796,7 +995,20 @@
           al: LS + 'altas',
           em: LS + 'empresas',
           uh: LS + 'ultimas_horas',
+          ob: LS + 'ultima_obra',
+          cn: LS + 'sin_compartir',
         };
+      // Textos de cobertura (en llano; los tres primeros los aprobó Bixente).
+      const COB = {
+        con: "Con cobertura: datos al día",
+        sin: "Sin cobertura: usando la lista del {fecha}",
+        sinFecha: "Sin cobertura: usando la lista guardada",
+        nada: "Sin datos todavía: abre la tablet una vez con cobertura",
+        nadaTitulo: "Todavía no hay lista de obras ni de trabajadores",
+        informe: "Informe necesita cobertura la primera vez. Lo demás sigue funcionando: puedes anotar y enviar.",
+        sinLista: "Jornadas sin enviar: {n}. Están a salvo en la tablet. Necesitas cobertura para cargar la lista y poder seguir.",
+        sinPreparar: "Para usar la tablet sin cobertura, primero tienes que abrirla una vez con cobertura.",
+      };
       // Lee y parsea un valor JSON de localStorage; devuelve el valor por defecto d si no existe o
       // falla
       function get(k, d) {
@@ -927,6 +1139,7 @@
       // única obra|ámbito|fecha.
       let state = null,
         origin = '',
+        datosDe = '',
         pending = get(K.p, []),
         news = get(K.n, []),
         hours = get(K.h, {}),
@@ -1024,23 +1237,48 @@
         ren: null,
         varios: null,
         nuevoError: '',
+        homonimo: null,
         prefill: null,
         listo: null,
+        compartirAviso: null,
+        aviso: null,
+        guardado: null,
+        listaDe: null,
       };
-      // Devuelve la lista unificada y ordenada alfabéticamente de nombres de trabajadores
-      // (publicados y nuevos creados)
-      function cat() {
+      // Memoria de UN repintado. Mientras se construye una pantalla nada cambia (las vistas solo leen),
+      // así que el índice de nombres y las filas de todas las obras se calculan una sola vez y se tiran
+      // al salir. Fuera de un repintado no hay memoria: guardar, anular o corregir un nombre cambian
+      // los datos y la pantalla siguiente parte de cero, sin nada que invalidar.
+      let memoria = null;
+      function conMemoria(construir) {
+        if (memoria) return construir();
+        memoria = { nombres: null, filas: null };
+        try {
+          return construir();
+        } finally {
+          memoria = null;
+        }
+      }
+      // Nombres de trabajadores (publicados y nuevos creados) por su clave sin tildes ni mayúsculas.
+      function indiceNombres() {
+        if (memoria && memoria.nombres) return memoria.nombres;
         let m = new Map();
         (state?.catalogo || []).forEach((x) => m.set(key(x.nombre), x.nombre));
         news.forEach((x) => {
           if (!m.has(key(x))) m.set(key(x), x);
         });
-        return [...m.values()].sort((x, y) => x.localeCompare(y, 'es'));
+        if (memoria) memoria.nombres = m;
+        return m;
+      }
+      // Devuelve la lista unificada y ordenada alfabéticamente de nombres de trabajadores
+      // (publicados y nuevos creados)
+      function cat() {
+        return [...indiceNombres().values()].sort((x, y) => x.localeCompare(y, 'es'));
       }
       // Nombre tal como está en el catálogo o en los nuevos si coincide sin tildes ni mayúsculas;
       // si no, el nombre limpio.
       function canon(n) {
-        return cat().find((x) => key(x) === key(n)) || clean(n);
+        return indiceNombres().get(key(n)) || clean(n);
       }
       // ---------------------------------------------------------------------------
       // Empresas: cada persona tiene una (o ninguna); se elige de una lista y se apunta para el PC
@@ -1119,9 +1357,9 @@
       // normalizado.
       function pub(ob = a.obra) {
         let o = state?.obras?.[ob];
-        return o && Array.isArray(o.jornadas)
-          ? o.jornadas.map((x) => ({ ...x, obra: ob, nombre: canon(x.nombre) }))
-          : [];
+        if (!o || !Array.isArray(o.jornadas)) return [];
+        let nombres = indiceNombres();
+        return o.jornadas.map((x) => ({ ...x, obra: ob, nombre: nombres.get(key(x.nombre)) || clean(x.nombre) }));
       }
       // Clave única de una jornada: obra|ámbito|fecha.
       function jk(x) {
@@ -1309,6 +1547,8 @@
       // con las horas normales de la fecha, sin extra) o de sugeridos
       function loadList() {
         a.prefill = null;
+        // De qué jornada sale la lista que se ve: guardar ESE día es corregir lo que se está viendo, no pisarlo.
+        a.listaDe = { obra: a.obra, ambito: a.amb, fecha: a.fecha };
         if (!state.obras[a.obra]) {
           a.list = [];
           return;
@@ -1388,14 +1628,159 @@
       }
       // Devuelve un nombre ya existente (catálogo o lista actual) que se parezca al nuevo sin ser
       // el mismo: ambos de 3 letras o más (sin tildes) y a distancia ≤ 1, o uno contenido en el
-      // otro; null si no hay ninguno.
-      function similar(n) {
-        let k = key(n);
-        if (k.length < 3) return null;
-        return [...cat(), ...a.list.map((x) => x.nombre)].find((x) => {
-          let z = key(x);
-          return z !== k && z.length >= 3 && (lev(k, z) <= 1 || k.includes(z) || z.includes(k));
+      // otro; null si no hay ninguno. Las pruebas de que es otra persona (una inicial detrás, otra empresa) las pone
+      // clasificarNombreEscrito, que es quien decide.
+      function similar(n, empresa = '') {
+        let r = clasificarNombreEscrito({ nombre: n, empresa, base: personasDeLaBase(), enLista: a.list.map((x) => x.nombre) });
+        return r.tipo === 'parecido' ? r.existente : null;
+      }
+      // «Nombre B.» o «Nombre B» (el mismo nombre más una inicial) es justo como se distingue a otra persona: no cuenta como
+      // parecido. Los dos textos van ya sin tildes ni mayúsculas.
+      function masUnaInicial(largo, corto) {
+        let resto = largo.slice(corto.length + 1);
+        return largo.startsWith(corto + ' ') && (resto.length === 1 || (resto.length === 2 && resto[1] === '.'));
+      }
+      // Qué hacer con un nombre recién escrito (lógica pura: sin pantalla ni reloj). Recibe el nombre, la empresa escrita
+      // junto a él, las personas de la base [{ nombre, empresa, activo }] y los nombres de la lista de hoy. Devuelve
+      // { tipo, existente }:
+      //   nuevo                → no está ni se parece a nadie
+      //   parecido             → no está, pero se parece a «existente»
+      //   mismo                → está (activo) y no hay conflicto de empresa: la escrita está vacía, es la misma o él no tiene
+      //   otra_persona_posible → está (activo) con una empresa distinta de la escrita: hay que preguntar
+      //   de_baja              → está, pero de baja: hay que preguntar
+      function clasificarNombreEscrito({ nombre, empresa, base, enLista }) {
+        const k = key(nombre);
+        const personas = Array.isArray(base) ? base : [];
+        const lista = Array.isArray(enLista) ? enLista : [];
+        if (!k) return { tipo: 'nuevo', existente: null };
+        const iguales = personas.filter((x) => key(x.nombre) === k);
+        const activos = iguales.filter((x) => x.activo !== false);
+        // Con dos activos del mismo nombre se prefiere el de la empresa escrita.
+        const activo = activos.find((x) => key(empresa) && key(x.empresa) === key(empresa)) || activos[0];
+        if (activo) {
+          const escrita = key(empresa);
+          const suya = key(activo.empresa);
+          return { tipo: escrita && suya && escrita !== suya ? 'otra_persona_posible' : 'mismo', existente: activo.nombre };
+        }
+        if (iguales.length) return { tipo: 'de_baja', existente: iguales[0].nombre };
+        const enEsta = lista.find((x) => key(x) === k);
+        if (enEsta !== undefined) return { tipo: 'mismo', existente: enEsta };
+        if (k.length >= 3) {
+          // Dos pruebas de que es otra persona y no una errata: el mismo nombre más una inicial, y que uno sea el
+          // nombre del otro con más palabras pero de empresas distintas (los nombres de la lista de hoy no tienen empresa).
+          const candidatos = [...personas.map((x) => ({ nombre: x.nombre, empresa: x.empresa })), ...lista.filter((x) => !personas.some((p) => key(p.nombre) === key(x))).map((x) => ({ nombre: x }))];
+          const parecido = candidatos.find((x) => {
+            const z = key(x.nombre);
+            if (z === k || z.length < 3 || masUnaInicial(k, z) || masUnaInicial(z, k)) return false;
+            const otraEmpresa = key(empresa) && key(x.empresa) && key(empresa) !== key(x.empresa);
+            return lev(k, z) <= 1 || (!otraEmpresa && (k.includes(z) || z.includes(k)));
+          });
+          if (parecido) return { tipo: 'parecido', existente: parecido.nombre };
+        }
+        return { tipo: 'nuevo', existente: null };
+      }
+      // Las personas de la base tal como las ve la tablet: nombre, empresa de ahora y si siguen en la base.
+      function personasDeLaBase() {
+        let activas = new Set();
+        (state?.catalogo || []).forEach((x) => {
+          if (x.activo !== false) activas.add(key(x.nombre));
         });
+        news.forEach((x) => activas.add(key(x)));
+        return cat().map((nombre) => ({ nombre, empresa: empresaDe(nombre), activo: activas.has(key(nombre)) }));
+      }
+      // «Nombre» (Empresa), o solo «Nombre» si no tiene empresa.
+      function conSuEmpresa(nombre) {
+        let empresa = empresaDe(nombre);
+        return '«' + nombre + '»' + (empresa ? ' (' + empresa + ')' : '');
+      }
+      // La primera palabra de un nombre: la que va antes del primer espacio.
+      function primerNombre(texto) {
+        return clean(texto).split(' ')[0];
+      }
+      // El nombre escrito ya estaba: se ha apuntado al que está y se dice cómo crear a otro.
+      function textoYaEstaba(existente) {
+        return (
+          conSuEmpresa(existente) +
+          ' ya estaba en la base: lo he apuntado en la lista. Si es otra persona, créala con un apellido o una inicial («' +
+          primerNombre(existente) +
+          ' B.»).'
+        );
+      }
+      // Pregunta que sale bajo «Nombre nuevo» cuando el nombre ya existe con otra empresa o está de baja y, si dice que
+      // es otra persona, el campo para ponerle un apellido o una inicial.
+      function homonimoHTML() {
+        let h = a.homonimo;
+        if (!h) return '';
+        if (h.fase === 'pregunta') {
+          let texto =
+            h.tipo === 'de_baja'
+              ? '«' + h.existente + '» estaba de baja. ¿Es el mismo, que vuelve?'
+              : 'Ya hay un ' + conSuEmpresa(h.existente) + '. ¿Es el mismo?';
+          return (
+            `<div class="aviso" id="pregunta-homonimo"><span data-texto>${E(texto)}</span><div class="actions">` +
+            `<button class="btn sec" data-hom-si>Sí, es el mismo</button>` +
+            `<button class="btn ghost" data-hom-no>No, es otra persona</button></div></div>`
+          );
+        }
+        let primero = primerNombre(h.existente);
+        let consejo =
+          'Ponle algo que lo distinga del otro «' + h.existente + '»: un apellido o una inicial. Por ejemplo «' +
+          primero + ' B.» o «' + primero + ' Pérez».';
+        let error = h.error ? `<div class="aviso" id="homonimo-error" role="alert">${E(h.error)}</div>` : '';
+        return (
+          `<div class="aviso" id="otra-persona"><span data-texto>${E(consejo)}</span>` +
+          `<input id="homonimo-campo" maxlength="60" autocomplete="off" aria-label="Nombre de la otra persona" ` +
+          `value="${E(h.valor)}"><div class="actions"><button class="btn pri" data-hom-crear>Crear</button>` +
+          `<button class="btn ghost" data-hom-cancelar>Cancelar</button></div>${error}</div>`
+        );
+      }
+      // «Crear» a la otra persona: su nombre tiene que ser distinto de todos los que ya hay y publicable. Si vale, entra por
+      // el camino de siempre de «Nombre nuevo», con la empresa que se escribió.
+      function crearOtraPersona() {
+        let h = a.homonimo;
+        if (!h || h.fase !== 'otra') return;
+        let valor = clean(h.valor);
+        let motivo = valor ? motivoNombre(valor) : '';
+        let ya = valor ? cat().find((n) => key(n) === key(valor)) || a.list.find((p) => key(p.nombre) === key(valor))?.nombre : '';
+        h.error = '';
+        if (!valor || key(valor) === key(h.existente) || key(valor) === key(h.nombre))
+          h.error = 'Tiene que ser distinto de «' + h.existente + '»: añade un apellido o una inicial.';
+        else if (motivo) h.error = 'Ese nombre no vale: ' + motivo + '.';
+        else if (ya) h.error = 'Ya hay un «' + ya + '». Elige otro.';
+        if (h.error) {
+          render();
+          document.querySelector('#homonimo-campo')?.focus();
+          return;
+        }
+        a.homonimo = null;
+        news.push(valor);
+        set(K.n, news);
+        addName(valor);
+        if (h.empresa) fijarEmpresa(valor, h.empresa);
+        changed(false);
+      }
+      // Aviso de personas con el mismo nombre en la lista que publica el PC: la tablet solo puede enseñar a una de cada nombre.
+      function avisoDosIgualesHTML() {
+        let grupos = new Map();
+        (state?.catalogo || []).forEach((x) => {
+          let k = key(x.nombre);
+          if (!k) return;
+          if (!grupos.has(k)) grupos.set(k, []);
+          grupos.get(k).push(x);
+        });
+        let repetidos = [...grupos.values()].filter((g) => g.length > 1);
+        if (!repetidos.length) return '';
+        let casos = repetidos.map((g) => {
+          let empresas = g.map((x) => clean(x.empresa)).filter(Boolean);
+          return '«' + clean(g[0].nombre) + '»' + (empresas.length ? ' (' + empresas.join(' y ') + ')' : '');
+        });
+        let texto =
+          repetidos.length === 1 && repetidos[0].length === 2
+            ? 'En la lista del PC hay dos personas llamadas ' + casos[0] +
+              ' y la tablet solo puede enseñar a una. Cámbiale el nombre a una de ellas desde el PC.'
+            : 'En la lista del PC hay personas con el mismo nombre: ' + casos.join(', ') +
+              '. La tablet solo puede enseñar a una de cada nombre. Cámbiales el nombre desde el PC.';
+        return `<div class="aviso" id="aviso-dos-iguales" role="alert">${E(texto)}</div>`;
       }
       // Vuelve al Portal de Sagarde según desde dónde se haya entrado
       function irAlPortal(evento) {
@@ -1492,13 +1877,14 @@
         });
         return coincidencias;
       }
-      // Marca como presente a una persona de la lista o, si no estaba, la añade con su horario predefinido
+      // Marca como presente a una persona de la lista o, si no estaba, la añade con las horas de su horario
+      // de ese día (las de la obra o su horario especial). Nunca con las de la última vez: así no sale una
+      // hora extra que nadie ha decidido. Un día sin horario (un sábado) queda sin horas, y se piden.
       function addName(n) {
         n = cat().find((x) => key(x) === key(n)) || clean(n);
         let x = a.list.find((x) => key(x.nombre) === key(n));
-        let ult = ultimoHorarioDe(n, a.obra, a.fecha);
         let baseDia = horarioDe(n, a.fecha);
-        let horasDefecto = (ult !== null && ult !== undefined && ult > 0) ? ult : (baseDia > 0 ? baseDia : null);
+        let horasDefecto = baseDia > 0 ? baseDia : null;
         if (x) {
           x.on = true;
           x.horas = horasDefecto;
@@ -1624,7 +2010,7 @@
           ? `<div class="dias-marcados"><span>Días marcados (${marcadas.length}):</span> ${marcadas.map((f) => `<span class="chip">${fdia(f)} <button type="button" data-quitar-dia="${f}">×</button></span>`).join('')}</div>`
           : '';
         return (
-          `<div class="cal-box" id="cal-box">` +
+          `<div class="cal-box${a.calAbierto ? '' : ' plegado'}" id="cal-box">` +
           `<div class="cal-head">` +
           `<button type="button" class="nav-cal" data-cal-nav="-1">‹</button>` +
           `<span>${meses[mes - 1]} ${ano}</span>` +
@@ -1654,6 +2040,128 @@
         return (
           `<div class="rotulo" id="rotulo-marcados">` +
           `${E('Marcados según la jornada del ' + diaLargo(a.prefill) + ': quita a quien no haya venido.')}</div>`
+        );
+      }
+      // «Ana, Beto y Carlos» (una sola persona: tal cual; ninguna: texto vacío).
+      function unirY(lista) {
+        return lista.length < 2 ? lista.join('') : lista.slice(0, -1).join(', ') + ' y ' + lista[lista.length - 1];
+      }
+      // Hasta siete nombres seguidos; si hay más, «Ana, Beto, Carlos, Dani, Eli, Fran y 3 más».
+      function nombresCortos(nombres) {
+        const MAXIMO = 6;
+        if (nombres.length <= MAXIMO + 1) return unirY(nombres);
+        return nombres.slice(0, MAXIMO).join(', ') + ' y ' + (nombres.length - MAXIMO) + ' más';
+      }
+      // Lo que cambia un día si se sustituye lo anotado: quién se queda fuera y quién se suma (los nombres sin
+      // tildes ni mayúsculas, como en toda la tablet) y, si es la misma gente, que lo que cambia son las horas.
+      function queCambiaAlSustituir(anteriores, nombres) {
+        let fuera = anteriores.filter((n) => !nombres.some((m) => key(m) === key(n)));
+        let suman = nombres.filter((m) => !anteriores.some((n) => key(m) === key(n)));
+        let partes = [];
+        if (fuera.length) partes.push('se queda' + (fuera.length === 1 ? '' : 'n') + ' fuera ' + unirY(fuera));
+        if (suman.length) partes.push('se suma' + (suman.length === 1 ? '' : 'n') + ' ' + unirY(suman));
+        return partes.length ? partes.join(' y ') : 'cambian las horas de ese día';
+      }
+      // Aviso de ANTES de guardar. Mientras está a la vista no se ha guardado nada: dice qué días ya tienen
+      // gente (y quién), cuáles caen en fin de semana en una obra sin horario ese día, cuáles aún no han
+      // llegado y a quién se le guardaría 0 horas, y deja elegir. Los botones vuelven a llamar a save.
+      function avisoGuardarHTML() {
+        if (!a.aviso) return '';
+        let dias = a.aviso.plan.dias;
+        let con = (codigo) => dias.filter((d) => d.avisos.includes(codigo));
+        let ocupados = con('ocupado');
+        let finde = con('finde');
+        let futuros = con('futuro');
+        let ceros = con('cero_horas');
+        let lineas = [];
+        ocupados.forEach((d) =>
+          lineas.push([
+            'ocupado',
+            'El ' + fdia(d.fecha) + ' ya hay ' + uno(d.anteriores.length, 'persona', 'personas') +
+              (d.origen === 'sin_enviar' ? ' (sin enviar al PC)' : ' (ya en el PC)') + ': ' + nombresCortos(d.anteriores) +
+              '. Si sigues, ' + queCambiaAlSustituir(d.anteriores, a.aviso.nombres) + '.',
+          ]),
+        );
+        if (finde.length)
+          lineas.push([
+            'finde',
+            'El ' + unirY(finde.map((d) => fdia(d.fecha))) +
+              (finde.length === 1
+                ? ' es fin de semana y esta obra no tiene horario ese día.'
+                : ' son fin de semana y esta obra no tiene horario esos días.'),
+          ]);
+        if (futuros.length)
+          lineas.push([
+            'futuro',
+            futuros.length === 1
+              ? 'El ' + fdia(futuros[0].fecha) + ' todavía no ha llegado.'
+              : 'Estos días todavía no han llegado: ' + unirY(futuros.map((d) => fdia(d.fecha))) + '.',
+          ]);
+        ceros.forEach((d) =>
+          lineas.push([
+            'cero_horas',
+            'El ' + fdia(d.fecha) + ': ' + unirY(d.sinHoras) +
+              (d.sinHoras.length === 1 ? ' se guardaría con 0 horas.' : ' se guardarían con 0 horas.'),
+          ]),
+        );
+        if (ceros.length) lineas.push(['ayuda', 'Si no quieres 0 horas, ponles sus horas con el + y el − y vuelve a guardar.']);
+        let hayLibres = dias.length > ocupados.length;
+        return (
+          `<div class="aviso aviso-guardar" id="aviso-guardar" role="alert"><b>Todavía no se ha guardado nada. ` +
+          `Mira esto antes:</b><ul>` +
+          lineas.map((linea) => `<li data-aviso="${E(linea[0])}">${E(linea[1])}</li>`).join('') +
+          `</ul><div class="actions"><button class="btn pri" data-guardar-modo="seguir">` +
+          `${ocupados.length ? 'Sustituir y guardar' : 'Guardar así'}</button>` +
+          `${
+            ocupados.length && hayLibres
+              ? '<button class="btn sec" data-guardar-modo="saltar">Saltar los días que ya tienen gente</button>'
+              : ''
+          }` +
+          `<button class="btn ghost" data-guardar-modo="cancelar">No guardar nada</button></div></div>`
+        );
+      }
+      // Cómo se llama un día en el resumen: «sáb 24/10» y, entre paréntesis, lo que se avisó o que ya estaba igual.
+      function etiquetaDiaGuardado(dia) {
+        let notas = [];
+        if (dia.accion === 'igual') notas.push('ya estaba igual');
+        if (dia.finde) notas.push('fin de semana');
+        if (dia.futuro) notas.push('todavía no había llegado');
+        if (dia.sinHoras.length) notas.push('0 horas: ' + unirY(dia.sinHoras));
+        return fdia(dia.fecha) + (notas.length ? ' (' + notas.join(', ') + ')' : '');
+      }
+      // Lo que ha pasado al guardar cuando hubo algún aviso de por medio, una frase por cosa: jornadas guardadas,
+      // una línea por cada jornada sustituida (quién estaba y quién queda) y las que no se han guardado. Es lo que se
+      // enseña debajo del botón Guardar. nombres = las personas que se han guardado.
+      function resumenDeGuardado(plan, resultado, nombres) {
+        let delPlan = (fecha) => plan.dias.find((d) => d.fecha === fecha);
+        let guardadas = resultado.guardar.filter((f) => !resultado.sustituidas.includes(f));
+        let lineas = [];
+        if (guardadas.length)
+          lineas.push(
+            '✓ ' + uno(guardadas.length, 'jornada guardada', 'jornadas guardadas') + ': ' +
+              unirY(guardadas.map((f) => etiquetaDiaGuardado(delPlan(f)))) + '.',
+          );
+        resultado.sustituidas.forEach((f) =>
+          lineas.push(
+            '↻ ' + etiquetaDiaGuardado(delPlan(f)) + ' sustituida: antes ' + nombresCortos(delPlan(f).anteriores) +
+              ', ahora ' + nombresCortos(nombres) + '.',
+          ),
+        );
+        if (resultado.saltadas.length)
+          lineas.push(
+            '✕ ' + uno(resultado.saltadas.length, 'jornada sin guardar', 'jornadas sin guardar') +
+              (resultado.saltadas.length === 1 ? ' porque ya tenía gente: ' : ' porque ya tenían gente: ') +
+              unirY(resultado.saltadas.map((f) => fdia(f))) + '.',
+          );
+        return lineas;
+      }
+      // El resumen de lo que acaba de pasar al guardar, hasta que se toque otra cosa o se pulse «Entendido».
+      function resumenGuardadoHTML() {
+        if (!a.guardado) return '';
+        return (
+          `<div class="rotulo" id="resumen-guardado" role="status"><b>Así ha quedado:</b><ul>` +
+          a.guardado.map((linea) => `<li>${E(linea)}</li>`).join('') +
+          `</ul><div class="actions"><button class="btn ghost sm" data-cerrar-resumen>Entendido</button></div></div>`
         );
       }
       // Combina las filas de jornadas publicadas con las pendientes locales de la obra para los
@@ -1691,6 +2199,9 @@
             `<div class="actions"><button class="btn sec" data-ren-si>Sí, son la misma persona</button>` +
             `<button class="btn ghost" data-ren-no>No</button></div></div>`
           : '';
+        let ayuda = a.ren.ayuda
+          ? `<div class="aviso" id="ren-ayuda"><span data-texto>${E(a.ren.ayuda)}</span></div>`
+          : '';
         let otra =
           a.ren.empresa === OTRA_EMPRESA
             ? `<input id="ren-empresa-otra" maxlength="60" autocomplete="off" placeholder="Nombre de la empresa" ` +
@@ -1701,12 +2212,16 @@
           `autocomplete="off" aria-label="Nombre correcto" value="${E(a.ren.valor)}">` +
           `<select id="ren-empresa" aria-label="Empresa">${opcionesEmpresaHTML(a.ren.empresa)}</select>${otra}` +
           `<div class="actions"><button class="btn pri" data-ren-guardar>Guardar</button>` +
-          `<button class="btn ghost" data-ren-cancelar>Cancelar</button></div>${error}${pregunta}</div>`
+          `<button class="btn ghost" data-ren-cancelar>Cancelar</button></div>${error}${pregunta}${ayuda}</div>`
         );
       }
       // Genera el marcado HTML de las filas de trabajadores, con control de asistencia, horas,
       // horas extra y horario propio
       function rowsHTML() {
+        return conMemoria(rowsHTMLSinMemoria);
+      }
+      // Lo mismo sin memoria de repintado: las pruebas lo comparan con rowsHTML.
+      function rowsHTMLSinMemoria() {
         return a.list
           .map((persona, indice) => {
             if (a.ren && a.ren.nombre === persona.nombre) return filaEdicionHTML(persona);
@@ -1837,14 +2352,109 @@
             .join('; ')}. Revisa que sea correcto (ej. mañana en una y tarde en otra).</div>`
         );
       }
+      // «28/10» a partir de la fecha de generación de la lista («2026-10-28T…»); vacío si no se entiende.
+      function diaMes(generado) {
+        let g = String(generado || '');
+        return /^[0-9]{4}-[0-9]{2}-[0-9]{2}/.test(g) ? g.slice(8, 10) + "/" + g.slice(5, 7) : "";
+      }
+      // Etiqueta de la barra: dice la verdad sobre la cobertura y de qué día son los datos.
+      function etiquetaCobertura() {
+        if (!state) return COB.nada;
+        if (datosDe === "red") return COB.con;
+        let dia = diaMes(state.generado);
+        return dia ? COB.sin.replace("{fecha}", dia) : COB.sinFecha;
+      }
+      // Barra de arriba: nombre de la tablet, etiqueta de cobertura y, si toca, el borrador.
+      function barraHTML() {
+        return (
+          '<div class="bar"><span>Personal en obra</span><div class="bar-estado">' +
+          '<small id="estado-cobertura">' + E(etiquetaCobertura()) + "</small>" +
+          (a.auto ? '<small id="estado-borrador">Borrador guardado automáticamente</small>' : "") +
+          "</div></div>"
+        );
+      }
+      // Si no se pudo preparar la tablet para abrirse sin cobertura, se dice (nunca en silencio).
+      function avisoSinPrepararHTML() {
+        return window.__sw === "error" ? `<div class="aviso" id="aviso-sin-preparar">${E(COB.sinPreparar)}</div>` : "";
+      }
+      // Tarjeta cuando no hay ninguna lista guardada: qué falta y, si hay jornadas sin enviar, que están a salvo.
+      function sinEstadoHTML() {
+        let n = pending.length;
+        return (
+          `<div class="card"><h2>${E(COB.nadaTitulo)}</h2><p>${E(COB.nada)}</p>` +
+          (n ? `<p class="aviso" id="sin-estado-jornadas">${E(COB.sinLista.replace("{n}", n))}</p>` : "") +
+          "</div>"
+        );
+      }
+      // «OBRA PRUEBA» solo sirve para probar: no sale en los desplegables salvo con ?pruebas=1 en la dirección
+      // (o si ya se está usando o tiene jornadas sin enviar).
+      function esObraDePrueba(id) {
+        return id === 'prueba';
+      }
+      function pruebasVisibles() {
+        try {
+          return new URLSearchParams(location.search).get('pruebas') === '1';
+        } catch (e) {
+          return false;
+        }
+      }
+      function obrasAbiertas() {
+        return Object.entries(state.obras).filter(
+          (entrada) =>
+            !entrada[1].cerrada &&
+            (!esObraDePrueba(entrada[0]) ||
+              pruebasVisibles() ||
+              entrada[0] === a.obra ||
+              pending.some((jornada) => jornada.obra === entrada[0])),
+        );
+      }
+      // La obra con la que se abre la tablet: la última que se usó aquí; si no hay (primera vez o se borró lo
+      // que se llevaba a medias), la que tiene la jornada anotada más reciente; si ninguna tiene, la primera.
+      function obraPorDefecto() {
+        let abiertas = Object.entries(state.obras).filter(
+          (entrada) => !entrada[1].cerrada && (!esObraDePrueba(entrada[0]) || pruebasVisibles()),
+        );
+        let ids = abiertas.map((entrada) => entrada[0]);
+        let ultima = get(K.ob, '');
+        if (typeof ultima === 'string' && ids.includes(ultima)) return ultima;
+        let mejor = '';
+        let mejorFecha = '';
+        abiertas.forEach((entrada) => {
+          ['vivienda', 'garaje'].forEach((ambito) => {
+            let ultimaJornada = entrada[1].ultima && entrada[1].ultima[ambito];
+            if (ultimaJornada && fechaOk(ultimaJornada.fecha) && ultimaJornada.fecha > mejorFecha) {
+              mejorFecha = ultimaJornada.fecha;
+              mejor = entrada[0];
+            }
+          });
+        });
+        return mejor || ids[0] || '';
+      }
+      // Botón que abre o pliega el calendario: dice qué día está elegido, o cuántos días están marcados.
+      function calToggleHTML() {
+        let dias = a.fechas && a.fechas.length ? a.fechas : [a.fecha];
+        let texto =
+          dias.length > 1
+            ? dias.length + ' días marcados'
+            : (a.fecha === today() ? 'Hoy · ' : a.fecha === add(today(), -1) ? 'Ayer · ' : '') + diaLargo(a.fecha);
+        return (
+          '<button type="button" class="btn ghost cal-toggle" id="cal-toggle" data-cal-abrir aria-expanded="' +
+          (a.calAbierto ? 'true' : 'false') +
+          '" aria-controls="cal-box">' +
+          E(texto) +
+          (a.calAbierto ? '&nbsp;▴' : '&nbsp;▾') +
+          '</button>'
+        );
+      }
       function appView() {
         let horario = hor();
         let mostrarAviso = !matchMedia('(display-mode: standalone)').matches && !get(K.a, false);
-        let obras = Object.entries(state.obras).filter((entrada) => !entrada[1].cerrada);
+        let obras = obrasAbiertas();
         return (
-          `<div class="bar"><span>Personal en obra</span><small>` +
-          `${a.auto ? 'Borrador guardado automáticamente' : 'Funciona sin cobertura: sí'}</small></div><div ` +
+          `${barraHTML()}<div ` +
           `class="origin" id="estado-origen">${E(origin)}</div><div class="pad">` +
+          `${avisoSinPrepararHTML()}` +
+          `${avisoDosIgualesHTML()}` +
           `${
             mostrarAviso
               ? '<div class="aviso" id="aviso-instalar"><button data-cerrar-aviso>×</button>Conviene ' +
@@ -1852,7 +2462,7 @@
                 'usa en 7 días.</div>'
               : ''
           }` +
-          `<label class="fld">Obra</label><select id="obra">` +
+          `<div class="cols"><div class="col-izq"><label class="fld">Obra</label><select id="obra">` +
           `${obras
             .map(
               (entrada) =>
@@ -1863,8 +2473,8 @@
           `</select><label class="fld">Qué anotas</label><div class="seg"><button ` +
           `data-amb="vivienda" class="${a.amb === 'vivienda' ? 'on' : ''}">Viviendas</button>` +
           `<button data-amb="garaje" class="${a.amb === 'garaje' ? 'on' : ''}">Garajes</button>` +
-          `</div><label class="fld">Fecha y calendario (puedes marcar varios días)</label><input id="fecha" type="date" value="` +
-          `${E(a.fecha)}">${calendarioHTML()}<div class="chips">` +
+          `</div><label class="fld">Fecha y calendario (puedes marcar varios días)</label><div class="fecha-fila"><input id="fecha" type="date" value="` +
+          `${E(a.fecha)}">${calToggleHTML()}</div>${calendarioHTML()}<div class="chips">` +
           `${[
             ['0', 'Hoy'],
             ['-1', 'Ayer'],
@@ -1877,7 +2487,7 @@
             )
             .join('')}` +
           `<button class="btn ghost sm" data-limpiar-dias>Solo hoy</button>` +
-          `</div>${rotuloHTML()}<div class="actions"><button class="btn ghost sm" data-todos="1">Marcar ` +
+          `</div></div><div class="col-der">${rotuloHTML()}<div class="actions"><button class="btn ghost sm" data-todos="1">Marcar ` +
           `todos</button><button class="btn ghost sm" data-todos="0">Desmarcar todos</button>` +
           `</div><div id="lista">${rowsHTML()}</div><label class="fld">Añadir de la base</label>` +
           `<div class="criterio-busqueda"><select id="filtro-criterio" aria-label="Criterio de búsqueda">` +
@@ -1886,9 +2496,9 @@
           `<option value="obra" ${a.filtroCriterio === 'obra' ? 'selected' : ''}>Por obra</option>` +
           `<option value="horas" ${a.filtroCriterio === 'horas' ? 'selected' : ''}>Por horas</option>` +
           `<option value="todo" ${a.filtroCriterio === 'todo' ? 'selected' : ''}>Por todo</option>` +
-          `</select><input id="filtro" value="${E(a.filtroTexto || '')}" placeholder="${E(placeholderBusqueda(a.filtroCriterio))}"></div>` +
+          `</select><input id="filtro" inputmode="search" enterkeyhint="search" autocomplete="off" value="${E(a.filtroTexto || '')}" placeholder="${E(placeholderBusqueda(a.filtroCriterio))}"></div>` +
           `<div class="add"><select id="addsel">${opcionesHTML(a.filtroTexto || '', a.filtroCriterio || 'nombre')}</select>` +
-          `<button class="btn sec" data-add>Añadir</button></div><label class="fld">Nombre nuevo</label><input id="nuevo" maxlength="60">` +
+          `<button class="btn sec" data-add>Añadir</button></div><label class="fld">Nombre nuevo</label><input id="nuevo" maxlength="60" autocomplete="off" autocapitalize="words" enterkeyhint="done">` +
           `<label class="fld">Empresa del nombre nuevo</label><select id="nuevo-empresa" aria-label="Empresa del ` +
           `nombre nuevo">${opcionesEmpresaHTML('')}</select><input id="nuevo-empresa-otra" maxlength="60" ` +
           `autocomplete="off" placeholder="Nombre de la empresa" aria-label="Nombre de la empresa" hidden>` +
@@ -1902,6 +2512,7 @@
                 `crear</button></div></div>`
               : ''
           }` +
+          `${homonimoHTML()}` +
           `</div><div class="actions"><button class="btn ghost" data-varios>Añadir varios nombres</button></div>` +
           `${
             a.varios
@@ -1927,13 +2538,12 @@
           ]
             .map(
               (dia) =>
-                `<label>${dia[0]}<input type="number" min="0" max="24" step=".5" data-hor="` +
+                `<label>${dia[0]}<input type="number" inputmode="decimal" autocomplete="off" min="0" max="24" step=".5" data-hor="` +
                 `${E(dia[1])}" value="${E(horario[dia[1]])}"></label>`,
             )
             .join('')}` +
-          `</div><div id="aviso-horario" class="nota"></div></details>${rotuloDobleObraHTML()}<div class="sum" ` +
-          `id="resumen">${sumHTML()}</div><button class="btn pri full" data-guardar>Guardar ` +
-          `jornada</button><div class="pending"><b id="pendientes" data-n="${E(pending.length)}` +
+          `</div><div id="aviso-horario" class="nota"></div></details>${rotuloDobleObraHTML()}` +
+          `${avisoGuardarHTML()}${resumenGuardadoHTML()}<div class="pending"><b id="pendientes" data-n="${E(pending.length)}` +
           `">Sin enviar al PC: ${uno(pending.length, 'jornada', 'jornadas')}</b>` +
           `${cambiosNombresHTML()}</div>` +
           `${
@@ -1944,7 +2554,9 @@
               : '<div class="actions"><button class="btn sec" data-v="enviar">Enviar al PC</button>' +
                 '<button class="btn ghost" data-reset>Borrar lo que llevo a medias</button></div>'
           }` +
-          `</div>`
+          `</div></div>` +
+          `<div class="barra-guardar" id="barra-guardar"><div class="sum" id="resumen">${sumHTML()}</div>` +
+          `<button class="btn pri" data-guardar>Guardar jornada</button></div>`
         );
       }
       // Fecha corta con el día de la semana, p. ej. «vie 23/10».
@@ -1953,13 +2565,23 @@
         let partes = fecha.split('-');
         return dias[dow(fecha)] + ' ' + partes[2] + '/' + partes[1];
       }
-      // Genera la vista de histórico de jornadas recientes y pendientes con opciones para reabrir o
-      // anular cada una
+      // Primer día desde el que Jornadas enseña lo ya anotado: el 1 del mes pasado o, si es más atrás que 14 días, ese.
+      // Así a final de mes, o cuando llegan los partes, se puede corregir cualquier día del mes y del anterior.
+      function inicioDeJornadas() {
+        let partes = today().split('-').map(Number);
+        let anio = partes[1] === 1 ? partes[0] - 1 : partes[0];
+        let mes = partes[1] === 1 ? 12 : partes[1] - 1;
+        let primeroDelMesPasado = anio + '-' + String(mes).padStart(2, '0') + '-01';
+        let hace14 = add(today(), -14);
+        return primeroDelMesPasado < hace14 ? primeroDelMesPasado : hace14;
+      }
+      // Genera la vista de histórico de jornadas (desde inicioDeJornadas hasta los días futuros ya anotados) y
+      // pendientes con opciones para reabrir o anular cada una
       function jornadasView() {
         let jornadas = new Map();
-        let limite = add(today(), -14);
+        let limite = inicioDeJornadas();
         pub()
-          .filter((fila) => fila.fecha >= limite && fila.fecha <= today())
+          .filter((fila) => fila.fecha >= limite)
           .forEach((fila) => {
             let clave = fila.ambito + '|' + fila.fecha;
             if (!jornadas.has(clave))
@@ -1972,8 +2594,7 @@
         let lista = [...jornadas.values()].sort((izquierda, derecha) =>
           derecha.fecha.localeCompare(izquierda.fecha),
         );
-        let opciones = Object.entries(state.obras)
-          .filter((entrada) => !entrada[1].cerrada)
+        let opciones = obrasAbiertas()
           .map(
             (entrada) =>
               `<option value="${E(entrada[0])}" ${entrada[0] === a.obra ? 'selected' : ''}>` +
@@ -2056,6 +2677,9 @@
       // Genera la vista de informe con agregados de horas, días, porcentaje de impacto, la suma por
       // empresa y barras gráficas relativas
       function infoView() {
+        // Si personal_calculo.js no llegó (primera vez sin cobertura) solo esta pantalla se queda sin cuentas.
+        if (typeof PersonalCalculo === "undefined")
+          return `<div class="card" id="informe-sin-calculo"><h2>Informe de personal</h2><p class="aviso">${E(COB.informe)}</p></div>`;
         // Cada fila lleva la empresa de su persona tal como la ve esta tablet (lo apuntado aquí manda).
         let filas = PersonalCalculo.filtrar(rowState(), {
           obra: a.obra,
@@ -2139,7 +2763,12 @@
       // Actualiza el DOM mostrando la vista activa (app, jornadas o informe) y el estado de
       // selección de pestañas
       function render() {
+        conMemoria(renderSinMemoria);
+      }
+      // Lo mismo sin memoria de repintado: las pruebas lo comparan con render.
+      function renderSinMemoria() {
         if (!state) {
+          document.querySelector('#sin-estado').innerHTML = sinEstadoHTML();
           document.querySelector('#sin-estado').hidden = false;
           document.querySelectorAll('.view').forEach((vista) => (vista.hidden = true));
           return;
@@ -2151,8 +2780,8 @@
         if (a.obra) document.querySelector('#v-app').innerHTML = appView();
         else
           document.querySelector('#v-app').innerHTML =
-            '<div class="bar"><span>Personal en obra</span><small>Funciona sin cobertura: sí</small></div><div ' +
-            'class="origin" id="estado-origen">' +
+            barraHTML() +
+            '<div class="origin" id="estado-origen">' +
             E(origin) +
             ('</div><div class="pad" id="sin-obras"><h2>No hay obras abiertas</h2><p>Cuando haya ' +
               'una obra abierta con personal aparecerá aquí.</p></div>');
@@ -2167,6 +2796,9 @@
       // y repinta la vista
       function changed(cargar = true) {
         a.nuevoError = '';
+        a.homonimo = null;
+        a.aviso = null;
+        a.guardado = null;
         if (cargar) {
           a.hp = null;
           a.ren = null;
@@ -2322,6 +2954,7 @@
         let cambiaEmpresa = !elegida.error && key(elegida.empresa) !== key(empresaDe(de));
         a.ren.error = '';
         a.ren.pregunta = '';
+        a.ren.ayuda = '';
         if (valor !== de && (!valor || motivo)) {
           a.ren.error = valor ? 'Ese nombre no vale: ' + motivo + '.' : 'Escribe el nombre.';
         } else if (elegida.error) {
@@ -2330,7 +2963,8 @@
           a.ren = null;
         } else if (valor !== de && otro && !confirmado) {
           a.ren.pregunta =
-            'Ya hay un «' + otro + '». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.';
+            'Ya hay un ' + conSuEmpresa(otro) + ' y estás corrigiendo a ' + conSuEmpresa(de) +
+            '. ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.';
         } else {
           a.ren = null;
           let empresaNueva = cambiaEmpresa ? elegida.empresa : undefined;
@@ -2356,7 +2990,7 @@
       // empresa, ya tienen otra, no valen, se parecen a alguien) o, si no hay nada, un aviso. Los nombres van escapados.
       function resumenVariosHTML(resumen) {
         if (!resumen) return '';
-        let { entran, estaban, novalen, parecidos, conEmpresa, puestas, otras } = resumen;
+        let { entran, estaban, novalen, parecidos, conEmpresa, puestas, homonimos } = resumen;
         let nombres = (lista) => lista.map((x) => E(x)).join(', ');
         let cuantos = (lista, uno, varios) => (lista.length === 1 ? uno : varios) + ' ' + lista.length + ': ';
         let lineas = [];
@@ -2370,10 +3004,18 @@
           let inicio = puestas.length === 1 ? 'Se le pone la empresa a 1: ' : 'Se les pone la empresa a ' + puestas.length + ': ';
           lineas.push(['puestas', inicio + casos + '.']);
         }
-        if (otras.length) {
-          let casos = otras.map((x) => '«' + E(x.nombre) + '» (' + E(x.actual) + ', no ' + E(x.escrita) + ')').join('; ');
-          let inicio = otras.length === 1 ? 'Ya tiene otra empresa: ' : 'Ya tienen otra empresa: ';
-          lineas.push(['otras', inicio + casos + '. Para cambiarla usa el lápiz ✎.']);
+        if (homonimos.length) {
+          let primero = homonimos[0];
+          let ejemplo = '«' + E(primerNombre(primero.nombre)) + ' B., ' + E(primero.escrita) + '»';
+          let casos = homonimos.map((x) => '«' + E(x.nombre) + '» (' + E(x.actual) + ')').join(', ');
+          lineas.push([
+            'homonimos',
+            homonimos.length === 1
+              ? 'Ya hay un «' + E(primero.nombre) + '» (' + E(primero.actual) + '): «' + E(primero.nombre) + '» no entra. ' +
+                'Si es otra persona, escríbela con un apellido o una inicial (' + ejemplo + '); si es la misma, quita la línea.'
+              : 'Ya hay estos nombres con otra empresa: ' + casos + '. No entran. ' +
+                'Si son otras personas, escríbelas con un apellido o una inicial (' + ejemplo + '); si son las mismas, quita las líneas.',
+          ]);
         }
         if (novalen.length) {
           let casos = novalen.map((x) => '«' + E(x.nombre) + '» (' + E(x.motivo) + ')').join('; ');
@@ -2402,7 +3044,7 @@
       // últimas clases para corregirlas. A quien ya estaba sin empresa se le pone la que se escribió.
       function añadirVarios() {
         if (!a.varios) return;
-        let resumen = { entran: [], estaban: [], novalen: [], parecidos: [], conEmpresa: 0, puestas: [], otras: [] };
+        let resumen = { entran: [], estaban: [], novalen: [], parecidos: [], conEmpresa: 0, puestas: [], homonimos: [] };
         let porCorregir = [];
         let vistos = new Set();
         a.varios.texto.split(/\r?\n/).forEach((linea) => {
@@ -2418,19 +3060,23 @@
           let motivo = motivoNombre(nombre);
           let motivoEmpresa = !motivo && empresa ? motivoNombre(empresa) : '';
           let existente = cat().find((x) => key(x) === key(nombre));
-          let parecido = motivo || motivoEmpresa || existente ? null : similar(nombre);
+          let parecido = motivo || motivoEmpresa || existente ? null : similar(nombre, canonEmpresa(empresa));
           if (motivo || motivoEmpresa) {
             resumen.novalen.push({ nombre, motivo: motivo || 'la empresa no vale: ' + motivoEmpresa });
             porCorregir.push(texto);
           } else if (existente) {
-            resumen.estaban.push(existente);
             let escrita = canonEmpresa(empresa);
             let actual = empresaDe(existente);
-            if (escrita && !actual) {
-              fijarEmpresa(existente, escrita);
-              resumen.puestas.push({ nombre: existente, empresa: escrita });
-            } else if (escrita && key(actual) !== key(escrita)) {
-              resumen.otras.push({ nombre: existente, actual, escrita });
+            if (escrita && actual && key(actual) !== key(escrita)) {
+              // Otra empresa: puede ser otra persona con el mismo nombre. No entra y la línea se queda para corregirla.
+              resumen.homonimos.push({ nombre: existente, actual, escrita });
+              porCorregir.push(texto);
+            } else {
+              resumen.estaban.push(existente);
+              if (escrita && !actual) {
+                fijarEmpresa(existente, escrita);
+                resumen.puestas.push({ nombre: existente, empresa: escrita });
+              }
             }
           } else if (parecido) {
             resumen.parecidos.push({ nombre, con: parecido });
@@ -2458,6 +3104,12 @@
       // Reúne las jornadas de todas las obras (publicadas y pendientes) para verificar acumulados
       // diarios de horas
       function filasDeTodasLasObras() {
+        if (!memoria) return filasSinMemoria();
+        if (!memoria.filas) memoria.filas = filasSinMemoria();
+        // Una copia: quien la recibe puede quitarle jornadas sin tocar la memoria del repintado.
+        return new Map(memoria.filas);
+      }
+      function filasSinMemoria() {
         let jornadas = new Map();
         Object.keys(state.obras).forEach((obra) => {
           pub(obra).forEach((fila) => {
@@ -2469,10 +3121,157 @@
         pending.forEach((jornada) => jornadas.set(jk(jornada), jornada.anulada ? [] : jornada.presentes));
         return jornadas;
       }
+      // ---------------------------------------------------------------------------
+      // Antes de guardar: qué días merecen un aviso (lógica pura, sin pantalla)
+      // ---------------------------------------------------------------------------
+      // Dice qué avisos tiene cada día marcado antes de guardar: gente que se pisaría, fin de semana en una
+      // obra sin horario ese día, día que aún no ha llegado y personas que se guardarían con 0 horas.
+      //   entrada = { hoy, dias: [{ fecha, horarioObra, existente: null | { origen, personas }, nuevas, yaAnotado }] }
+      //   (origen: 'sin_enviar' o 'en_el_pc'; personas y nuevas: [{ nombre, horas }]; yaAnotado, opcional: ese día ya
+      //   tenía jornada y es el que se está corrigiendo, así que no se avisa de fin de semana ni de día futuro).
+      // Devuelve { dias: [{ fecha, accion, origen, anteriores, finde, futuro, sinHoras, avisos }], hayAvisos, firma }.
+      // accion: 'nuevo' (día vacío), 'igual' (ya estaba exactamente así) o 'sustituye' (pisaría a otra gente).
+      // La firma cambia si cambia cualquier cosa de lo que se avisa: sirve para no guardar algo distinto de lo
+      // que se enseñó.
+      function planificarGuardado(entrada) {
+        // Clave de un nombre: sin espacios de más, sin tildes y en minúsculas.
+        const claveNombre = (nombre) =>
+          String(nombre ?? '')
+            .trim()
+            .replace(/\s+/g, ' ')
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase();
+        // Persona y horas como un solo texto, para comparar listas sin importar el orden.
+        const parDe = (persona) =>
+          claveNombre(persona.nombre) +
+          '|' +
+          (Number.isFinite(persona.horas) ? Math.round(persona.horas * 100) / 100 : '?');
+        const mismasPersonas = (izquierda, derecha) => {
+          const x = izquierda.map(parDe).sort();
+          const y = derecha.map(parDe).sort();
+          return x.length === y.length && x.every((par, i) => par === y[i]);
+        };
+        // 0 = domingo … 6 = sábado, sin depender de la zona horaria.
+        const diaDeLaSemana = (fecha) => {
+          const [anio, mes, dia] = fecha.split('-').map(Number);
+          return new Date(Date.UTC(anio, mes - 1, dia)).getUTCDay();
+        };
+
+        const vistas = new Set();
+        const dias = [];
+        entrada.dias.forEach((dato) => {
+          if (vistas.has(dato.fecha)) return;
+          vistas.add(dato.fecha);
+          const anteriores = ((dato.existente && dato.existente.personas) || []).map((persona) => persona.nombre);
+          const hayGente = anteriores.length > 0;
+          let accion = 'nuevo';
+          if (hayGente) accion = mismasPersonas(dato.existente.personas, dato.nuevas) ? 'igual' : 'sustituye';
+          const finde = !dato.yaAnotado && [0, 6].includes(diaDeLaSemana(dato.fecha)) && !(dato.horarioObra > 0);
+          const futuro = !dato.yaAnotado && dato.fecha > entrada.hoy;
+          const sinHoras = dato.nuevas
+            .filter((persona) => typeof persona.horas !== 'number' || !Number.isFinite(persona.horas) || persona.horas <= 0)
+            .map((persona) => persona.nombre);
+          const avisos = [];
+          if (accion === 'sustituye') avisos.push('ocupado');
+          if (finde) avisos.push('finde');
+          if (futuro) avisos.push('futuro');
+          if (sinHoras.length) avisos.push('cero_horas');
+          dias.push({
+            fecha: dato.fecha,
+            accion,
+            origen: hayGente ? dato.existente.origen : null,
+            anteriores,
+            finde,
+            futuro,
+            sinHoras,
+            avisos,
+            nuevas: dato.nuevas.map((persona) => [persona.nombre, persona.horas]),
+          });
+        });
+        dias.sort((x, y) => (x.fecha < y.fecha ? -1 : x.fecha > y.fecha ? 1 : 0));
+        const firma = JSON.stringify(dias.map((d) => [d.fecha, d.accion, d.avisos, d.anteriores, d.nuevas]));
+        dias.forEach((d) => delete d.nuevas);
+        return { dias, hayAvisos: dias.some((d) => d.avisos.length > 0), firma };
+      }
+      // Traduce lo que decide la persona ante el aviso ('seguir', 'saltar' o 'cancelar') en los días que se
+      // guardan: { guardar, sustituidas, saltadas, cancelado } con las fechas en el orden del plan. Cualquier
+      // otra respuesta cuenta como cancelar: ante la duda no se guarda nada.
+      function aplicarDecision(plan, modo) {
+        const fechasCon = (condicion) => plan.dias.filter(condicion).map((d) => d.fecha);
+        if (modo === 'seguir')
+          return {
+            guardar: fechasCon(() => true),
+            sustituidas: fechasCon((d) => d.accion === 'sustituye'),
+            saltadas: [],
+            cancelado: false,
+          };
+        if (modo === 'saltar')
+          return {
+            guardar: fechasCon((d) => d.accion !== 'sustituye'),
+            sustituidas: [],
+            saltadas: fechasCon((d) => d.accion === 'sustituye'),
+            cancelado: false,
+          };
+        return { guardar: [], sustituidas: [], saltadas: [], cancelado: true };
+      }
+      // Lo que se guardaría de cada persona presente en esa fecha: sus horas (o las de su horario de ese día si
+      // no se han tocado) y, como extra, lo que pasa de ese horario.
+      function presentesDelDia(presentes, f) {
+        return presentes.map((persona) => {
+          let baseDia = horarioDe(persona.nombre, f);
+          let horasPersona = R(persona.horas === null ? baseDia : persona.horas);
+          return {
+            nombre: persona.nombre,
+            horas: horasPersona,
+            extra: R(Math.max(0, horasPersona - baseDia)),
+          };
+        });
+      }
+      // Los datos que necesita planificarGuardado: por cada fecha, lo que esa obra y ese ámbito ya tienen anotado
+      // (lo sin enviar manda sobre lo que ya tiene el PC; una anulada deja el día vacío) y lo que se guardaría.
+      // El día del que salió la lista que se está viendo cuenta como vacío: cambiarlo es corregir lo que se ve, y
+      // pedir confirmación en cada corrección sería ruido. Los demás días, que la lista no enseña, sí avisan.
+      function diasParaPlan(fechas, presentes) {
+        let delPc = new Map();
+        pub().forEach((fila) => {
+          if (fila.ambito !== a.amb || !fechas.includes(fila.fecha)) return;
+          if (!delPc.has(fila.fecha)) delPc.set(fila.fecha, []);
+          delPc.get(fila.fecha).push({ nombre: fila.nombre, horas: +fila.horas });
+        });
+        let abierta = a.listaDe && a.listaDe.obra === a.obra && a.listaDe.ambito === a.amb ? a.listaDe.fecha : null;
+        return fechas.map((f) => {
+          let sinEnviar = pending.find((j) => jk(j) === a.obra + '|' + a.amb + '|' + f);
+          let real = null;
+          if (sinEnviar) {
+            if (!sinEnviar.anulada && sinEnviar.presentes.length)
+              real = {
+                origen: 'sin_enviar',
+                personas: sinEnviar.presentes.map((p) => ({ nombre: canon(p.nombre), horas: +p.horas })),
+              };
+          } else if (delPc.has(f)) real = { origen: 'en_el_pc', personas: delPc.get(f) };
+          // El día abierto no cuenta como «ya hay gente» (se está viendo) y, si ya tenía jornada, tampoco avisa de
+          // fin de semana ni de día futuro: eso ya se avisó cuando se anotó.
+          let esLaAbierta = f === abierta;
+          // Un sábado o domingo «tiene horario» si lo tiene la obra o alguna de las personas marcadas (su horario
+          // especial): si no, es un día en el que nadie tiene horas fijadas.
+          let horarioDelDia = Math.max(hor()[dow(f)], ...presentes.map((persona) => horarioDe(persona.nombre, f)));
+          return {
+            fecha: f,
+            horarioObra: horarioDelDia,
+            existente: esLaAbierta ? null : real,
+            yaAnotado: esLaAbierta && real !== null,
+            nuevas: presentesDelDia(presentes, f).map((p) => ({ nombre: p.nombre, horas: p.horas })),
+          };
+        });
+      }
       // Valida y guarda la jornada en pendientes de localStorage: exige las horas en los días sin
       // horario, rechaza si alguien pasa de 24 h ese día entre todas las obras y avisa (sin
-      // bloquear) por encima de 12 h.
-      function save() {
+      // bloquear) por encima de 12 h. Antes de escribir nada mira si algún día pisaría a gente ya
+      // anotada, cae en fin de semana sin horario, aún no ha llegado o dejaría a alguien con 0 horas:
+      // en ese caso NO guarda, enseña el aviso y espera la respuesta (decision = { modo, firma }, que
+      // llega desde los botones del aviso). Con la respuesta de un aviso ya cambiado vuelve a avisar.
+      function save(decision) {
         let presentes = a.list.filter((persona) => persona.on);
         if (!presentes.length) return toast('No hay ninguna persona presente');
         let sinHoras = presentes.filter(
@@ -2523,21 +3322,40 @@
           }
         }
 
-        // 2. Guardar todas las jornadas de las fechas marcadas
-        fechasAGuardar.forEach((f) => {
+        // 2. Mirar qué días merecen un aviso ANTES de escribir nada. Si hay alguno no se guarda: se enseña el aviso
+        // y solo se sigue con la respuesta de la persona (los botones del aviso vuelven a llamar a save).
+        let plan = planificarGuardado({ hoy: today(), dias: diasParaPlan(fechasAGuardar, presentes) });
+        let modo = 'seguir';
+        if (plan.hayAvisos) {
+          if (!decision || decision.firma !== plan.firma) {
+            a.guardado = null;
+            a.aviso = { firma: plan.firma, plan, nombres: presentes.map((persona) => persona.nombre) };
+            render();
+            document.querySelector('#aviso-guardar')?.scrollIntoView({ block: 'nearest' });
+            return;
+          }
+          modo = decision.modo;
+        }
+        a.aviso = null;
+        let resultado = aplicarDecision(plan, modo);
+        if (resultado.cancelado) {
+          a.guardado = null;
+          render();
+          return toast('No se ha guardado nada.');
+        }
+        if (!resultado.guardar.length) {
+          a.guardado = resumenDeGuardado(plan, resultado, presentes.map((persona) => persona.nombre));
+          render();
+          return toast('No se ha guardado ningún día: todos ya tenían gente.');
+        }
+
+        // 3. Guardar las jornadas de los días que toca
+        resultado.guardar.forEach((f) => {
           let jornada = {
             obra: a.obra,
             ambito: a.amb,
             fecha: f,
-            presentes: presentes.map((persona) => {
-              let baseDia = horarioDe(persona.nombre, f);
-              let horasPersona = R(persona.horas === null ? baseDia : persona.horas);
-              return {
-                nombre: persona.nombre,
-                horas: horasPersona,
-                extra: R(Math.max(0, horasPersona - baseDia)),
-              };
-            }),
+            presentes: presentesDelDia(presentes, f),
             anulada: false,
             notas: '',
             registrado: new Date().toISOString(),
@@ -2546,7 +3364,7 @@
           pending.push(jornada);
         });
 
-        // 3. Recordar los horarios predefinidos para la próxima vez
+        // 4. Recordar los horarios predefinidos para la próxima vez
         let ultimas = get(K.uh, {});
         presentes.forEach((persona) => {
           let baseDia = horarioDe(persona.nombre, a.fecha);
@@ -2556,6 +3374,12 @@
         set(K.uh, ultimas);
 
         let guardada = set(K.p, pending);
+        // Si hubo algún aviso de por medio, el resumen dice con exactitud qué días se han guardado, cuáles se
+        // han sustituido (y quién estaba) y cuáles se han saltado.
+        a.guardado =
+          guardada && plan.hayAvisos
+            ? resumenDeGuardado(plan, resultado, presentes.map((persona) => persona.nombre))
+            : null;
         render();
 
         if (!guardada)
@@ -2587,7 +3411,10 @@
         });
         let avisos = totales.filter((p) => p.total > 12);
 
-        if (fechasAGuardar.length > 1) {
+        let aviso12h = avisos.map((p) => p.nombre + ' suma ' + N(p.total) + ' h ese día (todas las obras)').join('; ');
+        if (plan.hayAvisos) {
+          toast('Guardado. Mira abajo qué se ha guardado, sustituido o saltado.' + (aviso12h ? ' Aviso: ' + aviso12h : ''));
+        } else if (fechasAGuardar.length > 1) {
           toast(
             '✓ Guardadas ' +
               fechasAGuardar.length +
@@ -2694,7 +3521,9 @@
         return (
           `<div class="envio" data-obra="${E(id)}"><h3>${E(nombreObra(id))}</h3><ul>${lineas.join('')}</ul>` +
           `<p class="nota">Se llamará «${E(nombreFichero(id))}»</p>` +
-          `<button class="btn pri full" data-preparar="${E(id)}">Preparar el fichero para el PC</button></div>`
+          `<button class="btn pri full" data-preparar="${E(id)}">Preparar el fichero para el PC</button>` +
+          (compartirDisponible(id) ? `<button class="btn sec full" data-compartir="${E(id)}">Enviar con…</button>` : '') +
+          `</div>`
         );
       }
       // Bloque de los nombres corregidos y nuevos, que viajan dentro del fichero de cualquier obra.
@@ -2727,10 +3556,12 @@
           : ids.length
             ? 'Tienes cambios sin enviar:'
             : '';
+        let vias = ids.some(compartirDisponible) ? `<p id="envio-vias">${E(COMP.vias)}</p>` : '';
         let contenido = ids.length
-          ? `<p id="resumen-envio"><b>${E(resumen)}</b></p>${ids.map(envioObraHTML).join('')}${envioNombresHTML()}`
+          ? `<p id="resumen-envio"><b>${E(resumen)}</b></p>${vias}${ids.map(envioObraHTML).join('')}${envioNombresHTML()}`
           : `<div class="aviso" id="nada-que-enviar">No hay nada por enviar: todas las jornadas ya están en el PC.</div>`;
         let listo = a.listo ? `<div class="listo" id="listo" role="status">${E(a.listo)}</div>` : '';
+        if (a.compartirAviso) listo += `<div class="aviso" id="envio-fallo" role="status">${E(a.compartirAviso)}</div>`;
         return (
           `<div class="card" id="enviar"><h2>Enviar las jornadas al PC</h2>` +
           `<p id="para-que"><b>Para qué sirve:</b> la tablet apunta quién ha trabajado cada día, pero las ` +
@@ -2783,14 +3614,24 @@
         }));
         return { lote, nombre: nombreFichero(id), contenido: contenidoEnLlano(datos) };
       }
+      // El fichero de una obra listo para llevarlo al PC, o null si esa obra no tiene nada que enviar.
+      // Lo usan «Preparar el fichero para el PC» y «Enviar con…»: los dos parten del MISMO fichero.
+      function ficheroParaEnviar(id) {
+        if (!state.obras[id] && !pending.some((jornada) => jornada.obra === id)) return null;
+        let fichero = armarFichero(id);
+        return fichero.contenido ? fichero : null;
+      }
+      // Contenido del fichero tal como se escribe (descarga y «Enviar con…» lo sacan de aquí: no pueden diferir).
+      function textoDelFichero(lote) {
+        return JSON.stringify(lote, null, 1);
+      }
       // «Preparar el fichero para el PC»: descarga el fichero de la obra y deja a la vista el recuadro
       // «Listo» con su nombre y lo que lleva.
       function prepararFichero(id) {
-        if (!state.obras[id] && !pending.some((jornada) => jornada.obra === id)) return;
-        let fichero = armarFichero(id);
-        if (!fichero.contenido) return;
+        let fichero = ficheroParaEnviar(id);
+        if (!fichero) return;
         // Genera y dispara la descarga con un objeto Blob temporal
-        let url = URL.createObjectURL(new Blob([JSON.stringify(fichero.lote, null, 1)], { type: 'application/json' }));
+        let url = URL.createObjectURL(new Blob([textoDelFichero(fichero.lote)], { type: 'application/json' }));
         let enlace = document.createElement('a');
         enlace.href = url;
         enlace.download = fichero.nombre + '.json';
@@ -2798,7 +3639,112 @@
         enlace.click();
         enlace.remove();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
+        a.compartirAviso = null;
         a.listo = `Listo. Se ha guardado el fichero «${fichero.nombre}» con ${fichero.contenido}. Ahora mándalo al PC.`;
+        render();
+      }
+      // ---------------------------------------------------------------------------
+      // «Enviar con…» (MA7): el MISMO fichero por la hoja de compartir del aparato (OneDrive, WhatsApp…).
+      // Solo cambia cómo llega el fichero: mismo nombre, mismo contenido, mismo sitio de destino (la
+      // carpeta REVISIONES de la obra). La descarga de siempre sigue ahí. Las cuatro funciones de abajo no
+      // tocan la pantalla ni el reloj: se les pasa el navegador y la clase File (así se prueban solas).
+      // ---------------------------------------------------------------------------
+      // COMPARTIR: inicio
+      // El fichero para la hoja de compartir: mismo nombre y mismo tipo que la descarga.
+      function archivoParaCompartir(ClaseFile, nombre, texto) {
+        return new ClaseFile([texto], nombre + '.json', { type: 'application/json' });
+      }
+      // ¿Sabe este aparato compartir ficheros? Sin soporte (o sin permiso) el botón no se enseña.
+      function sabeCompartir(nav, ClaseFile, nombre) {
+        try {
+          if (!nav || typeof nav.share !== 'function' || typeof nav.canShare !== 'function') return false;
+          return !!nav.canShare({ files: [archivoParaCompartir(ClaseFile, nombre, '{}')] });
+        } catch (error) {
+          return false;
+        }
+      }
+      // Comparte el fichero con la hoja del sistema. NUNCA lanza: devuelve el resultado.
+      //   'compartido'  eligió dónde mandarlo
+      //   'cancelado'   cerró la hoja sin elegir (no es un fallo)
+      //   'denegado'    el aparato no deja compartir este fichero (Chrome no admite el tipo .json)
+      //   'sin_soporte' no sabe compartir ficheros
+      //   'error'       cualquier otra cosa
+      // OJO: hay que llamarla directamente desde el toque del dedo (el navegador no abre la hoja si no).
+      async function compartirFichero(nav, ClaseFile, nombre, texto) {
+        let datos;
+        try {
+          if (!nav || typeof nav.share !== 'function' || typeof nav.canShare !== 'function') return { resultado: 'sin_soporte' };
+          datos = { files: [archivoParaCompartir(ClaseFile, nombre, texto)] };
+          if (!nav.canShare(datos)) return { resultado: 'sin_soporte' };
+        } catch (error) {
+          return { resultado: 'sin_soporte' };
+        }
+        try {
+          await nav.share(datos);
+          return { resultado: 'compartido' };
+        } catch (error) {
+          let nombreError = error && error.name;
+          if (nombreError === 'AbortError') return { resultado: 'cancelado' };
+          if (nombreError === 'NotAllowedError') return { resultado: 'denegado' };
+          return { resultado: 'error' };
+        }
+      }
+      // COMPARTIR: fin
+      const COMP = {
+        vias:
+          'Hay dos maneras de llevar el fichero al PC. «Preparar el fichero para el PC» lo guarda en las ' +
+          'descargas de este aparato (los pasos de abajo). «Enviar con…» abre la lista de aplicaciones de ' +
+          'este aparato: elige OneDrive (o la que uses para pasar cosas al PC) y la carpeta REVISIONES de la ' +
+          'obra. Es el mismo fichero en las dos.',
+        listo:
+          'Listo. Has pasado el fichero «{nombre}» con {contenido} a la aplicación que has elegido. ' +
+          'Comprueba que ha llegado a la carpeta REVISIONES de la obra.',
+        denegado:
+          'Este aparato no deja pasar este fichero con «Enviar con…». Usa «Preparar el fichero para el PC»: ' +
+          'guarda el mismo fichero y no se pierde nada.',
+        error:
+          'No se ha podido abrir «Enviar con…». Vuelve a probar o usa «Preparar el fichero para el PC»: ' +
+          'guarda el mismo fichero y no se pierde nada.',
+      };
+      // Si el aparato rechazó el fichero, el botón se esconde en ese aparato durante 30 días (luego vuelve a
+      // probar: el navegador puede haber cambiado). Se guarda el día del rechazo.
+      function compartirRechazado() {
+        let rechazo = get(K.cn, null);
+        return !!(rechazo && /^\d{4}-\d{2}-\d{2}$/.test(rechazo.desde) && today() <= add(rechazo.desde, 30));
+      }
+      // El navegador y la clase File de este aparato (null si no existen: así nada revienta donde no los hay).
+      function elAparato() {
+        return { nav: typeof navigator === 'undefined' ? null : navigator, ClaseFile: typeof File === 'undefined' ? null : File };
+      }
+      // ¿Se enseña «Enviar con…» en la obra id? Solo si el aparato sabe y no ha rechazado ya el fichero.
+      function compartirDisponible(id) {
+        let aparato = elAparato();
+        return !compartirRechazado() && sabeCompartir(aparato.nav, aparato.ClaseFile, nombreFichero(id));
+      }
+      // Hay un «Enviar con…» en marcha (la hoja del sistema abierta): un segundo toque no abre otra.
+      let compartiendo = false;
+      // «Enviar con…» de una obra. Cualquier otra cosa que el toque se hace antes de llamar a la hoja.
+      async function compartirObra(id) {
+        if (compartiendo) return;
+        let fichero = ficheroParaEnviar(id);
+        if (!fichero) return;
+        compartiendo = true;
+        let respuesta;
+        let aparato = elAparato();
+        try {
+          respuesta = await compartirFichero(aparato.nav, aparato.ClaseFile, fichero.nombre, textoDelFichero(fichero.lote));
+        } finally {
+          compartiendo = false;
+        }
+        let resultado = respuesta.resultado;
+        if (resultado === 'cancelado') return;
+        if (resultado === 'compartido') {
+          a.compartirAviso = null;
+          a.listo = COMP.listo.replace('{nombre}', fichero.nombre).replace('{contenido}', fichero.contenido);
+        } else {
+          if (resultado === 'denegado' || resultado === 'sin_soporte') set(K.cn, { desde: today() });
+          a.compartirAviso = resultado === 'error' ? COMP.error : COMP.denegado;
+        }
         render();
       }
       // ---------------------------------------------------------------------------
@@ -2833,6 +3779,12 @@
           a.fechas = [a.fecha];
           a.calMes = a.fecha.slice(0, 7);
           changed();
+          return;
+        }
+        // Abrir o plegar el calendario (en el móvil va plegado para que la lista de gente se vea al abrir)
+        if (datos.calAbrir !== undefined) {
+          a.calAbierto = !a.calAbierto;
+          render();
           return;
         }
         // Día del calendario interactivo
@@ -2932,6 +3884,8 @@
         // Rechazar la fusión de personas al renombrar
         if (datos.renNo !== undefined) {
           a.ren.pregunta = '';
+          a.ren.ayuda =
+            'Si son dos personas distintas, ponle un apellido o una inicial: «' + primerNombre(a.ren.valor) + ' B.».';
           refrescar();
           return;
         }
@@ -3035,19 +3989,35 @@
             render();
             return;
           }
-          let igual =
-            cat().find((existente) => key(existente) === key(nombre)) ||
-            a.list.find((persona) => key(persona.nombre) === key(nombre))?.nombre;
-          if (igual) {
-            addName(igual);
-            let aviso = empresaParaExistente(igual, elegida.empresa);
-            changed(false);
-            if (aviso) toast(aviso);
+          let clase = clasificarNombreEscrito({
+            nombre,
+            empresa: elegida.empresa,
+            base: personasDeLaBase(),
+            enLista: a.list.map((persona) => persona.nombre),
+          });
+          // Ya existe con otra empresa o está de baja: se pregunta antes de crear o cambiar nada.
+          if (clase.tipo === 'otra_persona_posible' || clase.tipo === 'de_baja') {
+            a.homonimo = {
+              nombre,
+              empresa: elegida.empresa,
+              existente: clase.existente,
+              tipo: clase.tipo,
+              fase: 'pregunta',
+              valor: '',
+              error: '',
+            };
+            render();
             return;
           }
-          let parecido = similar(nombre);
-          if (parecido) {
-            a.warn = { neo: nombre, old: parecido, empresa: elegida.empresa };
+          if (clase.tipo === 'mismo') {
+            addName(clase.existente);
+            let aviso = empresaParaExistente(clase.existente, elegida.empresa);
+            changed(false);
+            toast(aviso || textoYaEstaba(clase.existente));
+            return;
+          }
+          if (clase.tipo === 'parecido') {
+            a.warn = { neo: nombre, old: clase.existente, empresa: elegida.empresa };
             render();
             return;
           }
@@ -3080,10 +4050,56 @@
           changed(false);
           return;
         }
+        // Respuesta a «Ya hay un nombre igual. ¿Es el mismo?»: «Sí» apunta al que ya está sin tocarle la empresa (para eso está el
+        // lápiz ✎); «No» pide un apellido o una inicial para crear a la otra persona; «Cancelar» no deja rastro.
+        if (datos.homSi !== undefined) {
+          let h = a.homonimo;
+          if (!h) return;
+          a.homonimo = null;
+          addName(h.existente);
+          changed(false);
+          toast('Se ha apuntado a ' + conSuEmpresa(h.existente) + '. Su empresa no se cambia: para cambiarla usa el lápiz ✎.');
+          return;
+        }
+        if (datos.homNo !== undefined) {
+          if (!a.homonimo) return;
+          Object.assign(a.homonimo, { fase: 'otra', valor: a.homonimo.nombre + ' ', error: '' });
+          render();
+          let campo = document.querySelector('#homonimo-campo');
+          if (campo) {
+            campo.focus();
+            campo.setSelectionRange(campo.value.length, campo.value.length);
+          }
+          return;
+        }
+        if (datos.homCrear !== undefined) return crearOtraPersona();
+        if (datos.homCancelar !== undefined) {
+          a.homonimo = null;
+          render();
+          return;
+        }
         // Botón guardar jornada: valida horas y límites y guarda la jornada en pendientes
         if (datos.guardar !== undefined) return save();
+        // Respuesta al aviso de antes de guardar: guardar así (sustituyendo), saltar los días que ya tienen
+        // gente o no guardar nada. Con una respuesta de un aviso que ya cambió, save vuelve a avisar.
+        if (datos.guardarModo !== undefined) {
+          if (datos.guardarModo === 'cancelar') {
+            a.aviso = null;
+            render();
+            return toast('No se ha guardado nada.');
+          }
+          return save({ modo: datos.guardarModo, firma: a.aviso && a.aviso.firma });
+        }
+        // Cierra el resumen de lo que se acaba de guardar
+        if (datos.cerrarResumen !== undefined) {
+          a.guardado = null;
+          render();
+          return;
+        }
         // Botón «Preparar el fichero para el PC» de una obra: lo descarga y deja el recuadro «Listo»
         if (datos.preparar !== undefined) return prepararFichero(datos.preparar);
+        // «Enviar con…»: la hoja de compartir del aparato (debe abrirse en este mismo toque)
+        if (datos.compartir !== undefined) return compartirObra(datos.compartir);
         // Botón empezar de cero: solicita confirmación para borrar el borrador de la jornada en
         // curso
         if (datos.reset !== undefined) {
@@ -3115,9 +4131,10 @@
             fecha: elemento.dataset.fecha,
           };
           if (datos.abrir !== undefined) {
-            Object.assign(a, jornada, { v: 'app' });
-            loadList();
-            draft();
+            // Se abre UN día: los días que estuvieran marcados en el calendario no se arrastran al guardar.
+            // (jornada lleva «ambito» pero la tablet usa «amb»: sin ese cambio abría siempre el ámbito de antes).
+            Object.assign(a, jornada, { v: 'app', amb: jornada.ambito, fechas: [jornada.fecha], calMes: jornada.fecha.slice(0, 7) });
+            changed();
           } else a.confirm = jornada;
           render();
           return;
@@ -3184,6 +4201,7 @@
         // Cambio de obra seleccionada: actualiza la obra activa y recarga la lista de presentes
         if (campo.id === 'obra' || campo.id === 'obra-j') {
           a.obra = campo.value;
+          set(K.ob, a.obra);
           changed();
           return;
         }
@@ -3248,6 +4266,10 @@
           a.ren.otra = evento.target.value;
           return;
         }
+        if (evento.target.id === 'homonimo-campo' && a.homonimo) {
+          a.homonimo.valor = evento.target.value;
+          return;
+        }
         if (evento.target.id === 'varios-texto' && a.varios) {
           a.varios.texto = evento.target.value;
           return;
@@ -3260,6 +4282,11 @@
         }
       });
       document.addEventListener('keydown', (evento) => {
+        if (evento.target.id === 'homonimo-campo' && evento.key === 'Enter') {
+          evento.preventDefault();
+          crearOtraPersona();
+          return;
+        }
         if ((evento.target.id === 'ren-campo' || evento.target.id === 'ren-empresa-otra') && evento.key === 'Enter') {
           evento.preventDefault();
           guardarRenombre(false);
@@ -3280,6 +4307,8 @@
         if (window.__pub && window.SAGARDE_PERSONAL?.obras) {
           state = window.SAGARDE_PERSONAL;
           set(K.e, state);
+          // personal_sw.js marca con __sgdOrigen = "copia" el estado que sirve desde su caché (sin cobertura).
+          datosDe = window.__sgdOrigen === 'copia' ? 'copia' : 'red';
           let generado = state.generado || '';
           let coincidencia = generado.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})/);
           let fechaLegible = coincidencia
@@ -3293,12 +4322,16 @@
               ':' +
               coincidencia[5]
             : generado;
-          origin = 'Lista de trabajadores y obras al día' + (generado ? ': ' + fechaLegible : '');
+          origin =
+            datosDe === 'red'
+              ? 'Lista de trabajadores y obras al día' + (generado ? ': ' + fechaLegible : '')
+              : 'Se usa la lista guardada en este aparato';
         } else {
           // Si no hay conexión o se superó el tiempo de espera, arranca con la copia local de
           // respaldo
           if (copia?.obras) {
             state = copia;
+            datosDe = 'copia';
             origin =
               'Se usa la lista guardada en este aparato' +
               (porEspera ? ' · la lista nueva tarda en llegar' : '');
@@ -3310,7 +4343,7 @@
         aplicarRenombresAlEstado();
         olvidarEmpresas();
         reconcile();
-        a.obra = Object.keys(state.obras).find((obra) => !state.obras[obra].cerrada) || '';
+        a.obra = obraPorDefecto();
         if (!restore()) loadList();
         render();
         if (rotos > 0)

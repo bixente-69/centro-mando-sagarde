@@ -25,6 +25,13 @@ import panel_personal  # noqa: E402
 
 fallos = []
 
+# El reloj, fijo: «el mes» de la tablet y del ranking es el del reloj del navegador, y los datos son de octubre de 2026. Con el reloj
+# real la prueba se rompía sola al cambiar de mes (en Auckland ya era noviembre el 31/10 por la tarde). Mismo instante que el de
+# verificar_generador_personal.py (23/10/2026): sigue siendo 23/10 en las tres zonas horarias que recorre este verificador.
+FECHA_FIJA = """(() => { const fijo = new Date('2026-10-23T10:00:00+02:00').valueOf(); const Real = Date;
+  class Falsa extends Real { constructor(...a) { if (a.length === 0) { super(fijo); } else { super(...a); } } static now() { return fijo; } }
+  window.Date = Falsa; })();"""
+
 
 def ok(cond, msg):
     if not cond:
@@ -129,6 +136,7 @@ def main():
         b = p.chromium.launch()
         for tz in ('Europe/Madrid', 'Pacific/Auckland', 'America/Los_Angeles'):
             ctx = b.new_context(viewport={'width': 820, 'height': 1000}, timezone_id=tz, locale='es-ES')
+            ctx.add_init_script(FECHA_FIJA)
             errs = []
 
             # 1) PESTAÑA y 2) INFORME de la obra alfa (octubre, todas las jornadas de esa obra)
@@ -215,6 +223,7 @@ def main():
         # 320 y 390 px: las palabras sueltas de empresa (CATERSYSTEM, Manueles) no se parten por la mitad en ningún sitio
         for ancho in (390, 320):
             ctx = b.new_context(viewport={'width': ancho, 'height': 900}, timezone_id='Europe/Madrid', locale='es-ES')
+            ctx.add_init_script(FECHA_FIJA)
             for nombre, fn, raiz, sel in (('pestaña', panel_personal.vista_personal, '#pers-raiz', '#pers-raiz .pers-emp, #pers-raiz [data-por-empresa] td:first-child'),
                                           ('informe', panel_personal.informe_personal, '#pinf-raiz', '#pinf-raiz .pinf-emp, #pinf-raiz [data-por-empresa] td:first-child')):
                 pg = ctx.new_page()

@@ -665,7 +665,8 @@ class TestLector(Base):
         self.ing(lote([], empresas=[emp('Mikel', 'Manueles'), emp('Txomin', 'Otra')]), escribir=True)
         self.fichero(lote([], empresas=[emp('Mikel', 'Catersystem'), emp('Txomin', ''), emp('Andoni', 'Obras')]))
         f = self.analizar()['ficheros'][0]
-        self.assertEqual(f['resumen'], '2 empresas puestas, 1 empresa quitada')
+        # MA4b: «Mikel» (Manueles → Catersystem) es una empresa CAMBIADA, no puesta: el resumen ya no las junta.
+        self.assertEqual(f['resumen'], '1 empresa puesta, 1 empresa cambiada, 1 empresa quitada')
         lineas = PI._lineas_ficha(f)
         self.assertIn('      · Cambia la empresa de «Mikel»: de «Manueles» a «Catersystem».', lineas)
         self.assertIn('      · Quita la empresa a «Txomin» (era «Otra»).', lineas)

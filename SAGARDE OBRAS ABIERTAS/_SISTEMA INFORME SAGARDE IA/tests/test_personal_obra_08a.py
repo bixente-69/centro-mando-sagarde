@@ -184,7 +184,8 @@ class TestRenombres(Base):
                                            'id_otro': None, 'orden': None}])
         t = self.persona('T0001')
         self.assertEqual((t['nombre'], t['nombres_anteriores']), ('Mikel Etxeberria', ['Mikel']))
-        self.assertEqual(set(t), set(P.TK))
+        # «horario_preferido» solo existe en quien tiene uno propio (P1 lo pone y lo quita): no es parte fija de la ficha.
+        self.assertEqual(set(t), set(P.TK) - {'horario_preferido'})
         self.assertEqual(self.codigos(r['avisos_lote']), [])
         filas = P.aplanar(self.raiz, OBRAS, 'olabeaga')
         self.assertEqual(sorted({f['nombre'] for f in filas}), ['Andoni', 'Mikel Etxeberria', 'Txomin'])
@@ -352,7 +353,8 @@ class TestAltas(Base):
         r = self.ing(lote([], altas=['Mikel', 'andoni', 'TXOMÍN']), escribir=True)
         self.assertEqual([(e['id'], e['accion']) for e in r['altas_pedidas']],
                          [('T0001', 'sin_cambios'), ('T0003', 'sin_cambios'), ('T0002', 'sin_cambios')])
-        self.assertEqual(r['avisos_lote'], [])
+        # MA4b: un nombre «nuevo» que ya estaba se avisa (antes callaba); sigue sin escribirse nada.
+        self.assertEqual(r['avisos_lote'], [{'codigo': 'alta_ya_existia', 'detalle': d} for d in ('Mikel', 'Andoni', 'Txomin')])
         self.assertFalse(r['escrito'])
         self.assertEqual(self.hashes(), h)
 
@@ -465,7 +467,7 @@ class TestNombresAnteriores(Base):
         self.ing(lote([], renombres=[ren('Txomin', 'Mikel')]), escribir=True)
         r = self.ing(lote([], altas=['Mikel']))
         self.assertEqual((r['altas_pedidas'][0]['id'], r['altas_pedidas'][0]['accion']), ('T0002', 'sin_cambios'))
-        self.assertEqual(r['avisos_lote'], [])
+        self.assertEqual(r['avisos_lote'], [{'codigo': 'alta_ya_existia', 'detalle': 'Mikel'}], 'MA4b: ya no es un silencio')
 
     def test_comprobar_nombres_anteriores(self):
         self.sembrar()
@@ -813,8 +815,25 @@ class TestTextos(unittest.TestCase):
          '«Mikel» es un nombre antiguo de «Mikel Etxeberria»: se ha tomado como la misma persona.'),
         # 08c2a: el campo Empresa
         ('empresa_sin_persona', 'Fantasma', '«Fantasma» no estaba en la base: no se le puede poner empresa.'),
+        # MA4b: dos personas con el mismo nombre no se funden en silencio
+        ('empresa_cambiada', 'Mikel | Manueles | Catersystem',
+         '«Mikel» pasa de la empresa «Manueles» a «Catersystem»: todas sus horas ya apuntadas se contarán en «Catersystem». '
+         'Si es otra persona con el mismo nombre, hay que ponerle un apellido o una inicial en la tablet.'),
+        ('alta_ya_existia', 'Mikel',
+         '«Mikel» ya estaba en la base: este fichero lo daba por nuevo y se ha tomado como la misma persona.'),
+        ('alta_de_baja', 'Mikel',
+         '«Mikel» estaba de baja y este fichero lo da por nuevo: vuelve a la lista. '
+         'Si es otra persona con el mismo nombre, hay que ponerle un apellido o una inicial.'),
+        # MA5: los de oficios, horarios preferidos y bajas ya tenían su frase en P1, pero esta lista no los recorría
+        ('baja_sin_persona', 'Mikel', '«Mikel» no estaba en la base: no hay nadie a quien quitar.'),
+        ('baja_sin_persona', None, 'Un nombre que se quería quitar no estaba en la base.'),
+        ('categoria_sin_persona', 'Mikel', '«Mikel» no estaba en la base: no se le puede poner oficio.'),
+        ('categoria_sin_persona', None, 'Un oficio era para alguien que no estaba en la base: no se ha puesto.'),
     ]
     RECHAZOS = {
+        'baja_invalida': 'Un nombre de la lista de personas a quitar viene mal escrito.',
+        'categoria_invalida': 'El oficio o categoría viene mal escrito.',
+        'horario_preferido_invalido': 'Un horario preferido viene mal escrito.',
         'lote_invalido': 'El fichero no tiene el formato esperado.',
         'tipo_desconocido': 'Este fichero no es un control horario.',
         'version_desconocida': 'Este control horario es de una versión que este PC no conoce.',

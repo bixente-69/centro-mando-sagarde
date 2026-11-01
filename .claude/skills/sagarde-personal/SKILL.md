@@ -38,6 +38,7 @@ Todo en `SAGARDE OBRAS ABIERTAS/` salvo lo indicado.
 | Pestaña e informe de cada obra | `_SISTEMA INFORME SAGARDE IA/panel_personal.py` |
 | Ranking y «Base de trabajadores» | `_SISTEMA INFORME SAGARDE IA/personal_sagarde.html` (la base se abre también con `#base`) |
 | Lector de los controles horarios | `_SISTEMA INFORME SAGARDE IA/lector_control_horario.py` (ver `sagarde-actualizar-obra`) |
+| La tablet sin cobertura (service worker, manifest e iconos) | `_SISTEMA INFORME SAGARDE IA/personal_sw.js`, `personal_manifest.json`, `personal_icono_192.png`, `personal_icono_512.png`, `personal_icono_apple.png`. **Si cambias `personal_sw.js`, sube su `VERSION`**; la página y el cálculo no lo necesitan (van por red primero). Cada fichero nuevo de este tipo necesita su línea en `.gitignore` (lista blanca) |
 
 Las obras archivadas conservan su `personal_obra.json` (viaja con la carpeta) y el ranking las sigue contando, marcadas
 `cerrada`. **Nunca borrar ese fichero al cerrar una obra** (ver `sagarde-cerrar-obra`).
@@ -105,6 +106,19 @@ py -3.11 personal_obra.py separar-empresas --aplicar    # solo tras su «sí»
 Lo dudoso (nombre que quedaría vacío, nombre que ya existe, dos que quedarían iguales, un sufijo «@AUT», alguien que ya tiene
 otra empresa) **no se toca y se enseña**; para juntar dos personas, `fusionar`.
 
+### Dos personas con el mismo nombre
+El nombre sigue siendo único en la base. La tablet y la pestaña «Generar personal» preguntan **«¿es el mismo o es otra
+persona?»** antes de crear nada; si es otra, piden un apellido o una inicial («Rafa B.»; «Nombre B.» ya no cuenta como errata
+parecida). En el PC, el lector **frena** (queda «a revisar», no se aplica ni se descarta) un fichero que **cambia la empresa**
+de alguien (`empresa_cambiada`) o **reactiva a una baja** (`alta_de_baja`): puede ser otra persona con el mismo nombre y
+aceptarlo es cosa de Bixente. Diseño y casos: `_SISTEMA/docs/superpowers/specs/2026-10-30-personal-misma-persona-mismo-nombre-design.md`
+(opción B reforzada, **provisional hasta probarla en el campo**).
+
+### «Generar personal» (pestaña del ranking): altas, empresas, oficios, horarios y bajas desde el PC
+Prepara una lista de cambios (se guarda en el aparato aunque se recargue) y descarga **`BASE TRABAJADORES SAGARDE <DDMMAAAA>.json`**
+(`tipo: lote_personal`, `obra: sagarde`). Es otro fichero de aportación, no un circuito aparte: se deja en `REVISIONES` de
+**cualquier** obra y entra con «actualiza la obra» como un control horario. Hasta que el PC lo aplica, la base no cambia.
+
 ## La suma por empresa
 
 Sale sola, sin ningún paso aparte, en los **cuatro sitios**: pestaña Personal de cada obra, sección Personal del Informe de
@@ -144,5 +158,10 @@ Lo de personal: `test_personal_obra` (+ `_08a`), `test_personal_empresas_08c2a`,
 `test_controles_horarios_08b`, `test_personal_integracion` (+ `_08a`), `test_publicacion_personal`, `test_personal_calculo` y
 `test_empresas_suma_08c2b` y `test_base_trabajadores_08e` (necesitan `node`), `test_generador_personal` y
 `test_lenguaje_electricista` (necesitan Playwright; ≈ 2–7 min; `SAGARDE_SIN_NAVEGADOR=1` los salta a propósito) y
-`test_panel_personal`. Las verificaciones de navegador de la pestaña, el informe y el ranking siguen en la carpeta de trabajo
+`test_panel_personal`. De la serie de mejoras de la auditoría del 30/10: `test_personal_sin_cobertura`,
+`test_personal_guardado_sin_pisar`, `test_personal_mismo_nombre` (+ `_pantallas`), `test_generar_personal_ma5`,
+`test_personal_pantallas_ma6`, `test_personal_enviar_con_ma7`, `test_personal_escala_y_compatibilidad`,
+`test_orden_empresas_y_generar_personal` y `test_personal_agy_cobertura_ma8` (las zonas del código de agy que se
+rompieron a propósito y nadie notaba: últimas horas, «Por horas», fichero de la tablet campo a campo, avisos y fichero de
+«Generar personal»). Las verificaciones de navegador de la pestaña, el informe y el ranking siguen en la carpeta de trabajo
 del proyecto (`PROYECTO PERSONAL EN OBRA/staging/_verificadores/`: `verificar_p4.py`, `verificar_p5.py`, `verificar_p5b.py`).

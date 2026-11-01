@@ -7,6 +7,8 @@ fecha en el 23/10/2026 y recorre el flujo completo. El lote que exporta la app s
 (P1). Viene del verificador de staging (paso 06): solo cambia de dónde salen la app, P1 y la carpeta de pruebas.
 P3_SOLO_08C=1 = modo rápido del paso 08c: solo las escenas T80 en adelante (lápiz, desplegable completo, varios nombres).
 P3_SOLO_08C2A=1 = modo rápido del paso 08c2a: solo las escenas T120 en adelante (el campo Empresa: crear, lápiz, varios nombres, lista, «Enviar al PC»).
+P3_SOLO_MA4C=1 = modo rápido del paso MA4c: solo las escenas T170 en adelante (dos personas con el mismo nombre: la pregunta «¿es el mismo?», el lápiz, varios nombres).
+P3_SOLO_MA2=1 = modo rápido del paso MA2: solo las escenas T150 en adelante (anotar sin pisar lo ya guardado, fin de semana, días futuros, horas al añadir).
 P3_SOLO_08C2B=1 = modo rápido del paso 08c2b: solo las escenas T140 en adelante (la suma por empresa y la empresa junto al nombre en el Informe).
 P3_SOLO_08D=1 = modo rápido del paso 08d: solo las escenas T90 en adelante (día nuevo con la gente anterior marcada, «Enviar al PC», nombre del fichero).
 P3_APP = carpeta que tiene generador_personal.html, personal_calculo.js y personal_obra.py (por defecto, el motor)."""
@@ -385,8 +387,9 @@ with sync_playwright() as p:
         items = pg.eval_on_selector_all('#v-jornadas .jor-item', 'e=>e.map(i=>[i.dataset.obra,i.dataset.ambito,i.dataset.fecha,i.classList.contains("pendiente")])')
         claves = {(a, f) for o, a, f, pe in items}
         esperado = {('vivienda', '2026-10-23'), ('vivienda', '2026-10-22'), ('vivienda', '2026-10-21'), ('garaje', '2026-10-16'),
-                    ('garaje', '2026-10-15'), ('vivienda', '2026-10-12'), ('vivienda', '2026-10-10')}
-        ok(claves == esperado, 'jornadas listadas (pendientes + publicadas de los últimos 14 días): %s' % sorted(claves))
+                    ('garaje', '2026-10-15'), ('vivienda', '2026-10-12'), ('vivienda', '2026-10-10'),
+                    ('vivienda', '2026-10-06'), ('vivienda', '2026-10-05'), ('vivienda', '2026-09-03'), ('vivienda', '2026-09-02'), ('vivienda', '2026-09-01')}
+        ok(claves == esperado, 'jornadas listadas (pendientes + publicadas desde el día 1 del mes pasado, MA2): %s' % sorted(claves))
         ok([pe for o, a, f, pe in items if (a, f) == ('vivienda', '2026-10-23')] == [True], 'la jornada sin ingerir debe llevar la clase pendiente')
         clic('#v-jornadas .jor-item[data-ambito="vivienda"][data-fecha="2026-10-22"] button[data-abrir]')
         ok(valor('#fecha') == '2026-10-22' and marcados() == ['Mikel', 'Txomin'], 'abrir una jornada la carga en el formulario: %s %s' % (valor('#fecha'), marcados()))
@@ -457,6 +460,8 @@ with sync_playwright() as p:
         clic('#v-app .row[data-nombre="Mikel"] .step button >> nth=0')
         ok(txt('#v-app .row[data-nombre="Mikel"] .step output') == '7,5 h', 'el primer toque fija 7,5 h: %r' % txt('#v-app .row[data-nombre="Mikel"] .step output'))
         clic('button[data-guardar]')
+        ok(pg.query_selector('#aviso-guardar') is not None and pendientes() == antes, 'MA2: guardar un sábado de futuro sin horario enseña el aviso y todavía no guarda nada: %r' % pendientes())
+        clic('#aviso-guardar button[data-guardar-modo="seguir"]')
         ok(pendientes() == str(int(antes) + 1), 'con horas puestas, guardar sí guarda el sábado: %r' % pendientes())
         sab = [j for j in exportar().get('jornadas', []) if j['fecha'] == '2026-10-24']
         ok(sab and sab[0]['presentes'][0]['horas'] == 7.5 and sab[0]['presentes'][0].get('extra') == 7.5, 'el sábado todo cuenta como extra: %s' % sab)
@@ -669,6 +674,14 @@ with sync_playwright() as p:
 
     def con_escena(nombre, datos, fn, **kw):
         """Ejecuta una escena; cualquier excepción se convierte en un fallo legible y no tumba las demás."""
+        if os.environ.get('P3_SOLO_MA4C') == '1':     # modo del paso MA4c: solo las escenas T170 en adelante (dos personas con el mismo nombre)
+            m = re.match(r'T(\d+)', nombre)
+            if not (m and int(m.group(1)) >= 170):
+                return
+        if os.environ.get('P3_SOLO_MA2') == '1':     # modo del paso MA2: solo las escenas T150 en adelante (anotar sin pisar, fin de semana, días futuros, horas al añadir)
+            m = re.match(r'T(\d+)', nombre)
+            if not (m and int(m.group(1)) >= 150):
+                return
         if os.environ.get('P3_SOLO_08C2B') == '1':     # modo del paso 08c2b: solo las escenas T140 en adelante (la suma por empresa en el Informe)
             m = re.match(r'T(\d+)', nombre)
             if not (m and int(m.group(1)) >= 140):
@@ -781,14 +794,32 @@ with sync_playwright() as p:
         ok('anulada' in item, 'T19 una jornada anulada pendiente debe decir «anulada» en la lista: %r' % item)
     con_escena('T19', ESTADO1, t19)
 
-    # --- T20: ventana de Jornadas: de hoy−14 a hoy, ambos incluidos; ni más viejas ni futuras
+    # --- T20: ventana de Jornadas (MA2): desde el día 1 del mes pasado (o 14 días atrás si es más antiguo) hasta los días futuros ya anotados
     def t20(e):
         e.ir()
         e.clic('button[data-v="jornadas"]')
         cl = e.pg.eval_on_selector_all('#v-jornadas .jor-item', 'e=>e.map(i=>i.dataset.fecha)')
-        ok(sorted(cl) == ['2026-10-09', '2026-10-10', '2026-10-23'], 'T20 jornadas listadas (14 días hacia atrás desde hoy, sin futuras): %s' % cl)
-    f20 = [fila(f, 'vivienda', 'Mikel', 7.5) for f in ('2026-10-08', '2026-10-09', '2026-10-10', '2026-10-23', '2026-10-24')]
+        ok(sorted(cl) == ['2026-09-01', '2026-10-08', '2026-10-09', '2026-10-10', '2026-10-23', '2026-10-24'],
+           'T20 jornadas listadas (desde el 01/09, con las futuras ya anotadas; el 31/08 no): %s' % cl)
+    f20 = [fila(f, 'vivienda', 'Mikel', 7.5) for f in ('2026-08-31', '2026-09-01', '2026-10-08', '2026-10-09', '2026-10-10', '2026-10-23', '2026-10-24')]
     con_escena('T20', estado_con({'olabeaga': obra_est('2026 OLABEAGA', f20)}, ['Mikel']), t20)
+
+    # --- T20b/T20c: la ventana a principios de mes (los 14 días no llegan al mes pasado) y en el cambio de año
+    def t20b(e):
+        e.ir()
+        e.clic('button[data-v="jornadas"]')
+        cl = e.pg.eval_on_selector_all('#v-jornadas .jor-item', 'e=>e.map(i=>i.dataset.fecha)')
+        ok(sorted(cl) == ['2026-10-01', '2026-11-03'], 'T20b el 03/11 la lista llega al 01/10 y no al 30/09: %s' % cl)
+    f20b = [fila(f, 'vivienda', 'Mikel', 7.5) for f in ('2026-09-30', '2026-10-01', '2026-11-03')]
+    con_escena('T20b', estado_con({'olabeaga': obra_est('2026 OLABEAGA', f20b)}, ['Mikel']), t20b, hoy='2026-11-03T10:00:00+01:00')
+
+    def t20c(e):
+        e.ir()
+        e.clic('button[data-v="jornadas"]')
+        cl = e.pg.eval_on_selector_all('#v-jornadas .jor-item', 'e=>e.map(i=>i.dataset.fecha)')
+        ok(sorted(cl) == ['2026-12-01', '2027-01-10'], 'T20c el 10/01/2027 la lista llega al 01/12/2026 y no al 30/11: %s' % cl)
+    f20c = [fila(f, 'vivienda', 'Mikel', 7.5) for f in ('2026-11-30', '2026-12-01', '2027-01-10')]
+    con_escena('T20c', estado_con({'olabeaga': obra_est('2026 OLABEAGA', f20c)}, ['Mikel']), t20c, hoy='2027-01-10T10:00:00+01:00')
 
     # --- T21: obra inicial = primera NO cerrada; sin ninguna obra abierta no hay error y se explica
     def t21(e):
@@ -1684,6 +1715,8 @@ with sync_playwright() as p:
             e.clic('#v-app .row[data-nombre="Gorka"] .x')
             ok(e.txt('.sum') == '1 presente · 4 h', 'T69 con solo Aitor el sábado no faltan horas: %r' % e.txt('.sum'))
             e.clic('button[data-guardar]')
+            ok([x.get_attribute('data-aviso') for x in e.pg.query_selector_all('#aviso-guardar li')] == ['futuro'], 'T69 (MA2) con horario propio el sábado no avisa de fin de semana, solo de que aún no ha llegado')
+            e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
             ok(e.pendientes() == '1', 'T69 se puede guardar el sábado con el horario propio: %r %r' % (e.pendientes(), e.toast()))
             a = [p for j in (e.exportar() or {}).get('jornadas', []) for p in j['presentes']]
             ok(a and a[0]['horas'] == 4 and a[0]['extra'] == 0, 'T69 el sábado de Aitor son 4 h normales: %s' % a)
@@ -1714,6 +1747,7 @@ with sync_playwright() as p:
                 e.clic('#v-app .row[data-nombre="%s"] .x' % n)
             ok(e.marcados() == ['Aitor'] and e.txt('.sum') == '1 presente · 4 h', 'T69b el sábado con «Marcar todos» y solo Aitor marcado: 4 h (su horario propio), sin «faltan horas»: %r %s' % (e.txt('.sum'), e.marcados()))
             e.clic('button[data-guardar]')
+            e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')     # MA2: el 24/10 aún no ha llegado (hoy es 23/10)
             ok(e.pendientes() == '1' and 'faltan' not in e.toast(), 'T69b se guarda sin pedir horas: %r %r' % (e.pendientes(), e.toast()))
         con_escena('T69b', est5({'Aitor': {'sab': 4}}), t69b)
 
@@ -2143,7 +2177,7 @@ with sync_playwright() as p:
         e.clic(lapiz('Txomin'))
         e.pg.fill('#ren-campo', 'mikel')
         e.clic('button[data-ren-guardar]')
-        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «Mikel». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.', 'T83 la pregunta: %r' % e.txt('#ren-pregunta [data-texto]'))
+        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «Mikel» y estás corrigiendo a «Txomin». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.', 'T83 la pregunta: %r' % e.txt('#ren-pregunta [data-texto]'))
         ok('Sí, son la misma persona' in e.txt('button[data-ren-si]') and e.txt('button[data-ren-no]') == 'No', 'T83 botones de la pregunta: %r %r' % (e.txt('button[data-ren-si]'), e.txt('button[data-ren-no]')))
         ok(e.filas() == ['Mikel', 'Txomin'] and not ls(e, 'renombres'), 'T83 hasta que se contesta no cambia nada: %s %s' % (e.filas(), ls(e, 'renombres')))
         e.clic('button[data-ren-no]')
@@ -2372,7 +2406,7 @@ with sync_playwright() as p:
         e.clic(lapiz('Mikel'))
         e.pg.fill('#ren-campo', raro2)
         e.clic('button[data-ren-guardar]')
-        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «%s». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.' % raro2 and e.pg.evaluate("document.querySelectorAll('#ren-pregunta [data-texto] *').length") == 0, 'T89 la pregunta enseña el nombre con comillas y & como texto: %r' % e.txt('#ren-pregunta [data-texto]'))
+        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «%s» y estás corrigiendo a «Mikel». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.' % raro2 and e.pg.evaluate("document.querySelectorAll('#ren-pregunta [data-texto] *').length") == 0, 'T89 la pregunta enseña el nombre con comillas y & como texto: %r' % e.txt('#ren-pregunta [data-texto]'))
         e.clic('button[data-ren-si]')
         ok(raro2 in e.txt('#toast') and e.pg.evaluate("document.querySelectorAll('#toast *').length") == 0 and 'Mikel' not in e.filas() and raro2 in e.filas(), 'T89 al juntarlos el aviso lleva los nombres como texto: %r %s' % (e.txt('#toast'), e.filas()))
         ok(ls(e, 'renombres') == [{'de': 'Mikel', 'a': raro2}], 'T89 y se apunta con las comillas intactas: %s' % ls(e, 'renombres'))
@@ -2776,7 +2810,7 @@ with sync_playwright() as p:
         e.clic('#v-app button[data-v="enviar"]')
         ok(e.pg.is_visible('#enviar'), 'T112 «Enviar al PC» (abajo) abre la pantalla de enviar')
         e.clic('nav button[data-v="app"]')
-        ok(e.txt('.bar small') == 'Funciona sin cobertura: sí', 'T112 cabecera: %r' % e.txt('.bar small'))
+        ok(e.txt('.bar small') == 'Con cobertura: datos al día', 'T112 cabecera (MA3: la etiqueta ya no es fija; con la lista recién llegada dice «Con cobertura»): %r' % e.txt('.bar small'))
         e.clic('button[data-reset]')
         ok(e.txt('#confirmar-reset').startswith('¿Borrar lo que llevas a medias?'), 'T112 pregunta antes de borrar: %r' % e.txt('#confirmar-reset'))
     con_escena('T112', ESTADO1, t112)
@@ -2949,8 +2983,11 @@ with sync_playwright() as p:
         crear(e, 'ana', 'Manueles')
         ok(e.marcados() == ['Ana'] and ls(e, 'empresas') in (None, []) and 'ya tiene' not in e.toast(), 'T124 misma empresa: lo marca y no apunta nada: %s %s' % (e.marcados(), ls(e, 'empresas')))
         crear(e, 'ANA', 'CATERSYSTEM')
-        ok(e.txt('#toast') == '«Ana» ya tiene la empresa «Manueles»: para cambiarla usa el lápiz ✎.' and emp_fila(e, 'Ana') == 'Manueles' and ls(e, 'empresas') in (None, []),
-           'T124 otra empresa: avisa y NO la cambia: %r %r %s' % (e.txt('#toast'), emp_fila(e, 'Ana'), ls(e, 'empresas')))
+        ok(e.txt('#pregunta-homonimo [data-texto]') == 'Ya hay un «Ana» (Manueles). ¿Es el mismo?' and emp_fila(e, 'Ana') == 'Manueles' and ls(e, 'empresas') in (None, []),
+           'T124 otra empresa: pregunta (MA4c) y NO la cambia: %r %r %s' % (e.txt('#pregunta-homonimo [data-texto]'), emp_fila(e, 'Ana'), ls(e, 'empresas')))
+        e.clic('button[data-hom-si]')
+        ok(e.txt('#toast') == 'Se ha apuntado a «Ana» (Manueles). Su empresa no se cambia: para cambiarla usa el lápiz ✎.' and emp_fila(e, 'Ana') == 'Manueles' and ls(e, 'empresas') in (None, []),
+           'T124 «Sí, es el mismo» tampoco la cambia: %r %r %s' % (e.txt('#toast'), emp_fila(e, 'Ana'), ls(e, 'empresas')))
         crear(e, 'dani', 'Sagarde')
         ok(emp_fila(e, 'Dani') == 'Sagarde' and ls(e, 'empresas') == [{'nombre': 'Dani', 'empresa': 'Sagarde'}] and 'Dani' in e.marcados(),
            'T124 quien no tenía empresa la recibe: %r %s' % (emp_fila(e, 'Dani'), ls(e, 'empresas')))
@@ -3076,14 +3113,14 @@ with sync_playwright() as p:
         e.clic('button[data-varios]')
         e.pg.fill('#varios-texto', TEXTO130)
         e.clic('button[data-varios-ok]')
-        res = {k: e.txt('[data-res="%s"]' % k) for k in ('entran', 'estaban', 'puestas', 'otras', 'novalen', 'parecidos')}
+        res = {k: e.txt('[data-res="%s"]' % k) for k in ('entran', 'estaban', 'puestas', 'homonimos', 'novalen', 'parecidos')}
         ok(res['entran'] == 'Entran 4: Fran, Gaia, Hugo, Iker. 2 con empresa.', 'T130 entran: %r' % res['entran'])
-        ok(res['estaban'] == 'Ya estaban 3: Ana, Dani, Beto.', 'T130 ya estaban: %r' % res['estaban'])
+        ok(res['estaban'] == 'Ya estaban 2: Dani, Beto.', 'T130 ya estaban (Ana ya no: tiene otra empresa y es un posible homónimo): %r' % res['estaban'])
         ok(res['puestas'] == 'Se le pone la empresa a 1: Dani (Sagarde).', 'T130 a quien no tenía se le pone: %r' % res['puestas'])
-        ok(res['otras'] == 'Ya tiene otra empresa: «Ana» (Manueles, no CATERSYSTEM). Para cambiarla usa el lápiz ✎.', 'T130 a quien ya tiene otra NO se le cambia: %r' % res['otras'])
+        ok(res['homonimos'] == 'Ya hay un «Ana» (Manueles): «Ana» no entra. Si es otra persona, escríbela con un apellido o una inicial («Ana B., CATERSYSTEM»); si es la misma, quita la línea.', 'T130 a quien ya tiene otra NO se le cambia y su línea se queda (MA4c): %r' % res['homonimos'])
         ok(res['novalen'] == 'No valen 2: «, Ona» (falta el nombre); «Luz» (la empresa no vale: parece un teléfono).', 'T130 no valen: %r' % res['novalen'])
         ok(res['parecidos'].startswith('Se parece a alguien que ya está 1: «Anaa» (se parece a «Ana»).'), 'T130 parecidos: %r' % res['parecidos'])
-        ok(e.valor('#varios-texto') == ', Ona\nLuz, 612345678\nAnaa, Sagarde', 'T130 en el cuadro quedan las líneas por corregir, enteras (con su empresa): %r' % e.valor('#varios-texto'))
+        ok(e.valor('#varios-texto') == ', Ona\nAna, CATERSYSTEM\nLuz, 612345678\nAnaa, Sagarde', 'T130 en el cuadro quedan las líneas por corregir, enteras (con su empresa): %r' % e.valor('#varios-texto'))
         ok(ls(e, 'altas') == ['Fran', 'Gaia', 'Hugo', 'Iker'] and ls(e, 'nuevos') == ['Fran', 'Gaia', 'Hugo', 'Iker'], 'T130 altas y nuevos: %s %s' % (ls(e, 'altas'), ls(e, 'nuevos')))
         ok(ls(e, 'empresas') == [{'nombre': 'Fran', 'empresa': 'Manueles'}, {'nombre': 'Gaia', 'empresa': 'Obras Nuevas SL'}, {'nombre': 'Dani', 'empresa': 'Sagarde'}],
            'T130 empresas apuntadas: %s' % ls(e, 'empresas'))
@@ -3343,6 +3380,660 @@ with sync_playwright() as p:
     con_escena('T147', est10(filas=filas_147, ultima=u('2026-10-22', 'Dani')), t147)
 
     # Fin del bloque del paso 08c2b
+
+    # ===== Paso MA2: anotar sin pisar lo ya guardado (varios días, fin de semana, días futuros, horas a 0) y horas al añadir =====
+    # Hoy es el viernes 23/10/2026. En olabeaga el jueves 22/10 ya tiene anotados a Ana, Beto, Carlos, Dani y Eli (enviados al PC).
+    PEND_MA2 = 'pendientes'
+
+    def marcar_dias(e, fechas, principal):
+        """Deja marcados esos días del calendario con la fecha principal indicada (como si se hubieran tocado)."""
+        e.pg.evaluate("([f,p])=>{a.fechas=f;a.fecha=p;a.calMes=p.slice(0,7);render()}", [fechas, principal])
+
+    def solo(e, *nombres):
+        """Deja marcados exactamente esos nombres de la lista (tocando la X de los que sobran o faltan)."""
+        for n in e.filas():
+            if (n in nombres) != (n in e.marcados()):
+                e.clic('#v-app .row[data-nombre="%s"] .x' % n)
+
+    def lineas_aviso(e):
+        return e.pg.eval_on_selector_all('#aviso-guardar li', 'e=>e.map(l=>[l.dataset.aviso,l.innerText.trim().replace(/\\s+/g," ")])')
+
+    def botones_aviso(e):
+        return e.pg.eval_on_selector_all('#aviso-guardar button', 'e=>e.map(b=>b.dataset.guardarModo)')
+
+    def guardadas(e):
+        return ls(e, PEND_MA2) or []
+
+    def por_fecha(e):
+        return {j['fecha']: [(p['nombre'], p['horas'], p['extra']) for p in j['presentes']] for j in guardadas(e)}
+
+    def hay_aviso(e):
+        return e.pg.query_selector('#aviso-guardar') is not None
+
+    # --- T150: un día que ya tiene gente enviada al PC: avisa, no guarda nada hasta confirmar y luego dice qué sustituyó
+    def t150(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')     # la lista sigue siendo la del 23/10: no enseña lo que hay el 22/10
+        solo(e, 'Ana', 'Beto', 'Carlos', 'Dani')
+        e.clic('button[data-guardar]')
+        ok(hay_aviso(e), 'T150 con el 22/10 ya anotado sale el aviso de antes de guardar')
+        ok(guardadas(e) == [] and e.pendientes() == '0', 'T150 con el aviso a la vista NO se ha guardado nada: %s' % guardadas(e))
+        lineas = lineas_aviso(e)
+        ok([x[0] for x in lineas] == ['ocupado'], 'T150 una sola línea, la del día ocupado: %s' % lineas)
+        texto = lineas[0][1] if lineas else ''
+        ok('jue 22/10 ya hay 5 personas (ya en el PC): Ana, Beto, Carlos, Dani y Eli.' in texto and 'se queda fuera Eli' in texto,
+           'T150 el aviso dice qué día, cuánta gente, si ya está en el PC, quién estaba y quién se queda fuera: %r' % texto)
+        ok(botones_aviso(e) == ['seguir', 'cancelar'], 'T150 con un solo día no se ofrece «saltar»: %s' % botones_aviso(e))
+        e.pg.evaluate("save({ modo: 'seguir', firma: 'firma de un aviso viejo' })")
+        ok(guardadas(e) == [] and hay_aviso(e), 'T150 la respuesta de un aviso que ya no es este no guarda nada: %s' % guardadas(e))
+        ok(e.txt('#aviso-guardar button[data-guardar-modo="seguir"]') == 'Sustituir y guardar', 'T150 el botón dice «Sustituir y guardar»')
+        e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+        ok(por_fecha(e) == {'2026-10-22': [('Ana', 7.5, 0), ('Beto', 7.5, 0), ('Carlos', 7.5, 0), ('Dani', 7.5, 0)]}, 'T150 tras confirmar queda la jornada nueva: %s' % por_fecha(e))
+        ok(not hay_aviso(e), 'T150 tras confirmar el aviso desaparece')
+        resumen = e.txt('#resumen-guardado')
+        ok('jue 22/10' in resumen and 'sustituida' in resumen and 'antes Ana, Beto, Carlos, Dani y Eli, ahora Ana, Beto, Carlos y Dani' in resumen,
+           'T150 el resumen dice qué se sustituyó y por quién: %r' % resumen)
+        ok('Guardada' not in e.txt('#toast') and 'Jornada guardada' not in e.txt('#toast'), 'T150 al sustituir, el mensaje no dice «Guardada(s)»: %r' % e.txt('#toast'))
+    con_escena('T150', est10(), t150)
+
+    # --- T151: un día con jornada sin enviar: avisa de que está sin enviar y «No guardar nada» deja todo exactamente como estaba
+    def t151(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')
+        antes = guardadas(e)
+        ok(len(antes) == 1 and e.pendientes() == '1', 'T151 hay una jornada sin enviar sembrada: %s' % antes)
+        solo(e, 'Ana', 'Beto', 'Carlos')
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        texto = lineas[0][1] if lineas else ''
+        ok(len(lineas) == 1 and 'jue 22/10 ya hay 2 personas (sin enviar al PC): Ana y Beto.' in texto and 'se suma Carlos' in texto,
+           'T151 el aviso dice que ese día ya estaba sin enviar con Ana y Beto y que se suma Carlos: %s' % lineas)
+        e.clic('#aviso-guardar button[data-guardar-modo="cancelar"]')
+        ok(guardadas(e) == antes, 'T151 cancelar deja la jornada anterior exactamente igual: %s' % guardadas(e))
+        ok(not hay_aviso(e) and e.txt('#toast') == 'No se ha guardado nada.', 'T151 cancelar cierra el aviso y lo dice: %r' % e.txt('#toast'))
+        e.clic('button[data-guardar]')
+        ok(hay_aviso(e), 'T151 al volver a pulsar Guardar el aviso sale otra vez (no se guardó nada)')
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')
+        solo(e, 'Ana', 'Carlos')
+        e.clic('button[data-guardar]')
+        ok('se queda fuera Beto y se suma Carlos.' in (lineas_aviso(e) or [['', '']])[0][1], 'T151 quita a uno y suma a otro: %s' % lineas_aviso(e))
+        solo(e, 'Ana', 'Beto')
+        e.clic('#v-app .row[data-nombre="Ana"] button[data-d="0.5"]')
+        e.clic('button[data-guardar]')
+        ok('Si sigues, cambian las horas de ese día.' in (lineas_aviso(e) or [['', '']])[0][1], 'T151 la misma gente con otras horas: %s' % lineas_aviso(e))
+        e.fecha('2026-10-21')
+        ok(not hay_aviso(e), 'T151 cambiar de día cierra el aviso')
+    con_escena('T151', est10(), t151, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', ['Ana', 'Beto'])]))
+
+    # --- T152: dos días marcados con el calendario, uno ocupado: «Saltar» guarda solo el vacío y el resumen dice qué saltó
+    def t152(e):
+        e.ir()
+        e.clic('#cal-toggle')   # en el móvil el calendario va plegado (MA6): se abre con el botón de la fecha
+        e.clic('button[data-cal-dia="2026-10-21"]')
+        e.clic('button[data-cal-dia="2026-10-22"]')
+        e.clic('button[data-quitar-dia="2026-10-23"]')
+        solo(e, 'Ana', 'Beto')
+        e.clic('button[data-guardar]')
+        ok([x[0] for x in lineas_aviso(e)] == ['ocupado'] and 'jue 22/10' in lineas_aviso(e)[0][1], 'T152 solo el 22/10 está ocupado (el 21/10 no): %s' % lineas_aviso(e))
+        ok(botones_aviso(e) == ['seguir', 'saltar', 'cancelar'], 'T152 con un día libre se ofrece «saltar»: %s' % botones_aviso(e))
+        ok(guardadas(e) == [], 'T152 con el aviso a la vista no se ha guardado ningún día')
+        e.clic('#aviso-guardar button[data-guardar-modo="saltar"]')
+        ok(por_fecha(e) == {'2026-10-21': [('Ana', 7.5, 0), ('Beto', 7.5, 0)]}, 'T152 solo se guarda el día vacío: %s' % por_fecha(e))
+        resumen = e.txt('#resumen-guardado')
+        ok('1 jornada guardada: mié 21/10.' in resumen and '1 jornada sin guardar porque ya tenía gente: jue 22/10.' in resumen,
+           'T152 el resumen dice qué se guardó y qué se saltó: %r' % resumen)
+        ok('Guardadas' not in e.txt('#toast'), 'T152 el mensaje no presume de «Guardadas»: %r' % e.txt('#toast'))
+    con_escena('T152', est10(), t152)
+
+    # --- T153: los mismos dos días, «Sustituir y guardar»: guarda los dos, lo dice con exactitud y el fichero para el PC es válido
+    def t153(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-21', '2026-10-22'], '2026-10-21')
+        solo(e, 'Ana', 'Beto')
+        e.clic('button[data-guardar]')
+        e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+        ok(sorted(por_fecha(e)) == ['2026-10-21', '2026-10-22'], 'T153 se guardan los dos días: %s' % sorted(por_fecha(e)))
+        resumen = e.txt('#resumen-guardado')
+        ok('1 jornada guardada: mié 21/10.' in resumen and 'jue 22/10 sustituida' in resumen, 'T153 el resumen separa lo nuevo de lo sustituido: %r' % resumen)
+        ok('Guardadas 2' not in e.txt('#toast') and 'Guardadas 2' not in resumen, 'T153 nunca «Guardadas 2 jornadas» cuando una sustituyó a otra: %r' % e.txt('#toast'))
+        lote = e.exportar()
+        ok(lote and [j['fecha'] for j in lote['jornadas']] == ['2026-10-21', '2026-10-22'], 'T153 el fichero para el PC lleva las dos jornadas: %s' % (lote or {}).get('jornadas'))
+        if lote:
+            valida_con_p1(lote)
+        e.clic('#resumen-guardado button[data-cerrar-resumen]')
+        ok(e.pg.query_selector('#resumen-guardado') is None, 'T153 «Entendido» cierra el resumen')
+    con_escena('T153', est10(), t153)
+
+    # --- T154: fin de semana y día que aún no ha llegado con las horas sin tocar: avisa de todo, y si sigue lo guarda con 0 horas a la vista
+    def t154(e):
+        e.ir(previa=True)     # la lista sale marcada con la gente del 22/10 y con las horas SIN tocar (siguen el horario de cada día)
+        marcar_dias(e, ['2026-10-23', '2026-10-24', '2026-10-25'], '2026-10-23')
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        ok([x[0] for x in lineas] == ['finde', 'futuro', 'cero_horas', 'cero_horas', 'ayuda'], 'T154 líneas del aviso: %s' % lineas)
+        d = dict((x[0], x[1]) for x in lineas)
+        ok(d.get('finde') == 'El sáb 24/10 y dom 25/10 son fin de semana y esta obra no tiene horario esos días.', 'T154 línea de fin de semana: %r' % d.get('finde'))
+        ok(d.get('futuro') == 'Estos días todavía no han llegado: sáb 24/10 y dom 25/10.', 'T154 línea de días futuros: %r' % d.get('futuro'))
+        ok(any('El sáb 24/10: Ana, Beto, Carlos, Dani y Eli se guardarían con 0 horas.' == x[1] for x in lineas), 'T154 línea de 0 horas del sábado: %s' % lineas)
+        ok(botones_aviso(e) == ['seguir', 'cancelar'] and e.txt('#aviso-guardar button[data-guardar-modo="seguir"]') == 'Guardar así', 'T154 botones: %s' % botones_aviso(e))
+        ok(guardadas(e) == [], 'T154 con el aviso a la vista no se ha guardado nada')
+        e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+        g = por_fecha(e)
+        cinco = [(n, 7.5, 0) for n, _ in PERS]
+        ok(g.get('2026-10-23') == cinco and g.get('2026-10-24') == [(n, 0, 0) for n, _ in PERS] and g.get('2026-10-25') == [(n, 0, 0) for n, _ in PERS],
+           'T154 el viernes con 7,5 h y el fin de semana con 0 h, a la vista: %s' % g)
+        resumen = e.txt('#resumen-guardado')
+        ok('sáb 24/10 (fin de semana, todavía no había llegado, 0 horas: Ana, Beto, Carlos, Dani y Eli)' in resumen and '3 jornadas guardadas' in resumen, 'T154 el resumen cuenta lo avisado: %r' % resumen)
+    con_escena('T154', est10(), t154)
+
+    # --- T155: con las horas puestas a mano el fin de semana avisa pero no hay línea de 0 horas
+    def t155(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-23', '2026-10-24'], '2026-10-23')
+        solo(e, 'Ana')
+        e.clic('#v-app .row[data-nombre="Ana"] button[data-d="0.5"]')
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        ok([x[0] for x in lineas] == ['finde', 'futuro'], 'T155 con horas puestas no hay línea de 0 horas: %s' % lineas)
+        e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+        g = por_fecha(e)
+        ok(g.get('2026-10-24') == [('Ana', 8, 8)] and g.get('2026-10-23') == [('Ana', 8, 0.5)], 'T155 el sábado guarda las horas puestas: %s' % g)
+    con_escena('T155', est10(), t155)
+
+    # --- T156: solo un día futuro laborable: una línea, sin «saltar»; y un día ya pasado y vacío no avisa de nada
+    def t156(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-27'], '2026-10-27')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok([x[0] for x in lineas_aviso(e)] == ['futuro'] and lineas_aviso(e)[0][1] == 'El mar 27/10 todavía no ha llegado.', 'T156 línea de día futuro: %s' % lineas_aviso(e))
+        ok(botones_aviso(e) == ['seguir', 'cancelar'], 'T156 botones: %s' % botones_aviso(e))
+        e.clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+        ok(por_fecha(e) == {'2026-10-27': [('Ana', 7.5, 0)]}, 'T156 al seguir se guarda: %s' % por_fecha(e))
+        marcar_dias(e, ['2026-10-20'], '2026-10-20')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and '2026-10-20' in por_fecha(e) and e.txt('#toast') == 'Jornada guardada en este aparato ✓', 'T156 un día pasado, vacío y laborable se guarda sin aviso, con el mensaje de siempre: %r' % e.txt('#toast'))
+    con_escena('T156', est10(), t156)
+
+    # --- T157: corregir el día que se está viendo (la lista salió de él) no pide confirmación: es lo de siempre
+    def t157(e):
+        e.ir()
+        e.fecha('2026-10-22')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and e.txt('#toast') == 'Jornada guardada en este aparato ✓', 'T157 guardar el mismo día sin cambiar nada no avisa: %r' % e.txt('#toast'))
+        solo(e, 'Ana', 'Beto')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and por_fecha(e) == {'2026-10-22': [('Ana', 7.5, 0), ('Beto', 7.5, 0)]}, 'T157 quitar gente del día que se está viendo se guarda sin avisar: %s' % por_fecha(e))
+        marcar_dias(e, ['2026-10-21', '2026-10-22'], '2026-10-22')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and sorted(por_fecha(e)) == ['2026-10-21', '2026-10-22'], 'T157 el día visto y otro vacío: sin aviso: %s' % sorted(por_fecha(e)))
+    con_escena('T157', est10(), t157)
+
+    # --- T159: con UN solo día marcado, si la lista no salió de ese día (se quitó el otro del calendario) también avisa
+    def t159(e):
+        e.ir()
+        e.clic('#cal-toggle')
+        e.clic('button[data-cal-dia="2026-10-22"]')
+        e.clic('button[data-quitar-dia="2026-10-23"]')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        ok([x[0] for x in lineas] == ['ocupado'] and 'jue 22/10 ya hay 5 personas' in lineas[0][1] and 'se quedan fuera Beto, Carlos, Dani y Eli' in lineas[0][1],
+           'T159 un solo día ocupado con una lista de otro día: %s' % lineas)
+        ok(guardadas(e) == [], 'T159 no se ha guardado nada')
+        e.pg.evaluate("save({ modo: 'saltar', firma: a.aviso.firma })")
+        ok(guardadas(e) == [] and e.txt('#toast') == 'No se ha guardado ningún día: todos ya tenían gente.', 'T159 «saltar» con todos los días ocupados no guarda nada y lo dice: %r' % e.txt('#toast'))
+        ok('1 jornada sin guardar porque ya tenía gente: jue 22/10.' in e.txt('#resumen-guardado'), 'T159 y el resumen lo cuenta: %r' % e.txt('#resumen-guardado'))
+    con_escena('T159', est10(), t159)
+
+    # --- T160: un día que la lista no enseña pero que ya estaba exactamente igual no avisa (se guarda con el mensaje de siempre)
+    def t160(e):
+        e.ir(previa=True)
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')
+        e.pg.evaluate("a.list.forEach(p => { p.horas = 7.5; })")
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and e.txt('#toast') == 'Jornada guardada en este aparato ✓', 'T160 el 22/10 ya tenía a esos cinco con 7,5 h: no avisa: %r' % e.txt('#toast'))
+    con_escena('T160', est10(), t160)
+
+    # --- T162: con muchas personas en el día el aviso las nombra todas hasta siete y, si hay más, «… y N más»
+    def t162(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok('ya hay 7 personas (ya en el PC): P1, P2, P3, P4, P5, P6 y P7.' in (lineas_aviso(e) or [['', '']])[0][1], 'T162 con siete personas las nombra todas: %s' % lineas_aviso(e))
+    n162 = ['P%d' % i for i in range(1, 8)]
+    con_escena('T162', est10(personas=[('Ana', '')] + [(n, '') for n in n162], filas=viv('2026-10-22', *n162), ultima=u('2026-10-22', 'Ana')), t162)
+
+    def t162b(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-22'], '2026-10-22')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok('ya hay 9 personas (ya en el PC): P1, P2, P3, P4, P5, P6 y 3 más.' in (lineas_aviso(e) or [['', '']])[0][1], 'T162 con nueve personas nombra seis y cuenta el resto: %s' % lineas_aviso(e))
+    n162b = ['P%d' % i for i in range(1, 10)]
+    con_escena('T162b', est10(personas=[('Ana', '')] + [(n, '') for n in n162b], filas=viv('2026-10-22', *n162b), ultima=u('2026-10-22', 'Ana')), t162b)
+
+    # --- T161: un sábado ya pasado: con horario propio de ese día no avisa de fin de semana; sin él, sí
+    def t161(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-17'], '2026-10-17')
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and por_fecha(e) == {'2026-10-17': [('Ana', 4, 0)]}, 'T161 Ana tiene horario propio de 4 h los sábados: sin aviso y con 4 h normales: %s' % por_fecha(e))
+        marcar_dias(e, ['2026-10-10'], '2026-10-10')
+        solo(e, 'Beto')
+        e.clic('#v-app .row[data-nombre="Beto"] .step button >> nth=0')
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        ok(lineas == [['finde', 'El sáb 10/10 es fin de semana y esta obra no tiene horario ese día.']], 'T161 Beto no tiene horario ese sábado: avisa de fin de semana (y no de 0 horas porque puso sus horas): %s' % lineas)
+    s161 = est10()
+    s161['obras']['olabeaga']['excepciones_horario'] = {'Ana': {'sab': 4}}
+    con_escena('T161', s161, t161)
+
+    # --- T158: al añadir a alguien de la base sale con las horas de su horario de ESE día, no con las de la última vez (y sin extra)
+    def t158(e):
+        e.ir()
+        e.pg.select_option('#addsel', 'Zoe')
+        e.clic('button[data-add]')
+        ok(e.horas('Zoe') == '6 h', 'T158 Zoe, un viernes con horario propio de 6 h, sale con 6 h y no con las 9 h de la última vez: %r' % e.horas('Zoe'))
+        ok('extra' not in e.txt('#v-app .row[data-nombre="Zoe"] .sub'), 'T158 no sale ninguna hora extra por sorpresa: %r' % e.txt('#v-app .row[data-nombre="Zoe"] .sub'))
+        e.fecha('2026-10-24')
+        e.pg.select_option('#addsel', 'Yago')
+        e.clic('button[data-add]')
+        ok(e.horas('Yago') == '¿horas?', 'T158 un sábado sin horario nadie sale con horas inventadas: %r' % e.horas('Yago'))
+        e.clic('button[data-guardar]')
+        ok(e.txt('#toast').startswith('Faltan las horas de: Yago'), 'T158 y se piden las horas antes de guardar: %r' % e.txt('#toast'))
+    s158 = est10(personas=PERS + [('Yago', ''), ('Zoe', '')], filas=viv('2026-10-22', *[n for n, _ in PERS]), ultima=u('2026-10-22', *[n for n, _ in PERS]))
+    s158['obras']['olabeaga']['excepciones_horario'] = {'Zoe': {'vie': 6}}
+    con_escena('T158', s158, t158, init=sembrar('sgd_personal_ultimas_horas', {'zoe': 9, 'yago': 9}))
+
+    # --- Corregir UN día concreto más adelante (requisito de Bixente, 30/10): se abre desde Jornadas y solo cambia ese día
+    def abrir_dia(e, fecha, ambito='vivienda'):
+        e.clic('nav button[data-v="jornadas"]')
+        e.clic('.jor-item[data-fecha="%s"][data-ambito="%s"] button[data-abrir]' % (fecha, ambito))
+
+    def dias_de_jornadas(e):
+        e.clic('nav button[data-v="jornadas"]')
+        fechas = e.pg.eval_on_selector_all('#v-jornadas .jor-item', 'e=>e.map(x=>x.dataset.fecha)')
+        e.clic('nav button[data-v="app"]')
+        return fechas
+
+    CINCO = [n for n, _ in PERS]
+
+    # --- T163: tres días anotados de golpe (sin enviar); se reabre el 2.º, se quita a uno y solo cambia ese día
+    def t163(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-19', '2026-10-20', '2026-10-21'], '2026-10-19')
+        solo(e, *CINCO)
+        e.clic('button[data-guardar]')
+        antes = {j['fecha']: j for j in guardadas(e)}
+        ok(sorted(antes) == ['2026-10-19', '2026-10-20', '2026-10-21'] and not hay_aviso(e), 'T163 se guardan los tres días sin aviso: %s' % sorted(antes))
+        abrir_dia(e, '2026-10-20')
+        ok(sorted(e.marcados()) == sorted(CINCO), 'T163 al abrir el 20/10 salen los cinco marcados: %s' % e.marcados())
+        solo(e, 'Ana', 'Beto', 'Carlos', 'Dani')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e), 'T163 corregir el día que se está viendo no asusta con un aviso: %s' % lineas_aviso(e))
+        despues = {j['fecha']: j for j in guardadas(e)}
+        ok(sorted(despues) == sorted(antes) and [p['nombre'] for p in despues['2026-10-20']['presentes']] == ['Ana', 'Beto', 'Carlos', 'Dani'],
+           'T163 el 20/10 queda con cuatro: %s' % por_fecha(e))
+        ok(despues['2026-10-19'] == antes['2026-10-19'] and despues['2026-10-21'] == antes['2026-10-21'], 'T163 los días 19 y 21 NO se tocan (ni la hora en que se guardaron)')
+    con_escena('T163', est10(), t163)
+
+    # --- T164: días ya enviados al PC; se marcan varios días sin guardarlos y aun así abrir uno solo cambia ese
+    def t164(e):
+        e.ir()
+        marcar_dias(e, ['2026-10-19', '2026-10-20', '2026-10-21'], '2026-10-19')
+        abrir_dia(e, '2026-10-20')
+        solo(e, 'Ana', 'Beto', 'Carlos', 'Dani')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e), 'T164 sin aviso al corregir un día ya enviado: %s' % lineas_aviso(e))
+        ok(por_fecha(e) == {'2026-10-20': [(n, 7.5, 0) for n in CINCO[:4]]} and e.pendientes() == '1',
+           'T164 solo se guarda el 20/10 (los días marcados antes no se arrastran): %s' % por_fecha(e))
+    f164 = viv('2026-10-19', *CINCO) + viv('2026-10-20', *CINCO) + viv('2026-10-21', *CINCO)
+    con_escena('T164', est10(filas=f164, ultima=u('2026-10-21', *CINCO)), t164)
+
+    # --- T165: un día de hace más de 14 días (fin de mes, cuando llegan los partes) sale en Jornadas y se corrige igual
+    def t165(e):
+        e.ir()
+        dias = dias_de_jornadas(e)
+        ok('2026-09-30' in dias and '2026-09-01' in dias and '2026-08-31' not in dias,
+           'T165 Jornadas llega hasta el día 1 del mes pasado (01/09) y no más atrás: %s' % dias)
+        abrir_dia(e, '2026-09-30')
+        solo(e, 'Ana', 'Beto', 'Carlos', 'Dani')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and por_fecha(e) == {'2026-09-30': [(n, 7.5, 0) for n in CINCO[:4]]}, 'T165 se corrige el 30/09 sin aviso: %s' % por_fecha(e))
+    f165 = viv('2026-08-31', *CINCO) + viv('2026-09-01', *CINCO) + viv('2026-09-30', *CINCO) + viv('2026-10-22', *CINCO)
+    con_escena('T165', est10(filas=f165), t165)
+
+    # --- T166: un día futuro ya anotado (enviado al PC o sin enviar) sale en Jornadas y se corrige sin el aviso de «aún no ha llegado»
+    def t166(e):
+        e.ir()
+        dias = dias_de_jornadas(e)
+        ok(dias[:2] == ['2026-10-28', '2026-10-27'], 'T166 los días futuros ya anotados salen en Jornadas, los más lejanos primero: %s' % dias)
+        abrir_dia(e, '2026-10-27')
+        solo(e, 'Ana', 'Beto', 'Carlos', 'Dani')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and [x[0] for x in por_fecha(e)['2026-10-27']] == ['Ana', 'Beto', 'Carlos', 'Dani'], 'T166 corregir un día futuro ya anotado no avisa: %s %s' % (lineas_aviso(e), por_fecha(e)))
+        abrir_dia(e, '2026-10-28')
+        solo(e, 'Ana', 'Beto', 'Carlos')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and [x[0] for x in por_fecha(e)['2026-10-28']] == ['Ana', 'Beto', 'Carlos'] and len(por_fecha(e)['2026-10-27']) == 4, 'T166 lo mismo con uno sin enviar: %s %s' % (lineas_aviso(e), por_fecha(e)))
+    f166 = viv('2026-10-22', *CINCO) + viv('2026-10-27', *CINCO)
+    con_escena('T166', est10(filas=f166), t166, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-28', CINCO)]))
+
+    # --- T167: una persona pasa a otra obra el mismo día: sale el aviso de doble obra y quitarla de la primera no deja nada huérfano
+    def t167(e):
+        e.ir()
+        e.obra('mungia')
+        e.fecha('2026-10-22')
+        e.pg.select_option('#addsel', 'Ana')
+        e.clic('button[data-add]')
+        aviso = e.txt('#aviso-doble-obra')
+        ok('Ana' in aviso and 'jue 22/10' in aviso and 'OLABEAGA' in aviso.upper(), 'T167 al añadirla en la otra obra sale el aviso de doble obra: %r' % aviso)
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and e.pendientes() == '1', 'T167 se guarda en la segunda obra: %r' % e.pendientes())
+        e.obra('olabeaga')
+        e.fecha('2026-10-22')
+        solo(e, 'Beto', 'Carlos', 'Dani', 'Eli')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and e.pendientes() == '2', 'T167 se corrige la primera obra: %r' % e.pendientes())
+        j = {(x['obra'], x['fecha']): [p['nombre'] for p in x['presentes']] for x in guardadas(e)}
+        ok(j == {('mungia', '2026-10-22'): ['Ana'], ('olabeaga', '2026-10-22'): ['Beto', 'Carlos', 'Dani', 'Eli']}, 'T167 cada obra queda con lo suyo: %s' % j)
+        e.obra('mungia')
+        e.fecha('2026-10-22')
+        ok(e.pg.query_selector('#aviso-doble-obra') is None, 'T167 ya no queda aviso de doble obra: %r' % e.txt('#aviso-doble-obra'))
+    s167 = est10()
+    s167['obras']['mungia'] = obra_est('2026 MUNGIA', [])
+    con_escena('T167', s167, t167)
+
+    # --- T168: abrir desde Jornadas un día de GARAJES (con la tablet en viviendas) abre el garaje, no las viviendas de ese día
+    def t168(e):
+        e.ir()
+        ok(e.pg.query_selector('button[data-amb="vivienda"].on') is not None, 'T168 se parte de viviendas')
+        abrir_dia(e, '2026-10-22', 'garaje')
+        ok(e.pg.query_selector('button[data-amb="garaje"].on') is not None and sorted(e.marcados()) == ['Ana', 'Beto'],
+           'T168 se abre el garaje del 22/10 con su gente (Ana y Beto), no las viviendas: %s' % e.marcados())
+        solo(e, 'Ana')
+        e.clic('button[data-guardar]')
+        ok(not hay_aviso(e) and [(j['ambito'], j['fecha']) for j in guardadas(e)] == [('garaje', '2026-10-22')],
+           'T168 se guarda el garaje y las viviendas de ese día no se tocan: %s' % [(j['ambito'], j['fecha']) for j in guardadas(e)])
+    s168 = est10(filas=viv('2026-10-22', *CINCO) + gar('2026-10-22', 'Ana', 'Beto'))
+    con_escena('T168', s168, t168)
+
+    # ======================================================================================================================
+    # Bloque del paso MA4c: dos personas con el mismo nombre. La pregunta «¿es el mismo o es otra persona?» al crear, el lápiz,
+    # «Añadir varios nombres» y el recuadro de dos iguales publicados. Escenas T170 en adelante (P3_SOLO_MA4C=1 corre solo
+    # estas). Fecha fija: viernes 23/10/2026. Datos inventados; Ander está de baja.
+    # ======================================================================================================================
+    HOM = [('Rafa', 'Alfa Instalaciones'), ('Pepe', ''), ('Luis', 'Beta Montajes'), ('Ander', 'Gamma Electrica'), ('Zoilo', 'Sagarde')]
+    PREVIAS_HOM = {'Rafa': 'Alfa Instalaciones', 'Luis': 'Beta Montajes', 'Ander': 'Gamma Electrica', 'Zoilo': 'Sagarde'}
+
+    def est170(personas=None, bajas=('Ander',), lista=('Rafa', 'Pepe', 'Luis')):
+        s = est10(personas=HOM if personas is None else personas, filas=viv('2026-10-22', *lista), ultima=u('2026-10-22', *lista))
+        for t in s['catalogo']:
+            if t['nombre'] in bajas:
+                t['activo'] = False
+        return s
+
+    def pregunta(e):
+        return e.txt('#pregunta-homonimo [data-texto]')
+
+    def sin_rastro(e):
+        return all(ls(e, c) in (None, []) for c in ('nuevos', 'altas', 'empresas', 'renombres'))
+
+    def sin_desborde(e, cual):
+        ancho = e.pg.evaluate("[document.documentElement.scrollWidth, window.innerWidth]")
+        ok(ancho[0] <= ancho[1], 'T17x a 390 px no desborda (%s): %s' % (cual, ancho))
+
+    # --- T170: «Rafa» con otra empresa, existiendo «Rafa (Alfa Instalaciones)»: pregunta y NO crea nada hasta que responde
+    def t170(e):
+        e.ir()
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and e.pg.query_selector('#aviso-dos-iguales') is None, 'T170 al abrir no hay pregunta ni recuadro de dos iguales')
+        filas0 = e.filas()
+        crear(e, 'Rafa', 'Beta Montajes')
+        ok(pregunta(e) == 'Ya hay un «Rafa» (Alfa Instalaciones). ¿Es el mismo?', 'T170 la pregunta dice a quién se parece y con qué empresa: %r' % pregunta(e))
+        ok(e.txt('#pregunta-homonimo [data-hom-si]') == 'Sí, es el mismo' and e.txt('#pregunta-homonimo [data-hom-no]') == 'No, es otra persona',
+           'T170 los dos botones con las palabras de Bixente: %r %r' % (e.txt('#pregunta-homonimo [data-hom-si]'), e.txt('#pregunta-homonimo [data-hom-no]')))
+        ok(sin_rastro(e) and e.filas() == filas0, 'T170 mientras no responde no se ha creado ni apuntado nada: %s %s' % (e.filas(), [ls(e, c) for c in ('nuevos', 'altas', 'empresas')]))
+        sin_desborde(e, 'pregunta')
+        e.clic('button[data-todos="1"]')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None, 'T170 hacer otra cosa en la pantalla quita la pregunta (como el resto de avisos)')
+        # con tilde, mayúsculas y espacios de más es la misma pregunta (la clave no distingue)
+        crear(e, ' RAFÁ ', 'Beta Montajes')
+        ok(pregunta(e) == 'Ya hay un «Rafa» (Alfa Instalaciones). ¿Es el mismo?', 'T170 «RAFÁ» con tilde/espacios es el mismo nombre: %r' % pregunta(e))
+    con_escena('T170', est170(), t170)
+
+    # --- T171: sin conflicto de empresa NO pregunta: misma empresa o sin empresa → se apunta al que está (texto A); «Rafaa» sigue siendo «parecido»
+    def t171(e):
+        e.ir()
+        crear(e, 'Rafa', 'Alfa Instalaciones')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and 'Rafa' in e.marcados(), 'T171 misma empresa: sin pregunta y apuntado: %s' % e.marcados())
+        texto_a = '«Rafa» (Alfa Instalaciones) ya estaba en la base: lo he apuntado en la lista. Si es otra persona, créala con un apellido o una inicial («Rafa B.»).'
+        ok(e.txt('#toast') == texto_a, 'T171 texto A: %r' % e.txt('#toast'))
+        e.clic('#v-app .row[data-nombre="Rafa"] .x')
+        ok('Rafa' not in e.marcados(), 'T171 se desmarca para la siguiente comprobación')
+        crear(e, 'rafa')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and 'Rafa' in e.marcados() and e.txt('#toast') == texto_a, 'T171 sin empresa: sin pregunta, apuntado y texto A: %r' % e.txt('#toast'))
+        ok(sin_rastro(e), 'T171 no se apunta nada para el PC: %s' % [ls(e, c) for c in ('nuevos', 'altas', 'empresas')])
+        # sin empresa en la base el texto A omite el paréntesis
+        crear(e, 'Pepe')
+        ok(e.txt('#toast') == '«Pepe» ya estaba en la base: lo he apuntado en la lista. Si es otra persona, créala con un apellido o una inicial («Pepe B.»).', 'T171 texto A sin empresa: %r' % e.txt('#toast'))
+        # un nombre solo PARECIDO sigue con el aviso de siempre y sin la pregunta nueva
+        crear(e, 'Rafaa', 'Beta Montajes')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and 'Se parece a «Rafa». ¿Es la misma persona?' in e.txt('#nuevo-aviso'), 'T171 «Rafaa» sigue avisando «Se parece a…»: %r' % e.txt('#nuevo-aviso'))
+    con_escena('T171', est170(), t171)
+
+    # --- T172: «Pepe» no tiene empresa en la base y se escribe Beta → se le pone Beta y NO pregunta nada
+    def t172(e):
+        e.ir()
+        crear(e, 'Pepe', 'Beta Montajes')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and e.pg.query_selector('#otra-persona') is None, 'T172 no hay pregunta de ninguna clase')
+        ok(ls(e, 'empresas') == [{'nombre': 'Pepe', 'empresa': 'Beta Montajes'}], 'T172 se le pone la empresa: %s' % ls(e, 'empresas'))
+        ok('Pepe' in e.marcados() and ls(e, 'nuevos') in (None, []), 'T172 apuntado en la lista y sin nombre nuevo: %s %s' % (e.marcados(), ls(e, 'nuevos')))
+    con_escena('T172', est170(), t172)
+
+    # --- T173: «Sí, es el mismo» apunta al que está, no cambia su empresa y lo dice
+    def t173(e):
+        e.ir()
+        crear(e, 'Rafa', 'Beta Montajes')
+        e.clic('button[data-hom-si]')
+        ok(e.pg.query_selector('#pregunta-homonimo') is None and 'Rafa' in e.marcados(), 'T173 queda apuntado Rafa: %s' % e.marcados())
+        ok(sin_rastro(e), 'T173 «empresas» sigue vacío (la empresa no se cambia): %s' % [ls(e, c) for c in ('nuevos', 'altas', 'empresas')])
+        ok(e.txt('#toast') == 'Se ha apuntado a «Rafa» (Alfa Instalaciones). Su empresa no se cambia: para cambiarla usa el lápiz ✎.', 'T173 el aviso lo dice: %r' % e.txt('#toast'))
+        ok(emp_fila(e, 'Rafa') == 'Alfa Instalaciones', 'T173 sigue en Alfa: %r' % emp_fila(e, 'Rafa'))
+    con_escena('T173', est170(), t173)
+
+    # --- T174: «No, es otra persona» + «Rafa B.» → persona nueva con la empresa escrita, «Rafa» intacto, y el fichero vale para el PC
+    def t174(e):
+        e.ir()
+        crear(e, 'Rafa', 'Beta Montajes')
+        e.clic('button[data-hom-no]')
+        ok(e.txt('#otra-persona [data-texto]') == 'Ponle algo que lo distinga del otro «Rafa»: un apellido o una inicial. Por ejemplo «Rafa B.» o «Rafa Pérez».', 'T174 texto B2: %r' % e.txt('#otra-persona [data-texto]'))
+        ok(e.valor('#homonimo-campo') == 'Rafa ' and e.pg.evaluate("document.activeElement.id") == 'homonimo-campo', 'T174 el campo sale con «Rafa » y con el cursor dentro: %r' % e.valor('#homonimo-campo'))
+        sin_desborde(e, 'otra persona')
+        for malo in ('', 'Rafa', 'rafa', ' RAFÁ '):
+            e.pg.fill('#homonimo-campo', malo)
+            e.clic('button[data-hom-crear]')
+            ok(e.txt('#homonimo-error') == 'Tiene que ser distinto de «Rafa»: añade un apellido o una inicial.' and sin_rastro(e), 'T174 %r no vale: %r' % (malo, e.txt('#homonimo-error')))
+        e.pg.fill('#homonimo-campo', 'Luis')
+        e.clic('button[data-hom-crear]')
+        ok(e.txt('#homonimo-error') == 'Ya hay un «Luis». Elige otro.' and sin_rastro(e), 'T174 uno que ya existe: %r' % e.txt('#homonimo-error'))
+        e.pg.fill('#homonimo-campo', 'zoilo')    # «Zoilo» está en la base pero no en la lista de hoy: la clave no distingue mayúsculas
+        e.clic('button[data-hom-crear]')
+        ok(e.txt('#homonimo-error') == 'Ya hay un «Zoilo». Elige otro.' and sin_rastro(e), 'T174 uno que ya existe con otras mayúsculas y fuera de la lista: %r' % e.txt('#homonimo-error'))
+        e.pg.fill('#homonimo-campo', 'x@y.es')
+        e.clic('button[data-hom-crear]')
+        ok(e.txt('#homonimo-error') == 'Ese nombre no vale: parece un correo.' and sin_rastro(e), 'T174 uno que no se puede publicar: %r' % e.txt('#homonimo-error'))
+        e.pg.fill('#homonimo-campo', 'Rafa B.')
+        e.clic('button[data-hom-crear]')
+        ok(e.pg.query_selector('#otra-persona') is None and 'Rafa B.' in e.marcados() and 'Rafa' not in e.marcados(), 'T174 se crea y se marca «Rafa B.», no «Rafa»: %s' % e.marcados())
+        ok(ls(e, 'nuevos') == ['Rafa B.'] and ls(e, 'empresas') == [{'nombre': 'Rafa B.', 'empresa': 'Beta Montajes'}], 'T174 apuntado como nombre nuevo con su empresa: %s %s' % (ls(e, 'nuevos'), ls(e, 'empresas')))
+        ok(emp_fila(e, 'Rafa B.') == 'Beta Montajes' and emp_fila(e, 'Rafa') == 'Alfa Instalaciones', 'T174 cada uno con su empresa: %r %r' % (emp_fila(e, 'Rafa B.'), emp_fila(e, 'Rafa')))
+        lote = e.exportar()
+        ok(lote and lote.get('altas') == ['Rafa B.'] and lote.get('empresas') == [{'nombre': 'Rafa B.', 'empresa': 'Beta Montajes'}] and not lote.get('renombres'),
+           'T174 el fichero lleva «Rafa B.» como nombre nuevo con Beta y nada de «Rafa»: %s' % json.dumps(lote, ensure_ascii=False)[:300])
+        valida_con_p1(lote)
+        r, emps, _ = e2e_emp(lote, previas=PREVIAS_HOM, personas=HOM)
+        if r is not None:
+            codigos = [x['codigo'] for x in r['avisos_lote']]
+            ok(emps.get('Rafa') == 'Alfa Instalaciones' and emps.get('Rafa B.') == 'Beta Montajes' and 'empresa_cambiada' not in codigos and 'alta_ya_existia' not in codigos,
+               'T174 en el PC: Rafa sigue en Alfa y «Rafa B.» es otra persona de Beta, sin avisos de cambio: %s %s' % (emps, codigos))
+    con_escena('T174', est170(), t174)
+
+    # --- T175: «Cancelar» no deja rastro; un nombre que ya creaste sale como «Ya hay un «Rafa B.». Elige otro.»; Enter también crea
+    def t175(e):
+        e.ir()
+        crear(e, 'Rafa', 'Beta Montajes')
+        e.clic('button[data-hom-no]')
+        e.pg.fill('#homonimo-campo', 'Rafa B.')
+        e.clic('button[data-hom-cancelar]')
+        ok(sin_rastro(e) and e.pg.query_selector('#otra-persona') is None and e.pg.query_selector('#pregunta-homonimo') is None, 'T175 «Cancelar» no deja pregunta ni rastro: %s' % [ls(e, c) for c in ('nuevos', 'altas', 'empresas')])
+        crear(e, 'Rafa', 'Beta Montajes')
+        e.clic('button[data-hom-no]')
+        e.pg.fill('#homonimo-campo', 'Rafa B.')
+        e.pg.press('#homonimo-campo', 'Enter')
+        ok(ls(e, 'nuevos') == ['Rafa B.'], 'T175 Enter en el campo crea: %s' % ls(e, 'nuevos'))
+        crear(e, 'Rafa', 'Beta Montajes')
+        ok(pregunta(e) == 'Ya hay un «Rafa» (Alfa Instalaciones). ¿Es el mismo?', 'T175 con «Rafa B.» ya creado, «Rafa» + Beta sigue preguntando: %r' % pregunta(e))
+        e.clic('button[data-hom-no]')
+        e.pg.fill('#homonimo-campo', 'rafa b.')
+        e.clic('button[data-hom-crear]')
+        ok(e.txt('#homonimo-error') == 'Ya hay un «Rafa B.». Elige otro.' and ls(e, 'nuevos') == ['Rafa B.'], 'T175 «rafa b.» ya existe (mayúsculas distintas): %r %s' % (e.txt('#homonimo-error'), ls(e, 'nuevos')))
+    con_escena('T175', est170(), t175)
+
+    # --- T176: «Ander» está de baja → pregunta C; «No» + apellido crea a otro y el de baja sigue de baja; «Sí» lo apunta sin tocar nada
+    def t176(e):
+        e.ir()
+        crear(e, 'Ander')
+        ok(pregunta(e) == '«Ander» estaba de baja. ¿Es el mismo, que vuelve?', 'T176 pregunta C: %r' % pregunta(e))
+        e.clic('button[data-hom-no]')
+        e.pg.fill('#homonimo-campo', 'Ander G.')
+        e.clic('button[data-hom-crear]')
+        ok(ls(e, 'nuevos') == ['Ander G.'] and 'Ander G.' in e.marcados() and 'Ander' not in e.filas(), 'T176 se crea «Ander G.» y «Ander» no aparece: %s %s' % (ls(e, 'nuevos'), e.filas()))
+        ok(not any(o.startswith('Ander ·') or o == 'Ander' for o in nombres_opciones(e)), 'T176 el de baja sigue sin salir en el desplegable: %s' % nombres_opciones(e))
+        crear(e, 'ander', 'Alfa Instalaciones')
+        ok(pregunta(e) == '«Ander» estaba de baja. ¿Es el mismo, que vuelve?', 'T176 también con otra empresa escrita: %r' % pregunta(e))
+        e.clic('button[data-hom-si]')
+        ok('Ander' in e.marcados() and ls(e, 'empresas') in (None, []), 'T176 «Sí» lo apunta sin cambiarle la empresa: %s %s' % (e.marcados(), ls(e, 'empresas')))
+        ok(e.txt('#toast') == 'Se ha apuntado a «Ander» (Gamma Electrica). Su empresa no se cambia: para cambiarla usa el lápiz ✎.', 'T176 aviso: %r' % e.txt('#toast'))
+    con_escena('T176', est170(), t176)
+
+    # --- T177: «Añadir varios nombres»: «Rafa, Beta» no entra y se queda en el cuadro (texto E); «Rafa B., Beta» sí entra
+    def t177(e):
+        e.ir()
+        e.clic('button[data-varios]')
+        e.pg.fill('#varios-texto', 'Rafa, Beta Montajes' + chr(10) + 'Rafa B., Beta Montajes' + chr(10) + 'Pepe' + chr(10) + 'Luis, Beta Montajes')
+        e.clic('button[data-varios-ok]')
+        ok(e.txt('[data-res="homonimos"]') == 'Ya hay un «Rafa» (Alfa Instalaciones): «Rafa» no entra. Si es otra persona, escríbela con un apellido o una inicial («Rafa B., Beta Montajes»); si es la misma, quita la línea.',
+           'T177 texto E: %r' % e.txt('[data-res="homonimos"]'))
+        ok(e.valor('#varios-texto') == 'Rafa, Beta Montajes', 'T177 la línea se queda en el cuadro para corregirla: %r' % e.valor('#varios-texto'))
+        ok(ls(e, 'nuevos') == ['Rafa B.'] and ls(e, 'altas') == ['Rafa B.'] and ls(e, 'empresas') == [{'nombre': 'Rafa B.', 'empresa': 'Beta Montajes'}],
+           'T177 solo «Rafa B.» entra, con su empresa, y «Rafa» no cambia: %s %s %s' % (ls(e, 'nuevos'), ls(e, 'altas'), ls(e, 'empresas')))
+        ok(e.txt('[data-res="estaban"]') == 'Ya estaban 2: Pepe, Luis.' and e.pg.query_selector('[data-res="otras"]') is None, 'T177 «Pepe» y «Luis» (misma empresa) siguen como «ya estaban»: %r' % e.txt('[data-res="estaban"]'))
+        sin_desborde(e, 'varios')
+        # si no se corrige no pasa nada: la línea sigue y no se guarda nada más
+        e.clic('button[data-varios-ok]')
+        ok(ls(e, 'nuevos') == ['Rafa B.'] and e.valor('#varios-texto') == 'Rafa, Beta Montajes', 'T177 volver a pulsar sin corregir no añade nada: %s' % ls(e, 'nuevos'))
+        e.pg.fill('#varios-texto', 'Rafa Gómez, Gamma Electrica')
+        e.clic('button[data-varios-ok]')
+        ok(ls(e, 'nuevos') == ['Rafa B.', 'Rafa Gómez'], 'T177 corregida la línea (otra empresa y un apellido), entra: %s' % ls(e, 'nuevos'))
+    con_escena('T177', est170(), t177)
+
+    # --- T177b: dos líneas con otra empresa → el texto E en plural
+    def t177b(e):
+        e.ir()
+        e.clic('button[data-varios]')
+        e.pg.fill('#varios-texto', 'Rafa, Beta Montajes' + chr(10) + 'Luis, Alfa Instalaciones')
+        e.clic('button[data-varios-ok]')
+        ok(e.txt('[data-res="homonimos"]') == 'Ya hay estos nombres con otra empresa: «Rafa» (Alfa Instalaciones), «Luis» (Beta Montajes). No entran. Si son otras personas, escríbelas con un apellido o una inicial («Rafa B., Beta Montajes»); si son las mismas, quita las líneas.',
+           'T177b texto E en plural: %r' % e.txt('[data-res="homonimos"]'))
+        ok(e.valor('#varios-texto') == 'Rafa, Beta Montajes' + chr(10) + 'Luis, Alfa Instalaciones' and sin_rastro(e), 'T177b las dos líneas se quedan y no se toca nada: %r' % e.valor('#varios-texto'))
+    con_escena('T177b', est170(), t177b)
+
+    # --- T178: lápiz «Pepe» → «Rafa» (existe): la pregunta dice las dos empresas; «No» enseña la ayuda D; «Pepe» → «Rafa B.» renombra
+    def t178(e):
+        e.ir()
+        e.clic(lapiz('Pepe'))
+        e.pg.fill('#ren-campo', 'Rafa')
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «Rafa» (Alfa Instalaciones) y estás corrigiendo a «Pepe» (Beta Montajes). ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.',
+           'T178 la pregunta dice la empresa de cada uno: %r' % e.txt('#ren-pregunta [data-texto]'))
+        e.clic('button[data-ren-no]')
+        ok(e.pg.query_selector('#ren-pregunta') is None and e.txt('#ren-ayuda') == 'Si son dos personas distintas, ponle un apellido o una inicial: «Rafa B.».',
+           'T178 «No» enseña la ayuda D: %r' % e.txt('#ren-ayuda'))
+        sin_desborde(e, 'lápiz')
+        e.pg.fill('#ren-campo', 'Rafa B.')
+        e.clic('button[data-ren-guardar]')
+        ok(ls(e, 'renombres') == [{'de': 'Pepe', 'a': 'Rafa B.'}] and 'Rafa B.' in e.filas() and 'Rafa' in e.filas() and e.pg.query_selector('#ren-ayuda') is None,
+           'T178 «Pepe» pasa a «Rafa B.» y «Rafa» sigue: %s %s' % (ls(e, 'renombres'), e.filas()))
+    con_escena('T178', est170(personas=[('Rafa', 'Alfa Instalaciones'), ('Pepe', 'Beta Montajes'), ('Luis', 'Beta Montajes'), ('Ander', 'Gamma Electrica'), ('Zoilo', 'Sagarde')]), t178)
+
+    # --- T178b: el lápiz con «Sí» sigue juntando (como siempre); sin empresa en ninguno la pregunta no lleva paréntesis
+    def t178b(e):
+        e.ir()
+        e.clic(lapiz('Pepe'))
+        e.pg.fill('#ren-campo', 'Luis')
+        e.clic('button[data-ren-guardar]')
+        ok(e.txt('#ren-pregunta [data-texto]') == 'Ya hay un «Luis» (Beta Montajes) y estás corrigiendo a «Pepe». ¿Son la misma persona? Se juntarán al pasarlo al PC, con vista previa antes.', 'T178b %r' % e.txt('#ren-pregunta [data-texto]'))
+        e.clic('button[data-ren-si]')
+        ok(ls(e, 'renombres') == [{'de': 'Pepe', 'a': 'Luis'}], 'T178b «Sí» junta: %s' % ls(e, 'renombres'))
+    con_escena('T178b', est170(), t178b)
+
+    # --- T179: con «Rafa» y «Rafa B.» el desplegable y la lista enseñan a los dos, cada uno con su empresa, y se pueden elegir
+    def t179(e):
+        e.ir()
+        etiquetas = nombres_opciones(e)
+        ok('Rafa B. · Beta Montajes' in etiquetas and 'Rafa · Alfa Instalaciones (ya está)' in etiquetas, 'T179 el desplegable enseña «Rafa B.» con su empresa: %s' % etiquetas)
+        e.pg.select_option('#addsel', 'Rafa B.')
+        e.clic('button[data-add]')
+        ok(sorted(x for x in e.filas() if x.startswith('Rafa')) == ['Rafa', 'Rafa B.'], 'T179 la lista tiene a los dos: %s' % e.filas())
+        ok(emp_fila(e, 'Rafa') == 'Alfa Instalaciones' and emp_fila(e, 'Rafa B.') == 'Beta Montajes', 'T179 cada uno con su empresa: %r %r' % (emp_fila(e, 'Rafa'), emp_fila(e, 'Rafa B.')))
+    con_escena('T179', est170(personas=HOM + [('Rafa B.', 'Beta Montajes')]), t179)
+
+    # --- T180: doble obra y 24 h: «Rafa» en una obra y «Rafa B.» en otra el mismo día son dos personas (sin aviso falso ni bloqueo falso)
+    def t180(e):
+        e.ir()
+        e.obra('mungia')
+        e.fecha('2026-10-22')
+        e.pg.select_option('#addsel', 'Rafa B.')
+        e.clic('button[data-add]')
+        ok(e.pg.query_selector('#aviso-doble-obra') is None and e.pg.query_selector('.warn-obra') is None, 'T180 «Rafa B.» no avisa de doble obra por culpa de «Rafa»: %r' % e.txt('#aviso-doble-obra'))
+        e.pulsar('Rafa B.', 19, '0.5')      # 17 h: si se juntara con las 7,5 h de «Rafa» en Olabeaga serían 24,5 h
+        e.clic('button[data-guardar]')
+        ok('no se guarda' not in e.toast() and e.pendientes() == '1', 'T180 17 h de «Rafa B.» + 7,5 h de «Rafa» no bloquea el 24 h: %r %r' % (e.toast(), e.pendientes()))
+        # control: «Rafa» a secas en la otra obra sí avisa de doble obra
+        e.pg.select_option('#addsel', 'Rafa')
+        e.clic('button[data-add]')
+        ok(e.pg.query_selector('.warn-obra') is not None, 'T180 control: la misma persona en las dos obras sí avisa')
+    s180 = est170(personas=HOM + [('Rafa B.', '')], lista=('Rafa', 'Pepe', 'Luis'))   # sin empresa: el aviso de doble obra solo mira el nombre
+    s180['obras']['mungia'] = obra_est('2026 MUNGIA', [])
+    con_escena('T180', s180, t180)
+
+    # --- T181: el estado publicado trae DOS «Rafa» → recuadro visible con el texto F (antes se escondía uno en silencio); sin duplicados, nada
+    def t181(e):
+        e.ir()
+        ok(e.txt('#aviso-dos-iguales') == 'En la lista del PC hay dos personas llamadas «Rafa» (Alfa Instalaciones y Beta Montajes) y la tablet solo puede enseñar a una. Cámbiale el nombre a una de ellas desde el PC.',
+           'T181 recuadro F: %r' % e.txt('#aviso-dos-iguales'))
+        sin_desborde(e, 'dos iguales')
+    con_escena('T181', est170(personas=[('Rafa', 'Alfa Instalaciones'), ('Rafa', 'Beta Montajes'), ('Luis', 'Beta Montajes')], bajas=(), lista=('Rafa', 'Luis')), t181)
+
+    # --- T182: «Sí» y «No» no pisan otras cosas: con la pregunta abierta, volver a «Crear» otro nombre la sustituye
+    def t182(e):
+        e.ir()
+        crear(e, 'Rafa', 'Beta Montajes')
+        crear(e, 'Luis', 'Alfa Instalaciones')
+        ok(pregunta(e) == 'Ya hay un «Luis» (Beta Montajes). ¿Es el mismo?' and len(e.pg.query_selector_all('#pregunta-homonimo')) == 1, 'T182 la pregunta nueva sustituye a la vieja: %r' % pregunta(e))
+        e.clic('button[data-hom-no]')
+        e.pg.fill('#homonimo-campo', 'Luis M.')
+        e.clic('button[data-hom-crear]')
+        ok(ls(e, 'nuevos') == ['Luis M.'] and ls(e, 'empresas') == [{'nombre': 'Luis M.', 'empresa': 'Alfa Instalaciones'}], 'T182 se crea «Luis M.» con Alfa (la empresa de la última pregunta): %s %s' % (ls(e, 'nuevos'), ls(e, 'empresas')))
+    con_escena('T182', est170(), t182)
+
+    # Fin del bloque del paso MA4c
+
+    # Fin del bloque del paso MA2
 
     # Fin del bloque del paso 08d
 

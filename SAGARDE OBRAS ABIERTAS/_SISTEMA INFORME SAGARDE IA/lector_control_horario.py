@@ -33,13 +33,16 @@ import personal_obra as po  # noqa: E402
 YA_APLICADO, LISTO, A_REVISAR, RECHAZADO = "ya_aplicado", "listo", "a_revisar", "rechazado"
 
 # Avisos de personal_obra que obligan a MIRAR el fichero antes de aplicarlo: nunca se aplican ni se descartan
-# en silencio. El resto de avisos (alta_nueva, nombre_anterior_usado, renombre_sin_origen) solo se cuentan.
+# en silencio. El resto de avisos (alta_nueva, alta_ya_existia, nombre_anterior_usado, renombre_sin_origen) solo se cuentan.
+# `empresa_cambiada` y `alta_de_baja` (MA4b): puede ser otra persona con el mismo nombre; aceptarlos es cosa de Bixente.
 AVISOS_A_REVISAR = (
     "nombre_parecido",
     "suma_diaria_alta",
     "fecha_futura",
     "reemplazo",
     "renombre_coincide_con_otro",
+    "empresa_cambiada",
+    "alta_de_baja",
 )
 
 AMBITOS = {"vivienda": "viviendas", "garaje": "garajes"}
@@ -302,9 +305,12 @@ def _resumen_texto(ficha):
         partes.append(_plural(len(cambiados), "cambio de nombre", "cambios de nombre"))
     if ficha["personas_nuevas"]:
         partes.append(_plural(len(ficha["personas_nuevas"]), "persona nueva", "personas nuevas"))
-    puestas = [e for e in ficha["empresas"] if e["accion"] in ("puesta", "cambiada")]
+    puestas = [e for e in ficha["empresas"] if e["accion"] == "puesta"]
     if puestas:
         partes.append(_plural(len(puestas), "empresa puesta", "empresas puestas"))
+    cambiadas = [e for e in ficha["empresas"] if e["accion"] == "cambiada"]
+    if cambiadas:
+        partes.append(_plural(len(cambiadas), "empresa cambiada", "empresas cambiadas"))
     quitadas = [e for e in ficha["empresas"] if e["accion"] == "quitada"]
     if quitadas:
         partes.append(_plural(len(quitadas), "empresa quitada", "empresas quitadas"))
@@ -313,8 +319,15 @@ def _resumen_texto(ficha):
     oficios_puestos = [c for c in ficha.get("categorias", []) if c["accion"] in ("puesta", "cambiada")]
     if oficios_puestos:
         partes.append(_plural(len(oficios_puestos), "oficio puesto", "oficios puestos"))
-    if ficha.get("horarios_preferidos"):
-        partes.append(_plural(len(ficha["horarios_preferidos"]), "horario preferido", "horarios preferidos"))
+    oficios_quitados = [c for c in ficha.get("categorias", []) if c["accion"] == "quitada"]
+    if oficios_quitados:
+        partes.append(_plural(len(oficios_quitados), "oficio quitado", "oficios quitados"))
+    horarios_puestos = [h for h in ficha.get("horarios_preferidos", []) if h["accion"] != "quitada"]
+    if horarios_puestos:
+        partes.append(_plural(len(horarios_puestos), "horario preferido", "horarios preferidos"))
+    horarios_quitados = [h for h in ficha.get("horarios_preferidos", []) if h["accion"] == "quitada"]
+    if horarios_quitados:
+        partes.append(_plural(len(horarios_quitados), "horario preferido quitado", "horarios preferidos quitados"))
     if ficha.get("bajas"):
         partes.append(_plural(len(ficha["bajas"]), "persona quitada", "personas quitadas"))
     if ficha["rechazadas"]:

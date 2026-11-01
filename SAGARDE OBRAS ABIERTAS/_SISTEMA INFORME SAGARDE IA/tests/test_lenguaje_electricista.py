@@ -34,6 +34,7 @@ APP_DIR = Path(os.environ.get("P3_APP") or TESTS.parent)
 if str(MOTOR_IA) not in sys.path:
     sys.path.insert(0, str(MOTOR_IA))
 
+import datos_base_trabajadores as D  # noqa: E402
 import lector_control_horario as lector  # noqa: E402
 import personal_integracion as pi  # noqa: E402
 import personal_obra as po  # noqa: E402
@@ -304,6 +305,73 @@ class TestLenguajeDeLaApp(unittest.TestCase):
         problemas = revisar(recogidos, "app")
         self.assertEqual([], sorted(set(problemas)), "\n".join(sorted(set(problemas))[:30]))
 
+    def test_los_avisos_de_antes_de_guardar_no_usan_palabras_de_programador(self):
+        """Paso MA2: el aviso de antes de guardar (día con gente, fin de semana, día futuro, 0 horas), sus tres respuestas y el
+        resumen de lo guardado, sustituido y saltado se escriben en lenguaje de electricista."""
+        from playwright.sync_api import sync_playwright
+
+        base = Path(os.environ.get("P3_TMP") or tempfile.gettempdir()) / ("lenguaje_avisos_" + uuid.uuid4().hex[:8])
+        base.mkdir(parents=True)
+        self.addCleanup(shutil.rmtree, str(base), True)
+        for nombre in ("generador_personal.html", "personal_calculo.js"):
+            shutil.copy(APP_DIR / nombre, base / nombre)
+        (base / "personal_estado.js").write_text("window.SAGARDE_PERSONAL = " + json.dumps(_estado(), ensure_ascii=False) + ";\n", encoding="utf-8")
+        url = "file:///" + str(base).replace(os.sep, "/").replace(" ", "%20") + "/generador_personal.html"
+        recogidos = []
+        with sync_playwright() as p:
+            nav = p.chromium.launch()
+            ctx = nav.new_context(viewport={"width": 390, "height": 844}, timezone_id="Europe/Madrid", locale="es-ES")
+            ctx.add_init_script(FECHA_FIJA)
+            pg = ctx.new_page()
+            pg.set_default_timeout(4000)
+            errores = []
+            pg.on("pageerror", lambda e: errores.append(str(e)))
+
+            def mirar():
+                recogidos.extend(pg.evaluate(JS_TEXTOS))
+
+            def clic(sel):
+                pg.click(sel, timeout=4000)
+                mirar()
+
+            def preparar(dias, principal):
+                # días marcados con la lista de siempre, solo Mikel y con las horas sin tocar (siguen el horario de cada día)
+                pg.evaluate("([d, p]) => { a.fechas = d; a.fecha = p; a.calMes = p.slice(0, 7); a.list.forEach((x) => { x.on = x.nombre === 'Mikel'; x.horas = null; }); render(); }", [dias, principal])
+
+            pg.goto(url)
+            pg.wait_for_selector("#obra")
+            todos = ["2026-10-21", "2026-10-22", "2026-10-24", "2026-10-25"]
+            # 1) los cuatro avisos a la vez; se salta lo que ya tenía gente
+            preparar(todos, "2026-10-21")
+            clic("button[data-guardar]")
+            self.assertTrue(pg.query_selector("#aviso-guardar"), "no ha salido el aviso de antes de guardar")
+            clic('#aviso-guardar button[data-guardar-modo="saltar"]')
+            # 2) los mismos días otra vez: ahora se sustituye lo que había
+            preparar(["2026-10-21", "2026-10-22"], "2026-10-21")
+            pg.evaluate("a.list.forEach((x) => { x.on = x.nombre === 'Txomin'; x.horas = null; }); render()")
+            clic("button[data-guardar]")
+            clic('#aviso-guardar button[data-guardar-modo="seguir"]')
+            clic("#resumen-guardado button[data-cerrar-resumen]")
+            # 3) un aviso y «No guardar nada»
+            preparar(["2026-10-21", "2026-10-22"], "2026-10-21")
+            clic("button[data-guardar]")
+            clic('#aviso-guardar button[data-guardar-modo="cancelar"]')
+            # 4) todos los días ocupados y «saltar» a mano: no se guarda ninguno
+            preparar(["2026-10-21"], "2026-10-22")
+            pg.evaluate("a.list.forEach((x) => { x.on = x.nombre === 'Mikel'; x.horas = null; }); a.listaDe = null; render()")
+            clic("button[data-guardar]")
+            pg.evaluate("save({ modo: 'saltar', firma: a.aviso.firma })")
+            mirar()
+            nav.close()
+        self.assertEqual([], errores, "errores de JavaScript mientras se recorrían los avisos")
+        todo = " ".join(recogidos)
+        for frase in ("Todavía no se ha guardado nada", "ya hay 2 personas (ya en el PC)", "son fin de semana", "todavía no han llegado", "se guardaría con 0 horas",
+                      "Si no quieres 0 horas", "Sustituir y guardar", "Saltar los días que ya tienen gente", "No guardar nada", "Así ha quedado",
+                      "jornadas guardadas", "sustituida", "sin guardar porque ya tenía", "No se ha guardado nada.", "No se ha guardado ningún día"):
+            self.assertIn(frase, todo, "falta en lo revisado: " + frase)
+        problemas = revisar(recogidos, "avisos de antes de guardar")
+        self.assertEqual([], sorted(set(problemas)), "\n".join(sorted(set(problemas))[:30]))
+
     def test_el_campo_empresa_de_la_app_tampoco_usa_palabras_de_programador(self):
         """Recorre todos los estados del campo Empresa (08c2a): desplegables, errores, avisos, resúmenes y «Enviar al PC»."""
         from playwright.sync_api import sync_playwright
@@ -351,6 +419,7 @@ class TestLenguajeDeLaApp(unittest.TestCase):
             pg.fill("#nuevo", "mikel")
             pg.select_option("#nuevo-empresa", "Rafa @AUT")
             clic("button[data-nuevo]")
+            clic("button[data-hom-si]")             # MA4c: «Ya hay un «Mikel» (Manueles). ¿Es el mismo?» → «Sí»
             pg.fill("#nuevo", "Txomi")
             clic("button[data-nuevo]")
             clic("button[data-usar]")
@@ -388,13 +457,121 @@ class TestLenguajeDeLaApp(unittest.TestCase):
         texto = "\n".join(recogidos)
         # Un recuento de cero es una alarma: el recorrido tiene que haber pasado de verdad por cada estado nuevo.
         for esperado in ("Sin empresa", "Otra empresa…", "Escribe la empresa.", "Esa empresa no vale: parece un teléfono.",
-                         "ya tiene la empresa «Manueles»", "Empresa de «Mikel»: ahora «Sagarde»", "se queda sin empresa",
+                         "Ya hay un «Mikel» (Manueles). ¿Es el mismo?", "Se ha apuntado a «Mikel» (Manueles). Su empresa no se cambia", "Empresa de «Mikel»: ahora «Sagarde»", "se queda sin empresa",
                          "Nombre corregido: «Mikel» ahora es «Mikel Z», empresa «Obras Z»", "con empresa.",
-                         "Se le pone la empresa a 1", "Se les pone la empresa a 2", "Ya tiene otra empresa: «Mikel Z»", "Ya tienen otra empresa", "falta el nombre", "4 empresas puestas"):
+                         "Se le pone la empresa a 1", "Se les pone la empresa a 2", "Ya hay un «Mikel Z» (Obras Z): «Mikel Z» no entra", "Ya hay estos nombres con otra empresa", "falta el nombre", "4 empresas puestas"):
             self.assertIn(esperado, texto, "el recorrido no ha llegado a este texto: «%s»" % esperado)
         self.assertGreater(len(set(recogidos)), 40)
         problemas = revisar(recogidos, "app (empresas)")
         self.assertEqual([], sorted(set(problemas)), "\n".join(sorted(set(problemas))[:30]))
+
+    def test_las_preguntas_de_dos_personas_con_el_mismo_nombre_no_usan_palabras_de_programador(self):
+        """MA4c: recorre la pregunta «¿es el mismo o es otra persona?» de la tablet (sí, no, errores, cancelar, de baja), la ayuda del
+        lápiz, «Añadir varios nombres» con un nombre que ya existe y el recuadro de dos iguales publicados."""
+        from playwright.sync_api import sync_playwright
+
+        base = Path(os.environ.get("P3_TMP") or tempfile.gettempdir()) / ("lenguaje_hom_" + uuid.uuid4().hex[:8])
+        base.mkdir(parents=True)
+        self.addCleanup(shutil.rmtree, str(base), True)
+        for nombre in ("generador_personal.html", "personal_calculo.js"):
+            shutil.copy(APP_DIR / nombre, base / nombre)
+        estado = _estado_empresas()
+        estado["catalogo"].append({"id": "T0090", "nombre": "Zuri", "categoria": "", "empresa": "Manueles", "activo": False})
+        (base / "personal_estado.js").write_text("window.SAGARDE_PERSONAL = " + json.dumps(estado, ensure_ascii=False) + ";" + chr(10), encoding="utf-8")
+        url = "file:///" + str(base).replace(os.sep, "/").replace(" ", "%20") + "/generador_personal.html"
+        recogidos = []
+        with sync_playwright() as p:
+            nav = p.chromium.launch()
+            ctx = nav.new_context(viewport={"width": 390, "height": 844}, timezone_id="Europe/Madrid", locale="es-ES")
+            ctx.add_init_script(FECHA_FIJA)
+            pg = ctx.new_page()
+            pg.set_default_timeout(4000)
+            errores = []
+            pg.on("pageerror", lambda e: errores.append(str(e)))
+
+            def mirar():
+                recogidos.extend(pg.evaluate(JS_TEXTOS))
+
+            def clic(sel):
+                pg.click(sel, timeout=4000)
+                mirar()
+
+            pg.goto(url)
+            pg.wait_for_selector("#obra")
+            mirar()
+            # nombre nuevo con otra empresa: pregunta, «No», errores, «Cancelar», «No» + apellido
+            pg.fill("#nuevo", "Mikel")
+            pg.select_option("#nuevo-empresa", "Rafa @AUT")
+            clic("button[data-nuevo]")
+            clic("button[data-hom-no]")
+            for malo in ("Mikel", "Txomin", "x@y.es"):
+                pg.fill("#homonimo-campo", malo)
+                clic("button[data-hom-crear]")
+            clic("button[data-hom-cancelar]")
+            pg.fill("#nuevo", "Mikel")
+            pg.select_option("#nuevo-empresa", "Rafa @AUT")
+            clic("button[data-nuevo]")
+            clic("button[data-hom-no]")
+            pg.fill("#homonimo-campo", "Mikel B.")
+            clic("button[data-hom-crear]")
+            # sin conflicto: lo apunta y dice cómo crear a otro; de baja: pregunta y «Sí»
+            pg.fill("#nuevo", "txomin")
+            clic("button[data-nuevo]")
+            pg.fill("#nuevo", "Zuri")
+            clic("button[data-nuevo]")
+            clic("button[data-hom-si]")
+            # lápiz: «Ya hay un… ¿Son la misma persona?» y «No» con su ayuda
+            clic("button[data-ren='0']")
+            pg.fill("#ren-campo", "Txomin")
+            clic("button[data-ren-guardar]")
+            clic("button[data-ren-no]")
+            # varios: uno que ya existe con otra empresa (singular) y dos (plural)
+            clic("button[data-varios]")
+            pg.fill("#varios-texto", "Mikel, Sagarde")
+            clic("button[data-varios-ok]")
+            pg.fill("#varios-texto", "Mikel, Sagarde" + chr(10) + "Rafa, Manueles")
+            clic("button[data-varios-ok]")
+            nav.close()
+        self.assertEqual([], errores, "errores de JavaScript mientras se recorría la pregunta de dos personas con el mismo nombre")
+        texto = chr(10).join(recogidos)
+        for esperado in ("¿Es el mismo?", "Sí, es el mismo", "No, es otra persona", "Ponle algo que lo distinga del otro «Mikel»",
+                         "Tiene que ser distinto de «Mikel»: añade un apellido o una inicial.", "Ya hay un «Txomin». Elige otro.",
+                         "Ese nombre no vale: parece un correo.", "ya estaba en la base: lo he apuntado en la lista",
+                         "estaba de baja. ¿Es el mismo, que vuelve?", "Se ha apuntado a «Zuri»",
+                         "y estás corrigiendo a «Mikel»", "Si son dos personas distintas, ponle un apellido o una inicial",
+                         "no entra. Si es otra persona, escríbela con un apellido o una inicial",
+                         "Ya hay estos nombres con otra empresa"):
+            self.assertIn(esperado, texto, "el recorrido no ha llegado a este texto: «%s»" % esperado)
+        problemas = revisar(recogidos, "app (dos personas con el mismo nombre)")
+        self.assertEqual([], sorted(set(problemas)), chr(10).join(sorted(set(problemas))[:30]))
+
+    def test_el_aviso_de_dos_iguales_publicados_no_usa_palabras_de_programador(self):
+        from playwright.sync_api import sync_playwright
+
+        base = Path(os.environ.get("P3_TMP") or tempfile.gettempdir()) / ("lenguaje_dos_" + uuid.uuid4().hex[:8])
+        base.mkdir(parents=True)
+        self.addCleanup(shutil.rmtree, str(base), True)
+        for nombre in ("generador_personal.html", "personal_calculo.js"):
+            shutil.copy(APP_DIR / nombre, base / nombre)
+        estado = _estado_empresas()
+        estado["catalogo"] += [{"id": "T0092", "nombre": "Rafa", "categoria": "", "empresa": "Sagarde", "activo": True},
+                               {"id": "T0093", "nombre": "Rafa", "categoria": "", "empresa": "Manueles", "activo": True},
+                               {"id": "T0094", "nombre": "Rafa", "categoria": "", "empresa": "", "activo": True}]
+        (base / "personal_estado.js").write_text("window.SAGARDE_PERSONAL = " + json.dumps(estado, ensure_ascii=False) + ";" + chr(10), encoding="utf-8")
+        url = "file:///" + str(base).replace(os.sep, "/").replace(" ", "%20") + "/generador_personal.html"
+        with sync_playwright() as p:
+            nav = p.chromium.launch()
+            ctx = nav.new_context(viewport={"width": 390, "height": 844}, timezone_id="Europe/Madrid", locale="es-ES")
+            ctx.add_init_script(FECHA_FIJA)
+            pg = ctx.new_page()
+            pg.set_default_timeout(4000)
+            pg.goto(url)
+            pg.wait_for_selector("#obra")
+            recogidos = pg.evaluate(JS_TEXTOS)
+            nav.close()
+        texto = chr(10).join(recogidos)
+        self.assertIn("En la lista del PC hay personas con el mismo nombre", texto)
+        self.assertEqual([], sorted(set(revisar(recogidos, "app (dos iguales)"))))
 
 
 class TestLenguajeDeLaSumaPorEmpresa(unittest.TestCase):
@@ -455,6 +632,222 @@ class TestLenguajeDelPC(unittest.TestCase):
             self.assertIn(esperado, codigos)
 
 
+class TestLenguajeSinCobertura(unittest.TestCase):
+    """MA3: los textos de cobertura (etiquetas y avisos) que Bixente lee en un garaje sin red, en lenguaje de electricista."""
+
+    def _textos(self):
+        html = (APP_DIR / "generador_personal.html").read_text(encoding="utf-8")
+        bloque = re.search(r"const COB = \{(.*?)\n      \};", html, re.S)
+        self.assertIsNotNone(bloque, "no se encuentra el bloque «const COB» con los textos de cobertura")
+        pares = re.findall(r'^\s+(\w+): ("(?:[^"\\]|\\.)*"),$', bloque.group(1), re.M)
+        return {nombre: json.loads(valor) for nombre, valor in pares}
+
+    def test_los_textos_de_cobertura_no_usan_palabras_de_programador(self):
+        textos = self._textos()
+        self.assertEqual(8, len(textos), "una lista vacía o corta de textos es una alarma, no «no aplica»: %s" % sorted(textos))
+        problemas = revisar([t.replace("{fecha}", "28/10").replace("{n}", "3") for t in textos.values()], "cobertura")
+        self.assertEqual([], problemas, problemas)
+
+    def test_las_tres_etiquetas_dicen_lo_que_toca(self):
+        t = self._textos()
+        self.assertTrue(t["con"].startswith("Con cobertura:"), t["con"])
+        self.assertTrue(t["sin"].startswith("Sin cobertura:") and "{fecha}" in t["sin"], t["sin"])
+        self.assertTrue(t["nada"].startswith("Sin datos todavía:") and "cobertura" in t["nada"], t["nada"])
+        self.assertIn("{n}", t["sinLista"])
+        self.assertIn("a salvo", t["sinLista"])
+        self.assertIn("primera vez", t["informe"])
+
+
+class TestLenguajeEnviarCon(unittest.TestCase):
+    """MA7: los textos de «Enviar con…» (la explicación de las dos maneras, el «Listo» y los dos avisos) en lenguaje de electricista."""
+
+    def _textos(self):
+        html = (APP_DIR / "generador_personal.html").read_text(encoding="utf-8")
+        bloque = re.search(r"const COMP = \{(.*?)\n      \};", html, re.S)
+        self.assertIsNotNone(bloque, "no se encuentra el bloque «const COMP» con los textos de «Enviar con…»")
+        textos = {}
+        for nombre, cuerpo in re.findall(r"^\s+(\w+):\s*((?:'(?:[^'\\]|\\.)*'(?:\s*\+\s*)?\s*)+),$", bloque.group(1), re.M):
+            textos[nombre] = "".join(json.loads('"' + t.replace('"', '\\"') + '"') for t in re.findall(r"'((?:[^'\\]|\\.)*)'", cuerpo))
+        return textos
+
+    def test_los_textos_de_enviar_con_no_usan_palabras_de_programador(self):
+        textos = self._textos()
+        self.assertEqual(["denegado", "error", "listo", "vias"], sorted(textos), "una lista vacía o corta de textos es una alarma, no «no aplica»: %s" % sorted(textos))
+        problemas = revisar([t.replace("{nombre}", "CONTROL HORARIO X 23102026").replace("{contenido}", "2 jornadas") for t in textos.values()], "enviar con")
+        self.assertEqual([], problemas, problemas)
+
+    def test_dicen_lo_que_toca(self):
+        t = self._textos()
+        self.assertIn("«Enviar con…»", t["vias"])
+        self.assertIn("«Preparar el fichero para el PC»", t["vias"])
+        self.assertIn("REVISIONES", t["vias"])
+        self.assertIn("OneDrive", t["vias"])
+        self.assertIn("mismo fichero", t["vias"])
+        self.assertTrue(t["listo"].startswith("Listo."), t["listo"])
+        self.assertIn("{nombre}", t["listo"])
+        self.assertIn("{contenido}", t["listo"])
+        self.assertIn("REVISIONES", t["listo"])
+        for clave in ("denegado", "error"):
+            self.assertIn("«Preparar el fichero para el PC»", t[clave])
+            self.assertIn("no se pierde nada", t[clave])
+
+
+@unittest.skipUnless(_OK, "NO se ha revisado el lenguaje de «Generar personal»: %s" % _MOTIVO)
+class TestLenguajeDeGenerarPersonal(unittest.TestCase):
+    """MA5: la guarda mira la pestaña «Generar personal» de personal_sagarde.html en un navegador de verdad, como hace con la tablet.
+    Recorre cada estado (vacío, empresa nueva, añadir, errores, parecidos, preguntas, bajas, editar, quitar oficio y horario, lista
+    preparada, fichero guardado y sus tres pasos, «¿seguro?», lo recuperado al recargar, lo ya aplicado, almacenamiento bloqueado,
+    lo guardado que no se puede leer, página sin datos o sin cálculo). Una lista vacía de textos es una alarma, no un «no aplica»:
+    se exige un mínimo de textos distintos y que hayan salido las frases que cada estado tiene que enseñar."""
+
+    # Frases que TIENEN que haber salido en el recorrido: si falta una, la guarda no ha pasado por ese estado.
+    ESPERADOS = [
+        "Tienes 3 cambios sin enviar", "¿Seguro?", "carpeta REVISIONES de cualquier obra", "actualiza la obra", "Quitar oficio",
+        "Volver a horario normal", "se ha marcado para quitar de la base de trabajadores", "¿Es el mismo, que", "Ponle algo que lo distinga",
+        "Se han recuperado", "ya está aplicado", "no deja guardar lo preparado", "no se ha podido leer", "Escribe al menos el nombre",
+        "parece un DNI, un teléfono o un correo", "Revisa las horas del horario personalizado", "Todavía no hay datos de personal publicados",
+        "No se pudo cargar personal_calculo.js", "no se han podido recuperar", "se parece a", "Cambio preparado", "Se quitará de la base",
+        "Trabajador nuevo", "Cambia de empresa", "Quita el oficio", "Fichero guardado con", "Escribe el nombre de la empresa nueva",
+        "no tiene el formato esperado", "se queda sin oficio", "vuelve al horario normal", "Datos de «", "Todavía no has añadido ni quitado",
+    ]
+    MINIMO_DE_TEXTOS = 200
+
+    def test_ningun_estado_de_generar_personal_usa_palabras_de_programador(self):
+        import ayudante_generar as A
+
+        recogidos = []
+
+        def ver(page):
+            recogidos.extend(page.evaluate(JS_TEXTOS))
+
+        def recorrido(page, carpeta):
+            ver(page)                                                      # vacío
+            page.select_option("#gen-empresa", "__nueva__")
+            ver(page)                                                      # empresa nueva sin nombre
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # error: falta la empresa nueva
+            page.fill("#gen-empresa-nueva", "Montajes Norte")
+            page.select_option("#gen-categoria", "__otra__")
+            page.fill("#gen-categoria-otra", "Peón")
+            page.select_option("#gen-horario-tipo", "personalizado")
+            ver(page)                                                      # horario por día
+            page.fill("#gen-nombre", "Koldo Agirre")
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # añadido + lista + «sin enviar»
+            for malo in ("", "12345678Z", "Ana <b>", "Ana ana@correo.es"):  # errores de nombre
+                page.fill("#gen-nombre", malo)
+                page.click("#btn-gen-anadir")
+                ver(page)
+            for dia in ("lun", "mar", "mie", "jue", "vie", "sab", "dom"):
+                page.fill('[data-gen-dia="%s"]' % dia, "")
+            page.fill("#gen-nombre", "Ione Sasia")
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # horario sin horas
+            page.fill('[data-gen-dia="lun"]', "99")
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # horas fuera de 0 a 24
+            page.select_option("#gen-horario-tipo", "normal")
+            page.select_option("#gen-empresa", A.ALFA)
+            page.select_option("#gen-categoria", "")
+            page.fill("#gen-nombre", "Rafaa")
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # se parece a otro
+            page.click("#btn-gen-confirmar-parecido")
+            ver(page)
+            page.click('[data-gen-modo="varios"]')
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # varios, lista vacía
+            page.fill('[data-gen-var-nom="0"]', "Uno Dos")
+            page.fill('[data-gen-var-nom="1"]', "Rafa")
+            page.click("#btn-gen-mas-lineas")
+            ver(page)
+            page.click("#btn-gen-anadir")
+            ver(page)                                                      # varios: ya está / añadido
+            page.click('[data-gen-modo="uno"]')
+            A.anadir(page, "Luis", A.ALFA)
+            ver(page)                                                      # pregunta: ¿es el mismo?
+            page.click("#btn-gen-hom-no")
+            ver(page)
+            page.fill("#gen-hom-campo", "Luis")
+            page.click("#btn-gen-hom-crear")
+            ver(page)                                                      # error: tiene que ser distinto
+            page.fill("#gen-hom-campo", "Luis B.")
+            page.click("#btn-gen-hom-crear")
+            ver(page)
+            A.anadir(page, "Luis", A.ALFA)
+            page.click("#btn-gen-hom-si")
+            ver(page)                                                      # el mismo: pasa de Beta a Alfa
+            A.anadir(page, "Ander", A.ALFA)
+            ver(page)                                                      # de baja
+            page.click("#btn-gen-hom-cancelar")
+            ver(page)
+            page.click('[data-gen-quitar-oficio="Rafa"]')
+            ver(page)
+            page.click('[data-gen-quitar-horario="Rafa"]')
+            ver(page)
+            page.click('[data-gen-editar-emp="Rafa"]')
+            ver(page)                                                      # Editar
+            page.select_option("#gen-empresa", "Sagarde")
+            page.click('[data-gen-baja="Zoilo"]')
+            ver(page)                                                      # baja
+            page.click('[data-gen-deshacer-baja="Zoilo"]')
+            ver(page)
+            page.click('[data-gen-baja="Zoilo"]')
+            A.descargar(page)
+            ver(page)                                                      # fichero guardado y sus tres pasos
+            page.click("#btn-gen-vaciar")
+            ver(page)                                                      # ¿seguro?
+            page.click("#btn-gen-vaciar-no")
+            A.recargar(page, carpeta)
+            ver(page)                                                      # recuperado al recargar
+            e = A.estado()
+            e["catalogo"].append(D.ficha(6, "Koldo Agirre", "Montajes Norte", categoria="Peón",
+                                         horario_preferido={"lun": 7.5, "mar": 7.5, "mie": 7.5, "jue": 7.5, "vie": 7.5, "sab": 0, "dom": 0}))
+            A.recargar(page, carpeta, e)
+            ver(page)                                                      # lo que el PC ya aplicó
+            page.click("#btn-gen-vaciar")
+            page.click("#btn-gen-vaciar-si")
+            ver(page)                                                      # vacío otra vez
+
+        errores = A.con_pagina(recorrido)
+        self.assertEqual(errores, [], "errores de JavaScript en la página")
+
+        def memoria_bloqueada(page, carpeta):
+            A.anadir(page, "Nuevo Uno", A.ALFA)
+            ver(page)
+        bloqueo = ("(() => { const t = () => { throw new DOMException('bloqueado', 'SecurityError'); };"
+                   " Object.defineProperty(window, 'localStorage', { get: t, configurable: true }); })();")
+        self.assertEqual(A.con_pagina(memoria_bloqueada, init=bloqueo), [])
+
+        def sembrar(valor):
+            return ("(() => { try { if (!window.sessionStorage.getItem('sembrado')) { window.localStorage.setItem(%s, %s);"
+                    " window.sessionStorage.setItem('sembrado', '1'); } } catch (e) {} })();" % (json.dumps(A.CLAVE_BORRADOR), json.dumps(valor)))
+        self.assertEqual(A.con_pagina(lambda page, carpeta: ver(page), init=sembrar("esto no es un texto guardado")), [])
+        malo = {"version": 1, "guardado": "2026-10-31T09:15:00.000Z", "descargado": None, "bajas": [{"nombre": "<b>x</b>"}],
+                "preparados": [{"nombre": "Bien Uno", "empresa": A.ALFA}, {"nombre": 5}]}
+        self.assertEqual(A.con_pagina(lambda page, carpeta: ver(page), init=sembrar(json.dumps(malo))), [])
+
+        # Páginas que no llegan a enseñar la pestaña: sin datos, con datos de otra versión, sin el cálculo
+        def esperar_texto(page, carpeta):
+            page.wait_for_selector("#contenido-generar .empty, #contenido-generar .aviso", state="attached")
+            ver(page)
+        A.con_pagina(esperar_texto, con_estado=False, ir_a_generar=False)
+        A.con_pagina(esperar_texto, e={"version": 2}, ir_a_generar=False, esperar=False)
+        A.con_pagina(esperar_texto, con_calculo=False, ir_a_generar=False)
+
+        texto = chr(10).join(recogidos)
+        distintos = sorted(set(recogidos))
+        self.assertGreaterEqual(len(distintos), self.MINIMO_DE_TEXTOS, "la guarda de «Generar personal» ha revisado muy pocos textos: %d" % len(distintos))
+        faltan = [f for f in self.ESPERADOS if f not in texto]
+        self.assertEqual(faltan, [], "la guarda no ha pasado por estos estados de «Generar personal»")
+        self.assertEqual([], sorted(set(revisar(recogidos, "Generar personal"))))
+
+    def test_la_guarda_de_generar_lee_la_pagina_que_se_publica(self):
+        self.assertTrue((APP_DIR / "personal_sagarde.html").exists())
+        fuente = Path(__file__).read_text(encoding="utf-8")
+        self.assertIn("personal_sagarde", fuente, "esta guarda tiene que nombrar la página que vigila")
+
+
 class TestElDetectorDeLenguaje(unittest.TestCase):
     """El detector tiene que saltar con lo que se prohíbe (si no, la guarda que «no encuentra nada» no prueba nada)."""
 
@@ -469,7 +862,8 @@ class TestElDetectorDeLenguaje(unittest.TestCase):
 
     def test_no_salta_con_lenguaje_de_electricista(self):
         for texto in ["Enviar al PC", "Sin enviar al PC: 3 jornadas", "Borrar lo que llevo a medias", "horario especial 9 h",
-                      "Lista de trabajadores y obras al día: 25/10/2026 15:59", "Funciona sin cobertura: sí",
+                      "Lista de trabajadores y obras al día: 25/10/2026 15:59", "Con cobertura: datos al día",
+                      "Sin cobertura: usando la lista del 28/10",
                       "Es importante mirar la carpeta REVISIONES", "Nombre nuevo: «Asensio» no estaba en la base; se añade.",
                       "Por empresa", "Sin empresa", "Total autónomos (@AUT)", "Hay una persona con más de una empresa (Ana)"]:
             self.assertEqual([], palabras_prohibidas(texto), texto)
