@@ -5,7 +5,7 @@
    "id": "T0001",
    "nombre": "Asensio",
    "categoria": "",
-   "empresa": "",
+   "empresa": "Sagarde",
    "activo": true,
    "alta": "2026-10-25",
    "fusionado_en": null
@@ -149,6 +149,69 @@
    "empresa": "MARIOS",
    "activo": true,
    "alta": "2026-10-27",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0016",
+   "nombre": "David",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true,
+   "alta": "2026-10-29",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0017",
+   "nombre": "Eneko",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true,
+   "alta": "2026-10-29",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0018",
+   "nombre": "Carlos",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true,
+   "alta": "2026-10-29",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0019",
+   "nombre": "Victor",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true,
+   "alta": "2026-10-29",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0020",
+   "nombre": "Vicario",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true,
+   "alta": "2026-10-29",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0021",
+   "nombre": "JoseMari",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true,
+   "alta": "2026-10-29",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0022",
+   "nombre": "Aurelian @AUT",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true,
+   "alta": "2026-10-29",
    "fusionado_en": null
   }
  ]

@@ -9392,27 +9392,27 @@
   "materiales": {
     "ultimo_mes": "Octubre26",
     "ultima_fecha": "29/10/2026",
-    "dias_desde": 0,
+    "dias_desde": 3,
     "meses": [
       "Octubre26"
     ],
-    "n_items": 46,
-    "aviso": null,
+    "n_items": 47,
+    "aviso": "ENTREGAS fila 57: falta el material; la fila no se cuenta. · ENTREGAS fila 58: falta el material; la fila no se cuenta. · ENTREGAS fila 59: falta el material; la fila no se cuenta. · ENTREGAS fila 60: falta el material; la fila no se cuenta. · ENTREGAS fila 61: falta el material; la fila no se cuenta.",
     "_meta": {
-      "actualizado": "29/10/2026 11:20"
+      "actualizado": "01/11/2026 08:17"
     }
   },
   "documentos": {
-    "total": 43,
+    "total": 52,
     "por_categoria": {
       "Excel": 2,
       "Imágenes": 6,
       "Otros": 16,
-      "PDF": 16,
+      "PDF": 25,
       "Planos y gráfica": 3
     },
     "_meta": {
-      "actualizado": "27/10/2026 22:46"
+      "actualizado": "01/11/2026 08:17"
     }
   },
   "contactos": []

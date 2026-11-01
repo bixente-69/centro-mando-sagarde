@@ -1,13 +1,13 @@
 window.SAGARDE_PERSONAL = {
  "version": 1,
- "generado": "2026-10-27T23:08:07.708517+01:00",
+ "generado": "2026-10-29T15:10:00.000000+01:00",
  "jornada_base_h": 7.5,
  "catalogo": [
   {
    "id": "T0001",
    "nombre": "Asensio",
    "categoria": "",
-   "empresa": "",
+   "empresa": "Sagarde",
    "activo": true
   },
   {
@@ -121,6 +121,55 @@ window.SAGARDE_PERSONAL = {
    "nombre": "Mario Eduardo (M)",
    "categoria": "",
    "empresa": "MARIOS",
+   "activo": true
+  },
+  {
+   "id": "T0016",
+   "nombre": "David",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true
+  },
+  {
+   "id": "T0017",
+   "nombre": "Eneko",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true
+  },
+  {
+   "id": "T0018",
+   "nombre": "Carlos",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true
+  },
+  {
+   "id": "T0019",
+   "nombre": "Victor",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true
+  },
+  {
+   "id": "T0020",
+   "nombre": "Vicario",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true
+  },
+  {
+   "id": "T0021",
+   "nombre": "JoseMari",
+   "categoria": "",
+   "empresa": "Sagarde",
+   "activo": true
+  },
+  {
+   "id": "T0022",
+   "nombre": "Aurelian @AUT",
+   "categoria": "",
+   "empresa": "Sagarde",
    "activo": true
   }
  ],
@@ -873,42 +922,48 @@ window.SAGARDE_PERSONAL = {
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-13",
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-14",
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-15",
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-16",
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-20",
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-20",
@@ -931,7 +986,8 @@ window.SAGARDE_PERSONAL = {
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-21",
@@ -954,7 +1010,8 @@ window.SAGARDE_PERSONAL = {
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-22",
@@ -1001,7 +1058,8 @@ window.SAGARDE_PERSONAL = {
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-23",
@@ -1048,7 +1106,8 @@ window.SAGARDE_PERSONAL = {
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-26",
@@ -1071,7 +1130,8 @@ window.SAGARDE_PERSONAL = {
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-27",
@@ -1110,7 +1170,8 @@ window.SAGARDE_PERSONAL = {
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-28",
@@ -1149,7 +1210,8 @@ window.SAGARDE_PERSONAL = {
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-29",
@@ -1188,7 +1250,8 @@ window.SAGARDE_PERSONAL = {
      "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
-     "extra": 0
+     "extra": 0,
+     "empresa": "Sagarde"
     },
     {
      "fecha": "2026-10-30",
