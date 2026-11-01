@@ -250,7 +250,10 @@ class TestLenguajeDeLaApp(unittest.TestCase):
             mirar()
             for vista in ("jornadas", "informe", "enviar", "app"):
                 clic('nav button[data-v="%s"]' % vista)
-            # día nuevo con la gente anterior marcada (rótulo) y sin gente
+            # día nuevo sin nada guardado (rótulo), copiar el último día (rótulo), «Varios días» encendido y apagado, y sin gente
+            clic("button[data-copiar-ultimo]")
+            clic("button[data-multi-dias]")
+            clic("button[data-multi-dias]")
             clic("button[data-todos='0']")
             clic("button[data-guardar]")                       # «No hay ninguna persona presente»
             clic("button[data-todos='1']")

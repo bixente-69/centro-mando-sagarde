@@ -8,6 +8,7 @@ fecha en el 23/10/2026 y recorre el flujo completo. El lote que exporta la app s
 P3_SOLO_08C=1 = modo rápido del paso 08c: solo las escenas T80 en adelante (lápiz, desplegable completo, varios nombres).
 P3_SOLO_08C2A=1 = modo rápido del paso 08c2a: solo las escenas T120 en adelante (el campo Empresa: crear, lápiz, varios nombres, lista, «Enviar al PC»).
 P3_SOLO_MA4C=1 = modo rápido del paso MA4c: solo las escenas T170 en adelante (dos personas con el mismo nombre: la pregunta «¿es el mismo?», el lápiz, varios nombres).
+P3_SOLO_CAL=1 = modo rápido del calendario: solo las escenas T200 en adelante (pinchar un día enseña lo guardado, «Copiar el último día», «Varios días»).
 P3_SOLO_MA2=1 = modo rápido del paso MA2: solo las escenas T150 en adelante (anotar sin pisar lo ya guardado, fin de semana, días futuros, horas al añadir).
 P3_SOLO_08C2B=1 = modo rápido del paso 08c2b: solo las escenas T140 en adelante (la suma por empresa y la empresa junto al nombre en el Informe).
 P3_SOLO_08D=1 = modo rápido del paso 08d: solo las escenas T90 en adelante (día nuevo con la gente anterior marcada, «Enviar al PC», nombre del fichero).
@@ -104,10 +105,6 @@ def quitar_estado():
         os.remove(ruta)
 
 
-# Paso 08d (D5): un día nuevo sale con la gente de la jornada anterior marcada. Las pruebas de antes del 08d parten de la lista sin marcar:
-# este JS desmarca por dentro (sin pulsar nada ni guardar borrador) lo que salió prerrellenado. Las escenas nuevas (T90+) no lo usan.
-JS_SIN_PREVIA = "if (typeof a !== 'undefined' && a.prefill) { a.list.forEach(x => { x.on = false; }); a.prefill = null; render(); }"
-MAIN = {'sin_previa': False}
 FECHA_FIJA = """(() => { const fijo = new Date('2026-10-23T10:00:00+02:00').valueOf(); const Real = Date;
   class Falsa extends Real { constructor(...a) { if (a.length === 0) { super(fijo); } else { super(...a); } } static now() { return fijo; } }
   window.Date = Falsa; })();"""
@@ -195,8 +192,6 @@ with sync_playwright() as p:
             ok(False, msg or 'no existe el elemento %s' % sel)
             return False
         pg.click(sel, timeout=4000)
-        if MAIN['sin_previa'] and ('data-amb' in sel or 'data-dia' in sel):
-            pg.evaluate(JS_SIN_PREVIA)
         return True
 
     def espera_obra():
@@ -238,8 +233,6 @@ with sync_playwright() as p:
             ok(False, 'no existe #fecha')
             return
         pg.evaluate("v=>{const e=document.getElementById('fecha');e.value=v;e.dispatchEvent(new Event('change',{bubbles:true}))}", v)
-        if MAIN['sin_previa']:
-            pg.evaluate(JS_SIN_PREVIA)
 
     def exportar():
         # Paso 08d: se prepara desde la pestaña «Enviar al PC» (botón de la obra que se ve en «Anotar») y se vuelve a «Anotar».
@@ -276,19 +269,21 @@ with sync_playwright() as p:
     except Exception as e:  # noqa: BLE001
         ok(False, 'T0 se interrumpio: %s' % (str(e).strip().splitlines() or [repr(e)])[0][:220])
     try:
-        # --- T1 (reescrita en 08d, D5): lista inicial = última jornada + habituales, con MARCADA la gente de la última jornada anterior
+        # --- T1 (reescrita con «Copiar el último día»): lista inicial = última jornada + habituales, SIN marcar; la gente del último día anterior se copia a propósito
         ok(filas_lista() == ['Mikel', 'Txomin', 'Rafa'], 'lista inicial de viviendas: última jornada + habituales (≥ 3 días en 30): %s' % filas_lista())
-        ok(marcados() == ['Mikel', 'Txomin'], 'el viernes 23/10 sale marcada la gente del jueves 22/10 (Mikel y Txomin), no Rafa: %s' % marcados())
-        ok(txt('#rotulo-marcados') == 'Marcados según la jornada del jueves 22/10: quita a quien no haya venido.', 'rótulo de la lista prerrellenada: %r' % txt('#rotulo-marcados'))
+        ok(marcados() == [] and txt('#estado-dia') == 'Este día no tiene nada guardado.', 'el viernes 23/10, un día nuevo, sale sin marcar a nadie y lo dice: %s %r' % (marcados(), txt('#estado-dia')))
+        ok(txt('button[data-copiar-ultimo]') == 'Copiar el último día (jue 22/10)', 'el botón dice de qué día copia: %r' % txt('button[data-copiar-ultimo]'))
+        clic('button[data-copiar-ultimo]')
+        ok(marcados() == ['Mikel', 'Txomin'] and filas_lista() == ['Mikel', 'Txomin', 'Rafa'], '«Copiar el último día» marca a la gente del jueves 22/10 (Mikel y Txomin), no a Rafa, que se queda en la lista sin marcar: %s %s' % (marcados(), filas_lista()))
+        ok(txt('#rotulo-marcados') == 'Marcados según la jornada del jueves 22/10: quita a quien no haya venido.', 'rótulo de la lista copiada: %r' % txt('#rotulo-marcados'))
         clic('button[data-amb="garaje"]')
-        ok(filas_lista() == ['Andoni'] and marcados() == ['Andoni'], 'lista inicial de garajes: la última jornada de garajes (viernes 16/10) marcada: %s %s' % (filas_lista(), marcados()))
+        ok(filas_lista() == ['Andoni'] and marcados() == [], 'lista inicial de garajes: la última jornada de garajes (viernes 16/10), sin marcar: %s %s' % (filas_lista(), marcados()))
+        clic('button[data-copiar-ultimo]')
+        ok(marcados() == ['Andoni'], 'copiar en garajes marca la última jornada de garajes (viernes 16/10): %s' % marcados())
         ok(txt('#rotulo-marcados') == 'Marcados según la jornada del viernes 16/10: quita a quien no haya venido.', 'rótulo de garajes: %r' % txt('#rotulo-marcados'))
         ok('on' in (pg.get_attribute('button[data-amb="garaje"]', 'class') or ''), 'el ámbito activo debe llevar la clase on')
         clic('button[data-amb="vivienda"]')
-        ok(filas_lista() == ['Mikel', 'Txomin', 'Rafa'], 'al volver a viviendas vuelve su lista: %s' % filas_lista())
-        # T2 en adelante (anteriores a 08d) parten de la lista sin marcar: se desmarca por dentro, sin pulsar nada ni guardar borrador
-        MAIN['sin_previa'] = True
-        pg.evaluate(JS_SIN_PREVIA)
+        ok(filas_lista() == ['Mikel', 'Txomin', 'Rafa'] and marcados() == [], 'al volver a viviendas vuelve su lista sin marcar: %s %s' % (filas_lista(), marcados()))
 
     except Exception as e:  # noqa: BLE001
         ok(False, 'T1 se interrumpio: %s' % (str(e).strip().splitlines() or [repr(e)])[0][:220])
@@ -563,24 +558,15 @@ with sync_playwright() as p:
             self.pg = self.ctx.new_page()
             self.pg.set_default_timeout(4000)
             self.errs = []
-            self.previa = False
             self.pg.on('pageerror', lambda e: self.errs.append(str(e)))
 
-        def sin_previa(self):
-            if not self.previa:
-                self.pg.evaluate(JS_SIN_PREVIA)
-
-        def ir(self, esperar_obra=True, previa=False):
+        def ir(self, esperar_obra=True):
             self.pg.goto(self.url)
             if esperar_obra:
                 try:
                     self.pg.wait_for_selector('#obra', timeout=3000)
                 except Exception:  # noqa: BLE001
                     pass
-            # Paso 08d (D5): las escenas de antes del 08d parten de la lista sin marcar (solo si salió prerrellenada, para no tocar un
-            # borrador restaurado). Lo nuevo se prueba en T90+ con previa=True.
-            self.previa = previa
-            self.sin_previa()
             return self
 
         def cerrar(self):
@@ -599,9 +585,11 @@ with sync_playwright() as p:
                 ok(False, 'no existe el elemento %s' % sel)
                 return False
             self.pg.click(sel, timeout=4000)
-            if 'data-amb' in sel or 'data-dia' in sel:
-                self.sin_previa()
             return True
+
+        def copiar(self):
+            """Pulsa «Copiar el último día»: la gente del último día anterior pasa marcada a la lista."""
+            return self.clic('button[data-copiar-ultimo]')
 
         def filas(self):
             return self.pg.eval_on_selector_all('#v-app .row', 'e=>e.map(r=>r.dataset.nombre)')
@@ -615,11 +603,9 @@ with sync_playwright() as p:
 
         def fecha(self, v):
             self.pg.evaluate("v=>{const e=document.getElementById('fecha');e.value=v;e.dispatchEvent(new Event('change',{bubbles:true}))}", v)
-            self.sin_previa()
 
         def obra(self, v):
             self.pg.select_option('#obra', v)
-            self.sin_previa()
 
         def horas(self, nombre):
             return self.txt('#v-app .row[data-nombre="%s"] .step output' % nombre)
@@ -674,6 +660,10 @@ with sync_playwright() as p:
 
     def con_escena(nombre, datos, fn, **kw):
         """Ejecuta una escena; cualquier excepción se convierte en un fallo legible y no tumba las demás."""
+        if os.environ.get('P3_SOLO_CAL') == '1':     # modo del calendario: solo las escenas T200 en adelante (pinchar un día enseña lo guardado, «Copiar el último día», «Varios días»)
+            m = re.match(r'T(\d+)', nombre)
+            if not (m and int(m.group(1)) >= 200):
+                return
         if os.environ.get('P3_SOLO_MA4C') == '1':     # modo del paso MA4c: solo las escenas T170 en adelante (dos personas con el mismo nombre)
             m = re.match(r'T(\d+)', nombre)
             if not (m and int(m.group(1)) >= 170):
@@ -725,11 +715,15 @@ with sync_playwright() as p:
 
     # --- T16: lista por defecto = última jornada + habituales (≥ 3 fechas en los 30 días anteriores, límite inclusivo, mismo ámbito y obra)
     def t16(e):
-        e.ir(previa=True)
+        e.ir()
         ok(e.filas() == ['Fran', 'Ana', 'Beto', 'Dani'], 'T16 lista de viviendas = última jornada (en su orden) + habituales por nombre, sin repetir: %s' % e.filas())
-        ok(e.marcados() == ['Fran', 'Ana'], 'T16 (08d) de esa lista salen marcados solo los de la última jornada anterior (22/10: Fran y Ana); los habituales, sin marcar: %s' % e.marcados())
+        ok(e.marcados() == [], 'T16 el día nuevo sale sin marcar a nadie: %s' % e.marcados())
+        e.copiar()
+        ok(e.marcados() == ['Fran', 'Ana'], 'T16 con «Copiar el último día» se marcan solo los de la última jornada anterior (22/10: Fran y Ana); los habituales, sin marcar: %s' % e.marcados())
         e.clic('button[data-amb="garaje"]')
-        ok(e.filas() == ['Hugo'] and e.marcados() == ['Hugo'], 'T16 lista de garajes: solo cuentan las fechas del propio ámbito (Eva: 2 de garaje + 2 de vivienda no es habitual): %s %s' % (e.filas(), e.marcados()))
+        ok(e.filas() == ['Hugo'] and e.marcados() == [], 'T16 lista de garajes: solo cuentan las fechas del propio ámbito (Eva: 2 de garaje + 2 de vivienda no es habitual): %s %s' % (e.filas(), e.marcados()))
+        e.copiar()
+        ok(e.marcados() == ['Hugo'], 'T16 y al copiar en garajes, el último día de garajes: %s' % e.marcados())
     d16 = [fila(f, 'vivienda', 'Ana', 7.5) for f in ('2026-10-05', '2026-10-06')]  # 2 días: no es habitual
     d16 += [fila(f, 'vivienda', 'Beto', 7.5) for f in ('2026-09-23', '2026-10-01', '2026-10-02')]  # 09-23 = justo 30 días antes (incluido)
     d16 += [fila(f, 'vivienda', 'Carlos', 7.5) for f in ('2026-09-22', '2026-10-01', '2026-10-02')]  # 09-22 = 31 días antes (fuera): solo 2
@@ -890,7 +884,6 @@ with sync_playwright() as p:
         e.pg.dispatch_event('input[data-hor="5"]', 'change')
         e.pg.reload()
         e.pg.wait_for_selector('#obra')
-        e.sin_previa()      # 08d: al recargar, el día nuevo vuelve a salir con la gente anterior marcada; T25 no trata de eso
         ok(e.pg.evaluate("localStorage.getItem('sgd_personal_horarios')") in ('{}', None), 'T25 el horario guardado en el aparato debe olvidarse cuando coincide con el publicado: %r' % e.pg.evaluate("localStorage.getItem('sgd_personal_horarios')"))
         e.clic('#v-app .row[data-nombre="Mikel"] .x')
         e.clic('button[data-guardar]')
@@ -903,7 +896,7 @@ with sync_playwright() as p:
     def t26(e):
         e.ir()
         ok(e.valor('#fecha') == '2026-10-24', 'T26 a las 00:30 locales del 24/10 la fecha de hoy debe ser 2026-10-24 (no la UTC): %r' % e.valor('#fecha'))
-        ok('on' in (e.pg.get_attribute('button[data-dia="0"]', 'class') or ''), 'T26 el botón «Hoy» debe estar activo')
+        ok(e.txt('#cal-toggle').startswith('Hoy ·') and 'sábado 24/10' in e.txt('#cal-toggle'), 'T26 el botón de la fecha dice «Hoy · sábado 24/10»: %r' % e.txt('#cal-toggle'))
         e.clic('#v-app .row[data-nombre="Mikel"] .x')
         ok(e.txt('#v-app .row[data-nombre="Mikel"] .step output') == '¿horas?', 'T26 el 24/10 es sábado: sin horario')
     con_escena('T26', ESTADO1, t26, hoy='2026-10-24T00:30:00+02:00')
@@ -2449,21 +2442,26 @@ with sync_playwright() as p:
 
     # --- T90: el lunes mira el viernes (la última jornada anterior que existe, no el «ayer» de calendario)
     def t90(e):
-        e.ir(previa=True)
+        e.ir()
+        ok(e.marcados() == [] and e.txt('button[data-copiar-ultimo]') == 'Copiar el último día (vie 16/10)',
+           'T90 el viernes 23/10 (ayer, 22/10, no hubo obra) sale sin marcar y el botón ofrece el viernes 16/10: %s %r' % (e.marcados(), e.txt('button[data-copiar-ultimo]')))
+        e.copiar()
         ok(e.marcados() == ['Ana', 'Beto'] and rotulo(e) == 'Marcados según la jornada del viernes 16/10: quita a quien no haya venido.',
-           'T90 el viernes 23/10 (ayer, 22/10, no hubo obra) sale marcada la gente del viernes 16/10: %s %r' % (e.marcados(), rotulo(e)))
+           'T90 al copiar sale marcada la gente del viernes 16/10: %s %r' % (e.marcados(), rotulo(e)))
         e.fecha('2026-10-19')
+        ok(e.marcados() == [] and e.pg.query_selector('#rotulo-marcados') is None, 'T90 al cambiar de fecha la copia no se arrastra: %s %r' % (e.marcados(), rotulo(e)))
+        e.copiar()
         ok(e.filas() == ['Ana', 'Beto'] and e.marcados() == ['Ana', 'Beto'] and 'viernes 16/10' in rotulo(e),
-           'T90 el lunes 19/10 mira el viernes 16/10 (no el domingo ni el jueves 15/10, que es de Carlos): %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
+           'T90 el lunes 19/10 copia el viernes 16/10 (no el domingo ni el jueves 15/10, que es de Carlos): %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
         e.fecha('2026-10-14')
-        ok(e.marcados() == [] and e.pg.query_selector('#rotulo-marcados') is None,
-           'T90 el miércoles 14/10 no tiene nada ANTERIOR (lo del 15 y el 16 es posterior): no se marca a nadie y no hay rótulo: %s %r' % (e.marcados(), rotulo(e)))
+        ok(e.marcados() == [] and e.pg.query_selector('#rotulo-marcados') is None and e.pg.query_selector('button[data-copiar-ultimo]') is None,
+           'T90 el miércoles 14/10 no tiene nada ANTERIOR (lo del 15 y el 16 es posterior): no hay botón ni rótulo de copia: %s %r' % (e.marcados(), rotulo(e)))
     con_escena('T90', est9(viv('2026-10-15', 'Carlos') + viv('2026-10-16', 'Ana', 'Beto'), ['Ana', 'Beto', 'Carlos'], u('2026-10-16', 'Ana', 'Beto')), t90)
 
     # --- T90b: «la última jornada anterior» deja fuera la de la propia fecha (se prueba la función directamente: la pantalla ni la llama
     # cuando la fecha ya tiene jornada)
     def t90b(e):
-        e.ir(previa=True)
+        e.ir()
         e.fecha('2026-10-16')           # el 16/10 ya tiene jornada (Ana y Beto): lo anterior es el 15/10 (Carlos)
         r = e.pg.evaluate("jornadaAnterior()")
         ok(r == {'fecha': '2026-10-15', 'nombres': ['Carlos']}, 'T90b la última jornada anterior al 16/10 es la del 15/10 (Carlos), no la del propio 16/10: %s' % r)
@@ -2472,36 +2470,45 @@ with sync_playwright() as p:
 
     # --- T91: viviendas y garajes por separado (y cada obra con lo suyo)
     def t91(e):
-        e.ir(previa=True)
-        ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T91 viviendas mira SU última jornada (miércoles 21/10: Ana): %s %r' % (e.marcados(), rotulo(e)))
+        e.ir()
+        e.copiar()
+        ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T91 viviendas copia SU última jornada (miércoles 21/10: Ana): %s %r' % (e.marcados(), rotulo(e)))
         e.clic('button[data-amb="garaje"]')
-        ok(e.marcados() == ['Hugo'] and 'jueves 22/10' in rotulo(e) and 'Ana' not in e.filas(), 'T91 garajes mira SU última jornada (jueves 22/10: Hugo) y no mezcla las de viviendas: %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
+        e.copiar()
+        ok(e.marcados() == ['Hugo'] and 'jueves 22/10' in rotulo(e) and 'Ana' not in e.filas(), 'T91 garajes copia SU última jornada (jueves 22/10: Hugo) y no mezcla las de viviendas: %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
         e.clic('button[data-amb="vivienda"]')
-        ok(e.marcados() == ['Ana'] and 'Hugo' not in e.filas(), 'T91 al volver a viviendas vuelve la suya: %s %s' % (e.filas(), e.marcados()))
+        ok(e.marcados() == [] and 'Hugo' not in e.filas(), 'T91 al volver a viviendas vuelve la suya, sin marcar: %s %s' % (e.filas(), e.marcados()))
+        e.copiar()
+        ok(e.marcados() == ['Ana'], 'T91 y copiar vuelve a dar la de viviendas: %s' % e.marcados())
         e.obra('mungia')
-        ok(e.marcados() == ['Pepe'] and 'martes 20/10' in rotulo(e), 'T91 otra obra mira la suya (Mungia, martes 20/10: Pepe): %s %r' % (e.marcados(), rotulo(e)))
+        e.copiar()
+        ok(e.marcados() == ['Pepe'] and 'martes 20/10' in rotulo(e), 'T91 otra obra copia la suya (Mungia, martes 20/10: Pepe): %s %r' % (e.marcados(), rotulo(e)))
     mun9 = {'mungia': obra_est('2026 MUNGIA', viv('2026-10-20', 'Pepe'), ultima={'vivienda': u('2026-10-20', 'Pepe'), 'garaje': None})}
     con_escena('T91', est9(viv('2026-10-21', 'Ana') + gar('2026-10-22', 'Hugo'), ['Ana', 'Hugo', 'Pepe'], u('2026-10-21', 'Ana'), u('2026-10-22', 'Hugo'), mun9), t91)
 
     # --- T91b: una jornada de GARAJES sin enviar no entra en la lista de viviendas (ni al revés)
     def t91b(e):
-        e.ir(previa=True)
-        ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T91b viviendas sigue mirando la suya (miércoles 21/10: Ana) aunque haya garajes sin enviar el jueves: %s %r' % (e.marcados(), rotulo(e)))
+        e.ir()
+        e.copiar()
+        ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T91b viviendas sigue copiando la suya (miércoles 21/10: Ana) aunque haya garajes sin enviar el jueves: %s %r' % (e.marcados(), rotulo(e)))
         e.clic('button[data-amb="garaje"]')
-        ok(e.marcados() == ['Hugo'] and 'jueves 22/10' in rotulo(e), 'T91b garajes mira la de garajes sin enviar (jueves 22/10: Hugo): %s %r' % (e.marcados(), rotulo(e)))
+        e.copiar()
+        ok(e.marcados() == ['Hugo'] and 'jueves 22/10' in rotulo(e), 'T91b garajes copia la de garajes sin enviar (jueves 22/10: Hugo): %s %r' % (e.marcados(), rotulo(e)))
     con_escena('T91b', est9(viv('2026-10-21', 'Ana'), ['Ana', 'Hugo'], u('2026-10-21', 'Ana')), t91b,
                init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', ['Hugo'], ambito='garaje')]))
 
     # --- T92: cuentan las jornadas todavía sin enviar al PC (y mandan sobre las del PC)
     def t92(e):
-        e.ir(previa=True)
+        e.ir()
+        e.copiar()
         ok(e.marcados() == ['Beto'] and 'jueves 22/10' in rotulo(e) and e.filas() == ['Ana', 'Beto'],
            'T92 una jornada sin enviar (jueves 22/10: Beto) cuenta como anterior: %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
     con_escena('T92', est9(viv('2026-10-21', 'Ana'), ['Ana', 'Beto'], u('2026-10-21', 'Ana')), t92,
                init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', ['beto'])]))   # «beto» en minúscula: sale como «Beto»
 
     def t92b(e):
-        e.ir(previa=True)
+        e.ir()
+        e.copiar()
         ok(e.marcados() == ['Beto'] and 'jueves 22/10' in rotulo(e),
            'T92b la jornada corregida sin enviar (Beto) manda sobre la que ya tiene el PC de ese mismo día (Ana): %s %r' % (e.marcados(), rotulo(e)))
     con_escena('T92b', est9(viv('2026-10-22', 'Ana'), ['Ana', 'Beto'], u('2026-10-22', 'Ana')), t92b,
@@ -2509,7 +2516,8 @@ with sync_playwright() as p:
 
     # --- T93: una jornada ANULADA no cuenta (la anulada sin enviar quita la del PC)
     def t93(e):
-        e.ir(previa=True)
+        e.ir()
+        e.copiar()
         ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T93 la jornada del jueves 22/10 está anulada: se mira la del miércoles 21/10 (Ana): %s %r' % (e.marcados(), rotulo(e)))
         e.clic('nav button[data-v="enviar"]')
         li = e.pg.eval_on_selector_all('.envio[data-obra="olabeaga"] li', 'e=>e.map(l=>l.textContent.trim())')
@@ -2518,14 +2526,16 @@ with sync_playwright() as p:
                init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', [], anulada=True)]))
 
     def t93b(e):
-        e.ir(previa=True)
-        ok(e.marcados() == [] and e.pg.query_selector('#rotulo-marcados') is None, 'T93b si la única jornada anterior está anulada es como si no hubiera: sin marcar y sin rótulo: %s %r' % (e.marcados(), rotulo(e)))
+        e.ir()
+        ok(e.marcados() == [] and e.pg.query_selector('#rotulo-marcados') is None and e.pg.query_selector('button[data-copiar-ultimo]') is None,
+           'T93b si la única jornada anterior está anulada es como si no hubiera: sin marcar, sin rótulo y sin botón de copiar: %s %r' % (e.marcados(), rotulo(e)))
     con_escena('T93b', est9(viv('2026-10-22', 'Beto'), ['Beto'], u('2026-10-22', 'Beto')), t93b,
                init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', [], anulada=True)]))
 
     # --- T94: se marcan con las horas normales de la fecha nueva (su horario especial si lo tienen), sin extra ni notas
     def t94(e):
-        e.ir(previa=True)
+        e.ir()
+        e.copiar()
         ok(e.marcados() == ['Ana', 'Beto'] and e.horas('Ana') == '7,5 h' and e.horas('Beto') == '9 h',
            'T94 el viernes: Ana a 7,5 h (aunque el jueves hizo 9 h) y Beto a su horario especial de 9 h: %s %r %r' % (e.marcados(), e.horas('Ana'), e.horas('Beto')))
         ok(chip(e, 'Beto', True) == 'horario especial 9 h' and chip(e, 'Ana') == '' and chip(e, 'Beto') == '',
@@ -2543,8 +2553,9 @@ with sync_playwright() as p:
                            excep={'Beto': {'vie': 9}}), t94)
 
     def t94b(e):
-        e.ir(previa=True)
+        e.ir()
         e.fecha('2026-10-24')
+        e.copiar()
         ok(e.marcados() == ['Ana'] and e.horas('Ana') == '¿horas?', 'T94b un sábado sin horario sale marcada pero pide las horas, como al marcar a mano: %s %r' % (e.marcados(), e.horas('Ana')))
         e.clic('button[data-guardar]')
         ok('faltan las horas' in e.toast() and e.pendientes() == '0', 'T94b y no se guarda sin ellas: %r %r' % (e.toast(), e.pendientes()))
@@ -2552,40 +2563,47 @@ with sync_playwright() as p:
 
     # --- T95: nada se guarda hasta «Guardar jornada»
     def t95(e):
-        e.ir(previa=True)
+        e.ir()
         e.fecha('2026-10-19')
+        e.copiar()
         e.fecha('2026-10-23')
-        ok(e.marcados() == ['Ana', 'Beto'] and e.pendientes() == '0' and ls(e, 'pendientes') in (None, []), 'T95 abrir y cambiar de fecha no guarda ninguna jornada: %s %r %s' % (e.marcados(), e.pendientes(), ls(e, 'pendientes')))
+        e.copiar()
+        ok(e.marcados() == ['Ana', 'Beto'] and e.pendientes() == '0' and ls(e, 'pendientes') in (None, []), 'T95 abrir, copiar y cambiar de fecha no guarda ninguna jornada: %s %r %s' % (e.marcados(), e.pendientes(), ls(e, 'pendientes')))
         e.clic('button[data-guardar]')
         ok(e.pendientes() == '1' and [x['nombre'] for x in ls(e, 'pendientes')[0]['presentes']] == ['Ana', 'Beto'], 'T95 «Guardar jornada» sí la guarda, con los marcados: %s' % ls(e, 'pendientes'))
-        ok(e.pg.query_selector('#rotulo-marcados') is None, 'T95 una vez guardada la jornada el rótulo ya no se ve: %r' % rotulo(e))
+        ok(e.pg.query_selector('#rotulo-marcados') is None, 'T95 una vez guardada la jornada el rótulo de copia ya no se ve: %r' % rotulo(e))
+        ok(e.txt('#estado-dia') == '✓ Guardado el viernes 23/10: 2 personas (sin enviar al PC).', 'T95 y en su lugar dice que ya está guardada: %r' % e.txt('#estado-dia'))
     con_escena('T95', est9(viv('2026-10-16', 'Ana', 'Beto'), ['Ana', 'Beto'], u('2026-10-16', 'Ana', 'Beto')), t95)
 
     # --- T96: si la fecha YA tiene jornada (del PC o sin enviar) se ve lo guardado, como hoy
     def t96(e):
-        e.ir(previa=True)
+        e.ir()
         ok(e.marcados() == ['Ana'] and e.filas() == ['Ana', 'Beto'] and e.pg.query_selector('#rotulo-marcados') is None,
-           'T96 con jornada del PC en esa fecha se ve lo guardado (solo Ana), sin rótulo: %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
+           'T96 con jornada del PC en esa fecha se ve lo guardado (solo Ana), sin rótulo de copia: %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
+        ok(e.txt('#estado-dia') == '✓ Guardado el viernes 23/10: 1 persona.' and e.pg.query_selector('button[data-copiar-ultimo]') is None,
+           'T96 dice que ese día está guardado (1 persona, ya en el PC) y no ofrece copiar: %r' % e.txt('#estado-dia'))
         e.fecha('2026-10-24')
         e.fecha('2026-10-23')
         ok(e.marcados() == ['Ana'] and e.pg.query_selector('#rotulo-marcados') is None, 'T96 al volver a esa fecha sigue viéndose lo guardado: %s' % e.marcados())
     con_escena('T96', est9(viv('2026-10-22', 'Ana', 'Beto') + viv('2026-10-23', 'Ana'), ['Ana', 'Beto'], u('2026-10-22', 'Ana', 'Beto')), t96)
 
     def t96b(e):
-        e.ir(previa=True)
-        ok(e.marcados() == ['Beto'] and e.pg.query_selector('#rotulo-marcados') is None, 'T96b con jornada SIN ENVIAR en esa fecha se ve lo guardado (Beto), sin rótulo: %s %r' % (e.marcados(), rotulo(e)))
+        e.ir()
+        ok(e.marcados() == ['Beto'] and e.pg.query_selector('#rotulo-marcados') is None, 'T96b con jornada SIN ENVIAR en esa fecha se ve lo guardado (Beto), sin rótulo de copia: %s %r' % (e.marcados(), rotulo(e)))
+        ok(e.txt('#estado-dia') == '✓ Guardado el viernes 23/10: 1 persona (sin enviar al PC).', 'T96b y dice que está sin enviar al PC: %r' % e.txt('#estado-dia'))
     con_escena('T96b', est9(viv('2026-10-22', 'Ana', 'Beto'), ['Ana', 'Beto'], u('2026-10-22', 'Ana', 'Beto')), t96b,
                init=sembrar('sgd_personal_pendientes', [pend9('2026-10-23', ['Beto'])]))
 
     # --- T97: un borrador a medias manda (no se pisa); y conserva el rótulo al recargar
     def t97(e):
-        e.ir(previa=True)
+        e.ir()
         ok(e.marcados() == ['Beto'] and e.pg.query_selector('#rotulo-marcados') is None, 'T97 el borrador a medias (solo Beto) manda sobre la jornada anterior (Ana y Beto): %s %r' % (e.marcados(), rotulo(e)))
     bor97 = {'obra': 'olabeaga', 'ambito': 'vivienda', 'fecha': '2026-10-23', 'lista': [{'nombre': 'Ana', 'on': False, 'horas': None}, {'nombre': 'Beto', 'on': True, 'horas': None}]}
     con_escena('T97', est9(viv('2026-10-22', 'Ana', 'Beto'), ['Ana', 'Beto'], u('2026-10-22', 'Ana', 'Beto')), t97, init=sembrar('sgd_personal_borrador', bor97))
 
     def t97b(e):
-        e.ir(previa=True)
+        e.ir()
+        e.copiar()
         e.clic('#v-app .row[data-nombre="Ana"] .x')
         ok(e.marcados() == ['Beto'], 'T97b preparación: se quita a Ana: %s' % e.marcados())
         e.pg.reload()
@@ -2594,21 +2612,23 @@ with sync_playwright() as p:
     con_escena('T97b', est9(viv('2026-10-22', 'Ana', 'Beto'), ['Ana', 'Beto'], u('2026-10-22', 'Ana', 'Beto')), t97b)
 
     def t97c(e):
-        e.ir(previa=True)
+        e.ir()
         ok(e.marcados() == ['Beto'] and e.pg.query_selector('#rotulo-marcados') is None, 'T97c un borrador con la marca de un día que NO es anterior no enseña rótulo: %s %r' % (e.marcados(), rotulo(e)))
     con_escena('T97c', est9(viv('2026-10-22', 'Ana', 'Beto'), ['Ana', 'Beto'], u('2026-10-22', 'Ana', 'Beto')), t97c,
                init=sembrar('sgd_personal_borrador', dict(bor97, prefill='2026-10-24')))
 
     # --- T98: sin jornada anterior, como hoy (habituales sin marcar, sin rótulo)
     def t98(e):
-        e.ir(previa=True)
+        e.ir()
         e.fecha('2026-10-01')
-        ok(e.marcados() == [] and e.filas() == ['Ana'] and e.pg.query_selector('#rotulo-marcados') is None, 'T98 antes de la primera jornada no se marca a nadie y no hay rótulo: %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
+        ok(e.marcados() == [] and e.filas() == ['Ana'] and e.pg.query_selector('#rotulo-marcados') is None and e.pg.query_selector('button[data-copiar-ultimo]') is None,
+           'T98 antes de la primera jornada no se marca a nadie y no hay rótulo ni botón de copiar: %s %s %r' % (e.filas(), e.marcados(), rotulo(e)))
     con_escena('T98', est9(viv('2026-10-14', 'Ana'), ['Ana'], u('2026-10-14', 'Ana')), t98)
 
     # --- T99: «Desmarcar todos» y «Marcar todos» siguen funcionando con la lista prerrellenada
     def t99(e):
-        e.ir(previa=True)
+        e.ir()
+        e.copiar()
         e.clic('button[data-todos="0"]')
         ok(e.marcados() == [], 'T99 Desmarcar todos con la lista prerrellenada: %s' % e.marcados())
         e.clic('button[data-todos="1"]')
@@ -2617,26 +2637,34 @@ with sync_playwright() as p:
 
     # --- T100: al cambiar fecha, ámbito u obra se recalcula
     def t100(e):
-        e.ir(previa=True)
-        ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T100 punto de partida (viernes 23/10 mira el miércoles 21/10): %s %r' % (e.marcados(), rotulo(e)))
-        e.clic('button[data-dia="-2"]')                      # anteayer = 21/10, que ya tiene jornada: se ve lo guardado y desaparece el rótulo
-        ok(e.marcados() == ['Ana'] and e.pg.query_selector('#rotulo-marcados') is None, 'T100 con «Anteayer» (21/10, con jornada) se ve lo guardado y se recalcula el rótulo: %s %r' % (e.marcados(), rotulo(e)))
-        e.fecha('2026-10-20')                                # martes sin jornada: mira el lunes 19/10
-        ok(e.marcados() == ['Beto'] and 'lunes 19/10' in rotulo(e), 'T100 al cambiar de fecha (20/10) mira el 19/10: %s %r' % (e.marcados(), rotulo(e)))
-        e.fecha('2026-10-18')                                # domingo sin jornada: mira el viernes 16/10
-        ok(e.marcados() == ['Carlos'] and 'viernes 16/10' in rotulo(e), 'T100 con el domingo 18/10 mira el viernes 16/10: %s %r' % (e.marcados(), rotulo(e)))
+        e.ir()
+        e.copiar()
+        ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T100 punto de partida (viernes 23/10 copia el miércoles 21/10): %s %r' % (e.marcados(), rotulo(e)))
+        e.clic('#cal-toggle')                                # en el móvil el calendario va plegado: se abre con el botón de la fecha
+        e.clic('button[data-cal-dia="2026-10-21"]')          # el 21/10 ya tiene jornada: se ve lo guardado y desaparece el rótulo de copia
+        ok(e.marcados() == ['Ana'] and e.pg.query_selector('#rotulo-marcados') is None, 'T100 al pinchar el 21/10 (con jornada) se ve lo guardado y se recalcula el rótulo: %s %r' % (e.marcados(), rotulo(e)))
+        e.fecha('2026-10-20')                                # martes sin jornada: sin marcar; copiar da el lunes 19/10
+        ok(e.marcados() == [], 'T100 al cambiar de fecha (20/10) vuelve la lista sin marcar: %s' % e.marcados())
+        e.copiar()
+        ok(e.marcados() == ['Beto'] and 'lunes 19/10' in rotulo(e), 'T100 copiar el 20/10 da el 19/10: %s %r' % (e.marcados(), rotulo(e)))
+        e.fecha('2026-10-18')                                # domingo sin jornada: copiar da el viernes 16/10
+        e.copiar()
+        ok(e.marcados() == ['Carlos'] and 'viernes 16/10' in rotulo(e), 'T100 con el domingo 18/10 copia el viernes 16/10: %s %r' % (e.marcados(), rotulo(e)))
         e.obra('mungia')
-        ok(e.marcados() == ['Pepe'] and 'lunes 12/10' in rotulo(e), 'T100 al cambiar de obra mira la de esa obra: %s %r' % (e.marcados(), rotulo(e)))
+        e.copiar()
+        ok(e.marcados() == ['Pepe'] and 'lunes 12/10' in rotulo(e), 'T100 al cambiar de obra copia la de esa obra: %s %r' % (e.marcados(), rotulo(e)))
         e.obra('olabeaga')
         e.clic('button[data-amb="garaje"]')
-        ok(e.marcados() == [] and e.pg.query_selector('#rotulo-marcados') is None, 'T100 al cambiar de ámbito a uno sin jornadas anteriores no se marca a nadie: %s' % e.marcados())
+        ok(e.marcados() == [] and e.pg.query_selector('#rotulo-marcados') is None and e.pg.query_selector('button[data-copiar-ultimo]') is None,
+           'T100 al cambiar de ámbito a uno sin jornadas anteriores no se marca a nadie ni hay botón de copiar: %s' % e.marcados())
     mun100 = {'mungia': obra_est('2026 MUNGIA', viv('2026-10-12', 'Pepe'), ultima={'vivienda': u('2026-10-12', 'Pepe'), 'garaje': None})}
     con_escena('T100', est9(viv('2026-10-16', 'Carlos') + viv('2026-10-19', 'Beto') + viv('2026-10-21', 'Ana'), ['Ana', 'Beto', 'Carlos', 'Pepe'],
                             u('2026-10-21', 'Ana'), None, mun100), t100)
 
     # --- T101: nombres escritos distinto en el PC («mikel») salen una sola vez y con el nombre de la base
     def t101(e):
-        e.ir(previa=True)
+        e.ir()
+        e.copiar()
         ok(e.filas() == ['Mikel'] and e.marcados() == ['Mikel'], 'T101 «mikel» del PC sale como «Mikel», una vez y marcado: %s %s' % (e.filas(), e.marcados()))
     con_escena('T101', est9([fila('2026-10-22', 'vivienda', 'mikel', 7.5)], ['Mikel'], None), t101)   # sin «ultima»: el nombre sale SOLO de las filas del PC
 
@@ -3468,7 +3496,7 @@ with sync_playwright() as p:
     # --- T152: dos días marcados con el calendario, uno ocupado: «Saltar» guarda solo el vacío y el resumen dice qué saltó
     def t152(e):
         e.ir()
-        e.clic('#cal-toggle')   # en el móvil el calendario va plegado (MA6): se abre con el botón de la fecha
+        e.clic('button[data-multi-dias]')   # «Varios días» enciende el marcado de varios y abre el calendario (en el móvil va plegado)
         e.clic('button[data-cal-dia="2026-10-21"]')
         e.clic('button[data-cal-dia="2026-10-22"]')
         e.clic('button[data-quitar-dia="2026-10-23"]')
@@ -3506,7 +3534,8 @@ with sync_playwright() as p:
 
     # --- T154: fin de semana y día que aún no ha llegado con las horas sin tocar: avisa de todo, y si sigue lo guarda con 0 horas a la vista
     def t154(e):
-        e.ir(previa=True)     # la lista sale marcada con la gente del 22/10 y con las horas SIN tocar (siguen el horario de cada día)
+        e.ir()
+        e.copiar()     # la lista sale marcada con la gente del 22/10 y con las horas SIN tocar (siguen el horario de cada día)
         marcar_dias(e, ['2026-10-23', '2026-10-24', '2026-10-25'], '2026-10-23')
         e.clic('button[data-guardar]')
         lineas = lineas_aviso(e)
@@ -3573,7 +3602,7 @@ with sync_playwright() as p:
     # --- T159: con UN solo día marcado, si la lista no salió de ese día (se quitó el otro del calendario) también avisa
     def t159(e):
         e.ir()
-        e.clic('#cal-toggle')
+        e.clic('button[data-multi-dias]')
         e.clic('button[data-cal-dia="2026-10-22"]')
         e.clic('button[data-quitar-dia="2026-10-23"]')
         solo(e, 'Ana')
@@ -3589,7 +3618,8 @@ with sync_playwright() as p:
 
     # --- T160: un día que la lista no enseña pero que ya estaba exactamente igual no avisa (se guarda con el mensaje de siempre)
     def t160(e):
-        e.ir(previa=True)
+        e.ir()
+        e.copiar()
         marcar_dias(e, ['2026-10-22'], '2026-10-22')
         e.pg.evaluate("a.list.forEach(p => { p.horas = 7.5; })")
         e.clic('button[data-guardar]')
@@ -4030,6 +4060,193 @@ with sync_playwright() as p:
         e.clic('button[data-hom-crear]')
         ok(ls(e, 'nuevos') == ['Luis M.'] and ls(e, 'empresas') == [{'nombre': 'Luis M.', 'empresa': 'Alfa Instalaciones'}], 'T182 se crea «Luis M.» con Alfa (la empresa de la última pregunta): %s %s' % (ls(e, 'nuevos'), ls(e, 'empresas')))
     con_escena('T182', est170(), t182)
+
+    # ======================================================================================================================
+    # Calendario: pinchar un día enseña lo que tenga guardado (¿estuvo Manuel el lunes?), «Copiar el último día» para un día
+    # nuevo y «Varios días» para marcar más de uno. Sin los botones Hoy / Ayer / Anteayer / Solo hoy.
+    # ======================================================================================================================
+    def pinchar(e, fecha):
+        """Pincha un día del calendario (en el móvil, si está plegado, lo abre antes con el botón de la fecha)."""
+        if e.pg.query_selector('#cal-box') and not e.pg.is_visible('#cal-box'):
+            e.clic('#cal-toggle')
+        e.clic('button[data-cal-dia="%s"]' % fecha)
+
+    def est200():
+        # hoy es el viernes 23/10. El lunes 19/10 vino Manuel; el 22/10 no hay nada guardado.
+        filas = (viv('2026-10-16', 'Ana', 'Beto', 'Carlos') + viv('2026-10-19', 'Ana', 'Manuel') + viv('2026-10-20', 'Ana', 'Beto', 'Carlos')
+                 + viv('2026-10-21', 'Ana', 'Beto'))
+        return est9(filas, ['Ana', 'Beto', 'Carlos', 'Manuel'], u('2026-10-21', 'Ana', 'Beto'))
+
+    # --- T200: pinchar un día pasado enseña a quien estuvo (y a quien no), y dice que ese día está guardado
+    def t200(e):
+        e.ir()
+        pinchar(e, '2026-10-19')
+        ok(e.valor('#fecha') == '2026-10-19' and e.marcados() == ['Ana', 'Manuel'] and 'Beto' in e.filas(),
+           'T200 pinchar el lunes 19/10 enseña a quien estuvo (Ana y Manuel) y deja sin marcar a los demás: %s %s %s' % (e.valor('#fecha'), e.filas(), e.marcados()))
+        ok(e.txt('#estado-dia') == '✓ Guardado el lunes 19/10: 2 personas.', 'T200 dice que ese día está guardado: %r' % e.txt('#estado-dia'))
+        ok(not e.pg.is_visible('#cal-box'), 'T200 en el móvil, al elegir el día el calendario se pliega y la lista se ve enseguida')
+        ok(e.pendientes() == '0' and ls(e, 'pendientes') in (None, []), 'T200 mirar un día no guarda nada: %s' % e.pendientes())
+        pinchar(e, '2026-10-20')
+        ok(e.marcados() == ['Ana', 'Beto', 'Carlos'] and e.txt('#estado-dia') == '✓ Guardado el martes 20/10: 3 personas.',
+           'T200 pinchar el martes 20/10 enseña a los tres: %s %r' % (e.marcados(), e.txt('#estado-dia')))
+    con_escena('T200', est200(), t200)
+
+    # --- T201: un día sin nada guardado sale vacío y lo dice; «Copiar el último día» pone a la gente del último día anterior; se quita a uno y se guarda
+    def t201(e):
+        e.ir()
+        pinchar(e, '2026-10-22')
+        ok(e.marcados() == [] and e.txt('#estado-dia') == 'Este día no tiene nada guardado.' and e.pg.query_selector('#rotulo-marcados') is None,
+           'T201 el jueves 22/10, sin nada guardado, sale sin marcar y lo dice: %s %r' % (e.marcados(), e.txt('#estado-dia')))
+        ok(e.txt('button[data-copiar-ultimo]') == 'Copiar el último día (mié 21/10)', 'T201 el botón dice de qué día copia: %r' % e.txt('button[data-copiar-ultimo]'))
+        e.copiar()
+        ok(e.marcados() == ['Ana', 'Beto'] and rotulo(e) == 'Marcados según la jornada del miércoles 21/10: quita a quien no haya venido.',
+           'T201 al copiar salen marcados Ana y Beto (el miércoles 21/10) y el rótulo lo dice: %s %r' % (e.marcados(), rotulo(e)))
+        ok(e.pendientes() == '0', 'T201 copiar no guarda nada')
+        e.clic('#v-app .row[data-nombre="Beto"] .x')        # esta vez Beto no vino
+        e.clic('button[data-guardar]')
+        g = ls(e, 'pendientes') or []
+        ok(not hay_aviso(e) and len(g) == 1 and g[0]['fecha'] == '2026-10-22' and [p['nombre'] for p in g[0]['presentes']] == ['Ana'],
+           'T201 se guarda el 22/10 solo con Ana, sin aviso de «ya hay gente»: %s' % g)
+        ok(e.txt('#estado-dia') == '✓ Guardado el jueves 22/10: 1 persona (sin enviar al PC).' and e.pg.query_selector('button[data-copiar-ultimo]') is None,
+           'T201 y ahora dice que ese día está guardado y ya no ofrece copiar: %r' % e.txt('#estado-dia'))
+        pinchar(e, '2026-10-19')
+        pinchar(e, '2026-10-22')
+        ok(e.marcados() == ['Ana'], 'T201 al volver al 22/10 se ve lo guardado: %s' % e.marcados())
+    con_escena('T201', est200(), t201)
+
+    # --- T202: en un día guardado no se ofrece copiar; volver a pinchar el mismo día no tira lo que se prepara; cambiar de día sí recarga
+    def t202(e):
+        e.ir()
+        pinchar(e, '2026-10-19')
+        ok(e.pg.query_selector('button[data-copiar-ultimo]') is None, 'T202 un día ya guardado no ofrece copiar el último día')
+        e.clic('#v-app .row[data-nombre="Beto"] .x')        # se toca a Beto, sin guardar
+        ok(e.marcados() == ['Ana', 'Beto', 'Manuel'], 'T202 preparación: se marca a Beto: %s' % e.marcados())
+        pinchar(e, '2026-10-19')
+        ok(e.marcados() == ['Ana', 'Beto', 'Manuel'], 'T202 volver a pinchar el mismo día no tira lo que se está preparando: %s' % e.marcados())
+        pinchar(e, '2026-10-20')
+        pinchar(e, '2026-10-19')
+        ok(e.marcados() == ['Ana', 'Manuel'] and e.pendientes() == '0', 'T202 al volver de otro día sale lo guardado, no lo tocado sin guardar: %s %s' % (e.marcados(), e.pendientes()))
+    con_escena('T202', est200(), t202)
+
+    # --- T203: ya no están Hoy / Ayer / Anteayer / Solo hoy; sí «Copiar el último día» y «Varios días»
+    def t203(e):
+        e.ir()
+        ok(e.pg.query_selector('button[data-dia]') is None and e.pg.query_selector('button[data-limpiar-dias]') is None,
+           'T203 no queda ningún botón de fecha rápida (data-dia, data-limpiar-dias)')
+        textos = e.pg.eval_on_selector_all('#v-app button', 'e=>e.map(b=>b.textContent.trim())')
+        ok(not [x for x in textos if x in ('Hoy', 'Ayer', 'Anteayer', 'Solo hoy')], 'T203 ni los textos Hoy, Ayer, Anteayer o Solo hoy: %s' % textos)
+        ok(e.txt('#v-app .col-izq .chips') == 'Copiar el último día (mié 21/10) Varios días', 'T203 debajo del calendario: solo copiar y varios días: %r' % e.txt('#v-app .col-izq .chips'))
+        ok(e.pg.get_attribute('button[data-multi-dias]', 'aria-pressed') == 'false', 'T203 «Varios días» empieza apagado')
+        ok(e.pg.evaluate("[...document.querySelectorAll('button[data-copiar-ultimo], button[data-multi-dias]')].every(b => b.getBoundingClientRect().height >= 44)"),
+           'T203 los dos botones nuevos miden al menos 44 px')
+    con_escena('T203', est200(), t203)
+
+    # --- T204: «Varios días»: encendido se suman y se quitan días sin tocar la lista; apagado vuelve un solo día
+    def t204(e):
+        e.ir()
+        e.clic('button[data-multi-dias]')
+        ok(e.pg.is_visible('#cal-box') and e.pg.get_attribute('button[data-multi-dias]', 'aria-pressed') == 'true',
+           'T204 «Varios días» abre el calendario y queda pulsado')
+        ok(e.pg.query_selector('#estado-dia') is None, 'T204 con «Varios días» la lista es la que se prepara: no hay línea de «guardado»: %r' % e.txt('#estado-dia'))
+        e.copiar()                                             # lista preparada: Ana y Beto
+        e.clic('button[data-cal-dia="2026-10-21"]')
+        ok(e.pg.evaluate("a.fechas.slice().sort()") == ['2026-10-21', '2026-10-23'] and e.marcados() == ['Ana', 'Beto'],
+           'T204 pinchar otro día lo SUMA y no recarga la lista: %s %s' % (e.pg.evaluate("a.fechas"), e.marcados()))
+        ok('2 días marcados' in rotulo(e) and e.pg.is_visible('#cal-box'), 'T204 el rótulo cuenta los días y el calendario sigue abierto: %r' % rotulo(e))
+        e.clic('button[data-cal-dia="2026-10-21"]')
+        ok(e.pg.evaluate("a.fechas.slice().sort()") == ['2026-10-23'], 'T204 pinchar un día ya marcado lo quita: %s' % e.pg.evaluate("a.fechas"))
+        e.clic('button[data-cal-dia="2026-10-21"]')
+        e.clic('button[data-multi-dias]')
+        ok(e.pg.evaluate("a.fechas") == ['2026-10-21'] and e.pg.query_selector('#rotulo-marcados') is None and e.pg.get_attribute('button[data-multi-dias]', 'aria-pressed') == 'false',
+           'T204 apagar «Varios días» deja un solo día (el último que se tocó): %s' % e.pg.evaluate("a.fechas"))
+        ok(e.marcados() == ['Ana', 'Beto'], 'T204 y la lista preparada se queda como estaba: %s' % e.marcados())
+        pinchar(e, '2026-10-20')
+        ok(e.marcados() == ['Ana', 'Beto', 'Carlos'] and e.pg.evaluate("a.fechas") == ['2026-10-20'], 'T204 con «Varios días» apagado pinchar vuelve a cambiar de día: %s' % e.marcados())
+    con_escena('T204', est200(), t204)
+
+    # --- T205: copiar con «Varios días» sobre un día que ya tiene gente no pisa nada sin avisar
+    def t205(e):
+        e.ir()
+        e.clic('button[data-multi-dias]')
+        e.clic('button[data-cal-dia="2026-10-20"]')           # el 20/10 ya tiene a Ana, Beto y Carlos
+        e.clic('button[data-quitar-dia="2026-10-23"]')
+        ok(e.pg.evaluate("a.fechas") == ['2026-10-20'] and e.pg.query_selector('button[data-copiar-ultimo]') is not None,
+           'T205 con «Varios días» el botón de copiar sigue ahí aunque el día ya tenga gente: %s' % e.pg.evaluate("a.fechas"))
+        e.copiar()
+        ok(e.marcados() == ['Ana', 'Manuel'] and 'lunes 19/10' in rotulo(e), 'T205 copia el último día anterior al 20/10 (el lunes 19/10: Ana y Manuel): %s %r' % (e.marcados(), rotulo(e)))
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        ok(hay_aviso(e) and [x[0] for x in lineas] == ['ocupado'] and 'mar 20/10 ya hay 3 personas' in lineas[0][1] and 'se suma Manuel' in lineas[0][1],
+           'T205 al guardar sobre el 20/10 avisa de que ya hay gente y de quién cambia: %s' % lineas)
+        ok(guardadas(e) == [], 'T205 con el aviso a la vista no se ha guardado nada')
+    con_escena('T205', est200(), t205)
+
+    # --- T206: una jornada anulada sin enviar deja el día como «sin nada guardado»
+    def t206(e):
+        e.ir()
+        pinchar(e, '2026-10-20')
+        ok(e.marcados() == [] and e.txt('#estado-dia') == 'Este día no tiene nada guardado.' and e.txt('button[data-copiar-ultimo]') == 'Copiar el último día (lun 19/10)',
+           'T206 el 20/10 está anulado sin enviar: sin marcar, lo dice y se puede copiar el 19/10: %s %r' % (e.marcados(), e.txt('#estado-dia')))
+    con_escena('T206', est200(), t206, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-20', [], anulada=True)]))
+
+    # --- T207: en una tablet (dos columnas) el calendario está siempre a la vista, pinchar un día carga lo guardado y no se pliega nada
+    def t207(e):
+        e.ir()
+        ok(e.pg.is_visible('#cal-box'), 'T207 en la tablet el calendario se ve siempre')
+        e.clic('button[data-cal-dia="2026-10-19"]')
+        ok(e.marcados() == ['Ana', 'Manuel'] and e.pg.is_visible('#cal-box') and e.txt('#estado-dia') == '✓ Guardado el lunes 19/10: 2 personas.',
+           'T207 pinchar el 19/10 enseña a Ana y Manuel y el calendario sigue a la vista: %s %r' % (e.marcados(), e.txt('#estado-dia')))
+    con_escena('T207', est200(), t207, ancho=1180, alto=820)
+
+    # --- T208: copiar sobre un día que ya tiene gente y del que salió la lista (se pasa a «Varios días» sin cambiar de día) avisa al guardar
+    def t208(e):
+        e.ir()
+        pinchar(e, '2026-10-20')                               # tiene a Ana, Beto y Carlos: la lista sale de ese día
+        e.clic('button[data-multi-dias]')                      # sigue siendo UN día, pero con «Varios días» el botón de copiar se ofrece
+        e.copiar()                                             # copia el 19/10 (Ana y Manuel) encima
+        ok(e.marcados() == ['Ana', 'Manuel'], 'T208 preparación: copia el 19/10: %s' % e.marcados())
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        ok(hay_aviso(e) and [x[0] for x in lineas] == ['ocupado'] and 'mar 20/10 ya hay 3 personas' in lineas[0][1] and guardadas(e) == [],
+           'T208 guardar la copia sobre el 20/10 avisa aunque la lista saliera de ese mismo día, y no guarda nada: %s' % lineas)
+    con_escena('T208', est200(), t208)
+
+    # --- T209: el «último día» es el anterior al PRIMER día marcado, no al último que se tocó
+    def t209(e):
+        e.ir()
+        e.clic('button[data-multi-dias]')
+        e.clic('button[data-cal-dia="2026-10-19"]')
+        e.clic('button[data-cal-dia="2026-10-22"]')            # lo último que se toca es el 22/10; el primero marcado es el 19/10
+        ok(e.pg.evaluate("a.fecha") == '2026-10-22' and e.pg.evaluate("a.fechas.slice().sort()") == ['2026-10-19', '2026-10-22', '2026-10-23'],
+           'T209 preparación: tres días marcados: %s %s' % (e.pg.evaluate("a.fecha"), e.pg.evaluate("a.fechas")))
+        ok(e.txt('button[data-copiar-ultimo]') == 'Copiar el último día (vie 16/10)', 'T209 el botón ofrece el día anterior al 19/10: %r' % e.txt('button[data-copiar-ultimo]'))
+        e.copiar()
+        ok(e.marcados() == ['Ana', 'Beto', 'Carlos'], 'T209 copia el viernes 16/10 (Ana, Beto y Carlos): %s' % e.marcados())
+    con_escena('T209', est200(), t209, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-21', ['Beto'])]))   # una jornada sin enviar entre el 19/10 y el 22/10: no cuenta como anterior al 19/10
+
+    # --- T210: escribir una fecha vuelve a UN día y apaga «Varios días»
+    def t210(e):
+        e.ir()
+        e.clic('button[data-multi-dias]')
+        e.fecha('2026-10-20')
+        ok(e.pg.get_attribute('button[data-multi-dias]', 'aria-pressed') == 'false' and e.pg.evaluate("a.fechas") == ['2026-10-20'],
+           'T210 escribir la fecha deja un solo día y apaga «Varios días»: %s' % e.pg.evaluate("a.fechas"))
+        pinchar(e, '2026-10-19')
+        ok(e.pg.evaluate("a.fechas") == ['2026-10-19'] and e.marcados() == ['Ana', 'Manuel'], 'T210 y pinchar un día vuelve a cambiar de día: %s %s' % (e.pg.evaluate("a.fechas"), e.marcados()))
+    con_escena('T210', est200(), t210)
+
+    # --- T211: abrir un día desde Jornadas es abrir UN día: «Varios días» se apaga
+    def t211(e):
+        e.ir()
+        e.clic('button[data-multi-dias]')
+        e.clic('button[data-v="jornadas"]')
+        boton = e.pg.query_selector('.jor-item[data-fecha="2026-10-20"] button[data-abrir]')
+        ok(boton is not None, 'T211 Jornadas ofrece abrir el 20/10')
+        if boton is not None:
+            boton.click()
+            ok(e.pg.get_attribute('button[data-multi-dias]', 'aria-pressed') == 'false' and e.pg.evaluate("a.fechas") == ['2026-10-20'] and e.marcados() == ['Ana', 'Beto', 'Carlos'],
+               'T211 al abrir el 20/10 desde Jornadas queda un solo día con su gente: %s %s' % (e.pg.evaluate("a.fechas"), e.marcados()))
+    con_escena('T211', est200(), t211)
 
     # Fin del bloque del paso MA4c
 

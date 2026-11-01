@@ -1239,6 +1239,7 @@
         nuevoError: '',
         homonimo: null,
         prefill: null,
+        multiDia: false,
         listo: null,
         compartirAviso: null,
         aviso: null,
@@ -1523,16 +1524,16 @@
       // Última jornada de esta obra y este ámbito ANTERIOR a la fecha elegida (no «ayer» de calendario:
       // el lunes mira el viernes). Cuentan las que ya tiene el PC y las que están sin enviar; una
       // anulada sin enviar quita la del PC. Devuelve { fecha, nombres } o null si no hay ninguna.
-      function jornadaAnterior() {
+      function jornadaAnterior(desde = a.fecha) {
         let jornadas = new Map();
         pub()
-          .filter((fila) => fila.ambito === a.amb && fila.fecha < a.fecha)
+          .filter((fila) => fila.ambito === a.amb && fila.fecha < desde)
           .forEach((fila) => {
             if (!jornadas.has(fila.fecha)) jornadas.set(fila.fecha, []);
             jornadas.get(fila.fecha).push(fila.nombre);
           });
         pending
-          .filter((j) => j.obra === a.obra && j.ambito === a.amb && j.fecha < a.fecha)
+          .filter((j) => j.obra === a.obra && j.ambito === a.amb && j.fecha < desde)
           .forEach((j) => {
             if (j.anulada) jornadas.delete(j.fecha);
             else jornadas.set(j.fecha, j.presentes.map((persona) => canon(persona.nombre)));
@@ -1542,9 +1543,17 @@
         let fecha = fechas[fechas.length - 1];
         return { fecha, nombres: jornadas.get(fecha) };
       }
-      // Carga la lista de presentes para la fecha actual a partir de la jornada pendiente, de la
-      // publicada o, si la fecha es nueva, de la última jornada anterior (sus presentes salen marcados
-      // con las horas normales de la fecha, sin extra) o de sugeridos
+      // Lo que la obra y el ámbito en pantalla tienen guardado de ESA fecha: { personas, sinEnviar } o null si no hay
+      // nada (una jornada anulada sin enviar deja el día vacío). Lo sin enviar al PC manda sobre lo que ya tiene el PC.
+      function jornadaGuardada(fecha = a.fecha) {
+        let sinEnviar = pending.find((x) => jk(x) === a.obra + '|' + a.amb + '|' + fecha);
+        if (sinEnviar) return sinEnviar.anulada ? null : { personas: sinEnviar.presentes.length, sinEnviar: true };
+        let filas = rowsKey({ obra: a.obra, ambito: a.amb, fecha });
+        return filas.length ? { personas: new Set(filas.map((x) => key(x.nombre))).size, sinEnviar: false } : null;
+      }
+      // Carga la lista de presentes para la fecha actual a partir de la jornada pendiente o de la publicada.
+      // Si la fecha no tiene nada guardado sale todo sin marcar (los sugeridos): la gente del último día se
+      // copia a propósito con el botón «Copiar el último día», no sola.
       function loadList() {
         a.prefill = null;
         // De qué jornada sale la lista que se ve: guardar ESE día es corregir lo que se está viendo, no pisarlo.
@@ -1556,17 +1565,7 @@
         let p = current(),
           r = rowsKey({ obra: a.obra, ambito: a.amb, fecha: a.fecha }),
           pres = p ? (p.anulada ? [] : p.presentes) : r.length ? r : null,
-          names = defaultNames(),
-          anterior = pres ? null : jornadaAnterior();
-        if (anterior) {
-          a.prefill = anterior.fecha;
-          anterior.nombres.forEach((nombre) => {
-            if (!names.some((n) => key(n) === key(nombre))) names.push(nombre);
-          });
-          let marcados = new Set(anterior.nombres.map(key));
-          a.list = names.map((nombre) => ({ nombre, on: marcados.has(key(nombre)), horas: null }));
-          return;
-        }
+          names = defaultNames();
         if (pres) {
           let m = new Map(pres.map((x) => [key(x.nombre), x]));
           pres.forEach((x) => {
@@ -1580,6 +1579,33 @@
           return;
         }
         a.list = names.map((nombre) => ({ nombre, on: false, horas: null }));
+      }
+      // Los días que se van a anotar: los marcados en el calendario o, si no hay, la fecha elegida.
+      function diasElegidos() {
+        return a.fechas && a.fechas.length ? [...a.fechas].sort() : [a.fecha];
+      }
+      // ¿Se están marcando varios días? Con «Varios días» encendido o, aunque no lo esté, si ya hay más de uno marcado.
+      function modoVarios() {
+        return a.multiDia || diasElegidos().length > 1;
+      }
+      // «Copiar el último día»: marca a la gente de la última jornada anterior al primer día elegido, con las horas
+      // normales de cada fecha (sin extra), y conserva los nombres que ya había en la lista. Es una copia para repasar
+      // (quitar a quien no haya venido): no guarda nada. La lista ya no es la de un día guardado, así que guardar
+      // sobre un día con gente avisa como siempre.
+      function copiarUltimoDia() {
+        let anterior = jornadaAnterior(diasElegidos()[0]);
+        if (!anterior) return toast('Todavía no hay ningún día anterior anotado en esta obra.');
+        let nombres = a.list.map((x) => x.nombre);
+        anterior.nombres.forEach((nombre) => {
+          if (!nombres.some((n) => key(n) === key(nombre))) nombres.push(nombre);
+        });
+        let marcados = new Set(anterior.nombres.map(key));
+        a.hp = null;
+        a.ren = null;
+        a.list = nombres.map((nombre) => ({ nombre, on: marcados.has(key(nombre)), horas: null }));
+        a.prefill = anterior.fecha;
+        a.listaDe = null;
+        changed(false);
       }
       // Guarda en localStorage el borrador de lo que se está anotando (obra, ámbito, fecha y
       // lista).
@@ -2025,7 +2051,8 @@
           `</div>`
         );
       }
-      // Rótulo que avisa de los días marcados o de que la lista sale marcada con la jornada anterior
+      // Rótulo de la lista: avisa de los días marcados, de que la lista se ha copiado de otro día o, con un solo día,
+      // de si ese día tiene algo guardado (así una casilla sin marcar quiere decir «no vino» y no «nadie lo ha anotado»).
       function rotuloHTML() {
         if (a.fechas && a.fechas.length > 1) {
           let ordenadas = [...a.fechas].sort();
@@ -2035,11 +2062,19 @@
             `<small>El horario y operarios que guardes se aplicarán a <b>todos los días marcados</b>.</small></div>`
           );
         }
-        let guardada = current() || rowsKey({ obra: a.obra, ambito: a.amb, fecha: a.fecha }).length;
-        if (!a.prefill || guardada) return '';
+        let guardada = jornadaGuardada();
+        if (a.prefill && (!guardada || modoVarios()))
+          return (
+            `<div class="rotulo" id="rotulo-marcados">` +
+            `${E('Marcados según la jornada del ' + diaLargo(a.prefill) + ': quita a quien no haya venido.')}</div>`
+          );
+        // Con «Varios días» encendido la lista es la que se está preparando, no la de un día: cada día con gente avisa al guardar.
+        if (modoVarios()) return '';
+        if (!guardada) return `<div class="rotulo" id="estado-dia">${E('Este día no tiene nada guardado.')}</div>`;
         return (
-          `<div class="rotulo" id="rotulo-marcados">` +
-          `${E('Marcados según la jornada del ' + diaLargo(a.prefill) + ': quita a quien no haya venido.')}</div>`
+          `<div class="rotulo" id="estado-dia">` +
+          `${E('✓ Guardado el ' + diaLargo(a.fecha) + ': ' + uno(guardada.personas, 'persona', 'personas') +
+            (guardada.sinEnviar ? ' (sin enviar al PC).' : '.'))}</div>`
         );
       }
       // «Ana, Beto y Carlos» (una sola persona: tal cual; ninguna: texto vacío).
@@ -2450,6 +2485,9 @@
         let horario = hor();
         let mostrarAviso = !matchMedia('(display-mode: standalone)').matches && !get(K.a, false);
         let obras = obrasAbiertas();
+        // «Copiar el último día» solo tiene sentido si hay un día anterior anotado y, con un solo día elegido, si ese
+        // día aún no tiene gente (un día ya guardado se ve tal cual).
+        let ultimoDia = state?.obras?.[a.obra] && (modoVarios() || !jornadaGuardada()) ? jornadaAnterior(diasElegidos()[0]) : null;
         return (
           `${barraHTML()}<div ` +
           `class="origin" id="estado-origen">${E(origin)}</div><div class="pad">` +
@@ -2473,21 +2511,17 @@
           `</select><label class="fld">Qué anotas</label><div class="seg"><button ` +
           `data-amb="vivienda" class="${a.amb === 'vivienda' ? 'on' : ''}">Viviendas</button>` +
           `<button data-amb="garaje" class="${a.amb === 'garaje' ? 'on' : ''}">Garajes</button>` +
-          `</div><label class="fld">Fecha y calendario (puedes marcar varios días)</label><div class="fecha-fila"><input id="fecha" type="date" value="` +
+          `</div><label class="fld">Fecha y calendario</label><div class="fecha-fila"><input id="fecha" type="date" value="` +
           `${E(a.fecha)}">${calToggleHTML()}</div>${calendarioHTML()}<div class="chips">` +
-          `${[
-            ['0', 'Hoy'],
-            ['-1', 'Ayer'],
-            ['-2', 'Anteayer'],
-          ]
-            .map(
-              (opcion) =>
-                `<button class="btn ghost sm ${a.fecha === add(today(), +opcion[0]) ? 'on' : ''}" ` +
-                `data-dia="${E(opcion[0])}">${opcion[1]}</button>`,
-            )
-            .join('')}` +
-          `<button class="btn ghost sm" data-limpiar-dias>Solo hoy</button>` +
-          `</div></div><div class="col-der">${rotuloHTML()}<div class="actions"><button class="btn ghost sm" data-todos="1">Marcar ` +
+          `${
+            ultimoDia
+              ? `<button class="btn ghost sm" data-copiar-ultimo>Copiar el último día (${E(fdia(ultimoDia.fecha))})</button>`
+              : ''
+          }` +
+          `<button class="btn ghost sm ${modoVarios() ? 'on' : ''}" data-multi-dias aria-pressed="${modoVarios() ? 'true' : 'false'}">` +
+          `Varios días</button></div>` +
+          `${modoVarios() ? '<p class="nota">Toca los días que quieras marcar: lo que guardes vale para todos.</p>' : ''}` +
+          `</div><div class="col-der">${rotuloHTML()}<div class="actions"><button class="btn ghost sm" data-todos="1">Marcar ` +
           `todos</button><button class="btn ghost sm" data-todos="0">Desmarcar todos</button>` +
           `</div><div id="lista">${rowsHTML()}</div><label class="fld">Añadir de la base</label>` +
           `<div class="criterio-busqueda"><select id="filtro-criterio" aria-label="Criterio de búsqueda">` +
@@ -3773,12 +3807,22 @@
           changed();
           return;
         }
-        // Chips de fecha rápida: cambia la fecha a Hoy (0), Ayer (-1) o Anteayer (-2)
-        if (datos.dia !== undefined) {
-          a.fecha = add(today(), +datos.dia);
-          a.fechas = [a.fecha];
-          a.calMes = a.fecha.slice(0, 7);
-          changed();
+        // Copiar a la lista la gente del último día anotado (se repasa y se quita a quien no haya venido)
+        if (datos.copiarUltimo !== undefined) {
+          copiarUltimoDia();
+          return;
+        }
+        // «Varios días»: encendido, los días del calendario se suman o se quitan del marcado; apagado, vuelve a haber un
+        // solo día (el último que se tocó) y la lista que se está preparando se queda como está.
+        if (datos.multiDias !== undefined) {
+          if (modoVarios()) {
+            a.multiDia = false;
+            a.fechas = [a.fecha];
+          } else {
+            a.multiDia = true;
+            a.calAbierto = true;
+          }
+          changed(false);
           return;
         }
         // Abrir o plegar el calendario (en el móvil va plegado para que la lista de gente se vea al abrir)
@@ -3787,9 +3831,21 @@
           render();
           return;
         }
-        // Día del calendario interactivo
+        // Día del calendario. Con «Varios días» apagado (lo normal) el día pinchado pasa a ser EL día y se ve lo que
+        // tenga guardado (volver a pinchar el mismo no recarga: no se pierde lo que se esté preparando). Con «Varios
+        // días» encendido se suma o se quita del marcado y la lista no se toca.
         if (datos.calDia) {
           let dia = datos.calDia;
+          if (!modoVarios()) {
+            let mismo = dia === a.fecha;
+            a.fecha = dia;
+            a.fechas = [dia];
+            a.calMes = dia.slice(0, 7);
+            a.calAbierto = false;
+            if (mismo) render();
+            else changed();
+            return;
+          }
           a.fechas = a.fechas && a.fechas.length ? a.fechas : [a.fecha];
           if (a.fechas.includes(dia)) {
             if (a.fechas.length > 1) {
@@ -3822,14 +3878,6 @@
           let z = (n) => String(n).padStart(2, '0');
           a.calMes = `${ano}-${z(mes)}`;
           render();
-          return;
-        }
-        // Limpiar días: dejar solo hoy
-        if (datos.limpiarDias !== undefined) {
-          a.fecha = today();
-          a.fechas = [a.fecha];
-          a.calMes = a.fecha.slice(0, 7);
-          changed();
           return;
         }
         // Confirmar aviso de operario en dos obras el mismo día
@@ -4133,7 +4181,7 @@
           if (datos.abrir !== undefined) {
             // Se abre UN día: los días que estuvieran marcados en el calendario no se arrastran al guardar.
             // (jornada lleva «ambito» pero la tablet usa «amb»: sin ese cambio abría siempre el ámbito de antes).
-            Object.assign(a, jornada, { v: 'app', amb: jornada.ambito, fechas: [jornada.fecha], calMes: jornada.fecha.slice(0, 7) });
+            Object.assign(a, jornada, { v: 'app', amb: jornada.ambito, fechas: [jornada.fecha], multiDia: false, calMes: jornada.fecha.slice(0, 7) });
             changed();
           } else a.confirm = jornada;
           render();
@@ -4222,6 +4270,7 @@
           }
           a.fecha = campo.value;
           a.fechas = [a.fecha];
+          a.multiDia = false;
           a.calMes = a.fecha.slice(0, 7);
           changed();
           return;

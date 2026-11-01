@@ -28,7 +28,6 @@ TMP_BASE = Path(os.environ.get("P3_TMP") or tempfile.gettempdir())
 FECHA_FIJA = """(() => { const fijo = new Date('2026-10-23T10:00:00+02:00').valueOf(); const Real = Date;
   class Falsa extends Real { constructor(...a) { if (a.length === 0) { super(fijo); } else { super(...a); } } static now() { return fijo; } }
   window.Date = Falsa; })();"""
-SIN_PREVIA = "if (typeof a !== 'undefined' && a.prefill) { a.list.forEach(x => { x.on = false; }); a.prefill = null; render(); }"
 OLA = "2026 OLABEAGA"
 MUN = "2026 MUNGIA"
 
@@ -84,7 +83,6 @@ class Tablet:
     def ir(self):
         self.pg.goto(self.url)
         self.pg.wait_for_selector("#obra")
-        self.pg.evaluate(SIN_PREVIA)
         return self
 
     def cerrar(self):

@@ -165,6 +165,9 @@ class TestMedidasEnSeisAnchos(Base):
                     pg.click("#cal-toggle")
                 self.assertTrue(pg.is_visible("#cal-box"), "el calendario tiene que verse al abrirlo")
                 self._revisar(pg, "Anotar con el calendario abierto", ancho)
+                pg.click("button[data-multi-dias]")
+                self._revisar(pg, "Anotar con «Varios días» encendido", ancho)
+                pg.click("button[data-multi-dias]")
                 pg.click("#horario summary")
                 self._revisar(pg, "Anotar con el horario semanal abierto", ancho)
                 pg.click("button[data-varios]")
@@ -175,6 +178,7 @@ class TestMedidasEnSeisAnchos(Base):
                 pg.click("button[data-ren-cancelar]")
                 # un lunes de futuro (en esta fecha de prueba): al guardar sale el aviso con sus botones
                 pg.click('button[data-cal-dia="2026-10-26"]')
+                pg.click("button[data-copiar-ultimo]")   # un día nuevo sale sin marcar: se copia a la gente del 22/10
                 pg.click("button[data-guardar]")
                 pg.wait_for_selector("#aviso-guardar")
                 self._revisar(pg, "Anotar con el aviso de guardar", ancho)
@@ -221,7 +225,12 @@ class TestCabeceraListaYGuardar(Base):
                 self.assertEqual(pg.get_attribute("#cal-toggle", "aria-expanded"), "true")
                 self.assertEqual(" ".join(pg.inner_text("#cal-toggle").split()), "Hoy · viernes 23/10 ▴")
                 pg.click('button[data-cal-dia="2026-10-22"]')
-                self.assertTrue(pg.is_visible("#cal-box"), "marcar un día no pliega el calendario")
+                self.assertFalse(pg.is_visible("#cal-box"), "elegir un día pliega el calendario para que se vea la lista")
+                self.assertEqual(" ".join(pg.inner_text("#cal-toggle").split()), "Ayer · jueves 22/10 ▾")
+                pg.click("button[data-multi-dias]")
+                self.assertTrue(pg.is_visible("#cal-box"), "«Varios días» abre el calendario")
+                pg.click('button[data-cal-dia="2026-10-21"]')
+                self.assertTrue(pg.is_visible("#cal-box"), "marcar un día con «Varios días» no pliega el calendario")
                 self.assertEqual(" ".join(pg.inner_text("#cal-toggle").split()), "2 días marcados ▴")
                 pg.click("#cal-toggle")
                 self.assertFalse(pg.is_visible("#cal-box"))
@@ -274,6 +283,7 @@ class TestCabeceraListaYGuardar(Base):
 
     def test_el_resumen_y_el_guardado_siguen_igual(self):
         pg, errores = self.abrir(390, 844)
+        pg.click("button[data-copiar-ultimo]")   # el viernes 23/10 sale sin marcar: se copia a la gente del 22/10
         self.assertEqual(" ".join(pg.inner_text("#resumen").split()), "12 presentes · 90 h")
         pg.click("button[data-guardar]")
         pg.wait_for_function("(JSON.parse(localStorage.getItem('sgd_personal_pendientes') || '[]')).length === 1")
@@ -301,6 +311,7 @@ class TestDosColumnas(Base):
         for ancho, alto in TABLETS:
             with self.subTest(ancho=ancho):
                 pg, _ = self.abrir(ancho, alto)
+                pg.click("button[data-copiar-ultimo]")   # un día nuevo sale sin marcar: se copia a la gente del 22/10
                 altura = pg.evaluate("document.documentElement.scrollHeight")
                 self.assertGreater(altura, alto, "con 12 personas la página tiene que poder bajarse (%s de %s)" % (altura, alto))
                 pg.evaluate("document.querySelector('#lista .row:last-child').scrollIntoView({block: 'end'})")
@@ -316,7 +327,7 @@ class TestDosColumnas(Base):
         self.assertLess(c["alto"], c["pantalla"], "la columna de la izquierda no es más alta que la pantalla: %s" % c)
         self.assertGreater(c["contenido"], c["alto"], "(la prueba necesita una pantalla más baja que la columna) %s" % c)
         pg.evaluate("document.querySelector('.col-izq').scrollTop = 99999")
-        r = pg.evaluate("""() => ({boton: document.querySelector('[data-limpiar-dias]').getBoundingClientRect().bottom, col: document.querySelector('.col-izq').getBoundingClientRect().bottom})""")
+        r = pg.evaluate("""() => ({boton: document.querySelector('[data-multi-dias]').getBoundingClientRect().bottom, col: document.querySelector('.col-izq').getBoundingClientRect().bottom})""")
         self.assertLessEqual(r["boton"], r["col"] + 1, "lo último de la columna de la izquierda se alcanza: %s" % r)
 
     def test_las_otras_pantallas_no_se_estiran_de_mas(self):
