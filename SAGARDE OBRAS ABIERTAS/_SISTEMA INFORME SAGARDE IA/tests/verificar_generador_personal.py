@@ -4248,6 +4248,110 @@ with sync_playwright() as p:
                'T211 al abrir el 20/10 desde Jornadas queda un solo día con su gente: %s %s' % (e.pg.evaluate("a.fechas"), e.marcados()))
     con_escena('T211', est200(), t211)
 
+    # ======================================================================================================================
+    # Guardar sin nadie marcado: si el día ya tenía gente (no vino nadie, o se fueron a otra obra) se queda sin nadie, con aviso antes.
+    # ======================================================================================================================
+    SEGUIR_VACIAR = '#aviso-guardar button[data-guardar-modo="seguir"]'
+
+    # --- T212: un día con gente en el PC: desmarcar a todos y guardar avisa a quién se quita, no guarda hasta confirmar y lo anota como anulado
+    def t212(e):
+        e.ir()
+        pinchar(e, '2026-10-20')                               # Ana, Beto y Carlos, ya en el PC
+        e.clic('button[data-todos="0"]')
+        e.clic('button[data-guardar]')
+        ok(lineas_aviso(e) == [['vaciar', 'El mar 20/10 ya hay 3 personas (ya en el PC): Ana, Beto y Carlos. Si sigues, ese día se queda sin nadie.']],
+           'T212 el aviso dice a quién se quita: %s' % lineas_aviso(e))
+        ok(botones_aviso(e) == ['seguir', 'cancelar'] and e.txt(SEGUIR_VACIAR) == 'Dejar sin nadie',
+           'T212 botones «Dejar sin nadie» y «No guardar nada»: %s %r' % (botones_aviso(e), e.txt(SEGUIR_VACIAR)))
+        ok(guardadas(e) == [] and e.pendientes() == '0', 'T212 con el aviso a la vista no se ha guardado nada: %s' % guardadas(e))
+        e.clic('#aviso-guardar button[data-guardar-modo="cancelar"]')
+        ok(not hay_aviso(e) and guardadas(e) == [] and e.txt('#toast') == 'No se ha guardado nada.', 'T212 «No guardar nada» lo deja todo igual: %r' % e.txt('#toast'))
+        e.clic('button[data-guardar]')
+        e.clic(SEGUIR_VACIAR)
+        g = guardadas(e)
+        ok(len(g) == 1 and g[0]['fecha'] == '2026-10-20' and g[0]['anulada'] is True and g[0]['presentes'] == [],
+           'T212 se anota el 20/10 como anulado (el PC lo quitará): %s' % g)
+        ok(not hay_aviso(e) and '↻ mar 20/10 se queda sin nadie: antes Ana, Beto y Carlos.' in e.txt('#resumen-guardado') and e.txt('#toast') == 'Hecho: ese día se queda sin nadie.',
+           'T212 y lo cuenta: %r %r' % (e.txt('#resumen-guardado'), e.txt('#toast')))
+        ok(e.txt('#estado-dia') == 'Este día no tiene nada guardado.' and e.pg.query_selector('button[data-copiar-ultimo]') is not None,
+           'T212 ahora ese día figura sin nada guardado: %r' % e.txt('#estado-dia'))
+        lote = e.exportar()
+        ok(lote and [(j['fecha'], j['anulada'], j['presentes']) for j in lote['jornadas']] == [('2026-10-20', True, [])],
+           'T212 el fichero para el PC lleva el 20/10 como anulado: %s' % (lote or {}).get('jornadas'))
+        if lote:
+            valida_con_p1(lote)
+        e.clic('button[data-v="jornadas"]')
+        ok('Anulada' in e.txt('.jor-item[data-fecha="2026-10-20"]'), 'T212 en Jornadas el 20/10 sale como anulado: %r' % e.txt('.jor-item[data-fecha="2026-10-20"]'))
+    con_escena('T212', est200(), t212)
+
+    # --- T213: un día que solo estaba apuntado en este aparato (sin enviar) se borra del todo: no hay nada que anular en el PC
+    def t213(e):
+        e.ir()
+        pinchar(e, '2026-10-22')
+        e.copiar()
+        e.clic('button[data-guardar]')
+        ok(len(guardadas(e)) == 1 and e.pendientes() == '1', 'T213 preparación: el 22/10 queda guardado sin enviar: %s' % guardadas(e))
+        e.clic('button[data-todos="0"]')
+        e.clic('button[data-guardar]')
+        ok(lineas_aviso(e) == [['vaciar', 'El jue 22/10 ya hay 2 personas (sin enviar al PC): Ana y Beto. Si sigues, ese día se queda sin nadie.']],
+           'T213 el aviso dice que está sin enviar: %s' % lineas_aviso(e))
+        e.clic(SEGUIR_VACIAR)
+        ok(guardadas(e) == [] and e.pendientes() == '0', 'T213 el día solo apuntado aquí se borra, sin dejar nada por enviar: %s' % guardadas(e))
+        ok(e.txt('#estado-dia') == 'Este día no tiene nada guardado.', 'T213 y figura sin nada guardado: %r' % e.txt('#estado-dia'))
+    con_escena('T213', est200(), t213)
+
+    # --- T214: un día sin nada guardado y nadie marcado: sigue diciendo que no hay nadie y no pregunta
+    def t214(e):
+        e.ir()
+        e.clic('button[data-guardar]')
+        ok(e.txt('#toast') == 'No hay ninguna persona presente' and not hay_aviso(e) and guardadas(e) == [],
+           'T214 sin nadie y sin nada guardado: %r' % e.txt('#toast'))
+    con_escena('T214', est200(), t214)
+
+    # --- T215: varios días marcados, uno con gente y otro vacío: el aviso nombra solo el que tiene gente y solo ese queda anulado
+    def t215(e):
+        e.ir()
+        e.clic('button[data-multi-dias]')
+        e.clic('button[data-cal-dia="2026-10-14"]')
+        e.clic('button[data-cal-dia="2026-10-20"]')
+        e.clic('button[data-quitar-dia="2026-10-23"]')           # queda a.fecha = el primero marcado (14/10, vacío): el 20/10 solo se ve entre los días marcados
+        ok(e.pg.evaluate("a.fechas.slice().sort()") == ['2026-10-14', '2026-10-20'], 'T215 preparación: dos días marcados: %s' % e.pg.evaluate("a.fechas"))
+        e.clic('button[data-guardar]')
+        lineas = lineas_aviso(e)
+        ok([x[0] for x in lineas] == ['vaciar'] and 'mar 20/10 ya hay 3 personas' in lineas[0][1] and '14/10' not in lineas[0][1],
+           'T215 el aviso nombra solo el 20/10: %s' % lineas)
+        e.clic(SEGUIR_VACIAR)
+        ok([(j['fecha'], j['anulada']) for j in guardadas(e)] == [('2026-10-20', True)], 'T215 solo se anula el 20/10: %s' % guardadas(e))
+    con_escena('T215', est200(), t215)
+
+    # --- T216: si cambia la lista con el aviso a la vista, el aviso desaparece; y una respuesta de un aviso viejo no guarda nada
+    def t216(e):
+        e.ir()
+        pinchar(e, '2026-10-20')
+        e.clic('button[data-todos="0"]')
+        e.clic('button[data-guardar]')
+        ok(hay_aviso(e), 'T216 preparación: sale el aviso')
+        e.clic('#v-app .row[data-nombre="Ana"] .x')
+        ok(not hay_aviso(e) and guardadas(e) == [], 'T216 marcar a alguien cierra el aviso sin guardar nada')
+        e.clic('#v-app .row[data-nombre="Ana"] .x')
+        e.clic('button[data-guardar]')
+        e.pg.evaluate("save({ modo: 'seguir', firma: 'firma vieja' })")
+        ok(hay_aviso(e) and guardadas(e) == [], 'T216 una respuesta con la firma de otro aviso vuelve a avisar y no guarda: %s' % guardadas(e))
+    con_escena('T216', est200(), t216)
+
+    # --- T217: un nombre que acaba en punto («Rafa B.») no duplica el punto en el aviso ni en el resumen
+    def t217(e):
+        e.ir()
+        pinchar(e, '2026-10-20')
+        e.clic('button[data-todos="0"]')
+        e.clic('button[data-guardar]')
+        ok(lineas_aviso(e) == [['vaciar', 'El mar 20/10 ya hay 2 personas (ya en el PC): Ana y Rafa B. Si sigues, ese día se queda sin nadie.']],
+           'T217 el aviso con «Rafa B.» lleva un solo punto: %s' % lineas_aviso(e))
+        e.clic(SEGUIR_VACIAR)
+        ok('↻ mar 20/10 se queda sin nadie: antes Ana y Rafa B.' in e.txt('#resumen-guardado') and '..' not in e.txt('#resumen-guardado'),
+           'T217 y el resumen también: %r' % e.txt('#resumen-guardado'))
+    con_escena('T217', est9(viv('2026-10-20', 'Ana', 'Rafa B.'), ['Ana', 'Rafa B.'], u('2026-10-20', 'Ana', 'Rafa B.')), t217)
+
     # Fin del bloque del paso MA4c
 
     # Fin del bloque del paso MA2

@@ -1543,13 +1543,19 @@
         let fecha = fechas[fechas.length - 1];
         return { fecha, nombres: jornadas.get(fecha) };
       }
-      // Lo que la obra y el ámbito en pantalla tienen guardado de ESA fecha: { personas, sinEnviar } o null si no hay
-      // nada (una jornada anulada sin enviar deja el día vacío). Lo sin enviar al PC manda sobre lo que ya tiene el PC.
+      // Lo que la obra y el ámbito en pantalla tienen guardado de ESA fecha: { personas, nombres, sinEnviar } o null si
+      // no hay nada (una jornada anulada sin enviar deja el día vacío). Lo sin enviar al PC manda sobre lo que ya tiene el PC.
       function jornadaGuardada(fecha = a.fecha) {
         let sinEnviar = pending.find((x) => jk(x) === a.obra + '|' + a.amb + '|' + fecha);
-        if (sinEnviar) return sinEnviar.anulada ? null : { personas: sinEnviar.presentes.length, sinEnviar: true };
+        if (sinEnviar) {
+          if (sinEnviar.anulada) return null;
+          let nombres = sinEnviar.presentes.map((x) => canon(x.nombre));
+          return { personas: nombres.length, nombres, sinEnviar: true };
+        }
         let filas = rowsKey({ obra: a.obra, ambito: a.amb, fecha });
-        return filas.length ? { personas: new Set(filas.map((x) => key(x.nombre))).size, sinEnviar: false } : null;
+        if (!filas.length) return null;
+        let porClave = new Map(filas.map((x) => [key(x.nombre), x.nombre]));
+        return { personas: porClave.size, nombres: [...porClave.values()], sinEnviar: false };
       }
       // Carga la lista de presentes para la fecha actual a partir de la jornada pendiente o de la publicada.
       // Si la fecha no tiene nada guardado sale todo sin marcar (los sugeridos): la gente del último día se
@@ -2081,6 +2087,10 @@
       function unirY(lista) {
         return lista.length < 2 ? lista.join('') : lista.slice(0, -1).join(', ') + ' y ' + lista[lista.length - 1];
       }
+      // Cierra una frase con punto sin duplicarlo si ya acaba en uno (un nombre como «Manuel B.»).
+      function conPunto(texto) {
+        return texto.endsWith('.') ? texto : texto + '.';
+      }
       // Hasta siete nombres seguidos; si hay más, «Ana, Beto, Carlos, Dani, Eli, Fran y 3 más».
       function nombresCortos(nombres) {
         const MAXIMO = 6;
@@ -2102,6 +2112,26 @@
       // llegado y a quién se le guardaría 0 horas, y deja elegir. Los botones vuelven a llamar a save.
       function avisoGuardarHTML() {
         if (!a.aviso) return '';
+        // Guardar sin nadie marcar en días que ya tienen gente: dice a quién se quita y deja elegir.
+        if (a.aviso.vaciar)
+          return (
+            `<div class="aviso aviso-guardar" id="aviso-guardar" role="alert"><b>Todavía no se ha guardado nada. ` +
+            `Mira esto antes:</b><ul>` +
+            a.aviso.dias
+              .map(
+                (dia) =>
+                  `<li data-aviso="vaciar">` +
+                  E(
+                    'El ' + fdia(dia.fecha) + ' ya hay ' + uno(dia.guardada.personas, 'persona', 'personas') +
+                      (dia.guardada.sinEnviar ? ' (sin enviar al PC)' : ' (ya en el PC)') + ': ' +
+                      conPunto(nombresCortos(dia.guardada.nombres)) + ' Si sigues, ese día se queda sin nadie.',
+                  ) +
+                  `</li>`,
+              )
+              .join('') +
+            `</ul><div class="actions"><button class="btn pri" data-guardar-modo="seguir">Dejar sin nadie</button>` +
+            `<button class="btn ghost" data-guardar-modo="cancelar">No guardar nada</button></div></div>`
+          );
         let dias = a.aviso.plan.dias;
         let con = (codigo) => dias.filter((d) => d.avisos.includes(codigo));
         let ocupados = con('ocupado');
@@ -3299,6 +3329,51 @@
           };
         });
       }
+      // «Guardar jornada» con nadie marcado. Si ese día no tiene nada guardado no hay nada que hacer; si ya tenía gente
+      // (no vino nadie, o se fueron a otra obra) lo que se pide es dejarlo SIN nadie: antes de tocar nada se dice a quién
+      // se quita y se espera la respuesta (decision = { modo: 'seguir', firma }, que llega desde el aviso; con la
+      // respuesta de un aviso que ya cambió vuelve a avisar). Un día que solo existía en este aparato se borra; uno que
+      // ya está en el PC se anota como anulado para que el PC lo quite al recibir el fichero (como «Anular» en Jornadas).
+      function guardarSinNadie(decision) {
+        let dias = diasElegidos()
+          .map((fecha) => ({ fecha, guardada: jornadaGuardada(fecha) }))
+          .filter((dia) => dia.guardada);
+        if (!dias.length) return toast('No hay ninguna persona presente');
+        let firma = JSON.stringify(dias.map((dia) => [dia.fecha, dia.guardada.nombres]));
+        if (!decision || decision.modo !== 'seguir' || decision.firma !== firma) {
+          a.guardado = null;
+          a.aviso = { vaciar: true, firma, dias };
+          render();
+          document.querySelector('#aviso-guardar')?.scrollIntoView({ block: 'nearest' });
+          return;
+        }
+        a.aviso = null;
+        dias.forEach((dia) => {
+          let jornada = {
+            obra: a.obra,
+            ambito: a.amb,
+            fecha: dia.fecha,
+            presentes: [],
+            anulada: true,
+            notas: '',
+            registrado: new Date().toISOString(),
+          };
+          pending = pending.filter((guardada) => jk(guardada) !== jk(jornada));
+          if (rowsKey(jornada).length) pending.push(jornada);
+        });
+        let guardado = set(K.p, pending);
+        a.prefill = null;
+        a.guardado = guardado
+          ? dias.map((dia) => '↻ ' + fdia(dia.fecha) + ' se queda sin nadie: antes ' + conPunto(nombresCortos(dia.guardada.nombres)))
+          : null;
+        render();
+        if (!guardado)
+          return toast(
+            'No se pudo guardar en este aparato (¿navegación privada o memoria llena?). Envía ya ' +
+              'la jornada al PC para no perder lo apuntado.',
+          );
+        toast('Hecho: ' + (dias.length === 1 ? 'ese día se queda sin nadie.' : 'esos días se quedan sin nadie.'));
+      }
       // Valida y guarda la jornada en pendientes de localStorage: exige las horas en los días sin
       // horario, rechaza si alguien pasa de 24 h ese día entre todas las obras y avisa (sin
       // bloquear) por encima de 12 h. Antes de escribir nada mira si algún día pisaría a gente ya
@@ -3307,7 +3382,7 @@
       // llega desde los botones del aviso). Con la respuesta de un aviso ya cambiado vuelve a avisar.
       function save(decision) {
         let presentes = a.list.filter((persona) => persona.on);
-        if (!presentes.length) return toast('No hay ninguna persona presente');
+        if (!presentes.length) return guardarSinNadie(decision);
         let sinHoras = presentes.filter(
           (persona) => horarioDe(persona.nombre) === 0 && persona.horas === null,
         );

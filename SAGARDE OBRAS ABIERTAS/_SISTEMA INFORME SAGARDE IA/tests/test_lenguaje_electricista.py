@@ -258,6 +258,13 @@ class TestLenguajeDeLaApp(unittest.TestCase):
             clic("button[data-guardar]")                       # «No hay ninguna persona presente»
             clic("button[data-todos='1']")
             clic("button[data-guardar]")                       # jornada guardada
+            clic("button[data-todos='0']")
+            clic("button[data-guardar]")                       # aviso de dejar el día sin nadie
+            clic("button[data-guardar-modo='cancelar']")
+            clic("button[data-guardar]")
+            clic("button[data-guardar-modo='seguir']")         # día sin nadie (resumen)
+            clic("button[data-todos='1']")
+            clic("button[data-guardar]")                       # vuelve a guardarse
             clic("button[data-reset]")                         # pregunta de borrar
             clic("button[data-reset-no]")
             # lápiz: error de nombre vacío, pregunta de «ya hay un…», cambio hecho
