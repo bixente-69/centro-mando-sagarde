@@ -159,7 +159,11 @@ class TestLosCuatroSitiosUsanLoMismo(unittest.TestCase):
     def test_ningun_sitio_escribe_su_propio_bloque(self):
         for nombre in self.SITIOS:
             texto = leer(nombre)
-            self.assertNotRegex(texto, r'>Por empresa<', nombre + ': el título «Por empresa» solo vive en personal_calculo.js')
+            # La única «Por empresa» permitida fuera del cálculo es una OPCIÓN del selector de búsqueda de la tablet («Añadir de la
+            # base»: Por nombre / Por empresa / Por obra…): no es un bloque con suma. Cualquier otra etiqueta con ese texto (un título,
+            # un div, un span…) sería un segundo bloque escrito a mano.
+            for etiqueta in re.findall(r'<(\w+)[^>]*>Por empresa<', texto):
+                self.assertEqual('option', etiqueta, nombre + ': el título «Por empresa» solo vive en personal_calculo.js (aquí, en <%s>)' % etiqueta)
             self.assertNotIn('Total autónomos', texto, nombre + ': la línea de autónomos solo vive en personal_calculo.js')
             self.assertNotRegex(texto, r'<\w+[^>]*data-por-empresa', nombre + ': el bloque lo escribe personal_calculo.js')
         calculo = leer('personal_calculo.js')
