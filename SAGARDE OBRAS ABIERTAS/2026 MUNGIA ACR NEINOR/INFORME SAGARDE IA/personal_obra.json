@@ -113,26 +113,10 @@
   {
    "fecha": "2026-10-30",
    "ambito": "garaje",
-   "anulada": false,
+   "anulada": true,
    "notas": "",
-   "presentes": [
-    {
-     "id": "T0004",
-     "horas": 8,
-     "extra": 0
-    },
-    {
-     "id": "T0005",
-     "horas": 8,
-     "extra": 0
-    },
-    {
-     "id": "T0006",
-     "horas": 8,
-     "extra": 0
-    }
-   ],
-   "registrado": "2026-10-27T19:27:35.257Z",
+   "presentes": [],
+   "registrado": "2026-11-01T19:41:26.891Z",
    "origen": "movil"
   }
  ]

@@ -274,6 +274,30 @@ class TestAuditar(Base):
         self.editar_obra("obraa", lambda d: d["jornadas"][0].update(notas="Llueve. Hormigón 2026-10-19 07:30 T0001"))
         self.assertNotIn("PERSONAL_DATO_PRIVADO", self.codigos(pi.auditar(self.raiz)))
 
+    def anadir_a_la_traza(self, oid, **campos):
+        linea = {"ts": "2026-11-01T21:49:00+01:00", "accion": "recibido",
+                 "fichero": "CONTROL HORARIO PRUEBA 01112026.json"}
+        linea.update(campos)
+        with open(self.ruta_obra(oid, "personal_jornadas.jsonl"), "a", encoding="utf-8") as f:
+            f.write(json.dumps(linea, ensure_ascii=False) + "\n")
+
+    def test_el_sha256_de_la_traza_no_se_toma_por_un_telefono(self):
+        """Un sha256 son 64 caracteres hexadecimales y puede llevar por casualidad nueve cifras seguidas
+        («600411282» es un teléfono para la regla). Pasó el 01/11/2026 con un CONTROL HORARIO real de Olabeaga y
+        el auditor habría parado el .bat sin publicar. El código de control no es un dato de nadie."""
+        self.ingerir(L_A)
+        sha = "5968c701ffb600411282f19051418fa201fad5f7b6cb444394a8635ab2866c74"
+        self.anadir_a_la_traza("obraa", sha256=sha)
+        self.assertNotIn("PERSONAL_DATO_PRIVADO", self.codigos(pi.auditar(self.raiz)))
+
+    def test_un_telefono_en_otro_campo_de_la_traza_sigue_siendo_un_error(self):
+        """La excepción es solo para el valor de `sha256`: el resto de la línea se sigue mirando."""
+        self.ingerir(L_A)
+        sha = "5968c701ffb600411282f19051418fa201fad5f7b6cb444394a8635ab2866c74"
+        self.anadir_a_la_traza("obraa", sha256=sha, fichero="llamar al 612 345 678.json")
+        inc = [i for i in pi.auditar(self.raiz) if i["codigo"] == "PERSONAL_DATO_PRIVADO"]
+        self.assertTrue(inc and "telefono" in inc[0]["mensaje"], inc)
+
     def test_falta_un_fichero_declarado(self):
         self.ingerir(L_A)
         (self.motor / "personal_sagarde.html").unlink()

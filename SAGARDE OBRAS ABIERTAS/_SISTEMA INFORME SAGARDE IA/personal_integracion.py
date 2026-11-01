@@ -71,6 +71,8 @@ CLAVES_TRAZA = {
     "sha256", "fichero", "de", "a", "nombre", "rechazadas",
 }
 _SHA256 = re.compile(r"[0-9a-fA-F]{64}")
+# El valor de `"sha256": "<64 hex>"` en una línea de la traza (se quita antes de buscar datos privados).
+_SHA256_EN_LINEA = re.compile(r'("sha256"\s*:\s*")[0-9a-fA-F]{64}(")')
 
 # Datos que jamás deben llegar a estos ficheros (decisión de Bixente: el
 # esquema no lleva DNI, teléfono ni correo). Se buscan en el texto crudo para
@@ -421,6 +423,10 @@ def _datos_privados(ficheros):
                                    "Abrir el fichero y revisarlo o restaurarlo desde git.", f))
             continue
         for n, linea in enumerate(lineas, 1):
+            # Un sha256 son 64 caracteres hexadecimales y puede llevar por casualidad nueve cifras seguidas, que la
+            # regla del teléfono tomaría por un número (01/11/2026, un control real de Olabeaga). No es un dato de
+            # nadie: se quita su valor y el resto de la línea se sigue mirando igual.
+            linea = _SHA256_EN_LINEA.sub(r"\1\2", linea)
             for tipo, patron in PATRONES_PRIVADOS:
                 if patron.search(linea):
                     out.append(_incidencia(

@@ -1,6 +1,6 @@
 window.SAGARDE_PERSONAL = {
  "version": 1,
- "generado": "2026-10-29T15:10:00.000000+01:00",
+ "generado": "2026-11-01T21:50:08.921219+01:00",
  "jornada_base_h": 7.5,
  "catalogo": [
   {
@@ -231,7 +231,7 @@ window.SAGARDE_PERSONAL = {
    "ultima": {
     "vivienda": null,
     "garaje": {
-     "fecha": "2026-10-30",
+     "fecha": "2026-10-29",
      "presentes": [
       {
        "nombre": "Alejo",
@@ -318,30 +318,6 @@ window.SAGARDE_PERSONAL = {
     },
     {
      "fecha": "2026-10-29",
-     "ambito": "garaje",
-     "nombre": "Nestor",
-     "horas": 8,
-     "extra": 0,
-     "empresa": "Manueles"
-    },
-    {
-     "fecha": "2026-10-30",
-     "ambito": "garaje",
-     "nombre": "Alejo",
-     "horas": 8,
-     "extra": 0,
-     "empresa": "Manueles"
-    },
-    {
-     "fecha": "2026-10-30",
-     "ambito": "garaje",
-     "nombre": "Manuel",
-     "horas": 8,
-     "extra": 0,
-     "empresa": "Manueles"
-    },
-    {
-     "fecha": "2026-10-30",
      "ambito": "garaje",
      "nombre": "Nestor",
      "horas": 8,
@@ -884,6 +860,21 @@ window.SAGARDE_PERSONAL = {
        "extra": 0
       },
       {
+       "nombre": "Alejo",
+       "horas": 8,
+       "extra": 0
+      },
+      {
+       "nombre": "Manuel",
+       "horas": 8,
+       "extra": 0
+      },
+      {
+       "nombre": "Nestor",
+       "horas": 8,
+       "extra": 0
+      },
+      {
        "nombre": "Zuleiman",
        "horas": 8,
        "extra": 0
@@ -1208,14 +1199,6 @@ window.SAGARDE_PERSONAL = {
     {
      "fecha": "2026-10-29",
      "ambito": "vivienda",
-     "nombre": "Asensio",
-     "horas": 7.5,
-     "extra": 0,
-     "empresa": "Sagarde"
-    },
-    {
-     "fecha": "2026-10-29",
-     "ambito": "vivienda",
      "nombre": "Hssain",
      "horas": 8,
      "extra": 0,
@@ -1248,6 +1231,14 @@ window.SAGARDE_PERSONAL = {
     {
      "fecha": "2026-10-30",
      "ambito": "vivienda",
+     "nombre": "Alejo",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-10-30",
+     "ambito": "vivienda",
      "nombre": "Asensio",
      "horas": 7.5,
      "extra": 0,
@@ -1268,6 +1259,22 @@ window.SAGARDE_PERSONAL = {
      "horas": 8,
      "extra": 0,
      "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-10-30",
+     "ambito": "vivienda",
+     "nombre": "Manuel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-10-30",
+     "ambito": "vivienda",
+     "nombre": "Nestor",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
     },
     {
      "fecha": "2026-10-30",
