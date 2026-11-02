@@ -1201,5 +1201,398 @@ class TestRotulosDeFasesNoSeCortan(unittest.TestCase):
         self.assertGreaterEqual(alto_celda, 8 * mm)
 
 
+def _fixture_portales_altos():
+    """Dos portales cuya tabla por planta obliga al recorte extraordinario."""
+    tajos = [
+        {
+            'id': f'portal_{indice:02d}',
+            'nombre': f'Tajo de portal alto {indice:02d}',
+            'propiedad': 'propio',
+            'fase': f'Fase de portal {((indice - 1) % 20) + 1:02d}',
+            'orden': indice,
+        }
+        for indice in range(1, 31)
+    ]
+    tajos.extend({
+        'id': f'externo_portal_{indice:02d}',
+        'nombre': f'Condicionante de portal alto {indice:02d}',
+        'propiedad': 'externo',
+        'fase': 'Condicionantes',
+        'orden': 100 + indice,
+    } for indice in range(1, 13))
+
+    nombres_plantas = ['PB'] + [
+        f'Planta {indice}' for indice in range(1, 15)
+    ]
+    portales = []
+    for numero in (1, 2):
+        referencia = f'portal_alto_{numero}'
+        plantas = []
+        for orden, nombre in enumerate(nombres_plantas):
+            plantas.append({
+                'id': f'{referencia}_planta_{orden:02d}',
+                'nombre': nombre,
+                'orden': orden,
+                'ubicaciones': [
+                    {
+                        'id': f'{referencia}_{orden:02d}_vivienda_{vivienda}',
+                        'nombre': f'Vivienda {vivienda}',
+                        'tipo': 'vivienda',
+                    }
+                    for vivienda in range(1, 4)
+                ],
+            })
+        portales.append({
+            'id': referencia,
+            'nombre': f'Portal {numero}',
+            'referencia': referencia,
+            'plantas': plantas,
+        })
+
+    ficha = {
+        'identidad': {
+            'cliente': 'Cliente de prueba con portales altos',
+            'direccion': 'Avenida de las Catorce Plantas 14, Barakaldo',
+        },
+        'estructura': {'bloques': [{
+            'id': 'bloque_alto',
+            'nombre': 'Bloque Alto',
+            'portales': portales,
+        }]},
+        'tajos': {'detalle': tajos},
+    }
+
+    snapshot = []
+    for numero, portal in enumerate(portales, 1):
+        referencia = portal['referencia']
+        for orden, nombre_planta in enumerate(nombres_plantas):
+            for vivienda in range(1, 4):
+                unidad = (
+                    f'{referencia}_{orden:02d}_vivienda_{vivienda}')
+                for indice in range(1, 31):
+                    estado = ('X', 'M', '/', '')[
+                        (numero + orden + vivienda + indice) % 4]
+                    snapshot.append({
+                        'task': f'Tajo de portal alto {indice:02d}',
+                        'building': referencia,
+                        'floor': nombre_planta,
+                        'unit': unidad,
+                        'status': estado,
+                    })
+
+    historial = []
+    for paso, fecha in enumerate((
+            '01/07/2026', '15/07/2026', '01/08/2026',
+            '17/08/2026'), 1):
+        revision = []
+        for indice, fila in enumerate(snapshot):
+            estado = ('', '/', 'M', 'X')[
+                min(3, (indice % 5 + paso) // 2)]
+            revision.append({**fila, 'status': estado})
+        historial.append((fecha, revision))
+
+    detalle = []
+    for numero, portal in enumerate(portales, 1):
+        referencia = portal['referencia']
+        for indice in range(1, 13):
+            detalle.append({
+                'tarea_id': f'portal_{indice:02d}',
+                'trabajo': f'Tajo de portal alto {indice:02d}',
+                'propiedad': 'propio',
+                'categoria': 'VIABLE',
+                'edificio': referencia,
+                'planta': 'PB',
+                'unidad': f'{referencia}_00_vivienda_1',
+                'estado': '',
+                'fase_nombre': f'Fase de portal {indice:02d}',
+                'orden_ejecucion': indice,
+            })
+        for indice in range(13, 25):
+            externo = indice - 12
+            detalle.append({
+                'tarea_id': f'portal_{indice:02d}',
+                'trabajo': f'Tajo de portal alto {indice:02d}',
+                'propiedad': 'propio',
+                'categoria': 'BLOQUEADO',
+                'edificio': referencia,
+                'planta': f'Planta {numero}',
+                'unidad': f'{referencia}_{numero:02d}_vivienda_1',
+                'estado': '',
+                'fase_nombre': f'Fase de portal {indice:02d}',
+                'orden_ejecucion': indice,
+                'dependencias_detalle': [{
+                    'id': f'externo_portal_{externo:02d}',
+                    'nombre': (
+                        f'Condicionante de portal alto {externo:02d}'),
+                    'estado': 'Pendiente',
+                    'cumplida': False,
+                }],
+            })
+
+    meta = {
+        'OBRA PORTALES ALTOS': {
+            'nombre': 'OBRA PORTALES ALTOS',
+            'bloques': [{
+                'nombre': 'Bloque Alto',
+                'portales': [
+                    {
+                        'nombre': portal['nombre'],
+                        'referencia_portal': portal['referencia'],
+                    }
+                    for portal in portales
+                ],
+            }],
+        },
+    }
+    return {
+        'ficha': ficha,
+        'snapshot': snapshot,
+        'historial': historial,
+        'prioridades': {'detalle_items': detalle},
+        'meta': meta,
+    }
+
+
+class TestPortalDeMuchasPlantas(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        try:
+            import pdfplumber  # noqa: F401
+        except ImportError:
+            raise unittest.SkipTest('pdfplumber no esta instalado')
+        cls.fx = _fixture_portales_altos()
+        cls.tmp = tempfile.TemporaryDirectory()
+        cls.pdf = Path(cls.tmp.name) / 'informe_portales_altos.pdf'
+        salida = io.StringIO()
+        with mock.patch.object(
+                gie, '_cargar_meta_obras', return_value=cls.fx['meta']):
+            with redirect_stdout(salida):
+                gie.generar_pdf_ejecutivo(
+                    'OBRA PORTALES ALTOS', '17/08/2026',
+                    cls.fx['snapshot'], cls.pdf,
+                    historial=cls.fx['historial'], ficha=cls.fx['ficha'],
+                    prioridades=cls.fx['prioridades'])
+        cls.log = salida.getvalue()
+
+    @classmethod
+    def tearDownClass(cls):
+        cls.tmp.cleanup()
+
+    def _abrir(self):
+        import pdfplumber
+        return pdfplumber.open(str(self.pdf))
+
+    def test_tres_paginas_densas_y_sin_hojas_residuales_de_pie(self):
+        with self._abrir() as pdf:
+            textos = [pagina.extract_text() or '' for pagina in pdf.pages]
+            self.assertEqual(len(textos), 3, textos)
+            for numero, (pagina, texto) in enumerate(
+                    zip(pdf.pages, textos), 1):
+                self.assertIn('Fuente:', texto, f'pagina {numero}')
+                anterior_al_pie = texto.split('Fuente:', 1)[0]
+                self.assertGreaterEqual(
+                    len(anterior_al_pie), 600,
+                    f'pagina {numero}: solo contiene el pie')
+
+                palabras = pagina.extract_words()
+                pies = [p['top'] for p in palabras
+                        if p['text'] == 'Fuente:']
+                self.assertTrue(
+                    pies, f'pagina {numero} sin linea de fuente')
+                limite_pie = min(pies)
+                cuerpo = [c for c in pagina.chars
+                          if c['top'] < limite_pie - 1]
+                self.assertTrue(cuerpo, f'pagina {numero} sin contenido')
+                ocupado = ((max(c['bottom'] for c in cuerpo)
+                            - min(c['top'] for c in cuerpo))
+                           / (pagina.height - 2 * gie.MARGIN_Y))
+                self.assertGreaterEqual(
+                    ocupado, .75,
+                    f'pagina {numero}: ocupacion {ocupado:.1%}')
+                self.assertLessEqual(
+                    ocupado, .965,
+                    f'pagina {numero}: ocupacion {ocupado:.1%}')
+
+    def test_todas_las_plantas_salen_y_conservan_la_legibilidad(self):
+        with self._abrir() as pdf:
+            textos = [pagina.extract_text() or '' for pagina in pdf.pages]
+            for numero, texto in enumerate(textos[1:], 2):
+                for nombre in ['PB'] + [
+                        f'Planta {indice}' for indice in range(1, 15)]:
+                    self.assertRegex(
+                        texto, r'\b{}\b'.format(re.escape(nombre)),
+                        f'pagina de portal {numero} sin {nombre}')
+            for numero, pagina in enumerate(pdf.pages, 1):
+                self.assertTrue(pagina.chars, f'pagina {numero} sin texto')
+                minimo = min(float(c['size']) for c in pagina.chars)
+                self.assertGreaterEqual(
+                    minimo + .01, 8.5,
+                    f'pagina {numero}: fuente minima {minimo:.2f} pt')
+
+        self.assertNotIn('[ERROR INFORME EJECUTIVO]', self.log)
+
+
+class TestOrdenYAgrupacionDePlantas(unittest.TestCase):
+
+    @classmethod
+    def setUpClass(cls):
+        # Estas pruebas miden anchos con la tipografia del informe sin PDF.
+        gie._registrar_fuentes()
+
+    @staticmethod
+    def _componente(nombre, estados):
+        return {
+            'nombre': nombre,
+            'snapshot': [
+                {
+                    'task': f'Tajo {indice}',
+                    'building': 'Portal 1',
+                    'floor': nombre,
+                    'unit': 'Vivienda 1',
+                    'status': estado,
+                }
+                for indice, estado in enumerate(estados, 1)
+            ],
+        }
+
+    def test_clave_ordena_pb_numeros_y_mantiene_el_resto_estable(self):
+        nombres = ['10', '2', 'PB', '1', 'Cubierta',
+                   'Zonas especiales']
+        self.assertEqual(
+            sorted(nombres, key=gie._clave_orden_planta),
+            ['PB', '1', '2', '10', 'Cubierta', 'Zonas especiales'])
+        self.assertLess(
+            gie._clave_orden_planta('1.2'),
+            gie._clave_orden_planta('1.10'))
+        self.assertLess(
+            gie._clave_orden_planta('1ª'),
+            gie._clave_orden_planta('2ª'))
+
+        no_numeradas = ['Zonas especiales', 'Cubierta', 'Ático']
+        self.assertEqual(
+            sorted(no_numeradas, key=gie._clave_orden_planta),
+            no_numeradas)
+
+    def test_componentes_por_campo_devuelve_las_plantas_en_orden(self):
+        nombres = ['10', '2', 'PB', '1', 'Cubierta',
+                   'Zonas especiales']
+        snapshot = [
+            {
+                'task': 'Tajo de orden',
+                'building': 'Portal 1',
+                'floor': nombre,
+                'unit': 'Vivienda 1',
+                'status': '',
+            }
+            for nombre in nombres
+        ]
+
+        componentes = gie._componentes_por_campo(snapshot, 'floor')
+
+        self.assertEqual(
+            [componente['nombre'] for componente in componentes],
+            ['PB', '1', '2', '10', 'Cubierta', 'Zonas especiales'])
+        for componente in componentes:
+            self.assertTrue(all(
+                fila['floor'] == componente['nombre']
+                for fila in componente['snapshot']))
+
+    def test_agrupa_terminadas_consecutivas_y_suma_sus_mediciones(self):
+        componentes = [
+            self._componente('PB', ('X', 'X')),
+            self._componente('1', ('X',)),
+            self._componente('2', ('X', 'X', 'X')),
+            self._componente('3', ('X',)),
+            self._componente('4', ('X', 'M')),
+            self._componente('5', ('',)),
+        ]
+
+        filas = gie._filas_avance_plantas(componentes)
+
+        self.assertEqual(
+            [fila['tipo'] for fila in filas],
+            ['terminada', 'resto', 'resto'])
+        self.assertEqual(filas[0]['nombres'], ['PB', '1', '2', '3'])
+        self.assertEqual((filas[0]['x'], filas[0]['total']), (7, 7))
+        self.assertEqual(filas[1]['nombres'], ['4'])
+        self.assertEqual(filas[2]['nombres'], ['5'])
+
+    def test_el_resto_separa_terminadas_y_no_oculta_una_planta_vacia(self):
+        componentes = [
+            self._componente('1', ('X',)),
+            self._componente('2', ('',)),
+            self._componente('3', ('X',)),
+        ]
+
+        filas = gie._filas_avance_plantas(componentes)
+
+        self.assertEqual(
+            [(fila['tipo'], fila['nombres']) for fila in filas],
+            [
+                ('terminada', ['1']),
+                ('resto', ['2']),
+                ('terminada', ['3']),
+            ])
+        self.assertEqual((filas[1]['x'], filas[1]['total']), (0, 1))
+
+    def test_no_agrupa_no_numeradas_y_forma_las_etiquetas(self):
+        componentes = [
+            self._componente('PB', ('X',)),
+            self._componente('1', ('X',)),
+            self._componente('2', ('X',)),
+            self._componente('3', ('X',)),
+            self._componente('Zonas especiales', ('X',)),
+        ]
+
+        filas = gie._filas_avance_plantas(componentes)
+
+        self.assertEqual(len(filas), 2)
+        self.assertEqual(filas[0]['nombres'], ['PB', '1', '2', '3'])
+        self.assertEqual(filas[1]['nombres'], ['Zonas especiales'])
+        self.assertEqual(
+            gie._etiqueta_fila_planta(filas[0]),
+            'PB – 3 · terminadas')
+        self.assertEqual(
+            gie._etiqueta_fila_planta(filas[1]),
+            'Zonas especiales · terminada')
+        self.assertEqual(
+            gie._etiqueta_fila_planta({
+                'tipo': 'terminada', 'nombres': ['PB'],
+            }),
+            'PB · terminada')
+        self.assertEqual(
+            gie._etiqueta_fila_planta({
+                'tipo': 'resto', 'nombres': ['Planta 4'],
+            }),
+            'Planta 4')
+
+    def test_ningun_nivel_omite_plantas_y_el_nivel_cero_es_mas_alto(self):
+        componentes = [
+            self._componente(f'Planta {indice}', ('',))
+            for indice in range(1, 31)
+        ]
+        flujos = {}
+        for nivel in (0, 1, 2):
+            flujo = gie._tabla_avance_plantas(
+                componentes, 190 * mm, 1.0, nivel=nivel)
+            flujos[nivel] = flujo
+            texto = _texto_de_flowable(flujo)
+            for indice in range(1, 31):
+                nombre = f'Planta {indice}'
+                self.assertRegex(
+                    texto, r'\b{}\b'.format(re.escape(nombre)),
+                    f'nivel {nivel} sin {nombre}')
+
+        self.assertEqual(len(flujos[0]), 30)
+        self.assertTrue(all(
+            isinstance(fila, Drawing) for fila in flujos[0]))
+        terminada = gie._tabla_avance_plantas(
+            [self._componente('PB', ('X',))],
+            190 * mm, 1.0, nivel=0)
+        self.assertIsInstance(terminada[0], Drawing)
+        self.assertGreater(flujos[0][0].height, terminada[0].height)
+
+
 if __name__ == '__main__':
     unittest.main()

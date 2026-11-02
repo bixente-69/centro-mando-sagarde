@@ -1718,14 +1718,16 @@ def _grafico_distribucion(snapshot: list[dict], ancho: float,
 
 def _dibujo_barra_linea(nombre: str, pct: float, x: int, total: int,
                         ancho: float, escala: float,
-                        ancho_nombre: float) -> Drawing:
+                        ancho_nombre: float,
+                        valor_corto: bool = False) -> Drawing:
     """Fase en una sola linea: rotulo, barra y valor. Cuesta ~5,6 mm por fase
     en vez de los ~8,5 mm de la variante con el rotulo encima de la barra, y
     ese espacio se dedica a mostrar mas filas de las tablas de la hoja."""
     alto = max(5.2 * mm, 5.6 * mm * escala)
     dibujo = Drawing(ancho, alto)
     font_size = _fuente_escalada(8.7, escala, 8.5)
-    valor = '{:.1f}%  {}/{}'.format(pct, x, total)
+    valor = ('{:.1f}%'.format(pct) if valor_corto
+             else '{:.1f}%  {}/{}'.format(pct, x, total))
     ancho_valor = pdfmetrics.stringWidth(valor, FUENTE_BOLD, font_size)
     etiqueta = str(nombre)
     # La variante en linea solo se elige cuando el nombre cabe entero
@@ -1794,6 +1796,193 @@ def _dibujo_barra_resumen(nombre: str, pct: float, x: int, total: int,
     dibujo.add(Rect(0, y, ancho * max(0, min(100, pct)) / 100, 2.4 * mm,
                     fillColor=color, strokeColor=None))
     return dibujo
+
+
+PLANTAS_BAJAS = ('PB', 'P B', 'BAJO', 'BAJA', 'PLANTA BAJA')
+
+
+def _clave_orden_planta(nombre: object) -> tuple:
+    """Orden de planta: PB primero, luego las numeradas en orden numerico
+    (1.2 antes que 1.10) y al final lo que no es una planta numerada (cubierta,
+    zonas especiales...) en el orden en que llega."""
+    texto = _fold(nombre).upper()
+    if texto in PLANTAS_BAJAS:
+        return (0, ())
+    if re.search(r'\d', texto):
+        return (1, tuple(
+            (0, int(trozo), '') if trozo.isdigit() else (1, 0, trozo)
+            for trozo in re.findall(r'\d+|\D+', texto)))
+    return (2, ())
+
+
+def _filas_avance_plantas(componentes: list[dict]) -> list[dict]:
+    """Una fila por planta, en el orden recibido. Las plantas seguidas que
+    estan del todo terminadas se resumen en una sola fila («PB - 5 ·
+    terminadas»); todas las demas (con avance parcial o sin empezar) salen una
+    a una y destacadas: son el resto de la obra, donde hay que poner el foco."""
+    filas = []
+    for componente in componentes:
+        nombre = str(componente['nombre'])
+        kpis = motor_informes.kpis_snapshot(componente['snapshot'])
+        tipo = ('terminada' if kpis['total'] and kpis['x'] >= kpis['total']
+                else 'resto')
+        anterior = filas[-1] if filas else None
+        if (anterior is not None and tipo == 'terminada'
+                and anterior['tipo'] == 'terminada'
+                and _clave_orden_planta(nombre)[0] < 2
+                and _clave_orden_planta(anterior['nombres'][-1])[0] < 2):
+            anterior['nombres'].append(nombre)
+            anterior['x'] += kpis['x']
+            anterior['total'] += kpis['total']
+            continue
+        filas.append({
+            'tipo': tipo, 'nombres': [nombre],
+            'x': kpis['x'], 'total': kpis['total'],
+            'pct': kpis['pct_ponderado'],
+        })
+    return filas
+
+
+def _etiqueta_fila_planta(fila: dict) -> str:
+    nombres = fila['nombres']
+    rotulo = (nombres[0] if len(nombres) == 1
+              else '{} – {}'.format(nombres[0], nombres[-1]))
+    if fila['tipo'] != 'terminada':
+        return rotulo
+    return '{} · {}'.format(
+        rotulo, 'terminada' if len(nombres) == 1 else 'terminadas')
+
+
+def _recortar_texto(texto: str, fuente: str, tam: float,
+                    ancho_max: float) -> str:
+    if pdfmetrics.stringWidth(texto, fuente, tam) <= ancho_max:
+        return texto
+    recortado = texto
+    while (recortado and pdfmetrics.stringWidth(
+            recortado.rstrip() + '…', fuente, tam) > ancho_max):
+        recortado = recortado[:-1]
+    return recortado.rstrip() + '…'
+
+
+def _dibujo_fila_compacta(etiqueta: str, pct: float, x: int, total: int,
+                          ancho: float, escala: float,
+                          valor_corto: bool = False) -> Drawing:
+    """Fila de plantas terminadas: una linea, en tono apagado y con la barra
+    fina, para que destaque el resto de plantas."""
+    alto = max(5.2 * mm, 5.6 * mm * escala)
+    dibujo = Drawing(ancho, alto)
+    font_size = _fuente_escalada(8.7, escala, 8.5)
+    valor = ('{:.0f}%'.format(pct) if valor_corto
+             else '{:.1f}%  {}/{}'.format(pct, x, total))
+    ancho_valor = pdfmetrics.stringWidth(valor, FUENTE, font_size)
+    etiqueta = _recortar_texto(
+        etiqueta, FUENTE, font_size,
+        max(10 * mm, ancho - ancho_valor - 8 * mm - 3 * mm))
+    ancho_nombre = pdfmetrics.stringWidth(etiqueta, FUENTE, font_size)
+    base = (alto - font_size * .72) / 2
+    dibujo.add(String(0, base, etiqueta, fontName=FUENTE,
+                      fontSize=font_size, fillColor=COL_MUTED))
+    x0 = ancho_nombre + 1.5 * mm
+    ancho_barra = max(8 * mm, ancho - ancho_valor - 1.5 * mm - x0)
+    grosor = 1.6 * mm
+    y = (alto - grosor) / 2
+    dibujo.add(Rect(x0, y, ancho_barra, grosor,
+                    fillColor=colors.HexColor('#E8EDF3'), strokeColor=None))
+    color = _color_estado(pct)
+    dibujo.add(Rect(x0, y, ancho_barra * max(0, min(100, pct)) / 100, grosor,
+                    fillColor=color, strokeColor=None))
+    dibujo.add(String(ancho, base, valor, fontName=FUENTE,
+                      fontSize=font_size, textAnchor='end',
+                      fillColor=color if pct > 0 else COL_MUTED))
+    return dibujo
+
+
+def _tabla_avance_plantas(componentes: list[dict], ancho: float,
+                          escala: float, nivel: int = 0) -> list:
+    """«Avance por planta»: todas las plantas, en orden de planta, sin «+N mas».
+
+    nivel 0: las plantas sin terminar llevan rotulo encima de la barra.
+    nivel 1: todo en una linea por planta.
+    nivel 2: una linea por planta; las de rotulo corto, en dos columnas (se
+    lee primero la izquierda), y las de rotulo largo a todo el ancho, siempre
+    en el mismo orden de planta.
+    Los niveles 1 y 2 los pide el ajuste de pagina cuando no cabe; no se omite
+    ninguna planta en ninguno de ellos."""
+    filas = _filas_avance_plantas(componentes)
+    if not filas:
+        return [Paragraph(
+            '<i>Sin subdivisiones adicionales.</i>',
+            _estilo_maqueta('sin_componentes', 8.6, escala,
+                            minimo=8.5, color=COL_MUTED))]
+    font_size = _fuente_escalada(8.7, escala, 8.5)
+
+    def ancho_rotulo(fila: dict) -> float:
+        return pdfmetrics.stringWidth(
+            _etiqueta_fila_planta(fila), FUENTE, font_size)
+
+    def dibujo(fila: dict, ancho_fila: float, ancho_nombre: float,
+               valor_corto: bool = False) -> Drawing:
+        etiqueta = _etiqueta_fila_planta(fila)
+        if fila['tipo'] == 'terminada':
+            return _dibujo_fila_compacta(
+                etiqueta, 100.0, fila['x'], fila['total'], ancho_fila,
+                escala, valor_corto=valor_corto)
+        if nivel == 0:
+            return _dibujo_barra_resumen(
+                etiqueta, fila['pct'], fila['x'], fila['total'],
+                ancho_fila, escala)
+        return _dibujo_barra_linea(
+            etiqueta, fila['pct'], fila['x'], fila['total'], ancho_fila,
+            escala, ancho_nombre, valor_corto=valor_corto)
+
+    if nivel < 2:
+        ancho_nombre = max(
+            [ancho_rotulo(f) for f in filas if f['tipo'] == 'resto']
+            or [0]) + .8 * mm
+        return [dibujo(fila, ancho, ancho_nombre) for fila in filas]
+
+    ancho_celda = (ancho - 3 * mm) / 2
+
+    def es_corta(fila: dict) -> bool:
+        return (fila['tipo'] == 'resto'
+                and ancho_rotulo(fila) <= .42 * ancho_celda)
+
+    def tabla_dos_columnas(tramo: list[dict]) -> Table:
+        mitad = (len(tramo) + 1) // 2
+        columnas = (tramo[:mitad], tramo[mitad:])
+        celdas = []
+        for grupo in columnas:
+            ancho_nombre = max(
+                [ancho_rotulo(f) for f in grupo] or [0]) + .8 * mm
+            celdas.append([dibujo(f, ancho_celda, ancho_nombre, True)
+                           for f in grupo])
+        tabla = Table(
+            [[celdas[0][i], celdas[1][i] if i < len(celdas[1]) else '']
+             for i in range(mitad)],
+            colWidths=[ancho_celda + 1.5 * mm, ancho_celda + 1.5 * mm])
+        tabla.setStyle(TableStyle([
+            ('VALIGN', (0, 0), (-1, -1), 'TOP'),
+            ('LEFTPADDING', (0, 0), (0, -1), 0),
+            ('RIGHTPADDING', (0, 0), (0, -1), 1.5 * mm),
+            ('LEFTPADDING', (1, 0), (1, -1), 1.5 * mm),
+            ('RIGHTPADDING', (1, 0), (1, -1), 0),
+            ('TOPPADDING', (0, 0), (-1, -1), 0),
+            ('BOTTOMPADDING', (0, 0), (-1, -1), 0),
+        ]))
+        return tabla
+
+    flujo, tramo = [], []
+    for fila in filas:
+        if es_corta(fila):
+            tramo.append(fila)
+            continue
+        if tramo:
+            flujo.append(tabla_dos_columnas(tramo))
+            tramo = []
+        flujo.append(dibujo(fila, ancho, ancho_rotulo(fila) + .8 * mm))
+    if tramo:
+        flujo.append(tabla_dos_columnas(tramo))
+    return flujo
 
 
 def _tabla_fases_doble(fases: list[dict], content_w: float,
@@ -2182,6 +2371,7 @@ def _panel_superior(
     avisos_cierre: list[str] | None,
     hay_garaje: bool,
     zonas: list[dict] | None,
+    plantas_nivel: int | None = None,
 ) -> Table:
     ancho_izq = content_w * .59
     ancho_der = content_w - ancho_izq - 4 * mm
@@ -2221,8 +2411,12 @@ def _panel_superior(
         ])
     else:
         derecha.append(_seccion(titulo_componentes, escala))
-        derecha.extend(_tabla_avance_componentes(
-            componentes or [], ancho_der, escala))
+        if plantas_nivel is None:
+            derecha.extend(_tabla_avance_componentes(
+                componentes or [], ancho_der, escala))
+        else:
+            derecha.extend(_tabla_avance_plantas(
+                componentes or [], ancho_der, escala, plantas_nivel))
         if cierre is not None and (cierre.get('hitos') or {}):
             derecha.extend([
                 Spacer(1, max(.8 * mm, 1.2 * mm * escala)),
@@ -2304,6 +2498,7 @@ def _crear_pagina_electrica(
     zonas: list[dict] | None = None,
     limites: dict | None = None,
     serie_avance: list[dict] | None = None,
+    por_planta: bool = False,
 ) -> list:
     datos = _datos_pagina_electrica(
         snapshot_propio, historial, prioridades, metadatos_por_id,
@@ -2323,7 +2518,9 @@ def _crear_pagina_electrica(
         hueco(1.2),
         _panel_superior(
             datos, snapshot_propio, content_w, escala, componentes,
-            titulo_componentes, cierre, avisos_cierre, hay_garaje, zonas),
+            titulo_componentes, cierre, avisos_cierre, hay_garaje, zonas,
+            plantas_nivel=(limites or {}).get('plantas', 0) if por_planta
+            else None),
         hueco(1.2),
         _seccion('Fases de producci\u00f3n', escala),
         _nota('Porcentaje ponderado y celdas terminadas sobre el total '
@@ -2344,6 +2541,14 @@ def _medir_flowables(flowables: list, ancho: float) -> float:
         _w, h = flowable.wrap(ancho, 1000 * mm)
         alto += h
     return alto
+
+
+def _solo_compacta_plantas(limites: dict, base: dict | None) -> bool:
+    """True si el plan solo compacta «Avance por planta»: respecto del plan
+    base no recorta tajos, condicionantes ni frentes."""
+    return (base is not None and 'plantas' in limites
+            and all(limites[clave] >= base[clave]
+                    for clave in ('tajos', 'bloqueadores', 'frentes')))
 
 
 def _ajustar_pagina(fabrica, ancho: float, alto: float,
@@ -2391,7 +2596,14 @@ def _ajustar_pagina(fabrica, ancho: float, alto: float,
                         limites_finales = ampliados
                         flowables, alto_natural = prueba, alto_prueba
 
-            if indice_plan > 0:
+            if (indice_plan > 0 and limites_finales is not None
+                    and _solo_compacta_plantas(
+                        limites_finales, planes_efectivos[0])):
+                print(
+                    '[AVISO INFORME EJECUTIVO] Tabla de plantas compactada '
+                    '(nivel {}) para {!r}: se muestran todas las '
+                    'plantas.'.format(limites_finales['plantas'], etiqueta))
+            elif indice_plan > 0:
                 print(
                     '[AVISO INFORME EJECUTIVO] Recorte visible para {!r}: '
                     'tajos={}, condicionantes={}, frentes={}; las tablas '
@@ -2454,6 +2666,7 @@ def _construir_bloque_electrico(
     hay_garaje: bool = False,
     zonas: list[dict] | None = None,
     serie_avance: list[dict] | None = None,
+    por_planta: bool = False,
 ) -> dict:
     propios = _filtrar_snapshot_sagarde(
         snapshot, metadatos_por_nombre, referencias)
@@ -2466,6 +2679,14 @@ def _construir_bloque_electrico(
         {'tajos': 6, 'bloqueadores': 3, 'frentes': 3},
         {'tajos': 6, 'bloqueadores': 2, 'frentes': 2},
     ]
+    if por_planta:
+        # «Avance por planta» nunca omite plantas. En cada plan de recorte se
+        # prueba esa tabla primero normal, luego en una linea por planta y
+        # luego en dos columnas: se recorta lo menos posible y, de lo que
+        # haya que apretar, lo menos posible tambien.
+        planes_recorte = [
+            {**plan, 'plantas': nivel}
+            for plan in planes_recorte for nivel in (0, 1, 2)]
     ajuste = _ajustar_pagina(
         lambda escala, limites: _crear_pagina_electrica(
             escala, nombre_obra, sub_titulo, fecha_rev, propios, historial,
@@ -2473,7 +2694,8 @@ def _construir_bloque_electrico(
             content_w, referencias=referencias, cierre=cierre,
             avisos_cierre=avisos_cierre, componentes=componentes,
             titulo_componentes=titulo_componentes, hay_garaje=hay_garaje,
-            zonas=zonas, limites=limites, serie_avance=serie_avance),
+            zonas=zonas, limites=limites, serie_avance=serie_avance,
+            por_planta=por_planta),
         content_w, alto_disponible,
         '{} \u00b7 {}'.format(nombre_obra, sub_titulo),
         planes=planes_recorte, ocupacion_max=.96)
@@ -2483,10 +2705,12 @@ def _construir_bloque_electrico(
 
 def _componentes_por_campo(snapshot: list[dict], campo: str) -> list[dict]:
     grupos = motor_informes._agrupar(snapshot, campo) if snapshot else {}
+    # Las plantas van en orden de planta (PB, 1, 2... 10), no alfabetico.
+    clave = ((lambda item: _clave_orden_planta(item[0])) if campo == 'floor'
+             else (lambda item: _fold(item[0])))
     return [
         {'nombre': str(nombre), 'snapshot': registros}
-        for nombre, registros in sorted(
-            grupos.items(), key=lambda item: _fold(item[0]))
+        for nombre, registros in sorted(grupos.items(), key=clave)
     ]
 
 
@@ -2663,6 +2887,7 @@ def generar_pdf_ejecutivo(
                         _filtrar_snapshot_sagarde(
                             snap_portal, metadatos_por_nombre), 'floor'),
                     titulo_componentes='Avance por planta',
+                    por_planta=True,
                     hay_garaje=any(
                         _es_zona_especial(fila) for fila in snap_portal),
                     serie_avance=_serie_avance_sagarde(
