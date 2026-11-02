@@ -28,7 +28,7 @@ mano y ningún script lo toca**: un generador que rehiciera la prosa borraría
 el criterio de quien la escribió.
 
 <!-- AUTO:estado -->
-*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 01/11/2026 19:22. No editar a mano.*
+*Lo reescribe `_SISTEMA/MOTOR/scripts/actualizar_mapa_mental.py` en cada `Actualizar_Sagarde.bat`. La fecha es la de la última vez que alguna cifra cambió: 02/11/2026 22:12. No editar a mano.*
 
 **24** carpetas de obra abiertas · **7** en el registro único · **7** con panel · **6** con ficha. En todo el árbol, **382** `.py` y **9** `.bat`.
 
@@ -39,7 +39,7 @@ el criterio de quien la escribió.
 | 2026 BOLUETA ACR | 106 | 73 | 3837 | 2617 | 345 | 67 | 627 | – | 181 | 76.7 |
 | 2026 MUNGIA ACR NEINOR | 62 | 38 | 2356 | 2083 | 66 | 21 | 186 | – | – | 90.3 |
 | 2026 OBRA PRUEBA | 31 | 38 | 1178 | 161 | 36 | 5 | 976 | – | – | 16.3 |
-| 2026 OLABEAGA BILBAO | 49 | 72 | 1519 | 141 | 56 | 49 | 1215 | – | 58 | 12.3 |
+| 2026 OLABEAGA BILBAO | 49 | 72 | 1519 | 209 | 25 | 41 | 1186 | – | 58 | 15.0 |
 
 `X` terminado · `M` mas del 50 % · `/` iniciado · `P` pendiente confirmado · `?` sin mirar · `N` no aplica.
 <!-- /AUTO:estado -->
@@ -53,7 +53,7 @@ entonces cada publicación comprueba una por una las rutas que este documento
 declara y publica aquí las que no llevan a ninguna parte.
 
 <!-- AUTO:rutas_muertas -->
-*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 01/11/2026 19:22).*
+*Se comprueban en cada `Actualizar_Sagarde.bat`. Ninguna ruta declarada en este documento apunta a un sitio que no exista (última variación: 02/11/2026 22:12).*
 <!-- /AUTO:rutas_muertas -->
 
 | Campo | Valor |
@@ -93,7 +93,7 @@ Las capas confirmadas son:
 
 1. **Fuentes documentales**: las carpetas de obras abiertas (cuenta viva en «Estado de hoy»), 128 obras cerradas publicadas, 31 contratos de postventa y 4 contratos de mantenimiento en sus resúmenes actuales.
 2. **Normalización**: siete adaptadores de obra y lectores genéricos PDF/HTML/XLSX. Solo cinco adaptadores de obra están registrados; dos apuntan a obras ya cerradas y sus rutas bajo obras abiertas no existen. Desde el 26/08/2026 hay además tres adaptadores de revisión —tinta, PDF digital y HTML digital— que producen el mismo contrato `REVISION_NORMALIZADA`; el HTML sirve para cualquier obra y es la vía digital preferente cuando existe el gemelo del PDF.
-3. **Estado persistente**: un `ficha_obra.json` por obra registrada —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Tras cada aplicación real que supera la salvaguarda se intenta añadir además una entrada no bloqueante a `revisiones_aplicadas.jsonl`. Gorliz está registrado pero sin revisión ni base. Olabeaga (alta 24/09/2026: 30 viviendas con garajes y trasteros) entró primero por adaptador y desde el 27/09/2026 es **alta nativa**: tiene `ficha_obra.json` (3 portales, 35 ubicaciones con zonas especiales) y `ficha_garajes.json` (20 zonas), y ya lleva revisiones reales aplicadas (04/10 y 05/10/2026). Su información de proyecto está en `2026 OLABEAGA BILBAO/INFORME_TECNICO_OBRA_OLABEAGA.md` (REBT + ICT, ampliado el 05/10/2026 con el Anexo III de Telecomunicaciones) y los planos y anexos en `DOCUMENTACION INICIAL/`. **Barakaldo** (`2026 BARAKALDO 104V OBRAS ESPECIALES`, alta 05/10/2026: Bloque 1 de la UE-12 Rontegui, 104 VPO en 2 portales y garaje de 3 sótanos) entró en **modo adaptador, sin `ficha_obra.json`**, porque solo existe el proyecto de ejecución y no hay hoja del generador ni estado de obra; su mapa de proyecto es `2026 BARAKALDO 104V OBRAS ESPECIALES/INFORME_TECNICO_OBRA_BARAKALDO.md` (v2 del 06/10/2026, sobre toda la documentación inicial: memoria, anexos, planos rev01, presupuesto BC3 y fichas de vivienda; 78 viviendas tasadas en el Portal 1 y 26 de alquiler en el Portal 2, 3 sótanos con plazas 1–125 numeradas) y lleva propuesta de estructura para la alta nativa cuando llegue la hoja.
+3. **Estado persistente**: un `ficha_obra.json` por obra registrada —la base de datos de cada obra—, sidecars, memorias, prioridades, dudas, confirmaciones y resúmenes. Tras cada aplicación real que supera la salvaguarda se intenta añadir además una entrada no bloqueante a `revisiones_aplicadas.jsonl`. Gorliz está registrado pero sin revisión ni base. Olabeaga (alta 24/09/2026: 30 viviendas con garajes y trasteros) entró primero por adaptador y desde el 27/09/2026 es **alta nativa**: tiene `ficha_obra.json` (3 portales, 35 ubicaciones con zonas especiales) y `ficha_garajes.json` (20 zonas), y ya lleva revisiones reales aplicadas (04/10 y 05/10/2026). Su información de proyecto está en `2026 OLABEAGA BILBAO/INFORME_TECNICO_OBRA_OLABEAGA.md` (REBT + ICT, ampliado el 05/10/2026 con el Anexo III de Telecomunicaciones) y los planos y anexos en `DOCUMENTACION INICIAL/`. **Barakaldo** (`2026 BARAKALDO 104V OBRAS ESPECIALES`, alta 05/10/2026: Bloque 1 de la UE-12 Rontegui, 104 VPO en 2 portales y garaje de 3 sótanos) entró en **modo adaptador, sin `ficha_obra.json`**, porque solo existe el proyecto de ejecución y no hay hoja del generador ni estado de obra; su mapa de proyecto es `2026 BARAKALDO 104V OBRAS ESPECIALES/INFORME_TECNICO_OBRA_BARAKALDO.md` (v2 del 06/10/2026, sobre toda la documentación inicial: memoria, anexos, planos rev01, presupuesto BC3 y fichas de vivienda; 78 viviendas tasadas en el Portal 1 y 26 de alquiler en el Portal 2, 3 sótanos con plazas 1–125 numeradas) y lleva propuesta de estructura para la alta nativa cuando llegue la hoja. **Actualización 02/11/2026:** Barakaldo ya es alta nativa (08/10/2026, `ficha_obra.json`) y tiene además `ficha_garajes.json` (alta del garaje el 02/11/2026) y `personal_obra.json`/`personal_jornadas.jsonl` (primer control horario), más su hoja de materiales en `REVISIONES/hoja de entrega de materiales BARAKALDO.xlsx`.
 
    **Las cifras de cada base están en «Estado de hoy»**, al principio de este
    documento, con su desglose de estados. Aquí había una segunda copia de esa
@@ -784,7 +784,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | Gernika/Mungia/Bolueta/PRUEBA | Operativo con ficha | ver «Estado de hoy» |
 | Obispo Orueta | **Cerrada el 13/08/2026** | archivada con su `cierre.json`; sus 18 tajos propios siguen en el catálogo |
 | Gorliz | En desarrollo | registro/panel 0%; sin revisión |
-| Barakaldo 104V | Operativa con ficha | alta 05/10/2026 en modo adaptador; **alta nativa 08/10/2026** desde su primera hoja (2 portales, 106 viviendas, 14 zonas especiales, 68 tajos, 4.140 celdas; sin garaje todavía); primera revisión aplicada el 08/10/2026 (10 celdas iniciadas, 0,1 % ponderado); PDF ejecutivo de 4 páginas |
+| Barakaldo 104V | Operativa con ficha | alta 05/10/2026 en modo adaptador; **alta nativa 08/10/2026** desde su primera hoja (2 portales, 106 viviendas, 14 zonas especiales, 68 tajos, 4.140 celdas; sin garaje todavía); primera revisión aplicada el 08/10/2026 (10 celdas iniciadas, 0,1 % ponderado); PDF ejecutivo de 4 páginas; **hoja de entrega de materiales en formato registro (hoja `ENTREGAS`) creada el 02/11/2026** en `REVISIONES/hoja de entrega de materiales BARAKALDO.xlsx` (ruta declarada en `registro_obras.py`, `materiales_rel`; primer albarán Suelbat 474019, 15 líneas) |
 | Olabeaga | Operativa con ficha | alta nativa 27/09/2026; `ficha_obra.json` + `ficha_garajes.json`; revisiones aplicadas 04/10 y 05/10/2026; PDF ejecutivo de 6 páginas |
 | Otras 16 abiertas | Sin uso confirmado | resumen sin panel |
 | Motor/priorizador | Operativo | salidas/tests/memoria |
@@ -838,7 +838,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | ¿Automatizar las otras 16 obras? | No registradas | registro/resumen/roadmap | decisión por obra | alcance real |
 | ¿Crear ficha para Obispo? | panel/JS sin ficha | adaptador/prioridades/memoria/JS | estructura definitiva | generador/KPI |
 | ¿Primera revisión de Gorliz? | historial vacío | adaptador/registro/JS | archivo oficial | hoja/KPI |
-| ¿Alta nativa de Barakaldo 104V? | **Resuelta** (08/10/2026): ficha nativa desde la hoja; el Portal 2 trae 13 plantas (28 viviendas) frente a las 12 (26) del proyecto — Bixente: manda la hoja, la próxima revisión lo corrige sola | `INFORME_TECNICO_OBRA_BARAKALDO.md` (apartado 13), `alta_obra_desde_hoja.py` (lector HTML genérico), `registro_obras.py` | falta la hoja de garaje (3 sótanos) | – |
+| ¿Alta nativa de Barakaldo 104V? | **Resuelta** (08/10/2026): ficha nativa desde la hoja; el Portal 2 trae 13 plantas (28 viviendas) frente a las 12 (26) del proyecto — Bixente: manda la hoja, la próxima revisión lo corrige sola | `INFORME_TECNICO_OBRA_BARAKALDO.md` (apartado 13), `alta_obra_desde_hoja.py` (lector HTML genérico), `registro_obras.py` | garaje dado de alta el 02/11/2026 desde su hoja (`ficha_garajes.json`: 1 garaje, S-1/S-2/S-3, 42 tajos); primer control horario aplicado el 02/11/2026 (`personal_obra.json`, 120 h en 5 días, 3 personas) | – |
 | ¿Ampliación del generador para garajes? | **Resuelta** (26-27/09/2026): garajes con `ficha_garajes.json`, hoja propia y alta nativa de Olabeaga | `ficha_garajes.json`, hojas `_garaje.html` | – | – |
 | ¿Conservar adaptadores OLD? | rutas rotas | adaptadores/árbol | intención | deuda técnica |
 | ¿Qué índice de mantenimiento manda? | 2 escritores | BAT/Python/HTML | decisión | salida variable |

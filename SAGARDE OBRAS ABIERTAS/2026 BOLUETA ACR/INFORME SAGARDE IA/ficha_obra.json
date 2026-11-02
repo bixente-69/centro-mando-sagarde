@@ -22125,7 +22125,7 @@
   "materiales": {
     "ultimo_mes": "Julio26",
     "ultima_fecha": "29/07/2026",
-    "dias_desde": 95,
+    "dias_desde": 96,
     "meses": [
       "Marzo26",
       "Abril26",
@@ -22134,22 +22134,22 @@
       "Julio26"
     ],
     "n_items": 35,
-    "aviso": "La hoja de materiales no se actualiza desde 29/07/2026 (95 días). Los datos de consumo/stock pueden estar desfasados.",
+    "aviso": "La hoja de materiales no se actualiza desde 29/07/2026 (96 días). Los datos de consumo/stock pueden estar desfasados.",
     "_meta": {
-      "actualizado": "01/11/2026 08:17"
+      "actualizado": "02/11/2026 20:28"
     }
   },
   "documentos": {
-    "total": 139,
+    "total": 140,
     "por_categoria": {
       "Excel": 7,
-      "Imágenes": 77,
+      "Imágenes": 78,
       "Otros": 20,
       "PDF": 24,
       "Word": 11
     },
     "_meta": {
-      "actualizado": "27/10/2026 22:45"
+      "actualizado": "02/11/2026 20:28"
     }
   },
   "contactos": []
