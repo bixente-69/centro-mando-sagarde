@@ -720,6 +720,22 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        position: relative;
+      }
+      /* Día con algo guardado en la obra y el ámbito que se ven (en el PC o solo en este aparato): fondo verde claro y un
+         punto, para que no dependa solo del color. Va antes de .hoy y .on, que mandan sobre él. */
+      .cal-dia.tiene {
+        background: #dcf3e5;
+      }
+      .cal-dia.tiene::after {
+        content: '';
+        position: absolute;
+        top: 4px;
+        right: 4px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #1f7a43;
       }
       .cal-dia.hoy {
         border: 2px solid var(--accent);
@@ -729,6 +745,44 @@
         color: #fff;
         border-color: var(--header);
         font-weight: 700;
+      }
+      .cal-dia.on.tiene::after {
+        background: #fff;
+      }
+      .cal-leyenda {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 14px;
+        margin-top: 8px;
+        font-size: 12px;
+        color: var(--muted);
+      }
+      .cal-leyenda span {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .cal-leyenda .muestra {
+        position: relative;
+        flex: none;
+        width: 16px;
+        height: 16px;
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: #fff;
+      }
+      .cal-leyenda .muestra.tiene {
+        background: #dcf3e5;
+      }
+      .cal-leyenda .muestra.tiene::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: #1f7a43;
       }
       .dias-marcados {
         display: flex;
@@ -2019,9 +2073,28 @@
         if (criterio === 'todo') return 'Buscar por nombre, empresa, obra o horas...';
         return 'Buscar por nombre...';
       }
-      // Genera el calendario interactivo para marcar uno o varios días diferentes
+      // Días (AAAA-MM-DD) en los que la obra y el ámbito que se ven tienen algo guardado, en el PC o solo en este aparato.
+      // Mismo criterio que jornadaGuardada (manda la jornada sin enviar; una anulada deja el día sin nada), pero en una
+      // sola pasada para pintar todo el calendario.
+      function diasConRegistro() {
+        let dias = new Set();
+        pub().forEach((fila) => {
+          if (fila.ambito === a.amb) dias.add(fila.fecha);
+        });
+        let vistos = new Set();
+        pending.forEach((jornada) => {
+          if (jornada.obra !== a.obra || jornada.ambito !== a.amb || vistos.has(jornada.fecha)) return;
+          vistos.add(jornada.fecha);
+          if (jornada.anulada) dias.delete(jornada.fecha);
+          else dias.add(jornada.fecha);
+        });
+        return dias;
+      }
+      // Genera el calendario interactivo para marcar uno o varios días diferentes. Los días que ya tienen algo guardado
+      // (en esta obra y este ámbito) salen de otro color, con una leyenda, para ver de un vistazo cuáles faltan por anotar.
       function calendarioHTML() {
         let [ano, mes] = (a.calMes || a.fecha.slice(0, 7)).split('-').map(Number);
+        let conRegistro = diasConRegistro();
         let meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         let primerDia = new Date(ano, mes - 1, 1).getDay();
         let primerDiaCol = (primerDia === 0 ? 6 : primerDia - 1);
@@ -2035,7 +2108,11 @@
           let fStr = `${ano}-${z(mes)}-${z(d)}`;
           let on = (a.fechas || [a.fecha]).includes(fStr) ? ' on' : '';
           let hoyClass = fStr === today() ? ' hoy' : '';
-          celdas.push(`<button type="button" class="cal-dia${on}${hoyClass}" data-cal-dia="${fStr}">${d}</button>`);
+          let tiene = conRegistro.has(fStr);
+          let etiqueta = tiene ? ` aria-label="${E(fdia(fStr))}: con registro"` : '';
+          celdas.push(
+            `<button type="button" class="cal-dia${on}${hoyClass}${tiene ? ' tiene' : ''}" data-cal-dia="${fStr}"${etiqueta}>${d}</button>`,
+          );
         }
         let marcadas = (a.fechas || [a.fecha]).sort();
         let listaMarcadas = marcadas.length > 1
@@ -2053,6 +2130,8 @@
           `<span class="cal-sem">J</span><span class="cal-sem">V</span><span class="cal-sem">S</span><span class="cal-sem">D</span>` +
           celdas.join('') +
           `</div>` +
+          `<div class="cal-leyenda" id="cal-leyenda"><span><i class="muestra tiene"></i>Con registro en ${a.amb === 'garaje' ? 'Garajes' : 'Viviendas'}</span> ` +
+          `<span><i class="muestra"></i>Sin registro</span></div>` +
           listaMarcadas +
           `</div>`
         );

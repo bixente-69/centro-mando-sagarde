@@ -4352,6 +4352,132 @@ with sync_playwright() as p:
            'T217 y el resumen también: %r' % e.txt('#resumen-guardado'))
     con_escena('T217', est9(viv('2026-10-20', 'Ana', 'Rafa B.'), ['Ana', 'Rafa B.'], u('2026-10-20', 'Ana', 'Rafa B.')), t217)
 
+    # ======================================================================================================================
+    # Calendario con los días que ya tienen registro: en la obra y el ámbito que se ven, un día con algo guardado (en el PC o solo
+    # en este aparato) sale de otro color, para repasar de un vistazo qué días faltan por anotar y cuáles ya están.
+    # ======================================================================================================================
+    LEYENDA_VIV = 'Con registro en Viviendas Sin registro'
+
+    def con_registro(e):
+        """Días del mes que se ve en el calendario marcados como «con registro» (con el calendario plegado o no)."""
+        return e.pg.eval_on_selector_all('button.cal-dia.tiene', 'b=>b.map(x=>x.dataset.calDia)')
+
+    def abrir_cal(e):
+        """En el móvil el calendario viene plegado: se abre con el botón de la fecha. En la tablet ya está a la vista."""
+        if not e.pg.is_visible('#cal-box'):
+            e.clic('#cal-toggle')
+
+    def mes_cal(e, paso):
+        abrir_cal(e)
+        e.clic('button[data-cal-nav="%d"]' % paso)
+
+    # --- T218: los días con algo guardado (en el PC o solo aquí) salen marcados; una anulada sin enviar quita la marca; hay leyenda
+    def t218(e):
+        e.ir()
+        ok(con_registro(e) == ['2026-10-16', '2026-10-19', '2026-10-21', '2026-10-22'],
+           'T218 octubre: marcados el 16, 19 y 21 (en el PC) y el 22 (solo aquí); el 20 está anulado sin enviar y no cuenta: %s' % con_registro(e))
+        ok(e.txt('#cal-leyenda') == LEYENDA_VIV, 'T218 la leyenda dice qué significa el color y de qué ámbito es: %r' % e.txt('#cal-leyenda'))
+        ok(e.pg.get_attribute('button[data-cal-dia="2026-10-19"]', 'aria-label') == 'lun 19/10: con registro'
+           and e.pg.get_attribute('button[data-cal-dia="2026-10-17"]', 'aria-label') is None,
+           'T218 el día marcado lo dice también con palabras (no solo con color): %r %r' % (
+               e.pg.get_attribute('button[data-cal-dia="2026-10-19"]', 'aria-label'), e.pg.get_attribute('button[data-cal-dia="2026-10-17"]', 'aria-label')))
+        mes_cal(e, -1)
+        ok(con_registro(e) == [], 'T218 septiembre no tiene nada guardado: %s' % con_registro(e))
+        mes_cal(e, 1)
+        ok(con_registro(e) == ['2026-10-16', '2026-10-19', '2026-10-21', '2026-10-22'], 'T218 al volver a octubre siguen las marcas: %s' % con_registro(e))
+        ok(e.pendientes() == '2' and len(ls(e, 'pendientes')) == 2, 'T218 mirar el calendario no toca lo guardado: %s' % e.pendientes())
+    con_escena('T218', est200(), t218, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', ['Ana']), pend9('2026-10-20', [], anulada=True)]))
+
+    # --- T219: las marcas son del ámbito que se ve: en Garajes salen los días de garaje, no los de vivienda
+    def t219(e):
+        e.ir()
+        ok(con_registro(e) == ['2026-10-19'] and e.txt('#cal-leyenda') == LEYENDA_VIV,
+           'T219 en Viviendas solo el 19/10: %s %r' % (con_registro(e), e.txt('#cal-leyenda')))
+        e.clic('button[data-amb="garaje"]')
+        ok(con_registro(e) == ['2026-10-14', '2026-10-15'] and e.txt('#cal-leyenda') == 'Con registro en Garajes Sin registro',
+           'T219 en Garajes salen el 14 y el 15/10 y la leyenda cambia a Garajes: %s %r' % (con_registro(e), e.txt('#cal-leyenda')))
+        e.clic('button[data-amb="vivienda"]')
+        ok(con_registro(e) == ['2026-10-19'], 'T219 al volver a Viviendas vuelve el 19/10: %s' % con_registro(e))
+    con_escena('T219', est9(viv('2026-10-19', 'Ana') + gar('2026-10-14', 'Ana') + gar('2026-10-15', 'Beto'), ['Ana', 'Beto'],
+                            u('2026-10-19', 'Ana'), u('2026-10-15', 'Beto')), t219)
+
+    # --- T220: las marcas son de la obra que se ve: lo guardado en otra obra no se mezcla
+    def t220(e):
+        e.ir()
+        e.obra('olabeaga')
+        ok(con_registro(e) == ['2026-10-19'], 'T220 Olabeaga: solo su 19/10 (no el 20 ni el 21 de Mungia): %s' % con_registro(e))
+        e.obra('mungia')
+        ok(con_registro(e) == ['2026-10-20', '2026-10-21'], 'T220 Mungia: su 20/10 (en el PC) y su 21/10 (solo aquí): %s' % con_registro(e))
+        e.obra('olabeaga')
+        ok(con_registro(e) == ['2026-10-19'], 'T220 al volver a Olabeaga, otra vez solo el 19/10: %s' % con_registro(e))
+    mungia = obra_est('2026 MUNGIA', viv('2026-10-20', 'Ana'), ultima={'vivienda': u('2026-10-20', 'Ana'), 'garaje': None})
+    con_escena('T220', est9(viv('2026-10-19', 'Ana'), ['Ana'], u('2026-10-19', 'Ana'), extra_obras={'mungia': mungia}), t220,
+               init=sembrar('sgd_personal_pendientes', [pend9('2026-10-21', ['Ana'], obra='mungia')]))
+
+    # --- T221: guardar un día lo marca al momento; anularlo desde Jornadas le quita la marca
+    def t221(e):
+        e.ir()
+        ok('2026-10-22' not in con_registro(e), 'T221 preparación: el 22/10 no está marcado: %s' % con_registro(e))
+        pinchar(e, '2026-10-22')
+        e.copiar()
+        e.clic('button[data-guardar]')
+        abrir_cal(e)
+        ok('2026-10-22' in con_registro(e), 'T221 al guardar el 22/10 sale marcado (sin esperar al PC): %s' % con_registro(e))
+        e.clic('button[data-v="jornadas"]')
+        e.clic('.jor-item[data-fecha="2026-10-22"] button[data-anular]')
+        e.clic('#confirmar button[data-confirmar="si"]')
+        e.clic('button[data-v="app"]')
+        ok('2026-10-22' not in con_registro(e) and '2026-10-21' in con_registro(e),
+           'T221 al anular el 22/10 pierde la marca y el 21/10 (en el PC) la conserva: %s' % con_registro(e))
+    con_escena('T221', est200(), t221)
+
+    # --- T222: la marca coincide SIEMPRE con lo que dice «este día tiene algo guardado» (jornadaGuardada), en cada obra, ámbito y mes
+    def t222(e):
+        e.ir(); abrir_cal(e)
+        for obra_id in ('olabeaga', 'mungia'):
+            e.obra(obra_id)
+            for amb in ('vivienda', 'garaje'):
+                e.clic('button[data-amb="%s"]' % amb)
+                for mes in ('2026-09', '2026-10', '2026-11'):
+                    e.pg.evaluate("m=>{a.calMes=m;render();}", mes)
+                    esperado = e.pg.evaluate("[...document.querySelectorAll('button.cal-dia')].map(b=>b.dataset.calDia).filter(f=>jornadaGuardada(f)!==null)")
+                    ok(con_registro(e) == esperado, 'T222 %s/%s/%s: marcas %s y jornadaGuardada %s' % (obra_id, amb, mes, con_registro(e), esperado))
+                    if mes == '2026-10':
+                        ok(len(esperado) > 0, 'T222 %s/%s: la comprobación no es vacía en octubre: %s' % (obra_id, amb, esperado))
+    mungia222 = obra_est('2026 MUNGIA', viv('2026-10-20', 'Ana') + gar('2026-10-13', 'Ana'), ultima={'vivienda': u('2026-10-20', 'Ana'), 'garaje': u('2026-10-13', 'Ana')})
+    con_escena('T222', est9(viv('2026-10-19', 'Ana') + viv('2026-11-02', 'Ana') + gar('2026-10-14', 'Ana'), ['Ana'], u('2026-11-02', 'Ana'), u('2026-10-14', 'Ana'),
+                            extra_obras={'mungia': mungia222}), t222, ancho=1180, alto=820,
+               init=sembrar('sgd_personal_pendientes', [pend9('2026-10-22', ['Ana']), pend9('2026-10-19', [], anulada=True), pend9('2026-10-15', ['Ana'], ambito='garaje'),
+                                                         pend9('2026-09-30', ['Ana'], obra='mungia')]))
+
+    # --- T223: el color se nota (distinto del día sin registro y del seleccionado), el día elegido con registro conserva una señal y no hay desborde
+    def t223(e):
+        e.ir()
+        pinchar(e, '2026-10-19')
+        abrir_cal(e)
+        medida = e.pg.evaluate("""() => {
+          const css = (sel, p, pseudo) => getComputedStyle(document.querySelector(sel), pseudo || null)[p];
+          return {tiene: css('button[data-cal-dia="2026-10-16"]', 'backgroundColor'), sin: css('button[data-cal-dia="2026-10-17"]', 'backgroundColor'),
+                  elegido: css('button[data-cal-dia="2026-10-19"]', 'backgroundColor'), clases: document.querySelector('button[data-cal-dia="2026-10-19"]').className,
+                  punto: css('button[data-cal-dia="2026-10-16"]', 'content', '::after'), puntoElegido: css('button[data-cal-dia="2026-10-19"]', 'content', '::after'),
+                  puntoSin: css('button[data-cal-dia="2026-10-17"]', 'content', '::after'),
+                  alto: document.querySelector('button[data-cal-dia="2026-10-16"]').getBoundingClientRect().height};
+        }""")
+        ok(medida['tiene'] != medida['sin'], 'T223 el día con registro tiene otro color que el que no: %s' % medida)
+        ok('on' in medida['clases'].split() and 'tiene' in medida['clases'].split() and medida['elegido'] not in (medida['tiene'], medida['sin']),
+           'T223 el día elegido con registro sigue siendo el elegido (fondo propio) y a la vez con registro: %s' % medida)
+        ok(medida['punto'] not in ('none', 'normal') and medida['puntoElegido'] not in ('none', 'normal') and medida['puntoSin'] in ('none', 'normal'),
+           'T223 la señal (un punto) sale en los días con registro, elegidos o no, y no en los demás: %s' % medida)
+        ok(medida['alto'] >= 44, 'T223 las casillas siguen midiendo al menos 44 px: %s' % medida['alto'])
+        sin_desborde(e, 'calendario con marcas')
+    con_escena('T223', est200(), t223)
+
+    def t223b(e):
+        e.ir()
+        sin_desborde(e, 'calendario con marcas en la tablet')
+        ok(e.pg.is_visible('#cal-leyenda') and len(con_registro(e)) == 4, 'T223 en la tablet la leyenda y las marcas se ven sin abrir nada: %s' % con_registro(e))
+    con_escena('T223b', est200(), t223b, ancho=1180, alto=820)
+
     # Fin del bloque del paso MA4c
 
     # Fin del bloque del paso MA2
