@@ -22123,20 +22123,21 @@
   ],
   "dudas": [],
   "materiales": {
-    "ultimo_mes": "Julio26",
-    "ultima_fecha": "29/07/2026",
-    "dias_desde": 96,
+    "ultimo_mes": "Noviembre26",
+    "ultima_fecha": "02/11/2026",
+    "dias_desde": 1,
     "meses": [
       "Marzo26",
       "Abril26",
       "Mayo",
       "Junio26",
-      "Julio26"
+      "Julio26",
+      "Noviembre26"
     ],
-    "n_items": 35,
-    "aviso": "La hoja de materiales no se actualiza desde 29/07/2026 (96 días). Los datos de consumo/stock pueden estar desfasados.",
+    "n_items": 37,
+    "aviso": null,
     "_meta": {
-      "actualizado": "02/11/2026 20:28"
+      "actualizado": "03/11/2026 15:32"
     }
   },
   "documentos": {
