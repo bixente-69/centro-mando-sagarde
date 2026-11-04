@@ -41,7 +41,9 @@ CARPETAS_SISTEMA = {"_SISTEMA", "_SISTEMA INFORME SAGARDE IA",
 if str(MOTOR_DIR) not in sys.path:
     sys.path.insert(0, str(MOTOR_DIR))
 
-from avisos import contrato_sin_aviso, dias_desde_timestamp, es_aviso_por_antiguedad
+from avisos import (contrato_sin_aviso, dias_desde_timestamp, es_aviso_por_antiguedad,
+                    CODIGO_HOJAS_SIN_APLICAR, CODIGO_CONTROLES_SIN_APLICAR,
+                    CODIGO_PENDIENTES_NO_COMPROBADO)
 
 _SCRIPTS_DIR = str(Path(__file__).resolve().parent)
 if _SCRIPTS_DIR not in sys.path:
@@ -168,6 +170,79 @@ def audit_obras_abiertas() -> list[dict]:
     return issues
 
 
+def audit_pendientes_revisiones(raiz=None, obras=None) -> list[dict]:
+    """Hojas y controles horarios que esperan sin aplicar en `<obra>/REVISIONES`.
+
+    Es el eslabon manual donde mas se pierde: lo que se deja en la carpeta y nadie
+    aplica no da error en ningun sitio (decision 4 de Bixente, 04/11/2026). No se
+    inventa ninguna regla: se reutilizan las que ya decide «actualiza la obra»:
+    - hojas: `actualizar_obra.detectar_hojas` (fecha + huella SHA256, vivienda y garaje);
+    - controles horarios: `cerrar_obra.controles_sin_aplicar` (huella SHA256 contra la traza).
+    Si una obra no se puede comprobar se AVISA (PENDIENTES_NO_COMPROBADO): un cero por
+    haber fallado la comprobacion seria el fallo de siempre.
+    """
+    raiz = Path(raiz or ROOT)
+    motor = raiz / "SAGARDE OBRAS ABIERTAS" / "_SISTEMA INFORME SAGARDE IA"
+    try:
+        if str(motor) not in sys.path:
+            sys.path.insert(0, str(motor))
+        import actualizar_obra
+        import cerrar_obra
+        if obras is None:
+            import registro_obras
+            obras = registro_obras.OBRAS
+    except Exception as exc:  # que la comprobacion no arranque se dice, no se calla
+        return [_issue_no_comprobado("(todas)", f"no se pudo cargar el codigo: {type(exc).__name__}: {exc}")]
+
+    issues = []
+    for obra in obras:
+        carpeta = raiz / "SAGARDE OBRAS ABIERTAS" / obra["carpeta_obra"]
+        if not (carpeta / "REVISIONES").is_dir():
+            continue
+        try:
+            def leer(nombre):
+                ruta = carpeta / "INFORME SAGARDE IA" / nombre
+                if not ruta.is_file():
+                    return None
+                return json.loads(ruta.read_text(encoding="utf-8"))
+            det = actualizar_obra.detectar_hojas(
+                carpeta / "REVISIONES", leer("ficha_obra.json"), leer("ficha_garajes.json"))
+            hojas = [h.ruta.name for h in det.vivienda + det.garaje]
+            ctl = cerrar_obra.controles_sin_aplicar(raiz, obra)
+        except Exception as exc:  # noqa: BLE001
+            issues.append(_issue_no_comprobado(obra["nombre"], f"{type(exc).__name__}: {exc}"))
+            continue
+        if ctl.get("error"):
+            issues.append(_issue_no_comprobado(obra["nombre"], f"controles horarios: {ctl['error']}"))
+        controles = [p["nombre"] for p in ctl.get("pendientes", [])]
+        if hojas:
+            issues.append({
+                "nivel": "warning", "area": "Obras Abiertas", "obra": obra["nombre"],
+                "codigo": CODIGO_HOJAS_SIN_APLICAR, "n": len(hojas), "ficheros": hojas,
+                "mensaje": f"{len(hojas)} hoja(s) de revision en REVISIONES sin aplicar: {', '.join(hojas)}.",
+                "archivo": str(carpeta.relative_to(raiz) / "REVISIONES"),
+                "solucion": f"Decir «actualiza la obra {obra['id']}», o sacar de la carpeta las hojas que no valgan.",
+            })
+        if controles:
+            issues.append({
+                "nivel": "warning", "area": "Obras Abiertas", "obra": obra["nombre"],
+                "codigo": CODIGO_CONTROLES_SIN_APLICAR, "n": len(controles), "ficheros": controles,
+                "mensaje": f"{len(controles)} control(es) horario(s) en REVISIONES sin aplicar: {', '.join(controles)}.",
+                "archivo": str(carpeta.relative_to(raiz) / "REVISIONES"),
+                "solucion": f"Decir «actualiza la obra {obra['id']}», o sacar de la carpeta los que no valgan.",
+            })
+    return issues
+
+
+def _issue_no_comprobado(obra: str, motivo: str) -> dict:
+    return {
+        "nivel": "warning", "area": "Obras Abiertas", "obra": obra,
+        "codigo": CODIGO_PENDIENTES_NO_COMPROBADO,
+        "mensaje": f"No se pudo comprobar si hay hojas o controles sin aplicar: {motivo}",
+        "solucion": "Mirar a mano la carpeta REVISIONES de la obra y avisar si el fallo se repite.",
+    }
+
+
 def audit_materiales() -> list[dict]:
     """Hojas de entrega de materiales que el panel no podra leer.
 
@@ -283,7 +358,8 @@ def run_audit() -> dict:
     issues_mant = audit_mantenimientos()
     issues_mat = audit_materiales()
     issues_personal = audit_personal()
-    all_issues = issues_obras + issues_mant + issues_mat + issues_personal
+    issues_pendientes = audit_pendientes_revisiones()
+    all_issues = issues_obras + issues_mant + issues_mat + issues_personal + issues_pendientes
 
     errors = [i for i in all_issues if i["nivel"] == "error"]
     warnings = [i for i in all_issues if i["nivel"] == "warning"]

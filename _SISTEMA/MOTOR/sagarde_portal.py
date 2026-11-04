@@ -1027,6 +1027,34 @@ a.row:active,a.card:active{background:#f2f4f7}
 """
 
 
+def bloque_aviso_subida(generado_ts: float, generado_txt: str, prefijo: str = "alerta") -> str:
+    """Aviso de antiguedad de la ultima subida, calculado al ABRIR la pagina.
+
+    Una pagina generada hace 3 semanas no sabe que es vieja si la edad se pinta al
+    generarla: por eso la calcula el navegador con la fecha de generacion incrustada.
+    Los umbrales (avisos.DIAS_SUBIDA_*) viajan en la propia pagina. `prefijo` es la clase
+    CSS de los avisos de esa portada ("alerta" en escritorio, "al" en el movil).
+    """
+    import avisos
+    return (
+        '<style>#aviso-subida[hidden]{display:none!important}</style>'
+        f'<div id="aviso-subida" hidden data-generado="{generado_ts:.0f}" '
+        f'data-fecha="{escape(generado_txt, quote=True)}" '
+        f'data-amarillo="{avisos.DIAS_SUBIDA_AMARILLO}" data-rojo="{avisos.DIAS_SUBIDA_ROJO}"></div>'
+        '<script>(function(){var e=document.getElementById("aviso-subida");if(!e)return;'
+        'var g=Number(e.getAttribute("data-generado"))*1000,'
+        'a=Number(e.getAttribute("data-amarillo")),r=Number(e.getAttribute("data-rojo"));'
+        'if(!isFinite(g)||!g||!isFinite(a)||!isFinite(r))return;'
+        'var d0=new Date(g);d0.setHours(0,0,0,0);var h=new Date();h.setHours(0,0,0,0);'
+        'var dias=Math.round((h-d0)/864e5),n;'
+        'if(dias>r){n="bad"}else if(dias>a){n="warn"}else{return}'
+        f'e.className="{prefijo} "+n;e.hidden=false;'
+        'e.textContent="La \u00faltima actualizaci\u00f3n del portal fue hace "+dias+" d\u00edas ("'
+        '+e.getAttribute("data-fecha")+"). Ejecuta Actualizar_Sagarde.bat para ponerlo al d\u00eda.";'
+        '})();</script>'
+    )
+
+
 def generar_portal_movil(ro: dict | None, rp: dict | None,
                           mant: list[dict], obras_cerradas: list[dict]) -> None:
     # Norma _SISTEMA (07/08/2026): el portal movil es una vista generada,
@@ -1065,8 +1093,10 @@ def generar_portal_movil(ro: dict | None, rp: dict | None,
         sin_cambios = [o["nombre"] for o in obras if o.get("con_panel") and o.get("sin_cambios")]
         if sin_cambios:
             alertas_raw.append(("warn", f"{len(sin_cambios)} obra(s) sin cambios respecto a la ultima revision: {', '.join(sin_cambios)}"))
-    alertas_html = "".join(f'<div class="al {t}">{txt}</div>' for t, txt in alertas_raw) \
-        if alertas_raw else '<div class="al ok">Sin bloqueos activos en las obras con seguimiento IA.</div>'
+    aviso_subida = bloque_aviso_subida(datetime.now().timestamp(), generated, "al")
+    alertas_html = ("".join(f'<div class="al {t}">{txt}</div>' for t, txt in alertas_raw)
+                    if alertas_raw else '<div class="al ok">Sin bloqueos activos en las obras con seguimiento IA.</div>')
+    alertas_html = aviso_subida + alertas_html
 
     # El fichero vive en _SISTEMA/, un nivel por debajo de la raiz, y todos
     # los href de los resumenes son relativos a la raiz.
@@ -1343,6 +1373,43 @@ if(si)si.addEventListener('input',function(){{var q=si.value.trim().toLowerCase(
     print(f"  Portal movil: {output}")
 
 
+def _plural(n: int, uno: str, varios: str) -> str:
+    return f"{n} {uno if n == 1 else varios}"
+
+
+def _alertas_pendientes_revisiones(pendientes: list[dict]) -> list[tuple[str, str]]:
+    """Avisos de lo que espera sin aplicar en REVISIONES (lo calcula el auditor del paso 0).
+
+    Un aviso con las obras y cuanto tiene cada una, y otro aparte si alguna obra no se
+    pudo comprobar: un fallo al comprobar no puede parecer «no hay pendientes».
+    """
+    import avisos as _avisos
+    alertas = []
+    por_obra: dict[str, dict[str, int]] = {}
+    for i in pendientes:
+        if i.get("codigo") == _avisos.CODIGO_PENDIENTES_NO_COMPROBADO:
+            continue
+        cuenta = por_obra.setdefault(str(i.get("obra", "?")), {"hojas": 0, "controles": 0})
+        clave = "hojas" if i.get("codigo") == _avisos.CODIGO_HOJAS_SIN_APLICAR else "controles"
+        cuenta[clave] += int(i.get("n") or 0)
+    if por_obra:
+        partes = []
+        for obra, c in por_obra.items():
+            cosas = []
+            if c["hojas"]:
+                cosas.append(_plural(c["hojas"], "hoja", "hojas"))
+            if c["controles"]:
+                cosas.append(_plural(c["controles"], "control horario", "controles horarios"))
+            partes.append(f"<b>{escape(obra)}</b>: {' y '.join(cosas)}")
+        alertas.append(("warn", "📥 Sin aplicar en REVISIONES — di «actualiza la obra» para cada una: " + " · ".join(partes)))
+    no_comprobadas = [str(i.get("obra", "?")) for i in pendientes
+                      if i.get("codigo") == _avisos.CODIGO_PENDIENTES_NO_COMPROBADO]
+    if no_comprobadas:
+        nombres = ", ".join(f"<b>{escape(o)}</b>" for o in no_comprobadas)
+        alertas.append(("warn", f"⚠️ No se pudo comprobar si hay hojas o controles sin aplicar en: {nombres}"))
+    return alertas
+
+
 def construir_alertas(ro: dict | None = None, rp: dict | None = None, mant: list[dict] | None = None) -> list[tuple[str, str]]:
     """Traduce el resumen de Obras Abiertas, Post-Ventas y Mantenimientos en avisos accionables."""
     alertas = []
@@ -1429,9 +1496,15 @@ def construir_alertas(ro: dict | None = None, rp: dict | None = None, mant: list
         try:
             with open(diag_path, encoding="utf-8") as f:
                 diag = json.load(f)
+            import avisos as _avisos
+            todos = diag.get("issues", [])
+            pendientes = [i for i in todos if i.get("codigo") in _avisos.CODIGOS_PENDIENTES]
+            alertas.extend(_alertas_pendientes_revisiones(pendientes))
+            # Los pendientes tienen su propio aviso: no se cuentan ademas como «formato».
             warnings_audit = [
-                i for i in diag.get("issues", [])
+                i for i in todos
                 if i.get("nivel") == "warning"
+                and i.get("codigo") not in _avisos.CODIGOS_PENDIENTES
                 and not aviso_caducado(i.get("dias_antiguedad"))
             ]
             if warnings_audit:
@@ -1566,6 +1639,9 @@ def build_html(areas: list[dict], apps: list[dict], ro: dict | None, rp: dict | 
     else:
         alertas_html = '<div class="alerta ok">Sin bloqueos ni avisos activos en las obras con seguimiento IA.</div>' if ro else \
             '<div class="alerta info">Todavia no se ha generado el resumen de Obras Abiertas — ejecuta el actualizador para verlo aqui.</div>'
+    ahora_aviso = datetime.now()
+    alertas_html = bloque_aviso_subida(
+        ahora_aviso.timestamp(), ahora_aviso.strftime("%d/%m/%Y %H:%M"), "alerta") + alertas_html
 
     # --- Grid de obras con seguimiento IA, ordenadas por riesgo ---
     obras_ia = [o for o in (ro or {}).get("obras", []) if o.get("con_panel") and o.get("panel_actualizado")]

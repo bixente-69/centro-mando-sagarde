@@ -144,6 +144,7 @@ class TestAuditoriaDeMateriales(unittest.TestCase):
                 patch.object(auditor_sagarde, "audit_obras_abiertas", return_value=[]), \
                 patch.object(auditor_sagarde, "audit_mantenimientos", return_value=[]), \
                 patch.object(auditor_sagarde, "audit_personal", return_value=[]), \
+                patch.object(auditor_sagarde, "audit_pendientes_revisiones", return_value=[]), \
                 patch.object(auditor_sagarde, "audit_materiales", return_value=[aviso]):
             from contextlib import redirect_stdout
             import io
