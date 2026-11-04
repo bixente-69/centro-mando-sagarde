@@ -21,6 +21,8 @@ trazabilidad JSONL. Ver §4, §5.2, §5.4 y §7.
 
 **Corrección 04/11/2026** (comprobada contra el repositorio): el catálogo de tajos sí está en git; el portal móvil se regenera en cada pasada (solo le falta un enlace de navegación); los accesos de aplicaciones son seis, no siete; y de los cuatro BAT solo dos están versionados. Las dos tablas automáticas no se han tocado.
 
+**Actualización 04/11/2026 (noche):** el generador de revisiones se ha auditado entero y su PR está fusionada en `main`: 14 fallos corregidos (informe `_SISTEMA/docs/auditorias_nube_2026-11-04/H_generador_revisiones.md`), 87 pruebas nuevas en navegador real y 65 mutaciones detectadas. Decisiones de Bixente 8 y 9 en `_SISTEMA/docs/auditorias_nube_2026-11-04/G_decisiones_bixente.md`; memoria con los hechos de campo, las claves del almacenamiento del aparato y cómo ejecutar las pruebas con navegador en la nube en `_SISTEMA/docs/2026-11-04-memoria-generador-revisiones-y-campo.md`. El recuento de pruebas del mapa («114») estaba desfasado: hay **2.067 definidas** (1.950 + 117). Las dos tablas automáticas siguen sin tocarse.
+
 ## Estado de hoy
 
 Las dos tablas que siguen las reescribe
@@ -125,7 +127,7 @@ Las capas confirmadas son:
    salir siempre bloqueado.
 5. **Presentación**: un panel por obra registrada (cuenta viva en «Estado de hoy»), índices, portal de escritorio, un portal móvil (`_SISTEMA/PORTAL SAGARDE.html`: se regenera en cada pasada, pero ningún índice lo enlaza), generador de revisiones y seis accesos de aplicaciones (3 de obras abiertas y 3 herramientas de `VARIOS`).
 6. **Orquestación/publicación**: `generar_todos.py`, `sagarde_portal.py`, scripts especializados y cuatro BAT (en git solo están `Actualizar_Sagarde.bat` y `Abrir_Panel_Local.bat`; los demás no se versionan y no se pueden comprobar desde la nube). `Actualizar_Sagarde.bat` termina en `git add -A`, commit y `push origin main`.
-7. **Gobierno**: dos `CLAUDE.md`, cuatro definiciones locales tipo skill/agente, planes, especificaciones, handoffs, memoria vigente y 114 casos de prueba definidos estáticamente.
+7. **Gobierno**: dos `CLAUDE.md`, cuatro definiciones locales tipo skill/agente, planes, especificaciones, handoffs, memoria vigente y 2.067 pruebas definidas (`def test_`: 1.950 en las del motor de obras y 117 en `_SISTEMA/MOTOR/tests`, medido el 04/11/2026).
 
 Flujo confirmado: los historiales DOCX/PDF/HTML/JSON de los adaptadores de obra y las revisiones individuales de tinta/PDF digital/HTML digital se traducen a `REVISION_NORMALIZADA`; `validar_revision.py` decide reglas comunes y `aplicar_revision.py` calcula una copia de la ficha en memoria. Antes de persistir, el llamador compara ese resultado con el camino histórico: solo con paridad guarda la ficha y añade trazabilidad. La ficha vuelve a producir el snapshot validado; el motor calcula KPI y bloqueos; **el priorizador lee la base de la obra** y produce trabajos, previsión y preguntas; se escriben memoria, panel e informe ejecutivo; después se agregan índices, el registro del generador y el portal.
 
@@ -258,7 +260,7 @@ mindmap
       4 planes
       1 handoff
       3 especificaciones
-      114 casos de prueba
+      2067 pruebas definidas
     Histórico y dudas
       SAGARDE OLD
       backups
@@ -320,7 +322,7 @@ flowchart TD
 | A13 | Decisión | Prioridades | Priorizador v4.3 | módulo | `priorizador_trabajos.py` | Clasificar y agrupar | Historial + catálogo | JSON | catálogo | Panel | Operativo | `priorizador_trabajos.py:14-36`, `:560-633` |
 | A14 | Orquestación | Obras | Generador total | script | `generar_todos.py` | Coordinar 5 obras y agregados; convertir el último historial a revisión normalizada y aplicar el cutover con salvaguarda aislada por obra | Registro/fuentes | Ficha/JSON/HTML/PDF/JS/JSONL | A06-A13, A26-A31 | BAT | Operativo sobre motor común; una divergencia bloquea solo la ficha afectada | `generar_todos.py:990-1076`, `:1148-1195` |
 | A15 | Presentación | Obra | Panel de obra | interfaz | `panel_obra.py` → `*/panel.html` | Nueve vistas | Snapshot/ficha | HTML | Chart.js local | Portal | 5 instancias | `panel_obra.py:476-538` |
-| A16 | Presentación | Revisión | Generador | interfaz | `generador_revisiones.html` | Hojas desde fichas | JS/usuario | HTML/localStorage | navegador | Campo | Solo 3 fichas | `worksWithDatabase`, `sc-home`, `sc-wizard` |
+| A16 | Presentación | Revisión | Generador | interfaz | `generador_revisiones.html` | Hojas desde fichas; autoguardado en el aparato con aviso y limpieza de copias de más de 30 días | JS/usuario | HTML/localStorage | navegador | Campo | Operativo; auditado el 04/11/2026 (14 fallos corregidos); no probado en tablet real | `worksWithDatabase`, `sc-home`, `sc-wizard`, `escribirHaciendoSitio`; informe `_SISTEMA/docs/auditorias_nube_2026-11-04/H_generador_revisiones.md` |
 | A17 | Presentación | Portal | Portal escritorio | interfaz | `sagarde_portal.py` → `index.html` | Centro de mando | Resúmenes/árbol | HTML | otras capas | Usuario | Operativo | `sagarde_portal.py:936-1085` |
 | A18 | Presentación | Móvil | 5 pestañas | interfaz | `PORTAL SAGARDE.html` | Portal compacto | Resúmenes | HTML | `generar_portal_movil` | Usuario | CONFIRMADO POR CÓDIGO | se regenera en cada pasada (`sagarde_portal.py:1018`, llamada en `:1676`); salida del 04/11/2026; sin enlace desde `index.html` |
 | A19 | Presentación | Postventa | Índice/previews | interfaz | `postventas_index.py` | Filtros, pendientes, Word | Carpetas | HTML/JSON | python-docx | Portal | Operativo | `postventas_index.py:345-765` |
@@ -328,7 +330,7 @@ flowchart TD
 | A21 | Presentación | Apps | 3 herramientas | interfaz | `APLICACIONES/index.html`, `VARIOS/*` | Tierras, baterías, Buscador Eléctrico, personal | Datos locales y consulta remota | HTML/JSON/PDF | navegador + Cloudflare Worker privado | Portal | Mixto | `sagarde_portal.py:519-565`, `:853-887`; `VARIOS/BUSCADOR ELECTRICO/app_buscador_electrico.html` |
 | A22 | Informes | Ejecutivo eléctrico | PDF A4 | script | `generar_informe_ejecutivo.py` | Producción propia Sagarde por obra/portal | Ficha + historial + prioridades | PDF | ReportLab + catálogo + **fuentes en `assets/fonts/`** | Orquestador | Operativo desde base viva; tipografía propia desde 14/08/2026 | `generar_informe_ejecutivo.py` |
 | A23 | Automatización | Global | Actualizador | automatización | `Actualizar_Sagarde.bat` | Regenerar y publicar | Árbol | Archivos/commit | Python/Git | Usuario | Riesgoso | BAT completo |
-| A24 | Calidad | Pruebas | unittest | prueba | dos carpetas `tests` | 114 casos | Código/fixtures | Resultado | dependencias | Desarrollo | No ejecutado aquí | clases `Test*` |
+| A24 | Calidad | Pruebas | unittest | prueba | dos carpetas `tests` | 2.067 pruebas definidas (1.950 + 117) | Código/fixtures | Resultado | dependencias | Desarrollo | Las 1.950 del motor de obras se ejecutaron el 04/11/2026 con dependencias: 22 fallos, todos de entorno (ruta `D:\`, clon superficial); las 117 de `_SISTEMA/MOTOR/tests` sin ejecutar | clases `Test*`; memoria `_SISTEMA/docs/2026-11-04-memoria-generador-revisiones-y-campo.md` |
 | A25 | Histórico | Archivo | OLD/backups/scratch | almacenamiento | `SAGARDE (OLD)`, `*.bak`, `scratch` | Conservación/restos | Archivos | Consulta | — | Humano/portal | Histórico/duplicado | 128 cerradas; 590 nombres backup |
 | A26 | Normalización | Revisión común | Motor de validación | módulo | `_SISTEMA.../validar_revision.py` | Define `REVISION_NORMALIZADA`, genera su ID y centraliza forma, ubicación, catálogo, alfabetos y reglas antes/después | Revisión + ficha + catálogo | Aceptadas/rechazadas/avisos/resumen/aplicable | `ficha_obra.MAPA_ESTADO`, catálogo | Aplicador, tres adaptadores, CLI y orquestador | Operativo; puro respecto a ficha y disco | `validar_revision.py:18-40`, `:43-55`, `:261-427` |
 | A27 | Actualización | Revisión común | Motor de aplicación | módulo | `_SISTEMA.../aplicar_revision.py` | Valida y aplica solo acciones `actualizar` sobre una copia profunda; no hace I/O | Revisión + ficha + catálogo + `dry_run` | Resultado y, si procede, `ficha_actualizada` en memoria | A26 | CLI y orquestador | Operativo; puro, `dry_run=True` por defecto | `aplicar_revision.py:2-6`, `:13-46` |
@@ -466,6 +468,8 @@ Hay 55 Markdown previos a esta auditoría. Se agrupan series repetitivas conserv
 | Instrucciones raíz | `CLAUDE.md` | instrucciones | Reglas globales | Vigente | carga de proyecto | Coherente con ficha/riesgos |
 | Instrucciones motor | `_SISTEMA/MOTOR/CLAUDE.md` | instrucciones | Pipeline/skills | Vigente con ruta ambigua | raíz/skills | `.claude/agents/...` depende del contexto |
 | Memoria vigente | `docs/2026-07-28-memoria-diccionario-tajos-alertas-informes.md` | memoria | Estado y decisiones | Vigente declarada | `CLAUDE.md` | Continuidad principal |
+| Memoria del generador y del campo | `_SISTEMA/docs/2026-11-04-memoria-generador-revisiones-y-campo.md` | memoria | Hechos de campo confirmados por Bixente, claves del almacenamiento de la tablet, invariantes del generador, cómo ejecutar las pruebas con navegador en la nube | Vigente desde 04/11/2026 | `CLAUDE.md` | Leer antes de tocar el generador |
+| Auditoría de la nube (04/11/2026) | `_SISTEMA/docs/auditorias_nube_2026-11-04/` | informes | A–F auditorías, G decisiones de Bixente, H generador de revisiones | Vigente | memoria anterior | La carpeta está bajo la regla `*` del `.gitignore`: los informes nuevos van con `git add -f` |
 | Guía de campo | `_SISTEMA/MOTOR/GUIA_CAMPO_MOBIL.md` | guía | Nomenclatura | Parcial | sin refs | Nombre real “MOBIL” |
 | Hoja de ruta | `_SISTEMA/MOTOR/HOJA_DE_RUTA.md` | roadmap | Fases 1-4 | 1-3 completas; 4 en curso | sin ref directa | 16 obras sin automatizar |
 | LEEME | `_SISTEMA.../LEEME.md` | documentación | Arquitectura antigua | APARENTEMENTE OBSOLETO | manual | M=75%, niega lector genérico/materiales; código dice otra cosa |
@@ -527,6 +531,7 @@ Criterio: **136 vistas/estados navegables**: 126 pestañas/pasos/filtros (5 móv
 | Inicio generador | `sc-home` | `generador_revisiones.html` | obras/recientes | JS/localStorage | seleccionar/eliminar | registro JS | 3 obras |
 | Asistente | `sc-wizard`, `step-1`…`step-4` | idem | Obra/Estructura/Tajos/Generar | ficha/usuario | editar/descargar/preview | navegador | Operativo |
 | Hoja generada | HTML descargado | plantilla del generador | Revisión | celdas | vacío→`/`→`M`→`X`, imprimir/guardar/limpiar | localStorage | Operativo |
+| Red de seguridad de la tablet | claves `sgd_rev_*` | `generador_revisiones.html` (`autoSave`, `escribirHaciendoSitio`, `saveConfig`, `podarConfigs`) | La hoja guarda sus marcas en el aparato al pulsar cada celda y las recupera al reabrir; con el aparato lleno avisa y borra solo copias de hojas de más de 30 días | `localStorage`: `sgd_rev_<obra>_<fecha>` (una hoja grande de Bolueta ≈ 224.000 caracteres), `sgd_rev_cfg_*`, `sgd_rev_recents`; cuota ≈ 5,2 millones de caracteres por origen `file://` | pulsar celda; «Guardar revisión» descarga el HTML y no depende del almacenamiento | decisiones 8 y 9 de `_SISTEMA/docs/auditorias_nube_2026-11-04/G_decisiones_bixente.md` | Operativo; probado en Chromium, no en tablet real |
 | Postventa | página + `all/recent/vencido/pdf/word/images` | `POST-VENTAS/index.html` | contratos/pendientes | Word/resumen | buscar/filtrar/abrir | postventas | Operativo |
 | Preview Word | página repetida | `_PREVIEWS_WORD/*.html` | tablas/pendientes | DOCX | Panel/Abrir Word | postventas | 88 generadas |
 | Mantenimientos | página | `MANTENIMIENTOS/index.html` | 4 contratos | escaneo | buscar/abrir | portal | Segundo generador prevalece |
@@ -801,7 +806,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | Skills revisión/actualizar | Documentadas | comandos coherentes |
 | Skill nueva obra | Obsoleta aparente | registro/esquema antiguos |
 | Skill parte | Sin uso confirmado | sin llamada |
-| Tests | Parcialmente documentados | 114 casos, no ejecutados |
+| Tests | Ejecutados el 04/11/2026 | 2.067 definidas; 1.950 ejecutadas (22 fallos de entorno) y 117 sin ejecutar |
 | Backups/scratch/staging | Duplicado/temporal | sin refs |
 
 # 11. Problemas, riesgos y contradicciones
