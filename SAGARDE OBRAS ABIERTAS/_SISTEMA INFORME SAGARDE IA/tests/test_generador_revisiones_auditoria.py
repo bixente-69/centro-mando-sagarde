@@ -46,6 +46,16 @@ HOJA_JS = """(vivs) => {
   return generateHTML({});
 }"""
 
+# Igual, pero con identificadores FIJOS de bloque, portal y planta, como los que trae una obra de la base (ficha).
+# Sin ids, cada generacion inventa unos nuevos (uid) y las claves de las celdas ya no casan entre una hoja y otra.
+HOJA_ESTABLE_JS = """(vivs) => {
+  S.obra='OBRA T'; S.fecha='2026-11-04';
+  S.bloques=normaliseStructure({bloques:[{id:'b1',nombre:'B1',portales:[{id:'p1',nombre:'P1',
+    plantas:[{id:'f1',nombre:'1',vivs:vivs},{id:'f2',nombre:'2',vivs:vivs}]}]}]});
+  S.sel=new Set(CAT.map(t=>t.id));
+  return generateHTML({});
+}"""
+
 # Pulsa (cambia de estado) la primera o segunda celda de las viviendas pedidas, por orden de aparicion.
 MARCAR_JS = """(pares) => {
   const cs=[...document.querySelectorAll('.td-st[data-k]')];
@@ -95,9 +105,9 @@ class Base(unittest.TestCase):
         pg.goto(GENERADOR.resolve().as_uri())
         return pg, errores
 
-    def hoja(self, pg, vivs):
+    def hoja(self, pg, vivs, js=HOJA_JS):
         """Genera la hoja con esas viviendas, la guarda en una carpeta temporal y la abre en una pagina nueva."""
-        html = pg.evaluate(HOJA_JS, vivs)
+        html = pg.evaluate(js, vivs)
         carpeta = TMP_BASE / ("gen_aud_" + uuid.uuid4().hex[:8])
         carpeta.mkdir(parents=True)
         self.addCleanup(shutil.rmtree, str(carpeta), True)
@@ -166,6 +176,30 @@ class TestH1RecuperarMarcas(Base):
         h.wait_for_timeout(400)
         self.assertEqual(h.evaluate(MARCADAS_JS), 2)
         self.assertFalse(h.evaluate(AVISO_JS, r"no se (ha|han) recuperado"))
+
+    def test_decision_de_bixente_las_marcas_guardadas_vuelven_aunque_la_hoja_sea_nueva(self):
+        """DECIDIDO el 04/11/2026 (Bixente, trabajo de campo): NO se toca.
+
+        En un edificio de 23 plantas con la tablet en la mano es facil que se resbale y se salga de la pantalla,
+        o que se apague: las marcas guardadas en el aparato para esa obra y fecha vuelven al reabrir, incluso
+        en una hoja recien generada y en blanco, y las copias de seguridad «(2)», «(3)» son a proposito.
+        Esta prueba impide que alguien lo «arregle» creyendo que es un fallo."""
+        pg, _ = self.generador()
+        a = self.hoja(pg, ['A', 'B'], HOJA_ESTABLE_JS)
+        a.evaluate(MARCAR_JS, [['A', 0], ['B', 1]])
+        b = self.hoja(pg, ['A', 'B'], HOJA_ESTABLE_JS)   # hoja nueva, en blanco, misma obra y misma fecha
+        self.assertEqual(b.evaluate(MARCADAS_JS), 2,
+                         "las marcas de campo guardadas en el aparato deben volver (decision de Bixente)")
+
+    def test_con_estructura_nueva_sin_ids_las_marcas_viejas_no_casan_y_se_avisa(self):
+        """El otro lado: una obra montada a mano inventa ids nuevos en cada generacion, asi que las marcas viejas
+        NO encajan. Antes se descartaban sin decir nada; ahora se cuentan y se avisa."""
+        pg, _ = self.generador()
+        a = self.hoja(pg, ['A', 'B'])
+        a.evaluate(MARCAR_JS, [['A', 0], ['B', 1]])
+        b = self.hoja(pg, ['A', 'B'])
+        self.assertEqual(b.evaluate(MARCADAS_JS), 0)
+        b.wait_for_function(AVISO_JS, arg=r"2 marcas guardadas.*no se han recuperado", timeout=3000)
 
     def test_el_aviso_no_sale_en_el_pdf(self):
         pg, _ = self.generador()
