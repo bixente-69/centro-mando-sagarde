@@ -1,6 +1,6 @@
 window.SAGARDE_PERSONAL = {
  "version": 1,
- "generado": "2026-11-02T20:28:39.678189+01:00",
+ "generado": "2026-11-04T21:25:47.625900+01:00",
  "jornada_base_h": 7.5,
  "catalogo": [
   {
@@ -981,25 +981,6 @@ window.SAGARDE_PERSONAL = {
   },
   "gorliz": {
    "nombre": "2026 GORLIZ HOSPITAL",
-   "cerrada": false,
-   "horario_semanal": {
-    "lun": 7.5,
-    "mar": 7.5,
-    "mie": 7.5,
-    "jue": 7.5,
-    "vie": 7.5,
-    "sab": 0,
-    "dom": 0
-   },
-   "excepciones_horario": {},
-   "ultima": {
-    "vivienda": null,
-    "garaje": null
-   },
-   "jornadas": []
-  },
-  "prueba": {
-   "nombre": "2026 OBRA PRUEBA",
    "cerrada": false,
    "horario_semanal": {
     "lun": 7.5,
