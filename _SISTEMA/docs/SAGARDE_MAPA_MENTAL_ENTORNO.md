@@ -19,6 +19,8 @@ revisión (tinta, PDF digital y HTML digital) convergen en un motor común con
 validación, aplicación pura en memoria, salvaguarda de doble cálculo y
 trazabilidad JSONL. Ver §4, §5.2, §5.4 y §7.
 
+**Corrección 04/11/2026** (comprobada contra el repositorio): el catálogo de tajos sí está en git; el portal móvil se regenera en cada pasada (solo le falta un enlace de navegación); los accesos de aplicaciones son seis, no siete; y de los cuatro BAT solo dos están versionados. Las dos tablas automáticas no se han tocado.
+
 ## Estado de hoy
 
 Las dos tablas que siguen las reescribe
@@ -122,8 +124,8 @@ Las capas confirmadas son:
    **Al añadir un tajo al catálogo hay que preguntar qué debe estar terminado
    antes.** Un tajo sin dependencia sale siempre viable, que es tan falso como
    salir siempre bloqueado.
-5. **Presentación**: un panel por obra registrada (cuenta viva en «Estado de hoy»), índices, portal de escritorio, un portal móvil estancado, generador de revisiones y siete accesos de aplicaciones.
-6. **Orquestación/publicación**: `generar_todos.py`, `sagarde_portal.py`, scripts especializados y cuatro BAT. `Actualizar_Sagarde.bat` termina en `git add -A`, commit y `push origin main`.
+5. **Presentación**: un panel por obra registrada (cuenta viva en «Estado de hoy»), índices, portal de escritorio, un portal móvil (`_SISTEMA/PORTAL SAGARDE.html`: se regenera en cada pasada, pero ningún índice lo enlaza), generador de revisiones y seis accesos de aplicaciones (3 de obras abiertas y 3 herramientas de `VARIOS`).
+6. **Orquestación/publicación**: `generar_todos.py`, `sagarde_portal.py`, scripts especializados y cuatro BAT (en git solo están `Actualizar_Sagarde.bat` y `Abrir_Panel_Local.bat`; los demás no se versionan y no se pueden comprobar desde la nube). `Actualizar_Sagarde.bat` termina en `git add -A`, commit y `push origin main`.
 7. **Gobierno**: dos `CLAUDE.md`, cuatro definiciones locales tipo skill/agente, planes, especificaciones, handoffs, memoria vigente y 114 casos de prueba definidos estáticamente.
 
 Flujo confirmado: los historiales DOCX/PDF/HTML/JSON de los adaptadores de obra y las revisiones individuales de tinta/PDF digital/HTML digital se traducen a `REVISION_NORMALIZADA`; `validar_revision.py` decide reglas comunes y `aplicar_revision.py` calcula una copia de la ficha en memoria. Antes de persistir, el llamador compara ese resultado con el camino histórico: solo con paridad guarda la ficha y añade trazabilidad. La ficha vuelve a producir el snapshot validado; el motor calcula KPI y bloqueos; **el priorizador lee la base de la obra** y produce trabajos, previsión y preguntas; se escriben memoria, panel e informe ejecutivo; después se agregan índices, el registro del generador y el portal.
@@ -156,9 +158,9 @@ reglas/CATALOGO_TAJOS.json ──┐
 Dos hechos que conviene tener presentes al tocar cualquier eslabón:
 
 - **El generador consume la salida del priorizador, no el catálogo directamente.** `crear_registro_revision(obra, prioridades)` construye la lista de tajos de la hoja desde `detalle_items`. Cambiar el priorizador cambia la hoja impresa.
-- **`reglas/CATALOGO_TAJOS.json` no está en git.** La línea 2 del `.gitignore` (`*`) lo atrapa y no se le hizo excepción. Es una decisión tomada el 11/08/2026: su única copia es el historial de versiones de OneDrive. **No mutarlo para una prueba: no hay `git checkout` que lo restaure.**
+- **`reglas/CATALOGO_TAJOS.json` sí está en git** (versionado desde el commit `78c0b3a`, 15/10/2026; comprobado el 04/11/2026 con `git ls-files`). Pero la línea 2 del `.gitignore` (`*`) lo sigue cubriendo y no tiene excepción propia: git lo rastrea de hecho, no por una regla. Mientras siga rastreado se puede restaurar con git; si se borrara y se recreara, volvería a quedar fuera sin aviso (haría falta una excepción `!` en el `.gitignore`). El texto anterior de este mapa (11/08/2026) decía que no estaba en git y que su única copia era el historial de OneDrive: ya no es cierto. Aun así, conviene no mutarlo para una prueba sin una copia aparte.
 
-Lo más consolidado es el camino de cinco obras registradas, el contrato común de estados y las salidas JSON/HTML. Las dudas principales son: 16 carpetas abiertas sin automatización; dos adaptadores huérfanos; Gorliz sin revisión ni base; documentación antigua; una skill de alta desactualizada; portal móvil no reescrito por código inalcanzable; índice de mantenimiento con dos generadores; dependencias sin manifiesto; y cientos de backups sin política ejecutable de vigencia.
+Lo más consolidado es el camino de cinco obras registradas, el contrato común de estados y las salidas JSON/HTML. Las dudas principales son: 16 carpetas abiertas sin automatización; dos adaptadores huérfanos; Gorliz sin revisión ni base; documentación antigua; una skill de alta desactualizada; portal móvil sin enlace desde la navegación; índice de mantenimiento con dos generadores; dependencias sin manifiesto; y cientos de backups sin política ejecutable de vigencia.
 
 Añadido el 15/08/2026: tajo común `fotovoltaica` (sin dependencia, igual
 que Cuarto técnico) y un cierre de expediente por obra
@@ -223,7 +225,7 @@ mindmap
       localStorage
     Interfaz
       portal de escritorio
-      portal móvil estancado
+      portal móvil (sin enlace)
       índice de obras
       panel de obra
         Panel
@@ -321,7 +323,7 @@ flowchart TD
 | A15 | Presentación | Obra | Panel de obra | interfaz | `panel_obra.py` → `*/panel.html` | Nueve vistas | Snapshot/ficha | HTML | Chart.js local | Portal | 5 instancias | `panel_obra.py:476-538` |
 | A16 | Presentación | Revisión | Generador | interfaz | `generador_revisiones.html` | Hojas desde fichas | JS/usuario | HTML/localStorage | navegador | Campo | Solo 3 fichas | `worksWithDatabase`, `sc-home`, `sc-wizard` |
 | A17 | Presentación | Portal | Portal escritorio | interfaz | `sagarde_portal.py` → `index.html` | Centro de mando | Resúmenes/árbol | HTML | otras capas | Usuario | Operativo | `sagarde_portal.py:936-1085` |
-| A18 | Presentación | Móvil | 5 pestañas | interfaz | `PORTAL SAGARDE.html` | Portal compacto | Resúmenes | HTML | `generar_portal_movil` | Usuario | APARENTEMENTE OBSOLETO | archivo 25/07; código `:569-759` |
+| A18 | Presentación | Móvil | 5 pestañas | interfaz | `PORTAL SAGARDE.html` | Portal compacto | Resúmenes | HTML | `generar_portal_movil` | Usuario | CONFIRMADO POR CÓDIGO | se regenera en cada pasada (`sagarde_portal.py:1018`, llamada en `:1676`); salida del 04/11/2026; sin enlace desde `index.html` |
 | A19 | Presentación | Postventa | Índice/previews | interfaz | `postventas_index.py` | Filtros, pendientes, Word | Carpetas | HTML/JSON | python-docx | Portal | Operativo | `postventas_index.py:345-765` |
 | A20 | Presentación | Mantenimiento | Índice/mapas | interfaz | dos Python | Resumen/árbol | Carpetas | HTML/JSON | filesystem | Portal | Duplicado | BAT + `sagarde_portal.main` |
 | A21 | Presentación | Apps | 3 herramientas | interfaz | `APLICACIONES/index.html`, `VARIOS/*` | Tierras, baterías, Buscador Eléctrico, personal | Datos locales y consulta remota | HTML/JSON/PDF | navegador + Cloudflare Worker privado | Portal | Mixto | `sagarde_portal.py:519-565`, `:853-887`; `VARIOS/BUSCADOR ELECTRICO/app_buscador_electrico.html` |
@@ -374,7 +376,7 @@ Criterio: **49 archivos Python/BAT** (45 `.py`, incluidos pruebas y `__init__.py
 | Script | Ruta | Lenguaje | Función | Ejecución | Llamado desde | Lee | Escribe / genera | Dependencias | Estado |
 |---|---|---|---|---|---|---|---|---|---|
 | `avisos.py` | `_SISTEMA/MOTOR/avisos.py` | Python | Antigüedad/caducidad 400 días + `CONTRATOS_SIN_AVISO_INACTIVIDAD` (contratos de mantenimiento sin aviso: hoy OBRAMAT, rescindido 22/10/2026; quitar la entrada para reactivar) | import | portal/auditor/mantenimiento/tests | timestamps | — | stdlib | Activo |
-| `sagarde_portal.py` | `_SISTEMA/MOTOR/sagarde_portal.py` | Python | Portal, apps, cerradas, mapas | directo/BAT | BAT global | resúmenes/árbol | índices y mapas HTML | stdlib, avisos | Activo; móvil roto |
+| `sagarde_portal.py` | `_SISTEMA/MOTOR/sagarde_portal.py` | Python | Portal, apps, cerradas, mapas | directo/BAT | BAT global | resúmenes/árbol | índices y mapas HTML | stdlib, avisos | Activo |
 | `auditor_sagarde.py` | `_SISTEMA/MOTOR/scripts/auditor_sagarde.py` | Python | Auditoría pre-vuelo | directo/import | BAT/test | obras/mantenimiento/hojas de materiales | `auditoria_diagnostico.json` | stdlib | Activo; falsos duplicados |
 | `materiales_xlsx.py` | `_SISTEMA/MOTOR/scripts/materiales_xlsx.py` | Python | Comprueba, repara y genera la hoja de entrega de materiales (`<obra>/MATERIALES/` en Olabeaga; `<obra>/REVISIONES/` en el resto). Rejilla (Mungia, Bolueta): declaración XML que no casa con los bytes, `<v>` en blanco y fórmulas del TOTAL sin valor calculado (`reparar` copia, corrige el XML y recalcula con Excel por COM). Registro de entregas (Olabeaga): filas inválidas de ENTREGAS y hojas generadas desactualizadas (`generar` las rehace; `migrar` convierte una rejilla en registro sin perder cantidad) | `comprobar / reparar / generar / migrar <obra o ruta>` y `comprobar --todas` | agy/Claude al editar materiales; `auditor_sagarde.py` (paso 0 del BAT) | `registro_obras.py`, el `.xlsx` | el `.xlsx` y su copia `.bak` en `MATERIALES/_SISTEMA/` (o `REVISIONES/_SISTEMA/` en rejilla) | openpyxl, Excel | Activo desde el 20/10/2026 (`tests/test_materiales_xlsx.py` y `tests/test_entregas_materiales.py`); `comprobar --todas` hoy marca **Bolueta** (TOTAL sin calcular en todas sus hojas; no se ha tocado) |
 | `entregas_materiales.py` | `SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/entregas_materiales.py` | Python | **Registro de entregas** (piloto Olabeaga, 20/10/2026): la hoja ENTREGAS (una fila por línea entregada: fecha, suministrador, albarán, categoría, material, tipo, marca, uni, cantidad) es la única fuente; de ella salen la pestaña Materiales del panel (por meses: lista de entregas con suministrador y albarán como columnas y total por material; cabeceras ordenables al pulsar) y las 5 opciones de Materiales del «Informe de obra» (Total, Por mes, Por albarán, Por suministrador, Todas las entregas) y las hojas de mes y ACUMULADO del Excel, con el mismo cálculo y solo valores (sin fórmulas) | import desde `lectores.leer_materiales` (despacha por la hoja ENTREGAS) y `panel_obra.py` (vista nueva) | `generar_todos.py`, `materiales_xlsx.py` | `2026 OLABEAGA BILBAO/MATERIALES/hoja de entrega de materiales OLABEAGA.xlsx` (carpeta propia desde el 20/10/2026; Mungia y Bolueta siguen en `REVISIONES/`) | datos del panel y Excel | openpyxl | Activo; `refrescar_hojas` (llamado por `generar_todos` antes de leer los materiales) rehace solas las hojas del mes si alguien editó ENTREGAS y no ejecutó `generar`; una fila inválida no se cuenta ni se vuelve cero y se avisa; Mungia y Bolueta siguen con la rejilla antigua |
@@ -512,7 +514,7 @@ Criterio: **136 vistas/estados navegables**: 126 pestañas/pasos/filtros (5 móv
 | Pestaña o vista | Identificador | Ruta | Finalidad | Datos | Acciones | Relacionados | Estado |
 |---|---|---|---|---|---|---|---|
 | Centro de mando | página raíz | `index.html` / portal Python | KPI/alertas/áreas/búsqueda | resúmenes/árbol | buscar/abrir | todo | Operativo |
-| Inicio, Obras, Post-ventas, Mantenimientos, Cerradas | `tab0`…`tab4` | `PORTAL SAGARDE.html` | Móvil | resúmenes | cambiar/buscar | portal | Obsoleto aparente |
+| Inicio, Obras, Post-ventas, Mantenimientos, Cerradas | `tab0`…`tab4` | `PORTAL SAGARDE.html` | Móvil | resúmenes | cambiar/buscar | portal | Vigente (se regenera; sin enlace) |
 | Índice obras | página | `SAGARDE OBRAS ABIERTAS/index.html` | todas las obras; panel solo las registradas | resumen | abrir panel/PDF | generar_todos | Operativo |
 | Panel | `v-panel` | `panel_obra.py` | KPI/resumen | snapshot/ficha | ver | motor | Operativo |
 | Trabajos | `v-trabajos` | idem | bloqueos/avance | motor | tabla | motor | Operativo |
@@ -575,7 +577,7 @@ Criterio: **136 vistas/estados navegables**: 126 pestañas/pasos/filtros (5 móv
 | Postventa sync | muta | DOCX | backup + save | `:244-270` | Confirmado |
 | Mantenimiento Python | escribe | índice | write | fuente | Confirmado |
 | Portal Python | sobrescribe | mismo índice | `generar_index_mantenimientos` | main 1079 | Confirmado |
-| Portal Python | llamada parcial | portal móvil | llamada + cuerpo roto | `:569-759`, `:1084` | Confirmado roto |
+| Portal Python | llamada parcial | portal móvil | llamada + cuerpo operativo | `sagarde_portal.py:1018`, `:1676` | Corregido: ya no está roto (comprobado el 04/11/2026) |
 | Skill revisión | referencia | scripts | comandos | skill | Documental |
 | Skill nueva obra | referencia antigua | `generar_todos.py.OBRAS` | instrucción | skill paso 5 | Contradicha |
 
@@ -791,7 +793,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | Motor común de revisiones | Operativo con salvaguarda | tinta/PDF/HTML e historial consolidado convergen en validación/aplicación; 0 discrepancias en los casos reales verificados el 26/08/2026 |
 | Generador | Operativo parcial | solo fichas |
 | Portal escritorio | Operativo | salida 29/07 |
-| Portal móvil | Obsoleto aparente | salida 25/07/código roto |
+| Portal móvil | Vigente: se regenera en cada pasada; sin enlace de navegación | salida 04/11/2026 |
 | Postventa | Operativo | 31 contratos/resumen |
 | Sync postventa | Experimental/manual | mutador sin llamada BAT |
 | Mantenimiento | Operativo duplicado | dos escritores |
@@ -805,7 +807,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 
 # 11. Problemas, riesgos y contradicciones
 
-1. **Portal móvil no regenerable:** `generar_portal_movil` acaba en línea 605; desde 645 el cuerpo quedó tras retornos de `_render_variacion_badge`, por tanto inalcanzable. HTML 25/07 frente a portal 29/07. CONFIRMADO.
+1. **Portal móvil (resuelto):** el 29/07 `generar_portal_movil` tenía el cuerpo inalcanzable tras los retornos de `_render_variacion_badge`. Hoy se regenera en cada pasada (llamada en `sagarde_portal.py:1676`; salida del 04/11/2026 16:31). Sigue sin enlace desde `index.html`, el índice de obras abiertas ni el de aplicaciones (comprobado el 04/11/2026).
 2. **Skill nueva obra antigua:** edita `generar_todos.py.OBRAS`, pero el registro está en `registro_obras.py`; JSON propuestos no son v4.3. CONFIRMADO.
 3. **Solo 3 obras en generador:** JS contiene 4, interfaz filtra fichas; Gorliz da error. CONFIRMADO.
 4. **16 obras abiertas sin automatizar:** 22 carpetas menos 6 registradas (12/08/2026; las dos cifras salen de «Estado de hoy»). CONFIRMADO.
@@ -842,7 +844,7 @@ tampoco: su generador nunca llegó a escribirlo — ver la nota en
 | ¿Ampliación del generador para garajes? | **Resuelta** (26-27/09/2026): garajes con `ficha_garajes.json`, hoja propia y alta nativa de Olabeaga | `ficha_garajes.json`, hojas `_garaje.html` | – | – |
 | ¿Conservar adaptadores OLD? | rutas rotas | adaptadores/árbol | intención | deuda técnica |
 | ¿Qué índice de mantenimiento manda? | 2 escritores | BAT/Python/HTML | decisión | salida variable |
-| ¿Mantener portal móvil? | launch/código vs salida vieja | launch/portal/HTML | intención | interfaz estancada |
+| ¿Mantener portal móvil? | se regenera, pero ningún índice lo enlaza | launch/portal/HTML | intención | interfaz huérfana |
 | ¿Publicar Docs/Para/Scratch? | portal vs whitelist | portal/gitignore | política | 404/exposición |
 | ¿Versiones admitidas? | sin manifiesto | imports/BAT/skills | versiones probadas | reproducibilidad |
 | ¿Otras skills externas instaladas? | CARDIVA ya está confirmada; `superpowers:*` y `artifact-design` siguen siendo solo referencias. Auditoría del 25/08/2026: confirmadas además `postventas-sagarde`, `sagarde-parte-postventa` y `sagarde-revision-obra` operando sobre Sagarde sin `SKILL.md` ni mención en ningún archivo del repositorio — viven instaladas a nivel de host, no versionadas | CLAUDE/planes/settings, registro multi-IA y sesión del 25/08 | decidir si sustituyen a `sagarde-parte-incidencia`/`sagarde-revision` del repo o son un camino paralelo, y dejarlo escrito | repetibilidad; quien retome el proyecto sin esta sesión no sabe que existen |
