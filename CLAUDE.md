@@ -351,6 +351,15 @@ Contiene el diccionario confirmado, las traducciones históricas, la
 especialización de tajos, la corrección de falsas alertas y el contrato del
 informe ejecutivo. Leerla antes de volver a preguntar por esos asuntos.
 
+**Memoria del generador de revisiones y del trabajo de campo (04/11/2026):**
+`_SISTEMA/docs/2026-11-04-memoria-generador-revisiones-y-campo.md`. Hechos de
+campo confirmados por Bixente (obra de 23 plantas, tablet en la mano, copias
+`(2)`/`(3)` de seguridad a propósito), claves del almacenamiento de la tablet,
+invariantes que no se rompen y cómo ejecutar las pruebas con navegador en la
+nube. Sus decisiones 8 y 9 están en
+`_SISTEMA/docs/auditorias_nube_2026-11-04/G_decisiones_bixente.md`. Leerlas
+antes de volver a preguntarle o de tocar el generador.
+
 **Revisiones de campo a la base (paso 4 del ciclo, implementado el
 05/08/2026).** Cuando Bixente entregue una hoja marcada a boli:
 
