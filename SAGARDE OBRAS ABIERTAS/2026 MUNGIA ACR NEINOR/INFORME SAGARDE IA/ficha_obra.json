@@ -13227,18 +13227,18 @@
     }
   },
   "documentos": {
-    "total": 136,
+    "total": 134,
     "por_categoria": {
       "Comprimidos": 1,
       "Excel": 4,
       "Imágenes": 21,
-      "Otros": 8,
+      "Otros": 6,
       "PDF": 70,
       "Planos y gráfica": 5,
       "Word": 27
     },
     "_meta": {
-      "actualizado": "15/10/2026 11:54"
+      "actualizado": "04/11/2026 23:42"
     }
   },
   "contactos": []
