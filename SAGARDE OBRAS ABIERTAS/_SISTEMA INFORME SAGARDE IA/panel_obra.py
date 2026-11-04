@@ -2263,6 +2263,26 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     # ---- DOCUMENTOS ----
     docs_html = ""
     if documentos:
+        docs_rfo = [d for d in documentos if (d.get('subcarpeta') or '').lower() == 'revisiones fin de obra']
+        if docs_rfo:
+            docs_html += (
+                '<div style="background:#f0f6fc;border:1px solid #b9d1f0;border-left:5px solid #0b1f3a;'
+                'border-radius:8px;padding:14px 16px;margin:10px 0 16px;">'
+                '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">'
+                '<strong style="color:#0b1f3a;font-size:13.5px;">&#128203; Revisiones fin de obra &mdash; Actas de repaso e Incidencias de Electricidad</strong>'
+                '<span class="badge bad" style="font-size:11.5px;">Carpeta: revisiones fin de obra (' + str(len(docs_rfo)) + ' archivos)</span>'
+                '</div>'
+            )
+            for d in docs_rfo:
+                es_principal = d['nombre'].upper().startswith('INCIDENCIAS ELECTRICIDAD') or d['nombre'].upper().startswith('SAGARDE PORTAL')
+                estilo = 'font-weight:700;color:#0b1f3a;' if es_principal else ''
+                icono = '&#128196; ' if d['nombre'].lower().endswith('.pdf') else ('&#128221; ' if d['nombre'].lower().endswith('.docx') else '&#9993; ')
+                docs_html += (
+                    f'<div class="doc" style="padding:3px 0;"><a href="{d["href"]}" target="_blank" style="{estilo}">{icono}{d["nombre"]}</a>'
+                    f'<span style="color:var(--muted);font-size:11.5px;"> ({d["kb"]} KB)</span>'
+                    f' <span style="color:var(--muted);font-size:11.5px;">&middot; {d["subcarpeta"]}</span></div>'
+                )
+            docs_html += '</div>'
         cat_actual = None
         for doc in documentos:
             if doc['categoria'] != cat_actual:
