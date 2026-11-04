@@ -1692,14 +1692,34 @@ function saveConfig(){
     catalog:CAT,importData:S.importData||null,
     sourceId:S.sourceId||null,sourceMeta:S.sourceMeta||null,
   };
-  localStorage.setItem(key,JSON.stringify(cfg));
-  const recents = JSON.parse(localStorage.getItem('sgd_rev_recents')||'[]');
-  const entry={key,obra:S.obra,fecha:S.fecha,bloques:S.bloques.length,
-               portales:getPortalEntries().length,garajes:S.garajes.length,modo:S.modo,ts:Date.now()};
-  const filtered = recents.filter(r=>r.key!==key);
-  filtered.unshift(entry);
-  localStorage.setItem('sgd_rev_recents', JSON.stringify(filtered.slice(0,8)));
+  try{
+    const recents = JSON.parse(localStorage.getItem('sgd_rev_recents')||'[]');
+    // Antes de guardar, fuera las configuraciones huerfanas de antes: liberan sitio.
+    podarConfigs(recents);
+    localStorage.setItem(key,JSON.stringify(cfg));
+    const entry={key,obra:S.obra,fecha:S.fecha,bloques:S.bloques.length,
+                 portales:getPortalEntries().length,garajes:S.garajes.length,modo:S.modo,ts:Date.now()};
+    const filtered = recents.filter(r=>r.key!==key);
+    filtered.unshift(entry);
+    const kept = filtered.slice(0,8);
+    localStorage.setItem('sgd_rev_recents', JSON.stringify(kept));
+    podarConfigs(kept);   // las que acaban de salir de la lista de recientes
+  }catch(e){
+    // Aparato lleno o almacenamiento bloqueado: antes lanzaba QuotaExceededError sin control y no decia nada.
+    showToast('No se pudo guardar la configuración en este aparato (memoria llena o bloqueada).',6000);
+    return;
+  }
   showToast('Configuración guardada ✓');
+}
+
+// loadConfig solo se llama desde la lista de recientes: una configuracion que no esta en ella
+// no se puede abrir desde ningun sitio y solo ocupa espacio (cada una lleva las celdas de la
+// obra entera: unos 200.000 caracteres la de Bolueta, de unos 5 millones que caben en total).
+// Se borra solo ESO: nunca las marcas guardadas de las hojas (sgd_rev_<obra>_<fecha>).
+function podarConfigs(recientes){
+  Object.keys(localStorage)
+    .filter(k=>k.startsWith('sgd_rev_cfg_')&&!recientes.some(r=>r.key===k))
+    .forEach(k=>localStorage.removeItem(k));
 }
 
 function renderRecent(){
@@ -1846,7 +1866,20 @@ document.querySelectorAll('.td-st[data-k]').forEach(c=>{
   });
 });
 function getData(){const d={};document.querySelectorAll('.td-st[data-k]').forEach(c=>{if(c.dataset.st)d[c.dataset.k]=c.dataset.st;});return d;}
-function autoSave(){try{localStorage.setItem(KEY,JSON.stringify(getData()));}catch(e){}}
+/* Autoguardado: es la red de seguridad de campo (tablet en la mano, se resbala, se apaga). Con el
+   aparato lleno o el almacenamiento bloqueado, antes fallaba en silencio: la celda se marcaba en
+   pantalla, no se guardaba nada y nadie se enteraba. Ahora se avisa, una vez por hoja, y se dice
+   que hacer: la descarga de «Guardar revisión» no depende del almacenamiento. */
+let avisadoSinGuardar=false;
+function autoSave(){
+  try{ localStorage.setItem(KEY,JSON.stringify(getData())); }
+  catch(e){
+    if(!avisadoSinGuardar){
+      avisadoSinGuardar=true;
+      showToast('No se está guardando en este aparato (memoria llena o bloqueada). Pulsa «Guardar revisión» para no perder lo marcado.',12000);
+    }
+  }
+}
 function doSave(){
   autoSave();
   document.title=REVISION_FILE_BASE;
@@ -2604,11 +2637,11 @@ function doPreview(){
 /* ════════════════════════════════════════════
    UTILS
 ════════════════════════════════════════════ */
-function showToast(m){
+function showToast(m,ms){
   const t=document.createElement('div');
   t.style.cssText='position:fixed;bottom:24px;right:22px;background:#1A3558;color:#fff;padding:9px 16px;border-radius:4px;font-family:Arial Narrow,Arial,sans-serif;font-size:12px;z-index:9999;opacity:1;transition:opacity .3s;pointer-events:none';
   t.textContent=m; document.body.appendChild(t);
-  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300);},1700);
+  setTimeout(()=>{t.style.opacity='0';setTimeout(()=>t.remove(),300);},ms||1700);
 }
 
 /* ── INIT ── */

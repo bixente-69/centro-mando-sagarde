@@ -21,6 +21,12 @@ Los cuatro fallos (reproducidos antes de corregirlos):
       quitar una del medio salian nombres repetidos en la misma planta (Trasteros 3 x2, Zona C x2,
       Basuras 2 x2) y en la hoja impresa dos columnas con el mismo rotulo.
 
+* H8  Con el aparato lleno el autoguardado de la hoja fallaba en silencio (`catch(e){}`): la celda se marcaba en
+      pantalla y no se guardaba nada, justo la red de seguridad de campo (tablet en la mano, 23 plantas). Medido:
+      una hoja de Bolueta con todo marcado ocupa 223.690 caracteres y caben unas 23 en los ~5,2 millones del
+      aparato; ademas `saveConfig` dejaba huerfanas las configuraciones que salen de «Recientes» y tampoco
+      avisaba si fallaba.
+
 Sin Playwright o sin Chromium las pruebas se saltan (no fallan): Bixente lo lanza todo con .bat.
 """
 import json
@@ -61,6 +67,16 @@ MARCAR_JS = """(pares) => {
   const cs=[...document.querySelectorAll('.td-st[data-k]')];
   pares.forEach(([viv,n])=>cs.filter(c=>c.dataset.k.endsWith('__'+viv))[n].click());
 }"""
+
+# Llena el almacenamiento del aparato hasta el ultimo caracter (con copias de hojas antiguas inventadas).
+LLENAR_JS = """() => {
+  const trozo='x'.repeat(100000); let n=0;
+  try{ for(;;){ localStorage.setItem('sgd_rev_OTRA_2026-09-'+String(n).padStart(2,'0'), trozo); n++; } }catch(e){}
+  for(const tam of [10000,1000,100,10,1]){ let m=0;
+    try{ for(;;){ localStorage.setItem('sgd_rev_RELLENO_'+tam+'_'+(m++), 'x'.repeat(tam)); } }catch(e){} }
+}"""
+
+AVISOS_JS = "[...document.querySelectorAll('.sheet-toast')].map(d=>d.textContent)"
 
 MARCADAS_JS = "[...document.querySelectorAll('.td-st[data-k]')].filter(c=>c.dataset.st).length"
 
@@ -531,6 +547,110 @@ class TestImpresionDeLaHojaDeGaraje(Base):
         h.emulate_media(media="print")
         self.assertEqual(h.evaluate("[...document.querySelectorAll('.hoja-section')].map(s=>getComputedStyle(s).display)"),
                          ["block", "block"])
+
+
+class TestH8RedDeSeguridad(Base):
+    """Lo que protege al que sube 23 plantas con la tablet en la mano: si no se esta guardando, que lo diga."""
+
+    def _hoja_llena(self):
+        pg, _ = self.generador()
+        h = self.hoja(pg, ['A', 'B'])
+        h.evaluate(LLENAR_JS)
+        return pg, h
+
+    def test_con_el_aparato_lleno_el_autoguardado_avisa(self):
+        pg, h = self._hoja_llena()
+        h.evaluate("() => document.querySelector('.td-st[data-k]').click()")
+        self.assertEqual(h.evaluate("document.querySelector('.td-st[data-k]').dataset.st"), "/",
+                         "la celda debe marcarse en pantalla aunque no se pueda guardar")
+        self.assertIsNone(h.evaluate("localStorage.getItem(KEY)"))
+        avisos = h.evaluate(AVISOS_JS)
+        self.assertTrue(any("no se esta guardando" in a.lower().replace("á", "a") for a in avisos), avisos)
+        self.assertTrue(any("Guardar revisi" in a for a in avisos), "tiene que decir que hacer: pulsar Guardar revision")
+
+    def test_el_aviso_de_no_guardado_sale_una_vez_no_en_cada_clic(self):
+        pg, h = self._hoja_llena()
+        h.evaluate("() => document.querySelectorAll('.td-st[data-k]').forEach((c,i)=>{ if(i<4) c.click(); })")
+        avisos = [a for a in h.evaluate(AVISOS_JS) if "guardando" in a]
+        self.assertEqual(len(avisos), 1, avisos)
+
+    def test_el_aviso_de_no_guardado_dura_lo_bastante_para_leerse(self):
+        pg, h = self._hoja_llena()
+        h.evaluate("() => document.querySelector('.td-st[data-k]').click()")
+        h.wait_for_timeout(2500)
+        self.assertTrue(any("guardando" in a for a in h.evaluate(AVISOS_JS)), "se apago antes de poder leerlo")
+
+    def test_con_espacio_el_autoguardado_no_avisa_de_nada(self):
+        pg, _ = self.generador()
+        h = self.hoja(pg, ['A', 'B'])
+        h.evaluate("() => document.querySelector('.td-st[data-k]').click()")
+        self.assertEqual(h.evaluate("Object.keys(JSON.parse(localStorage.getItem(KEY))).length"), 1)
+        self.assertEqual(h.evaluate(AVISOS_JS), [])
+
+    def test_guardar_revision_con_el_aparato_lleno_sigue_descargando(self):
+        """La descarga es la salvaguarda real: no puede depender del almacenamiento."""
+        pg, h = self._hoja_llena()
+        h.evaluate("() => document.querySelector('.td-st[data-k]').click()")
+        with h.expect_download() as d:
+            h.evaluate("doSave()")
+        self.assertTrue(d.value.suggested_filename.startswith("REVISION OBRA T 04112026"))
+
+    GUARDAR_N = """(n) => { for(let i=0;i<n;i++){ S.obra='OBRA '+i; S.fecha='2026-11-04';
+        S.bloques=normaliseStructure({bloques:[{id:'b',nombre:'B1',portales:[{id:'p',nombre:'P1',plantas:[{id:'f',nombre:'1',vivs:['A']}]}]}]});
+        saveConfig(); } }"""
+    CLAVES_CFG = "Object.keys(localStorage).filter(k=>k.startsWith('sgd_rev_cfg_')).sort()"
+
+    def test_las_configuraciones_que_salen_de_recientes_no_se_acumulan(self):
+        pg, _ = self.generador()
+        pg.evaluate(self.GUARDAR_N, 11)
+        self.assertEqual(pg.evaluate("JSON.parse(localStorage.getItem('sgd_rev_recents')).length"), 8)
+        self.assertEqual(len(pg.evaluate(self.CLAVES_CFG)), 8, "las 3 que salieron de la lista se quedaban huerfanas")
+
+    def test_se_conservan_las_configuraciones_de_las_8_ultimas(self):
+        pg, _ = self.generador()
+        pg.evaluate(self.GUARDAR_N, 11)
+        claves = pg.evaluate(self.CLAVES_CFG)
+        esperadas = sorted("sgd_rev_cfg_OBRA_%d" % i for i in range(3, 11))
+        self.assertEqual(claves, esperadas)
+
+    def test_una_configuracion_huerfana_de_antes_se_limpia(self):
+        pg, _ = self.generador()
+        pg.evaluate("() => localStorage.setItem('sgd_rev_cfg_VIEJA_HUERFANA', JSON.stringify({obra:'VIEJA'}))")
+        pg.evaluate(self.GUARDAR_N, 1)
+        self.assertEqual(pg.evaluate(self.CLAVES_CFG), ["sgd_rev_cfg_OBRA_0"])
+
+    def test_no_se_tocan_las_marcas_guardadas_de_las_hojas(self):
+        pg, _ = self.generador()
+        pg.evaluate("() => localStorage.setItem('sgd_rev_OBRA%20T_2026-11-04', '{\"a\":\"X\"}')")
+        pg.evaluate(self.GUARDAR_N, 11)
+        self.assertEqual(pg.evaluate("localStorage.getItem('sgd_rev_OBRA%20T_2026-11-04')"), '{"a":"X"}')
+
+    def test_guardar_la_configuracion_con_el_aparato_lleno_avisa_y_no_revienta(self):
+        pg, errores = self.generador()
+        pg.evaluate("""() => { S.obra='OBRA T'; S.fecha='2026-11-04'; }""")
+        pg.evaluate(LLENAR_JS)
+        pg.evaluate("saveConfig()")
+        self.assertEqual(errores, [], "saveConfig lanzaba QuotaExceededError sin control")
+        avisos = pg.evaluate("[...document.querySelectorAll('body > div')].map(d=>d.textContent)")
+        self.assertTrue(any("No se pudo guardar la configuraci" in a for a in avisos), avisos)
+        self.assertFalse(any("Configuraci" in a and "guardada" in a for a in avisos), "no puede decir que guardo lo que no guardo")
+
+    def test_si_el_aparato_esta_lleno_de_configuraciones_huerfanas_guardar_las_limpia_y_funciona(self):
+        pg, errores = self.generador()
+        pg.evaluate("""() => { S.obra='OBRA T'; S.fecha='2026-11-04'; }""")
+        pg.evaluate(LLENAR_JS.replace("sgd_rev_OTRA_2026-09-", "sgd_rev_cfg_HUERFANA_").replace("sgd_rev_RELLENO_", "sgd_rev_cfg_RELLENO_"))
+        pg.evaluate("saveConfig()")
+        self.assertEqual(errores, [])
+        avisos = pg.evaluate("[...document.querySelectorAll('body > div')].map(d=>d.textContent)")
+        self.assertFalse(any("No se pudo guardar" in a for a in avisos), avisos)
+        self.assertEqual(pg.evaluate(self.CLAVES_CFG), ["sgd_rev_cfg_OBRA_T"])
+
+    def test_guardar_la_configuracion_con_espacio_sigue_diciendo_guardada(self):
+        pg, errores = self.generador()
+        pg.evaluate("""() => { S.obra='OBRA T'; S.fecha='2026-11-04'; saveConfig(); }""")
+        avisos = pg.evaluate("[...document.querySelectorAll('body > div')].map(d=>d.textContent)")
+        self.assertTrue(any("guardada" in a for a in avisos), avisos)
+        self.assertEqual(errores, [])
 
 
 if __name__ == "__main__":
