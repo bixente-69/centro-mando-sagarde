@@ -61,8 +61,13 @@ prueba se entera. Hoy eso destapó 3 pruebas que parecían verificar algo y no
 verificaban nada.
 
 **Antes de dar nada por bueno:**
-- Que las obras no implicadas no se mueven (Mungia 79.8, Gernika 76.3,
-  Bolueta 41.7, Obispo Orueta 80.0). Si se mueven, hay efecto colateral.
+- Que las obras no implicadas no se mueven. Antes de tocar nada, anotar el
+  desglose (x, m, slash, vacio) de **todas** las obras y el SHA-256 de su
+  `ficha_obra.json`; después, comprobar que las no implicadas dan exactamente
+  lo mismo (`actualizar_obra.py` ya lo hace). Las cifras vigentes de cada obra
+  están en «Estado de hoy» del mapa mental, que se reescribe solo en cada
+  `Actualizar_Sagarde.bat`. No copiar aquí cifras fijas: envejecen. Si se
+  mueven, hay efecto colateral.
 - Reportar el antes/después a Bixente. Aplicar en silencio una corrección que
   mueve cifras es repetir el problema desde el otro lado.
 
@@ -81,8 +86,9 @@ cualquier fichero mutado para una verificación.
 publicación, usar `--finalizar` o `--solo-revisiones`.
 
 **El `.gitignore` es lista blanca** (`*` ignora todo, luego se permite). Un
-tipo de fichero nuevo exige tocar `.gitignore` y el `.bat` a la vez, o se
-genera pero nunca se publica.
+tipo de fichero nuevo exige tocar el `.gitignore`: sin su línea `!` se genera
+pero nunca se publica. El `.bat` no hay que tocarlo: hace `git add -A`, que
+respeta esa lista; solo el PDF ejecutivo se fuerza con `add -f`.
 
 ---
 

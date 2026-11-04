@@ -288,8 +288,9 @@ Objetivo suyo (04/10/2026): tras actualizar la obra, el informe que pida sale
   una primera revisión falta una página del PDF, buscar aquí.
 - El % de una obra ignora las celdas `?` (no medidas): 30 celdas medidas
   pueden mover el % de golpe. Es esperable, no un error.
-- Las cifras de referencia de `CLAUDE.md` (Mungia 79.8, Gernika 76.3, Bolueta
-  41.7, Orueta 80.0) están desfasadas; la comprobación válida es que los
+- Las cifras de referencia que figuraban en `CLAUDE.md` (Mungia 79.8, Gernika
+  76.3, Bolueta 41.7, Orueta 80.0; retiradas el 04/11/2026) estaban desfasadas;
+  la comprobación válida es que los
   `ficha_obra.json` de las demás obras no cambian (mismo SHA-256 antes y después).
 - Hacer la actualización de una obra no es motivo para ejecutar `git checkout --`
   ni `git restore` sobre otros ficheros: preservar y preguntar.
