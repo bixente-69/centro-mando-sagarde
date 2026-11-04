@@ -476,13 +476,93 @@ class PdfReal(unittest.TestCase):
     una obra: el barrido de las cinco es `python verificar_hojas_pdf.py`.
     """
 
-    def test_la_hoja_de_obra_prueba_sale_limpia(self):
+    # Era `prueba` (1178 celdas): esa obra se dio de baja el 04/11/2026. Mientras
+    # obras_revisiones.js conservaba su entrada la prueba seguia pasando, pero en
+    # cuanto el .bat regenerase el registro habria fallado sin que hubiera ningun
+    # defecto de papel. Mungia es una obra abierta y su rejilla ya esta declarada.
+    @requiere_obra('mungia')
+    def test_la_hoja_de_mungia_sale_limpia(self):
         sys.path.insert(0, RAIZ)
         import verificar_hojas_pdf as V
         with tempfile.TemporaryDirectory() as tmp:
-            html = V.generar_html('prueba', os.path.join(tmp, 'h.html'))
+            html = V.generar_html('mungia', os.path.join(tmp, 'h.html'))
             pdf = V.imprimir_pdf(html, os.path.join(tmp, 'h.pdf'))
-            self.assertEqual(V.validar(pdf, 1178, 'prueba'), [])
+            self.assertEqual(V.validar(pdf, V.ESPERADAS['mungia'], 'mungia'), [])
+
+
+class _Pagina:
+    def __init__(self, anotar):
+        self.anotar = anotar
+
+    def goto(self, *a, **k):
+        self.anotar('goto')
+
+    def emulate_media(self, **k):
+        self.anotar('media')
+
+    def pdf(self, **k):
+        self.anotar('pdf')
+
+
+class _Navegador:
+    def __init__(self, anotar):
+        self.anotar = anotar
+
+    def new_page(self):
+        return _Pagina(self.anotar)
+
+    def close(self):
+        self.anotar('close')
+
+
+class _Playwright:
+    """Un Playwright de mentira: `edge_ok` dice si Edge esta instalado."""
+    def __init__(self, edge_ok, anotar):
+        self.chromium = self
+        self.edge_ok, self.anotar = edge_ok, anotar
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *a):
+        return False
+
+    def launch(self, **k):
+        self.anotar('launch:%s' % (k.get('channel') or 'chromium'))
+        if k.get('channel') == 'msedge' and not self.edge_ok:
+            raise RuntimeError("Chromium distribution 'msedge' is not found")
+        return _Navegador(self.anotar)
+
+
+class ImpresionConRespaldoDeNavegador(unittest.TestCase):
+    """imprimir_pdf usa Edge si esta y, si no, el Chromium de Playwright.
+
+    Antes pedia solo Edge: en cualquier maquina sin Edge (Linux, la nube) la unica
+    prueba de papel de la suite fallaba y, peor, nunca llegaba a comprobar nada.
+    """
+
+    def _imprimir(self, edge_ok):
+        import unittest.mock as mock
+        sys.path.insert(0, RAIZ)
+        import verificar_hojas_pdf as V
+        hechos = []
+        falso = lambda: _Playwright(edge_ok, hechos.append)
+        with mock.patch('playwright.sync_api.sync_playwright', falso):
+            V.imprimir_pdf(os.path.join(tempfile.gettempdir(), 'x.html'),
+                           os.path.join(tempfile.gettempdir(), 'x.pdf'))
+        return hechos
+
+    def test_con_edge_usa_edge_y_no_toca_el_chromium_de_playwright(self):
+        hechos = self._imprimir(edge_ok=True)
+        self.assertEqual([h for h in hechos if h.startswith('launch')], ['launch:msedge'])
+        self.assertIn('pdf', hechos)
+        self.assertIn('close', hechos)
+
+    def test_sin_edge_cae_al_chromium_de_playwright_e_imprime(self):
+        hechos = self._imprimir(edge_ok=False)
+        self.assertEqual([h for h in hechos if h.startswith('launch')], ['launch:msedge', 'launch:chromium'])
+        self.assertIn('pdf', hechos, 'sin Edge no llego a imprimir')
+        self.assertIn('close', hechos)
 
 
 if __name__ == '__main__':
