@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """KPI «Avance medio» del inicio (decision 1 del 04/11/2026).
 
-Quien entra en la media: las obras con datos reales. No entran OBRA PRUEBA
-(obra de ensayo) ni una obra sin base (Gorliz hoy): un desconocido no es 0 %.
+Quien entra en la media: las obras con datos reales. No entra una obra sin base
+(Gorliz hoy): un desconocido no es 0 %. (OBRA PRUEBA ya esta dada de baja.)
 Barakaldo, con 0,1 %, SI entra: es un dato real.
 """
 import os
@@ -27,7 +27,6 @@ def obra(carpeta, ponderado, estricto=None, **extra):
     return d
 
 
-PRUEBA = next(o["carpeta_obra"] for o in registro_obras.OBRAS if o["id"] == "prueba")
 
 
 class EntraEnMedia(unittest.TestCase):
@@ -44,19 +43,11 @@ class EntraEnMedia(unittest.TestCase):
     def test_pct_desconocido_no_entra(self):
         self.assertFalse(gt.entra_en_media(obra("X", None, None)))
 
-    def test_obra_de_ensayo_no_entra_aunque_tenga_datos(self):
-        self.assertFalse(gt.entra_en_media(obra(PRUEBA, 80.0, 70.0)))
-
-    def test_el_registro_marca_prueba_como_ensayo_y_gorliz_no(self):
-        por_id = {o["id"]: o for o in registro_obras.OBRAS}
-        self.assertTrue(por_id["prueba"].get("ensayo"))
-        self.assertFalse(por_id["gorliz"].get("ensayo"))
 
 
 class MediaDeLasObras(unittest.TestCase):
     OBRAS = [obra("A", 60.0), obra("B", 40.0), obra("C", 0.1, 0.1),
-             obra("2026 GORLIZ HOSPITAL", None, None, sin_datos=True),
-             obra(PRUEBA, 100.0)]
+             obra("2026 GORLIZ HOSPITAL", None, None, sin_datos=True)]
 
     def test_media_cuenta_solo_las_que_tienen_datos(self):
         n, media = gt.media_avance(self.OBRAS)
@@ -91,7 +82,7 @@ class ResumenEscritoAlDisco(unittest.TestCase):
             d.update(extra)
             return d
 
-        resultados = [res("BOL", 60.0), res("BAR", 0.1), res(PRUEBA, 90.0),
+        resultados = [res("BOL", 60.0), res("BAR", 0.1),
                       res("GOR", 0, sin_datos=True, n_rev=0)]
         carpetas = [{"nombre": r["carpeta_obra"], "ultima_ts": 1.0} for r in resultados]
         with tempfile.TemporaryDirectory() as tmp:

@@ -1310,15 +1310,11 @@ def generar_index(resultados):
 def entra_en_media(entrada):
     """True si la obra cuenta en el KPI «Avance medio» del inicio.
 
-    Solo cuentan las obras con datos reales. Una obra de ensayo (registro:
-    ``ensayo``) o sin base (``sin_datos``, p.ej. Gorliz hasta su primera
-    revision) queda fuera: un desconocido no es un 0 %. Una obra con un 0,1 %
-    medido (Barakaldo) SI entra.
+    Solo cuentan las obras con datos reales. Una obra sin base (``sin_datos``,
+    p.ej. Gorliz hasta su primera revision) queda fuera: un desconocido no es un
+    0 %. Una obra con un 0,1 % medido (Barakaldo) SI entra.
     """
     if entrada.get('sin_datos'):
-        return False
-    ensayo = {o['carpeta_obra'] for o in registro_obras.OBRAS if o.get('ensayo')}
-    if entrada.get('carpeta') in ensayo:
         return False
     return _pct_de_entrada(entrada) is not None
 

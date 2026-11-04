@@ -323,7 +323,9 @@ al cien por cien, hay confianza real de que no queda nada suelto.
 - **Mungia 27/07/2026**: 225 celdas con tinta, 177 coinciden con el sidecar.
   Corrigió 2 marcas que estaban en la vivienda equivocada y 3 que el sidecar
   guardaba con la clave `PORT AL` partida.
-- **OBRA PRUEBA**: obra ficticia para probar sin tocar datos reales.
+- **OBRA PRUEBA**: obra ficticia para probar sin tocar datos reales. **Dada de baja el
+  04/11/2026** (registro, adaptador y carpeta; sigue en el historial de git). Ya no existe
+  para probar: se prueba con carpetas temporales de test, nunca con obras reales.
 - **Bolueta 24/08/2026 (Flujo B, primera vez usado)**: 411 celdas avanzaron
   de verdad en total (245 en la primera pasada, 166 más recuperadas del bug
   de columnas fundidas). `pct_ponderado` 41.7→53.6. Gernika, Mungia y

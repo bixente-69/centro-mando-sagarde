@@ -181,7 +181,7 @@ Pendientes concretos al cierre del 13/08/2026:
 - **Cerrarla dejó 4 pruebas sin ejecutarse**: 3 de
   `test_tajos_propios_de_obra.py` y una de paginación. Se saltan con motivo
   visible, pero los tajos propios de obra se quedan sin ninguna obra que los
-  ejercite. Habría que apoyarlos en OBRA PRUEBA o en un fixture.
+  ejercite. OBRA PRUEBA ya no puede ser ese apoyo: **se dio de baja el 04/11/2026** (entrada del registro, `adaptador_prueba.py` y carpeta; su copia está en el historial de git). Habría que apoyarlos en un fixture.
 - Sigue abierto de antes: 16 carpetas de obra sin automatización, dos
   adaptadores huérfanos, Gorliz sin revisión ni base, una skill de alta
   desactualizada, el portal móvil, el índice de mantenimiento con dos

@@ -59,35 +59,6 @@ OBRAS = [
             'REVISIONES', 'hoja de entrega de materiales GORLIZ.xlsx'),
     },
     {
-        # Obra ficticia. Sirve para verificar la lectura de hojas marcadas en
-        # obra sin tocar datos reales: como se controlan sus dos revisiones,
-        # la respuesta correcta se conoce de antemano. Nacio de su propia
-        # hoja de alta (REVISION OBRA PRUEBA 05082026.pdf), en blanco, que es
-        # la que fija su distribucion: 2 bloques, 3 portales, 31 ubicaciones.
-        'id': 'prueba',
-        # Obra de ensayo: no cuenta en el KPI «Avance medio» (decision de
-        # Bixente, 04/11/2026). Se dara de baja del registro mas adelante.
-        'ensayo': True,
-        'nombre': '2026 OBRA PRUEBA',
-        'aliases': ['OBRA PRUEBA'],
-        'subtitulo': 'Obra de pruebas · No es una obra real · 2 bloques, 3 portales, 31 ubicaciones',
-        'adaptador': 'adaptador_prueba',
-        'carpeta_obra': '2026 OBRA PRUEBA',
-        'bloque_revision': 'BLOQUE 1',
-        # La hoja HTML enumera los portales en el orden de la estructura:
-        # B1/P1, B1/P2 y B2/P1. Los dos ultimos no se pueden deducir solo
-        # por el nombre "PORTAL" porque el orden natural alternativo los
-        # intercambia. El adaptador exige este mapa explicito antes de
-        # aceptar sus celdas; nunca debe adivinar una ubicacion plausible.
-        'mapa_portales_revision_html': {
-            'src_prueba_p1': 'p1',
-            'src_prueba_p2': 'p2',
-            'src_prueba_p3': 'p3',
-        },
-        'materiales_rel': os.path.join(
-            'REVISIONES', 'hoja de entrega de materiales OBRA PRUEBA.xlsx'),
-    },
-    {
         # Alta nativa el 27/09/2026 desde su primera hoja de distribución HTML.
         # Promoción de 30 viviendas con garajes y trasteros (proyecto "makia").
         'id': 'olabeaga',
