@@ -247,12 +247,7 @@ def _indexar_resumen_por_carpeta(entradas, origen):
 
 def _recalcular_totales_resumen(resumen):
     obras = resumen["obras"]
-    porcentajes = []
-    for obra in obras:
-        if obra.get("pct_ponderado") is not None:
-            porcentajes.append(obra["pct_ponderado"])
-        elif obra.get("pct_estricto") is not None:
-            porcentajes.append(obra["pct_estricto"])
+    n_media, media = gt.media_avance(obras)
 
     totales_nuevos = resumen.get("totales")
     if not isinstance(totales_nuevos, dict):
@@ -262,12 +257,8 @@ def _recalcular_totales_resumen(resumen):
         {
             "n_obras": len(obras),
             "n_con_panel": sum(bool(obra.get("con_panel")) for obra in obras),
-            "n_con_datos_frescos": len(porcentajes),
-            "avance_medio_ponderado": (
-                round(sum(porcentajes) / len(porcentajes), 1)
-                if porcentajes
-                else None
-            ),
+            "n_con_datos_frescos": n_media,
+            "avance_medio_ponderado": media,
             "bloqueos_totales": sum(
                 obra["n_bloqueos"] for obra in obras if "n_bloqueos" in obra
             ),

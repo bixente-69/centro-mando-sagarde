@@ -44,6 +44,7 @@ import ficha_garajes           # noqa: E402
 import aplicar_revision        # noqa: E402
 import trazabilidad_revisiones  # noqa: E402
 import validar_revision        # noqa: E402
+import registro_obras  # noqa: E402
 from registro_obras import OBRAS  # noqa: E402
 
 
@@ -1306,6 +1307,35 @@ def generar_index(resultados):
     print(f"\nIndex: {index_path}")
 
 
+def entra_en_media(entrada):
+    """True si la obra cuenta en el KPI «Avance medio» del inicio.
+
+    Solo cuentan las obras con datos reales. Una obra de ensayo (registro:
+    ``ensayo``) o sin base (``sin_datos``, p.ej. Gorliz hasta su primera
+    revision) queda fuera: un desconocido no es un 0 %. Una obra con un 0,1 %
+    medido (Barakaldo) SI entra.
+    """
+    if entrada.get('sin_datos'):
+        return False
+    ensayo = {o['carpeta_obra'] for o in registro_obras.OBRAS if o.get('ensayo')}
+    if entrada.get('carpeta') in ensayo:
+        return False
+    return _pct_de_entrada(entrada) is not None
+
+
+def _pct_de_entrada(entrada):
+    pct = entrada.get('pct_ponderado')
+    return pct if pct is not None else entrada.get('pct_estricto')
+
+
+def media_avance(obras):
+    """(n_obras_que_cuentan, media simple redondeada | None si no hay ninguna)."""
+    valores = [_pct_de_entrada(o) for o in obras if entra_en_media(o)]
+    if not valores:
+        return 0, None
+    return len(valores), round(sum(valores) / len(valores), 1)
+
+
 def escribir_resumen_json(resultados):
     """
     Publica un resumen en JSON, pensado para que lo lea el portal raiz
@@ -1319,7 +1349,6 @@ def escribir_resumen_json(resultados):
     carpetas = carpetas_obra()
 
     obras_json = []
-    con_pct = []
     bloqueos_totales = 0
     sin_cambios_total = 0
 
@@ -1330,7 +1359,6 @@ def escribir_resumen_json(resultados):
         r = resultados_por_carpeta.get(nombre_carpeta)
 
         if r:
-            con_pct.append(r['pct_ponderado'] or r['pct'])
             bloqueos_totales += r['n_bloqueos']
             if r['sin_cambios']:
                 sin_cambios_total += 1
@@ -1339,8 +1367,10 @@ def escribir_resumen_json(resultados):
                 'carpeta': nombre_carpeta,
                 'con_panel': True,
                 'panel_actualizado': True,
-                'pct_estricto': r['pct'],
-                'pct_ponderado': r['pct_ponderado'],
+                'pct_estricto': None if r.get('sin_datos') else r['pct'],
+                # Obra sin base: None (desconocido), nunca 0.
+                'pct_ponderado': None if r.get('sin_datos') else r['pct_ponderado'],
+                'sin_datos': bool(r.get('sin_datos')),
                 'n_rev': r['n_rev'],
                 'n_docs': r['n_docs'],
                 'n_bloqueos': r['n_bloqueos'],
@@ -1365,14 +1395,15 @@ def escribir_resumen_json(resultados):
             'href': ('SAGARDE OBRAS ABIERTAS/' + os.path.relpath(panel_path, OBRAS_ABIERTAS_DIR).replace('\\', '/')) if tiene_panel_previo else None,
         })
 
+    n_media, media = media_avance(obras_json)
     resumen = {
         'generado': datetime.now().strftime('%d/%m/%Y %H:%M'),
         'generado_ts': datetime.now().timestamp(),
         'totales': {
             'n_obras': len(carpetas),
             'n_con_panel': sum(1 for o in obras_json if o['con_panel']),
-            'n_con_datos_frescos': len(con_pct),
-            'avance_medio_ponderado': round(sum(con_pct) / len(con_pct), 1) if con_pct else None,
+            'n_con_datos_frescos': n_media,
+            'avance_medio_ponderado': media,
             'bloqueos_totales': bloqueos_totales,
             'obras_sin_cambios': sin_cambios_total,
         },
@@ -2181,6 +2212,7 @@ def main(hacer_pdf=True):
             'carpeta_obra': obra['carpeta_obra'],
             'nombre': obra['nombre'],
             'href': os.path.relpath(salida_html, OBRAS_ABIERTAS_DIR).replace('\\', '/'),
+            'sin_datos': bool(prioridades.get('sin_base')),
             'pct': res['kpis'].get('pct_estricto', 0) if res['kpis'] else 0,
             'pct_ponderado': res['kpis'].get('pct_ponderado', 0) if res['kpis'] else 0,
             'ultima': fecha_datos_real or '—',
