@@ -8,7 +8,7 @@
 |---|---|---|---|
 | 0 Orientación | lecturas obligatorias de `CLAUDE.md` §5 | ~10 lecturas | hecha |
 | 1 Inventario con cifras | scripts de solo lectura sobre fichas, jornadas, series, postventa | 6 scripts | hecha |
-| 2 Dónde se pierde trabajo | fricciones con evidencia | grep + informes A–H | pendiente |
+| 2 Dónde se pierde trabajo | fricciones con evidencia | grep + informes A–H | hecha |
 | 3 Investigación web | ≥15 fuentes en ~25–30 búsquedas | 30 búsquedas | pendiente |
 | 4 Ideas | ≥10 puntuadas con criterios | 1 tabla | pendiente |
 | 5 Propuestas | ≥2 completas, 1 recomendada | — | pendiente |
@@ -95,4 +95,26 @@ Ajuste lineal de los 6 últimos puntos de `pct_ponderado`, predicción de la fec
 
 ---
 
-*Las secciones 2 (resumen), 4 (fricciones), 5 (investigación web), 6 (ideas), 7 (propuestas) y 8 (fuentes) se añaden en las fases siguientes.*
+## 4. Fase 2 — Dónde se pierde trabajo de gestión (con evidencia)
+
+Las horas de Bixente por paso **no están medidas en ningún sitio del repo**; donde doy una cifra es una **hipótesis marcada (H)** que él puede corregir con un dato.
+
+| # | Fricción | Evidencia | Qué se pierde |
+|---|---|---|---|
+| F1 | **El eslabón manual «fichero en `REVISIONES` → alguien dice “actualiza la obra”» no avisa si se olvida.** El auditor solo avisa de `REVISIONES_DUPLICADAS`; no de hojas ni controles horarios pendientes | `G_decisiones_bixente.md` §4 (punto 3); informe F §3.2 | trabajo que existe en la tablet y no llega al portal sin que nadie lo vea |
+| F2 | **Subida semanal sin estado visible.** Hoy el portal solo lleva un sello gris «datos del…»; no hay aviso por antigüedad ni de push fallido (decidido 8/14 días, **sin implementar**) | G §3–4; F resumen 4 | confianza en lo que se ve en tablet/móvil |
+| F3 | **No existe ningún «qué ha cambiado desde la última vez».** El panel enseña estado actual, sparkline y `variacion_pct`; el único «prevision» del código (`priorizador_trabajos.prevision_desbloqueos`) significa «qué se desbloquea al terminar X», **no una fecha ni un ritmo** | `panel_obra.py:677-701`; `priorizador_trabajos.py:823`; `grep` de ritmo/tendencia/fecha de fin: 0 lógica | cada informe a la constructora se compone a mano |
+| F4 | **«Informe de obra a la carta» es 100 % manual:** se eligen las secciones con casillas cada vez, y su caso de uso declarado es mandar a oficiales «lo que ha visto el encargado tras una revisión» | `2026-08-29-informe-obra-a-la-carta-diseno.md` | **H:** 5 obras × 1 informe/semana × ~10 min = ~50 min/semana, si los manda |
+| F5 | **Materiales: solo «entregado», a mano, sin vigilancia.** Mungia: última entrada 08/05/2026 con obra viva hasta el 15/10 sin aviso; Olabeaga: 2 líneas sin suministrador/albarán | panel publicado (3.3); `entregas_materiales.py` | el control de pedidos se hace de cabeza o fuera del sistema |
+| F6 | **Postventa: 2.786 incidencias en tablas Word, texto libre, sin tipo ni causa.** El flujo de la skill es «detectar archivos → leer PDFs → cruzar con Word → añadir filas → ordenar» | 3.5; skill `postventas-sagarde` | el histórico más rico no se puede consultar ni devolver a obra |
+| F7 | **Serie histórica con denominadores mezclados** (Olabeaga 1295→1461; Mungia 88 %→43,5 %): cualquier tendencia calculada sobre ella arrastra el salto | informe D, F3; 3.1 | cualquier estadística o previsión nueva nacería rota si no se arregla esto antes |
+| F8 | **«Avance medio» del inicio contaminado** (decisión 1 de G, pendiente) | G §1 | números del primer vistazo que no son los reales |
+| F9 | **Copias `(2)/(3)` en `REVISIONES`**: a propósito, no es fricción de Bixente; coste menor: el motor elige por fecha de modificación y el auditor lo reporta como `info` | G §8 | nada que arreglar (no tocar) |
+
+**Crítica a lo que ya existe:** el sistema es **fuerte en capturar y mostrar estado** y **débil en convertirlo en acción**. Las tres funciones que `CLAUDE.md` §1 promete («estimar consumos y anticipar pedidos», «analizar históricos de revisiones», «estadísticas») **no tienen ninguna implementación**: lo único «de análisis» es la prioridad por dependencias. Además, **tres decisiones ya tomadas por Bixente (G1, G3, G4) siguen sin implementar**: cualquier propuesta nueva compite con ellas por los mismos créditos.
+
+**Descartado como fricción:** subir la tablet a la nube (no existe y §7c lo prohíbe); cobertura de la tablet (el informe C ya la cubre: PWA red-primero).
+
+---
+
+*Las secciones 2 (resumen), 5 (investigación web), 6 (ideas), 7 (propuestas) y 8 (fuentes) se añaden en las fases siguientes.*
