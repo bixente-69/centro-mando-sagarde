@@ -27,6 +27,10 @@ Los cuatro fallos (reproducidos antes de corregirlos):
       aparato; ademas `saveConfig` dejaba huerfanas las configuraciones que salen de «Recientes» y tampoco
       avisaba si fallaba.
 
+* H9  DECISION de Bixente (04/11/2026, opcion B): cuando el aparato se llena, se borran SOLO las copias automaticas
+      de hojas de mas de 30 dias, la mas vieja primero y solo las necesarias, y se avisa. Nunca la clave que se
+      esta escribiendo, ni configuraciones, ni la lista de recientes, ni nada de otra aplicacion.
+
 Sin Playwright o sin Chromium las pruebas se saltan (no fallan): Bixente lo lanza todo con .bat.
 """
 import json
@@ -68,13 +72,21 @@ MARCAR_JS = """(pares) => {
   pares.forEach(([viv,n])=>cs.filter(c=>c.dataset.k.endsWith('__'+viv))[n].click());
 }"""
 
-# Llena el almacenamiento del aparato hasta el ultimo caracter (con copias de hojas antiguas inventadas).
-LLENAR_JS = """() => {
+# Llena el almacenamiento del aparato hasta el ultimo caracter. `grande` es el prefijo de los trozos de 100.000
+# caracteres (`sufijo` va al final del nombre) y `chico` el de los trozos pequenos que rematan hasta el ultimo.
+def llenar_js(grande="relleno_g", chico="relleno_c", sufijo=""):
+    return """() => {
   const trozo='x'.repeat(100000); let n=0;
-  try{ for(;;){ localStorage.setItem('sgd_rev_OTRA_2026-09-'+String(n).padStart(2,'0'), trozo); n++; } }catch(e){}
+  try{ for(;;){ localStorage.setItem('%s'+(n++)+'%s', trozo); } }catch(e){}
   for(const tam of [10000,1000,100,10,1]){ let m=0;
-    try{ for(;;){ localStorage.setItem('sgd_rev_RELLENO_'+tam+'_'+(m++), 'x'.repeat(tam)); } }catch(e){} }
-}"""
+    try{ for(;;){ localStorage.setItem('%s'+tam+'_'+(m++), 'x'.repeat(tam)); } }catch(e){} }
+}""" % (grande, sufijo, chico)
+
+
+# Aparato lleno de cosas que NO se pueden borrar: el aviso de «no se esta guardando» tiene que salir.
+LLENAR_JS = llenar_js()
+# Aparato lleno de copias automaticas de hojas MUY viejas (se pueden borrar) y relleno que no.
+LLENAR_VIEJAS_JS = llenar_js("sgd_rev_VIEJA", "relleno_c", "_2025-01-01")
 
 AVISOS_JS = "[...document.querySelectorAll('.sheet-toast')].map(d=>d.textContent)"
 
@@ -638,7 +650,7 @@ class TestH8RedDeSeguridad(Base):
     def test_si_el_aparato_esta_lleno_de_configuraciones_huerfanas_guardar_las_limpia_y_funciona(self):
         pg, errores = self.generador()
         pg.evaluate("""() => { S.obra='OBRA T'; S.fecha='2026-11-04'; }""")
-        pg.evaluate(LLENAR_JS.replace("sgd_rev_OTRA_2026-09-", "sgd_rev_cfg_HUERFANA_").replace("sgd_rev_RELLENO_", "sgd_rev_cfg_RELLENO_"))
+        pg.evaluate(llenar_js("sgd_rev_cfg_HUERFANA_", "sgd_rev_cfg_RELLENO_"))
         pg.evaluate("saveConfig()")
         self.assertEqual(errores, [])
         avisos = pg.evaluate("[...document.querySelectorAll('body > div')].map(d=>d.textContent)")
@@ -651,6 +663,137 @@ class TestH8RedDeSeguridad(Base):
         avisos = pg.evaluate("[...document.querySelectorAll('body > div')].map(d=>d.textContent)")
         self.assertTrue(any("guardada" in a for a in avisos), avisos)
         self.assertEqual(errores, [])
+
+
+class TestH9HacerSitio(Base):
+    """Politica B de Bixente: al llenarse el aparato se borran copias automaticas de hojas de mas de 30 dias."""
+
+    SEMBRAR = """(semillas) => { localStorage.clear();
+        for(const [k,tam] of semillas) localStorage.setItem(k,'x'.repeat(tam)); }"""
+    ESCRIBIR = """([clave,tam,y,m,d]) => { const r=escribirHaciendoSitio(clave,'x'.repeat(tam),new Date(y,m,d));
+        return {ok:r.ok, borradas:r.borradas, aviso:r.aviso, quedan:Object.keys(localStorage).filter(k=>!k.startsWith('relleno_')).sort()}; }"""
+    HOY = (2026, 10, 4)          # 04/11/2026 (los meses de Date van de 0 a 11)
+    G = 100000
+
+    def _caso(self, semillas, clave="sgd_rev_NUEVA_2026-11-04", tam=50, hoy=HOY, llenar=True):
+        pg, _ = self.generador()
+        pg.evaluate(self.SEMBRAR, semillas)
+        if llenar:
+            pg.evaluate(llenar_js())
+        return pg.evaluate(self.ESCRIBIR, [clave, tam, *hoy])
+
+    V1 = ("sgd_rev_OBRA1_2026-08-01", G)      # 95 dias
+    V2 = ("sgd_rev_OBRA2_2026-09-15", G)      # 50 dias
+    V3 = ("sgd_rev_OBRA3_2026-10-04", G)      # 31 dias: ya es «mas de 30»
+    K1 = ("sgd_rev_OBRA4_2026-10-05", G)      # 30 dias exactos: NO se borra
+    K2 = ("sgd_rev_OBRA5_2026-11-03", G)      # 1 dia
+
+    def test_borra_la_copia_mas_vieja_y_solo_lo_necesario(self):
+        r = self._caso([self.V1, self.V2, self.V3, self.K1, self.K2])
+        self.assertTrue(r["ok"])
+        self.assertEqual(r["borradas"], 1)
+        self.assertEqual(r["quedan"], sorted(["sgd_rev_OBRA2_2026-09-15", "sgd_rev_OBRA3_2026-10-04",
+                                              "sgd_rev_OBRA4_2026-10-05", "sgd_rev_OBRA5_2026-11-03",
+                                              "sgd_rev_NUEVA_2026-11-04"]))
+
+    def test_si_una_no_basta_borra_la_siguiente_mas_vieja(self):
+        r = self._caso([self.V1, self.V2, self.V3, self.K1, self.K2], tam=150000)
+        self.assertTrue(r["ok"])
+        self.assertEqual(r["borradas"], 2)
+        self.assertNotIn("sgd_rev_OBRA1_2026-08-01", r["quedan"])
+        self.assertNotIn("sgd_rev_OBRA2_2026-09-15", r["quedan"])
+        self.assertIn("sgd_rev_OBRA3_2026-10-04", r["quedan"])
+
+    def test_borra_primero_la_mas_vieja_aunque_se_guardara_despues(self):
+        """El orden de las claves en el aparato es el de insercion: el criterio tiene que ser la fecha, no ese orden."""
+        for semillas in ([self.V1, self.V2], [self.V2, self.V1]):
+            r = self._caso(semillas)
+            self.assertEqual(r["borradas"], 1)
+            self.assertNotIn("sgd_rev_OBRA1_2026-08-01", r["quedan"], "debia borrarse la de 95 dias, no la de 50")
+            self.assertIn("sgd_rev_OBRA2_2026-09-15", r["quedan"])
+
+    def test_31_dias_se_borra_y_30_dias_no(self):
+        r = self._caso([self.V3])
+        self.assertEqual((r["ok"], r["borradas"]), (True, 1))
+        r = self._caso([self.K1])
+        self.assertEqual((r["ok"], r["borradas"]), (False, 0))
+        self.assertIn("sgd_rev_OBRA4_2026-10-05", r["quedan"])
+
+    def test_nunca_borra_lo_que_no_es_copia_de_hoja(self):
+        r = self._caso([("sgd_rev_cfg_X_2025-01-01", self.G),     # configuracion con fecha en el nombre
+                        ("sgd_rev_recents", 1000),
+                        ("otra_app_2020-01-01", self.G),          # de otra aplicacion
+                        self.K2])
+        self.assertEqual((r["ok"], r["borradas"]), (False, 0))
+        for k in ("sgd_rev_cfg_X_2025-01-01", "sgd_rev_recents", "otra_app_2020-01-01", "sgd_rev_OBRA5_2026-11-03"):
+            self.assertIn(k, r["quedan"])
+
+    def test_nunca_borra_la_clave_que_se_esta_escribiendo(self):
+        # La clave actual es MAS vieja que V1: si entrara entre las candidatas se borraria la primera.
+        r = self._caso([("sgd_rev_ACTUAL_2026-07-01", 10), self.V1], clave="sgd_rev_ACTUAL_2026-07-01", tam=50000)
+        self.assertTrue(r["ok"])
+        self.assertEqual(r["borradas"], 1)
+        self.assertIn("sgd_rev_ACTUAL_2026-07-01", r["quedan"])
+        self.assertNotIn("sgd_rev_OBRA1_2026-08-01", r["quedan"])
+
+    def test_reconoce_la_copia_de_hoja_de_garaje(self):
+        r = self._caso([("sgd_rev_OBRA_2026-08-01_garaje", self.G)])
+        self.assertEqual((r["ok"], r["borradas"]), (True, 1))
+
+    def test_la_fecha_de_hoy_es_un_parametro(self):
+        r = self._caso([self.V1], hoy=(2026, 7, 2))          # 02/08/2026: V1 tiene 1 dia
+        self.assertEqual((r["ok"], r["borradas"]), (False, 0))
+
+    def test_con_sitio_no_borra_nada(self):
+        r = self._caso([self.V1], llenar=False)
+        self.assertEqual((r["ok"], r["borradas"]), (True, 0))
+        self.assertIn("sgd_rev_OBRA1_2026-08-01", r["quedan"])
+
+    def test_el_aviso_dice_cuantas_se_borraron(self):
+        uno = self._caso([self.V1, self.V2])
+        self.assertRegex(uno["aviso"], r"^Memoria llena: se ha borrado 1 copia autom.tica de una hoja de m.s de 30 d.as para hacer sitio\.$")
+        dos = self._caso([self.V1, self.V2], tam=150000)
+        self.assertRegex(dos["aviso"], r"^Memoria llena: se han borrado 2 copias autom.ticas de hojas de m.s de 30 d.as para hacer sitio\.$")
+        self.assertEqual(self._caso([self.K2], llenar=False)["aviso"], "")
+
+    # ---- integracion: la hoja y «Guardar configuracion» usan la politica ----
+    def _contexto_con_reloj(self):
+        ctx = self.contexto()
+        ctx.clock.set_fixed_time("2026-11-04T10:00:00+01:00")
+        return ctx
+
+    def test_la_hoja_borra_copias_viejas_para_seguir_guardando_y_lo_dice(self):
+        pg, _ = self.generador(self._contexto_con_reloj())
+        h = self.hoja(pg, ['A', 'B'])
+        h.evaluate(LLENAR_VIEJAS_JS)
+        antes = h.evaluate("Object.keys(localStorage).filter(k=>k.startsWith('sgd_rev_VIEJA')).length")
+        h.evaluate("() => document.querySelector('.td-st[data-k]').click()")
+        self.assertIsNotNone(h.evaluate("localStorage.getItem(KEY)"), "con copias viejas que borrar tiene que guardar")
+        self.assertEqual(h.evaluate("Object.keys(localStorage).filter(k=>k.startsWith('sgd_rev_VIEJA')).length"), antes - 1)
+        avisos = h.evaluate(AVISOS_JS)
+        self.assertTrue(any("Memoria llena: se ha borrado 1 copia" in a for a in avisos), avisos)
+        self.assertFalse(any("No se est" in a for a in avisos), avisos)
+
+    def test_la_hoja_sin_nada_borrable_sigue_avisando_y_no_borra(self):
+        pg, _ = self.generador(self._contexto_con_reloj())
+        h = self.hoja(pg, ['A', 'B'])
+        h.evaluate(llenar_js("sgd_rev_RECIENTE", "relleno_c", "_2026-11-03"))
+        antes = h.evaluate("Object.keys(localStorage).length")
+        h.evaluate("() => document.querySelector('.td-st[data-k]').click()")
+        self.assertEqual(h.evaluate("Object.keys(localStorage).length"), antes, "no debe borrar copias de ayer")
+        self.assertTrue(any("No se est" in a for a in h.evaluate(AVISOS_JS)))
+
+    def test_guardar_la_configuracion_borra_copias_viejas_y_lo_dice(self):
+        pg, errores = self.generador(self._contexto_con_reloj())
+        pg.evaluate("() => { S.obra='OBRA T'; S.fecha='2026-11-04'; }")
+        pg.evaluate(LLENAR_VIEJAS_JS)
+        antes = pg.evaluate("Object.keys(localStorage).filter(k=>k.startsWith('sgd_rev_VIEJA')).length")
+        pg.evaluate("saveConfig()")
+        self.assertEqual(errores, [])
+        self.assertIsNotNone(pg.evaluate("localStorage.getItem('sgd_rev_cfg_OBRA_T')"))
+        self.assertLess(pg.evaluate("Object.keys(localStorage).filter(k=>k.startsWith('sgd_rev_VIEJA')).length"), antes)
+        avisos = pg.evaluate("[...document.querySelectorAll('body > div')].map(d=>d.textContent)")
+        self.assertTrue(any("guardada" in a and "Memoria llena: se ha" in a for a in avisos), avisos)
 
 
 if __name__ == "__main__":

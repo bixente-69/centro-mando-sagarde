@@ -1692,24 +1692,32 @@ function saveConfig(){
     catalog:CAT,importData:S.importData||null,
     sourceId:S.sourceId||null,sourceMeta:S.sourceMeta||null,
   };
+  let aviso='';
+  // Escribe haciendo sitio si hace falta (copias automaticas de hojas de mas de 30 dias, decision de
+  // Bixente) y recuerda el aviso para ensenarlo con el mensaje final.
+  const escribir=(k,v)=>{
+    const r=escribirHaciendoSitio(k,v,new Date());
+    if(r.aviso) aviso=r.aviso;
+    if(!r.ok) throw new Error('sin sitio');
+  };
   try{
     const recents = JSON.parse(localStorage.getItem('sgd_rev_recents')||'[]');
     // Antes de guardar, fuera las configuraciones huerfanas de antes: liberan sitio.
     podarConfigs(recents);
-    localStorage.setItem(key,JSON.stringify(cfg));
+    escribir(key,JSON.stringify(cfg));
     const entry={key,obra:S.obra,fecha:S.fecha,bloques:S.bloques.length,
                  portales:getPortalEntries().length,garajes:S.garajes.length,modo:S.modo,ts:Date.now()};
     const filtered = recents.filter(r=>r.key!==key);
     filtered.unshift(entry);
     const kept = filtered.slice(0,8);
-    localStorage.setItem('sgd_rev_recents', JSON.stringify(kept));
+    escribir('sgd_rev_recents', JSON.stringify(kept));
     podarConfigs(kept);   // las que acaban de salir de la lista de recientes
   }catch(e){
     // Aparato lleno o almacenamiento bloqueado: antes lanzaba QuotaExceededError sin control y no decia nada.
-    showToast('No se pudo guardar la configuración en este aparato (memoria llena o bloqueada).',6000);
+    showToast('No se pudo guardar la configuración en este aparato (memoria llena o bloqueada).'+(aviso?' '+aviso:''),8000);
     return;
   }
-  showToast('Configuración guardada ✓');
+  showToast('Configuración guardada ✓'+(aviso?' · '+aviso:''),aviso?8000:undefined);
 }
 
 // loadConfig solo se llama desde la lista de recientes: una configuracion que no esta en ella
@@ -1847,6 +1855,35 @@ function groupCompleteFloors(plantas,maxViviendas=10){
 
 // Runtime único para viviendas y garajes: el alfabeto y el ciclo no se
 // bifurcan. Las pestañas sólo se conectan cuando la hoja de garaje las emite.
+/* Escribe en el aparato y, si esta lleno, hace sitio. DECISION de Bixente (04/11/2026, opcion B):
+   al llenarse se borran SOLO copias automaticas de hojas de MAS de 30 dias (sgd_rev_<obra>_<fecha>
+   y su version _garaje), la mas vieja primero y solo las necesarias hasta que quepa, y se avisa.
+   NUNCA se borra: la clave que se esta escribiendo, las configuraciones (sgd_rev_cfg_*), la lista
+   de recientes, nada de otra aplicacion ni ninguna copia de 30 dias o menos.
+   Se incrusta tal cual en cada hoja con toString(): tiene que ser autonoma (sin variables de fuera).
+   Devuelve {ok, borradas, aviso}; `aviso` va vacio si no se borro nada. */
+function escribirHaciendoSitio(clave,valor,hoy){
+  const DIAS=30;
+  const intento=()=>{ try{ localStorage.setItem(clave,valor); return true; }catch(e){ return false; } };
+  if(intento()) return {ok:true,borradas:0,aviso:''};
+  const hoyUTC=Date.UTC(hoy.getFullYear(),hoy.getMonth(),hoy.getDate());
+  const viejas=Object.keys(localStorage).map(k=>{
+    const m=/^sgd_rev_(.+)_(\d{4})-(\d{2})-(\d{2})(?:_garaje)?$/.exec(k);
+    if(!m||k===clave||k.indexOf('sgd_rev_cfg_')===0) return null;
+    const dias=Math.round((hoyUTC-Date.UTC(+m[2],+m[3]-1,+m[4]))/86400000);
+    return dias>DIAS?{k,dias}:null;
+  }).filter(Boolean).sort((a,b)=>b.dias-a.dias);        // la mas vieja primero
+  let borradas=0, ok=false;
+  for(const v of viejas){
+    localStorage.removeItem(v.k); borradas++;
+    if(intento()){ ok=true; break; }
+  }
+  const aviso=borradas
+    ? 'Memoria llena: '+(borradas===1?'se ha borrado 1 copia automática de una hoja':'se han borrado '+borradas+' copias automáticas de hojas')+' de más de 30 días para hacer sitio.'
+    : '';
+  return {ok,borradas,aviso};
+}
+
 function sheetRuntime(safeKey,fileBase,withGarageTabs=false){
   return `<script>
 const CYCLE=['','/',  'M','X','N'];
@@ -1870,14 +1907,14 @@ function getData(){const d={};document.querySelectorAll('.td-st[data-k]').forEac
    aparato lleno o el almacenamiento bloqueado, antes fallaba en silencio: la celda se marcaba en
    pantalla, no se guardaba nada y nadie se enteraba. Ahora se avisa, una vez por hoja, y se dice
    que hacer: la descarga de «Guardar revisión» no depende del almacenamiento. */
+${escribirHaciendoSitio.toString()}
 let avisadoSinGuardar=false;
 function autoSave(){
-  try{ localStorage.setItem(KEY,JSON.stringify(getData())); }
-  catch(e){
-    if(!avisadoSinGuardar){
-      avisadoSinGuardar=true;
-      showToast('No se está guardando en este aparato (memoria llena o bloqueada). Pulsa «Guardar revisión» para no perder lo marcado.',12000);
-    }
+  const r=escribirHaciendoSitio(KEY,JSON.stringify(getData()),new Date());
+  if(r.aviso) showToast(r.aviso,8000);
+  if(!r.ok&&!avisadoSinGuardar){
+    avisadoSinGuardar=true;
+    showToast('No se está guardando en este aparato (memoria llena o bloqueada). Pulsa «Guardar revisión» para no perder lo marcado.',12000);
   }
 }
 function doSave(){
