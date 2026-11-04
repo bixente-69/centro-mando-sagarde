@@ -1,6 +1,24 @@
-# Estudio de mejoras de Sagarde — borrador por fases
+# Estudio de mejoras de Sagarde
 
-**Fecha:** 04/11/2026 · **Estado:** EN CURSO (se completa fase a fase; cada fase se guarda con commit). Solo lectura sobre producción: no se ha tocado código ni datos de obra, no se ha ejecutado ningún `.bat`.
+**Fecha:** 04/11/2026 · **Estado:** COMPLETO (fases 0–6). Solo lectura sobre producción: no se ha tocado código ni datos de obra, no se ha ejecutado ningún `.bat`.
+
+## 0. Resumen de una página
+
+**Recomendación: empezar por el «Parte de cambios» (P1).** Es un parte por obra que dice *qué ha avanzado desde la revisión anterior* (por portal, planta y tajo), enchufado al «Informe de obra a la carta» que ya existe, **más un cambio pequeño y urgente de fondo: guardar las transiciones celda a celda («de X a M») que hoy el motor calcula y tira.**
+
+**Por qué esa y no otra (hechos medidos):**
+1. `ficha_obra.py:611` calcula en memoria `estados_cambiados = (clave, antes, después)` en cada revisión y **lo descarta**: `revisiones_aplicadas.jsonl` solo guarda el *número* (`celdas_cambiadas`). La ficha conserva únicamente el último estado y su fecha. **Cada revisión que pase sin guardarlo pierde para siempre el historial fino** que `CLAUDE.md` §1 promete («analizar históricos de revisiones», «estadísticas») y del que dependen una futura previsión y los rendimientos por tajo.
+2. Hoy **no existe ningún «qué ha cambiado»** en panel ni informe (`grep` de ritmo/tendencia/fecha de fin: 0 lógica). Los datos para el 80 % del parte **ya están** en la ficha (`f` = fecha del último cambio de cada celda): sin entradas nuevas, sin app nueva, encaja con §7c.
+3. Las ideas «bonitas» del encargo **no tienen datos hoy**: horas por tajo (el control horario lleva ámbito vivienda/garaje, no tajo; 140 persona-día, 1.154 h, desde el 12/10), comparar con las 128 obras cerradas (en git solo hay 3 paneles y un `cierre.json`) y pedidos anticipados (no existe cantidad *necesaria* ni *instalada*; las hojas `.xlsx` ni están en git).
+4. Previsión de fin de obra: backtest propio, errores de −28 a +41 días **a umbrales del 70–85 %**; Mungia lleva 4 meses entre el 80 % y el 90 %. Una fecha de fin al 100 % con «intervalo de confianza» sería adorno. Se descarta hasta tener transiciones guardadas y la serie arreglada.
+
+**Las tres propuestas:** **P1** Parte de cambios + guardar transiciones (1–2 sesiones, recomendada). **P2** Estadística de postventa sobre las 2.786 incidencias que ya hay (2 sesiones; datos reales, pero su uso en la semana a semana es menor). **P3** Materiales «necesario frente a entregado» (condicionada a que Bixente aporte cantidades; no la empezaría).
+
+**Crítica al sistema:** fuerte en capturar estado, débil en convertirlo en acción; tres promesas de §1 sin implementar; tres decisiones ya tomadas por Bixente (G1 media del inicio, G3 plazos, G4 aviso de pendientes en `REVISIONES`) **siguen sin implementar** y compiten con esto por los mismos créditos: G4 en particular ataca el eslabón manual donde más se pierde y es más barata que cualquier propuesta nueva.
+
+**Límites de este estudio:** no abrí las páginas de la competencia, solo los extractos del buscador (marcado en §5); las horas ahorradas son **hipótesis (H)**, no medidas; el histórico de 128 obras y las hojas de materiales viven fuera de git (no verificable).
+
+---
 
 ## 1. Plan de trabajo
 
@@ -9,10 +27,10 @@
 | 0 Orientación | lecturas obligatorias de `CLAUDE.md` §5 | ~10 lecturas | hecha |
 | 1 Inventario con cifras | scripts de solo lectura sobre fichas, jornadas, series, postventa | 6 scripts | hecha |
 | 2 Dónde se pierde trabajo | fricciones con evidencia | grep + informes A–H | hecha |
-| 3 Investigación web | ≥15 fuentes en ~25–30 búsquedas | 30 búsquedas | pendiente |
-| 4 Ideas | ≥10 puntuadas con criterios | 1 tabla | pendiente |
-| 5 Propuestas | ≥2 completas, 1 recomendada | — | pendiente |
-| 6 Entrega | este documento + resumen + 1 pregunta | — | pendiente |
+| 3 Investigación web | ≥15 fuentes en ~25–30 búsquedas | 30 búsquedas | hecha (21 búsquedas, 33 URLs) |
+| 4 Ideas | ≥10 puntuadas con criterios | 1 tabla | hecha (14 ideas) |
+| 5 Propuestas | ≥2 completas, 1 recomendada | — | hecha (3) |
+| 6 Entrega | este documento + resumen + 1 pregunta | — | hecha |
 
 ---
 
@@ -117,4 +135,155 @@ Las horas de Bixente por paso **no están medidas en ningún sitio del repo**; d
 
 ---
 
-*Las secciones 2 (resumen), 5 (investigación web), 6 (ideas), 7 (propuestas) y 8 (fuentes) se añaden en las fases siguientes.*
+## 5. Fase 3 — Investigación web
+
+**Cómo se hizo y límite:** 21 búsquedas; **solo leí los extractos que devuelve el buscador, no abrí las páginas completas** (no usé el agente de lectura). Por eso cada afirmación es «según el extracto». Lo de fabricantes es publicidad salvo que diga lo contrario. Cobertura: lo que **no** encontré (Cocoplan: funciones; Obralia: nada fiable; precios fiables de casi todo) está dicho en cada fila.
+
+| # | Producto / fuente | Qué hace bien (según el extracto) | Qué copiar | Qué NO copiar (usuario único, portal estático, sin servidor) | URL |
+|---|---|---|---|---|---|
+| 1 | **Touchplan** (Last Planner) | PPC por semana, por gremio y por motivo de incumplimiento; informe de restricciones abiertas/resueltas; lookahead de 6 semanas | El **motivo de variación** junto al porcentaje; PPC por tajo/gremio | Multiusuario en tiempo real, edición colaborativa | https://touchplan.io/reporting/ |
+| 2 | **Last Planner / PPC** (literatura) | PPC = actividades completadas / planificadas; Mortenson cita media del sector 54,4 % frente a ~70 % en su obra (fabricante/contratista, no estudio independiente); causas de incumplimiento | Medir el cumplimiento *de lo comprometido*, no solo el avance | Exigir a Bixente un plan semanal nuevo (rompe §7c) | https://www.mortenson.com/newsroom/improving-productivity-in-the-field · https://iglc.net/PAPERS/Details/1916 |
+| 3 | **Cocoplan** (Valencia, basado en LPS) | Existe y se vende como software LPS; **no hallé** sus funciones concretas | Nada verificado | Todo lo no verificado | https://elreferente.es/startup/cocoplan |
+| 4 | **Fieldwire** (Hilti) | Informes **programables** (p. ej. «todas las tareas abiertas eléctricas al subcontratista cada lunes»); tareas ligadas a plano; offline con sincronización | La idea de **informe recurrente con filtro por gremio**; exportar PDF/hoja | Envío automático por correo (no hay servidor); cuentas por usuario. Informes y estados personalizados son de pago | https://fieldwire.com/support/using-fieldwire · https://thedigitalprojectmanager.com/tools/fieldwire-review/ |
+| 5 | **Raken** | Registra horas **y cantidades por código de coste** en el parte diario; compara con presupuesto y calcula eficiencia y tiempo proyectado. Producción solo en plan caro; el % se corta en 100 % | **Registrar horas por código de coste (= tajo)** es justo lo que le falta al control horario de Sagarde; presupuesto de horas por tajo | Exigir esto en la tablet **hoy**: más toques en obra con guantes y 23 plantas; solo cuando haya 6+ semanas de horas por ámbito | https://help.rakenapp.com/en/articles/14436994-how-to-track-production-hours-with-cost-codes-in-raken · https://help.rakenapp.com/en/articles/14492631-production-insights-in-raken |
+| 6 | **busybusy** | Horas por proyecto y código de coste; avisa **horas sin asignar** día a día; compara horas estimadas/reales. Una reseña de 2024 dice que si el trabajador se salta el campo, queda sin atribuir | La alarma de **«horas sin asignar»** (en Sagarde: jornadas sin tajo) | GPS/geovalla, cuentas | https://busybusy.com/features/budgets-projects-cost-codes/ · https://timeero.com/reviews/busybusy-review |
+| 7 | **Jibble / ClockShark** | Control horario con geovalla, offline, exportar XLS/CSV; ClockShark elige tarea al fichar | Exportar a hoja | Geovalla/biometría (el alcance de Bixente es «boceto», G §2) | https://www.jibble.io/construction-time-tracking · https://www.fool.com/the-ascent/small-business/time-clock/clockshark-review/ |
+| 8 | **simPRO** | Pedidos de compra ligados a trabajo; consumos por trabajo; aprobación de pedidos; informe semanal de discrepancias de precio con proveedor | Ligar **material ↔ trabajo** y el informe de discrepancias (en Sagarde: líneas sin albarán) | Catálogos de proveedor, stock, facturación; integraciones por nivel de plan | https://helpguide.simprogroup.com/Content/Service-and-Enterprise/Create-a-Purchase-Order.htm · https://www.casestudies.com/company/simpro-software/case-study/middlebury-electric-customer-case-study |
+| 9 | **Fergus / ServiceM8 / Tradify / Jobber** | Pensados para fontaneros/electricistas de servicio (presupuesto→factura); Fergus sigue material+horas+margen por trabajo | Nada de peso: son de **servicio y facturación**, no de obra por tajo | Facturación, agenda de cuadrillas | https://fergus.com/servicem8-vs-fergus/ · https://dev.to/tobydowns/best-job-management-software-for-nz-tradies-in-2026-tradify-vs-fergus-vs-servicem8-59el |
+| 10 | **Procore** (informe de propietario / semanal) | El informe semanal estándar lleva: calendario, trabajo hecho, **trabajo próximo**, RFI/consultas; plantilla propia de cada contratista | **Estructura del parte semanal**: hecho / próximo / bloqueos | Todo el ecosistema | https://v2.support.procore.com/en-gb/process-guides/analytics-2.0-reports/owner-report · https://support.procore.com/tc/brinkmann/Procore_Process_Database/Weekly_Report |
+| 11 | **Buildertrend** | «AI Client Updates»: resumen automático de la actividad de la obra hacia el cliente (en la hoja de ruta, estado «en curso» según la fuente) | La idea: resumen **generado desde la actividad**, no escrito a mano | Portal de cliente con cuenta | https://buildertrend-publicroadmap.launchnotes.io/board/keep-clients-informed-with-client-updates |
+| 12 | **Dashpivot (Sitemate)** | Seguimiento de progreso sobre PDF/plano en tablet, offline | Confirma el modelo de Sagarde (hoja de campo → progreso); nada nuevo | Panel multiusuario | https://sitemate.com/?p=7631 |
+| 13 | **Dalux Field** | Listas de comprobación **offline**: hay que *preparar* (descargar) antes de perder cobertura | Validan la decisión de Sagarde de que la descarga del HTML no dependa de la red | — | https://support.dalux.com/hc/articles/28263982197276 |
+| 14 | **PlanRadar** | Informes de defectos filtrables por contratista y tipo; paneles de estadística de defectos | Filtrar incidencias **por tipo y por responsable** | No encontré evidencia de tendencia en el tiempo por contratista en PlanRadar, Autodesk Build o PlanGrid | https://planradar.com/snag-app/ |
+| 15 | **Garantía en promotoras** (Punchlist Manager de Verisk, MASYC, Pivotal CRM) | Venden análisis de **causa raíz y tendencias por categoría/oficio** de las reclamaciones de postventa (publicidad del fabricante) | Campos mínimos: **vivienda, fecha, categoría del defecto, quién lo hizo**, si el mismo oficio lo repara | Su CRM completo | https://www.verisk.com/en-ca/products/punchlist-manager/ · https://masyc.squarespace.com/products/warranty · https://aihomebuilding.pages.dev/articles/warranty-callbacks-predictive-data.html |
+| 16 | **Presto (RIB Spain)** | Estándar español de presupuesto, mediciones, certificaciones y **control de producción** | La idea de **mediciones por partida** como base de «cantidad necesaria» | Es presupuesto de oficina, no seguimiento de campo | https://www.softwaredoit.es/rib-spain/rib-spain.html · https://www.emagister.com/presto-certificacion-obra-cursos-3827455.htm |
+| 17 | **Obralia** | **No encontré nada fiable** sobre la plataforma | — | — | (búsqueda sin resultado útil) |
+| 18 | **OpenProject** (código abierto) | Paquetes de trabajo, Gantt con dependencias, tiempos y costes; BIM en edición de pago | Nada: es un gestor de proyectos con servidor y base de datos | Todo (necesita servidor) | https://thedigitalprojectmanager.com/es/tools/resena-de-openproject/ |
+| 19 | **ERPNext / Odoo** (código abierto) | Consumo de material por tarea **no viene de serie**: hay módulos de pago o a medida | Confirma que «material por tarea» es un problema difícil incluso en ERP | Servidor, base de datos, modelo de stock | https://discuss.frappe.io/t/project-workflow-for-company-using-both-services-material-with-tracking-time-material-consumption/42747 · https://apps.odoo.com/apps/modules/19.0/job_order_material_consumption |
+| 20 | **Pedidos justo a tiempo (Procore)** | El momento del pedido se calcula hacia atrás desde la fecha de necesidad del *lookahead* de 2–6 semanas, con plazo del proveedor | Modelo lógico: *necesito el tajo X en la planta Y en la fecha F → pedir en F − plazo* | Necesita fechas de necesidad, que Sagarde no tiene (Cocoplan es de la constructora y no está en git) | https://www.procore.com/en-au/library/just-in-time-delivery-construction |
+| 21 | **NECA, unidades de trabajo** | Horas estándar por tarea eléctrica; normales/difíciles; ajustes por altura; la comparación «horas ganadas = cantidad × unidad frente a horas gastadas» es mi inferencia, no de la fuente | Idea de **horas ganadas** por tajo | El manual es de pago y de EE. UU.; no sirve para REBT/ICT sin calibrar | https://www.ecmweb.com/construction/estimating/article/20903843/understanding-labor · https://www.necaconvention.org/wp-content/uploads/2023/10/NECA-2023_Improving-and-Tracking-Labor-Productivity-with-Material-Management-_Matt-McDaniel-Dave-Gralike.pdf |
+
+### Metodología de previsión (por qué no prometo fecha de fin)
+
+- La previsión de duración por valor ganado es **más débil al principio** y se supone para proyectos grandes y largos; para pequeños puede no dar información fiable (extractos de revisión académica). Con la curva en S no lineal, de siete métodos comparados solo el filtro de Kalman fue robusto (Kim y Kim, 2014, según el extracto). Con muestras pequeñas se propone *bootstrap* de observaciones históricas (artículo de 2025, según el extracto). **No encontré** una fuente que cuantifique bandas de confianza con n pequeño: lo digo tal cual. Fuentes: https://pure.psu.edu/en/publications/sensitivity-of-earned-value-schedule-forecasting-to-s-curve-patte/ · https://iris.polito.it/handle/11583/2987791 · https://hrcak.srce.hr/file/199595.
+- Mi propio backtest (§3.6) coincide: indicio, no prueba.
+
+---
+
+## 6. Fase 4 — Ideas puntuadas
+
+Escala 0–3 (3 = mejor; en «esfuerzo» y «riesgo», 3 = menos esfuerzo/riesgo). **Ahorro** = hipótesis (H) con su cálculo. «Datos hoy» cita la cifra de §3.
+
+| # | Idea | Ahorro/semana (H) | Datos hoy (cifra) | Esfuerzo (sesiones) | Riesgo | Encaje §7c y portal estático | Verificación | Total /15 | Decisión |
+|---|---|---|---|---|---|---|---|---|---|
+| 1 | **Parte de cambios por obra** + guardar transiciones | 2 — 5 obras × ~10 min = ~50 min (H: si manda 1 parte/semana a cada una) | 3 — `f` y `r` en 100 % de las celdas; 0 % de transiciones | 3 — 1–2 | 3 — aditiva, no mueve cifras | 3 — sale del mismo `.bat`, sin app | 3 — fixtures + mutación + antes/después | **14** | **P1, recomendada** |
+| 2 | Avisos de pendientes en `REVISIONES` + estado de subida (**G3+G4 ya decididos**) | 2 — evita olvidos; H: 1 incidente/mes de ~30 min | 3 — auditor existe | 3 — 1 | 3 | 3 | 3 | **15** | **Hacer antes o con P1** (ya aprobado; no es propuesta nueva) |
+| 3 | Estadística de postventa (tiempos, reincidencias, por tipo) | 1 — es insight, no ahorro semanal | 3 — **2.786** filas, 2.502 con fecha de recepción | 2 — 2 | 2 — privacidad, texto libre, 71 % en 2022 | 2 — pasa por el `.bat` de postventa; hay que confirmar camino | 2 | **12** | **P2** |
+| 4 | Materiales «necesario frente a entregado» + pedidos | 3 si se acierta (H: 30–60 min/semana de cuentas de cabeza) | 0 — **no hay cantidad necesaria ni instalada**; `.xlsx` fuera de git | 1 — 3+ y depende de datos de Bixente | 1 — riesgo de ratios inventados | 2 | 2 | **9** | **P3 condicionada** |
+| 5 | Previsión de fin de obra con intervalo | 1 | 1 — 2 obras con serie larga; errores −28/+41 d | 1 | 1 — riesgo de **publicidad** | 3 | 1 — no validable con n=2 | **7** | **Descartada** hasta tener transiciones y serie corregida (revisar con ≥4 obras con serie) |
+| 6 | Horas por tajo / rendimiento | 2 | 0 — el control horario no tiene tajo; 3 semanas | 1 — toca la tablet | 1 — más toques en obra | 2 | 2 | **8** | **Aplazada**: cuando haya ≥6 semanas; primero «horas por punto de avance» por obra |
+| 7 | Comparar con las 128 obras cerradas | 1 | 0 — en git: 6 ficheros | 0 | 2 | 2 | 0 | **5** | **Descartada**: sin datos; preguntar a Bixente si existen fuera del repo |
+| 8 | PPC / plan semanal comprometido (Last Planner) | 2 | 1 — Cocoplan de Mungia fuera de git | 1 | 1 — pide un paso manual nuevo a Bixente | 1 — rompe «solo un fichero» | 1 | **6** | **Descartada** (puede volver si Bixente quiere un compromiso semanal) |
+| 9 | Alerta de datos viejos por tipo (entrega de material de Mungia: mayo; control horario) | 2 | 3 — medido | 3 | 3 | 3 | 3 | **14** | **Meter en P1/G4** como ampliación pequeña |
+| 10 | Corregir la serie histórica (denominadores 1295→1461; Mungia 88→43,5) | 1 | 3 | 2 | 2 | 3 | 3 | **12** | **Prerrequisito** de cualquier gráfica de tendencia; es «F3» del informe D |
+| 11 | «Cola de obra»: qué queda en obras >85 % (Mungia 186 `P`) y desde cuándo | 2 | 3 | 2 | 3 | 3 | 3 | **13** | **Incluida en P1** como sección del parte; ojo: solapa con «Qué hacer ahora» del priorizador (comprobar) |
+| 12 | Panel comparativo entre obras (ritmo, % por semana) | 1 | 2 — 5 obras, series dispares | 2 | 2 | 3 | 2 | **10** | Aplazada (misma razón que 5) |
+| 13 | Informe de cierre automático con lecciones (horas, incidencias) | 1 | 1 | 1 | 2 | 2 | 1 | **7** | Descartada: cierre de expediente ya existe |
+| 14 | Sustituir por herramienta comercial / ERP | 0 | – | 0 | 0 | 0 | 0 | **0** | **Descartada**: todas exigen servidor/cuentas, rompen §7c y el portal estático (OpenProject, ERPNext, Odoo); las comerciales son de servicio o de oficina |
+
+**Si solo hay una buena, lo digo:** la idea 2 (avisos G3+G4) es la más barata y ya está aprobada; la idea 1 es la mejor *nueva*. No relleno más.
+
+---
+
+## 7. Fase 5 — Propuestas
+
+### P1 · «Parte de cambios» + guardar las transiciones (RECOMENDADA)
+
+**1. Problema con evidencia.** (a) El motor calcula `estados_cambiados = (clave, antes, después)` en `ficha_obra.py:611` y la traza `revisiones_aplicadas.jsonl` guarda solo el recuento (`celdas_cambiadas`; en Bolueta: 132 líneas, 120 son «historial consolidado», 12 `html_digital`, suma de cambios 1.766). La ficha guarda `{v, f, r}` y se sobrescribe. (b) Panel e informe enseñan el estado actual, un sparkline y `variacion_pct`; **ninguno dice qué se hizo desde la última vez** (F3, F4). (c) Lo que sí se puede reconstruir hoy: celdas cuya fecha `f` es posterior a la revisión anterior = lo que ha cambiado, sin el «de». Pero ojo: **fechas de carga masiva** (p. ej. 28/07: 1.410 celdas en Mungia, 1.314 en Bolueta; Gernika 80 % con fecha de historial base) no son avance de campo y hay que excluirlas.
+
+**2. Qué vería Bixente** (boceto; en el panel de la obra y como bloque preseleccionado en «Informe de obra»):
+
+```
+OLABEAGA · cambios entre la revisión del 30/10 y la del 02/11
+  Terminado (X):  +17 celdas · Más del 50 % (M): +3 · Iniciado (/): +9
+  Bajan:           2 celdas (X→P) ← revisar: «lo que se apunta en la última vale»
+  Por tajo:        Tubos en vivienda  +12  · Cajas y mecanismos  +8 · ...
+  Por planta:      P3 +14 · P4 +7 · ...
+  Sin tocar en 3 revisiones: Cuarto técnico (todas P)
+  Quedan: 1.186 P  ·  desglose: X 209 · M 25 · / 41 · P 1186 · N 58
+```
+
+Nota: el «Bajan» solo es exacto con las transiciones guardadas (primera revisión tras implantarlo); antes aparece como «no se puede saber: no se guardó el estado anterior» — **nunca un 0**.
+
+**3. Flujo conforme a §7c.** Entra: nada nuevo (misma hoja en `REVISIONES`, mismo «actualiza la obra»). Se extiende: al aplicar, la traza JSONL guarda además `transiciones: [[clave, de, a], ...]` (campo aditivo, mismo fichero, **sin tipo de fichero nuevo, sin `.gitignore`**). Se regenera: panel (sección nueva) y «Informe de obra» (bloque nuevo). Se ve: portal. Cómo lo haría el generador de revisiones: mismo patrón «fichero → traza → panel».
+
+**4. Alcance mínimo (1–2 sesiones).** Sesión 1: guardar transiciones (+ prueba) y función pura `cambios_entre(ficha, fecha_desde)` sobre `f`; excluir fechas de carga masiva. Sesión 2: sección en panel + bloque en informe a la carta. **No hará:** previsión de fechas, horas, materiales, ni tocará la tablet.
+
+**5. Verificación.** `unittest`: (i) fixture con 3 revisiones y cambios conocidos → el parte da exactamente esos; (ii) revisión sin cambios → muestra «0 cambios» explícito, no oculta el bloque; (iii) carga masiva no cuenta como avance. **Mutación:** invertir el comparador de fechas, no excluir la carga masiva, perder el campo `transiciones` en `_entrada` de `trazabilidad_revisiones.py`: cada una debe romper una prueba. **Antes/después:** desglose `X/M//P/?/N` y SHA-256 de `ficha_obra.json` de **todas** las obras idénticos (`actualizar_obra.py` ya lo hace); solo cambia la traza JSONL y el panel. Regla de la familia de fallos: una prueba que compruebe que lo declarado (`transiciones`) aparece en el panel.
+
+**6. Riesgos / calidad del dato / decisiones.** Series cortas: Barakaldo 1 revisión (parte vacío con aviso). La baja `X→P` depende de que se guarde el estado anterior. Garajes usan `ficha_garajes.py:263`, también hay que cubrirlos (si no, repetimos «arreglar un camino y dejar roto su hermano», CLAUDE.md §6). **Decisiones de Bixente (una cada vez):** ¿el parte compara contra «la revisión anterior» o contra «hace 7 días»? (recomiendo la revisión anterior).
+
+**7. Copiado / descartado.** Copio: estructura hecho-próximo-bloqueos de Procore, informe recurrente filtrable de Fieldwire, resumen generado desde la actividad de Buildertrend, motivo de variación de Touchplan. Descarto: envío automático por correo, cuentas, tiempo real.
+
+**8. Coste.** 2 sesiones de nube (la 1ª puede hacerse sin él; la 2ª necesita su decisión sobre el formato). Valor: ~50 min/semana (H) + el historial fino que deja de perderse.
+
+### P2 · Estadística de postventa con los datos que ya hay
+
+**1. Problema.** 63 vistas previas de contratos, 45 con tablas, **2.786 incidencias** con recepción (2.502 legibles), resolución (2.340) y texto libre; **tiempo de resolución: mediana 7 días, p90 50 días** (1.976 pares). Hoy no hay consulta posible ni retorno a obra (F6). **Calidad:** columna OK con >6 variantes (`OK`, `SI`, `S`, `0K`…), años absurdos (`219`, `3018`), 2022 = 71 % de las filas (casi seguro pocas obras: no es tendencia).
+**2. Qué vería.** En el índice de postventa: tabla por contrato (nº de incidencias, mediana y p90 de resolución, abiertas y su antigüedad) y, aparte, «reincidencias por palabras clave» (toma, diferencial, telefonillo, luz…) marcadas **como hipótesis de clasificación**.
+**3. Flujo §7c.** Sin entrada nueva: el `.bat` ya regenera postventa (`Actualizar_Sagarde.bat`, paso 2); la estadística es un derivado más. **Por confirmar:** la fuente real son los Word en el PC (las vistas previas son derivadas); el cálculo debe leer la misma fuente que ya lee el pipeline, no las vistas previas.
+**4. Alcance.** Tiempos, abiertas/antigüedad, normalización de OK y fechas con **lista de filas rechazadas** (nunca a cero). **No hará:** clasificar por IA ni asignar causa; no publicará nombres ni teléfonos.
+**5. Verificación.** Fixture con filas conocidas (fechas inválidas, OK mal escrito); mutación del parser de fechas; conteo total = filas leídas + rechazadas (invariante); obras abiertas sin cambio.
+**6. Riesgos.** **Privacidad:** esos ficheros públicos ya contienen datos de clientes (informe E, §5.1). La salida debe ir agregada. Decisión de Bixente: ¿vale el ahorro de nada semanal a cambio de poder responder «¿cuánto tardamos?»? Mi opinión: es útil para negociar con promotoras, pero **no ahorra trabajo**.
+**7. Copiado.** Campos mínimos de garantía (vivienda, fecha, categoría, responsable) de Punchlist Manager/MASYC; filtro por tipo de PlanRadar. Descartado: CRM.
+**8. Coste.** 2 sesiones; casi todo sin él.
+
+### P3 · Materiales: necesario frente a entregado (no empezar aún)
+
+**Problema.** Solo existe «entregado», y el panel avisa de que no equivale a instalado. Mungia sin entradas desde el 08/05/2026. **Bloqueo real:** sin cantidades necesarias por tajo o ubicación, cualquier «pedido anticipado» sería un ratio inventado (§10). **Lo que sí vale ya (pequeño):** aviso de «sin entregas desde hace N días» por obra (idea 9) y filas incompletas.
+**Requiere de Bixente:** una fuente de cantidades necesarias (mediciones del proyecto o lista por vivienda tipo), una obra piloto y confirmar qué es «instalado». Mi recomendación: **no abrir P3** hasta tener eso; si lo tiene, es la de más valor potencial (idea 4) con riesgo de dato alto.
+**Verificación futura.** Totales entregado ≥ necesario no se corrige a cero; mutación de unidad; desglose de obras no implicadas.
+**Coste.** 3+ sesiones, dependientes de datos.
+
+---
+
+## 8. Fuentes
+
+Todas consultadas el 04/11/2026 **solo mediante extractos del buscador** (no se abrieron las páginas); precios de todas: sin verificar.
+
+1. https://touchplan.io/reporting/
+2. https://www.mortenson.com/newsroom/improving-productivity-in-the-field
+3. https://iglc.net/PAPERS/Details/1916
+4. https://elreferente.es/startup/cocoplan
+5. https://fieldwire.com/support/using-fieldwire
+6. https://thedigitalprojectmanager.com/tools/fieldwire-review/
+7. https://help.rakenapp.com/en/articles/14436994-how-to-track-production-hours-with-cost-codes-in-raken
+8. https://help.rakenapp.com/en/articles/14492631-production-insights-in-raken
+9. https://busybusy.com/features/budgets-projects-cost-codes/
+10. https://timeero.com/reviews/busybusy-review
+11. https://www.jibble.io/construction-time-tracking
+12. https://www.fool.com/the-ascent/small-business/time-clock/clockshark-review/
+13. https://helpguide.simprogroup.com/Content/Service-and-Enterprise/Create-a-Purchase-Order.htm
+14. https://www.casestudies.com/company/simpro-software/case-study/middlebury-electric-customer-case-study
+15. https://fergus.com/servicem8-vs-fergus/
+16. https://v2.support.procore.com/en-gb/process-guides/analytics-2.0-reports/owner-report
+17. https://buildertrend-publicroadmap.launchnotes.io/board/keep-clients-informed-with-client-updates
+18. https://sitemate.com/?p=7631
+19. https://support.dalux.com/hc/articles/28263982197276
+20. https://planradar.com/snag-app/
+21. https://www.verisk.com/en-ca/products/punchlist-manager/
+22. https://masyc.squarespace.com/products/warranty
+23. https://aihomebuilding.pages.dev/articles/warranty-callbacks-predictive-data.html
+24. https://www.softwaredoit.es/rib-spain/rib-spain.html
+25. https://thedigitalprojectmanager.com/es/tools/resena-de-openproject/
+26. https://discuss.frappe.io/t/project-workflow-for-company-using-both-services-material-with-tracking-time-material-consumption/42747
+27. https://apps.odoo.com/apps/modules/19.0/job_order_material_consumption
+28. https://www.procore.com/en-au/library/just-in-time-delivery-construction
+29. https://www.ecmweb.com/construction/estimating/article/20903843/understanding-labor
+30. https://pure.psu.edu/en/publications/sensitivity-of-earned-value-schedule-forecasting-to-s-curve-patte/
+31. https://iris.polito.it/handle/11583/2987791
+32. https://hrcak.srce.hr/file/199595
+33. https://www.necaconvention.org/wp-content/uploads/2023/10/NECA-2023_Improving-and-Tracking-Labor-Productivity-with-Material-Management-_Matt-McDaniel-Dave-Gralike.pdf
+
+**Medidas propias** (scripts de solo lectura, 04/11/2026): recuentos de §3 sobre `ficha_obra.json`, `ficha_garajes.json`, `personal_obra.json`, `revisiones_aplicadas.jsonl`, `panel.html` publicado y `POST-VENTAS/_SISTEMA/_PREVIEWS_WORD/*.html`. No se ejecutó la suite ni ningún `.bat`.
+
