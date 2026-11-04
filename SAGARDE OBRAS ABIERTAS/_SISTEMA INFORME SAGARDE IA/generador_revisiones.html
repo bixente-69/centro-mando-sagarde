@@ -1315,9 +1315,7 @@ function addPortalSpecialZone(bi,pi,key){
   const portal=portalAt(bi,pi);
   const def=SPECIAL_ZONE_BY_KEY[key];
   if(!portal||!def) return;
-  const iguales=portal.zonasEspeciales.filter(z=>z.tipo===def.tipo&&
-    String(z.funcion||'')===String(def.funcion||'')).length;
-  const nombre=iguales?`${def.label} ${iguales+1}`:def.label;
+  const nombre=nombreLibreZona(portal.zonasEspeciales,i=>i?`${def.label} ${i+1}`:def.label);
   portal.zonasEspeciales.push(makeSpecialZone(def.tipo,nombre,def.funcion||''));
   renderPortalStructures();
 }
@@ -1380,13 +1378,14 @@ function rmGarajePlanta(gi,pi){
   const garaje=garajeAt(gi); if(!garaje||garaje.plantas.length===1) return;
   garaje.plantas.splice(pi,1); renderGarajeStructures();
 }
-// Primer nombre automatico de la planta que no este ya usado (sin distinguir
+// Primer nombre automatico que no este ya usado en esa lista de zonas (las de
+// una planta de garaje o las zonas especiales de un portal; sin distinguir
 // mayusculas). `candidato(i)` da el nombre i-esimo: 0 -> «Basuras», 1 -> «Basuras 2».
 // Antes se contaban las zonas que habia y se sumaba uno: al quitar una del
 // medio (Trasteros 1, 2, 3 -> quitar la 2 -> añadir) salia «Trasteros 3» dos
 // veces, y en la hoja impresa dos columnas con el mismo rotulo en la misma planta.
-function nombreLibreZona(planta,candidato){
-  const usados=new Set(planta.zonas.map(z=>String(z.nombre).toUpperCase()));
+function nombreLibreZona(zonas,candidato){
+  const usados=new Set(zonas.map(z=>String(z.nombre).toUpperCase()));
   let i=0;
   while(usados.has(String(candidato(i)).toUpperCase())) i++;
   return candidato(i);
@@ -1395,7 +1394,7 @@ function addZona(gi,pi,key){
   const planta=garajeAt(gi)?.plantas[pi];
   const def=GARAGE_ZONE_BY_KEY[key];
   if(!planta||!def) return;
-  const nombre=nombreLibreZona(planta,i=>i?`${def.label} ${i+1}`:def.label);
+  const nombre=nombreLibreZona(planta.zonas,i=>i?`${def.label} ${i+1}`:def.label);
   planta.zonas.push(makeGarajeZona(def.tipo,nombre,def.funcion||''));
   renderGarajeStructures();
 }
@@ -1409,7 +1408,7 @@ function setZona(gi,pi,zid,value){
 }
 function incGarageCount(gi,pi,tipo){
   const planta=garajeAt(gi)?.plantas[pi]; if(!planta) return;
-  const nombre=nombreLibreZona(planta,i=>tipo==='vial'?`Zona ${DEF_VIV[i]||i+1}`:`Trasteros ${i+1}`);
+  const nombre=nombreLibreZona(planta.zonas,i=>tipo==='vial'?`Zona ${DEF_VIV[i]||i+1}`:`Trasteros ${i+1}`);
   planta.zonas.push(makeGarajeZona(tipo,nombre));
   renderGarajeStructures();
 }
@@ -1506,11 +1505,11 @@ function renderTajosVivienda(){
   CAT.forEach(t=>{ (groups[t.g]||(groups[t.g]=[])).push(t); });
   document.getElementById('tj-sel').innerHTML = Object.entries(groups).map(([g,tajos])=>`
     <div class="tj-group">
-      <div class="tj-group-hdr" onclick="toggleGroup(this)"><span class="tj-gname">${g}</span></div>
+      <div class="tj-group-hdr" onclick="toggleGroup(this)"><span class="tj-gname">${escHtml(g)}</span></div>
       <div class="tj-items">${tajos.map(t=>`
         <label class="tj-item">
           <input type="checkbox" id="cb-${t.id}" ${S.sel.has(t.id)?'checked':''} onchange="toggleT('${t.id}',this.checked)">
-          <span class="tj-name">${t.name}</span>
+          <span class="tj-name">${escHtml(t.name)}</span>
           <span class="tj-badge ${t.p}">${PROP_LBL[t.p]}</span>
           ${t.a!=='v'?`<span class="tj-badge a">${AMB_LBL[t.a]}</span>`:''}
         </label>`).join('')}</div>
@@ -1548,10 +1547,14 @@ function updTjCount(){
   }
   // Se cuenta en hojas, que es lo que sale por la impresora. "+17 sobre A4"
   // no le decia a nadie cuantas hojas iban a salir.
-  const hojas=repartirTajosEnHojas(getActiveTajos()).length;
-  count.textContent=hojas>1
-    ? `${S.sel.size} tajos · ${hojas} hojas por tabla`
-    : `${S.sel.size} tajos · 1 hoja por tabla`;
+  // Las hojas se calculan con los tajos de la MATRIZ de viviendas, igual que el
+  // paso 4 y la impresion (los de zonas especiales van en sus propias tablas).
+  // Antes se usaban TODOS los tajos seleccionados: con los datos reales de
+  // Bolueta, Olabeaga, Mungia y Gernika decia «2 hojas por tabla» en aviso de
+  // desbordamiento cuando salia 1 hoja, y llevaba a quitar tajos sin necesidad.
+  const matriz=getMatrixTajos();
+  const hojas=repartirTajosEnHojas(matriz).length;
+  count.textContent=`${getActiveTajos().length} tajos (${matriz.length} en la matriz de viviendas) · ${hojas} ${hojas>1?'hojas':'hoja'} por tabla`;
   count.className='tj-count'+(hojas>1?' over':'');
 }
 
@@ -1584,9 +1587,12 @@ function renderSummary(){
   else renderSummaryVivienda();
 }
 function renderSummaryVivienda(){
-  const n=S.sel.size;
   const matrixTajos=getMatrixTajos();
-  const nEspeciales=n-matrixTajos.length;
+  // Solo los tajos de zonas especiales que de verdad se imprimen en alguna zona
+  // de algun portal. Antes se restaba (todo lo seleccionado - matriz) y el
+  // resumen decia «35 de zonas especiales» con un portal sin ninguna zona
+  // (no se imprimia nada) o con un solo cuarto ligero (se imprimen 12).
+  const nEspeciales=tajosEspecialesImpresos();
   const entries=getPortalEntries();
   const hojasPorTabla=repartirTajosEnHojas(matrixTajos).length;
   const gruposDePlantas=entries.reduce((sum,{portal})=>sum+groupCompleteFloors(portal.plantas).length,0);
@@ -1989,6 +1995,12 @@ ${withGarageTabs?`document.querySelectorAll('.hoja-tab').forEach(btn=>{
 }
 
 const SPECIAL_COLS_PER_TABLE=8;
+function tajosEspecialesImpresos(){
+  const ids=new Set();
+  getPortalEntries().forEach(({portal})=>portal.zonasEspeciales.forEach(zona=>
+    specialTajosForZone(zona).forEach(t=>ids.add(t.id))));
+  return ids.size;
+}
 function specialTajosForZone(zona){
   const allowed=new Set(SPECIAL_ZONE_PROFILE_TAJOS[zona.tipo]||[]);
   return getActiveTajos().filter(t=>allowed.has(t.id));

@@ -31,6 +31,14 @@ Los cuatro fallos (reproducidos antes de corregirlos):
       de hojas de mas de 30 dias, la mas vieja primero y solo las necesarias, y se avisa. Nunca la clave que se
       esta escribiendo, ni configuraciones, ni la lista de recientes, ni nada de otra aplicacion.
 
+* H10 El contador del paso 3 («N tajos · H hojas por tabla») calculaba las hojas con TODOS los tajos, incluidos los de
+      zonas especiales que no entran en la matriz de viviendas. Con datos reales (Bolueta, Olabeaga, Mungia,
+      Gernika) decia «2 hojas por tabla» en aviso de desbordamiento y el paso 4 y la impresion daban 1.
+* H11 El resumen del paso 4 decia «N de zonas especiales» contando todo lo seleccionado, aunque el portal no tuviera
+      ninguna zona (35 de 35 sin imprimir) o solo un cuarto ligero (imprime 12).
+* H12 La lista de tajos del paso 3 no escapaba el nombre del tajo ni el de la fase (la de garaje si): inyectaba HTML.
+* H7b Las zonas especiales de vivienda tenian el mismo fallo de nombres repetidos que las de garaje.
+
 Sin Playwright o sin Chromium las pruebas se saltan (no fallan): Bixente lo lanza todo con .bat.
 """
 import json
@@ -794,6 +802,195 @@ class TestH9HacerSitio(Base):
         self.assertLess(pg.evaluate("Object.keys(localStorage).filter(k=>k.startsWith('sgd_rev_VIEJA')).length"), antes)
         avisos = pg.evaluate("[...document.querySelectorAll('body > div')].map(d=>d.textContent)")
         self.assertTrue(any("guardada" in a and "Memoria llena: se ha" in a for a in avisos), avisos)
+
+
+class TestH10ContadorDelPaso3(Base):
+    """El contador del paso 3 y el resumen del paso 4 tienen que decir lo mismo que sale por la impresora."""
+
+    PREPARAR = "() => { S.modo='vivienda'; S.sel=new Set(CAT.map(t=>t.id)); }"
+    LEER = """() => { goStep(3); const c=document.getElementById('tj-count');
+        return {texto:c.textContent, clase:c.className,
+                act:repartirTajosEnHojas(getActiveTajos()).length, mat:repartirTajosEnHojas(getMatrixTajos()).length,
+                nAct:getActiveTajos().length, nMat:getMatrixTajos().length}; }"""
+    # 30 tajos de matriz mas: la matriz ya no cabe en una hoja
+    DESBORDAR = """() => { for(let i=0;i<30;i++){ CAT.push({id:'zz_extra_'+i,name:'Extra '+i,g:'Fase extra '+(i%6),p:'p',a:'v'});
+        S.sel.add('zz_extra_'+i); } }"""
+
+    def _pg(self):
+        pg, _ = self.generador()
+        pg.evaluate(self.PREPARAR)
+        return pg
+
+    def test_con_todos_los_tajos_el_contador_no_avisa_de_un_desbordamiento_falso(self):
+        r = self._pg().evaluate(self.LEER)
+        self.assertGreater(r["act"], 1, "la prueba no ejercita el fallo: con todos los tajos ya cabria en una hoja")
+        self.assertEqual(r["mat"], 1)
+        self.assertIn("1 hoja por tabla", r["texto"])
+        self.assertNotIn("over", r["clase"], "avisaba de un desbordamiento que no existe")
+
+    def test_el_contador_dice_cuantos_tajos_son_de_la_matriz(self):
+        r = self._pg().evaluate(self.LEER)
+        self.assertIn("%d tajos" % r["nAct"], r["texto"])
+        self.assertIn("%d en la matriz" % r["nMat"], r["texto"])
+
+    def test_si_la_matriz_si_desborda_el_contador_avisa(self):
+        pg = self._pg()
+        pg.evaluate(self.DESBORDAR)
+        r = pg.evaluate(self.LEER)
+        self.assertEqual(r["mat"], 2)
+        self.assertIn("2 hojas por tabla", r["texto"])
+        self.assertIn("over", r["clase"])
+
+    def test_el_contador_y_el_resumen_dan_las_mismas_hojas(self):
+        import re
+        for desbordar in (False, True):
+            pg = self._pg()
+            if desbordar:
+                pg.evaluate(self.DESBORDAR)
+            texto = pg.evaluate(self.LEER)["texto"]
+            hojas_contador = int(re.search(r"(\d+) hojas? por tabla", texto).group(1))
+            resumen = pg.evaluate("() => { goStep(4); return document.getElementById('gen-summary').innerText.replace(/\\s+/g,' '); }")
+            m = re.search(r"repartida en (\d+) hojas", resumen)
+            hojas_resumen = int(m.group(1)) if m else 1
+            self.assertEqual(hojas_contador, hojas_resumen, (texto, resumen[:300]))
+
+    def test_en_modo_garaje_el_contador_no_cambia(self):
+        pg, _ = self.generador()
+        pg.evaluate("() => { setModo('garaje'); }")
+        texto = pg.evaluate("() => { goStep(3); return document.getElementById('tj-count').textContent; }")
+        self.assertRegex(texto, r"^\d+ de \d+ tajos de garaje$")
+
+
+class TestH11ResumenDeZonasEspeciales(Base):
+    PREPARAR = """() => { S.modo='vivienda'; S.obra='OBRA T';
+        S.bloques=normaliseStructure({bloques:[{id:'b',nombre:'B1',portales:[{id:'p',nombre:'P1',plantas:[{id:'f',nombre:'1',vivs:['A']}]}]}]});
+        S.sel=new Set(CAT.map(t=>t.id)); }"""
+    CONTENIDO = """() => { goStep(4); const t=document.getElementById('gen-summary').innerText.replace(/\\s+/g,' ');
+        return (t.match(/Contenido (.*?) en \\d+ tabla/)||[])[1]||t; }"""
+
+    def _pg(self):
+        pg, _ = self.generador()
+        pg.evaluate(self.PREPARAR)
+        return pg
+
+    def test_sin_zonas_especiales_no_dice_que_se_imprima_ninguna(self):
+        pg = self._pg()
+        contenido = pg.evaluate(self.CONTENIDO)
+        self.assertNotIn("zonas especiales", contenido)
+        self.assertIn("tajos de matriz", contenido)
+
+    def test_con_un_cuarto_ligero_cuenta_solo_los_tajos_que_ese_cuarto_imprime(self):
+        pg = self._pg()
+        pg.evaluate("addPortalSpecialZone(0,0,'cl_basuras')")
+        esperado = pg.evaluate("""() => SPECIAL_ZONE_PROFILE_TAJOS.cuarto_ligero
+            .filter(id=>S.sel.has(id)&&CAT.some(t=>t.id===id)).length""")
+        self.assertGreater(esperado, 0)
+        contenido = pg.evaluate(self.CONTENIDO)
+        self.assertIn("%d de zonas especiales" % esperado, contenido)
+
+    def test_con_varios_tipos_de_zona_cuenta_cada_tajo_una_sola_vez(self):
+        pg = self._pg()
+        pg.evaluate("() => { addPortalSpecialZone(0,0,'cl_basuras'); addPortalSpecialZone(0,0,'ct_riti'); addPortalSpecialZone(0,0,'cubierta'); }")
+        esperado = pg.evaluate("""() => { const ids=new Set(); const z=S.bloques[0].portales[0].zonasEspeciales;
+            z.forEach(zona=>specialTajosForZone(zona).forEach(t=>ids.add(t.id))); return ids.size; }""")
+        contenido = pg.evaluate(self.CONTENIDO)
+        self.assertIn("%d de zonas especiales" % esperado, contenido)
+
+    def test_lo_que_dice_el_resumen_es_lo_que_imprime_la_hoja(self):
+        import re
+        pg = self._pg()
+        pg.evaluate("() => { addPortalSpecialZone(0,0,'cl_basuras'); addPortalSpecialZone(0,0,'ct_riti'); }")
+        contenido = pg.evaluate(self.CONTENIDO)
+        dicho = int(re.search(r"(\d+) de zonas especiales", contenido).group(1))
+        impreso = pg.evaluate("""() => { const h=generateHTML({}); const ks=new Set();
+            for(const m of h.matchAll(/data-k="[^"]*__zesp__([^_"][^"]*?)__[^_"][^"]*"/g)) ks.add(m[1]); return ks.size; }""")
+        self.assertEqual(dicho, impreso, "el resumen y la hoja impresa no coinciden")
+
+    def test_cuenta_las_zonas_de_todos_los_portales(self):
+        pg, _ = self.generador()
+        pg.evaluate("""() => { S.modo='vivienda'; S.obra='OBRA T';
+            S.bloques=normaliseStructure({bloques:[{id:'b',nombre:'B1',portales:[
+              {id:'p1',nombre:'P1',plantas:[{id:'f1',nombre:'1',vivs:['A']}]},{id:'p2',nombre:'P2',plantas:[{id:'f2',nombre:'1',vivs:['A']}]}]}]});
+            S.sel=new Set(CAT.map(t=>t.id)); addPortalSpecialZone(0,0,'cl_basuras'); addPortalSpecialZone(0,1,'cubierta'); }""")
+        esperado = pg.evaluate("""() => new Set([...SPECIAL_ZONE_PROFILE_TAJOS.cuarto_ligero, ...SPECIAL_ZONE_PROFILE_TAJOS.cubierta]
+            .filter(id=>S.sel.has(id)&&CAT.some(t=>t.id===id))).size""")
+        solo_el_primero = pg.evaluate("""() => SPECIAL_ZONE_PROFILE_TAJOS.cuarto_ligero.filter(id=>S.sel.has(id)&&CAT.some(t=>t.id===id)).length""")
+        self.assertGreater(esperado, solo_el_primero)
+        self.assertIn("%d de zonas especiales" % esperado, pg.evaluate(self.CONTENIDO))
+
+    def test_los_tajos_de_matriz_se_siguen_contando_igual(self):
+        pg = self._pg()
+        n = pg.evaluate("getMatrixTajos().length")
+        self.assertIn("%d tajos de matriz" % n, pg.evaluate(self.CONTENIDO))
+
+
+class TestH12EscapadoDeLaListaDeTajos(Base):
+    def test_los_nombres_de_tajo_y_de_fase_no_inyectan_html(self):
+        pg, errores = self.generador()
+        r = pg.evaluate("""() => { S.modo='vivienda';
+            CAT.push({id:'zz_prueba',name:'Cable <i id="intruso">x</i> & tubo',g:'Fase <b id="intruso2">Y</b>',p:'p',a:'v'});
+            S.sel.add('zz_prueba'); renderTajosVivienda();
+            const out={intruso:!!document.getElementById('intruso'), intruso2:!!document.getElementById('intruso2'),
+                       texto:document.getElementById('cb-zz_prueba').parentElement.innerText,
+                       fase:[...document.querySelectorAll('.tj-gname')].map(e=>e.textContent).find(t=>t.includes('Fase <b'))};
+            CAT.pop(); return out; }""")
+        self.assertFalse(r["intruso"] or r["intruso2"], "el nombre se interpreto como HTML")
+        self.assertIn('Cable <i id="intruso">x</i> & tubo', r["texto"])
+        self.assertEqual(r["fase"], 'Fase <b id="intruso2">Y</b>')
+        self.assertEqual(errores, [])
+
+    def test_un_nombre_normal_se_ve_igual(self):
+        pg, _ = self.generador()
+        pg.evaluate("() => { S.modo='vivienda'; renderTajosVivienda(); }")
+        self.assertIn("Pintura — 1ª mano", pg.inner_text("#tj-sel"))
+        self.assertIn("Cubierta — Fotovoltaica", pg.inner_text("#tj-sel"))
+
+    def test_la_lista_de_garaje_ya_escapaba_y_sigue_escapando(self):
+        pg, _ = self.generador()
+        r = pg.evaluate("""() => { setModo('garaje'); CAT_GARAJE.push({id:'zz_g',name:'G <i id="gintruso">x</i>',g:'Fase G',p:'p',a:'z'});
+            S.selGaraje.add('zz_g'); renderTajosGaraje(); const o=!!document.getElementById('gintruso'); CAT_GARAJE.pop(); return o; }""")
+        self.assertFalse(r)
+
+
+class TestH7bNombresDeZonaEspecial(Base):
+    PREPARAR = """() => { S.modo='vivienda';
+        S.bloques=normaliseStructure({bloques:[{id:'b',nombre:'B1',portales:[{id:'p',nombre:'P1',plantas:[{id:'f',nombre:'1',vivs:['A']}]}]}]}); }"""
+    NOMBRES = "S.bloques[0].portales[0].zonasEspeciales.map(z=>z.nombre)"
+
+    def _pg(self):
+        pg, _ = self.generador()
+        pg.evaluate(self.PREPARAR)
+        return pg
+
+    def test_sin_huecos_salen_en_orden(self):
+        pg = self._pg()
+        pg.evaluate("() => { for(let i=0;i<3;i++) addPortalSpecialZone(0,0,'cl_basuras'); }")
+        self.assertEqual(pg.evaluate(self.NOMBRES), ["Basuras", "Basuras 2", "Basuras 3"])
+
+    def test_quitar_la_primera_y_anadir_no_repite_nombre(self):
+        pg = self._pg()
+        nombres = pg.evaluate("""() => { for(let i=0;i<3;i++) addPortalSpecialZone(0,0,'cl_basuras');
+            rmPortalSpecialZone(0,0,S.bloques[0].portales[0].zonasEspeciales[0].id);
+            addPortalSpecialZone(0,0,'cl_basuras'); return S.bloques[0].portales[0].zonasEspeciales.map(z=>z.nombre); }""")
+        self.assertEqual(len(nombres), 3)
+        self.assertEqual(len(set(nombres)), 3, "nombres repetidos: %r" % nombres)
+        self.assertEqual(set(nombres), {"Basuras", "Basuras 2", "Basuras 3"})
+
+    def test_no_distingue_mayusculas_y_mira_todo_el_portal(self):
+        pg = self._pg()
+        nombres = pg.evaluate("""() => { addPortalSpecialZone(0,0,'cl_basuras');
+            setPortalSpecialZone(0,0,S.bloques[0].portales[0].zonasEspeciales[0].id,'basuras 2');
+            addPortalSpecialZone(0,0,'cl_basuras'); return S.bloques[0].portales[0].zonasEspeciales.map(z=>z.nombre); }""")
+        self.assertEqual(nombres, ["basuras 2", "Basuras"])
+
+    def test_otro_portal_puede_repetir_el_nombre(self):
+        pg, _ = self.generador()
+        nombres = pg.evaluate("""() => { S.modo='vivienda';
+            S.bloques=normaliseStructure({bloques:[{id:'b',nombre:'B1',portales:[
+              {id:'p1',nombre:'P1',plantas:[{id:'f1',nombre:'1',vivs:['A']}]},{id:'p2',nombre:'P2',plantas:[{id:'f2',nombre:'1',vivs:['A']}]}]}]});
+            addPortalSpecialZone(0,0,'cl_basuras'); addPortalSpecialZone(0,1,'cl_basuras');
+            return S.bloques[0].portales.map(p=>p.zonasEspeciales.map(z=>z.nombre)); }""")
+        self.assertEqual(nombres, [["Basuras"], ["Basuras"]])
 
 
 if __name__ == "__main__":
