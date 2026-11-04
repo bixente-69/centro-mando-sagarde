@@ -146,6 +146,18 @@ def clase_pct(p: float) -> str:
     return "ok" if p >= 70 else "warn" if p >= 40 else "bad"
 
 
+def pct_tarjeta(o: dict) -> tuple[str, str]:
+    """(clase, texto) del numero grande de una tarjeta de obra.
+
+    Una obra sin datos (pct_ponderado None, p.ej. Gorliz hasta su primera
+    revision) dice «sin datos»: un desconocido no se pinta como 0 %.
+    """
+    pct = o.get("pct_ponderado")
+    if pct is None:
+        return "pending", "sin datos"
+    return clase_pct(pct), f"{pct:.0f}%"
+
+
 def dias_desde(ts: float | None) -> int | None:
     return dias_desde_timestamp(ts)
 
@@ -1215,11 +1227,12 @@ def _render_variacion_badge(var_pct: float | None) -> str:
 
     obras_ia = sorted(
         [o for o in (ro or {}).get("obras", []) if o.get("con_panel")],
-        key=lambda o: (-(o.get("n_bloqueos") or 0), o.get("pct_ponderado", 100))
+        key=lambda o: (-(o.get("n_bloqueos") or 0),
+                       100 if o.get("pct_ponderado") is None else o["pct_ponderado"])
     )
     obras_ia_parts = []
     for o in obras_ia:
-        pct_val = o.get("pct_ponderado", 0)
+        clase_p, texto_p = pct_tarjeta(o)
         spark_svg = _render_sparkline_svg(o.get("historico_pct"))
         var_badge = _render_variacion_badge(o.get("variacion_pct"))
         bloqueo = f'<div class="alert-tag">{o["n_bloqueos"]} bloqueo(s)</div>' if o.get("n_bloqueos") else ""
@@ -1227,7 +1240,7 @@ def _render_variacion_badge(var_pct: float | None) -> str:
             f'<div class="card">'
             f'<div class="cn">{escape(o["nombre"])}</div>'
             f'<div style="display:flex;align-items:center;gap:6px">'
-            f'<div class="pct {clase_pct(pct_val)}">{pct_val:.0f}%</div>'
+            f'<div class="pct {clase_p}">{texto_p}</div>'
             f'{var_badge}{spark_svg}'
             f'</div>'
             f'<div class="meta">Rev: {escape(str(o.get("ultima_revision", "—")))} &middot; {o.get("n_rev", 0)} revisiones &middot; {o.get("n_docs", 0)} docs</div>'
@@ -1556,11 +1569,12 @@ def build_html(areas: list[dict], apps: list[dict], ro: dict | None, rp: dict | 
 
     # --- Grid de obras con seguimiento IA, ordenadas por riesgo ---
     obras_ia = [o for o in (ro or {}).get("obras", []) if o.get("con_panel") and o.get("panel_actualizado")]
-    obras_ia.sort(key=lambda o: (-(o.get("n_bloqueos") or 0), o.get("pct_ponderado", 100)))
+    obras_ia.sort(key=lambda o: (-(o.get("n_bloqueos") or 0),
+                                 100 if o.get("pct_ponderado") is None else o["pct_ponderado"]))
     obra_cards = "".join(f'''<a class="obra" href="{escape(o['href'], quote=True)}" data-search="{escape(o['nombre'].lower())}">
       <h3>{escape(o['nombre'])}</h3>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-        <div class="pct {clase_pct(o.get('pct_ponderado', 0))}">{o.get('pct_ponderado', 0):.0f}%</div>
+        <div class="pct {pct_tarjeta(o)[0]}">{pct_tarjeta(o)[1]}</div>
         <div style="display:flex;align-items:center">{_render_variacion_badge(o.get('variacion_pct'))}{_render_sparkline_svg(o.get('historico_pct'))}</div>
       </div>
       <div class="row"><span>Ultima revision</span><span>{escape(str(o.get('ultima_revision', '—')))}</span></div>

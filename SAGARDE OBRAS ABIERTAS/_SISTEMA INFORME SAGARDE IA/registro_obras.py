@@ -65,6 +65,9 @@ OBRAS = [
         # hoja de alta (REVISION OBRA PRUEBA 05082026.pdf), en blanco, que es
         # la que fija su distribucion: 2 bloques, 3 portales, 31 ubicaciones.
         'id': 'prueba',
+        # Obra de ensayo: no cuenta en el KPI «Avance medio» (decision de
+        # Bixente, 04/11/2026). Se dara de baja del registro mas adelante.
+        'ensayo': True,
         'nombre': '2026 OBRA PRUEBA',
         'aliases': ['OBRA PRUEBA'],
         'subtitulo': 'Obra de pruebas · No es una obra real · 2 bloques, 3 portales, 31 ubicaciones',

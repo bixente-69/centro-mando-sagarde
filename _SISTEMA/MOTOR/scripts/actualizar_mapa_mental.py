@@ -219,7 +219,7 @@ def _kpis(raiz: Path) -> dict[str, str]:
         return {}
     obras = datos if isinstance(datos, list) else datos.get("obras", [])
     return {
-        o["nombre"]: str(o.get("pct_ponderado", "—"))
+        o["nombre"]: ("sin datos" if o.get("pct_ponderado") is None else str(o["pct_ponderado"]))
         for o in obras if isinstance(o, dict) and o.get("nombre")
     }
 
