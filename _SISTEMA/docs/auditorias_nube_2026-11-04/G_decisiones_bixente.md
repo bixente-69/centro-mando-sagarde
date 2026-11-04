@@ -16,6 +16,8 @@ Reglas que valen para todo lo de abajo (`CLAUDE.md`): pruebas primero (`unittest
 | 5 | Mapa mental desfasado | Corregido (PR 8) | Hecho |
 | 6 | `CLAUDE.md` desfasado | Corregido (PR 9) | Hecho |
 | 7 | Dar de baja OBRA PRUEBA | Quitarla bien, no borrar la carpeta a mano | **Pendiente** |
+| 8 | Marcas guardadas en el aparato (generador de revisiones) | Se quedan como están: al reabrir una hoja vuelven las marcas guardadas de esa obra y fecha. Las copias «(2)»/«(3)» de seguridad son a propósito | Decidido el 04/11/2026; fijado con prueba |
+| 9 | Aparato lleno de copias automáticas de hojas | Opción B: borrar solo copias de hojas de más de 30 días, la más vieja primero y solo las necesarias, y avisar | Decidido e implementado el 04/11/2026 (rama `claude/blissful-cannon-o3by6q`) |
 
 ## 1 · KPI «Avance medio»
 
@@ -68,6 +70,21 @@ Reglas que valen para todo lo de abajo (`CLAUDE.md`): pruebas primero (`unittest
 - **No borrar la carpeta a mano.** Está dada de alta en `registro_obras.py` (id `prueba`) y **al menos 12 ficheros de prueba la usan como obra de ensayo** (garajes, generar todo, cerrar obra, paneles, informe a la carta…). Borrarla rompería esas pruebas y el registro seguiría creyendo que existe.
 - **Trabajo:** primero dotar a esas pruebas de datos de ensayo propios (fixtures), después darla de baja del registro, después quitar la carpeta. Pruebas por mutación al terminar.
 - Al darla de baja desaparece también del aviso «obras sin archivos nuevos» del inicio y de la media del punto 1.
+
+## 8 · Marcas guardadas en el aparato: se quedan como están
+
+- **Decidido por Bixente (04/11/2026):** *«dejarlo como está»*. Al reabrir una hoja, el aparato vuelve a poner las marcas que tenía guardadas de esa obra y fecha, también en una hoja nueva.
+- **Razón de campo, textual:** *«imagínate Bolueta, edificio de 23 plantas, subes andando planta a planta y mirando vivienda por vivienda, escalera, rellanos, todo, con la tablet en la mano. Es facilísimo que se te resbale y te salgas de la pantalla. Hay veces que hasta guardo por si acaso hojas de seguridad por si se me apaga o borra, por eso a veces sale la revisión con un 2 o un 3 la última. Tiene que ser así. Comprobado con trabajo de campo.»*
+- **Consecuencias:** las copias `(2)`/`(3)` en `REVISIONES` son **copias de seguridad a propósito**, no una anomalía. El auditor las reporta como `REVISIONES_DUPLICADAS` de nivel `info` y el motor se queda con la de modificación más reciente. **No «arreglar» esta recuperación.**
+- **Matiz comprobado:** las marcas solo vuelven a una hoja nueva si portal y planta tienen los mismos identificadores (obra de la base). Con una estructura montada a mano no casan y ahora se avisa.
+- **Fijado con pruebas:** `test_decision_de_bixente_…` en `tests/test_generador_revisiones_auditoria.py`.
+
+## 9 · Aparato lleno: política B
+
+- **Decidido por Bixente (04/11/2026), opción B:** las copias automáticas que guarda la tablet al marcar (`sgd_rev_<obra>_<fecha>`, más la variante `_garaje`) nunca se borraban y acaban llenando el aparato (una hoja grande de Bolueta ocupa ~224.000 caracteres; caben unas 23 en el aparato). Cuando se llena, se borran **solo** las de **más de 30 días**, la más vieja primero y solo las necesarias, y **se avisa**.
+- **Nunca se borra:** la hoja que se está escribiendo, las configuraciones (`sgd_rev_cfg_*`), la lista de recientes, nada de otra aplicación ni ninguna copia de 30 días o menos (las de 30 exactos se quedan; las de 31 sí se borran).
+- **Si todo lo que ocupa es reciente:** no se borra nada y sale el aviso «No se está guardando en este aparato… Pulsa «Guardar revisión»». La descarga no depende del almacenamiento.
+- **Implementado en:** `escribirHaciendoSitio` de `generador_revisiones.html`. Detalle y pruebas en el informe H (H8, H9).
 
 ## No decidido (siguen abiertos en los informes)
 

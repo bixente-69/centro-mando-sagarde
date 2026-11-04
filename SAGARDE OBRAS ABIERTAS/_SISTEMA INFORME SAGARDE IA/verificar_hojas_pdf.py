@@ -82,7 +82,13 @@ def imprimir_pdf(html, pdf):
     """A4 con los margenes que declara el propio @page del generador."""
     from playwright.sync_api import sync_playwright
     with sync_playwright() as p:
-        nav = p.chromium.launch(channel='msedge')
+        try:
+            nav = p.chromium.launch(channel='msedge')
+        except Exception:
+            # Sin Edge (Linux, la nube) el Chromium de Playwright imprime igual.
+            # Antes se exigia Edge: en esas maquinas la unica prueba de papel de
+            # la suite fallaba y nunca llegaba a comprobar nada.
+            nav = p.chromium.launch()
         pagina = nav.new_page()
         pagina.goto('file:///' + os.path.abspath(html).replace('\\', '/'),
                     wait_until='load')
