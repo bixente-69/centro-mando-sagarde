@@ -17,6 +17,10 @@ Los cuatro fallos (reproducidos antes de corregirlos):
 * H4  La fecha por defecto salia de `toISOString()` (UTC): a las 00:30 locales de Madrid daba el dia
       de ayer, y con la pestana abierta de un dia para otro «Nueva revision» seguia con la fecha vieja.
 
+* H7  (garaje) `addZona` e `incGarageCount` ponian nombre contando las zonas que habia y sumando uno: al
+      quitar una del medio salian nombres repetidos en la misma planta (Trasteros 3 x2, Zona C x2,
+      Basuras 2 x2) y en la hoja impresa dos columnas con el mismo rotulo.
+
 Sin Playwright o sin Chromium las pruebas se saltan (no fallan): Bixente lo lanza todo con .bat.
 """
 import json
@@ -379,6 +383,120 @@ class TestH5Descarga(Base):
         self.assertEqual(pg.evaluate("window.__rev.length"), 0, "la URL se libero en el mismo instante del clic")
         pg.wait_for_function("window.__rev.length===1", timeout=3000)
         self.assertGreaterEqual(pg.evaluate("window.__rev[0] - window.__clic.t"), 900)
+
+
+class TestH7NombresDeZonaDeGaraje(Base):
+    """Nombres automaticos de zona: nunca repetidos en la misma planta (sin distinguir mayusculas)."""
+
+    PREPARAR = """() => { S.modo='garaje'; S.obra='OBRA T';
+        S.garajes=normaliseGarajeStructure({garajes:[{nombre:'G1',plantas:[{nombre:'S-1',zonas:[]}]}]}); }"""
+    NOMBRES = "S.garajes[0].plantas[0].zonas.map(z=>z.nombre)"
+
+    def _pg(self):
+        pg, _ = self.generador()
+        pg.evaluate(self.PREPARAR)
+        return pg
+
+    def test_trasteros_sin_huecos_salen_en_orden(self):
+        pg = self._pg()
+        pg.evaluate("() => { for(let i=0;i<3;i++) incGarageCount(0,0,'trastero'); }")
+        self.assertEqual(pg.evaluate(self.NOMBRES), ["Trasteros 1", "Trasteros 2", "Trasteros 3"])
+
+    def test_viales_sin_huecos_salen_en_orden(self):
+        pg = self._pg()
+        pg.evaluate("() => { for(let i=0;i<3;i++) incGarageCount(0,0,'vial'); }")
+        self.assertEqual(pg.evaluate(self.NOMBRES), ["Zona A", "Zona B", "Zona C"])
+
+    def test_el_noveno_vial_usa_numero_cuando_se_acaban_las_letras(self):
+        pg = self._pg()
+        pg.evaluate("() => { for(let i=0;i<9;i++) incGarageCount(0,0,'vial'); }")
+        self.assertEqual(pg.evaluate(self.NOMBRES)[-2:], ["Zona H", "Zona 9"])
+
+    def test_zonas_con_funcion_sin_huecos_salen_en_orden(self):
+        pg = self._pg()
+        pg.evaluate("() => { addZona(0,0,'cl_basuras'); addZona(0,0,'cl_basuras'); addZona(0,0,'cl_basuras'); }")
+        self.assertEqual(pg.evaluate(self.NOMBRES), ["Basuras", "Basuras 2", "Basuras 3"])
+
+    def test_quitar_un_trastero_del_medio_y_anadir_no_repite_nombre(self):
+        pg = self._pg()
+        nombres = pg.evaluate("""() => {
+            for(let i=0;i<3;i++) incGarageCount(0,0,'trastero');
+            rmZona(0,0,S.garajes[0].plantas[0].zonas[1].id);
+            incGarageCount(0,0,'trastero');
+            return S.garajes[0].plantas[0].zonas.map(z=>z.nombre); }""")
+        self.assertEqual(len(nombres), 3)
+        self.assertEqual(len(set(nombres)), 3, "nombres repetidos: %r" % nombres)
+        self.assertEqual(set(nombres), {"Trasteros 1", "Trasteros 2", "Trasteros 3"})
+
+    def test_quitar_el_primer_vial_y_anadir_no_repite_nombre(self):
+        pg = self._pg()
+        nombres = pg.evaluate("""() => {
+            for(let i=0;i<3;i++) incGarageCount(0,0,'vial');
+            rmZona(0,0,S.garajes[0].plantas[0].zonas[0].id);
+            incGarageCount(0,0,'vial');
+            return S.garajes[0].plantas[0].zonas.map(z=>z.nombre); }""")
+        self.assertEqual(len(set(nombres)), 3, "nombres repetidos: %r" % nombres)
+        self.assertEqual(set(nombres), {"Zona A", "Zona B", "Zona C"})
+
+    def test_quitar_la_primera_zona_con_funcion_y_anadir_no_repite_nombre(self):
+        pg = self._pg()
+        nombres = pg.evaluate("""() => {
+            addZona(0,0,'cl_basuras'); addZona(0,0,'cl_basuras');
+            rmZona(0,0,S.garajes[0].plantas[0].zonas[0].id);
+            addZona(0,0,'cl_basuras');
+            return S.garajes[0].plantas[0].zonas.map(z=>z.nombre); }""")
+        self.assertEqual(len(set(nombres)), 2, "nombres repetidos: %r" % nombres)
+        self.assertEqual(set(nombres), {"Basuras", "Basuras 2"})
+
+    def test_la_comparacion_no_distingue_mayusculas(self):
+        pg = self._pg()
+        nombres = pg.evaluate("""() => {
+            incGarageCount(0,0,'trastero'); incGarageCount(0,0,'trastero');
+            setZona(0,0,S.garajes[0].plantas[0].zonas[1].id,'trasteros 2');
+            incGarageCount(0,0,'trastero');
+            return S.garajes[0].plantas[0].zonas.map(z=>z.nombre); }""")
+        self.assertEqual(nombres, ["Trasteros 1", "trasteros 2", "Trasteros 3"])
+
+    def test_el_nombre_libre_se_busca_en_toda_la_planta_no_solo_en_su_tipo(self):
+        pg = self._pg()
+        nombres = pg.evaluate("""() => {
+            incGarageCount(0,0,'vial');
+            setZona(0,0,S.garajes[0].plantas[0].zonas[0].id,'Trasteros 1');
+            incGarageCount(0,0,'trastero');
+            return S.garajes[0].plantas[0].zonas.map(z=>z.nombre); }""")
+        self.assertEqual(len(set(n.upper() for n in nombres)), 2, "nombres repetidos: %r" % nombres)
+
+    def test_en_otra_planta_el_mismo_nombre_si_vale(self):
+        pg = self._pg()
+        nombres = pg.evaluate("""() => {
+            S.garajes[0].plantas.push(makeGarajePlanta(1));
+            incGarageCount(0,0,'trastero'); incGarageCount(0,1,'trastero');
+            return S.garajes[0].plantas.map(p=>p.zonas.map(z=>z.nombre)); }""")
+        self.assertEqual(nombres, [["Trasteros 1"], ["Trasteros 1"]])
+
+
+class TestImpresionDeLaHojaDeGaraje(Base):
+    """Guarda de algo que ya funciona (comprobado el 04/11/2026): elegir una pestaña no recorta el PDF."""
+
+    def test_con_una_pestana_elegida_se_imprimen_todas_las_secciones(self):
+        pg, _ = self.generador()
+        html = pg.evaluate("""() => {
+          S.modo='garaje'; S.obra='OBRA T'; S.fecha='2026-11-04';
+          S.garajes=normaliseGarajeStructure({garajes:[{nombre:'G1',plantas:[{nombre:'S-1',zonas:[
+            {nombre:'Zona A',tipo:'vial'},{nombre:'Trastero 1',tipo:'trastero'}]}]}]});
+          S.selGaraje=new Set(CAT_GARAJE.map(t=>t.id));
+          return generateGarajeHTML({}); }""")
+        carpeta = TMP_BASE / ("gen_aud_" + uuid.uuid4().hex[:8])
+        carpeta.mkdir(parents=True)
+        self.addCleanup(shutil.rmtree, str(carpeta), True)
+        (carpeta / "g.html").write_text(html, encoding="utf-8")
+        h = pg.context.new_page()
+        h.goto((carpeta / "g.html").as_uri())
+        h.evaluate("document.querySelectorAll('.hoja-tab')[2].click()")
+        self.assertEqual(h.evaluate("[...document.querySelectorAll('.hoja-section')].map(s=>s.hidden)"), [True, False])
+        h.emulate_media(media="print")
+        self.assertEqual(h.evaluate("[...document.querySelectorAll('.hoja-section')].map(s=>getComputedStyle(s).display)"),
+                         ["block", "block"])
 
 
 if __name__ == "__main__":

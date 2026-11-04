@@ -1380,12 +1380,22 @@ function rmGarajePlanta(gi,pi){
   const garaje=garajeAt(gi); if(!garaje||garaje.plantas.length===1) return;
   garaje.plantas.splice(pi,1); renderGarajeStructures();
 }
+// Primer nombre automatico de la planta que no este ya usado (sin distinguir
+// mayusculas). `candidato(i)` da el nombre i-esimo: 0 -> «Basuras», 1 -> «Basuras 2».
+// Antes se contaban las zonas que habia y se sumaba uno: al quitar una del
+// medio (Trasteros 1, 2, 3 -> quitar la 2 -> añadir) salia «Trasteros 3» dos
+// veces, y en la hoja impresa dos columnas con el mismo rotulo en la misma planta.
+function nombreLibreZona(planta,candidato){
+  const usados=new Set(planta.zonas.map(z=>String(z.nombre).toUpperCase()));
+  let i=0;
+  while(usados.has(String(candidato(i)).toUpperCase())) i++;
+  return candidato(i);
+}
 function addZona(gi,pi,key){
   const planta=garajeAt(gi)?.plantas[pi];
   const def=GARAGE_ZONE_BY_KEY[key];
   if(!planta||!def) return;
-  const iguales=planta.zonas.filter(z=>z.tipo===def.tipo&&String(z.funcion||'')===String(def.funcion||'')).length;
-  const nombre=iguales?`${def.label} ${iguales+1}`:def.label;
+  const nombre=nombreLibreZona(planta,i=>i?`${def.label} ${i+1}`:def.label);
   planta.zonas.push(makeGarajeZona(def.tipo,nombre,def.funcion||''));
   renderGarajeStructures();
 }
@@ -1397,13 +1407,9 @@ function setZona(gi,pi,zid,value){
   const zona=garajeAt(gi)?.plantas[pi]?.zonas.find(z=>z.id===zid);
   if(zona) zona.nombre=value.trim()||zona.nombre;
 }
-function garageCount(gi,pi,tipo){
-  return garajeAt(gi)?.plantas[pi]?.zonas.filter(z=>z.tipo===tipo).length||0;
-}
 function incGarageCount(gi,pi,tipo){
   const planta=garajeAt(gi)?.plantas[pi]; if(!planta) return;
-  const n=garageCount(gi,pi,tipo);
-  const nombre=tipo==='vial'?`Zona ${DEF_VIV[n]||n+1}`:`Trasteros ${n+1}`;
+  const nombre=nombreLibreZona(planta,i=>tipo==='vial'?`Zona ${DEF_VIV[i]||i+1}`:`Trasteros ${i+1}`);
   planta.zonas.push(makeGarajeZona(tipo,nombre));
   renderGarajeStructures();
 }
