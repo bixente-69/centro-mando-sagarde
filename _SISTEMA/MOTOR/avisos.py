@@ -6,6 +6,32 @@ from datetime import datetime
 DIAS_CADUCIDAD_AVISO = 400
 
 
+# Antiguedad de la ultima subida del portal (Bixente, 04/11/2026): quiere subir una
+# vez por semana, los viernes. Amarillo a MAS de 8 dias, rojo a MAS de 14. Son los
+# unicos sitios donde viven estos numeros: la pagina los recibe de aqui al generarse.
+DIAS_SUBIDA_AMARILLO = 8
+DIAS_SUBIDA_ROJO = 14
+
+# Codigos con los que el auditor avisa de lo que espera en `REVISIONES` sin aplicar.
+# Los escribe auditor_sagarde.py y los lee el portal: un solo nombre para ambos.
+CODIGO_HOJAS_SIN_APLICAR = "REVISIONES_SIN_APLICAR"
+CODIGO_CONTROLES_SIN_APLICAR = "CONTROLES_SIN_APLICAR"
+CODIGO_PENDIENTES_NO_COMPROBADO = "PENDIENTES_NO_COMPROBADO"
+CODIGOS_PENDIENTES = (CODIGO_HOJAS_SIN_APLICAR, CODIGO_CONTROLES_SIN_APLICAR,
+                      CODIGO_PENDIENTES_NO_COMPROBADO)
+
+
+def nivel_subida(dias):
+    """None (normal), 'warn' (mas de 8 dias) o 'bad' (mas de 14). Sin fecha: None."""
+    if dias is None:
+        return None
+    if dias > DIAS_SUBIDA_ROJO:
+        return "bad"
+    if dias > DIAS_SUBIDA_AMARILLO:
+        return "warn"
+    return None
+
+
 # Contratos de mantenimiento a los que NO se avisa de inactividad. Nombre tal
 # como lo muestra el portal (sin el prefijo "MANTENIMIENTO ") -> motivo corto,
 # que el indice de mantenimientos escribe en la tarjeta: el aviso queda apagado
