@@ -28,6 +28,13 @@ function periodoNatural(tipo, hoyISO) {
     const lunes = sumarDias(hoy, -((hoy.getUTCDay() + 6) % 7) - 7);
     return { desde: aISO(lunes), hasta: aISO(sumarDias(lunes, 6)), etiqueta: 'Semana pasada' };
   }
+  if (tipo === 'anio') {
+    return { desde: hoy.getUTCFullYear() + '-01-01', hasta: hoyISO, etiqueta: 'Este año (' + hoy.getUTCFullYear() + ')' };
+  }
+  if (tipo === 'anio_anterior') {
+    const a = hoy.getUTCFullYear() - 1;
+    return { desde: a + '-01-01', hasta: a + '-12-31', etiqueta: 'Año ' + a };
+  }
   if (tipo === 'mes') {
     const primero = new Date(Date.UTC(hoy.getUTCFullYear(), hoy.getUTCMonth(), 1));
     return { desde: aISO(primero), hasta: hoyISO, etiqueta: mayus(MESES[hoy.getUTCMonth()]) + ' (en curso)' };

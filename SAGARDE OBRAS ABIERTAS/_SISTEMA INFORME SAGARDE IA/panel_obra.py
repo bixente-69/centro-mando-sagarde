@@ -2423,6 +2423,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     viviendas_informe_checkbox_html = (
         '    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="viviendas" '
         'onchange="toggleGrupoInforme(this)"> <b>🏠 Viviendas</b></label>\n'
+        '    <div style="padding-left:26px">' + panel_viviendas.controles_html(viviendas, '-inf')
+        + '</div>\n'
         if viviendas and viviendas.get('tajos') else '')
     secciones_informe = {
         'trabajos': (
