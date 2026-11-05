@@ -40,11 +40,16 @@ def _leer_log(ruta):
     return entradas
 
 
-def ultima_revision(ruta_log):
+def ultima_revision(ruta_log, fechas_previas=None):
     """Ultima revision de campo del log, con sus transiciones unidas.
 
     Devuelve ``None`` si no hay ninguna. Si ninguna entrada de esa revision
     trae ``transiciones``, ``conocido`` es False y ``transiciones`` None.
+
+    ``fecha_anterior`` es la fecha de la revision de campo inmediatamente
+    anterior (del log y de ``fechas_previas``, p. ej. las de
+    ``ficha['revisiones']``, que cubren las anteriores al log). ``None`` si no
+    hay ninguna: nunca se inventa.
     """
     grupos = {}
     for e in _leer_log(ruta_log):
@@ -61,7 +66,14 @@ def ultima_revision(ruta_log):
             g['celdas_cambiadas_sin_detalle'], e.get('celdas_cambiadas', 0))
     if not grupos:
         return None
-    return max(grupos.values(), key=lambda g: _fecha(g['fecha']))
+    ultima = max(grupos.values(), key=lambda g: _fecha(g['fecha']))
+    candidatas = [g['fecha'] for g in grupos.values()] + list(fechas_previas or [])
+    anteriores = [f for f in candidatas
+                  if _fecha(f) != datetime.min
+                  and _fecha(f) < _fecha(ultima['fecha'])]
+    ultima['fecha_anterior'] = (
+        max(anteriores, key=_fecha) if anteriores else None)
+    return ultima
 
 
 def resumir_transiciones(transiciones):

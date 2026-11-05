@@ -155,6 +155,36 @@ class TestUltimaRevisionDelLog(unittest.TestCase):
         self.assertFalse(u['conocido'])
         self.assertEqual(u['celdas_cambiadas_sin_detalle'], 7)
 
+    def test_devuelve_la_fecha_de_la_revision_anterior(self):
+        ruta = self._log([
+            {'revision_id': 'r1', 'fecha': '09/10/2026',
+             'origen': 'html_digital', 'transiciones': []},
+            {'revision_id': 'r3', 'fecha': '02/11/2026',
+             'origen': 'html_digital', 'transiciones': []},
+            {'revision_id': 'r2', 'fecha': '21/10/2026',
+             'origen': 'html_digital', 'transiciones': []},
+        ])
+        u = cr.ultima_revision(ruta)
+        self.assertEqual(u['fecha'], '02/11/2026')
+        self.assertEqual(u['fecha_anterior'], '21/10/2026')
+
+    def test_la_anterior_puede_venir_de_las_revisiones_de_la_ficha(self):
+        ruta = self._log([
+            {'revision_id': 'r3', 'fecha': '02/11/2026',
+             'origen': 'html_digital', 'transiciones': []},
+        ])
+        u = cr.ultima_revision(ruta, fechas_previas=['09/10/2026', '21/10/2026',
+                                                      '02/11/2026'])
+        # la propia fecha de la ultima no cuenta como anterior
+        self.assertEqual(u['fecha_anterior'], '21/10/2026')
+
+    def test_sin_revision_anterior_la_fecha_es_none_no_inventada(self):
+        ruta = self._log([
+            {'revision_id': 'r1', 'fecha': '09/10/2026',
+             'origen': 'html_digital', 'transiciones': []},
+        ])
+        self.assertIsNone(cr.ultima_revision(ruta)['fecha_anterior'])
+
     def test_sin_log_o_vacio_devuelve_none(self):
         self.assertIsNone(cr.ultima_revision(Path('/no/existe.jsonl')))
         self.assertIsNone(cr.ultima_revision(self._log([])))
