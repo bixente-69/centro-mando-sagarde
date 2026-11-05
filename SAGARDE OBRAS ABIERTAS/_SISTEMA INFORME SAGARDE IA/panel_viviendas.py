@@ -4,6 +4,10 @@
 El HTML lleva los datos en bruto (``viviendas_tajos.datos_para_panel``) y el
 calculo de ``viviendas_calculo.js``: asi «hoy» es el dia real en que se abre la
 pagina, y el informe de obra saca exactamente lo que se esta viendo.
+
+Los controles (periodo y tajos que salen) existen DOS veces, en la pestaña y
+en el selector del informe de obra, y comparten un unico estado: cambiar uno
+cambia el otro, asi que el informe lleva siempre lo que se ve en la pestaña.
 """
 import html as html_lib
 import json
@@ -26,13 +30,14 @@ _UI = r"""
 (function () {
   const C = window.ViviendasCalculo;
   const datos = JSON.parse(document.getElementById('viviendas-datos').textContent);
-  const sel = document.getElementById('viv-periodo');
-  const desdeIn = document.getElementById('viv-desde');
-  const hastaIn = document.getElementById('viv-hasta');
   const cab = document.getElementById('viv-cabecera');
   const cuerpo = document.querySelector('#viv-tabla tbody');
   const notas = document.getElementById('viv-notas');
+  const raices = Array.prototype.slice.call(document.querySelectorAll('.viv-controles'));
   const pad = n => String(n).padStart(2, '0');
+  // UNICO estado: la pestaña y el informe de obra lo comparten.
+  const estado = { periodo: 'mes', desde: '', hasta: '',
+    tajos: new Set(datos.tajos.map(t => t.id)) };
 
   function hoyISO() {
     if (window.__HOY_VIVIENDAS) return window.__HOY_VIVIENDAS;
@@ -46,27 +51,32 @@ _UI = r"""
   }
   function esc(s) { return String(s).replace(/[&<>"]/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c])); }
 
-  // Meses con datos (los de las fechas de las viviendas terminadas), del mas reciente al mas antiguo.
+  // Meses con datos (los de las fechas de las viviendas), del mas reciente al mas antiguo.
   const meses = {};
   Object.keys(datos.celdas).forEach(t => datos.celdas[t].forEach(c => { if (c[1]) meses[c[1].slice(0, 7)] = 1; }));
-  Object.keys(meses).sort().reverse().forEach(m => {
-    const o = document.createElement('option');
-    o.value = 'mes:' + m;
-    o.textContent = C.periodoNatural('mes:' + m, hoyISO()).etiqueta;
-    sel.insertBefore(o, sel.querySelector('option[value="todo"]'));
+  const listaMeses = Object.keys(meses).sort().reverse();
+  raices.forEach(r => {
+    const sel = r.querySelector('.viv-sel');
+    listaMeses.forEach(m => {
+      const o = document.createElement('option');
+      o.value = 'mes:' + m;
+      o.textContent = C.periodoNatural('mes:' + m, hoyISO()).etiqueta;
+      sel.insertBefore(o, sel.querySelector('option[value="todo"]'));
+    });
   });
 
   function periodo() {
-    if (sel.value === 'rango') {
-      return { desde: desdeIn.value || null, hasta: hastaIn.value || null, etiqueta: 'Entre fechas' };
+    if (estado.periodo === 'rango') {
+      return { desde: estado.desde || null, hasta: estado.hasta || null, etiqueta: 'Entre fechas' };
     }
-    return C.periodoNatural(sel.value, hoyISO());
+    return C.periodoNatural(estado.periodo, hoyISO());
   }
 
   function construir() {
+    const tajos = datos.tajos.filter(t => estado.tajos.has(t.id));
+    if (!tajos.length) return { cab: 'Elige al menos un tajo.', filas: '', notas: '' };
     const p = periodo();
     const hoy = hoyISO();
-    let aviso = '';
     if (p.desde && p.hasta && p.desde > p.hasta) {
       return { cab: 'La fecha «desde» es posterior a «hasta».', filas: '', notas: '' };
     }
@@ -79,7 +89,7 @@ _UI = r"""
       : 'Sin revisión de campo con fecha registrada';
     const cabecera = p.etiqueta + ' — ' + rango + '. ' + rev + '.';
     let filas = '', sinFecha = 0, dudosas = 0;
-    datos.tajos.forEach(t => {
+    tajos.forEach(t => {
       const r = C.contar(datos, t.id, p.desde, p.hasta);
       sinFecha += r.sin_fecha; dudosas += r.dudosas;
       const pend = r.P + (r['?'] ? ' (+' + r['?'] + ' sin mirar)' : '');
@@ -101,8 +111,17 @@ _UI = r"""
     return { cab: cabecera, filas: filas, notas: n };
   }
 
+  function pintarControles() {
+    raices.forEach(r => {
+      r.querySelector('.viv-sel').value = estado.periodo;
+      r.querySelector('.viv-desde').value = estado.desde;
+      r.querySelector('.viv-hasta').value = estado.hasta;
+      r.querySelector('.viv-rango').style.display = estado.periodo === 'rango' ? 'inline' : 'none';
+      r.querySelectorAll('input[data-tajo]').forEach(cb => { cb.checked = estado.tajos.has(cb.dataset.tajo); });
+    });
+  }
   function pintar() {
-    document.getElementById('viv-rango').style.display = sel.value === 'rango' ? 'inline' : 'none';
+    pintarControles();
     const r = construir();
     cab.textContent = r.cab;
     cuerpo.innerHTML = r.filas;
@@ -117,17 +136,53 @@ _UI = r"""
   window.viviendasHTMLInforme = function () {
     const r = construir();
     return '<div class="card"><h3>Viviendas por tajo eléctrico</h3><p>' + esc(r.cab) + '</p>' +
-      '<table class="data">' + CABECERA + '<tbody>' + r.filas + '</tbody></table>' +
+      (r.filas ? '<table class="data">' + CABECERA + '<tbody>' + r.filas + '</tbody></table>' : '') +
       '<p style="font-size:12.5px;color:var(--muted)">' + esc(r.notas) + '</p></div>';
   };
 
-  sel.addEventListener('change', pintar);
-  desdeIn.addEventListener('change', pintar);
-  hastaIn.addEventListener('change', pintar);
-  sel.value = 'mes';
+  raices.forEach(r => {
+    r.querySelector('.viv-sel').addEventListener('change', e => { estado.periodo = e.target.value; pintar(); });
+    r.querySelector('.viv-desde').addEventListener('change', e => { estado.desde = e.target.value; pintar(); });
+    r.querySelector('.viv-hasta').addEventListener('change', e => { estado.hasta = e.target.value; pintar(); });
+    r.querySelectorAll('input[data-tajo]').forEach(cb => cb.addEventListener('change', e => {
+      if (e.target.checked) estado.tajos.add(e.target.dataset.tajo); else estado.tajos.delete(e.target.dataset.tajo);
+      pintar();
+    }));
+    r.querySelector('.viv-todos').addEventListener('click', () => {
+      datos.tajos.forEach(t => estado.tajos.add(t.id)); pintar(); });
+    r.querySelector('.viv-ninguno').addEventListener('click', () => { estado.tajos.clear(); pintar(); });
+  });
   pintar();
 })();
 """
+
+_OPCIONES = (
+    ('semana', 'Esta semana'), ('semana_pasada', 'Semana pasada'),
+    ('mes', 'Este mes'), ('mes_anterior', 'Mes anterior'),
+    ('anio', 'Este año'), ('anio_anterior', 'Año anterior'),
+    ('todo', 'Desde el principio'), ('rango', 'Entre fechas…'))
+
+
+def controles_html(datos, sufijo=''):
+    """Periodo + tajos que salen. ``sufijo`` distingue la copia del informe."""
+    if not datos or not datos.get('tajos'):
+        return ''
+    opciones = ''.join(f"<option value='{v}'>{html_lib.escape(t)}</option>"
+                       for v, t in _OPCIONES)
+    tajos = ''.join(
+        f"<label style='margin-right:12px;white-space:nowrap'>"
+        f"<input type='checkbox' data-tajo='{html_lib.escape(t['id'], quote=True)}' checked> "
+        f"{html_lib.escape(t['nombre'])}</label>" for t in datos['tajos'])
+    return (
+        f"<div class='viv-controles' style='margin:8px 0'>"
+        f"<div style='display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:8px'>"
+        f"<label><b>Periodo</b> <select id='viv-periodo{sufijo}' class='viv-sel'>{opciones}</select></label>"
+        f"<span class='viv-rango' id='viv-rango{sufijo}' style='display:none'>"
+        f"<input type='date' id='viv-desde{sufijo}' class='viv-desde'> a "
+        f"<input type='date' id='viv-hasta{sufijo}' class='viv-hasta'></span></div>"
+        f"<div id='viv-tajos{sufijo}' class='viv-tajos' style='font-size:13px'><b>Tajos</b> "
+        f"<button type='button' class='viv-todos'>Todos</button> "
+        f"<button type='button' class='viv-ninguno'>Ninguno</button><br>{tajos}</div></div>")
 
 
 def vista_html(datos):
@@ -146,18 +201,7 @@ def vista_html(datos):
     return (
         "<div class='card'><h3>Viviendas por tajo eléctrico</h3>"
         "<p id='viv-cabecera' style='font-size:13px;color:var(--muted)'></p>"
-        "<div style='display:flex;gap:10px;align-items:center;flex-wrap:wrap;"
-        "margin:10px 0'><label><b>Periodo</b> "
-        "<select id='viv-periodo'>"
-        "<option value='semana'>Esta semana</option>"
-        "<option value='semana_pasada'>Semana pasada</option>"
-        "<option value='mes'>Este mes</option>"
-        "<option value='mes_anterior'>Mes anterior</option>"
-        "<option value='todo'>Desde el principio</option>"
-        "<option value='rango'>Entre fechas…</option></select></label>"
-        "<span id='viv-rango' style='display:none'>"
-        "<input type='date' id='viv-desde'> a <input type='date' id='viv-hasta'>"
-        "</span></div>"
+        + controles_html(datos, '') +
         f"<div class='table-scroll'><table class='data' id='viv-tabla'><thead><tr>{cabecera}"
         "</tr></thead><tbody></tbody></table></div>"
         "<p id='viv-notas' style='font-size:12.5px;color:var(--muted);margin-top:10px'></p>"

@@ -120,6 +120,13 @@ def periodo_natural(tipo, hoy):
         lunes = hoy - timedelta(days=hoy.weekday() + 7)
         return (lunes.isoformat(), (lunes + timedelta(days=6)).isoformat(),
                 'Semana pasada')
+    if tipo == 'anio':
+        return (date(hoy.year, 1, 1).isoformat(), hoy.isoformat(),
+                f'Este año ({hoy.year})')
+    if tipo == 'anio_anterior':
+        a = hoy.year - 1
+        return (date(a, 1, 1).isoformat(), date(a, 12, 31).isoformat(),
+                f'Año {a}')
     if tipo == 'mes':
         return (hoy.replace(day=1).isoformat(), hoy.isoformat(),
                 f'{_MESES[hoy.month - 1].capitalize()} (en curso)')

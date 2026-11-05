@@ -185,6 +185,17 @@ class TestPeriodoNatural(unittest.TestCase):
         self.assertEqual(self.p('mes:2026-11')[:2], ('2026-11-01', '2026-11-05'))
         self.assertEqual(self.p('mes:2026-02')[:2], ('2026-02-01', '2026-02-28'))
 
+    def test_este_año_va_del_1_de_enero_a_hoy(self):
+        self.assertEqual(self.p('anio')[:2], ('2026-01-01', '2026-11-05'))
+
+    def test_año_anterior_es_el_año_natural_completo(self):
+        self.assertEqual(self.p('anio_anterior')[:2],
+                         ('2025-01-01', '2025-12-31'))
+
+    def test_el_1_de_enero_el_año_en_curso_tiene_un_solo_dia(self):
+        self.assertEqual(self.p('anio', date(2027, 1, 1))[:2],
+                         ('2027-01-01', '2027-01-01'))
+
     def test_todo_no_tiene_limites(self):
         self.assertEqual(self.p('todo')[:2], (None, None))
 
@@ -214,7 +225,8 @@ class TestParidadConJavaScript(unittest.TestCase):
     def test_periodos_y_conteos_coinciden_en_un_barrido(self):
         rnd = random.Random(7)
         tipos = ['todo', 'semana', 'semana_pasada', 'mes', 'mes_anterior',
-                 'mes:2026-02', 'mes:2026-10', 'mes:2027-01']
+                 'mes:2026-02', 'mes:2026-10', 'mes:2027-01', 'anio',
+                 'anio_anterior']
         periodos = []
         for i in range(0, 900, 7):
             hoy = date(2026, 1, 1) + timedelta(days=i)

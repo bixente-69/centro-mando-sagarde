@@ -87,6 +87,19 @@ class TestEstatico(unittest.TestCase):
         self.assertIn('viviendasHTMLInforme', html)
         self.assertIn("viviendas: '", html)
 
+    def test_el_selector_ofrece_año_y_año_anterior(self):
+        v = _vista(_generar(viviendas=_datos()), 'v-viviendas')
+        self.assertIn("value='anio'", v)
+        self.assertIn("value='anio_anterior'", v)
+
+    def test_el_informe_lleva_sus_propios_controles_de_periodo_y_tajos(self):
+        html = _generar(viviendas=_datos())
+        panel = html[html.index('id="panel-informe-obra"'):
+                     html.index('<div class="nav">')]
+        self.assertIn('id=\'viv-periodo-inf\'', panel)
+        self.assertIn("data-tajo='cableado'", panel)
+        self.assertIn("data-tajo='embornado'", panel)
+
     def test_cableado_en_generar_todos(self):
         ruta = os.path.join(_BASE, 'generar_todos.py')
         with open(ruta, encoding='utf-8') as f:
@@ -145,6 +158,46 @@ const { chromium } = require('playwright');
   await p.fill('#viv-desde', '2026-10-01');
   await p.fill('#viv-hasta', '2026-10-15');
   await p.dispatchEvent('#viv-hasta', 'change');
+  // Año
+  await p.selectOption('#viv-periodo', 'anio');
+  res.anio = await leer();
+  await p.selectOption('#viv-periodo', 'anio_anterior');
+  res.anio_anterior = await leer();
+  // Elegir tajos: quitar embornado en la pestaña
+  await p.selectOption('#viv-periodo', 'mes_anterior');
+  await p.evaluate(() => {
+    const cb = document.querySelector('#viv-tajos input[data-tajo="embornado"]');
+    cb.checked = false; cb.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  res.sin_embornado = await leer();
+  // Sincronizacion: el informe cambia el periodo y la pestaña lo refleja
+  await p.evaluate(() => {
+    const s = document.getElementById('viv-periodo-inf');
+    s.value = 'todo'; s.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  res.tab_tras_informe = await p.inputValue('#viv-periodo');
+  // ... y quitar cableado desde el informe lo quita tambien en la pestaña
+  await p.evaluate(() => {
+    const cb = document.querySelector('#viv-tajos-inf input[data-tajo="cableado"]');
+    cb.checked = false; cb.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  res.nada = await leer();
+  res.cb_pestana = await p.evaluate(() => ({
+    cableado: document.querySelector('#viv-tajos input[data-tajo="cableado"]').checked,
+    embornado: document.querySelector('#viv-tajos input[data-tajo="embornado"]').checked }));
+  await p.click('#viv-tajos .viv-todos');
+  res.todos_antes = await leer();
+  // Boton «Ninguno» y «Todos»
+  await p.click('#viv-tajos .viv-ninguno');
+  res.ninguno = await leer();
+  await p.click('#viv-tajos .viv-todos');
+  res.todos = await leer();
+  // volver a marcar todo
+  await p.evaluate(() => {
+    document.querySelectorAll('#viv-tajos input[data-tajo]').forEach(c => {
+      c.checked = true; c.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+  });
   // «hoy» == dia de la ultima revision de campo
   await p.evaluate(() => { window.__HOY_VIVIENDAS = '2026-10-30'; });
   await p.selectOption('#viv-periodo', 'semana');
@@ -188,8 +241,12 @@ class TestEnNavegador(unittest.TestCase):
         r = subprocess.run([NODE, guion, cls.html, '2026-11-05'],
                            capture_output=True, text=True, timeout=120)
         if r.returncode != 0:
-            raise unittest.SkipTest('no se pudo lanzar Chromium: '
-                                    + r.stderr[-300:])
+            # Solo se salta si NO HAY navegador. Si el guion falla por otra
+            # causa, la prueba falla: un salto mudo daba por bueno un panel roto.
+            if ('Cannot find module' in r.stderr
+                    or "Executable doesn't exist" in r.stderr):
+                raise unittest.SkipTest('Chromium/Playwright no disponible')
+            raise AssertionError('el guion del navegador fallo:\n' + r.stderr[-800:])
         cls.res = json.loads(r.stdout)
 
     @classmethod
@@ -237,6 +294,39 @@ class TestEnNavegador(unittest.TestCase):
         self.assertIn('Cableado eléctrico', inf)
         self.assertIn('01/10/2026', inf)
         self.assertIn('15/10/2026', inf)
+
+    def test_año_en_curso_y_año_anterior(self):
+        self.assertIn('01/01/2026', self.res['anio']['cab'])
+        self.assertIn('05/11/2026', self.res['anio']['cab'])
+        f = self.res['anio']['filas']['cableado']
+        self.assertEqual(f['hechas'], '1')           # A el 10/10; B es historial
+        self.assertEqual(self.res['anio']['filas']['cableado']['dudosas'], '1')
+        self.assertIn('31/12/2025', self.res['anio_anterior']['cab'])
+        self.assertEqual(
+            self.res['anio_anterior']['filas']['cableado']['hechas'], '0')
+
+    def test_elegir_tajos_en_la_pestana_quita_la_fila(self):
+        self.assertEqual(sorted(self.res['sin_embornado']['filas']),
+                         ['cableado'])
+
+    def test_la_casilla_de_la_pestana_refleja_lo_que_se_cambia_en_el_informe(self):
+        self.assertEqual(self.res['cb_pestana'],
+                         {'cableado': False, 'embornado': False})
+
+    def test_botones_ninguno_y_todos(self):
+        # «Todos» devuelve lo que se habia quitado; «Ninguno» desde ahi vacia.
+        self.assertEqual(sorted(self.res['todos_antes']['filas']),
+                         ['cableado', 'embornado'])
+        self.assertEqual(self.res['ninguno']['filas'], {})
+        self.assertEqual(sorted(self.res['todos']['filas']),
+                         ['cableado', 'embornado'])
+
+    def test_periodo_elegido_en_el_informe_se_refleja_en_la_pestana(self):
+        self.assertEqual(self.res['tab_tras_informe'], 'todo')
+
+    def test_quitar_todos_los_tajos_avisa_y_no_enseña_tabla_vacia_muda(self):
+        self.assertEqual(self.res['nada']['filas'], {})
+        self.assertIn('al menos un tajo', self.res['nada']['cab'])
 
     def test_por_defecto_se_abre_en_este_mes(self):
         self.assertEqual(self.res['inicial']['periodo'], 'mes')
