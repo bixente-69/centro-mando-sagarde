@@ -9433,15 +9433,15 @@
   "materiales": {
     "ultimo_mes": "Noviembre26",
     "ultima_fecha": "02/11/2026",
-    "dias_desde": 2,
+    "dias_desde": 3,
     "meses": [
       "Octubre26",
       "Noviembre26"
     ],
-    "n_items": 63,
+    "n_items": 58,
     "aviso": null,
     "_meta": {
-      "actualizado": "04/11/2026 16:30"
+      "actualizado": "05/11/2026 07:09"
     }
   },
   "documentos": {

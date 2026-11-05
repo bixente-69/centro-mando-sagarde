@@ -4,11 +4,11 @@
   "obra": "2025 GERNIKA 32V",
   "revision": "05/10/2026",
   "sin_base": false,
-  "edad_revision_dias": 30,
-  "revision_caducada": false,
+  "edad_revision_dias": 31,
+  "revision_caducada": true,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "04/11/2026 23:42",
+  "generado": "05/11/2026 07:08",
   "resumen": {
     "listos": 3,
     "verificar": 0,
@@ -4226,6 +4226,7 @@
   "avisos": [
     "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmaciÃ³n.",
-    "El orden sigue la secuencia lÃ³gica definida en CATALOGO_TAJOS.json."
+    "El orden sigue la secuencia lÃ³gica definida en CATALOGO_TAJOS.json.",
+    "La revisiÃ³n es del 05/10/2026 (31 dÃ­as). Los tajos conservan su clasificaciÃ³n; confirmar en obra antes de ejecutar."
   ]
 }
