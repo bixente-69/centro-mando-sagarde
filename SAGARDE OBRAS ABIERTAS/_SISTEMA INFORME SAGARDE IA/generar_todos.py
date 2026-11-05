@@ -44,6 +44,7 @@ import ficha_garajes           # noqa: E402
 import aplicar_revision        # noqa: E402
 import trazabilidad_revisiones  # noqa: E402
 import cambios_revision  # noqa: E402
+import viviendas_tajos  # noqa: E402
 import validar_revision        # noqa: E402
 import registro_obras  # noqa: E402
 from registro_obras import OBRAS  # noqa: E402
@@ -1784,6 +1785,26 @@ def _cambios_para_panel(obra, carpeta_abs, ficha_actual):
         return None
 
 
+def _viviendas_para_panel(obra, ficha_actual):
+    """Datos de la pestana «Viviendas» (viviendas por tajo electrico), o None.
+
+    Nunca lanza: un fallo se avisa y la pestana sale con «Sin datos de
+    viviendas»; el resto del panel no cambia.
+    """
+    try:
+        if not ficha_actual:
+            return None
+        ruta_cat = os.path.join(BASE_DIR, 'reglas', 'CATALOGO_TAJOS.json')
+        with open(ruta_cat, encoding='utf-8') as fichero:
+            tajos = json.load(fichero).get('tajos') or []
+        return viviendas_tajos.datos_para_panel(ficha_actual, tajos)
+    except Exception as exc:
+        print(f"  [AVISO VIVIENDAS] {obra['nombre']}: no se pudo preparar la pestana "
+              f"Viviendas ({type(exc).__name__}: {exc}). Sale vacia; el resto del "
+              "panel no cambia.")
+        return None
+
+
 def _personal_para_panel(obra):
     """Filas de personal de la obra para su pestana Personal («Personal en obra»).
 
@@ -2141,6 +2162,7 @@ def main(hacer_pdf=True):
             _controles_horarios_de_obra(obra)
             personal = _personal_para_panel(obra)
             cambios = _cambios_para_panel(obra, carpeta_abs, ficha_actual)
+            viviendas = _viviendas_para_panel(obra, ficha_actual)
             res = panel_obra.generar_panel(
                 obra=obra['nombre'], subtitulo=obra['subtitulo'], historial=historial,
                 materiales=materiales, ficha=ficha, documentos=documentos,
@@ -2155,6 +2177,7 @@ def main(hacer_pdf=True):
                 fecha_datos=fecha_datos,
                 personal=personal, personal_obra_id=obra['id'],
                 cambios=cambios,
+                viviendas=viviendas,
             )
         except Exception as e:
             print(f"  [ERROR] Fallo al generar el panel: {e}")

@@ -23,6 +23,7 @@ from collections import OrderedDict
 from datetime import datetime
 
 import entregas_materiales
+import panel_viviendas
 import motor_informes as motor
 from ficha_obra import NOMBRE_PLANTA_ZONAS_ESPECIALES
 from hilos_notas import sanear_texto
@@ -1893,7 +1894,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   prioridades_zonas_especiales=None,
                   snapshot_zonas_especiales=None, hilos=None,
                   fecha_datos=None, personal=None, personal_obra_id=None,
-                  cambios=None):
+                  cambios=None, viviendas=None):
     prioridades = prioridades or {}
     snapshot = historial[-1][1] if historial else []
     fecha_datos = fecha_datos or (historial[-1][0] if historial else '—')
@@ -2418,6 +2419,11 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     # es la salvaguarda contra la familia de fallo de este proyecto
     # (un dato declarado que un camino distinto ignora en silencio).
     cambios_vista_html = _cambios_vista_html(cambios)
+    viviendas_vista_html = panel_viviendas.vista_html(viviendas)
+    viviendas_informe_checkbox_html = (
+        '    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="viviendas" '
+        'onchange="toggleGrupoInforme(this)"> <b>🏠 Viviendas</b></label>\n'
+        if viviendas and viviendas.get('tajos') else '')
     secciones_informe = {
         'trabajos': (
             "<div class='card'><h3>Desviaciones de avance</h3>"
@@ -2497,7 +2503,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
   </p>
   <div id="informe-obra-grupos">
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="trabajos" onchange="toggleGrupoInforme(this)"> <b>✓ Trabajos</b></label>
-{materiales_informe_checkboxes_html}
+{viviendas_informe_checkbox_html}{materiales_informe_checkboxes_html}
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="personal" onchange="toggleGrupoInforme(this)"> <b>👷 Personal</b></label>
     <div class="tj-group-hdr">
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;">
@@ -2527,6 +2533,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 <div class="nav">
   <button class="active" data-view="v-panel">▦ Panel</button>
   <button data-view="v-trabajos">✓ Trabajos</button>
+  <button data-view="v-viviendas">🏠 Viviendas</button>
   <button data-view="v-materiales">▣ Materiales</button>
   <button data-view="v-personal">👷 Personal</button>
   <button data-view="v-prioridades">🎯 Prioridades 🏠</button>
@@ -2560,6 +2567,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     <table class="data"><thead><tr><th></th><th>Edificio</th><th>Planta</th><th>% estricto</th><th>% estimado</th><th>Nº registros</th></tr></thead>
     <tbody>{filas_det}</tbody></table></div>
 </section>
+
+<section id="v-viviendas" class="view">{viviendas_vista_html}</section>
 
 <section id="v-materiales" class="view">{materiales_html}</section>
 
@@ -2790,7 +2799,7 @@ function generarVistaPreviaInforme(){{
     return;
   }}
   const NOMBRES = {{
-    trabajos: '✓ Trabajos', materiales: '▣ Materiales', personal: '👷 Personal',
+    trabajos: '✓ Trabajos', viviendas: '🏠 Viviendas', materiales: '▣ Materiales', personal: '👷 Personal',
     cambios: '🔄 Cambios', tareas: '☑ Tareas', riesgos: '⚠ Riesgos', normativa: '📘 Normativa',
     documentos: '📎 Documentos', cierre: '📋 Cierre',
   }};
@@ -2819,6 +2828,9 @@ function generarVistaPreviaInforme(){{
       const html = grupo[cb.dataset.sub] || '';
       const titulo = (PREFIJO_SECCION[seccion]||'') + NOMBRES_SUB[cb.dataset.sub];
       contenido += `<div class="informe-seccion"><div class="informe-titulo">${{titulo}}</div>${{html}}</div>`;
+    }} else if (seccion === 'viviendas' && typeof window.viviendasHTMLInforme === 'function') {{
+      // Dinamico a proposito: saca EXACTAMENTE lo que se esta viendo en la pestana Viviendas.
+      contenido += `<div class="informe-seccion"><div class="informe-titulo">${{NOMBRES[seccion]}}</div>${{window.viviendasHTMLInforme()}}</div>`;
     }} else if (SECCIONES_INFORME[seccion] !== undefined && typeof SECCIONES_INFORME[seccion] === 'string') {{
       contenido += `<div class="informe-seccion"><div class="informe-titulo">${{NOMBRES[seccion]}}</div>${{SECCIONES_INFORME[seccion]}}</div>`;
     }}
