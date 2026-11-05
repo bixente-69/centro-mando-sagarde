@@ -165,6 +165,26 @@ bloque se escriben UNA sola vez, en `personal_calculo.js` (`agregarPorEmpresa` y
 Si en un informe sale el aviso «Hay una persona con más de una empresa», es un dato incoherente (una persona, una empresa): se
 corrige con `poner_empresa`.
 
+## La app de jornada: pestaña «Bandeja» (05/11/2026)
+
+Última pestaña de `generador_personal.html` (Anotar · Jornadas · Informe · Enviar al PC · **Bandeja**). Enseña, línea a línea y por
+obra, **todo lo que está sin enviar al PC** (jornadas, cambio del horario semanal, horarios especiales, nombres corregidos, nombres
+nuevos y empresas apuntadas) y cada línea lleva su botón **«Quitar»**; abajo, «Vaciar toda la bandeja» con su pregunta. **Quitar
+solo borra de ese aparato: no manda nada al PC ni cambia lo que el PC ya tiene** (a diferencia de «Anular» en Jornadas, que envía
+una anulación). Marca con «El PC ya tiene esto igual» las jornadas que coinciden con lo publicado, entendiendo los nombres
+antiguos (`nombres_anteriores` del catálogo). No se quita a medias: un nombre corregido o un nombre nuevo que lleva una jornada o
+un horario especial de la bandeja sale con el botón apagado y dice qué quitar primero. «Vaciar» borra pendientes, horarios,
+horarios especiales, nombres corregidos, nombres nuevos, empresas y los nombres creados en el aparato; **no toca** la lista de
+trabajadores guardada, el borrador de la jornada en curso ni nada del PC.
+
+**Por qué existe:** (1) en el PC de Bixente la bandeja no se vaciaba: `reconcile()` solo descarta una jornada sin enviar si coincide
+con lo publicado comparando nombres literales, y las apuntadas con nombres antiguos nunca coinciden (el PC ya los había renombrado);
+(2) en la tablet quedaron dos jornadas de garaje de Bolueta mal apuntadas (eran viviendas) y no había dónde quitarlas. **No se
+arregló `reconcile()`** (decisión de Bixente: lo importante es poder quitarlo; las jornadas nuevas ya llevan nombres actuales y se
+limpian solas). Prueba: `tests/test_personal_bandeja.py` (Chromium, datos inventados, 15 casos, 17 mutaciones detectadas). Los
+textos pasan por `test_lenguaje_electricista` (nada de «pendiente», «alta», «estado»…). No hace falta subir la `VERSION` de
+`personal_sw.js` (la página va por red primero).
+
 ## Publicar: la guarda del `.bat`
 
 El paso 0 de `Actualizar_Sagarde.bat` llama al auditor. Si los datos de personal tienen un error (esquema roto, un
@@ -195,7 +215,7 @@ Lo de personal: `test_personal_obra` (+ `_08a`), `test_personal_empresas_08c2a`,
 `test_lenguaje_electricista` (necesitan Playwright; ≈ 2–7 min; `SAGARDE_SIN_NAVEGADOR=1` los salta a propósito) y
 `test_panel_personal`. De la serie de mejoras de la auditoría del 30/10: `test_personal_sin_cobertura`,
 `test_personal_guardado_sin_pisar`, `test_personal_mismo_nombre` (+ `_pantallas`), `test_generar_personal_ma5`,
-`test_personal_pantallas_ma6`, `test_personal_enviar_con_ma7`, `test_personal_escala_y_compatibilidad`,
+`test_personal_pantallas_ma6`, `test_personal_enviar_con_ma7`, `test_personal_bandeja` (pestaña «Bandeja»), `test_personal_escala_y_compatibilidad`,
 `test_orden_empresas_y_generar_personal`, `test_calendario_obras` (pestaña «Calendario»; el cálculo con `node`, la página con
 Playwright) y `test_personal_agy_cobertura_ma8` (las zonas del código de agy que se
 rompieron a propósito y nadie notaba: últimas horas, «Por horas», fichero de la tablet campo a campo, avisos y fichero de

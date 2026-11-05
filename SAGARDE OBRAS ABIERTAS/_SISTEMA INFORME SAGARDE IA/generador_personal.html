@@ -631,6 +631,56 @@
         margin: 10px 0;
         font-weight: 700;
       }
+      /* ---- Bandeja: todo lo que está sin enviar al PC, línea a línea, con «Quitar» ---- */
+      .band-obra {
+        border: 1px solid var(--line);
+        border-left: 5px solid var(--accent);
+        border-radius: 10px;
+        padding: 11px;
+        margin: 10px 0;
+      }
+      .band-obra h3 {
+        margin: 0 0 6px;
+        font-size: 16px;
+      }
+      .band-obra ul {
+        margin: 0 0 4px;
+        padding-left: 0;
+        list-style: none;
+      }
+      .band-item {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 6px 10px;
+        margin: 8px 0;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--line);
+      }
+      .band-item:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+      .band-texto {
+        flex: 1 1 220px;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+      .band-igual {
+        display: inline-block;
+        margin-left: 6px;
+        padding: 1px 8px;
+        border: 1px solid #9fd3b4;
+        border-radius: 8px;
+        background: #e6f5ec;
+        font-size: 13px;
+        font-weight: 700;
+      }
+      .band-bloqueo {
+        flex: 1 1 100%;
+        margin: 0;
+      }
       .rotulo {
         background: #e8f0fb;
         border: 1px solid #b9cfee;
@@ -1019,7 +1069,8 @@
       >
       <div class="seg">
         <button data-v="app" class="on">Anotar</button><button data-v="jornadas">Jornadas</button
-        ><button data-v="informe">Informe</button><button data-v="enviar">Enviar al PC</button>
+        ><button data-v="informe">Informe</button><button data-v="enviar">Enviar al PC</button
+        ><button data-v="bandeja">Bandeja</button>
       </div>
     </nav>
     <main>
@@ -1028,6 +1079,7 @@
       <section id="v-jornadas" class="view" hidden></section>
       <section id="v-informe" class="view" hidden></section>
       <section id="v-enviar" class="view" hidden></section>
+      <section id="v-bandeja" class="view" hidden></section>
     </main>
     <div id="toast" role="status"></div>
     <script>
@@ -2986,7 +3038,8 @@
         document.querySelector('#v-jornadas').innerHTML = jornadasView();
         document.querySelector('#v-informe').innerHTML = infoView();
         document.querySelector('#v-enviar').innerHTML = enviarView();
-        ['app', 'jornadas', 'informe', 'enviar'].forEach(
+        document.querySelector('#v-bandeja').innerHTML = bandejaView();
+        ['app', 'jornadas', 'informe', 'enviar', 'bandeja'].forEach(
           (vista) => (document.querySelector('#v-' + vista).hidden = a.v !== vista),
         );
       }
@@ -3846,6 +3899,180 @@
           `<p class="nota">Va dentro de cada fichero para saber desde dónde llegó: «Móvil», «Tablet», «PC»…</p></div>`
         );
       }
+      // ---------------------------------------------------------------------------
+      // Bandeja: todo lo que está sin enviar al PC, línea a línea, con «Quitar» en cada una. Quitar solo borra de
+      // este aparato: no manda nada al PC ni cambia lo que el PC ya tiene. (Nace de dos casos reales del 05/11/2026:
+      // jornadas apuntadas con nombres antiguos que nunca coinciden con lo del PC, y jornadas de garaje mal apuntadas.)
+      // ---------------------------------------------------------------------------
+      // Nombre actual de una persona si el PC la conoce con ese nombre o con uno anterior; si no, el nombre limpio.
+      function nombreActualPC(nombre) {
+        let clave = key(nombre);
+        let persona = (state?.catalogo || []).find(
+          (c) => key(c.nombre) === clave || (c.nombres_anteriores || []).some((x) => key(x) === clave),
+        );
+        return persona ? persona.nombre : clean(nombre);
+      }
+      // ¿El PC ya tiene esta jornada igual (mismas personas, horas y extra)? Un nombre antiguo cuenta como el actual.
+      // Una anulada coincide solo si el PC no tiene nada ese día.
+      function elPCYaLaTiene(jornada) {
+        let filas = rowsKey(jornada);
+        if (jornada.anulada) return !filas.length;
+        let sello = (nombre, p) => key(nombre) + '|' + +p.horas + '|' + +(p.extra || 0);
+        let x = jornada.presentes.map((p) => sello(nombreActualPC(p.nombre), p)).sort();
+        let y = filas.map((p) => sello(p.nombre, p)).sort();
+        return x.length === y.length && x.every((v, i) => v === y[i]);
+      }
+      // ¿Qué otra cosa de la bandeja lleva ese nombre? '' si ninguna: entonces se puede quitar sin dejar nada a medias.
+      function quienLleva(nombre, contarNombresNuevos) {
+        let clave = key(nombre);
+        if (pending.some((j) => !j.anulada && j.presentes.some((p) => key(p.nombre) === clave)))
+          return 'Lo lleva una jornada de la bandeja: quítala primero.';
+        let enHorarios = Object.values(excepciones).some(
+          (personas) => objetoSimple(personas) && Object.keys(personas).some((n) => key(n) === clave),
+        );
+        if (enHorarios) return 'Lo lleva un horario especial de la bandeja: quítalo primero.';
+        if (contarNombresNuevos && altas.some((x) => key(x) === clave))
+          return 'Lo lleva un nombre nuevo de la bandeja: quítalo primero.';
+        return '';
+      }
+      // Una línea de la bandeja con su botón «Quitar» (apagado, con el motivo, si quitarla dejaría algo a medias).
+      function bandejaLinea(tipo, texto, atributos, motivoBloqueo = '') {
+        return (
+          `<li class="band-item" data-tipo="${tipo}"><span class="band-texto">${texto}</span>` +
+          `<button class="btn ghost sm" data-quitar="${tipo}" ${atributos}${motivoBloqueo ? ' disabled' : ''}>Quitar</button>` +
+          (motivoBloqueo ? `<p class="nota band-bloqueo">${E(motivoBloqueo)}</p>` : '') +
+          `</li>`
+        );
+      }
+      // Obras con algo sin enviar: jornadas, horarios especiales o cambio del horario semanal.
+      function obrasEnBandeja() {
+        let todas = [
+          ...new Set([...Object.keys(state.obras), ...pending.map((j) => j.obra), ...Object.keys(excepciones), ...Object.keys(hours)]),
+        ];
+        return todas.filter((id) => id && hayQueEnviar(sinEnviarDe(id)));
+      }
+      // El bloque de una obra: sus jornadas (con la marca si el PC ya las tiene iguales), horarios y cambio de horario.
+      function bandejaObraHTML(id) {
+        let datos = sinEnviarDe(id);
+        let lineas = datos.jornadas.map((jornada) => {
+          let igual = elPCYaLaTiene(jornada) ? ' <span class="band-igual">El PC ya tiene esto igual</span>' : '';
+          return bandejaLinea('jornada', E(lineaJornada(jornada)) + igual, `data-clave="${E(jk(jornada))}"`);
+        });
+        if (datos.horarioCambiado)
+          lineas.push(bandejaLinea('horario-obra', 'Cambio del horario semanal de la obra', `data-obra="${E(id)}"`));
+        Object.keys(datos.propios).forEach((nombre) =>
+          lineas.push(bandejaLinea('horario', E('Horario especial: ' + nombre), `data-obra="${E(id)}" data-nombre="${E(nombre)}"`)),
+        );
+        return `<div class="band-obra" data-obra="${E(id)}"><h3>${E(nombreObra(id))}</h3><ul>${lineas.join('')}</ul></div>`;
+      }
+      // Nombres corregidos, nombres nuevos y empresas apuntadas: no son de una obra, viajan en el fichero de cualquiera.
+      function bandejaNombresHTML() {
+        let lineas = [];
+        renombres.forEach((c) =>
+          lineas.push(
+            bandejaLinea(
+              'renombre',
+              E('Nombre corregido: «' + c.de + '» → «' + c.a + '»'),
+              `data-de="${E(c.de)}" data-a="${E(c.a)}"`,
+              quienLleva(c.a, true),
+            ),
+          ),
+        );
+        altas.forEach((nombre) =>
+          lineas.push(bandejaLinea('alta', E('Nombre nuevo: «' + nombre + '»'), `data-nombre="${E(nombre)}"`, quienLleva(nombre, false))),
+        );
+        empresas.forEach((x) =>
+          lineas.push(
+            bandejaLinea(
+              'empresa',
+              E(clean(x.empresa) ? 'Empresa de «' + x.nombre + '»: «' + x.empresa + '»' : 'Empresa quitada a «' + x.nombre + '»'),
+              `data-nombre="${E(x.nombre)}"`,
+            ),
+          ),
+        );
+        if (!lineas.length) return '';
+        return `<div class="band-obra" id="band-nombres"><h3>Nombres</h3><ul>${lineas.join('')}</ul></div>`;
+      }
+      // Pestaña «Bandeja».
+      function bandejaView() {
+        let ids = obrasEnBandeja();
+        let contenido = ids.map(bandejaObraHTML).join('') + bandejaNombresHTML();
+        let intro =
+          `<p id="para-que-bandeja">Aquí ves todo lo que está sin enviar al PC. «Quitar» solo lo borra de este aparato: ` +
+          `no manda nada al PC y no cambia lo que el PC ya tiene.</p>`;
+        if (!contenido)
+          return (
+            `<div class="card" id="bandeja"><h2>Bandeja</h2>${intro}` +
+            `<div class="aviso" id="bandeja-vacia">La bandeja está vacía: no hay nada sin enviar.</div></div>`
+          );
+        let total = ids.reduce((suma, id) => {
+          let datos = sinEnviarDe(id);
+          return suma + datos.jornadas.length + (datos.horarioCambiado ? 1 : 0) + Object.keys(datos.propios).length;
+        }, renombres.length + altas.length + empresas.length);
+        let vaciar = a.vaciar
+          ? `<div class="aviso" id="band-confirmar">¿Vaciar toda la bandeja? Se borran de este aparato ` +
+            `${uno(total, 'cosa', 'cosas')} de las de arriba. No se envía nada y el PC no cambia.` +
+            `<div class="actions"><button class="btn sec" data-vaciar-si>Sí, vaciar</button> ` +
+            `<button class="btn ghost" data-vaciar-no>No</button></div></div>`
+          : `<button class="btn sec full" data-vaciar>Vaciar toda la bandeja</button>`;
+        return `<div class="card" id="bandeja"><h2>Bandeja</h2>${intro}${contenido}${vaciar}</div>`;
+      }
+      // «Quitar» una línea de la bandeja. Lo que otra línea lleva no se quita a medias (el botón sale apagado; aquí se
+      // vuelve a comprobar por si algo cambió desde que se pintó la pantalla).
+      function quitarDeBandeja(tipo, d) {
+        if (tipo === 'jornada') {
+          pending = pending.filter((j) => jk(j) !== d.clave);
+          set(K.p, pending);
+        } else if (tipo === 'horario-obra') {
+          delete hours[d.obra];
+          set(K.h, hours);
+        } else if (tipo === 'horario') {
+          let personas = excepciones[d.obra];
+          if (objetoSimple(personas)) {
+            delete personas[d.nombre];
+            if (!Object.keys(personas).length) delete excepciones[d.obra];
+          }
+          set(K.x, excepciones);
+        } else if (tipo === 'renombre') {
+          if (quienLleva(d.a, true)) return render();
+          renombres = renombres.filter((c) => !(c.de === d.de && c.a === d.a));
+          set(K.rn, renombres);
+        } else if (tipo === 'alta') {
+          if (quienLleva(d.nombre, false)) return render();
+          altas = altas.filter((x) => key(x) !== key(d.nombre));
+          news = news.filter((x) => key(x) !== key(d.nombre));
+          empresas = empresas.filter((x) => key(x.nombre) !== key(d.nombre));
+          set(K.al, altas);
+          set(K.n, news);
+          set(K.em, empresas);
+        } else if (tipo === 'empresa') {
+          empresas = empresas.filter((x) => key(x.nombre) !== key(d.nombre));
+          set(K.em, empresas);
+        } else return;
+        render();
+        toast('Quitado de la bandeja. No se ha enviado nada.');
+      }
+      // «Vaciar toda la bandeja» (ya confirmado): borra de este aparato todo lo que está sin enviar. No toca la lista de
+      // trabajadores publicada, el borrador de la jornada en curso ni nada del PC.
+      function vaciarBandeja() {
+        pending = [];
+        hours = {};
+        excepciones = {};
+        renombres = [];
+        altas = [];
+        empresas = [];
+        news = [];
+        set(K.p, pending);
+        set(K.h, hours);
+        set(K.x, excepciones);
+        set(K.rn, renombres);
+        set(K.al, altas);
+        set(K.em, empresas);
+        set(K.n, news);
+        a.vaciar = false;
+        render();
+        toast('Bandeja vacía. No se ha enviado nada.');
+      }
       // Arma el contenido del fichero de una obra (mismo contrato de siempre): jornadas, horario
       // semanal si cambió, horarios especiales, nombres corregidos, nombres nuevos y empresas.
       function armarFichero(id) {
@@ -4024,12 +4251,26 @@
         let boton = evento.target.closest('button');
         if (!boton) return;
         let datos = boton.dataset;
-        // Pestañas superiores: cambia la vista activa entre Anotar, Jornadas e Informe
+        // Pestañas superiores: cambia la vista activa entre Anotar, Jornadas, Informe, Enviar al PC y Bandeja
         if (datos.v) {
           a.v = datos.v;
+          a.vaciar = false;
           render();
           return;
         }
+        // Bandeja: «Quitar» una línea, y «Vaciar toda la bandeja» con su pregunta. Solo borra de este aparato.
+        if (datos.quitar) return quitarDeBandeja(datos.quitar, datos);
+        if (datos.vaciar !== undefined) {
+          a.vaciar = true;
+          render();
+          return;
+        }
+        if (datos.vaciarNo !== undefined) {
+          a.vaciar = false;
+          render();
+          return;
+        }
+        if (datos.vaciarSi !== undefined) return vaciarBandeja();
         // Cierra y recuerda no volver a mostrar el aviso de añadir la app a la pantalla de inicio
         // de Safari
         if (datos.cerrarAviso !== undefined) {
