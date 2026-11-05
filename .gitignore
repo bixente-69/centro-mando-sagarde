@@ -67,6 +67,12 @@ VARIOS/APPS SAGARDE/
 # tests/test_panel_personal.py comprueba que de verdad se publica.
 !SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/personal_calculo.js
 
+# Viviendas por tajo (pestana «Viviendas»): panel_obra.py incrusta este fichero
+# en cada panel. Misma trampa que personal_calculo.js: sin esta linea el .js se
+# ignora y una copia limpia del repositorio no puede generar la pestana.
+# tests/test_viviendas_tajos.py lo comprueba con git check-ignore.
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/viviendas_calculo.js
+
 # Personal en obra (paso 06): los cuatro ficheros de DATOS. Sin cada linea el
 # fichero se genera pero nunca se publica (la lista blanca solo deja pasar .html
 # y .py): el ranking y la tablet leen personal_estado.js con <script src>, y el
