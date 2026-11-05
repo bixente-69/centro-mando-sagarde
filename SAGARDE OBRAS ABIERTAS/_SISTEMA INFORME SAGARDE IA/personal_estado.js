@@ -1,6 +1,6 @@
 window.SAGARDE_PERSONAL = {
  "version": 1,
- "generado": "2026-11-04T21:25:47.625900+01:00",
+ "generado": "2026-11-05T12:32:50.806304+01:00",
  "jornada_base_h": 7.5,
  "catalogo": [
   {
@@ -171,6 +171,20 @@ window.SAGARDE_PERSONAL = {
    "categoria": "",
    "empresa": "Sagarde",
    "activo": true
+  },
+  {
+   "id": "T0023",
+   "nombre": "Leonel",
+   "categoria": "",
+   "empresa": "CATERSYSTEM",
+   "activo": true
+  },
+  {
+   "id": "T0024",
+   "nombre": "Ignacio",
+   "categoria": "",
+   "empresa": "CATERSYSTEM",
+   "activo": true
   }
  ],
  "obras": {
@@ -186,7 +200,15 @@ window.SAGARDE_PERSONAL = {
     "sab": 0,
     "dom": 0
    },
-   "excepciones_horario": {},
+   "excepciones_horario": {
+    "Manuel": {
+     "lun": 8,
+     "mar": 8,
+     "mie": 8,
+     "jue": 8,
+     "vie": 8
+    }
+   },
    "ultima": {
     "vivienda": null,
     "garaje": null
@@ -829,7 +851,7 @@ window.SAGARDE_PERSONAL = {
      "fecha": "2026-11-03",
      "ambito": "vivienda",
      "nombre": "William (M)",
-     "horas": 9,
+     "horas": 5,
      "extra": 0,
      "empresa": "MARIOS"
     },
@@ -1059,19 +1081,38 @@ window.SAGARDE_PERSONAL = {
      "mie": 8,
      "jue": 8,
      "vie": 8
+    },
+    "Leonel": {
+     "lun": 8,
+     "mar": 8,
+     "mie": 8,
+     "jue": 8,
+     "vie": 8
+    },
+    "Ignacio": {
+     "lun": 8,
+     "mar": 8,
+     "mie": 8,
+     "jue": 8,
+     "vie": 8
     }
    },
    "ultima": {
     "vivienda": {
-     "fecha": "2026-11-02",
+     "fecha": "2026-11-03",
      "presentes": [
       {
-       "nombre": "Wilson",
+       "nombre": "Javi",
        "horas": 8,
        "extra": 0
       },
       {
-       "nombre": "Javi",
+       "nombre": "Leonel",
+       "horas": 8,
+       "extra": 0
+      },
+      {
+       "nombre": "Ignacio",
        "horas": 8,
        "extra": 0
       }
@@ -1498,6 +1539,30 @@ window.SAGARDE_PERSONAL = {
      "horas": 8,
      "extra": 0,
      "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-03",
+     "ambito": "vivienda",
+     "nombre": "Ignacio",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-03",
+     "ambito": "vivienda",
+     "nombre": "Javi",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-03",
+     "ambito": "vivienda",
+     "nombre": "Leonel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
     }
    ]
   },
@@ -1539,15 +1604,10 @@ window.SAGARDE_PERSONAL = {
    "ultima": {
     "vivienda": null,
     "garaje": {
-     "fecha": "2026-11-06",
+     "fecha": "2026-11-04",
      "presentes": [
       {
        "nombre": "Alejo",
-       "horas": 8,
-       "extra": 0
-      },
-      {
-       "nombre": "Manuel",
        "horas": 8,
        "extra": 0
       },
@@ -1618,62 +1678,6 @@ window.SAGARDE_PERSONAL = {
     },
     {
      "fecha": "2026-11-04",
-     "ambito": "garaje",
-     "nombre": "Manuel",
-     "horas": 8,
-     "extra": 0,
-     "empresa": "Manueles"
-    },
-    {
-     "fecha": "2026-11-04",
-     "ambito": "garaje",
-     "nombre": "Nestor",
-     "horas": 8,
-     "extra": 0,
-     "empresa": "Manueles"
-    },
-    {
-     "fecha": "2026-11-05",
-     "ambito": "garaje",
-     "nombre": "Alejo",
-     "horas": 8,
-     "extra": 0,
-     "empresa": "Manueles"
-    },
-    {
-     "fecha": "2026-11-05",
-     "ambito": "garaje",
-     "nombre": "Manuel",
-     "horas": 8,
-     "extra": 0,
-     "empresa": "Manueles"
-    },
-    {
-     "fecha": "2026-11-05",
-     "ambito": "garaje",
-     "nombre": "Nestor",
-     "horas": 8,
-     "extra": 0,
-     "empresa": "Manueles"
-    },
-    {
-     "fecha": "2026-11-06",
-     "ambito": "garaje",
-     "nombre": "Alejo",
-     "horas": 8,
-     "extra": 0,
-     "empresa": "Manueles"
-    },
-    {
-     "fecha": "2026-11-06",
-     "ambito": "garaje",
-     "nombre": "Manuel",
-     "horas": 8,
-     "extra": 0,
-     "empresa": "Manueles"
-    },
-    {
-     "fecha": "2026-11-06",
      "ambito": "garaje",
      "nombre": "Nestor",
      "horas": 8,

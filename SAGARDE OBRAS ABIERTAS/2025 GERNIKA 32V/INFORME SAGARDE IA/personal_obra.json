@@ -1,0 +1,24 @@
+{
+ "version": 1,
+ "obra": "gernika",
+ "jornada_base_h": 7.5,
+ "horario_semanal": {
+  "lun": 7.5,
+  "mar": 7.5,
+  "mie": 7.5,
+  "jue": 7.5,
+  "vie": 7.5,
+  "sab": 0,
+  "dom": 0
+ },
+ "excepciones_horario": {
+  "T0005": {
+   "lun": 8,
+   "mar": 8,
+   "mie": 8,
+   "jue": 8,
+   "vie": 8
+  }
+ },
+ "jornadas": []
+}

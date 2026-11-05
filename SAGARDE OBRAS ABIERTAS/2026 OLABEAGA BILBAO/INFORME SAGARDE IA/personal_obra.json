@@ -60,6 +60,20 @@
    "mie": 8,
    "jue": 8,
    "vie": 8
+  },
+  "T0023": {
+   "lun": 8,
+   "mar": 8,
+   "mie": 8,
+   "jue": 8,
+   "vie": 8
+  },
+  "T0024": {
+   "lun": 8,
+   "mar": 8,
+   "mie": 8,
+   "jue": 8,
+   "vie": 8
   }
  },
  "jornadas": [
@@ -481,6 +495,31 @@
     }
    ],
    "registrado": "2026-11-02T11:43:18.737Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-11-03",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0003",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0023",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0024",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-03T11:08:13.263Z",
    "origen": "movil"
   }
  ]

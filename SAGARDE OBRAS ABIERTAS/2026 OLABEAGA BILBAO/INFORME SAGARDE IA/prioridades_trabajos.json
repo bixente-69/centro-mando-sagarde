@@ -2,17 +2,17 @@
   "version": "4.3",
   "catalogo_version": "1.3",
   "obra": "2026 OLABEAGA BILBAO",
-  "revision": "02/11/2026",
+  "revision": "05/11/2026",
   "sin_base": false,
-  "edad_revision_dias": 3,
+  "edad_revision_dias": 0,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "05/11/2026 08:40",
+  "generado": "05/11/2026 12:38",
   "resumen": {
     "listos": 20,
     "verificar": 0,
-    "unidades_listas": 90,
+    "unidades_listas": 111,
     "unidades_verificar": 0,
     "bloqueados": 30,
     "otros_gremios": 16,
@@ -21,7 +21,7 @@
     "unidades_sin_revisar": 0,
     "terminados": 0,
     "inventario_total": 66,
-    "detalle_total": 1461,
+    "detalle_total": 1459,
     "preguntas_pendientes": 0,
     "viviendas": 11,
     "zonas_comunes": 3,
@@ -131,6 +131,24 @@
         },
         {
           "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
           "planta": "DUPLX ATICO",
           "unidades": [
             "A"
@@ -148,10 +166,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 12,
-      "n_ubicaciones": 12,
-      "n_unidades": 12,
-      "estado_actual": "Pendiente: 12",
+      "n_celdas": 14,
+      "n_ubicaciones": 14,
+      "n_unidades": 14,
+      "estado_actual": "Pendiente: 14",
       "motivo": "Abre el frente inicial de instalaciones.",
       "impacto_gremios": "Abre el frente inicial de instalaciones.",
       "orden": 1
@@ -277,6 +295,24 @@
         },
         {
           "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
           "planta": "DUPLX ATICO",
           "unidades": [
             "A"
@@ -294,10 +330,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 14,
-      "n_ubicaciones": 14,
+      "n_celdas": 16,
+      "n_ubicaciones": 16,
       "n_unidades": 2,
-      "estado_actual": "M: 2 · /: 4 · Pendiente: 8",
+      "estado_actual": "M: 2 · /: 4 · Pendiente: 10",
       "motivo": "Infraestructura vertical eléctrica.",
       "impacto_gremios": "Infraestructura vertical eléctrica.",
       "orden": 2
@@ -423,6 +459,24 @@
         },
         {
           "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
           "planta": "DUPLX ATICO",
           "unidades": [
             "A"
@@ -440,10 +494,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 14,
-      "n_ubicaciones": 14,
+      "n_celdas": 16,
+      "n_ubicaciones": 16,
       "n_unidades": 2,
-      "estado_actual": "M: 2 · /: 2 · Pendiente: 10",
+      "estado_actual": "M: 2 · /: 2 · Pendiente: 12",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
       "impacto_gremios": "Infraestructura vertical de telecomunicaciones.",
       "orden": 3
@@ -587,6 +641,24 @@
         },
         {
           "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
           "planta": "DUPLX ATICO",
           "unidades": [
             "A"
@@ -604,10 +676,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 16,
-      "n_ubicaciones": 16,
+      "n_celdas": 18,
+      "n_ubicaciones": 18,
       "n_unidades": 2,
-      "estado_actual": "/: 6 · Pendiente: 10",
+      "estado_actual": "/: 6 · Pendiente: 12",
       "motivo": "Infraestructura vertical de servicios comunes.",
       "impacto_gremios": "Infraestructura vertical de servicios comunes.",
       "orden": 4
@@ -751,6 +823,24 @@
         },
         {
           "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
           "planta": "DUPLX ATICO",
           "unidades": [
             "A"
@@ -768,10 +858,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 16,
-      "n_ubicaciones": 16,
-      "n_unidades": 8,
-      "estado_actual": "M: 4 · Pendiente: 12",
+      "n_celdas": 18,
+      "n_ubicaciones": 18,
+      "n_unidades": 9,
+      "estado_actual": "M: 4 · Pendiente: 14",
       "motivo": "Abre el frente de zonas comunes.",
       "impacto_gremios": "Abre el frente de zonas comunes.",
       "orden": 5
@@ -1025,6 +1115,24 @@
         },
         {
           "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "4ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
           "planta": "DUPLX ATICO",
           "unidades": [
             "A"
@@ -1040,15 +1148,6 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "2ª",
-          "unidades": [
-            "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "/"
         },
         {
           "edificio": "PORTAL 3",
@@ -1087,10 +1186,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 19,
-      "n_ubicaciones": 19,
-      "n_unidades": 19,
-      "estado_actual": "/: 2 · Pendiente: 17",
+      "n_celdas": 20,
+      "n_ubicaciones": 20,
+      "n_unidades": 20,
+      "estado_actual": "/: 1 · Pendiente: 19",
       "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
       "impacto_gremios": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
       "orden": 7
@@ -1116,8 +1215,53 @@
           "estado_actual": "Pendiente"
         },
         {
+          "edificio": "PORTAL 1",
+          "planta": "2ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
           "edificio": "PORTAL 2",
           "planta": "2ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "2ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "3ª",
           "unidades": [
             "B"
           ],
@@ -1128,19 +1272,10 @@
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidades": [
-            "A"
+            "B"
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "2ª",
-          "unidades": [
-            "C"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "M"
         },
         {
           "edificio": "PORTAL 3",
@@ -1170,10 +1305,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 7,
-      "n_ubicaciones": 7,
-      "n_unidades": 7,
-      "estado_actual": "M: 1 · Pendiente: 6",
+      "n_celdas": 11,
+      "n_ubicaciones": 11,
+      "n_unidades": 11,
+      "estado_actual": "M: 1 · Pendiente: 10",
       "motivo": "Prepara los recorridos de la instalación.",
       "impacto_gremios": "Prepara los recorridos de la instalación.",
       "orden": 8
@@ -1218,18 +1353,27 @@
         },
         {
           "edificio": "PORTAL 3",
-          "planta": "1ª",
+          "planta": "2ª",
           "unidades": [
-            "B"
+            "A"
           ],
           "n_unidades": 1,
-          "estado_actual": "/"
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "2ª",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 4,
-      "n_ubicaciones": 4,
-      "n_unidades": 4,
-      "estado_actual": "/: 1 · Pendiente: 3",
+      "n_celdas": 5,
+      "n_ubicaciones": 5,
+      "n_unidades": 5,
+      "estado_actual": "Pendiente: 5",
       "motivo": "Cableado general; no incluye cableados especiales.",
       "impacto_gremios": "Cableado general; no incluye cableados especiales.",
       "orden": 9
@@ -1274,18 +1418,27 @@
         },
         {
           "edificio": "PORTAL 3",
-          "planta": "1ª",
+          "planta": "2ª",
           "unidades": [
-            "B"
+            "A"
           ],
           "n_unidades": 1,
-          "estado_actual": "/"
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "2ª",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 4,
-      "n_ubicaciones": 4,
-      "n_unidades": 4,
-      "estado_actual": "/: 1 · Pendiente: 3",
+      "n_celdas": 5,
+      "n_ubicaciones": 5,
+      "n_unidades": 5,
+      "estado_actual": "Pendiente: 5",
       "motivo": "Cableado específico de telecomunicaciones.",
       "impacto_gremios": "Cableado específico de telecomunicaciones.",
       "orden": 10
@@ -1302,19 +1455,28 @@
       "fase_nombre": "Instalación interior",
       "ubicaciones": [
         {
-          "edificio": "PORTAL 1",
-          "planta": "1ª",
+          "edificio": "PORTAL 3",
+          "planta": "2ª",
           "unidades": [
-            "B"
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "2ª",
+          "unidades": [
+            "C"
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 1,
-      "n_ubicaciones": 1,
-      "n_unidades": 1,
-      "estado_actual": "Pendiente: 1",
+      "n_celdas": 2,
+      "n_ubicaciones": 2,
+      "n_unidades": 2,
+      "estado_actual": "Pendiente: 2",
       "motivo": "Cableado específico de portero.",
       "impacto_gremios": "Cableado específico de portero.",
       "orden": 11
@@ -1337,13 +1499,76 @@
             "B"
           ],
           "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "1ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "2ª",
+          "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "2ª",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 1,
-      "n_ubicaciones": 1,
-      "n_unidades": 1,
-      "estado_actual": "Pendiente: 1",
+      "n_celdas": 8,
+      "n_ubicaciones": 8,
+      "n_unidades": 8,
+      "estado_actual": "M: 6 · Pendiente: 2",
       "motivo": "Cableado específico de termostatos.",
       "impacto_gremios": "Cableado específico de termostatos.",
       "orden": 12
@@ -1372,16 +1597,25 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidades": [
             "C"
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 2,
-      "n_ubicaciones": 2,
-      "n_unidades": 2,
-      "estado_actual": "Pendiente: 2",
+      "n_celdas": 3,
+      "n_ubicaciones": 3,
+      "n_unidades": 3,
+      "estado_actual": "Pendiente: 3",
       "motivo": "Cierra conexiones eléctricas.",
       "impacto_gremios": "Cierra conexiones eléctricas.",
       "orden": 13
@@ -1410,16 +1644,25 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidades": [
             "C"
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 2,
-      "n_ubicaciones": 2,
-      "n_unidades": 2,
-      "estado_actual": "Pendiente: 2",
+      "n_celdas": 3,
+      "n_ubicaciones": 3,
+      "n_unidades": 3,
+      "estado_actual": "Pendiente: 3",
       "motivo": "Cierra conexiones de telecomunicaciones.",
       "impacto_gremios": "Cierra conexiones de telecomunicaciones.",
       "orden": 14
@@ -1594,16 +1837,25 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "1ª",
+          "unidades": [
             "C"
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 2,
-      "n_ubicaciones": 2,
-      "n_unidades": 2,
-      "estado_actual": "Pendiente: 2",
+      "n_celdas": 3,
+      "n_ubicaciones": 3,
+      "n_unidades": 3,
+      "estado_actual": "Pendiente: 3",
       "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
       "impacto_gremios": "No equivale a cuadros presentados ni a placas y tapas.",
       "orden": 16
@@ -1984,8 +2236,8 @@
       "edificio": "PORTAL 1",
       "planta": "PB",
       "unidad": "L.COMER 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
       "dependencias_cumplidas": [],
@@ -1994,7 +2246,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -2173,17 +2425,17 @@
       "edificio": "PORTAL 2",
       "planta": "4ª",
       "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "14/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -2200,17 +2452,17 @@
       "edificio": "PORTAL 2",
       "planta": "4ª",
       "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "14/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -2979,80 +3231,6 @@
       "orden_ejecucion": 20,
       "fase_nombre": "Inicio de obra",
       "display_group": "rozas_timbres",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "L.COMER 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "/",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "rozas_timbres",
-      "trabajo": "Rozas de timbres",
-      "trabajos_originales": [
-        "Rozas de timbres"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 20,
-      "fase_nombre": "Inicio de obra",
-      "display_group": "rozas_timbres",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "L.COMER 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "rozas_timbres",
-      "trabajo": "Rozas de timbres",
-      "trabajos_originales": [
-        "Rozas de timbres"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 20,
-      "fase_nombre": "Inicio de obra",
-      "display_group": "rozas_timbres",
       "edificio": "PORTAL 2",
       "planta": "1ª",
       "unidad": "A",
@@ -3240,19 +3418,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Abre el frente inicial de instalaciones.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -3277,19 +3455,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Abre el frente inicial de instalaciones.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -4166,7 +4344,7 @@
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -4395,19 +4573,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical eléctrica.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -4432,19 +4610,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical eléctrica.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -5321,7 +5499,7 @@
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -5550,19 +5728,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical de telecomunicaciones.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -5587,19 +5765,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical de telecomunicaciones.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -6476,7 +6654,7 @@
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -6725,19 +6903,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical de servicios comunes.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -6762,19 +6940,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical de servicios comunes.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -7651,7 +7829,7 @@
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -7900,19 +8078,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Abre el frente de zonas comunes.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -7937,19 +8115,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Abre el frente de zonas comunes.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -11639,17 +11817,17 @@
       "edificio": "PORTAL 1",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "07/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -11666,17 +11844,17 @@
       "edificio": "PORTAL 1",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "07/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -11693,17 +11871,17 @@
       "edificio": "PORTAL 1",
       "planta": "3ª",
       "unidad": "A",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "07/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -11720,17 +11898,17 @@
       "edificio": "PORTAL 1",
       "planta": "3ª",
       "unidad": "B",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "07/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -11909,17 +12087,17 @@
       "edificio": "PORTAL 2",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -11990,17 +12168,17 @@
       "edificio": "PORTAL 2",
       "planta": "3ª",
       "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "30/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12503,8 +12681,8 @@
       "edificio": "PORTAL 1",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Habilita trabajos interiores.",
       "dependencias_cumplidas": [],
@@ -12513,7 +12691,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -12530,17 +12708,17 @@
       "edificio": "PORTAL 1",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Habilita trabajos interiores.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -12557,8 +12735,8 @@
       "edificio": "PORTAL 1",
       "planta": "3ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Habilita trabajos interiores.",
       "dependencias_cumplidas": [],
@@ -12567,7 +12745,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -12584,17 +12762,17 @@
       "edificio": "PORTAL 1",
       "planta": "3ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Habilita trabajos interiores.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -12773,17 +12951,17 @@
       "edificio": "PORTAL 2",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Habilita trabajos interiores.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -12827,17 +13005,17 @@
       "edificio": "PORTAL 2",
       "planta": "3ª",
       "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Habilita trabajos interiores.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -12854,17 +13032,17 @@
       "edificio": "PORTAL 2",
       "planta": "3ª",
       "unidad": "B",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Habilita trabajos interiores.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -13097,17 +13275,17 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "B",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Habilita trabajos interiores.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -13648,7 +13826,7 @@
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -13887,19 +14065,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -13924,19 +14102,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -14225,27 +14403,17 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "VIABLE",
-      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
-      "dependencias_cumplidas": [
-        "Tabicado"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "cuadros_presentados",
@@ -14624,7 +14792,7 @@
         {
           "id": "primera_cara_pladur",
           "nombre": "Primeras caras de Pladur",
-          "estado": "Pendiente",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -14651,19 +14819,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Prepara los recorridos de la instalación.",
+      "dependencias_cumplidas": [
         "Primeras caras de Pladur"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "primera_cara_pladur",
           "nombre": "Primeras caras de Pladur",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -14698,7 +14866,7 @@
         {
           "id": "primera_cara_pladur",
           "nombre": "Primeras caras de Pladur",
-          "estado": "Pendiente",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -14725,19 +14893,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Prepara los recorridos de la instalación.",
+      "dependencias_cumplidas": [
         "Primeras caras de Pladur"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "primera_cara_pladur",
           "nombre": "Primeras caras de Pladur",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -14964,19 +15132,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Prepara los recorridos de la instalación.",
+      "dependencias_cumplidas": [
         "Primeras caras de Pladur"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "primera_cara_pladur",
           "nombre": "Primeras caras de Pladur",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -14999,6 +15167,43 @@
       "edificio": "PORTAL 2",
       "planta": "2ª",
       "unidad": "B",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Prepara los recorridos de la instalación.",
+      "dependencias_cumplidas": [
+        "Primeras caras de Pladur"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "primera_cara_pladur",
+          "nombre": "Primeras caras de Pladur",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/11/2026"
+    },
+    {
+      "tarea_id": "tubeado",
+      "trabajo": "Tubeado interior",
+      "trabajos_originales": [
+        "Tubeado interior"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 130,
+      "fase_nombre": "Instalación interior",
+      "display_group": "tubeado",
+      "edificio": "PORTAL 2",
+      "planta": "3ª",
+      "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
@@ -15035,59 +15240,22 @@
       "display_group": "tubeado",
       "edificio": "PORTAL 2",
       "planta": "3ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Primeras caras de Pladur"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "primera_cara_pladur",
-          "nombre": "Primeras caras de Pladur",
-          "estado": "M",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "tubeado",
-      "trabajo": "Tubeado interior",
-      "trabajos_originales": [
-        "Tubeado interior"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 130,
-      "fase_nombre": "Instalación interior",
-      "display_group": "tubeado",
-      "edificio": "PORTAL 2",
-      "planta": "3ª",
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Prepara los recorridos de la instalación.",
+      "dependencias_cumplidas": [
         "Primeras caras de Pladur"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "primera_cara_pladur",
           "nombre": "Primeras caras de Pladur",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -15450,27 +15618,17 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Primeras caras de Pladur"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "primera_cara_pladur",
-          "nombre": "Primeras caras de Pladur",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "tubeado",
@@ -15489,19 +15647,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Prepara los recorridos de la instalación.",
+      "dependencias_cumplidas": [
         "Primeras caras de Pladur"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "primera_cara_pladur",
           "nombre": "Primeras caras de Pladur",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -15524,27 +15682,17 @@
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "C",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Primeras caras de Pladur"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "primera_cara_pladur",
-          "nombre": "Primeras caras de Pladur",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "tubeado",
@@ -16276,7 +16424,7 @@
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "Pendiente",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -16661,27 +16809,17 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "VIABLE",
-      "motivo": "Cableado general; no incluye cableados especiales.",
-      "dependencias_cumplidas": [
-        "Tubeado interior"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "cableado",
@@ -16727,19 +16865,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado general; no incluye cableados especiales.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -16801,19 +16939,19 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado general; no incluye cableados especiales.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -17551,7 +17689,7 @@
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "Pendiente",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -17825,8 +17963,62 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "/",
-      "estado_actual": "/",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/11/2026"
+    },
+    {
+      "tarea_id": "telecableado",
+      "trabajo": "Telecableado",
+      "trabajos_originales": [
+        "Telecableado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 150,
+      "fase_nombre": "Instalación interior",
+      "display_group": "telecableado",
+      "edificio": "PORTAL 3",
+      "planta": "1ª",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "02/11/2026"
+    },
+    {
+      "tarea_id": "telecableado",
+      "trabajo": "Telecableado",
+      "trabajos_originales": [
+        "Telecableado"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 150,
+      "fase_nombre": "Instalación interior",
+      "display_group": "telecableado",
+      "edificio": "PORTAL 3",
+      "planta": "2ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
       "categoria": "VIABLE",
       "motivo": "Cableado específico de telecomunicaciones.",
       "dependencias_cumplidas": [
@@ -17845,70 +18037,6 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
-    },
-    {
-      "tarea_id": "telecableado",
-      "trabajo": "Telecableado",
-      "trabajos_originales": [
-        "Telecableado"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 150,
-      "fase_nombre": "Instalación interior",
-      "display_group": "telecableado",
-      "edificio": "PORTAL 3",
-      "planta": "1ª",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
-    },
-    {
-      "tarea_id": "telecableado",
-      "trabajo": "Telecableado",
-      "trabajos_originales": [
-        "Telecableado"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 150,
-      "fase_nombre": "Instalación interior",
-      "display_group": "telecableado",
-      "edificio": "PORTAL 3",
-      "planta": "2ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
       "ultima_fecha": "04/10/2026"
     },
     {
@@ -17965,19 +18093,19 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de telecomunicaciones.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -18259,6 +18387,750 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/11/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 1",
+      "planta": "2ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 1",
+      "planta": "2ª",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 1",
+      "planta": "3ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 1",
+      "planta": "3ª",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 1",
+      "planta": "4ª",
+      "unidad": "A (DPX)",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 1",
+      "planta": "4ª",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "L.COMER 1",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "L.COMER 2",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 2",
+      "planta": "1ª",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "30/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 2",
+      "planta": "1ª",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "30/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 2",
+      "planta": "2ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 2",
+      "planta": "2ª",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/11/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 2",
+      "planta": "3ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 2",
+      "planta": "3ª",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 2",
+      "planta": "4ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 2",
+      "planta": "4ª",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 2",
+      "planta": "DUPLX ATICO",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 2",
+      "planta": "DUPLX ATICO",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 3",
+      "planta": "1ª",
+      "unidad": "A",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 3",
+      "planta": "1ª",
+      "unidad": "B",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "27/10/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 3",
+      "planta": "1ª",
+      "unidad": "C",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "02/11/2026"
+    },
+    {
+      "tarea_id": "portero",
+      "trabajo": "Portero / videoportero",
+      "trabajos_originales": [
+        "Portero / videoportero"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 160,
+      "fase_nombre": "Instalación interior",
+      "display_group": "portero",
+      "edificio": "PORTAL 3",
+      "planta": "2ª",
+      "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
@@ -18293,770 +19165,6 @@
       "orden_ejecucion": 160,
       "fase_nombre": "Instalación interior",
       "display_group": "portero",
-      "edificio": "PORTAL 1",
-      "planta": "2ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 1",
-      "planta": "2ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 1",
-      "planta": "3ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 1",
-      "planta": "3ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 1",
-      "planta": "4ª",
-      "unidad": "A (DPX)",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 1",
-      "planta": "4ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "L.COMER 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "L.COMER 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 2",
-      "planta": "1ª",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "30/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 2",
-      "planta": "1ª",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "30/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 2",
-      "planta": "2ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 2",
-      "planta": "2ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 2",
-      "planta": "3ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 2",
-      "planta": "3ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 2",
-      "planta": "4ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 2",
-      "planta": "4ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 2",
-      "planta": "DUPLX ATICO",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 2",
-      "planta": "DUPLX ATICO",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 3",
-      "planta": "1ª",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "27/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 3",
-      "planta": "1ª",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "27/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 3",
-      "planta": "1ª",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
-      "edificio": "PORTAL 3",
-      "planta": "2ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "portero",
-      "trabajo": "Portero / videoportero",
-      "trabajos_originales": [
-        "Portero / videoportero"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 160,
-      "fase_nombre": "Instalación interior",
-      "display_group": "portero",
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "B",
@@ -19099,19 +19207,19 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de portero.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -19393,6 +19501,820 @@
       "edificio": "PORTAL 1",
       "planta": "1ª",
       "unidad": "B",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de termostatos.",
+      "dependencias_cumplidas": [
+        "Tubeado interior"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/11/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 1",
+      "planta": "2ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 1",
+      "planta": "2ª",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 1",
+      "planta": "3ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 1",
+      "planta": "3ª",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 1",
+      "planta": "4ª",
+      "unidad": "A (DPX)",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 1",
+      "planta": "4ª",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "L.COMER 1",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 1",
+      "planta": "PB",
+      "unidad": "L.COMER 2",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 2",
+      "planta": "1ª",
+      "unidad": "A",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de termostatos.",
+      "dependencias_cumplidas": [
+        "Tubeado interior"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/11/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 2",
+      "planta": "1ª",
+      "unidad": "B",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de termostatos.",
+      "dependencias_cumplidas": [
+        "Tubeado interior"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/11/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 2",
+      "planta": "2ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 2",
+      "planta": "2ª",
+      "unidad": "B",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "M",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/11/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 2",
+      "planta": "3ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 2",
+      "planta": "3ª",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 2",
+      "planta": "4ª",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 2",
+      "planta": "4ª",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 2",
+      "planta": "DUPLX ATICO",
+      "unidad": "A",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 2",
+      "planta": "DUPLX ATICO",
+      "unidad": "B",
+      "estado": "",
+      "estado_actual": "Pendiente",
+      "categoria": "BLOQUEADO",
+      "motivo": "Dependencias pendientes: Tubeado interior.",
+      "dependencias_cumplidas": [],
+      "dependencias_bloqueantes": [
+        "Tubeado interior"
+      ],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "Pendiente",
+          "minimo": 1.0,
+          "cumplida": false
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "04/10/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 3",
+      "planta": "1ª",
+      "unidad": "A",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de termostatos.",
+      "dependencias_cumplidas": [
+        "Tubeado interior"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/11/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 3",
+      "planta": "1ª",
+      "unidad": "B",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de termostatos.",
+      "dependencias_cumplidas": [
+        "Tubeado interior"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/11/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 3",
+      "planta": "1ª",
+      "unidad": "C",
+      "estado": "M",
+      "estado_actual": "M",
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de termostatos.",
+      "dependencias_cumplidas": [
+        "Tubeado interior"
+      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [
+        {
+          "id": "tubeado",
+          "nombre": "Tubeado interior",
+          "estado": "X",
+          "minimo": 1.0,
+          "cumplida": true
+        }
+      ],
+      "dependencias_sin_dato": [],
+      "omitido_ultima": false,
+      "forzado_entregado": false,
+      "ultima_fecha": "05/11/2026"
+    },
+    {
+      "tarea_id": "termostatos",
+      "trabajo": "Termostatos",
+      "trabajos_originales": [
+        "Termostatos"
+      ],
+      "propiedad": "propio",
+      "ambito": "vivienda",
+      "ambito_nombre": "Viviendas",
+      "orden_ejecucion": 170,
+      "fase_nombre": "Instalación interior",
+      "display_group": "termostatos",
+      "edificio": "PORTAL 3",
+      "planta": "2ª",
+      "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "VIABLE",
@@ -19427,770 +20349,6 @@
       "orden_ejecucion": 170,
       "fase_nombre": "Instalación interior",
       "display_group": "termostatos",
-      "edificio": "PORTAL 1",
-      "planta": "2ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 1",
-      "planta": "2ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 1",
-      "planta": "3ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 1",
-      "planta": "3ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 1",
-      "planta": "4ª",
-      "unidad": "A (DPX)",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 1",
-      "planta": "4ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "L.COMER 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 1",
-      "planta": "PB",
-      "unidad": "L.COMER 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 2",
-      "planta": "1ª",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "30/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 2",
-      "planta": "1ª",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "30/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 2",
-      "planta": "2ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 2",
-      "planta": "2ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 2",
-      "planta": "3ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 2",
-      "planta": "3ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 2",
-      "planta": "4ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 2",
-      "planta": "4ª",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 2",
-      "planta": "DUPLX ATICO",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 2",
-      "planta": "DUPLX ATICO",
-      "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 3",
-      "planta": "1ª",
-      "unidad": "A",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "27/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 3",
-      "planta": "1ª",
-      "unidad": "B",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "27/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 3",
-      "planta": "1ª",
-      "unidad": "C",
-      "estado": "X",
-      "estado_actual": "X",
-      "categoria": "TERMINADO",
-      "motivo": "Terminado según la última confirmación válida.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [],
-      "dependencias_detalle": [],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
-      "edificio": "PORTAL 3",
-      "planta": "2ª",
-      "unidad": "A",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado interior"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tubeado",
-          "nombre": "Tubeado interior",
-          "estado": "Pendiente",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "termostatos",
-      "trabajo": "Termostatos",
-      "trabajos_originales": [
-        "Termostatos"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 170,
-      "fase_nombre": "Instalación interior",
-      "display_group": "termostatos",
       "edificio": "PORTAL 3",
       "planta": "2ª",
       "unidad": "B",
@@ -20233,19 +20391,19 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de termostatos.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -23428,19 +23586,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Cableado eléctrico.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cierra conexiones eléctricas.",
+      "dependencias_cumplidas": [
         "Cableado eléctrico"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "cableado",
           "nombre": "Cableado eléctrico",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -24723,19 +24881,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Telecableado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cierra conexiones de telecomunicaciones.",
+      "dependencias_cumplidas": [
         "Telecableado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "telecableado",
           "nombre": "Telecableado",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -27261,14 +27419,13 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Cableado eléctrico.",
+      "categoria": "VIABLE",
+      "motivo": "No equivale a cuadros presentados ni a placas y tapas.",
       "dependencias_cumplidas": [
-        "Cuadros presentados"
-      ],
-      "dependencias_bloqueantes": [
+        "Cuadros presentados",
         "Cableado eléctrico"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "cuadros_presentados",
@@ -27280,9 +27437,9 @@
         {
           "id": "cableado",
           "nombre": "Cableado eléctrico",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -27353,19 +27510,20 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Cuadros presentados, Cableado eléctrico.",
-      "dependencias_cumplidas": [],
+      "motivo": "Dependencias pendientes: Cableado eléctrico.",
+      "dependencias_cumplidas": [
+        "Cuadros presentados"
+      ],
       "dependencias_bloqueantes": [
-        "Cuadros presentados",
         "Cableado eléctrico"
       ],
       "dependencias_detalle": [
         {
           "id": "cuadros_presentados",
           "nombre": "Cuadros presentados",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         },
         {
           "id": "cableado",
@@ -34306,11 +34464,12 @@
       "estado": "",
       "estado_actual": "Pendiente",
       "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Doblar cajas, Telecableado, Pintura — primera mano.",
-      "dependencias_cumplidas": [],
+      "motivo": "Dependencias pendientes: Doblar cajas, Pintura — primera mano.",
+      "dependencias_cumplidas": [
+        "Telecableado"
+      ],
       "dependencias_bloqueantes": [
         "Doblar cajas",
-        "Telecableado",
         "Pintura — primera mano"
       ],
       "dependencias_detalle": [
@@ -34324,9 +34483,9 @@
         {
           "id": "telecableado",
           "nombre": "Telecableado",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         },
         {
           "id": "pintura_primera",
@@ -45856,8 +46015,8 @@
       "edificio": "PORTAL 1",
       "planta": "Zonas especiales",
       "unidad": "z_muk4v5m3_40",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
       "dependencias_cumplidas": [],
@@ -45866,7 +46025,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -45883,8 +46042,8 @@
       "edificio": "PORTAL 1",
       "planta": "Zonas especiales",
       "unidad": "z_muk4v7wp_41",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
       "dependencias_cumplidas": [],
@@ -45893,7 +46052,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -45910,8 +46069,8 @@
       "edificio": "PORTAL 1",
       "planta": "Zonas especiales",
       "unidad": "z_muk4xw6v_42",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
       "dependencias_cumplidas": [],
@@ -45920,7 +46079,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -45937,8 +46096,8 @@
       "edificio": "PORTAL 1",
       "planta": "Zonas especiales",
       "unidad": "z_mv84bl2d_9",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "/",
+      "estado_actual": "/",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
       "dependencias_cumplidas": [],
@@ -45947,7 +46106,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "14/10/2026"
+      "ultima_fecha": "05/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -46759,7 +46918,7 @@
         {
           "id": "garaje_tabicado",
           "nombre": "Tabicado (zona común)",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -46796,7 +46955,7 @@
         {
           "id": "garaje_tabicado",
           "nombre": "Tabicado (zona común)",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -46833,7 +46992,7 @@
         {
           "id": "garaje_tabicado",
           "nombre": "Tabicado (zona común)",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -46870,7 +47029,7 @@
         {
           "id": "garaje_tabicado",
           "nombre": "Tabicado (zona común)",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -49673,7 +49832,7 @@
         {
           "id": "garaje_tabicado",
           "nombre": "Tabicado (zona común)",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -49710,7 +49869,7 @@
         {
           "id": "garaje_tabicado",
           "nombre": "Tabicado (zona común)",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -49747,7 +49906,7 @@
         {
           "id": "garaje_tabicado",
           "nombre": "Tabicado (zona común)",
-          "estado": "Pendiente",
+          "estado": "/",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -52771,20 +52930,6 @@
           "categoria": "VIABLE"
         },
         {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "L.COMER 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "PORTAL 1",
-          "planta": "PB",
-          "unidad": "L.COMER 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
           "edificio": "PORTAL 2",
           "planta": "1ª",
           "unidad": "A",
@@ -52831,14 +52976,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -52965,12 +53110,12 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 35,
-      "estado_actual": "Pendiente: 19 · X: 16",
+      "n_ubicaciones": 33,
+      "estado_actual": "Pendiente: 17 · X: 16",
       "resumen_categorias": {
-        "VIABLE": 12,
-        "BLOQUEADO": 7,
-        "TERMINADO": 16
+        "VIABLE": 14,
+        "TERMINADO": 16,
+        "BLOQUEADO": 3
       },
       "motivo": "Abre el frente inicial de instalaciones. Dependencias pendientes: Tabicado. Terminado según la última confirmación válida.",
       "orden_inventario": 1
@@ -53099,14 +53244,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -53236,8 +53381,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "M: 5 · /: 4 · Pendiente: 12 · X: 14",
       "resumen_categorias": {
-        "VIABLE": 14,
-        "BLOQUEADO": 7,
+        "VIABLE": 16,
+        "BLOQUEADO": 5,
         "TERMINADO": 14
       },
       "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical eléctrica. Terminado según la última confirmación válida.",
@@ -53367,14 +53512,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -53504,8 +53649,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "M: 2 · /: 5 · Pendiente: 14 · X: 14",
       "resumen_categorias": {
-        "VIABLE": 14,
-        "BLOQUEADO": 7,
+        "VIABLE": 16,
+        "BLOQUEADO": 5,
         "TERMINADO": 14
       },
       "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de telecomunicaciones. Terminado según la última confirmación válida.",
@@ -53635,14 +53780,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -53772,8 +53917,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "/: 6 · Pendiente: 17 · X: 12",
       "resumen_categorias": {
-        "VIABLE": 16,
-        "BLOQUEADO": 7,
+        "VIABLE": 18,
+        "BLOQUEADO": 5,
         "TERMINADO": 12
       },
       "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de servicios comunes. Terminado según la última confirmación válida.",
@@ -53903,14 +54048,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -54040,8 +54185,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "M: 4 · Pendiente: 19 · X: 12",
       "resumen_categorias": {
-        "VIABLE": 16,
-        "BLOQUEADO": 7,
+        "VIABLE": 18,
+        "BLOQUEADO": 5,
         "TERMINADO": 12
       },
       "motivo": "Abre el frente de zonas comunes. Dependencias pendientes: Tabicado. Terminado según la última confirmación válida.",
@@ -54438,14 +54583,14 @@
           "planta": "4ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -54507,8 +54652,8 @@
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "/",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
@@ -54573,11 +54718,11 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 35,
-      "estado_actual": "/: 2 · Pendiente: 27 · X: 6",
+      "estado_actual": "/: 1 · Pendiente: 27 · X: 7",
       "resumen_categorias": {
-        "VIABLE": 19,
-        "TERMINADO": 6,
-        "BLOQUEADO": 10
+        "VIABLE": 20,
+        "TERMINADO": 7,
+        "BLOQUEADO": 8
       },
       "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado. Dependencias pendientes: Tabicado. Terminado según la última confirmación válida.",
       "orden_inventario": 7
@@ -54615,7 +54760,7 @@
           "planta": "2ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
@@ -54629,7 +54774,7 @@
           "planta": "3ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
@@ -54678,13 +54823,13 @@
           "planta": "2ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
@@ -54692,14 +54837,14 @@
           "planta": "3ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "3ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -54775,22 +54920,22 @@
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "C",
-          "estado": "M",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
@@ -54841,11 +54986,11 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 35,
-      "estado_actual": "M: 1 · Pendiente: 28 · X: 6",
+      "estado_actual": "M: 1 · Pendiente: 26 · X: 8",
       "resumen_categorias": {
-        "VIABLE": 7,
-        "TERMINADO": 6,
-        "BLOQUEADO": 22
+        "VIABLE": 11,
+        "TERMINADO": 8,
+        "BLOQUEADO": 16
       },
       "motivo": "Dependencias pendientes: Primeras caras de Pladur. Prepara los recorridos de la instalación. Terminado según la última confirmación válida.",
       "orden_inventario": 8
@@ -55029,8 +55174,8 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "/",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
@@ -55044,7 +55189,7 @@
           "planta": "2ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55058,7 +55203,7 @@
           "planta": "2ª",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55109,11 +55254,11 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 35,
-      "estado_actual": "/: 1 · Pendiente: 32 · X: 2",
+      "estado_actual": "Pendiente: 32 · X: 3",
       "resumen_categorias": {
-        "BLOQUEADO": 29,
-        "VIABLE": 4,
-        "TERMINADO": 2
+        "BLOQUEADO": 27,
+        "VIABLE": 5,
+        "TERMINADO": 3
       },
       "motivo": "Cableado general; no incluye cableados especiales. Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
       "orden_inventario": 9
@@ -55276,8 +55421,8 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "/",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
@@ -55291,7 +55436,7 @@
           "planta": "2ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55305,7 +55450,7 @@
           "planta": "2ª",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55356,11 +55501,11 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 32,
-      "estado_actual": "/: 1 · Pendiente: 29 · X: 2",
+      "estado_actual": "Pendiente: 29 · X: 3",
       "resumen_categorias": {
-        "BLOQUEADO": 26,
-        "VIABLE": 4,
-        "TERMINADO": 2
+        "BLOQUEADO": 24,
+        "VIABLE": 5,
+        "TERMINADO": 3
       },
       "motivo": "Cableado específico de telecomunicaciones. Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
       "orden_inventario": 10
@@ -55383,8 +55528,8 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -55467,8 +55612,8 @@
           "edificio": "PORTAL 2",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -55538,7 +55683,7 @@
           "planta": "2ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55552,7 +55697,7 @@
           "planta": "2ª",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55603,11 +55748,11 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 27 · X: 5",
+      "estado_actual": "Pendiente: 25 · X: 7",
       "resumen_categorias": {
-        "BLOQUEADO": 26,
-        "VIABLE": 1,
-        "TERMINADO": 5
+        "BLOQUEADO": 23,
+        "TERMINADO": 7,
+        "VIABLE": 2
       },
       "motivo": "Cableado específico de portero. Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
       "orden_inventario": 11
@@ -55630,7 +55775,7 @@
           "edificio": "PORTAL 1",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "VIABLE"
         },
         {
@@ -55693,15 +55838,15 @@
           "edificio": "PORTAL 2",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
+          "estado": "M",
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
+          "estado": "M",
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 2",
@@ -55714,7 +55859,7 @@
           "edificio": "PORTAL 2",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "BLOQUEADO"
         },
         {
@@ -55763,29 +55908,29 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "A",
-          "estado": "X",
-          "categoria": "TERMINADO"
+          "estado": "M",
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "X",
-          "categoria": "TERMINADO"
+          "estado": "M",
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "C",
-          "estado": "X",
-          "categoria": "TERMINADO"
+          "estado": "M",
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55799,7 +55944,7 @@
           "planta": "2ª",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55850,13 +55995,12 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 27 · X: 5",
+      "estado_actual": "M: 7 · Pendiente: 25",
       "resumen_categorias": {
-        "BLOQUEADO": 26,
-        "VIABLE": 1,
-        "TERMINADO": 5
+        "BLOQUEADO": 24,
+        "VIABLE": 8
       },
-      "motivo": "Cableado específico de termostatos. Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
+      "motivo": "Cableado específico de termostatos. Dependencias pendientes: Tubeado interior.",
       "orden_inventario": 12
     },
     {
@@ -56039,7 +56183,7 @@
           "planta": "1ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -56120,8 +56264,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 33,
-        "VIABLE": 2
+        "BLOQUEADO": 32,
+        "VIABLE": 3
       },
       "motivo": "Cierra conexiones eléctricas. Dependencias pendientes: Cableado eléctrico.",
       "orden_inventario": 13
@@ -56306,7 +56450,7 @@
           "planta": "1ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -56387,8 +56531,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "Pendiente: 35",
       "resumen_categorias": {
-        "BLOQUEADO": 33,
-        "VIABLE": 2
+        "BLOQUEADO": 32,
+        "VIABLE": 3
       },
       "motivo": "Cierra conexiones de telecomunicaciones. Dependencias pendientes: Telecableado.",
       "orden_inventario": 14
@@ -56798,7 +56942,7 @@
           "planta": "1ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -56879,8 +57023,8 @@
       "n_ubicaciones": 32,
       "estado_actual": "Pendiente: 32",
       "resumen_categorias": {
-        "BLOQUEADO": 30,
-        "VIABLE": 2
+        "BLOQUEADO": 29,
+        "VIABLE": 3
       },
       "motivo": "Dependencias pendientes: Cableado eléctrico. Dependencias pendientes: Cuadros presentados, Cableado eléctrico. No equivale a cuadros presentados ni a placas y tapas.",
       "orden_inventario": 16
@@ -60643,7 +60787,7 @@
           "edificio": "PORTAL 1",
           "planta": "PB",
           "unidad": "L.COMER 2",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -60692,15 +60836,15 @@
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "A",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -60828,10 +60972,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 35,
-      "estado_actual": "M: 5 · /: 4 · Pendiente: 1 · X: 25",
+      "estado_actual": "M: 3 · /: 5 · X: 27",
       "resumen_categorias": {
-        "TERMINADO": 25,
-        "OTROS_GREMIOS": 10
+        "TERMINADO": 27,
+        "OTROS_GREMIOS": 8
       },
       "motivo": "Sin separaciones de vivienda no se inicia la instalación interior. Terminado según la última confirmación válida.",
       "orden_inventario": 51
@@ -61374,29 +61518,29 @@
           "edificio": "PORTAL 1",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "/",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "/",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3ª",
           "unidad": "A",
-          "estado": "/",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3ª",
           "unidad": "B",
-          "estado": "/",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -61444,8 +61588,8 @@
           "edificio": "PORTAL 2",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -61465,8 +61609,8 @@
           "edificio": "PORTAL 2",
           "planta": "3ª",
           "unidad": "B",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -61587,10 +61731,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 32,
-      "estado_actual": "M: 2 · /: 13 · Pendiente: 2 · X: 15",
+      "estado_actual": "/: 9 · Pendiente: 2 · X: 21",
       "resumen_categorias": {
-        "TERMINADO": 15,
-        "OTROS_GREMIOS": 17
+        "TERMINADO": 21,
+        "OTROS_GREMIOS": 11
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
       "orden_inventario": 54
@@ -61620,29 +61764,29 @@
           "edificio": "PORTAL 1",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3ª",
           "unidad": "A",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "3ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -61690,8 +61834,8 @@
           "edificio": "PORTAL 2",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "Pendiente",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -61704,15 +61848,15 @@
           "edificio": "PORTAL 2",
           "planta": "3ª",
           "unidad": "A",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "3ª",
           "unidad": "B",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -61774,8 +61918,8 @@
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidad": "B",
-          "estado": "/",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
@@ -61833,10 +61977,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 32,
-      "estado_actual": "M: 2 · /: 1 · Pendiente: 16 · X: 13",
+      "estado_actual": "M: 2 · Pendiente: 11 · X: 19",
       "resumen_categorias": {
-        "TERMINADO": 13,
-        "OTROS_GREMIOS": 19
+        "TERMINADO": 19,
+        "OTROS_GREMIOS": 13
       },
       "motivo": "Habilita trabajos interiores. Terminado según la última confirmación válida.",
       "orden_inventario": 55
@@ -63897,28 +64041,28 @@
           "edificio": "PORTAL 1",
           "planta": "Zonas especiales",
           "unidad": "z_muk4v5m3_40",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "Zonas especiales",
           "unidad": "z_muk4v7wp_41",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "Zonas especiales",
           "unidad": "z_muk4xw6v_42",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 1",
           "planta": "Zonas especiales",
           "unidad": "z_mv84bl2d_9",
-          "estado": "Pendiente",
+          "estado": "/",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -63984,7 +64128,7 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 12,
-      "estado_actual": "M: 1 · Pendiente: 10 · X: 1",
+      "estado_actual": "M: 1 · /: 4 · Pendiente: 6 · X: 1",
       "resumen_categorias": {
         "OTROS_GREMIOS": 11,
         "TERMINADO": 1
@@ -64366,7 +64510,7 @@
       "trabajo": "Tubeado interior",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 107,
+      "desbloquea": 98,
       "tajos_afectados": [
         "Cableado eléctrico",
         "Portero / videoportero",
@@ -64423,7 +64567,7 @@
       "trabajo": "Telecableado",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 66,
+      "desbloquea": 64,
       "tajos_afectados": [
         "Telembornado",
         "Telemecanizado"
@@ -64434,7 +64578,7 @@
       "trabajo": "Cableado eléctrico",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 63,
+      "desbloquea": 61,
       "tajos_afectados": [
         "Cuadro mecanizado",
         "Embornado eléctrico"
@@ -64495,7 +64639,7 @@
       "trabajo": "Cuadros presentados",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 26,
+      "desbloquea": 25,
       "tajos_afectados": [
         "Cuadro mecanizado"
       ]
@@ -64505,7 +64649,7 @@
       "trabajo": "Tabicado",
       "estado_actual": "X",
       "propiedad": "externo",
-      "desbloquea": 26,
+      "desbloquea": 19,
       "tajos_afectados": [
         "Cuadros presentados",
         "Montante de servicios comunes",
@@ -64516,16 +64660,6 @@
       ]
     },
     {
-      "tarea_id": "primera_cara_pladur",
-      "trabajo": "Primeras caras de Pladur",
-      "estado_actual": "X",
-      "propiedad": "externo",
-      "desbloquea": 22,
-      "tajos_afectados": [
-        "Tubeado interior"
-      ]
-    },
-    {
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "estado_actual": "/",
@@ -64533,6 +64667,16 @@
       "desbloquea": 18,
       "tajos_afectados": [
         "Derivación individual"
+      ]
+    },
+    {
+      "tarea_id": "primera_cara_pladur",
+      "trabajo": "Primeras caras de Pladur",
+      "estado_actual": "X",
+      "propiedad": "externo",
+      "desbloquea": 16,
+      "tajos_afectados": [
+        "Tubeado interior"
       ]
     },
     {
@@ -64592,7 +64736,7 @@
     {
       "tarea_id": "garaje_tabicado",
       "trabajo": "Tabicado (zona común)",
-      "estado_actual": "Pendiente",
+      "estado_actual": "/",
       "propiedad": "externo",
       "desbloquea": 6,
       "tajos_afectados": [
