@@ -153,6 +153,71 @@ _UI = r"""
     r.querySelector('.viv-ninguno').addEventListener('click', () => { estado.tajos.clear(); pintar(); });
   });
   pintar();
+
+  // CONSULTA RAPIDA (pestaña Cambios y selector del informe): un tajo + un periodo -> una frase.
+  // UNICO estado propio compartido por sus dos copias; no toca el de la pestaña Viviendas.
+  const ids = datos.tajos.map(t => t.id);
+  const rap = { tajo: ids.indexOf('cableado') >= 0 ? 'cableado' : ids[0],
+    periodo: 'semana', desde: '', hasta: '' };
+
+  function rapidaFrase() {
+    const p = rap.periodo === 'rango'
+      ? { desde: rap.desde || null, hasta: rap.hasta || null, etiqueta: 'Entre fechas' }
+      : C.periodoNatural(rap.periodo, hoyISO());
+    if (p.desde && p.hasta && p.desde > p.hasta) return 'La fecha «desde» es posterior a «hasta».';
+    const t = datos.tajos.find(x => x.id === rap.tajo);
+    const r = C.contar(datos, t.id, p.desde, p.hasta);
+    const sinLimite = !p.desde && !p.hasta;
+    const cuando = sinLimite ? 'desde el principio'
+      : p.etiqueta + ' (del ' + fmt(p.desde) + ' al ' + fmt(p.hasta) + ')';
+    const n = r.hechas;
+    let f = t.nombre + ' — ' + cuando + ': ' + n + (n === 1 ? ' vivienda terminada' : ' viviendas terminadas') +
+      ' de ' + r.total + '. ';
+    if (!sinLimite) f += 'Terminadas en total a fin del periodo: ' + r.acumuladas + '. ';
+    f += 'Ahora: X ' + r.X + ' · M ' + r.M + ' · / ' + r['/'] + ' · pendientes ' + r.P + '. ';
+    if (r.dudosas) f += r.dudosas + ' con fecha dudosa (carga de historial) dentro del periodo: no cuentan. ';
+    if (r.sin_fecha) f += r.sin_fecha + ' terminada(s) sin fecha: no entran en ningún periodo. ';
+    f += datos.ultima_revision ? 'Datos de la revisión de campo del ' + fmt(datos.ultima_revision) + '.'
+      : 'Sin revisión de campo con fecha registrada.';
+    return f;
+  }
+  // El informe de obra saca EXACTAMENTE la consulta que se esta viendo.
+  window.viviendasRapidaHTMLInforme = function () {
+    return '<div class="card"><h3>Consulta: viviendas por tajo y periodo</h3><p>' + esc(rapidaFrase()) + '</p></div>';
+  };
+
+  function iniciarRapida() {
+    const raices = Array.prototype.slice.call(document.querySelectorAll('.viv-rapida-ctl'));
+    if (!raices.length) return;
+    const resp = document.getElementById('viv-rapida-resp');
+    function pintarRapida() {
+      raices.forEach(r => {
+        r.querySelector('.viv-rap-tajo').value = rap.tajo;
+        r.querySelector('.viv-rap-periodo').value = rap.periodo;
+        r.querySelector('.viv-rap-desde').value = rap.desde;
+        r.querySelector('.viv-rap-hasta').value = rap.hasta;
+        r.querySelector('.viv-rap-rango').style.display = rap.periodo === 'rango' ? 'inline' : 'none';
+      });
+      if (resp) resp.textContent = rapidaFrase();
+    }
+    raices.forEach(r => {
+      const selP = r.querySelector('.viv-rap-periodo');
+      listaMeses.forEach(m => {
+        const o = document.createElement('option');
+        o.value = 'mes:' + m;
+        o.textContent = C.periodoNatural('mes:' + m, hoyISO()).etiqueta;
+        selP.insertBefore(o, selP.querySelector('option[value="todo"]'));
+      });
+      r.querySelector('.viv-rap-tajo').addEventListener('change', e => { rap.tajo = e.target.value; pintarRapida(); });
+      selP.addEventListener('change', e => { rap.periodo = e.target.value; pintarRapida(); });
+      r.querySelector('.viv-rap-desde').addEventListener('change', e => { rap.desde = e.target.value; pintarRapida(); });
+      r.querySelector('.viv-rap-hasta').addEventListener('change', e => { rap.hasta = e.target.value; pintarRapida(); });
+    });
+    pintarRapida();
+  }
+  // Su HTML va en la pestaña Cambios, DESPUES de este script: se inicia al terminar de cargar.
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciarRapida);
+  else iniciarRapida();
 })();
 """
 
@@ -183,6 +248,39 @@ def controles_html(datos, sufijo=''):
         f"<div id='viv-tajos{sufijo}' class='viv-tajos' style='font-size:13px'><b>Tajos</b> "
         f"<button type='button' class='viv-todos'>Todos</button> "
         f"<button type='button' class='viv-ninguno'>Ninguno</button><br>{tajos}</div></div>")
+
+
+def rapida_controles_html(datos, sufijo=''):
+    """Un tajo + un periodo. ``sufijo`` distingue la copia del selector del informe."""
+    if not datos or not datos.get('tajos'):
+        return ''
+    ids = [t['id'] for t in datos['tajos']]
+    por_defecto = 'cableado' if 'cableado' in ids else ids[0]
+    tajos = ''.join(
+        f"<option value='{html_lib.escape(t['id'], quote=True)}'"
+        f"{' selected' if t['id'] == por_defecto else ''}>{html_lib.escape(t['nombre'])}</option>"
+        for t in datos['tajos'])
+    periodos = ''.join(
+        f"<option value='{v}'{' selected' if v == 'semana' else ''}>{html_lib.escape(n)}</option>"
+        for v, n in _OPCIONES)
+    return (
+        "<div class='viv-rapida-ctl' style='display:flex;gap:10px;align-items:center;"
+        "flex-wrap:wrap;margin:8px 0'>"
+        f"<label><b>Tajo</b> <select id='viv-rapida-tajo{sufijo}' class='viv-rap-tajo'>{tajos}</select></label>"
+        f"<label><b>Periodo</b> <select id='viv-rapida-periodo{sufijo}' class='viv-rap-periodo'>"
+        f"{periodos}</select></label>"
+        f"<span class='viv-rap-rango' id='viv-rapida-rango{sufijo}' style='display:none'>"
+        f"<input type='date' id='viv-rapida-desde{sufijo}' class='viv-rap-desde'> a "
+        f"<input type='date' id='viv-rapida-hasta{sufijo}' class='viv-rap-hasta'></span></div>")
+
+
+def rapida_html(datos):
+    """Consulta rapida de la pestaña «Cambios»: un tajo y un periodo."""
+    if not datos or not datos.get('tajos'):
+        return ''
+    return ("<div class='card' id='viv-rapida'><h3>Consulta rápida: viviendas por tajo y periodo</h3>"
+            + rapida_controles_html(datos, '')
+            + "<p id='viv-rapida-resp' style='font-size:15px;line-height:1.5'></p></div>")
 
 
 def vista_html(datos):

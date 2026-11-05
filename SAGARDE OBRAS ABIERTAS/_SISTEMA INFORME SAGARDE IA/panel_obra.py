@@ -2420,6 +2420,12 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     # (un dato declarado que un camino distinto ignora en silencio).
     cambios_vista_html = _cambios_vista_html(cambios)
     viviendas_vista_html = panel_viviendas.vista_html(viviendas)
+    # La consulta rapida va SOLO en la pestaña (no en el informe: sus controles no sirven en un PDF).
+    cambios_tab_html = panel_viviendas.rapida_html(viviendas) + cambios_vista_html
+    cambios_informe_controles_html = (
+        '    <div style="padding-left:26px">'
+        + panel_viviendas.rapida_controles_html(viviendas, '-inf') + '</div>\n'
+        if viviendas and viviendas.get('tajos') else '')
     viviendas_informe_checkbox_html = (
         '    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="viviendas" '
         'onchange="toggleGrupoInforme(this)"> <b>🏠 Viviendas</b></label>\n'
@@ -2519,7 +2525,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="sin_revisar"> Sin revisar nunca</label>
     </div>
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="cambios" onchange="toggleGrupoInforme(this)"> <b>🔄 Cambios</b></label>
-    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="tareas" onchange="toggleGrupoInforme(this)"> <b>☑ Tareas</b></label>
+{cambios_informe_controles_html}    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="tareas" onchange="toggleGrupoInforme(this)"> <b>☑ Tareas</b></label>
 {garaje_informe_checkboxes_html}{zesp_informe_checkboxes_html}
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="riesgos" onchange="toggleGrupoInforme(this)"> <b>⚠ Riesgos</b></label>
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="normativa" onchange="toggleGrupoInforme(this)"> <b>📘 Normativa</b></label>
@@ -2579,7 +2585,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 <section id="v-prioridades" class="view">{prioridades_html}
   <div class="card"><h3>Hitos manuales</h3>{hitos_html}</div></section>
 
-<section id="v-cambios" class="view">{cambios_vista_html}</section>
+<section id="v-cambios" class="view">{cambios_tab_html}</section>
 
 <section id="v-tareas" class="view">{tareas_vista_html}</section>
 
@@ -2833,6 +2839,10 @@ function generarVistaPreviaInforme(){{
     }} else if (seccion === 'viviendas' && typeof window.viviendasHTMLInforme === 'function') {{
       // Dinamico a proposito: saca EXACTAMENTE lo que se esta viendo en la pestana Viviendas.
       contenido += `<div class="informe-seccion"><div class="informe-titulo">${{NOMBRES[seccion]}}</div>${{window.viviendasHTMLInforme()}}</div>`;
+    }} else if (seccion === 'cambios' && typeof window.viviendasRapidaHTMLInforme === 'function'
+        && typeof SECCIONES_INFORME[seccion] === 'string') {{
+      // La consulta elegida (tajo + periodo) y, debajo, la comparacion de revisiones de siempre.
+      contenido += `<div class="informe-seccion"><div class="informe-titulo">${{NOMBRES[seccion]}}</div>${{window.viviendasRapidaHTMLInforme()}}${{SECCIONES_INFORME[seccion]}}</div>`;
     }} else if (SECCIONES_INFORME[seccion] !== undefined && typeof SECCIONES_INFORME[seccion] === 'string') {{
       contenido += `<div class="informe-seccion"><div class="informe-titulo">${{NOMBRES[seccion]}}</div>${{SECCIONES_INFORME[seccion]}}</div>`;
     }}

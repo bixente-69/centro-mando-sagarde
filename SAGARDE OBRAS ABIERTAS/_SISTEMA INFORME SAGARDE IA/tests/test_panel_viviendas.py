@@ -100,6 +100,35 @@ class TestEstatico(unittest.TestCase):
         self.assertIn("data-tajo='cableado'", panel)
         self.assertIn("data-tajo='embornado'", panel)
 
+    def test_cambios_lleva_la_consulta_rapida_con_un_tajo_y_un_periodo(self):
+        html = _generar(viviendas=_datos())
+        v = _vista(html, 'v-cambios')
+        self.assertIn("id='viv-rapida-tajo'", v)
+        self.assertIn("id='viv-rapida-periodo'", v)
+        self.assertIn("value='cableado'", v)
+        self.assertIn("value='embornado'", v)
+        self.assertNotIn("value='telecableado'", v)
+
+    def test_el_tajo_por_defecto_es_cableado_aunque_no_sea_el_primero(self):
+        d = _datos()
+        d['tajos'].insert(0, {'id': 'tubeado', 'nombre': 'Tubeado interior'})
+        d['celdas'] = dict({'tubeado': d['celdas']['cableado']}, **d['celdas'])
+        v = _vista(_generar(viviendas=d), 'v-cambios')
+        self.assertIn("value='cableado' selected", v)
+
+    def test_el_informe_lleva_la_consulta_rapida_bajo_la_casilla_cambios(self):
+        html = _generar(viviendas=_datos())
+        panel = html[html.index('id="panel-informe-obra"'):
+                     html.index('<div class="nav">')]
+        i = panel.index('data-seccion="cambios"')
+        self.assertIn("id='viv-rapida-tajo-inf'", panel[i:])
+        self.assertIn("id='viv-rapida-periodo-inf'", panel[i:])
+        self.assertIn('viviendasRapidaHTMLInforme', html)
+
+    def test_sin_datos_de_viviendas_cambios_no_pinta_la_consulta(self):
+        v = _vista(_generar(), 'v-cambios')
+        self.assertNotIn('viv-rapida', v)
+
     def test_cableado_en_generar_todos(self):
         ruta = os.path.join(_BASE, 'generar_todos.py')
         with open(ruta, encoding='utf-8') as f:
@@ -198,6 +227,53 @@ const { chromium } = require('playwright');
       c.checked = true; c.dispatchEvent(new Event('change', { bubbles: true }));
     });
   });
+  // CONSULTA RAPIDA (pestaña Cambios): un tajo + un periodo -> una frase
+  await p.click('button[data-view="v-cambios"]');
+  await p.evaluate(() => { window.__HOY_VIVIENDAS = '2026-11-05'; });
+  const resp = async (tajo, per) => {
+    await p.selectOption('#viv-rapida-tajo', tajo);
+    await p.selectOption('#viv-rapida-periodo', per);
+    return p.evaluate(() => document.getElementById('viv-rapida-resp').textContent);
+  };
+  res.rapida = {};
+  res.rapida.cab_mes_ant = await resp('cableado', 'mes_anterior');
+  res.rapida.cab_mes = await resp('cableado', 'mes');
+  res.rapida.emb_todo = await resp('embornado', 'todo');
+  res.rapida.cab_todo = await resp('cableado', 'todo');
+  await p.selectOption('#viv-rapida-periodo', 'rango');
+  await p.fill('#viv-rapida-desde', '2026-10-09');
+  await p.fill('#viv-rapida-hasta', '2026-10-11');
+  await p.dispatchEvent('#viv-rapida-hasta', 'change');
+  res.rapida.rango = await p.evaluate(() => document.getElementById('viv-rapida-resp').textContent);
+  // Cambiar SOLO el tajo (el periodo no se toca) tambien repinta la respuesta
+  await p.selectOption('#viv-rapida-periodo', 'todo');
+  await p.selectOption('#viv-rapida-tajo', 'embornado');
+  const antes = await p.evaluate(() => document.getElementById('viv-rapida-resp').textContent);
+  await p.selectOption('#viv-rapida-tajo', 'cableado');
+  const despues = await p.evaluate(() => document.getElementById('viv-rapida-resp').textContent);
+  res.rapida.solo_tajo = [antes, despues];
+  // El selector del INFORME tiene su copia de la consulta, sincronizada con la pestaña
+  await p.evaluate(() => {
+    const t = document.getElementById('viv-rapida-tajo-inf');
+    t.value = 'embornado'; t.dispatchEvent(new Event('change', { bubbles: true }));
+    const q = document.getElementById('viv-rapida-periodo-inf');
+    q.value = 'todo'; q.dispatchEvent(new Event('change', { bubbles: true }));
+  });
+  res.rapida.tras_informe = await p.evaluate(() => document.getElementById('viv-rapida-resp').textContent);
+  res.rapida.tab_tajo = await p.inputValue('#viv-rapida-tajo');
+  await p.evaluate(() => {
+    document.querySelectorAll('#panel-informe-obra input[type=checkbox]').forEach(c => { c.checked = false; });
+    document.querySelector('input[data-seccion="cambios"]').checked = true;
+  });
+  const [pop2] = await Promise.all([
+    p.waitForEvent('popup'),
+    p.evaluate(() => generarVistaPreviaInforme()),
+  ]);
+  await pop2.waitForLoadState();
+  res.rapida.popup = await pop2.content();
+  // independiente de la pestaña Viviendas: no cambia su periodo
+  res.rapida.viv_periodo = await p.evaluate(() => document.getElementById('viv-periodo').value);
+  await p.click('button[data-view="v-viviendas"]');
   // «hoy» == dia de la ultima revision de campo
   await p.evaluate(() => { window.__HOY_VIVIENDAS = '2026-10-30'; });
   await p.selectOption('#viv-periodo', 'semana');
@@ -312,6 +388,55 @@ class TestEnNavegador(unittest.TestCase):
     def test_la_casilla_de_la_pestana_refleja_lo_que_se_cambia_en_el_informe(self):
         self.assertEqual(self.res['cb_pestana'],
                          {'cableado': False, 'embornado': False})
+
+    def test_consulta_rapida_octubre_cableado(self):
+        r = self.res['rapida']['cab_mes_ant']
+        self.assertIn('1 vivienda ', r)              # singular, no «1 viviendas»
+        self.assertNotIn('1 viviendas', r)
+        self.assertIn('Cableado eléctrico', r)
+        self.assertIn('Octubre 2026', r)
+        self.assertIn('de 3', r)                     # 3 viviendas aplicables
+
+    def test_consulta_rapida_noviembre_en_curso_son_cinco_dias_y_cero(self):
+        r = self.res['rapida']['cab_mes']
+        self.assertIn('0 viviendas', r)
+        self.assertIn('01/11/2026', r)
+        self.assertIn('05/11/2026', r)
+
+    def test_consulta_rapida_desde_el_principio_da_el_estado_de_ahora(self):
+        e = self.res['rapida']['emb_todo']
+        self.assertIn('1 vivienda ', e)
+        self.assertIn('de 1', e)                     # la N y la sin celda no cuentan
+        self.assertIn('desde el principio', e)
+        c = self.res['rapida']['cab_todo']
+        self.assertIn('2 viviendas', c)
+        self.assertIn('M 1', c)                      # «las M» tambien
+
+    def test_la_consulta_del_informe_se_refleja_en_la_pestana(self):
+        self.assertEqual(self.res['rapida']['tab_tajo'], 'embornado')
+        self.assertIn('Embornado', self.res['rapida']['tras_informe'])
+        self.assertIn('desde el principio', self.res['rapida']['tras_informe'])
+
+    def test_la_vista_previa_de_cambios_lleva_la_consulta_elegida(self):
+        pop = self.res['rapida']['popup']
+        self.assertIn('Embornado eléctrico', pop)
+        self.assertIn('desde el principio', pop)
+        self.assertIn('Sin revisiones registradas', pop)   # y lo de siempre
+
+    def test_cambiar_solo_el_tajo_repinta_la_respuesta(self):
+        antes, despues = self.res['rapida']['solo_tajo']
+        self.assertIn('Embornado', antes)
+        self.assertIn('Cableado', despues)
+
+    def test_consulta_rapida_acumuladas_a_fin_de_periodo(self):
+        self.assertIn('a fin del periodo: 2', self.res['rapida']['cab_mes_ant'])
+
+    def test_consulta_rapida_entre_fechas(self):
+        self.assertIn('1 vivienda ', self.res['rapida']['rango'])
+        self.assertIn('09/10/2026', self.res['rapida']['rango'])
+
+    def test_consulta_rapida_no_toca_el_periodo_de_la_pestana_viviendas(self):
+        self.assertEqual(self.res['rapida']['viv_periodo'], 'todo')
 
     def test_botones_ninguno_y_todos(self):
         # «Todos» devuelve lo que se habia quitado; «Ninguno» desde ahi vacia.
