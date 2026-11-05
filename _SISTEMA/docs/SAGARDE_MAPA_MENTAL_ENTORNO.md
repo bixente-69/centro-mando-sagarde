@@ -19,6 +19,8 @@ revisión (tinta, PDF digital y HTML digital) convergen en un motor común con
 validación, aplicación pura en memoria, salvaguarda de doble cálculo y
 trazabilidad JSONL. Ver §4, §5.2, §5.4 y §7.
 
+**Actualización 05/11/2026:** nuevas piezas `cambios_revision.py`, `viviendas_tajos.py`, `viviendas_calculo.js` y `panel_viviendas.py` (pestañas «Cambios» y «Viviendas», consulta rápida y controles en el informe de obra); el log de revisiones guarda ahora `transiciones`; los totales de materiales ya no se dividen por marca. Memoria: `_SISTEMA/docs/2026-11-05-memoria-estudio-cambios-viviendas-materiales.md`.
+
 **Corrección 04/11/2026** (comprobada contra el repositorio): el catálogo de tajos sí está en git; el portal móvil se regenera en cada pasada (solo le falta un enlace de navegación); los accesos de aplicaciones son seis, no siete; y de los cuatro BAT solo dos están versionados. Las dos tablas automáticas no se han tocado.
 
 **Actualización 04/11/2026 (noche):** el generador de revisiones se ha auditado entero y su PR está fusionada en `main`: 14 fallos corregidos (informe `_SISTEMA/docs/auditorias_nube_2026-11-04/H_generador_revisiones.md`), 87 pruebas nuevas en navegador real y 65 mutaciones detectadas. Decisiones de Bixente 8 y 9 en `_SISTEMA/docs/auditorias_nube_2026-11-04/G_decisiones_bixente.md`; memoria con los hechos de campo, las claves del almacenamiento del aparato y cómo ejecutar las pruebas con navegador en la nube en `_SISTEMA/docs/2026-11-04-memoria-generador-revisiones-y-campo.md`. El recuento de pruebas del mapa («114») estaba desfasado: hay **2.067 definidas** (1.950 + 117). Las dos tablas automáticas siguen sin tocarse.

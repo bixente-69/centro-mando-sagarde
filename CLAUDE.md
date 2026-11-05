@@ -365,6 +365,13 @@ nube. Sus decisiones 8 y 9 están en
 `_SISTEMA/docs/auditorias_nube_2026-11-04/G_decisiones_bixente.md`. Leerlas
 antes de volver a preguntarle o de tocar el generador.
 
+**Memoria del estudio de mejoras y de las pestañas «Cambios» y «Viviendas» (05/11/2026):**
+`_SISTEMA/docs/2026-11-05-memoria-estudio-cambios-viviendas-materiales.md`. Decisiones de
+Bixente (periodos naturales, tajos eléctricos, la marca informa y no divide, consulta rápida,
+controles también en el informe de obra), qué está implementado, qué se midió, lo pendiente y
+las trampas ya vividas. Leerla antes de volver a preguntarle o de tocar esas piezas. El
+análisis completo y las fuentes están en `_SISTEMA/docs/2026-11-04-estudio-mejoras-sagarde.md`.
+
 **Revisiones de campo a la base (paso 4 del ciclo, implementado el
 05/08/2026).** Cuando Bixente entregue una hoja marcada a boli:
 
