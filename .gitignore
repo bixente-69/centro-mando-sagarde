@@ -107,6 +107,10 @@ VARIOS/APPS SAGARDE/
 # es un .js dentro de tests/ y sin esta linea se genera pero nunca se publica.
 !SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/tests/verificar_personal_base.js
 
+# El verificador de node de la pestana «Calendario» (lo lanza tests/test_calendario_obras.py, que comprueba esta linea con
+# git check-ignore). Mismo motivo: es un .js dentro de tests/ y sin esta linea se genera pero nunca se publica.
+!SAGARDE OBRAS ABIERTAS/_SISTEMA INFORME SAGARDE IA/tests/verificar_personal_calendario.js
+
 # Ficha de obra: fuente de verdad de estructura y estados (una por obra)
 !SAGARDE OBRAS ABIERTAS/*/INFORME SAGARDE IA/ficha_obra.json
 

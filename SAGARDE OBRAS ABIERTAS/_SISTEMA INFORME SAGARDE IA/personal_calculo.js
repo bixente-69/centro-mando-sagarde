@@ -1063,6 +1063,111 @@ function empresasConocidas(filas, catalogo) {
   return Array.from(mapa.values()).sort((a, b) => a.localeCompare(b, 'es'));
 }
 
+// 12. calendarioMes(filas, opts): qué obras tienen registro cada día de un mes, para el calendario grande del ranking.
+// Devuelve la rejilla de semanas COMPLETAS (de lunes a domingo, con días de relleno de los meses vecinos) y, por día:
+//   · `obras`: las obras con alguna jornada ese día (las abiertas primero, en su orden; luego las demás), cada una con quién
+//     estuvo (`personas`, una línea por persona y zona), `nPersonas` (personas distintas), `horas` (suma; `null` si a alguna
+//     línea le faltan horas: un dato que falta no es 0) y `ambitos` (viviendas antes que garajes).
+//   · `esperadas` / `faltan`: las obras abiertas que debían tener registro y las que no lo tienen. Solo se exige en días
+//     laborables YA PASADOS (ni hoy ni el futuro: hoy aún se puede estar anotando) y desde el primer día con registro de cada
+//     obra (una obra que empezó el 04/11 no «falta» el 02/11). Una obra abierta que nunca tuvo jornadas no se exige.
+//   · `estado`: 'completo' (hay registro y no falta ninguna), 'parcial' (hay registro y falta alguna), 'ninguno' (se exigían
+//     obras y no hay registro de ninguna) o 'vacio' (nada que decir: fin de semana, antes de empezar, hoy, futuro).
+// opts: { anio, mes (1-12), obrasAbiertas: [id], hoy: 'AAAA-MM-DD' }. Sin «hoy» válido no se exige nada. Una jornada sin
+// obra, sin nombre o con fecha imposible no cuenta y se avisa (`avisos.filasInvalidas`). No modifica lo que recibe.
+const ORDEN_AMBITOS = ['vivienda', 'garaje'];
+
+function ordenAmbito(ambito) {
+  const i = ORDEN_AMBITOS.indexOf(ambito);
+  return i < 0 ? ORDEN_AMBITOS.length : i;
+}
+
+function resumirObraDelDia(id, lista) {
+  const personas = lista.slice().sort((a, b) =>
+    claveNombre(a.nombre).localeCompare(claveNombre(b.nombre), 'es') ||
+    ordenAmbito(a.ambito) - ordenAmbito(b.ambito) ||
+    a.ambito.localeCompare(b.ambito, 'es'));
+  const ambitos = Array.from(new Set(personas.map(p => p.ambito).filter(Boolean)))
+    .sort((a, b) => ordenAmbito(a) - ordenAmbito(b) || a.localeCompare(b, 'es'));
+  const sinHoras = personas.some(p => p.horas === null);
+  const suma = personas.reduce((s, p) => s + (p.horas === null ? 0 : p.horas), 0);
+  return {
+    obra: id,
+    nPersonas: new Set(personas.map(p => claveNombre(p.nombre))).size,
+    horas: sinHoras ? null : Math.round(suma * 100) / 100,
+    ambitos,
+    personas
+  };
+}
+
+function calendarioMes(filas, opts) {
+  const o = opts && typeof opts === 'object' ? opts : {};
+  const avisos = { filasInvalidas: 0 };
+  const abiertas = Array.from(new Set(Array.isArray(o.obrasAbiertas) ? o.obrasAbiertas.filter(x => typeof x === 'string' && x) : []));
+  const hoy = esFechaISO(o.hoy) ? o.hoy : null;
+
+  // Una pasada: las jornadas por fecha y obra, y el primer día con registro de cada obra
+  const porFecha = new Map();
+  const primeraFecha = {};
+  (Array.isArray(filas) ? filas : []).forEach(f => {
+    const nombre = f && typeof f === 'object' ? limpiarTexto(f.nombre) : '';
+    if (!nombre || typeof f.obra !== 'string' || !f.obra || !esFechaISO(f.fecha)) { avisos.filasInvalidas++; return; }
+    if (primeraFecha[f.obra] === undefined || f.fecha < primeraFecha[f.obra]) primeraFecha[f.obra] = f.fecha;
+    if (!porFecha.has(f.fecha)) porFecha.set(f.fecha, new Map());
+    const delDia = porFecha.get(f.fecha);
+    if (!delDia.has(f.obra)) delDia.set(f.obra, []);
+    const valida = clasificarFila(f) === 'valida';
+    delDia.get(f.obra).push({
+      nombre,
+      empresa: empresaDeFila(f),
+      ambito: typeof f.ambito === 'string' ? f.ambito : '',
+      horas: valida ? f.horas : null,
+      extra: valida ? (typeof f.extra === 'number' ? f.extra : 0) : null
+    });
+  });
+
+  const anio = o.anio, mes = o.mes;
+  if (!Number.isInteger(anio) || !Number.isInteger(mes) || mes < 1 || mes > 12 || anio < 1900 || anio > 2200) {
+    return { dias: [], avisos, primeraFecha };
+  }
+  const primero = new Date(Date.UTC(anio, mes - 1, 1));
+  const ultimo = new Date(Date.UTC(anio, mes, 0));
+  const inicio = sumarDias(primero, -((primero.getUTCDay() + 6) % 7));
+  const fin = sumarDias(ultimo, 6 - ((ultimo.getUTCDay() + 6) % 7));
+  const total = Math.round((fin.getTime() - inicio.getTime()) / 86400000) + 1;
+
+  const dias = [];
+  for (let i = 0; i < total; i++) {
+    const fd = sumarDias(inicio, i);
+    const fecha = aTextoISO(fd);
+    const semanaDia = (fd.getUTCDay() + 6) % 7; // 0 = lunes … 6 = domingo
+    const laborable = semanaDia < 5;
+    const delDia = porFecha.get(fecha) || new Map();
+    const orden = abiertas.filter(id => delDia.has(id))
+      .concat(Array.from(delDia.keys()).filter(id => abiertas.indexOf(id) < 0).sort((a, b) => a.localeCompare(b, 'es')));
+    const obras = orden.map(id => resumirObraDelDia(id, delDia.get(id)));
+    const exigible = laborable && hoy !== null && fecha < hoy;
+    const esperadas = exigible ? abiertas.filter(id => primeraFecha[id] !== undefined && primeraFecha[id] <= fecha) : [];
+    const faltan = esperadas.filter(id => !delDia.has(id));
+    const estado = obras.length > 0
+      ? (faltan.length > 0 ? 'parcial' : 'completo')
+      : (esperadas.length > 0 ? 'ninguno' : 'vacio');
+    dias.push({
+      fecha,
+      enMes: fd.getUTCMonth() === mes - 1,
+      semanaDia,
+      laborable,
+      hoy: hoy !== null && fecha === hoy,
+      futuro: hoy !== null && fecha > hoy,
+      obras,
+      esperadas,
+      faltan,
+      estado
+    });
+  }
+  return { dias, avisos, primeraFecha };
+}
+
 const API = {
   semanaISO,
   rangoPeriodo,
@@ -1082,7 +1187,8 @@ const API = {
   ordenarRanking,
   ordenarEmpresas,
   resumenEmpresas,
-  empresasConocidas
+  empresasConocidas,
+  calendarioMes
 };
 
 if (typeof module !== 'undefined' && module.exports) { module.exports = API; }

@@ -122,6 +122,30 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
 .gen-varios-fila{display:grid;grid-template-columns:minmax(0,1fr) minmax(140px,200px) auto;gap:8px;align-items:center;margin-bottom:8px}
 .gen-chk{display:inline-flex;align-items:center;gap:8px;font-weight:600;font-size:13.5px;margin-top:6px;cursor:pointer;min-height:44px}
 .gen-chk input{width:22px;height:22px}
+/* Vista Calendario */
+.cal-cab{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.cal-leyenda{display:flex;gap:6px 18px;flex-wrap:wrap;list-style:none;margin:0 0 10px;padding:0;font-size:13px;color:var(--muted)}
+.cal-leyenda li{display:flex;align-items:center;gap:6px}
+.cal-mue{display:inline-block;width:14px;height:14px;border-radius:4px;border:1px solid var(--line)}
+.cal-mue.completo,.cal-dia.completo{background:#dcf3e5;border-color:#8fd1ab}
+.cal-mue.parcial,.cal-dia.parcial{background:#fff1d6;border-color:#f1d58a}
+.cal-mue.ninguno,.cal-dia.ninguno{background:#fff;border:1px dashed #d6a93a}
+.cal-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.cal-cab-dia{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);text-align:center;padding:4px 0}
+.cal-dia{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-height:92px;min-width:0;padding:6px 7px;border:1px solid var(--line);border-radius:10px;background:#fafbfd;font:inherit;text-align:left;cursor:pointer;color:var(--text);overflow:hidden}
+.cal-dia.fuera{opacity:.5}
+.cal-dia.finde.vacio{background:#f3f5f9}
+.cal-dia.hoy{box-shadow:inset 0 0 0 2px var(--accent)}
+.cal-dia.sel{outline:3px solid var(--header);outline-offset:-1px}
+.cal-dia:focus-visible{outline:3px solid var(--accent2);outline-offset:-1px}
+.cal-n{font-weight:700;font-size:15px}
+.cal-cnt{font-size:12.5px;font-weight:700;color:var(--header2)}
+.cal-chip{display:block;max-width:100%;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:99px;background:#fff;border:1px solid #c9d6e6;color:#1f5ea8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-detalle{margin-top:16px;border-top:2px solid var(--line);padding-top:6px}
+.cal-detalle h3{margin:10px 0 4px;font-size:17px;color:var(--header)}
+.cal-detalle h4{margin:10px 0 4px;font-size:15px;color:var(--header2)}
+.cal-detalle td.t-tit{font-weight:700;overflow-wrap:anywhere}
+.cal-obra-sel{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0;font-size:13.5px;font-weight:600}
 @media(max-width:640px){
   main{padding:8px}
   .hdr{padding:16px}
@@ -180,6 +204,12 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
   table.tarjetas td.t-acc{padding-top:6px}
   table.tarjetas td:empty{display:none}
   .emp-ficha{padding:12px}
+  /* Calendario: en el móvil cada día es una casilla pequeña con su recuento; los nombres de obra se ven al pincharlo */
+  .cal-grid{gap:4px}
+  .cal-dia{min-height:58px;padding:4px}
+  .cal-chip{display:none}
+  .cal-n{font-size:14px}
+  .cal-cnt{font-size:11.5px}
 }
 </style>
 <script src="personal_calculo.js"></script>
@@ -190,11 +220,12 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
   <header class="hdr">
     <small>SAGARDE · CENTRO DE MANDO</small>
     <h1>Personal Sagarde</h1>
-    <p>Quién trabaja más para Sagarde, datos por empresa, base de trabajadores y generación de personal</p>
+    <p>Quién trabaja más para Sagarde, qué obras tienen registro cada día, datos por empresa, base de trabajadores y generación de personal</p>
   </header>
   <div class="ctl pestanas" id="pestanas">
     <div class="seg" role="group" aria-label="Qué quieres ver">
       <button type="button" data-v="ranking" class="on" aria-pressed="true">Ranking</button>
+      <button type="button" data-v="calendario" aria-pressed="false">Calendario</button>
       <button type="button" data-v="base" aria-pressed="false">Base de trabajadores</button>
       <button type="button" data-v="empresas" aria-pressed="false">Empresas</button>
       <button type="button" data-v="generar" aria-pressed="false">Generar personal</button>
@@ -219,6 +250,11 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       </select>
     </div>
     <div id="contenido"><p class="empty">Cargando personal…</p></div>
+  </section>
+  <section class="card" id="vista-calendario" aria-labelledby="t-calendario" hidden>
+    <h2 id="t-calendario">Calendario</h2>
+    <p class="intro">Qué obras tienen registro cada día. Pincha en un día para ver quién estuvo en cada obra.</p>
+    <div id="contenido-calendario"><p class="empty">Cargando personal…</p></div>
   </section>
   <section class="card" id="vista-base" aria-labelledby="t-base" hidden>
     <h2 id="t-base">Base de trabajadores</h2>
@@ -2752,11 +2788,206 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     pintarGenerar();
   }
 
+  /* ================= PESTAÑA: CALENDARIO ================= */
+  // Qué obras tienen registro cada día. Todo el cálculo (qué obras, quién estuvo, qué obras faltan) lo hace
+  // PersonalCalculo.calendarioMes con las mismas jornadas que el ranking: aquí solo se dibuja.
+
+  var DIAS_LARGOS = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo'];
+  var ETQ_AMBITO = { vivienda: 'Viviendas', garaje: 'Garajes' };
+  var calAnio = 0;   // año y mes (1-12) que se ven
+  var calMes = 0;
+  var calDia = '';   // día elegido 'AAAA-MM-DD' ('' = ninguno)
+  var calObra = '';  // obra elegida dentro de ese día
+
+  // «Hoy» de quien mira la página, en hora local (de noche en España ya es otro día en UTC)
+  function fechaHoyLocal() {
+    var d = new Date();
+    return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2);
+  }
+
+  // «BOLUETA» de «2026 BOLUETA ACR»: cabe en una casilla; el nombre entero va en el título
+  function nombreCortoObra(id) {
+    var completo = nombresObra[id] || id;
+    var sinAnio = completo.replace(/^\s*\d{4}\s+/, '').trim();
+    return sinAnio.split(/\s+/)[0] || completo;
+  }
+
+  // «lunes 2 de noviembre de 2026»: el día de la semana sale de la propia fecha, sin zona horaria
+  function fechaLarga(fecha) {
+    var p = fecha.split('-');
+    var d = new Date(Date.UTC(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10)));
+    return DIAS_LARGOS[(d.getUTCDay() + 6) % 7] + ' ' + parseInt(p[2], 10) + ' de ' + MESES[parseInt(p[1], 10) - 1] + ' de ' + p[0];
+  }
+
+  function textoObras(n) { return n + (n === 1 ? ' obra' : ' obras'); }
+  function textoPersonas(n) { return n + (n === 1 ? ' persona' : ' personas'); }
+
+  // Lo que dice en voz alta un lector de pantalla al llegar a la casilla
+  function descripcionDia(d) {
+    var base = fechaLarga(d.fecha).replace(/ de \d{4}$/, '');
+    if (d.obras.length === 0) {
+      return base + (d.faltan.length ? ': sin registro de ninguna de las ' + textoObras(d.faltan.length) : ': sin registro');
+    }
+    return base + ': ' + d.obras.length + ' de ' + textoObras(d.obras.length + d.faltan.length) + ' con registro';
+  }
+
+  function celdaCalendario(d) {
+    var n = parseInt(d.fecha.slice(8, 10), 10);
+    var total = d.obras.length + d.faltan.length;
+    var elegido = d.fecha === calDia;
+    var clases = 'cal-dia ' + d.estado + (d.enMes ? '' : ' fuera') + (d.laborable ? '' : ' finde') + (d.hoy ? ' hoy' : '') + (elegido ? ' sel' : '');
+    var html = '<button type="button" class="' + clases + '" data-f="' + d.fecha + '" aria-pressed="' + (elegido ? 'true' : 'false') + '"' +
+      (d.hoy ? ' aria-current="date"' : '') + ' aria-label="' + escaparHtml(descripcionDia(d)) + '">';
+    html += '<span class="cal-n">' + n + '</span>';
+    if (total > 0) html += '<span class="cal-cnt">' + d.obras.length + '/' + total + '</span>';
+    for (var i = 0; i < d.obras.length; i++) {
+      var id = d.obras[i].obra;
+      html += '<span class="cal-chip" title="' + escaparHtml(nombresObra[id] || id) + '">' + escaparHtml(nombreCortoObra(id)) + '</span>';
+    }
+    return html + '</button>';
+  }
+
+  // Quién estuvo en una obra ese día: nombre (con su empresa debajo), zona y horas
+  function tablaPersonasDia(o) {
+    var html = '<p class="cuenta">' + textoPersonas(o.nPersonas) + ' · ' +
+      (o.horas === null ? 'hay jornadas sin horas' : formatearNum(o.horas) + ' h') + '</p>';
+    html += '<div class="base-scroll"><table class="gen-tabla tarjetas"><thead><tr><th>Nombre</th><th>Zona</th><th class="n">Horas</th></tr></thead><tbody>';
+    for (var i = 0; i < o.personas.length; i++) {
+      var p = o.personas[i];
+      html += '<tr><td class="t-tit" data-etq="Nombre">' + escaparHtml(p.nombre) +
+        (p.empresa ? '<span class="nom-emp">' + escaparHtml(p.empresa) + '</span>' : '') + '</td>' +
+        '<td data-etq="Zona">' + escaparHtml(ETQ_AMBITO[p.ambito] || p.ambito || '–') + '</td>' +
+        '<td class="n" data-etq="Horas">' + formatearNum(p.horas) + '</td></tr>';
+    }
+    return html + '</tbody></table></div>';
+  }
+
+  function detalleCalendario(dias) {
+    var d = null;
+    for (var i = 0; i < dias.length; i++) {
+      if (dias[i].fecha === calDia) { d = dias[i]; break; }
+    }
+    if (!d) return '<p class="intro">Pincha un día para ver qué obras tienen registro y quién estuvo.</p>';
+    var total = d.obras.length + d.faltan.length;
+    var html = '<h3>' + escaparHtml(fechaLarga(d.fecha)) + '</h3>';
+    if (d.obras.length === 0) {
+      html += '<p class="empty">Ninguna obra tiene registro este día.</p>';
+    } else {
+      html += '<p class="cuenta">' + (d.faltan.length ? d.obras.length + ' de ' + textoObras(total) : textoObras(d.obras.length)) + ' con registro</p>';
+      var sel = null;
+      for (var j = 0; j < d.obras.length; j++) {
+        if (d.obras[j].obra === calObra) { sel = d.obras[j]; break; }
+      }
+      if (!sel) { sel = d.obras[0]; calObra = sel.obra; }
+      if (d.obras.length > 1) {
+        html += '<div class="cal-obra-sel"><label for="cal-obra">Obra</label><select class="sel-filtro" id="cal-obra">';
+        for (var k = 0; k < d.obras.length; k++) {
+          var ob = d.obras[k];
+          html += '<option value="' + escaparHtml(ob.obra) + '"' + (ob.obra === sel.obra ? ' selected' : '') + '>' +
+            escaparHtml(nombresObra[ob.obra] || ob.obra) + ' · ' + textoPersonas(ob.nPersonas) + '</option>';
+        }
+        html += '</select></div>';
+      } else {
+        html += '<h4>' + escaparHtml(nombresObra[sel.obra] || sel.obra) + '</h4>';
+      }
+      html += tablaPersonasDia(sel);
+    }
+    if (d.faltan.length) {
+      var nombres = [];
+      for (var m = 0; m < d.faltan.length; m++) nombres.push('<b>' + escaparHtml(nombresObra[d.faltan[m]] || d.faltan[m]) + '</b>');
+      html += '<p class="aviso">Sin registro este día: ' + nombres.join(', ') + '.</p>';
+    }
+    return html;
+  }
+
+  function pintarCalendario(enfocar) {
+    var cont = document.getElementById('contenido-calendario');
+    if (!cont) return;
+    try {
+      var datos = window.PersonalCalculo.calendarioMes(filas, { anio: calAnio, mes: calMes, obrasAbiertas: obrasAbiertas, hoy: fechaHoyLocal() });
+      var html = '';
+      if (filas.length === 0) {
+        html += '<p class="aviso">Todavía no hay jornadas guardadas. Cuando las haya, aparecerán marcadas en el calendario.</p>';
+      }
+      var malas = datos.avisos.filasInvalidas;
+      if (malas > 0) {
+        html += '<p class="aviso" role="alert">⚠ ' + (malas === 1 ? 'Una jornada no tiene' : malas + ' jornadas no tienen') +
+          ' obra, nombre o fecha válidos: no ' + (malas === 1 ? 'sale' : 'salen') + ' en el calendario.</p>';
+      }
+      html += '<div class="cal-cab"><div class="seg" role="group" aria-label="Moverse entre meses">' +
+        '<button type="button" data-cm="-1" aria-label="Mes anterior">‹</button>' +
+        '<output class="etq" aria-live="polite">' + MESES[calMes - 1] + ' ' + calAnio + '</output>' +
+        '<button type="button" data-cm="1" aria-label="Mes siguiente">›</button></div>' +
+        '<button type="button" class="btn-accion" data-cm="hoy">Hoy</button></div>';
+      html += '<ul class="cal-leyenda">' +
+        '<li><i class="cal-mue completo"></i>Todas las obras con registro</li>' +
+        '<li><i class="cal-mue parcial"></i>Falta alguna obra</li>' +
+        '<li><i class="cal-mue ninguno"></i>Ninguna obra con registro</li></ul>';
+      html += '<div class="cal-grid">';
+      for (var c = 0; c < 7; c++) html += '<div class="cal-cab-dia">' + DIAS_ETQ[c] + '</div>';
+      for (var i = 0; i < datos.dias.length; i++) html += celdaCalendario(datos.dias[i]);
+      html += '</div>';
+      html += '<p class="nota">En cada día, «2/3» son las obras con registro entre las que debían tenerlo. Cada obra se cuenta desde su primer día con registro; ' +
+        'no se exigen ni los fines de semana ni el día de hoy.</p>';
+      html += '<div class="cal-detalle" id="cal-detalle">' + detalleCalendario(datos.dias) + '</div>';
+      cont.innerHTML = html;
+      if (enfocar) {
+        var el = cont.querySelector(enfocar);
+        if (el && el.focus) el.focus();
+      }
+    } catch (e) {
+      cont.innerHTML = '<p class="aviso" role="alert">⚠ No se pudo calcular el calendario: ' + escaparHtml(e && e.message ? e.message : String(e)) + '</p>';
+    }
+  }
+
+  function iniciarCalendario() {
+    var cont = document.getElementById('contenido-calendario');
+    if (!cont) return;
+    var hoy = fechaHoyLocal();
+    calAnio = parseInt(hoy.slice(0, 4), 10);
+    calMes = parseInt(hoy.slice(5, 7), 10);
+    calDia = '';
+    calObra = '';
+    cont.addEventListener('click', function (ev) {
+      var dia = ev.target.closest('[data-f]');
+      if (dia) {
+        calDia = dia.getAttribute('data-f');
+        calObra = '';
+        pintarCalendario('[data-f="' + calDia + '"]');
+        return;
+      }
+      var mover = ev.target.closest('[data-cm]');
+      if (!mover) return;
+      var v = mover.getAttribute('data-cm');
+      if (v === 'hoy') {
+        var h = fechaHoyLocal();
+        calAnio = parseInt(h.slice(0, 4), 10);
+        calMes = parseInt(h.slice(5, 7), 10);
+        calDia = h;
+      } else {
+        calMes += parseInt(v, 10);
+        if (calMes < 1) { calMes = 12; calAnio--; } else if (calMes > 12) { calMes = 1; calAnio++; }
+        calDia = '';
+      }
+      calObra = '';
+      pintarCalendario('[data-cm="' + v + '"]');
+    });
+    cont.addEventListener('change', function (ev) {
+      if (ev.target && ev.target.id === 'cal-obra') {
+        calObra = ev.target.value;
+        pintarCalendario('#cal-obra');
+      }
+    });
+    pintarCalendario();
+  }
+
   /* ================= NAVEGACIÓN ENTRE PESTAÑAS ================= */
 
   function mostrarVista(v, tocarDireccion) {
-    var vistasValidas = { ranking: true, base: true, empresas: true, generar: true };
+    var vistasValidas = { ranking: true, calendario: true, base: true, empresas: true, generar: true };
     var queVer = vistasValidas[v] ? v : 'ranking';
+    var vc = document.getElementById('vista-calendario');
+    if (vc) vc.hidden = queVer !== 'calendario';
     var vr = document.getElementById('vista-ranking');
     var vb = document.getElementById('vista-base');
     var ve = document.getElementById('vista-empresas');
@@ -2788,7 +3019,7 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
       });
     }
     var h = (location.hash || '').replace(/^#/, '');
-    if (h === 'base' || h === 'empresas' || h === 'generar') mostrarVista(h, false);
+    if (h === 'calendario' || h === 'base' || h === 'empresas' || h === 'generar') mostrarVista(h, false);
   }
 
   /* ================= RANKING: ARRANQUE DE LA VISTA ================= */
@@ -2862,8 +3093,10 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
     }
   }
 
-  function mostrarEnLasCuatro(plantilla) {
+  function mostrarEnTodas(plantilla) {
     var vr = document.getElementById('contenido');
+    var vc = document.getElementById('contenido-calendario');
+    if (vc) vc.innerHTML = plantilla('el calendario');
     var vb = document.getElementById('contenido-base');
     var ve = document.getElementById('contenido-empresas');
     var vg = document.getElementById('contenido-generar');
@@ -2879,14 +3112,14 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
 
     try {
       if (!window.PersonalCalculo) {
-        mostrarEnLasCuatro(function (sujeto) {
+        mostrarEnTodas(function (sujeto) {
           return '<p class="aviso" role="alert">⚠ No se pudo cargar personal_calculo.js: la página no puede calcular ' + sujeto + '.</p>';
         });
         return;
       }
 
       if (!cargado) {
-        mostrarEnLasCuatro(function (sujeto) {
+        mostrarEnTodas(function (sujeto) {
           return '<p class="empty">Todavía no hay datos de personal publicados (no se encontró personal_estado.js). ' +
             'Cuando se pase el primer control horario a una obra, ' + sujeto + ' aparecerá aquí.</p>';
         });
@@ -2895,19 +3128,20 @@ table.emp-detalle tr.emp-fila.activa{background:#edf4fc}
 
       var errText = leerEstado();
       if (errText) {
-        mostrarEnLasCuatro(function () {
+        mostrarEnTodas(function () {
           return '<p class="aviso" role="alert">⚠ ' + escaparHtml(errText) + '</p>';
         });
         return;
       }
     } catch (e) {
       var msg = e && e.message ? e.message : String(e);
-      mostrarEnLasCuatro(function (sujeto) {
+      mostrarEnTodas(function (sujeto) {
         return '<p class="aviso" role="alert">⚠ No se pudo calcular ' + sujeto + ': ' + escaparHtml(msg) + '</p>';
       });
       return;
     }
 
+    iniciarCalendario();
     iniciarBase();
     iniciarEmpresas();
     iniciarGenerar();

@@ -57,6 +57,17 @@ cada uno con su nombre: jornadas que no se cuentan (sin horas o con datos no vá
 historial que no se pudo leer, alguien con jornadas que no figura en la base, o que el fichero no trae la lista de la base.
 **Un aviso aquí es un dato roto de verdad: no se ignora.**
 
+## Ver qué obras tienen registro cada día: pestaña «Calendario»
+
+Primera pestaña después del Ranking (`personal_sagarde.html#calendario`), **solo lectura**. Mes en grande (semanas de lunes a
+domingo); cada día dice `n/m` (obras con registro entre las que debían tenerlo) y, si es verde, ámbar o discontinuo, si están
+todas, falta alguna o no hay ninguna. Al pinchar un día: desplegable de obras (si hay más de una) y, de la elegida, quién estuvo
+(nombre, empresa, zona, horas), más «Sin registro este día: …» con las que faltan. **Una obra «debe» tener registro** si está
+abierta, el día es laborable y anterior a hoy, y es igual o posterior a su primer día con registro; Gorliz (sin jornadas) no se
+exige. El cálculo es `calendarioMes` en `personal_calculo.js` (una sola vez; la página solo dibuja). Solo refleja lo **ya
+aplicado**: un control horario sin aplicar en `REVISIONES` no sale hasta «actualiza la obra» o el `.bat`. Si una obra ya no se
+sigue y estorba como «falta», lo limpio es cerrarla (`sagarde-cerrar-obra`). Spec: `_SISTEMA/docs/superpowers/specs/2026-11-05-personal-calendario-por-obras-design.md`.
+
 ## Cambiar algo de la base (siempre: vista previa → antes/después)
 
 Regla común: primero la vista previa (no guarda nada), se la cuento a Bixente en llano, y si cambia nombres o cifras espero
@@ -161,7 +172,8 @@ Lo de personal: `test_personal_obra` (+ `_08a`), `test_personal_empresas_08c2a`,
 `test_panel_personal`. De la serie de mejoras de la auditoría del 30/10: `test_personal_sin_cobertura`,
 `test_personal_guardado_sin_pisar`, `test_personal_mismo_nombre` (+ `_pantallas`), `test_generar_personal_ma5`,
 `test_personal_pantallas_ma6`, `test_personal_enviar_con_ma7`, `test_personal_escala_y_compatibilidad`,
-`test_orden_empresas_y_generar_personal` y `test_personal_agy_cobertura_ma8` (las zonas del código de agy que se
+`test_orden_empresas_y_generar_personal`, `test_calendario_obras` (pestaña «Calendario»; el cálculo con `node`, la página con
+Playwright) y `test_personal_agy_cobertura_ma8` (las zonas del código de agy que se
 rompieron a propósito y nadie notaba: últimas horas, «Por horas», fichero de la tablet campo a campo, avisos y fichero de
 «Generar personal»). Las verificaciones de navegador de la pestaña, el informe y el ranking siguen en la carpeta de trabajo
 del proyecto (`PROYECTO PERSONAL EN OBRA/staging/_verificadores/`: `verificar_p4.py`, `verificar_p5.py`, `verificar_p5b.py`).
