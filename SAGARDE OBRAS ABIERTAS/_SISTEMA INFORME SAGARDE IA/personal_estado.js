@@ -1,6 +1,6 @@
 window.SAGARDE_PERSONAL = {
  "version": 1,
- "generado": "2026-11-05T12:32:50.806304+01:00",
+ "generado": "2026-11-05T13:51:34.919690+01:00",
  "jornada_base_h": 7.5,
  "catalogo": [
   {
@@ -210,10 +210,28 @@ window.SAGARDE_PERSONAL = {
     }
    },
    "ultima": {
-    "vivienda": null,
+    "vivienda": {
+     "fecha": "2026-11-04",
+     "presentes": [
+      {
+       "nombre": "Manuel",
+       "horas": 8,
+       "extra": 0
+      }
+     ]
+    },
     "garaje": null
    },
-   "jornadas": []
+   "jornadas": [
+    {
+     "fecha": "2026-11-04",
+     "ambito": "vivienda",
+     "nombre": "Manuel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    }
+   ]
   },
   "mungia": {
    "nombre": "2026 MUNGIA ACR NEINOR",
@@ -499,14 +517,6 @@ window.SAGARDE_PERSONAL = {
      "fecha": "2026-10-20",
      "ambito": "vivienda",
      "nombre": "Hssain",
-     "horas": 9,
-     "extra": 0,
-     "empresa": "CATERSYSTEM"
-    },
-    {
-     "fecha": "2026-10-20",
-     "ambito": "vivienda",
-     "nombre": "Wilson",
      "horas": 9,
      "extra": 0,
      "empresa": "CATERSYSTEM"

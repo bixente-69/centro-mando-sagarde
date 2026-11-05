@@ -20,5 +20,21 @@
    "vie": 8
   }
  },
- "jornadas": []
+ "jornadas": [
+  {
+   "fecha": "2026-11-04",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0005",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-05T12:23:03.866Z",
+   "origen": "movil"
+  }
+ ]
 }

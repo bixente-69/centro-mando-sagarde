@@ -116,11 +116,6 @@
    "notas": "",
    "presentes": [
     {
-     "id": "T0002",
-     "horas": 9,
-     "extra": 0
-    },
-    {
      "id": "T0013",
      "horas": 9,
      "extra": 0
@@ -131,7 +126,7 @@
      "extra": 0
     }
    ],
-   "registrado": "2026-10-27T14:24:21.430Z",
+   "registrado": "2026-11-05T12:45:57.000Z",
    "origen": "movil"
   },
   {
