@@ -2689,8 +2689,8 @@ with sync_playwright() as p:
     # --- T104: la pantalla «Enviar al PC» sin nada que enviar
     def t104(e):
         e.ir()
-        ok(e.pg.eval_on_selector_all('nav button', 'e=>e.map(b=>b.textContent.trim())') == ['Anotar', 'Jornadas', 'Informe', 'Enviar al PC'],
-           'T104 las cuatro pestañas: Anotar, Jornadas, Informe y Enviar al PC: %s' % e.pg.eval_on_selector_all('nav button', 'e=>e.map(b=>b.textContent.trim())'))
+        ok(e.pg.eval_on_selector_all('nav button', 'e=>e.map(b=>b.textContent.trim())') == ['Anotar', 'Jornadas', 'Informe', 'Enviar al PC', 'Bandeja'],
+           'T104 las cinco pestañas: Anotar, Jornadas, Informe, Enviar al PC y Bandeja: %s' % e.pg.eval_on_selector_all('nav button', 'e=>e.map(b=>b.textContent.trim())'))
         e.clic('nav button[data-v="enviar"]')
         ok(e.pg.is_visible('#enviar') and e.pg.query_selector('#v-app') is not None and not e.pg.is_visible('#v-app'), 'T104 la pestaña abre una pantalla de verdad')
         ok(e.txt('#enviar h2') == 'Enviar las jornadas al PC', 'T104 título: %r' % e.txt('#enviar h2'))
@@ -4762,6 +4762,19 @@ with sync_playwright() as p:
                init=ua('Mozilla/5.0 (Linux; Android 14; SM-X710) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36 EdgA/130.0'))
     con_escena('T239c', est200(), t239('Tablet'),
                init=ua('Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'))
+
+    # --- T245: en la «Bandeja», quitar una línea mientras OTRA pestaña acaba de guardar otro día NO borra ese día (la Bandeja escribe
+    # las listas enteras al quitar; el enganche del clic trae antes lo de la otra pestaña)
+    def t245(e):
+        e.ir()
+        e.clic('nav button[data-v="bandeja"]')
+        ok(e.pg.query_selector('button[data-quitar="jornada"]') is not None, 'T245 preparación: la Bandeja enseña la jornada sin enviar')
+        raw(e, 'pendientes', [pend9('2026-10-15', ['Beto']), pend9('2026-10-14', ['Ana'])])   # la otra pestaña guardó el 14/10; ésta no se enteró
+        e.clic('button[data-quitar="jornada"][data-clave="olabeaga|vivienda|2026-10-15"]')
+        ok(fechas_guardadas(e) == ['2026-10-14'],
+           'T245 al quitar el 15/10 en la Bandeja se conserva el 14/10 que dejó la otra pestaña (antes se perdía): %s' % fechas_guardadas(e))
+        ok(not e.errs, 'T245 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T245', est200(), t245, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-15', ['Beto'])]))
 
     # Fin del bloque de las dos pestañas
 
