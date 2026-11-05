@@ -315,8 +315,8 @@ class TestElFicheroQueSaleDeLaTablet(unittest.TestCase):
         try:
             _, lote = self.fichero(t)
             self.assertEqual(
-                ["tipo", "version", "obra", "excepciones_horario", "renombres", "altas", "empresas", "jornadas"], list(lote),
-                "los campos van todos y en el orden de siempre (sin horario semanal: no se tocó)")
+                ["tipo", "version", "obra", "dispositivo", "excepciones_horario", "renombres", "altas", "empresas", "jornadas"], list(lote),
+                "los campos van todos y en el orden de siempre, con el aparato justo detrás de la obra (sin horario semanal: no se tocó)")
             self.assertEqual({"Beto": {"vie": 6}}, lote["excepciones_horario"], "el horario propio de Beto")
             self.assertEqual([{"de": "Ana", "a": "Anna"}], lote["renombres"], "el nombre corregido: de Ana a Anna, no al revés")
             self.assertEqual(["Zeta", "Yeti"], lote["altas"],

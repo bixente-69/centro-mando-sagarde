@@ -1051,6 +1051,7 @@
           uh: LS + 'ultimas_horas',
           ob: LS + 'ultima_obra',
           cn: LS + 'sin_compartir',
+          ap: LS + 'aparato',
         };
       // Textos de cobertura (en llano; los tres primeros los aprobó Bixente).
       const COB = {
@@ -1073,11 +1074,17 @@
           return d;
         }
       }
+      // Texto que tenía guardado en el aparato cada clave la última vez que ESTA pestaña la leyó o la
+      // escribió. Sirve para enterarse de si otra pestaña de la misma tablet ha guardado algo desde
+      // entonces (ver releerSiOtraPestanaGuardo).
+      const vistos = {};
       // Serializa a JSON y guarda un valor en localStorage; devuelve true si tuvo éxito o false si
       // falló
       function set(k, v) {
         try {
-          localStorage.setItem(k, JSON.stringify(v));
+          let texto = JSON.stringify(v);
+          localStorage.setItem(k, texto);
+          vistos[k] = texto;
           return true;
         } catch (e) {
           return false;
@@ -1194,50 +1201,98 @@
       let state = null,
         origin = '',
         datosDe = '',
-        pending = get(K.p, []),
-        news = get(K.n, []),
-        hours = get(K.h, {}),
-        excepciones = get(K.x, {}),
-        renombres = get(K.rn, []),
-        altas = get(K.al, []),
-        empresas = get(K.em, []),
+        pending = [],
+        news = [],
+        hours = {},
+        excepciones = {},
+        renombres = [],
+        altas = [],
+        empresas = [],
         publicados = new Set(),
         rotos = 0;
-      if (!Array.isArray(pending)) pending = [];
-      // Vigilante de integridad: separa las jornadas pendientes válidas de las dañadas en
-      // localStorage
-      let pendientesBuenos = pending.filter((j) => jornadaOk(j));
-      let pendientesRotos = pending.filter((j) => !jornadaOk(j));
-      rotos = pendientesRotos.length;
-      // Aparta las jornadas corruptas en sgd_personal_rotos (K.r) para no perder datos ni bloquear
-      // la app
-      if (rotos) {
-        let anteriores = get(K.r, []);
-        if (!Array.isArray(anteriores)) anteriores = [];
-        set(K.r, anteriores.concat(pendientesRotos));
-        pending = pendientesBuenos;
-        set(K.p, pending);
+      // Las siete listas que guarda este aparato. Otra pestaña de la MISMA tablet comparte este
+      // almacenamiento: antes cada pestaña las leía una sola vez al abrir y luego las escribía
+      // enteras desde memoria, y la que guardaba la última borraba lo que había guardado la otra.
+      const CLAVES_LISTAS = [K.p, K.n, K.h, K.x, K.rn, K.al, K.em];
+      // Lee las siete listas del aparato y las deja limpias en memoria. Se llama al abrir y cada vez
+      // que otra pestaña ha guardado algo (ver releerSiOtraPestanaGuardo).
+      function cargarDelAparato() {
+        pending = get(K.p, []);
+        news = get(K.n, []);
+        hours = get(K.h, {});
+        excepciones = get(K.x, {});
+        renombres = get(K.rn, []);
+        altas = get(K.al, []);
+        empresas = get(K.em, []);
+        CLAVES_LISTAS.forEach((k) => {
+          try {
+            vistos[k] = localStorage.getItem(k);
+          } catch (e) {
+            vistos[k] = null;
+          }
+        });
+        if (!Array.isArray(pending)) pending = [];
+        // Vigilante de integridad: separa las jornadas pendientes válidas de las dañadas en
+        // localStorage
+        let pendientesBuenos = pending.filter((j) => jornadaOk(j));
+        let pendientesRotos = pending.filter((j) => !jornadaOk(j));
+        rotos += pendientesRotos.length;
+        // Aparta las jornadas corruptas en sgd_personal_rotos (K.r) para no perder datos ni
+        // bloquear la app
+        if (pendientesRotos.length) {
+          let anteriores = get(K.r, []);
+          if (!Array.isArray(anteriores)) anteriores = [];
+          set(K.r, anteriores.concat(pendientesRotos));
+          pending = pendientesBuenos;
+          set(K.p, pending);
+        }
+        news = Array.isArray(news) ? news.filter((x) => typeof x === 'string') : [];
+        renombres = Array.isArray(renombres)
+          ? renombres.filter(
+              (r) =>
+                r &&
+                typeof r === 'object' &&
+                typeof r.de === 'string' &&
+                clean(r.de) &&
+                typeof r.a === 'string' &&
+                clean(r.a),
+            )
+          : [];
+        altas = Array.isArray(altas) ? altas.filter((x) => typeof x === 'string' && clean(x)) : [];
+        // Empresas apuntadas en este aparato: { nombre, empresa }; empresa vacía = quitársela.
+        empresas = Array.isArray(empresas)
+          ? empresas.filter(
+              (e) => e && typeof e === 'object' && typeof e.nombre === 'string' && clean(e.nombre) && typeof e.empresa === 'string',
+            )
+          : [];
+        if (!hours || typeof hours !== 'object' || Array.isArray(hours)) hours = {};
+        excepciones = limpiarExcepciones(excepciones);
+        set(K.x, excepciones);
       }
-      news = Array.isArray(news) ? news.filter((x) => typeof x === 'string') : [];
-      renombres = Array.isArray(renombres)
-        ? renombres.filter(
-            (r) =>
-              r &&
-              typeof r === 'object' &&
-              typeof r.de === 'string' &&
-              clean(r.de) &&
-              typeof r.a === 'string' &&
-              clean(r.a),
-          )
-        : [];
-      altas = Array.isArray(altas) ? altas.filter((x) => typeof x === 'string' && clean(x)) : [];
-      // Empresas apuntadas en este aparato: { nombre, empresa }; empresa vacía = quitársela.
-      empresas = Array.isArray(empresas)
-        ? empresas.filter(
-            (e) => e && typeof e === 'object' && typeof e.nombre === 'string' && clean(e.nombre) && typeof e.empresa === 'string',
-          )
-        : [];
-      if (!hours || typeof hours !== 'object' || Array.isArray(hours)) hours = {};
+      // Antes de cada acción: si otra pestaña de esta tablet ha guardado algo en las siete listas
+      // desde la última vez que ESTA las leyó o las escribió, trae primero lo nuevo, para que lo
+      // que se guarde ahora se SUME a lo de la otra y no lo pise. Devuelve true si trajo algo.
+      function releerSiOtraPestanaGuardo() {
+        let cambio = false;
+        try {
+          cambio = CLAVES_LISTAS.some((k) => localStorage.getItem(k) !== (k in vistos ? vistos[k] : null));
+        } catch (e) {
+          return false;
+        }
+        if (!cambio) return false;
+        let rotasAntes = rotos;
+        cargarDelAparato();
+        // Si lo que trajo la otra pestaña incluye jornadas que no se pueden leer, se apartan (como al arrancar) y se AVISA:
+        // nada se descarta en silencio.
+        let nuevasRotas = rotos - rotasAntes;
+        if (iniciada && nuevasRotas > 0)
+          toast(
+            nuevasRotas === 1
+              ? 'Se ha apartado 1 jornada guardada que no se puede leer'
+              : 'Se han apartado ' + nuevasRotas + ' jornadas guardadas que no se pueden leer',
+          );
+        return true;
+      }
       // Objeto «llano»: ni null ni lista.
       function objetoSimple(valor) {
         return valor !== null && typeof valor === 'object' && !Array.isArray(valor);
@@ -1272,8 +1327,7 @@
         });
         return limpio;
       }
-      excepciones = limpiarExcepciones(excepciones);
-      set(K.x, excepciones);
+      cargarDelAparato();
       let a = {
         v: 'app',
         obra: '',
@@ -1489,6 +1543,7 @@
       // Reconcilia pendientes y horarios locales con el estado publicado por el PC, eliminando los
       // datos redundantes
       function reconcile() {
+        releerSiOtraPestanaGuardo();
         // Descarta jornadas pendientes locales que ya coincidan exactamente con las publicadas por
         // el PC
         pending = pending.filter((j) => !same(j, rowsKey(j)));
@@ -3755,7 +3810,7 @@
           `<p id="para-que"><b>Para qué sirve:</b> la tablet apunta quién ha trabajado cada día, pero las ` +
           `cuentas (horas, días y % de cada uno), el panel de la obra, el informe y el ranking se hacen en ` +
           `el PC. Aquí preparas lo que has apuntado para llevárselo al PC. No se envía solo: si no lo ` +
-          `llevas, el PC no se entera.</p>${contenido}${listo}` +
+          `llevas, el PC no se entera.</p>${contenido}${listo}${aparatoHTML()}` +
           `<p><b>Cómo sigue:</b></p><ol class="pasos" id="pasos">` +
           `<li>Se guarda un fichero llamado «CONTROL HORARIO», con el nombre de la obra y la fecha de ` +
           `hoy, en las descargas de este aparato.</li>` +
@@ -3765,12 +3820,38 @@
           `se publica: no hace falta volver a anotarlas.</p></div>`
         );
       }
+      // Nombre que lleva este aparato por defecto, según lo que es: «Tablet», «Móvil» o «PC».
+      function aparatoPorDefecto() {
+        // (Sin `navigator`, como en las pruebas que ejecutan el código fuera del navegador, no se sabe qué aparato es: «PC».)
+        let agente = typeof navigator === 'object' && navigator && typeof navigator.userAgent === 'string' ? navigator.userAgent : '';
+        if (/iPad/.test(agente) || (/Android/.test(agente) && !/Mobile/.test(agente))) return 'Tablet';
+        if (/iPhone|Android/.test(agente)) return 'Móvil';
+        return 'PC';
+      }
+      // Nombre del aparato tal como se guarda: sin espacios ni caracteres raros de más y de 30 letras como mucho.
+      function limpiarNombreAparato(texto) {
+        let sinRaros = typeof texto === 'string' ? texto.replace(/[\x00-\x1f\x7f]/g, ' ') : '';
+        return clean(sinRaros).slice(0, 30).trim();
+      }
+      // Cómo se llama este aparato: el que se le puso en «Enviar al PC» o, si no, el de por defecto. Va dentro de
+      // cada fichero para que el PC sepa desde dónde llegó cada cosa.
+      function nombreAparato() {
+        return limpiarNombreAparato(get(K.ap, '')) || aparatoPorDefecto();
+      }
+      // Campo de «Enviar al PC» para ponerle nombre a este aparato.
+      function aparatoHTML() {
+        return (
+          `<div class="envio" id="aparato"><label class="fld" for="aparato-nombre">Nombre de este aparato</label>` +
+          `<input id="aparato-nombre" maxlength="30" autocomplete="off" value="${E(nombreAparato())}">` +
+          `<p class="nota">Va dentro de cada fichero para saber desde dónde llegó: «Móvil», «Tablet», «PC»…</p></div>`
+        );
+      }
       // Arma el contenido del fichero de una obra (mismo contrato de siempre): jornadas, horario
       // semanal si cambió, horarios especiales, nombres corregidos, nombres nuevos y empresas.
       function armarFichero(id) {
         let datos = sinEnviarDe(id);
         let horario = hor(id);
-        let lote = { tipo: 'lote_personal', version: 1, obra: id };
+        let lote = { tipo: 'lote_personal', version: 1, obra: id, dispositivo: nombreAparato() };
         if (datos.horarioCambiado)
           lote.horario_semanal = {
             lun: horario[1],
@@ -3939,6 +4020,7 @@
       // Eventos: manejadores de click, change e input de la interfaz de usuario
       // ---------------------------------------------------------------------------
       document.addEventListener('click', (evento) => {
+        releerSiOtraPestanaGuardo();
         let boton = evento.target.closest('button');
         if (!boton) return;
         let datos = boton.dataset;
@@ -4383,7 +4465,18 @@
         }
       });
       document.addEventListener('change', (evento) => {
+        releerSiOtraPestanaGuardo();
         let campo = evento.target;
+        // Nombre de este aparato: se recuerda; vacío (o igual al de por defecto) = el de por defecto, sin guardar nada aparte
+        if (campo.id === 'aparato-nombre') {
+          let nombre = limpiarNombreAparato(campo.value);
+          if (!nombre || nombre === aparatoPorDefecto()) del(K.ap);
+          else set(K.ap, nombre);
+          // Se pone al día el propio campo, sin repintar la pantalla: repintar desde el aviso de «cambio» de un campo que
+          // tiene el foco quita el campo mientras pierde el foco y da error.
+          campo.value = nombreAparato();
+          return;
+        }
         // Desplegable de empresa del lápiz: «Otra empresa…» enseña el campo para escribirla
         if (campo.id === 'ren-empresa' && a.ren) {
           a.ren.empresa = campo.value;
@@ -4485,6 +4578,7 @@
         }
       });
       document.addEventListener('keydown', (evento) => {
+        releerSiOtraPestanaGuardo();
         if (evento.target.id === 'homonimo-campo' && evento.key === 'Enter') {
           evento.preventDefault();
           crearOtraPersona();
@@ -4558,6 +4652,22 @@
       }
       // Arranque en carga de página y temporizador de seguridad de 4 s por si el script tarda en
       // responder
+      // Una pestaña que está quieta se entera sola de lo que guarda la otra: cuando otra pestaña
+      // cambia el almacenamiento (evento `storage`) y cuando se vuelve a esta pestaña (por si el
+      // aviso se hubiera perdido con la pestaña dormida). Si alguien está escribiendo en un campo
+      // no se repinta la pantalla (se perdería lo escrito): se actualiza la memoria y la pantalla se
+      // pone al día en la siguiente acción.
+      function alDiaConLaOtraPestana() {
+        if (!iniciada || !releerSiOtraPestanaGuardo()) return;
+        let activo = document.activeElement;
+        if (!activo || !/^(INPUT|TEXTAREA|SELECT)$/.test(activo.tagName)) render();
+      }
+      window.addEventListener('storage', (evento) => {
+        if (evento.key === null || CLAVES_LISTAS.includes(evento.key)) alDiaConLaOtraPestana();
+      });
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') alDiaConLaOtraPestana();
+      });
       window.addEventListener('load', () => setTimeout(init, 0));
       setTimeout(() => init(true), 4000);
     </script>

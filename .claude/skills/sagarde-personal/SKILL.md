@@ -68,6 +68,22 @@ exige. El cálculo es `calendarioMes` en `personal_calculo.js` (una sola vez; la
 aplicado**: un control horario sin aplicar en `REVISIONES` no sale hasta «actualiza la obra» o el `.bat`. Si una obra ya no se
 sigue y estorba como «falta», lo limpio es cerrarla (`sagarde-cerrar-obra`). Spec: `_SISTEMA/docs/superpowers/specs/2026-11-05-personal-calendario-por-obras-design.md`.
 
+## La tablet con varias pestañas y el nombre del aparato (05/11/2026)
+
+- **Dos pestañas de la misma tablet ya no se pisan.** Las siete listas que guarda el aparato (`pendientes`, `nuevos`, `horarios`,
+  `excepciones`, `renombres`, `altas`, `empresas`) se leían una vez al abrir y se escribían enteras: la pestaña que guardaba la
+  última borraba lo de la otra. Ahora `cargarDelAparato()` las lee y `releerSiOtraPestanaGuardo()` —al empezar un clic, un cambio
+  o un Enter, y al conciliar— trae primero lo que otra pestaña haya guardado; una pestaña quieta se pone al día sola (eventos
+  `storage` y `visibilitychange`; no repinta si alguien está escribiendo en un campo); y si lo que llega trae jornadas ilegibles
+  se apartan en `rotos` **y se avisa** (nada se descarta en silencio). Escenas T230–T244 de `tests/verificar_generador_personal.py`
+  (`P3_SOLO_PESTANAS=1` corre solo esas).
+- **El fichero lleva el nombre del aparato** (`dispositivo`, justo detrás de `obra`): campo «Nombre de este aparato» en «Enviar al
+  PC»; por defecto «Móvil», «Tablet» o «PC» según el aparato; de 30 letras como mucho y sin caracteres de control. El PC ya lo
+  aceptaba y lo copia a la traza (`personal_jornadas.jsonl`), así que ahora se ve desde dónde llegó cada cosa.
+- Trampas: una prueba que fije las **claves exactas** del fichero hay que actualizarla si se añade una (pasó con `dispositivo`: T53,
+  T82, T134 y la de MA8); `fill()` de Playwright respeta el `maxlength` del campo; repintar con `render()` desde el `change` de un
+  campo con foco da error de `innerHTML`.
+
 ## Cambiar algo de la base (siempre: vista previa → antes/después)
 
 Regla común: primero la vista previa (no guarda nada), se la cuento a Bixente en llano, y si cambia nombres o cifras espero

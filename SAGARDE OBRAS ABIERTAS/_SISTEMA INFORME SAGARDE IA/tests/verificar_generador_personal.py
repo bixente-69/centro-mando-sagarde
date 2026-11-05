@@ -343,7 +343,8 @@ with sync_playwright() as p:
         ok(lote.get('tipo') == 'lote_personal' and lote.get('version') == 1 and lote.get('obra') == 'olabeaga', 'cabecera del lote: %s' % {k: lote.get(k) for k in ('tipo', 'version', 'obra')})
         ok(set(lote) <= {'tipo', 'version', 'obra', 'horario_semanal', 'excepciones_horario', 'jornadas', 'dispositivo'}, 'claves del lote fuera del contrato: %s' % sorted(lote))
         ok('horario_semanal' not in lote, 'sin cambiar el horario, el lote no debe llevar horario_semanal')
-        ok(set(lote) == {'tipo', 'version', 'obra', 'jornadas'}, 'una obra sin ningún horario propio exporta exactamente el lote de siempre (sin excepciones_horario): %s' % sorted(lote))
+        # 05/11/2026: el lote lleva además el nombre del aparato (`dispositivo`, T238); lo demás, igual que siempre
+        ok(set(lote) == {'tipo', 'version', 'obra', 'jornadas', 'dispositivo'}, 'una obra sin ningún horario propio exporta exactamente el lote de siempre más el aparato (sin excepciones_horario): %s' % sorted(lote))
         js = lote.get('jornadas', [])
         ok(len(js) == 1 and js[0].get('ambito') == 'vivienda' and js[0].get('fecha') == '2026-10-23' and js[0].get('anulada') is False, 'la jornada exportada: %s' % js)
         if js:
@@ -572,6 +573,19 @@ with sync_playwright() as p:
         def cerrar(self):
             self.ctx.close()
 
+        def hermana(self):
+            """Otra pestaña de la MISMA tablet: mismo contexto, así que comparte el almacenamiento (las jornadas sin enviar, los
+            nombres nuevos…). Devuelve un ayudante igual que éste pero apuntando a la pestaña nueva, ya abierta con la app."""
+            h = object.__new__(Escena)
+            h.__dict__.update(self.__dict__)
+            h.pg = self.ctx.new_page()
+            h.pg.set_default_timeout(4000)
+            h.errs = []
+            h.pg.on('pageerror', lambda e: h.errs.append(str(e)))
+            h.pg.goto(self.url)
+            h.pg.wait_for_selector('#obra', timeout=3000)
+            return h
+
         def txt(self, sel):
             el = self.pg.query_selector(sel)
             return norm(el.inner_text()) if el else ''
@@ -660,7 +674,11 @@ with sync_playwright() as p:
 
     def con_escena(nombre, datos, fn, **kw):
         """Ejecuta una escena; cualquier excepción se convierte en un fallo legible y no tumba las demás."""
-        if os.environ.get('P3_SOLO_CAL') == '1':     # modo del calendario: solo las escenas T200 en adelante (pinchar un día enseña lo guardado, «Copiar el último día», «Varios días»)
+        if os.environ.get('P3_SOLO_PESTANAS') == '1':     # modo de las dos pestañas (05/11/2026): solo las escenas T230 en adelante
+            m = re.match(r'T(\d+)', nombre)
+            if not (m and int(m.group(1)) >= 230):
+                return
+        if os.environ.get('P3_SOLO_CAL') == '1':    # modo del calendario: solo las escenas T200 en adelante (pinchar un día enseña lo guardado, «Copiar el último día», «Varios días»)
             m = re.match(r'T(\d+)', nombre)
             if not (m and int(m.group(1)) >= 200):
                 return
@@ -1389,7 +1407,7 @@ with sync_playwright() as p:
         e.clic('button[data-guardar]')
         lote = e.exportar() or {}
         ok(lote.get('excepciones_horario') == {'Aitor': {'vie': 9}, 'Gorka': {'vie': 9}}, 'T53 el lote lleva excepciones_horario por nombre, solo los que cambiaron: %s' % lote.get('excepciones_horario'))
-        ok(set(lote) == {'tipo', 'version', 'obra', 'excepciones_horario', 'jornadas'}, 'T53 claves del lote: %s' % sorted(lote))
+        ok(set(lote) == {'tipo', 'version', 'obra', 'dispositivo', 'excepciones_horario', 'jornadas'}, 'T53 claves del lote: %s' % sorted(lote))
         valida_con_p1(lote)
         if P1 is None:
             return
@@ -2067,7 +2085,7 @@ with sync_playwright() as p:
         e.clic('button[data-varios-cerrar]')
         ok(e.pg.query_selector('#varios') is None and ls(e, 'altas') is not None and cambios(e) == '5 nombres nuevos sin enviar al PC', 'T81 «Cerrar» esconde el cuadro y no pierde nada: %r' % cambios(e))
         lote = e.exportar() or {}
-        ok(set(lote) == {'tipo', 'version', 'obra', 'altas', 'jornadas'} and lote.get('altas') == ['Ane', 'Iker', 'Jon Ander', 'Al', 'Begoña'] and lote.get('jornadas') == [], 'T81 con solo nombres nuevos el fichero lleva altas y ninguna jornada: %s' % {k: lote.get(k) for k in lote})
+        ok(set(lote) == {'tipo', 'version', 'obra', 'dispositivo', 'altas', 'jornadas'} and lote.get('altas') == ['Ane', 'Iker', 'Jon Ander', 'Al', 'Begoña'] and lote.get('jornadas') == [], 'T81 con solo nombres nuevos el fichero lleva altas y ninguna jornada: %s' % {k: lote.get(k) for k in lote})
         valida_con_p1(lote)
         r, cat8, filas8 = e2e_p1(lote)
         ok(r is not None and r['ok'] and sorted(x['nombre'] for x in r['altas']) == ['Al', 'Ane', 'Begoña', 'Iker', 'Jon Ander'], 'T81 el PC da de alta a los 5 sin jornada: %s' % (json.dumps(r, ensure_ascii=False)[:400] if r else r))
@@ -2126,7 +2144,7 @@ with sync_playwright() as p:
         ok('Rafael' in [f.split(' ')[0] for f in fi] and 'Rafa' not in [f.split(' ')[0] for f in fi] and tokens(fi, 'Rafael')[1] == '2', 'T82 el informe cuenta las jornadas ya publicadas de Rafa bajo el nombre nuevo (1 publicada + la de hoy = 2 días): %s' % fi)
         e.clic('button[data-v="app"]')
         lote = e.exportar() or {}
-        ok(set(lote) == {'tipo', 'version', 'obra', 'renombres', 'jornadas'} and lote.get('renombres') == [{'de': 'Rafa', 'a': 'Rafael'}], 'T82 el fichero lleva el renombre dentro: %s' % {k: lote.get(k) for k in lote})
+        ok(set(lote) == {'tipo', 'version', 'obra', 'dispositivo', 'renombres', 'jornadas'} and lote.get('renombres') == [{'de': 'Rafa', 'a': 'Rafael'}], 'T82 el fichero lleva el renombre dentro: %s' % {k: lote.get(k) for k in lote})
         ok([p['nombre'] for p in lote.get('jornadas', [{}])[0].get('presentes', [])] == ['Mikel', 'Rafael'], 'T82 y la jornada con el nombre nuevo: %s' % lote.get('jornadas'))
         valida_con_p1(lote)
         r, cat8, filas8 = e2e_p1(lote)
@@ -2343,7 +2361,7 @@ with sync_playwright() as p:
         ok(e.exportar(esperar=False) is None and 'no hay nada por enviar' in e.enviar_txt('#nada-que-enviar').lower(), 'T86 (08d) sin nada que enviar no hay botón ni se descarga nada: %r' % e.enviar_txt('#nada-que-enviar'))
         renombra(e, 'Mikel', 'Mikelo')
         lote = e.exportar() or {}
-        ok(set(lote) == {'tipo', 'version', 'obra', 'renombres', 'jornadas'} and lote['jornadas'] == [] and lote['renombres'] == [{'de': 'Mikel', 'a': 'Mikelo'}], 'T86 solo con un nombre corregido el fichero se envía igualmente, sin jornadas: %s' % lote)
+        ok(set(lote) == {'tipo', 'version', 'obra', 'dispositivo', 'renombres', 'jornadas'} and lote['jornadas'] == [] and lote['renombres'] == [{'de': 'Mikel', 'a': 'Mikelo'}], 'T86 solo con un nombre corregido el fichero se envía igualmente, sin jornadas: %s' % lote)
         ok('con 1 nombre corregido' in e.listo() and 'jornada' not in e.listo(), 'T86 (08d) el recuadro «Listo» cuenta lo enviado (sin hablar de jornadas si no hay): %r' % e.listo())
         valida_con_p1(lote)
     con_escena('T86', est8(), t86)
@@ -3219,7 +3237,7 @@ with sync_playwright() as p:
         e.clic('#v-app .row[data-nombre="Carlos"] .x')
         e.clic('button[data-guardar]')
         lote = e.exportar() or {}
-        ok(sorted(lote) == ['jornadas', 'obra', 'tipo', 'version'] and [p['nombre'] for p in lote['jornadas'][0]['presentes']] == ['Ana', 'Carlos'],
+        ok(sorted(lote) == ['dispositivo', 'jornadas', 'obra', 'tipo', 'version'] and [p['nombre'] for p in lote['jornadas'][0]['presentes']] == ['Ana', 'Carlos'],
            'T134 el fichero solo lleva lo de siempre: %s' % sorted(lote))
         ok('1 jornada.' in e.listo() and 'empresa' not in e.listo(), 'T134 y el recuadro no habla de empresas: %r' % e.listo())
         ok(cambios(e) == '', 'T134 ni hay contadores de nombres: %r' % cambios(e))
@@ -4477,6 +4495,275 @@ with sync_playwright() as p:
         sin_desborde(e, 'calendario con marcas en la tablet')
         ok(e.pg.is_visible('#cal-leyenda') and len(con_registro(e)) == 4, 'T223 en la tablet la leyenda y las marcas se ven sin abrir nada: %s' % con_registro(e))
     con_escena('T223b', est200(), t223b, ancho=1180, alto=820)
+
+    # ======================================================================================================================
+    # 05/11/2026 — DOS PESTAÑAS DE LA MISMA TABLET NO SE PISAN. La app leía lo guardado en el aparato UNA vez al abrir y luego
+    # lo escribía entero desde memoria: la pestaña que guardaba la última borraba lo que había guardado la otra. Ahora, antes de
+    # cada acción, mira si otra pestaña guardó algo desde la última vez y lo trae primero; y se entera sola (evento `storage`
+    # y al volver a la pestaña). Escenas T230 en adelante. Hoy = viernes 23/10; el 15/10 y el 22/10 no tienen nada guardado.
+    # ======================================================================================================================
+    def guardar_dia(e, fecha, quien):
+        e.fecha(fecha)
+        e.anotar(quien)
+        e.clic('button[data-guardar]')
+
+    def fechas_guardadas(e):
+        return sorted(j['fecha'] for j in (ls(e, 'pendientes') or []))
+
+    # --- T230: dos pestañas abiertas a la vez guardan días distintos: se quedan los DOS (antes la última borraba el de la otra)
+    def t230(e):
+        e.ir()
+        h = e.hermana()
+        guardar_dia(e, '2026-10-22', 'Ana')
+        ok(fechas_guardadas(e) == ['2026-10-22'], 'T230 preparación: la pestaña A guardó el 22/10: %s' % fechas_guardadas(e))
+        guardar_dia(h, '2026-10-15', 'Beto')   # la B se abrió ANTES de que la A guardara: no conoce el 22/10
+        ok(fechas_guardadas(e) == ['2026-10-15', '2026-10-22'],
+           'T230 al guardar la B el 15/10, el 22/10 de la A SIGUE ahí (antes se perdía): %s' % fechas_guardadas(e))
+        quien = {j['fecha']: [p['nombre'] for p in j['presentes']] for j in ls(e, 'pendientes')}
+        ok(quien == {'2026-10-15': ['Beto'], '2026-10-22': ['Ana']}, 'T230 cada día conserva a su gente: %s' % quien)
+        ok(h.pendientes() == '2', 'T230 la pestaña B cuenta las dos jornadas sin enviar: %s' % h.pendientes())
+        ok(not e.errs and not h.errs, 'T230 sin errores de JavaScript: %s %s' % (e.errs, h.errs))
+    con_escena('T230', est200(), t230)
+
+    # --- T231: lo mismo con los nombres nuevos (otra de las listas del aparato): los dos nombres se quedan
+    def t231(e):
+        e.ir()
+        h = e.hermana()
+        e.pg.fill('#nuevo', 'Zeta')
+        e.clic('button[data-nuevo]')
+        ok('Zeta' in (ls(e, 'nuevos') or []), 'T231 preparación: la pestaña A creó «Zeta»: %s' % ls(e, 'nuevos'))
+        h.pg.fill('#nuevo', 'Yago')
+        h.clic('button[data-nuevo]')
+        nuevos = sorted(ls(e, 'nuevos') or [])
+        ok(nuevos == ['Yago', 'Zeta'], 'T231 al crear la B «Yago», «Zeta» de la A sigue ahí (antes se perdía): %s' % nuevos)
+        ok(not e.errs and not h.errs, 'T231 sin errores de JavaScript: %s %s' % (e.errs, h.errs))
+    con_escena('T231', est200(), t231)
+
+    # --- T232: una pestaña quieta se entera sola de lo que guarda la otra (sin tocar nada)
+    def t232(e):
+        e.ir()
+        h = e.hermana()
+        ok(e.pendientes() == '0', 'T232 preparación: la pestaña A no tiene nada sin enviar: %s' % e.pendientes())
+        guardar_dia(h, '2026-10-15', 'Beto')
+        e.pg.wait_for_timeout(500)
+        ok(e.pendientes() == '1', 'T232 la pestaña A, sin que nadie la toque, ya cuenta la jornada que guardó la B: %s' % e.pendientes())
+        ok('apartado' not in e.toast(), 'T232 y sin ilegibles no avisa de ninguna: %r' % e.toast())
+    con_escena('T232', est200(), t232)
+
+    # --- T233: si en la pestaña A alguien está escribiendo, lo que guarda la B NO le borra lo escrito
+    def t233(e):
+        e.ir()
+        h = e.hermana()
+        e.pg.fill('#nuevo', 'Ro')
+        guardar_dia(h, '2026-10-15', 'Beto')
+        e.pg.wait_for_timeout(500)
+        ok(e.valor('#nuevo') == 'Ro', 'T233 lo que se estaba escribiendo se conserva: %r' % e.valor('#nuevo'))
+        ok(e.pg.evaluate("document.activeElement && document.activeElement.id") == 'nuevo', 'T233 el cursor sigue en el campo')
+    con_escena('T233', est200(), t233)
+
+    # --- T234: al volver a la pestaña (aunque el aviso del navegador se hubiera perdido) se pone al día
+    def t234(e):
+        e.ir()
+        ok(e.pendientes() == '0', 'T234 preparación: nada sin enviar: %s' % e.pendientes())
+        # Se escribe desde ESTA pestaña, que no recibe su propio evento `storage`: es como si el aviso se hubiera perdido
+        e.pg.evaluate("v=>localStorage.setItem('sgd_personal_pendientes', JSON.stringify(v))", [pend9('2026-10-15', ['Beto'])])
+        e.pg.evaluate("()=>{Object.defineProperty(document,'visibilityState',{value:'visible',configurable:true});document.dispatchEvent(new Event('visibilitychange'))}")
+        e.pg.wait_for_timeout(300)
+        ok(e.pendientes() == '1', 'T234 al volver a la pestaña cuenta la jornada guardada por otra: %s' % e.pendientes())
+    con_escena('T234', est200(), t234)
+
+    # --- T235: aunque no se haya enterado, al GUARDAR trae primero lo de la otra y lo suma (no lo pisa). Todo se deja preparado y
+    # «la otra pestaña» guarda al final, así que lo PRIMERO que pasa después es un clic: solo lo protege el enganche del clic.
+    def raw(e, clave, valor):
+        """Escribe en el almacenamiento de la tablet desde ESTA pestaña: ésta no recibe su propio evento `storage`, es como si
+        otra pestaña hubiera guardado y a ésta no le hubiera llegado el aviso."""
+        e.pg.evaluate("([k,v])=>localStorage.setItem('sgd_personal_'+k, JSON.stringify(v))", [clave, valor])
+
+    def t235(e):
+        e.ir()
+        e.fecha('2026-10-22')
+        e.anotar('Ana')
+        raw(e, 'pendientes', [pend9('2026-10-15', ['Beto'])])
+        e.clic('button[data-guardar]')
+        ok(fechas_guardadas(e) == ['2026-10-15', '2026-10-22'],
+           'T235 al guardar el 22/10 se conserva el 15/10 que otra pestaña dejó sin que ésta se enterara: %s' % fechas_guardadas(e))
+        e.pg.fill('#nuevo', 'Yago')
+        raw(e, 'nuevos', ['Zeta'])
+        e.clic('button[data-nuevo]')
+        ok(sorted(ls(e, 'nuevos') or []) == ['Yago', 'Zeta'], 'T235 lo mismo al crear un nombre: %s' % ls(e, 'nuevos'))
+        ok(not e.errs, 'T235 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T235', est200(), t235)
+
+    # --- T236: lo mismo al cambiar el horario de la obra (se guarda por el camino de «cambio», no por un clic)
+    def t236(e):
+        e.ir()
+        e.clic('details#horario summary')
+        e.pg.fill('input[data-hor="5"]', '6')
+        raw(e, 'horarios', {'mungia': [6, 6, 6, 6, 6, 0, 0]})
+        e.pg.dispatch_event('input[data-hor="5"]', 'change')
+        obras_con_horario = sorted((ls(e, 'horarios') or {}).keys())
+        ok(obras_con_horario == ['mungia', 'olabeaga'],
+           'T236 al cambiar el horario de Olabeaga se conserva el de Mungia que dejó otra pestaña: %s' % obras_con_horario)
+        ok(not e.errs, 'T236 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T236', est200(), t236)
+
+    # --- T237: lo mismo al renombrar a alguien con la tecla Enter (camino del teclado)
+    def t237(e):
+        e.ir()
+        e.clic(lapiz('Ana'))
+        e.pg.fill('#ren-campo', 'Zacarias')
+        raw(e, 'pendientes', [pend9('2026-10-15', ['Beto'])])
+        e.pg.press('#ren-campo', 'Enter')
+        e.pg.wait_for_timeout(300)
+        if e.pg.query_selector('button[data-ren-si]'):
+            e.clic('button[data-ren-si]')
+        ok(fechas_guardadas(e) == ['2026-10-15'], 'T237 al renombrar con Enter se conserva la jornada que dejó otra pestaña: %s' % fechas_guardadas(e))
+        ok(not e.errs, 'T237 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T237', est200(), t237)
+
+    # --- T240: cada una de las SIETE listas del aparato se trae de la otra pestaña (no solo las probadas arriba)
+    def t240(e):
+        e.ir()
+        casos = [
+            ('pendientes', 'pending', [pend9('2026-10-15', ['Beto'])]),
+            ('nuevos', 'news', ['Zeta']),
+            ('horarios', 'hours', {'mungia': [6, 6, 6, 6, 6, 0, 0]}),
+            ('excepciones', 'excepciones', {'olabeaga': {'Ana': {'lun': 8}}}),
+            ('renombres', 'renombres', [{'de': 'Ana', 'a': 'Anita'}]),
+            ('altas', 'altas', ['Nuevo']),
+            ('empresas', 'empresas', [{'nombre': 'Ana', 'empresa': 'Manueles'}]),
+        ]
+        for clave, variable, valor in casos:
+            raw(e, clave, valor)
+            e.clic('nav button[data-v="jornadas"]')   # una acción cualquiera de esta pestaña
+            en_memoria = e.pg.evaluate("v=>JSON.stringify(eval(v))", variable)
+            esperado = json.dumps(valor, separators=(',', ':'), ensure_ascii=False)
+            ok(en_memoria == esperado, 'T240 tras guardar otra pestaña «%s», esta lo trae a memoria al actuar: %s (esperado %s)' % (clave, en_memoria, esperado))
+        ok('apartado' not in e.toast(), 'T240 ninguna de las siete trae nada ilegible, así que no avisa de ninguna: %r' % e.toast())
+        ok(not e.errs, 'T240 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T240', est200(), t240)
+
+    # --- T241: guardar uno mismo NO provoca relecturas de más; y al conciliar (lo que hace la app al arrancar) tampoco se pisa lo de otra pestaña
+    def t241(e):
+        e.ir()
+        e.pg.evaluate("()=>{window.__rel=0;const o=cargarDelAparato;cargarDelAparato=function(){window.__rel++;return o();};}")
+        guardar_dia(e, '2026-10-22', 'Ana')
+        guardar_dia(e, '2026-10-15', 'Beto')
+        ok(e.pg.evaluate("window.__rel") == 0, 'T241 guardar uno mismo no vuelve a leer del aparato (solo se relee si OTRA pestaña guardó): %s relecturas' % e.pg.evaluate("window.__rel"))
+        raw(e, 'pendientes', (ls(e, 'pendientes') or []) + [pend9('2026-10-14', ['Ana'])])
+        e.pg.evaluate("()=>reconcile()")
+        ok('2026-10-14' in fechas_guardadas(e), 'T241 al conciliar se conserva lo que otra pestaña acababa de guardar: %s' % fechas_guardadas(e))
+        ok(e.pg.evaluate("window.__rel") == 1, 'T241 y para eso se relee una sola vez: %s' % e.pg.evaluate("window.__rel"))
+    con_escena('T241', est200(), t241)
+
+    # --- T242: si lo guardado ya existía al abrir y NADIE más ha guardado, no hay relecturas (la pestaña sabe lo que leyó al abrir)
+    def t242(e):
+        e.ir()
+        e.pg.evaluate("()=>{window.__rel=0;const o=cargarDelAparato;cargarDelAparato=function(){window.__rel++;return o();};}")
+        e.clic('nav button[data-v="jornadas"]')
+        e.clic('nav button[data-v="app"]')
+        ok(e.pg.evaluate("window.__rel") == 0, 'T242 con jornadas ya guardadas al abrir y nadie más guardando no se relee: %s relecturas' % e.pg.evaluate("window.__rel"))
+        ok(e.pendientes() == '1', 'T242 y la jornada de antes sigue contada: %s' % e.pendientes())
+    con_escena('T242', est200(), t242, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-15', ['Beto'])]))
+
+    # --- T243: lo que otra pestaña deja y no se puede leer se aparta y SE AVISA (nada se descarta en silencio)
+    def t243(e):
+        e.ir()
+        mala = {'obra': 'olabeaga', 'ambito': 'vivienda', 'fecha': 'no-es-fecha', 'presentes': []}
+        raw(e, 'pendientes', [pend9('2026-10-15', ['Beto']), mala])
+        e.clic('nav button[data-v="jornadas"]')
+        ok('apartado 1 jornada' in e.toast(), 'T243 al traer lo de otra pestaña avisa de la jornada ilegible: %r' % e.toast())
+        ok(fechas_guardadas(e) == ['2026-10-15'], 'T243 la buena se queda y la mala sale de la lista: %s' % fechas_guardadas(e))
+        ok(len(ls(e, 'rotos') or []) == 1, 'T243 la mala se aparta en «rotos», no se pierde: %s' % ls(e, 'rotos'))
+    con_escena('T243', est200(), t243)
+
+    # --- T243b: si ya había una ilegible al arrancar, las que lleguen DESPUÉS se cuentan aparte (el aviso dice cuántas son las nuevas)
+    def t243b(e):
+        e.ir()
+        mala = lambda f: {'obra': 'olabeaga', 'ambito': 'vivienda', 'fecha': f, 'presentes': []}   # noqa: E731
+        raw(e, 'pendientes', [pend9('2026-10-15', ['Beto']), mala('uno'), mala('dos')])
+        e.clic('nav button[data-v="jornadas"]')
+        ok('apartado 2 jornadas' in e.toast(), 'T243b el aviso cuenta las 2 ilegibles que llegaron ahora (no las de antes): %r' % e.toast())
+        ok(len(ls(e, 'rotos') or []) == 3, 'T243b y las 3 (1 de antes + 2 de ahora) están apartadas: %s' % ls(e, 'rotos'))
+    con_escena('T243b', est200(), t243b, init=sembrar('sgd_personal_pendientes', [{'obra': 'olabeaga', 'ambito': 'vivienda', 'fecha': 'cero', 'presentes': []}]))
+
+    # --- T244: un aviso de «otra pestaña guardó» que llega ANTES de que la app haya arrancado no la rompe ni repinta de más
+    def t244(e):
+        e.ir()
+        ok(e.pg.query_selector('#obra') is not None and not e.pg.is_visible('#sin-estado'), 'T244 la app arranca normal')
+        ok(e.pendientes() == '1', 'T244 y cuenta lo que otra pestaña guardó mientras arrancaba: %s' % e.pendientes())
+        ok(not e.errs, 'T244 sin errores de JavaScript: %s' % e.errs)
+    aviso_temprano = ("document.addEventListener('DOMContentLoaded',()=>{localStorage.setItem('sgd_personal_pendientes',JSON.stringify(%s));"
+                      "window.dispatchEvent(new StorageEvent('storage',{key:'sgd_personal_pendientes'}));});" % json.dumps([pend9('2026-10-15', ['Beto'])]))
+    con_escena('T244', est200(), t244, init=aviso_temprano)
+
+    # --- T238: cada fichero lleva el NOMBRE DEL APARATO que lo hizo (antes el registro del PC decía `dispositivo: null` y no se sabía
+    # desde dónde llegó cada cosa). Se puede cambiar en «Enviar al PC»; se recuerda; vacío = el de por defecto; el PC lo acepta.
+    def t238(e):
+        e.ir()
+        guardar_dia(e, '2026-10-22', 'Ana')
+        f = e.exportar()
+        ok(f is not None and f.get('dispositivo') == 'PC', 'T238 sin haberle puesto nombre, el fichero lleva el de por defecto (aquí un ordenador): %r' % (f or {}).get('dispositivo'))
+        valida_con_p1(f)
+        e.clic('nav button[data-v="enviar"]')
+        ok(e.valor('#aparato-nombre') == 'PC', 'T238 el campo «Nombre de este aparato» enseña el de por defecto: %r' % e.valor('#aparato-nombre'))
+        e.pg.fill('#aparato-nombre', '  Tablet   de Bixente  ')
+        e.pg.dispatch_event('#aparato-nombre', 'change')
+        e.clic('nav button[data-v="app"]')
+        f = e.exportar()
+        ok(f is not None and f.get('dispositivo') == 'Tablet de Bixente', 'T238 el nombre puesto va en el fichero (sin espacios de más): %r' % (f or {}).get('dispositivo'))
+        valida_con_p1(f)
+        e.pg.reload()
+        e.pg.wait_for_selector('#obra')
+        e.clic('nav button[data-v="enviar"]')
+        ok(e.valor('#aparato-nombre') == 'Tablet de Bixente', 'T238 el nombre se recuerda al recargar: %r' % e.valor('#aparato-nombre'))
+        # (`fill` respeta el maxlength del campo; aquí se salta a propósito para probar el recorte de la app, que vale también para
+        # lo que llegue por otro camino)
+        e.pg.evaluate("v=>{const i=document.getElementById('aparato-nombre');i.removeAttribute('maxlength');i.value=v;i.dispatchEvent(new Event('change',{bubbles:true}));}", 'x' * 80)
+        ok(len(e.valor('#aparato-nombre')) == 30 and len(ls(e, 'aparato') or '') == 30,
+           'T238 el nombre no pasa de 30 letras (ni en el campo ni guardado): %d y %d' % (len(e.valor('#aparato-nombre')), len(ls(e, 'aparato') or '')))
+        e.pg.fill('#aparato-nombre', '   ')
+        e.pg.dispatch_event('#aparato-nombre', 'change')
+        ok(e.valor('#aparato-nombre') == 'PC', 'T238 si se deja vacío vuelve el de por defecto: %r' % e.valor('#aparato-nombre'))
+        ok(ls(e, 'aparato') in (None, ''), 'T238 con el de por defecto no se guarda nada aparte: %r' % ls(e, 'aparato'))
+        e.pg.fill('#aparato-nombre', 'Móvil de obra')
+        e.pg.dispatch_event('#aparato-nombre', 'change')
+        ok(ls(e, 'aparato') == 'Móvil de obra', 'T238 un nombre propio sí se guarda: %r' % ls(e, 'aparato'))
+        e.pg.fill('#aparato-nombre', 'PC')
+        e.pg.dispatch_event('#aparato-nombre', 'change')
+        ok(ls(e, 'aparato') in (None, ''), 'T238 poner justo el nombre de por defecto tampoco guarda nada aparte: %r' % ls(e, 'aparato'))
+        e.pg.fill('#aparato-nombre', 'A' + chr(7) + 'B')
+        e.pg.dispatch_event('#aparato-nombre', 'change')
+        ok(e.valor('#aparato-nombre') == 'A B', 'T238 los caracteres de control no se guardan: %r' % e.valor('#aparato-nombre'))
+        # Un nombre «sucio» que ya estuviera guardado (de otra versión, de otra pestaña…) sale limpio en el fichero
+        raw(e, 'aparato', '  Sucio   nombre ' + 'y' * 40)
+        e.pg.reload()   # (el campo de arriba aún tenía el foco y al soltarlo confirmaba su valor, pisando el de aquí)
+        e.pg.wait_for_selector('#obra')
+        f = e.exportar()
+        esperado = ('Sucio nombre ' + 'y' * 40)[:30]
+        ok(f is not None and f.get('dispositivo') == esperado, 'T238 el nombre guardado sale limpio y de 30 letras en el fichero: %r' % (f or {}).get('dispositivo'))
+        ok(not e.errs, 'T238 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T238', est200(), t238)
+
+    # --- T239: el nombre por defecto sale del tipo de aparato (móvil, tablet u ordenador)
+    def ua(texto):
+        return "Object.defineProperty(navigator,'userAgent',{get:()=>%s});" % json.dumps(texto)
+
+    def t239(esperado):
+        def f(e):
+            e.ir()
+            guardar_dia(e, '2026-10-22', 'Ana')
+            c = e.exportar()
+            ok(c is not None and c.get('dispositivo') == esperado, 'T239 por defecto el aparato se llama %r: %r' % (esperado, (c or {}).get('dispositivo')))
+        return f
+    con_escena('T239a', est200(), t239('Móvil'),
+               init=ua('Mozilla/5.0 (Linux; Android 14; SM-S911B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Mobile Safari/537.36 EdgA/130.0'))
+    con_escena('T239b', est200(), t239('Tablet'),
+               init=ua('Mozilla/5.0 (Linux; Android 14; SM-X710) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36 EdgA/130.0'))
+    con_escena('T239c', est200(), t239('Tablet'),
+               init=ua('Mozilla/5.0 (iPad; CPU OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1'))
+
+    # Fin del bloque de las dos pestañas
 
     # Fin del bloque del paso MA4c
 
