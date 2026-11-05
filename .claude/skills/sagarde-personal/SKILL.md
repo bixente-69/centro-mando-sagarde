@@ -83,6 +83,14 @@ sigue y estorba como «falta», lo limpio es cerrarla (`sagarde-cerrar-obra`). S
 - Trampas: una prueba que fije las **claves exactas** del fichero hay que actualizarla si se añade una (pasó con `dispositivo`: T53,
   T82, T134 y la de MA8); `fill()` de Playwright respeta el `maxlength` del campo; repintar con `render()` desde el `change` de un
   campo con foco da error de `innerHTML`.
+- **El aviso de un día que se sustituye o se anula enseña las horas** (decisión de Bixente, 05/11/2026: «solo avisar»). Cuando
+  un fichero trae un día que ya estaba guardado y distinto, el PC sigue frenando y preguntando como siempre; lo nuevo es que el
+  aviso dice a qué hora se apuntó cada versión y si el fichero es **MÁS ANTIGUO** o más nuevo que lo guardado («Ojo: este
+  fichero es MÁS ANTIGUO que lo guardado (el fichero se apuntó el lun 02/11 a las 09:10; lo guardado, el mié 04/11 a las
+  18:40)»). Sale de `personal_obra.comparar_registro` (hora de Madrid; sin hora legible en alguna de las dos, el aviso queda como
+  siempre) y vale para el reemplazo (`detalle` = «hora guardada | hora del fichero») y para la anulación (lo añade el lector).
+  **Nada se ignora solo**: un aparato con la hora mal puesta haría pasar por viejo un cambio bueno. Pruebas:
+  `tests/test_personal_aviso_hora_reemplazo.py`.
 
 ## Cambiar algo de la base (siempre: vista previa → antes/después)
 

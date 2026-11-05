@@ -376,7 +376,14 @@ def _simular(obra_id, lote, ficha, estado, hoy, raiz, obras, ahora):
     for j in aplica:
         previa = previas.get((j["ambito"], j["fecha"]))
         if j["accion"] == "anulacion" and previa is not None and previa["presentes"] and not previa.get("anulada"):
-            revisar.append(_motivo("anulacion", _donde(j["ambito"], j["fecha"])))
+            motivo = _motivo("anulacion", _donde(j["ambito"], j["fecha"]))
+            # Si el fichero trae su hora, la anulación dice si es más vieja o más nueva que lo guardado (solo informa)
+            del_fichero = next((x.get("registrado") for x in lote.get("jornadas", [])
+                                if isinstance(x, dict) and x.get("ambito") == j["ambito"] and x.get("fecha") == j["fecha"]), None)
+            _, frase = po.comparar_registro(previa.get("registrado"), del_fichero)
+            if frase:
+                motivo["texto"] += " " + frase
+            revisar.append(motivo)
     if revisar:
         return _cerrar(ficha, A_REVISAR, *revisar), prueba
     # Si la copia queda igual que el original, el fichero no cambia nada: solo se anotará que se ha recibido.

@@ -994,7 +994,12 @@ def ingerir_lote(
             accion = "anulacion"
         elif previa:
             accion = "reemplazo"
-            avisos.append({"codigo": "reemplazo", "detalle": None})
+            # Si el fichero trae su propia hora y se puede comparar con la de lo guardado, el aviso enseña las dos:
+            # «hora de lo guardado | hora del fichero». Se compara con la que TRAE el fichero (`normal`), nunca con la de
+            # ahora: un fichero sin hora no sabe si es viejo o nuevo, y entonces el aviso queda como siempre.
+            sentido, _ = comparar_registro(previa.get("registrado"), normal["registrado"])
+            detalle = f'{previa["registrado"]} | {normal["registrado"]}' if sentido in ("antiguo", "nuevo") else None
+            avisos.append({"codigo": "reemplazo", "detalle": detalle})
         else:
             accion = "alta"
         # Aplica los cambios en memoria y anota la traza solo si la jornada aporta novedades efectivas.
@@ -1717,6 +1722,57 @@ def comprobar(raiz, obras):
     return out
 
 
+_DIAS_CORTOS = ("lun", "mar", "mié", "jue", "vie", "sáb", "dom")
+
+
+def _zona_de_madrid():
+    """La zona horaria de Madrid, o None si este equipo no trae la base de zonas (entonces se usa su hora local)."""
+    try:
+        from zoneinfo import ZoneInfo
+        return ZoneInfo("Europe/Madrid")
+    except Exception:  # noqa: BLE001 — sin base de zonas no se rompe nada: se enseña la hora local de este equipo
+        return None
+
+
+def _instante(texto):
+    """Un instante con zona a partir de un texto ISO 8601 que LLEVE zona («…Z» o «…+01:00»).
+    None si no es texto, no se puede leer o no dice la zona (no se adivina)."""
+    if not isinstance(texto, str):
+        return None
+    limpio = texto.strip()
+    if limpio.endswith(("Z", "z")):
+        limpio = limpio[:-1] + "+00:00"
+    try:
+        instante = dt.datetime.fromisoformat(limpio)
+    except ValueError:
+        return None
+    return instante if instante.tzinfo is not None else None
+
+
+def _hora_llana(instante):
+    """«lun 02/11 a las 09:10», en hora de Madrid."""
+    zona = _zona_de_madrid()
+    local = instante.astimezone(zona) if zona is not None else instante.astimezone()
+    return f"{_DIAS_CORTOS[local.weekday()]} {local:%d/%m} a las {local:%H:%M}"
+
+
+def comparar_registro(guardado, fichero):
+    """Compara a qué hora se apuntó lo que ya estaba guardado y a qué hora se apuntó lo que trae el fichero.
+    Devuelve (sentido, frase): sentido = 'antiguo' (el fichero es anterior a lo guardado), 'nuevo', 'igual' o None si alguna
+    de las dos horas no se puede leer; la frase va en lenguaje llano y vacía si no hay nada que decir.
+    Es solo INFORMACIÓN para quien decide: nada se aplica ni se ignora por ella (la hora de un aparato mal puesta haría pasar
+    por viejo un cambio bueno)."""
+    a, b = _instante(guardado), _instante(fichero)
+    if a is None or b is None:
+        return None, ""
+    donde = f"(el fichero se apuntó el {_hora_llana(b)}; lo guardado, el {_hora_llana(a)})"
+    if b < a:
+        return "antiguo", f"Ojo: este fichero es MÁS ANTIGUO que lo guardado {donde}."
+    if b > a:
+        return "nuevo", f"Este fichero es más nuevo que lo guardado {donde}."
+    return "igual", ""
+
+
 def texto_aviso(codigo, detalle=None):
     """Frase en lenguaje llano para un código de aviso o de rechazo (nunca se enseña el código)."""
     fijos = {
@@ -1750,6 +1806,12 @@ def texto_aviso(codigo, detalle=None):
         "reemplazo": "Ya había una jornada de ese día en esa obra: la nueva la sustituye.",
         "traza_no_escrita": "Guardado bien, pero no se pudo anotar en el registro.",
     }
+    if codigo == "reemplazo" and isinstance(detalle, str) and " | " in detalle:
+        # El detalle es «hora de lo guardado | hora del fichero»: se añade quién es más antiguo, con las dos horas.
+        guardado, _, fichero = detalle.partition(" | ")
+        _, frase = comparar_registro(guardado, fichero)
+        if frase:
+            return fijos["reemplazo"] + " " + frase
     if codigo in fijos:
         return fijos[codigo]
     if codigo == "alta_nueva":
