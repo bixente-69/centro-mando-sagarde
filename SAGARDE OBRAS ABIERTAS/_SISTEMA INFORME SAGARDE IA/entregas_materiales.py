@@ -281,9 +281,22 @@ def agrupar(entregas):
     """Agrupa las entregas por mes. Ver la ESPECIFICACION del modulo."""
     ent = sorted(entregas, key=lambda e: (e['fecha'], e.get('fila', 0)))
 
+    # REGLA DE BIXENTE (05/11/2026): la MARCA informa, no divide. Un material se
+    # identifica por categoria + material + tipo (aislante, etc.) + unidad: el
+    # mismo cable de dos marcas es UN total y su marca las lista. Solo otro
+    # tipo (p. ej. libre de halogenos) abre otro total.
     def clave(e):
         return (_clave_texto(e['categoria']), _clave_texto(e['material']), _clave_texto(e['tipo']),
-                _clave_texto(e['marca']), _clave_texto(e['uni']))
+                _clave_texto(e['uni']))
+
+    primera_grafia_m = {}
+    for e in ent:
+        mk = _clave_texto(e.get('marca'))
+        if mk and mk not in primera_grafia_m:
+            primera_grafia_m[mk] = e['marca']
+
+    def marcas_de(entradas):
+        return _unir_marcas(primera_grafia_m.get(_clave_texto(e.get('marca'))) for e in entradas)
 
     # Orden de aparicion (cronologico): categorias y, dentro de cada una, materiales.
     visto, orden_cat, nombre = {}, {}, {}
@@ -292,8 +305,9 @@ def agrupar(entregas):
         if k not in visto:
             visto[k] = len(visto)
             nombre[k] = {'categoria': e['categoria'], 'material': e['material'], 'tipo': e['tipo'],
-                         'marca': e['marca'], 'uni': e['uni']}
+                         'uni': e['uni']}
         orden_cat.setdefault(k[0], len(orden_cat))
+    marcas_todas = {k: marcas_de([e for e in ent if clave(e) == k]) for k in visto}
 
     def orden_fila(k):
         return (orden_cat[k[0]], visto[k])
@@ -370,7 +384,8 @@ def agrupar(entregas):
             cant = [None if x is None else _num(x) for x in filas[k]]
             total = _num(sum(x for x in cant if x is not None))
             ant = _num(previo.get(k, 0))
-            salida.append(dict(nombre[k], cantidades=cant, mes_ant=ant, total_mes=total,
+            salida.append(dict(nombre[k], marca=marcas_de([e for e in delmes if clave(e) == k]),
+                               cantidades=cant, mes_ant=ant, total_mes=total,
                                acumulado=_num(ant + total)))
         for k, cant in filas.items():
             previo[k] = previo.get(k, 0) + sum(x for x in cant if x is not None)
@@ -389,9 +404,9 @@ def agrupar(entregas):
         for m in meses:
             f = next((x for x in m['filas'] if _clave_texto(x['categoria']) == k[0]
                       and _clave_texto(x['material']) == k[1] and _clave_texto(x['tipo']) == k[2]
-                      and _clave_texto(x['marca']) == k[3] and _clave_texto(x['uni']) == k[4]), None)
+                      and _clave_texto(x['uni']) == k[3]), None)
             por_mes.append(f['total_mes'] if f else None)
-        acum.append(dict(nombre[k], por_mes=por_mes, total=_num(previo[k])))
+        acum.append(dict(nombre[k], marca=marcas_todas[k], por_mes=por_mes, total=_num(previo[k])))
     return {'meses': meses,
             'acumulado': {'meses': etiquetas, 'filas': acum},
             'ultima_fecha': ent[-1]['fecha'] if ent else None,
@@ -497,6 +512,18 @@ def _tabla(cabeceras, filas):
             f'{cab}</tr></thead><tbody>{"".join(cuerpo)}</tbody></table></div>')
 
 
+def _unir_marcas(marcas):
+    """Marcas distintas (sin distinguir mayusculas ni espacios), en orden de
+    aparicion y con la primera grafia, separadas por coma. None si no hay."""
+    vistas, salida = set(), []
+    for m in marcas:
+        k = _clave_texto(m)
+        if k and k not in vistas:
+            vistas.add(k)
+            salida.append(m)
+    return ', '.join(salida) if salida else None
+
+
 def _celdas_suministrador_y_albaran(l):
     sumi = _e(l['suministrador']) if l['suministrador'] else _SIN_DATO.format(t='falta el suministrador')
     if l['albaran']:
@@ -508,8 +535,9 @@ def _celdas_suministrador_y_albaran(l):
     return (_td(sumi, l['suministrador'] or ''), _td(alb, l['albaran'] or ''))
 
 
-def _tipo_y_marca(x):
-    return ' · '.join(v for v in (x['tipo'], x['marca']) if v)
+def _tipo_y_marca_celdas(x):
+    """Tipo y marca en DOS celdas: la marca informa, no se pega al tipo."""
+    return [_td(_e(x['tipo'] or '')), _td(_e(x['marca'] or ''))]
 
 
 def _tabla_lineas(lineas):
@@ -518,10 +546,10 @@ def _tabla_lineas(lineas):
     for l in lineas:
         sumi, alb = _celdas_suministrador_y_albaran(l)
         filas.append(('fila', [_td(f"{l['fecha']:%d/%m/%Y}", f"{l['fecha']:%Y-%m-%d}"), sumi, alb,
-                               _td(_e(l['material'])), _td(_e(_tipo_y_marca(l))), _td(_e(l['uni'] or '')),
-                               _td(_fmt(l['cantidad']), l['cantidad'], True)]))
+                               _td(_e(l['material']))] + _tipo_y_marca_celdas(l)
+                              + [_td(_e(l['uni'] or '')), _td(_fmt(l['cantidad']), l['cantidad'], True)]))
     return _tabla([('Fecha', False), ('Suministrador', False), ('Albarán', False), ('Material', False),
-                   ('Tipo', False), ('Uni', False), ('Cant.', True)], filas)
+                   ('Tipo', False), ('Marca', False), ('Uni', False), ('Cant.', True)], filas)
 
 
 def _tabla_totales_mes(m):
@@ -531,11 +559,11 @@ def _tabla_totales_mes(m):
             cat = f['categoria']
             if cat:
                 filas.append(('cat', cat))
-        filas.append(('fila', [_td(_e(f['material'])), _td(_e(_tipo_y_marca(f))), _td(_e(f['uni'] or '')),
+        filas.append(('fila', [_td(_e(f['material']))] + _tipo_y_marca_celdas(f) + [_td(_e(f['uni'] or '')),
                                _td(_fmt(f['mes_ant']) if f['mes_ant'] else '', f['mes_ant'] or '', True),
                                _td(f'<b>{_fmt(f["total_mes"])}</b>', f['total_mes'], True),
                                _td(_fmt(f['acumulado']), f['acumulado'], True)]))
-    return _tabla([('Material', False), ('Tipo', False), ('Uni', False), ('Mes ant.', True),
+    return _tabla([('Material', False), ('Tipo', False), ('Marca', False), ('Uni', False), ('Mes ant.', True),
                    ('Total mes', True), ('Acumulado', True)], filas)
 
 
@@ -582,10 +610,10 @@ def render_total(res: dict) -> str:
             cat = f['categoria']
             if cat:
                 filas.append(('cat', cat))
-        filas.append(('fila', [_td(_e(f['material'])), _td(_e(_tipo_y_marca(f))), _td(_e(f['uni'] or ''))]
+        filas.append(('fila', [_td(_e(f['material']))] + _tipo_y_marca_celdas(f) + [_td(_e(f['uni'] or ''))]
                       + [_td(_fmt(c), c if c is not None else '', True) for c in f['por_mes']]
                       + [_td(f'<b>{_fmt(f["total"])}</b>', f['total'], True)]))
-    cab = [('Material', False), ('Tipo', False), ('Uni', False)] + [(x, True) for x in ac['meses']] + [('Total', True)]
+    cab = [('Material', False), ('Tipo', False), ('Marca', False), ('Uni', False)] + [(x, True) for x in ac['meses']] + [('Total', True)]
     ultima = g['ultima_fecha'].strftime('%d/%m/%Y') if g.get('ultima_fecha') else '—'
     return ('<div class="card"><h3>Acumulado de material entregado</h3>'
             f'<p {_P_META}>{g["n_entregas"]} línea(s) de entrega · última entrega {ultima}.</p>'
@@ -639,12 +667,12 @@ def render_por_albaran(res: dict) -> str:
            + _tabla([('Fecha', False), ('Suministrador', False), ('Albarán', False), ('Líneas', True)], resumen)
            + '</div>']
     for gr in grupos:
-        filas = [('fila', [_td(_e(l['material'])), _td(_e(_tipo_y_marca(l))), _td(_e(l['uni'] or '')),
+        filas = [('fila', [_td(_e(l['material']))] + _tipo_y_marca_celdas(l) + [_td(_e(l['uni'] or '')),
                            _td(_fmt(l['cantidad']), l['cantidad'], True)]) for l in gr['lineas']]
         falta = '' if gr['completa'] else _aviso_incompletas(len(gr['lineas']))
         out.append(f'<div class="card"><h3>{_e(_titulo_albaran(gr))}</h3>'
                    f'<p {_P_META}>{len(gr["lineas"])} línea(s).</p>{falta}'
-                   + _tabla([('Material', False), ('Tipo', False), ('Uni', False), ('Cant.', True)], filas) + '</div>')
+                   + _tabla([('Material', False), ('Tipo', False), ('Marca', False), ('Uni', False), ('Cant.', True)], filas) + '</div>')
     return '\n'.join(out)
 
 
@@ -652,7 +680,7 @@ def totales_por_suministrador(lineas):
     """[{'suministrador', 'albaranes', 'n_lineas', 'materiales'}] ordenado por
     nombre, con 'sin suministrador' (None) al final. Cada material suma todo lo
     que ese suministrador ha entregado, de todos los meses."""
-    por = {}
+    por, marcas_mat = {}, {}
     for l in lineas:
         k = _clave_texto(l['suministrador'])
         d = por.setdefault(k, {'suministrador': l['suministrador'], 'albaranes': [], 'n_lineas': 0, 'mat': {}})
@@ -661,9 +689,11 @@ def totales_por_suministrador(lineas):
         if a not in d['albaranes']:
             d['albaranes'].append(a)
         km = (_clave_texto(l['categoria']), _clave_texto(l['material']), _clave_texto(l['tipo']),
-              _clave_texto(l['marca']), _clave_texto(l['uni']))
+              _clave_texto(l['uni']))
         m = d['mat'].setdefault(km, dict(categoria=l['categoria'], material=l['material'], tipo=l['tipo'],
-                                         marca=l['marca'], uni=l['uni'], total=0, orden=len(d['mat'])))
+                                         marca=None, uni=l['uni'], total=0, orden=len(d['mat'])))
+        marcas_mat.setdefault((k, km), []).append(l['marca'])
+        m['marca'] = _unir_marcas(marcas_mat[(k, km)])
         m['total'] = _num(m['total'] + l['cantidad'])
     salida = []
     for k in sorted(por, key=lambda k: (k == '', k)):
@@ -693,11 +723,11 @@ def render_por_suministrador(res: dict) -> str:
                 cat = m['categoria']
                 if cat:
                     filas.append(('cat', cat))
-            filas.append(('fila', [_td(_e(m['material'])), _td(_e(_tipo_y_marca(m))), _td(_e(m['uni'] or '')),
+            filas.append(('fila', [_td(_e(m['material']))] + _tipo_y_marca_celdas(m) + [_td(_e(m['uni'] or '')),
                                    _td(f'<b>{_fmt(m["total"])}</b>', m['total'], True)]))
         out.append(f'<div class="card"><h3>{_e(nombre)}</h3>'
                    f'<p {_P_META}>{d["n_lineas"]} línea(s) · Albaranes: {albs}</p>'
-                   + _tabla([('Material', False), ('Tipo', False), ('Uni', False), ('Total entregado', True)], filas)
+                   + _tabla([('Material', False), ('Tipo', False), ('Marca', False), ('Uni', False), ('Total entregado', True)], filas)
                    + '</div>')
     return '\n'.join(out)
 

@@ -240,6 +240,11 @@ Por suministrador o Todas las entregas.
    libro (si se olvida, el motor rehace las hojas desfasadas al regenerar la obra o al
    publicar, pero solo este comando avisa de las filas inválidas: ejecutarlo siempre). Una fila con fecha ilegible o cantidad no numérica **no se cuenta** y sale
    en el aviso: hay que corregirla, no ignorarla.
+   **La marca informa, no divide (regla de Bixente, 05/11/2026).** El total de un material
+   se agrupa por categoría + material + tipo + unidad; la **marca no entra en la clave**: el
+   mismo cable de dos marcas es un solo total y su celda de marca las lista («REVI, otra»).
+   Lo que sí abre otro total es otro **tipo** (p. ej. libre de halógenos): el tipo de
+   aislante se escribe en la columna TIPO como texto libre, siempre igual escrito.
 3. Migrar otra obra de rejilla a registro: `materiales_xlsx.py migrar <obra>`
    (comprueba que no se pierde ni una unidad). Solo si Bixente lo pide: Mungia y
    Bolueta se quedan como están.
