@@ -43,6 +43,7 @@ import ficha_obra as fichas    # noqa: E402
 import ficha_garajes           # noqa: E402
 import aplicar_revision        # noqa: E402
 import trazabilidad_revisiones  # noqa: E402
+import cambios_revision  # noqa: E402
 import validar_revision        # noqa: E402
 import registro_obras  # noqa: E402
 from registro_obras import OBRAS  # noqa: E402
@@ -1763,6 +1764,26 @@ def _bloque_obras_fallidas(fallidas):
             f"{linea}")
 
 
+def _cambios_para_panel(obra, carpeta_abs, ficha_actual):
+    """Datos de la pestana «Cambios» de la obra (P1), o None si no hay log.
+
+    Nunca lanza: un fallo con el registro de revisiones se avisa y el panel
+    sale con la pestana en «Sin revisiones registradas», como una obra sin log.
+    """
+    try:
+        ruta_cat = os.path.join(BASE_DIR, 'reglas', 'CATALOGO_TAJOS.json')
+        with open(ruta_cat, encoding='utf-8') as fichero:
+            tajos = json.load(fichero).get('tajos') or []
+        return cambios_revision.preparar_para_panel(
+            trazabilidad_revisiones.ruta_log_obra(carpeta_abs),
+            ficha_actual or {}, tajos)
+    except Exception as exc:
+        print(f"  [AVISO CAMBIOS] {obra['nombre']}: no se pudo leer el registro "
+              f"de revisiones ({type(exc).__name__}: {exc}). La pestana Cambios "
+              "sale vacia; el resto del panel no cambia.")
+        return None
+
+
 def _personal_para_panel(obra):
     """Filas de personal de la obra para su pestana Personal («Personal en obra»).
 
@@ -2119,6 +2140,7 @@ def main(hacer_pdf=True):
                 cierre_expediente.guardar(salida_cierre, cierre_datos)
             _controles_horarios_de_obra(obra)
             personal = _personal_para_panel(obra)
+            cambios = _cambios_para_panel(obra, carpeta_abs, ficha_actual)
             res = panel_obra.generar_panel(
                 obra=obra['nombre'], subtitulo=obra['subtitulo'], historial=historial,
                 materiales=materiales, ficha=ficha, documentos=documentos,
@@ -2132,6 +2154,7 @@ def main(hacer_pdf=True):
                 snapshot_zonas_especiales=snapshot_zesp,
                 fecha_datos=fecha_datos,
                 personal=personal, personal_obra_id=obra['id'],
+                cambios=cambios,
             )
         except Exception as e:
             print(f"  [ERROR] Fallo al generar el panel: {e}")

@@ -70,15 +70,18 @@ class TestPestanaTareas(unittest.TestCase):
         'avisos': [],
     }
 
-    def test_boton_tareas_existe_justo_despues_de_prioridades(self):
+    def test_boton_tareas_va_despues_de_prioridades_con_solo_cambios_entre_medias(self):
         html = _generar([self.PENDIENTE])
         nav = html[html.index('<div class="nav">'):html.index('</div>', html.index('<div class="nav">'))]
         posicion_prioridades = nav.index('data-view="v-prioridades"')
         posicion_tareas = nav.index('data-view="v-tareas"')
         self.assertLess(posicion_prioridades, posicion_tareas)
-        self.assertNotIn('data-view=', nav[
-            posicion_prioridades + len('data-view="v-prioridades"'):
-            posicion_tareas])
+        # 05/11/2026 (peticion de Bixente): la pestana «Cambios» va ENTRE
+        # Prioridades y Tareas. Ninguna otra pestana puede colarse ahi.
+        entre = nav[posicion_prioridades + len('data-view="v-prioridades"'):
+                    posicion_tareas]
+        self.assertEqual(entre.count('data-view='), 1)
+        self.assertIn('data-view="v-cambios"', entre)
         self.assertIn('☑ Tareas', nav)
 
     def test_vista_tareas_contiene_tarjeta_e_hilo_conductor(self):

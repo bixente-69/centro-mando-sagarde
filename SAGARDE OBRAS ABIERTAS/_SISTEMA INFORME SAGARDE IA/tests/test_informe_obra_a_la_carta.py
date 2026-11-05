@@ -74,12 +74,12 @@ class TestBotonInformeObra(unittest.TestCase):
 
 class TestSeccionesEmbebidas(unittest.TestCase):
 
-    def test_el_json_tiene_las_once_claves_esperadas(self):
+    def test_el_json_tiene_las_doce_claves_esperadas(self):
         html = _generar()
         secciones = _extraer_secciones(html)
         self.assertEqual(set(secciones.keys()), {
-            'trabajos', 'materiales', 'personal', 'tareas', 'prioridades',
-            'prioridades_garaje', 'prioridades_zesp', 'riesgos',
+            'trabajos', 'materiales', 'personal', 'cambios', 'tareas',
+            'prioridades', 'prioridades_garaje', 'prioridades_zesp', 'riesgos',
             'normativa', 'documentos', 'cierre',
         })
 

@@ -19,6 +19,22 @@ def ruta_log_obra(carpeta_obra):
         os.fspath(carpeta_obra), 'INFORME SAGARDE IA', NOMBRE_LOG)
 
 
+def _transiciones(resultado_aplicacion, resumen):
+    """Celdas que cambian de estado, como ``[clave, antes, despues]``.
+
+    ``None`` significa "no se sabe" (no hay detalle, o el detalle no cuadra
+    con el resumen): nunca una lista vacia, que diria "no cambio nada".
+    """
+    aceptadas = resultado_aplicacion.get('aceptadas')
+    if not isinstance(aceptadas, list):
+        return None
+    cambios = [[c['clave'], c.get('antes'), c.get('despues')]
+               for c in aceptadas if c.get('accion') == 'actualizar']
+    if len(cambios) != resumen.get('cambios', 0):
+        return None
+    return cambios
+
+
 def _entrada(revision, resultado_aplicacion, salvaguarda_coincidio,
              celdas_comparadas):
     if not isinstance(revision, dict):
@@ -45,6 +61,7 @@ def _entrada(revision, resultado_aplicacion, salvaguarda_coincidio,
         'generado_por': metadata.get('generado_por'),
         'generado_en': metadata.get('generado_en'),
         'celdas_cambiadas': resumen.get('cambios', 0),
+        'transiciones': _transiciones(resultado_aplicacion, resumen),
         'celdas_conservadas': resumen.get('sin_cambio', 0),
         'celdas_descartadas': resumen.get('descartadas', 0),
         'celdas_rechazadas': resumen.get('rechazadas', 0),
