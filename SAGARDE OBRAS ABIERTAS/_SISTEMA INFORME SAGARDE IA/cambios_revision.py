@@ -93,3 +93,34 @@ def resumir_transiciones(transiciones):
     return {'conocido': True, 'total': len(transiciones),
             'a_estado': a_estado, 'por_tajo': por_tajo,
             'por_planta': por_planta, 'bajan': bajan}
+
+
+def _nombres_plantas(ficha):
+    nombres = {}
+    for bloque in (ficha.get('estructura') or {}).get('bloques') or []:
+        for portal in bloque.get('portales') or []:
+            for planta in portal.get('plantas') or []:
+                nombres[(portal.get('id'), planta.get('id'))] = (
+                    f"{portal.get('nombre') or portal.get('id')} · "
+                    f"{planta.get('nombre') or planta.get('id')}")
+    return nombres
+
+
+def preparar_para_panel(ruta_log, ficha, tajos_catalogo):
+    """Todo lo que la pestaña «Cambios» necesita, o ``None`` si no hay log.
+
+    ``ficha`` aporta las fechas de revisiones anteriores al log y los nombres
+    de portal y planta; ``tajos_catalogo`` es la lista ``tajos`` del catalogo.
+    """
+    fechas_ficha = [r.get('fecha') for r in (ficha.get('revisiones') or [])
+                    if r.get('fecha')]
+    ultima = ultima_revision(ruta_log, fechas_previas=fechas_ficha)
+    if ultima is None:
+        return None
+    return {
+        'revision': ultima,
+        'resumen': resumir_transiciones(ultima['transiciones']),
+        'nombres_tajo': {t['id']: t.get('nombre', t['id'])
+                         for t in tajos_catalogo or []},
+        'nombres_planta': _nombres_plantas(ficha),
+    }

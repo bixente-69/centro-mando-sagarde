@@ -1807,6 +1807,84 @@ def _combinar_matriz_planta_edificio(
     return {'labels': labels, 'series': series}
 
 
+_ETIQUETA_ESTADO_CAMBIOS = {
+    'X': 'Terminado', 'M': 'Más del 50 %', '/': 'Iniciado',
+    'P': 'Pendiente confirmado', 'N': 'No aplica', '?': 'Sin mirar'}
+
+
+def _cambios_vista_html(cambios):
+    """Pestaña «Cambios»: que cambio entre la revision anterior y la ultima.
+
+    Siempre con las dos fechas. Un desconocido (revision sin transiciones
+    guardadas) NO se pinta como cero. Garajes aun no registran transiciones.
+    """
+    nota = ("<p style='font-size:12.5px;color:var(--muted);margin-top:10px;'>"
+            "Solo vivienda y zonas especiales: los garajes todavía no guardan "
+            "este registro. Fuente: registro de revisiones aplicadas."
+            "</p>")
+    if not cambios:
+        return ("<div class='card'><h3>Cambios entre revisiones</h3>"
+                "<p>Sin revisiones registradas todavía: este panel no tiene "
+                "aún ninguna revisión de campo en el registro.</p>"
+                + nota + "</div>")
+    rev = cambios['revision']
+    res = cambios['resumen']
+    nt = cambios.get('nombres_tajo') or {}
+    npl = cambios.get('nombres_planta') or {}
+    if rev.get('fecha_anterior'):
+        titulo = (f"Cambios entre el {_e(rev['fecha_anterior'])} y el "
+                  f"{_e(rev['fecha'])}")
+    else:
+        titulo = (f"Cambios en la revisión del {_e(rev['fecha'])} "
+                  "(sin revisión anterior registrada)")
+    if not res.get('conocido'):
+        n = rev.get('celdas_cambiadas_sin_detalle') or 0
+        recuento = (f" El motor contó {n} celda(s) cambiadas, sin detalle."
+                    if n else "")
+        return (f"<div class='card'><h3>{titulo}</h3>"
+                "<p>No se puede saber qué cambió: no se guardó el estado "
+                "anterior de cada celda en esa revisión (el registro se "
+                "empezó a guardar después)." + recuento + "</p>"
+                + nota + "</div>")
+    if res['total'] == 0:
+        return (f"<div class='card'><h3>{titulo}</h3>"
+                "<p><b>0 cambios</b> registrados en esa revisión.</p>"
+                + nota + "</div>")
+    filas_estado = ''.join(
+        f"<tr><td>{_e(_ETIQUETA_ESTADO_CAMBIOS.get(k, k))}</td>"
+        f"<td style='text-align:right'>{n}</td></tr>"
+        for k, n in sorted(res['a_estado'].items(),
+                           key=lambda kv: -kv[1]))
+    if res['bajan']:
+        filas_bajan = ''.join(
+            f"<tr><td>{_e(c)}</td><td>{_e(a)}</td><td>{_e(d)}</td></tr>"
+            for c, a, d in res['bajan'])
+        bajan = ("<h4>Bajan de estado (revisar: lo último apuntado es lo "
+                 "que vale)</h4><table class='data'><thead><tr><th>Celda"
+                 "</th><th>Antes</th><th>Ahora</th></tr></thead><tbody>"
+                 + filas_bajan + "</tbody></table>")
+    else:
+        bajan = "<h4>Bajan de estado</h4><p>Ninguna celda baja de estado.</p>"
+    filas_tajo = ''.join(
+        f"<tr><td>{_e(nt.get(k, k))}</td>"
+        f"<td style='text-align:right'>{n}</td></tr>"
+        for k, n in sorted(res['por_tajo'].items(), key=lambda kv: -kv[1]))
+    filas_planta = ''.join(
+        f"<tr><td>{_e(npl.get(k, ' · '.join(k)))}</td>"
+        f"<td style='text-align:right'>{n}</td></tr>"
+        for k, n in sorted(res['por_planta'].items(),
+                           key=lambda kv: -kv[1]))
+    return (
+        f"<div class='card'><h3>{titulo}</h3>"
+        f"<p><b>{res['total']}</b> celda(s) cambian de estado.</p>"
+        "<h4>Pasan a</h4><table class='data'><tbody>" + filas_estado
+        + "</tbody></table>" + bajan
+        + "<h4>Por tajo</h4><table class='data'><tbody>" + filas_tajo
+        + "</tbody></table>"
+        "<h4>Por portal y planta</h4><table class='data'><tbody>"
+        + filas_planta + "</tbody></table>" + nota + "</div>")
+
+
 def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   output_path, volver_href="../../index.html", prioridades=None,
                   tajos_memoria=None, mem_resumen=None, bat_path=None,
@@ -1814,7 +1892,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
                   snapshot_garaje=None,
                   prioridades_zonas_especiales=None,
                   snapshot_zonas_especiales=None, hilos=None,
-                  fecha_datos=None, personal=None, personal_obra_id=None):
+                  fecha_datos=None, personal=None, personal_obra_id=None,
+                  cambios=None):
     prioridades = prioridades or {}
     snapshot = historial[-1][1] if historial else []
     fecha_datos = fecha_datos or (historial[-1][0] if historial else '—')
@@ -2338,6 +2417,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
     # correspondiente. No se recalcula ninguna cifra por un camino nuevo:
     # es la salvaguarda contra la familia de fallo de este proyecto
     # (un dato declarado que un camino distinto ignora en silencio).
+    cambios_vista_html = _cambios_vista_html(cambios)
     secciones_informe = {
         'trabajos': (
             "<div class='card'><h3>Desviaciones de avance</h3>"
@@ -2355,6 +2435,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
             else materiales_html
         ),
         'personal': personal_informe_html,
+        'cambios': cambios_vista_html,
         'tareas': tareas_vista_html,
         'prioridades': secciones_prioridades,
         'prioridades_garaje': secciones_prioridades_garaje,
@@ -2429,6 +2510,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="tajos_bloqueados"> Tajos bloqueados</label>
       <label><input type="checkbox" class="cb-prioridades" data-seccion="prioridades" data-sub="sin_revisar"> Sin revisar nunca</label>
     </div>
+    <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="cambios" onchange="toggleGrupoInforme(this)"> <b>🔄 Cambios</b></label>
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="tareas" onchange="toggleGrupoInforme(this)"> <b>☑ Tareas</b></label>
 {garaje_informe_checkboxes_html}{zesp_informe_checkboxes_html}
     <label class="tj-group-hdr"><input type="checkbox" class="grp-cb" data-seccion="riesgos" onchange="toggleGrupoInforme(this)"> <b>⚠ Riesgos</b></label>
@@ -2448,6 +2530,7 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
   <button data-view="v-materiales">▣ Materiales</button>
   <button data-view="v-personal">👷 Personal</button>
   <button data-view="v-prioridades">🎯 Prioridades 🏠</button>
+  <button data-view="v-cambios">🔄 Cambios</button>
   <button data-view="v-tareas">☑ Tareas{nav_tareas_contador_html}</button>
 {zesp_nav_html}
   <button data-view="v-riesgos">⚠ Riesgos</button>
@@ -2484,6 +2567,8 @@ def generar_panel(obra, subtitulo, historial, materiales, ficha, documentos,
 
 <section id="v-prioridades" class="view">{prioridades_html}
   <div class="card"><h3>Hitos manuales</h3>{hitos_html}</div></section>
+
+<section id="v-cambios" class="view">{cambios_vista_html}</section>
 
 <section id="v-tareas" class="view">{tareas_vista_html}</section>
 
@@ -2706,7 +2791,7 @@ function generarVistaPreviaInforme(){{
   }}
   const NOMBRES = {{
     trabajos: '✓ Trabajos', materiales: '▣ Materiales', personal: '👷 Personal',
-    tareas: '☑ Tareas', riesgos: '⚠ Riesgos', normativa: '📘 Normativa',
+    cambios: '🔄 Cambios', tareas: '☑ Tareas', riesgos: '⚠ Riesgos', normativa: '📘 Normativa',
     documentos: '📎 Documentos', cierre: '📋 Cierre',
   }};
   const NOMBRES_SUB = {{
