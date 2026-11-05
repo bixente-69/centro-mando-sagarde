@@ -383,20 +383,21 @@ class TestPanel(unittest.TestCase):
         h = self._html(MUESTRA[:4])
         lista = self._tablas(h)[0]
         self.assertEqual(self._cabecera(lista),
-                         ["FECHA", "SUMINISTRADOR", "ALBARÁN", "MATERIAL", "TIPO", "UNI", "CANT."])
+                         ["FECHA", "SUMINISTRADOR", "ALBARÁN", "MATERIAL", "TIPO", "MARCA", "UNI", "CANT."])
+        # 05/11/2026: la MARCA va en su propia columna (peticion de Bixente).
         filas = self._filas(lista)
         self.assertEqual(len(filas), 4)
-        self.assertEqual(filas[0], ["01/10/2026", "Sumi A", "111", "AZUL", "1,5", "200", "400"])
-        self.assertEqual(filas[2], ["05/10/2026", "Sumi B", "222", "PVC", "GRIS", "20", "171"])
-        self.assertEqual(filas[3], ["05/10/2026", "Sumi B", "223", "PVC", "GRIS", "20", "29"])
+        self.assertEqual(filas[0], ["01/10/2026", "Sumi A", "111", "AZUL", "1,5", "", "200", "400"])
+        self.assertEqual(filas[2], ["05/10/2026", "Sumi B", "222", "PVC", "GRIS", "", "20", "171"])
+        self.assertEqual(filas[3], ["05/10/2026", "Sumi B", "223", "PVC", "GRIS", "", "20", "29"])
 
     def test_debajo_de_la_lista_va_el_total_del_mes_por_material(self):
         h = self._html(MUESTRA[:4])
         totales = self._tablas(h)[1]
         self.assertEqual(self._cabecera(totales),
-                         ["MATERIAL", "TIPO", "UNI", "MES ANT.", "TOTAL MES", "ACUMULADO"])
+                         ["MATERIAL", "TIPO", "MARCA", "UNI", "MES ANT.", "TOTAL MES", "ACUMULADO"])
         pvc = next(f for f in self._filas(totales) if f[0] == "PVC")
-        self.assertEqual(pvc, ["PVC", "GRIS", "20", "", "200", "200"])      # 171 + 29
+        self.assertEqual(pvc, ["PVC", "GRIS", "", "20", "", "200", "200"])      # 171 + 29
 
     def test_todas_las_filas_de_cada_tabla_ocupan_las_mismas_columnas(self):
         import re
