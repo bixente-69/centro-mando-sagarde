@@ -561,8 +561,10 @@ with sync_playwright() as p:
             self.errs = []
             self.pg.on('pageerror', lambda e: self.errs.append(str(e)))
 
-        def ir(self, esperar_obra=True):
-            self.pg.goto(self.url)
+        def ir(self, esperar_obra=True, enlace=''):
+            """Abre la app. `enlace` es lo que va detrás de la dirección (p. ej. «#obra=mungia&fecha=2026-10-20»), como si se
+            llegara desde el calendario de Sagarde."""
+            self.pg.goto(self.url + enlace)
             if esperar_obra:
                 try:
                     self.pg.wait_for_selector('#obra', timeout=3000)
@@ -914,7 +916,7 @@ with sync_playwright() as p:
     def t26(e):
         e.ir()
         ok(e.valor('#fecha') == '2026-10-24', 'T26 a las 00:30 locales del 24/10 la fecha de hoy debe ser 2026-10-24 (no la UTC): %r' % e.valor('#fecha'))
-        ok(e.txt('#cal-toggle').startswith('Hoy ·') and 'sábado 24/10' in e.txt('#cal-toggle'), 'T26 el botón de la fecha dice «Hoy · sábado 24/10»: %r' % e.txt('#cal-toggle'))
+        ok(e.txt('#fecha-rotulo').lower().startswith('fecha: hoy ·') and 'sábado 24/10' in e.txt('#fecha-rotulo').lower(), 'T26 el rótulo de la fecha dice «Hoy · sábado 24/10»: %r' % e.txt('#fecha-rotulo'))
         e.clic('#v-app .row[data-nombre="Mikel"] .x')
         ok(e.txt('#v-app .row[data-nombre="Mikel"] .step output') == '¿horas?', 'T26 el 24/10 es sábado: sin horario')
     con_escena('T26', ESTADO1, t26, hoy='2026-10-24T00:30:00+02:00')
@@ -2658,9 +2660,8 @@ with sync_playwright() as p:
         e.ir()
         e.copiar()
         ok(e.marcados() == ['Ana'] and 'miércoles 21/10' in rotulo(e), 'T100 punto de partida (viernes 23/10 copia el miércoles 21/10): %s %r' % (e.marcados(), rotulo(e)))
-        e.clic('#cal-toggle')                                # en el móvil el calendario va plegado: se abre con el botón de la fecha
-        e.clic('button[data-cal-dia="2026-10-21"]')          # el 21/10 ya tiene jornada: se ve lo guardado y desaparece el rótulo de copia
-        ok(e.marcados() == ['Ana'] and e.pg.query_selector('#rotulo-marcados') is None, 'T100 al pinchar el 21/10 (con jornada) se ve lo guardado y se recalcula el rótulo: %s %r' % (e.marcados(), rotulo(e)))
+        e.fecha('2026-10-21')                                # el 21/10 ya tiene jornada: se ve lo guardado y desaparece el rótulo de copia
+        ok(e.marcados() == ['Ana'] and e.pg.query_selector('#rotulo-marcados') is None, 'T100 al elegir el 21/10 (con jornada) se ve lo guardado y se recalcula el rótulo: %s %r' % (e.marcados(), rotulo(e)))
         e.fecha('2026-10-20')                                # martes sin jornada: sin marcar; copiar da el lunes 19/10
         ok(e.marcados() == [], 'T100 al cambiar de fecha (20/10) vuelve la lista sin marcar: %s' % e.marcados())
         e.copiar()
@@ -3514,7 +3515,7 @@ with sync_playwright() as p:
     # --- T152: dos días marcados con el calendario, uno ocupado: «Saltar» guarda solo el vacío y el resumen dice qué saltó
     def t152(e):
         e.ir()
-        e.clic('button[data-multi-dias]')   # «Varios días» enciende el marcado de varios y abre el calendario (en el móvil va plegado)
+        e.clic('button[data-multi-dias]')   # «Varios días» enciende el marcado de varios y saca el calendario (solo existe con «Varios días»)
         e.clic('button[data-cal-dia="2026-10-21"]')
         e.clic('button[data-cal-dia="2026-10-22"]')
         e.clic('button[data-quitar-dia="2026-10-23"]')
@@ -4084,10 +4085,9 @@ with sync_playwright() as p:
     # nuevo y «Varios días» para marcar más de uno. Sin los botones Hoy / Ayer / Anteayer / Solo hoy.
     # ======================================================================================================================
     def pinchar(e, fecha):
-        """Pincha un día del calendario (en el móvil, si está plegado, lo abre antes con el botón de la fecha)."""
-        if e.pg.query_selector('#cal-box') and not e.pg.is_visible('#cal-box'):
-            e.clic('#cal-toggle')
-        e.clic('button[data-cal-dia="%s"]' % fecha)
+        """Elige un día. La app ya no tiene calendario propio salvo con «Varios días» (el calendario de verdad, con todas las obras,
+        es el de Sagarde): el día se elige con el campo de la fecha, que es lo que hace también el enlace desde Sagarde."""
+        e.fecha(fecha)
 
     def est200():
         # hoy es el viernes 23/10. El lunes 19/10 vino Manuel; el 22/10 no hay nada guardado.
@@ -4102,7 +4102,7 @@ with sync_playwright() as p:
         ok(e.valor('#fecha') == '2026-10-19' and e.marcados() == ['Ana', 'Manuel'] and 'Beto' in e.filas(),
            'T200 pinchar el lunes 19/10 enseña a quien estuvo (Ana y Manuel) y deja sin marcar a los demás: %s %s %s' % (e.valor('#fecha'), e.filas(), e.marcados()))
         ok(e.txt('#estado-dia') == '✓ Guardado el lunes 19/10: 2 personas.', 'T200 dice que ese día está guardado: %r' % e.txt('#estado-dia'))
-        ok(not e.pg.is_visible('#cal-box'), 'T200 en el móvil, al elegir el día el calendario se pliega y la lista se ve enseguida')
+        ok(e.pg.query_selector('#cal-box') is None, 'T200 sin «Varios días» no hay calendario que se interponga: la lista se ve enseguida')
         ok(e.pendientes() == '0' and ls(e, 'pendientes') in (None, []), 'T200 mirar un día no guarda nada: %s' % e.pendientes())
         pinchar(e, '2026-10-20')
         ok(e.marcados() == ['Ana', 'Beto', 'Carlos'] and e.txt('#estado-dia') == '✓ Guardado el martes 20/10: 3 personas.',
@@ -4132,15 +4132,15 @@ with sync_playwright() as p:
         ok(e.marcados() == ['Ana'], 'T201 al volver al 22/10 se ve lo guardado: %s' % e.marcados())
     con_escena('T201', est200(), t201)
 
-    # --- T202: en un día guardado no se ofrece copiar; volver a pinchar el mismo día no tira lo que se prepara; cambiar de día sí recarga
+    # --- T202: en un día guardado no se ofrece copiar; cambiar de día recarga lo guardado (no lo tocado sin guardar)
+    # (antes también «volver a pinchar el mismo día no tira lo que se prepara»: con el campo de la fecha ese caso no existe, el
+    # navegador no avisa de un cambio si la fecha es la misma; el enlace con el día que ya se ve se comprueba en T252)
     def t202(e):
         e.ir()
         pinchar(e, '2026-10-19')
         ok(e.pg.query_selector('button[data-copiar-ultimo]') is None, 'T202 un día ya guardado no ofrece copiar el último día')
         e.clic('#v-app .row[data-nombre="Beto"] .x')        # se toca a Beto, sin guardar
         ok(e.marcados() == ['Ana', 'Beto', 'Manuel'], 'T202 preparación: se marca a Beto: %s' % e.marcados())
-        pinchar(e, '2026-10-19')
-        ok(e.marcados() == ['Ana', 'Beto', 'Manuel'], 'T202 volver a pinchar el mismo día no tira lo que se está preparando: %s' % e.marcados())
         pinchar(e, '2026-10-20')
         pinchar(e, '2026-10-19')
         ok(e.marcados() == ['Ana', 'Manuel'] and e.pendientes() == '0', 'T202 al volver de otro día sale lo guardado, no lo tocado sin guardar: %s %s' % (e.marcados(), e.pendientes()))
@@ -4153,7 +4153,7 @@ with sync_playwright() as p:
            'T203 no queda ningún botón de fecha rápida (data-dia, data-limpiar-dias)')
         textos = e.pg.eval_on_selector_all('#v-app button', 'e=>e.map(b=>b.textContent.trim())')
         ok(not [x for x in textos if x in ('Hoy', 'Ayer', 'Anteayer', 'Solo hoy')], 'T203 ni los textos Hoy, Ayer, Anteayer o Solo hoy: %s' % textos)
-        ok(e.txt('#v-app .col-izq .chips') == 'Copiar el último día (mié 21/10) Varios días', 'T203 debajo del calendario: solo copiar y varios días: %r' % e.txt('#v-app .col-izq .chips'))
+        ok(e.txt('#v-app .col-izq .chips') == 'Copiar el último día (mié 21/10) Varios días', 'T203 debajo de la fecha: solo copiar y varios días: %r' % e.txt('#v-app .col-izq .chips'))
         ok(e.pg.get_attribute('button[data-multi-dias]', 'aria-pressed') == 'false', 'T203 «Varios días» empieza apagado')
         ok(e.pg.evaluate("[...document.querySelectorAll('button[data-copiar-ultimo], button[data-multi-dias]')].every(b => b.getBoundingClientRect().height >= 44)"),
            'T203 los dos botones nuevos miden al menos 44 px')
@@ -4178,8 +4178,9 @@ with sync_playwright() as p:
         ok(e.pg.evaluate("a.fechas") == ['2026-10-21'] and e.pg.query_selector('#rotulo-marcados') is None and e.pg.get_attribute('button[data-multi-dias]', 'aria-pressed') == 'false',
            'T204 apagar «Varios días» deja un solo día (el último que se tocó): %s' % e.pg.evaluate("a.fechas"))
         ok(e.marcados() == ['Ana', 'Beto'], 'T204 y la lista preparada se queda como estaba: %s' % e.marcados())
+        ok(e.pg.query_selector('#cal-box') is None, 'T204 con «Varios días» apagado el calendario desaparece')
         pinchar(e, '2026-10-20')
-        ok(e.marcados() == ['Ana', 'Beto', 'Carlos'] and e.pg.evaluate("a.fechas") == ['2026-10-20'], 'T204 con «Varios días» apagado pinchar vuelve a cambiar de día: %s' % e.marcados())
+        ok(e.marcados() == ['Ana', 'Beto', 'Carlos'] and e.pg.evaluate("a.fechas") == ['2026-10-20'], 'T204 y elegir otro día (con el campo de la fecha) vuelve a cambiar de día: %s' % e.marcados())
     con_escena('T204', est200(), t204)
 
     # --- T205: copiar con «Varios días» sobre un día que ya tiene gente no pisa nada sin avisar
@@ -4207,13 +4208,23 @@ with sync_playwright() as p:
            'T206 el 20/10 está anulado sin enviar: sin marcar, lo dice y se puede copiar el 19/10: %s %r' % (e.marcados(), e.txt('#estado-dia')))
     con_escena('T206', est200(), t206, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-20', [], anulada=True)]))
 
-    # --- T207: en una tablet (dos columnas) el calendario está siempre a la vista, pinchar un día carga lo guardado y no se pliega nada
+    # --- T207: en una tablet (dos columnas) tampoco hay calendario propio sin «Varios días»: elegir el día enseña lo guardado, el enlace
+    # al calendario de Sagarde se ve, y con «Varios días» el calendario sale a la vista y no se pliega al marcar días
     def t207(e):
         e.ir()
-        ok(e.pg.is_visible('#cal-box'), 'T207 en la tablet el calendario se ve siempre')
-        e.clic('button[data-cal-dia="2026-10-19"]')
-        ok(e.marcados() == ['Ana', 'Manuel'] and e.pg.is_visible('#cal-box') and e.txt('#estado-dia') == '✓ Guardado el lunes 19/10: 2 personas.',
-           'T207 pinchar el 19/10 enseña a Ana y Manuel y el calendario sigue a la vista: %s %r' % (e.marcados(), e.txt('#estado-dia')))
+        ok(e.pg.query_selector('#cal-box') is None and e.pg.is_visible('#enlace-calendario'),
+           'T207 en la tablet, sin «Varios días», no hay calendario en la app y sí el enlace al de Sagarde')
+        # (aquí el enlace va en su propia línea: en la fila de la fecha del móvil se estira al alto del campo y no se notaría si fuera pequeño)
+        alto_enlace = e.pg.evaluate("document.getElementById('enlace-calendario').getBoundingClientRect().height")
+        ok(alto_enlace >= 44, 'T207 y el enlace se pulsa con el dedo (alto %s px)' % alto_enlace)
+        e.fecha('2026-10-19')
+        ok(e.marcados() == ['Ana', 'Manuel'] and e.txt('#estado-dia') == '✓ Guardado el lunes 19/10: 2 personas.',
+           'T207 elegir el 19/10 enseña a Ana y Manuel: %s %r' % (e.marcados(), e.txt('#estado-dia')))
+        e.clic('button[data-multi-dias]')
+        ok(e.pg.is_visible('#cal-box'), 'T207 con «Varios días» el calendario sale a la vista')
+        e.clic('button[data-cal-dia="2026-10-21"]')
+        ok(e.pg.is_visible('#cal-box') and e.pg.evaluate("a.fechas.slice().sort()") == ['2026-10-19', '2026-10-21'],
+           'T207 y sigue a la vista al marcar días: %s' % e.pg.evaluate("a.fechas"))
     con_escena('T207', est200(), t207, ancho=1180, alto=820)
 
     # --- T208: copiar sobre un día que ya tiene gente y del que salió la lista (se pasa a «Varios días» sin cambiar de día) avisa al guardar
@@ -4249,8 +4260,9 @@ with sync_playwright() as p:
         e.fecha('2026-10-20')
         ok(e.pg.get_attribute('button[data-multi-dias]', 'aria-pressed') == 'false' and e.pg.evaluate("a.fechas") == ['2026-10-20'],
            'T210 escribir la fecha deja un solo día y apaga «Varios días»: %s' % e.pg.evaluate("a.fechas"))
+        ok(e.pg.query_selector('#cal-box') is None, 'T210 y con «Varios días» apagado el calendario desaparece')
         pinchar(e, '2026-10-19')
-        ok(e.pg.evaluate("a.fechas") == ['2026-10-19'] and e.marcados() == ['Ana', 'Manuel'], 'T210 y pinchar un día vuelve a cambiar de día: %s %s' % (e.pg.evaluate("a.fechas"), e.marcados()))
+        ok(e.pg.evaluate("a.fechas") == ['2026-10-19'] and e.marcados() == ['Ana', 'Manuel'], 'T210 y elegir otro día vuelve a cambiar de día: %s %s' % (e.pg.evaluate("a.fechas"), e.marcados()))
     con_escena('T210', est200(), t210)
 
     # --- T211: abrir un día desde Jornadas es abrir UN día: «Varios días» se apaga
@@ -4381,9 +4393,9 @@ with sync_playwright() as p:
         return e.pg.eval_on_selector_all('button.cal-dia.tiene', 'b=>b.map(x=>x.dataset.calDia)')
 
     def abrir_cal(e):
-        """En el móvil el calendario viene plegado: se abre con el botón de la fecha. En la tablet ya está a la vista."""
+        """La app solo enseña su calendario con «Varios días» encendido: se enciende si todavía no se ve."""
         if not e.pg.is_visible('#cal-box'):
-            e.clic('#cal-toggle')
+            e.clic('button[data-multi-dias]')
 
     def mes_cal(e, paso):
         abrir_cal(e)
@@ -4392,6 +4404,7 @@ with sync_playwright() as p:
     # --- T218: los días con algo guardado (en el PC o solo aquí) salen marcados; una anulada sin enviar quita la marca; hay leyenda
     def t218(e):
         e.ir()
+        abrir_cal(e)
         ok(con_registro(e) == ['2026-10-16', '2026-10-19', '2026-10-21', '2026-10-22'],
            'T218 octubre: marcados el 16, 19 y 21 (en el PC) y el 22 (solo aquí); el 20 está anulado sin enviar y no cuenta: %s' % con_registro(e))
         ok(e.txt('#cal-leyenda') == LEYENDA_VIV, 'T218 la leyenda dice qué significa el color y de qué ámbito es: %r' % e.txt('#cal-leyenda'))
@@ -4409,6 +4422,7 @@ with sync_playwright() as p:
     # --- T219: las marcas son del ámbito que se ve: en Garajes salen los días de garaje, no los de vivienda
     def t219(e):
         e.ir()
+        abrir_cal(e)
         ok(con_registro(e) == ['2026-10-19'] and e.txt('#cal-leyenda') == LEYENDA_VIV,
            'T219 en Viviendas solo el 19/10: %s %r' % (con_registro(e), e.txt('#cal-leyenda')))
         e.clic('button[data-amb="garaje"]')
@@ -4422,6 +4436,7 @@ with sync_playwright() as p:
     # --- T220: las marcas son de la obra que se ve: lo guardado en otra obra no se mezcla
     def t220(e):
         e.ir()
+        abrir_cal(e)
         e.obra('olabeaga')
         ok(con_registro(e) == ['2026-10-19'], 'T220 Olabeaga: solo su 19/10 (no el 20 ni el 21 de Mungia): %s' % con_registro(e))
         e.obra('mungia')
@@ -4435,6 +4450,7 @@ with sync_playwright() as p:
     # --- T221: guardar un día lo marca al momento; anularlo desde Jornadas le quita la marca
     def t221(e):
         e.ir()
+        abrir_cal(e)
         ok('2026-10-22' not in con_registro(e), 'T221 preparación: el 22/10 no está marcado: %s' % con_registro(e))
         pinchar(e, '2026-10-22')
         e.copiar()
@@ -4492,8 +4508,9 @@ with sync_playwright() as p:
 
     def t223b(e):
         e.ir()
+        abrir_cal(e)
         sin_desborde(e, 'calendario con marcas en la tablet')
-        ok(e.pg.is_visible('#cal-leyenda') and len(con_registro(e)) == 4, 'T223 en la tablet la leyenda y las marcas se ven sin abrir nada: %s' % con_registro(e))
+        ok(e.pg.is_visible('#cal-leyenda') and len(con_registro(e)) == 4, 'T223 en la tablet, con «Varios días», la leyenda y las marcas se ven sin abrir nada más: %s' % con_registro(e))
     con_escena('T223b', est200(), t223b, ancho=1180, alto=820)
 
     # ======================================================================================================================
@@ -4775,6 +4792,228 @@ with sync_playwright() as p:
            'T245 al quitar el 15/10 en la Bandeja se conserva el 14/10 que dejó la otra pestaña (antes se perdía): %s' % fechas_guardadas(e))
         ok(not e.errs, 'T245 sin errores de JavaScript: %s' % e.errs)
     con_escena('T245', est200(), t245, init=sembrar('sgd_personal_pendientes', [pend9('2026-10-15', ['Beto'])]))
+
+    # ======================================================================================================================
+    # 06/11/2026 — INTERCONEXIÓN con el calendario de Sagarde (personal_sagarde.html). La app abre en la obra, la zona y el día que le
+    # pide la dirección (#obra=…&fecha=…&amb=…) —«Editar» si el día tiene algo guardado, «Generar» si está vacío— y enseña su enlace
+    # al calendario. Nunca pisa una jornada a medias. Escenas T246 en adelante. Hoy = viernes 23/10.
+    # ======================================================================================================================
+    def est_enlace():
+        mung = obra_est('2026 MUNGIA', viv('2026-10-20', 'Ana', 'Beto') + gar('2026-10-21', 'Ana'),
+                        ultima={'vivienda': u('2026-10-20', 'Ana', 'Beto'), 'garaje': u('2026-10-21', 'Ana')})
+        vieja = obra_est('2020 VIEJA', [], cerrada=True)
+        return est9(viv('2026-10-19', 'Ana') + viv('2026-10-20', 'Ana'), ['Ana', 'Beto'], u('2026-10-20', 'Ana'),
+                    extra_obras={'mungia': mung, 'vieja': vieja})
+
+    def zona_on(e, zona):
+        return 'on' in (e.pg.get_attribute('button[data-amb="%s"]' % zona, 'class') or '').split()
+
+    # --- T246: «Editar»: el enlace abre en esa obra, zona y día y enseña lo que el día tiene guardado; la dirección queda limpia
+    def t246(e):
+        e.ir(enlace='#obra=mungia&fecha=2026-10-20&amb=vivienda')
+        ok(e.valor('#obra') == 'mungia' and e.valor('#fecha') == '2026-10-20', 'T246 abre en Mungia, el 20/10: %s %s' % (e.valor('#obra'), e.valor('#fecha')))
+        ok(zona_on(e, 'vivienda') and not zona_on(e, 'garaje'), 'T246 en Viviendas')
+        ok(e.marcados() == ['Ana', 'Beto'], 'T246 enseña a quien tiene guardado ese día (para corregirlo): %s' % e.marcados())
+        ok(e.txt('#estado-dia').startswith('✓ Guardado el'), 'T246 dice que ese día está guardado: %r' % e.txt('#estado-dia'))
+        ok(e.pg.evaluate('location.hash') == '', 'T246 la dirección queda limpia (recargar no lo repite): %r' % e.pg.evaluate('location.hash'))
+        ok(ls(e, 'ultima_obra') == 'mungia', 'T246 recuerda la obra para la próxima vez: %r' % ls(e, 'ultima_obra'))
+        e.pg.reload()
+        e.pg.wait_for_selector('#obra')
+        ok(e.valor('#obra') == 'mungia' and e.valor('#fecha') == '2026-10-20', 'T246 al recargar sigue ahí (no vuelve a otro día): %s %s' % (e.valor('#obra'), e.valor('#fecha')))
+        ok(not e.errs, 'T246 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T246', est_enlace(), t246)
+
+    # --- T247: la zona de garajes también viaja en el enlace
+    def t247(e):
+        e.ir(enlace='#obra=mungia&fecha=2026-10-21&amb=garaje')
+        ok(zona_on(e, 'garaje') and not zona_on(e, 'vivienda'), 'T247 en Garajes')
+        ok(e.valor('#obra') == 'mungia' and e.valor('#fecha') == '2026-10-21' and e.marcados() == ['Ana'],
+           'T247 Mungia, 21/10, garajes: %s %s %s' % (e.valor('#obra'), e.valor('#fecha'), e.marcados()))
+    con_escena('T247', est_enlace(), t247)
+
+    # --- T248: «Generar»: un día vacío abre vacío, listo para anotar
+    def t248(e):
+        e.ir(enlace='#obra=olabeaga&fecha=2026-10-22')
+        ok(e.valor('#obra') == 'olabeaga' and e.valor('#fecha') == '2026-10-22', 'T248 abre en Olabeaga, el 22/10: %s %s' % (e.valor('#obra'), e.valor('#fecha')))
+        ok(e.txt('#estado-dia') == 'Este día no tiene nada guardado.' and e.marcados() == [],
+           'T248 el día vacío sale sin nadie marcado: %r %s' % (e.txt('#estado-dia'), e.marcados()))
+        e.anotar('Ana')
+        e.clic('button[data-guardar]')
+        ok(fechas_guardadas(e) == ['2026-10-22'], 'T248 y se puede guardar desde ahí: %s' % fechas_guardadas(e))
+    con_escena('T248', est_enlace(), t248)
+
+    # --- T249: con solo una parte (la fecha) se cambia solo eso
+    def t249(e):
+        e.ir(enlace='#fecha=2026-10-21')
+        ok(e.valor('#fecha') == '2026-10-21', 'T249 solo la fecha: %s' % e.valor('#fecha'))
+        ok(e.valor('#obra') in ('olabeaga', 'mungia'), 'T249 la obra sigue siendo una de las abiertas: %s' % e.valor('#obra'))
+        ok(not e.errs, 'T249 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T249', est_enlace(), t249)
+
+    # --- T250: lo que no vale se ignora sin romper nada: obra que no existe o cerrada, fecha imposible, zona rara, etiquetas HTML
+    def t250(e):
+        # (entre una prueba y otra se pasa por una página en blanco: ir a otra dirección que solo cambia el trozo de detrás del # no recarga)
+        # El desplegable de obras enseña la primera de la lista cuando el valor no existe, así que mirar solo lo que se ve no basta
+        # (una mutación que aceptaba cualquier obra o zona sobrevivió): se mira también lo que la app tiene por dentro y lo que guarda.
+        def por_dentro():
+            return e.pg.evaluate("[a.obra, a.amb, a.fecha]")
+
+        def lo_guardado():
+            return e.pg.evaluate("Object.keys(localStorage).map(k => k + '=' + localStorage.getItem(k)).join(' | ')")
+
+        e.pg.goto('about:blank')
+        e.ir(enlace='#obra=noexiste&fecha=2026-13-45&amb=rarisima')
+        ok(e.valor('#fecha') == '2026-10-23' and e.valor('#obra') != 'noexiste', 'T250 todo inválido: se queda como estaba (hoy): %s %s' % (e.valor('#fecha'), e.valor('#obra')))
+        dentro = por_dentro()
+        ok(dentro[0] in ('olabeaga', 'mungia') and dentro[1] == 'vivienda' and dentro[2] == '2026-10-23',
+           'T250 y por dentro tampoco cambia nada (obra abierta, viviendas, hoy): %s' % dentro)
+        guardado = lo_guardado()
+        ok('noexiste' not in guardado and 'rarisima' not in guardado and '2026-13-45' not in guardado,
+           'T250 y de lo inválido no se guarda nada en el aparato: %s' % guardado[:300])
+        e.pg.goto('about:blank')
+        e.ir(enlace='#obra=vieja&fecha=2026-10-21')
+        ok(e.valor('#obra') != 'vieja' and e.valor('#fecha') == '2026-10-21', 'T250 una obra cerrada no se abre, pero la fecha buena sí: %s %s' % (e.valor('#obra'), e.valor('#fecha')))
+        dentro = por_dentro()
+        ok(dentro[0] in ('olabeaga', 'mungia') and dentro[2] == '2026-10-21',
+           'T250 y por dentro la obra cerrada tampoco entra (la fecha buena sí): %s' % dentro)
+        tras_la_obra_cerrada = dentro  # la app recuerda el último día que se vio: la carga siguiente arranca de ahí
+        e.pg.goto('about:blank')
+        e.ir(enlace='#obra=%3Cimg%20src%3Dx%20onerror%3D%22window.__xss%3D1%22%3E&fecha=%3Cb%3E')
+        ok(e.pg.evaluate('window.__xss') is None, 'T250 una obra con etiquetas HTML no se ejecuta')
+        dentro = por_dentro()
+        ok(dentro == tras_la_obra_cerrada,
+           'T250 y con etiquetas HTML por dentro todo se queda como estaba: %s (antes %s)' % (dentro, tras_la_obra_cerrada))
+        ok(e.pg.query_selector('#v-app img') is None, 'T250 ni se pinta como imagen')
+        ok(not e.errs, 'T250 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T250', est_enlace(), t250)
+
+    # --- T251: una jornada a medias NO se pisa: se avisa y todo queda como estaba
+    def borrador(obra, fecha, marcados):
+        return {'obra': obra, 'ambito': 'vivienda', 'fecha': fecha, 'prefill': None,
+                'lista': [{'nombre': 'Ana', 'on': 'Ana' in marcados, 'horas': None}, {'nombre': 'Beto', 'on': 'Beto' in marcados, 'horas': None}]}
+
+    def t251(e):
+        e.ir(enlace='#obra=mungia&fecha=2026-10-20')
+        ok(e.valor('#obra') == 'olabeaga' and e.valor('#fecha') == '2026-10-22' and e.marcados() == ['Ana'],
+           'T251 con Ana marcada en un día sin guardar, el enlace NO cambia de día: %s %s %s' % (e.valor('#obra'), e.valor('#fecha'), e.marcados()))
+        ok('jornada a medias' in e.toast(), 'T251 y lo dice: %r' % e.toast())
+        ok(e.pg.evaluate('location.hash') == '', 'T251 la dirección queda limpia igualmente: %r' % e.pg.evaluate('location.hash'))
+        ok((ls(e, 'borrador') or {}).get('fecha') == '2026-10-22', 'T251 el borrador no se toca: %r' % ls(e, 'borrador'))
+    con_escena('T251', est_enlace(), t251, init=sembrar('sgd_personal_borrador', borrador('olabeaga', '2026-10-22', ['Ana'])))
+
+    # --- T251b: si lo que hay en pantalla es justo lo guardado (solo se estaba mirando un día), sí cambia de día
+    def t251b(e):
+        e.ir(enlace='#obra=mungia&fecha=2026-10-20')
+        ok(e.valor('#obra') == 'mungia' and e.valor('#fecha') == '2026-10-20', 'T251b mirando un día ya guardado, el enlace sí cambia: %s %s' % (e.valor('#obra'), e.valor('#fecha')))
+        ok('jornada a medias' not in e.toast(), 'T251b y no avisa de nada: %r' % e.toast())
+    con_escena('T251b', est_enlace(), t251b, init=sembrar('sgd_personal_borrador', borrador('olabeaga', '2026-10-19', ['Ana'])))
+
+    # --- T252: pedir lo que ya se está viendo no cambia nada (ni borra lo que se lleva marcado)
+    def t252(e):
+        e.ir(enlace='#obra=olabeaga&fecha=2026-10-22&amb=vivienda')
+        ok(e.valor('#fecha') == '2026-10-22' and e.marcados() == ['Ana'], 'T252 el mismo día se queda como está, con lo marcado: %s %s' % (e.valor('#fecha'), e.marcados()))
+        ok('jornada a medias' not in e.toast(), 'T252 sin avisos: %r' % e.toast())
+    con_escena('T252', est_enlace(), t252, init=sembrar('sgd_personal_borrador', borrador('olabeaga', '2026-10-22', ['Ana'])))
+
+    # --- T253: el enlace al calendario de Sagarde lleva el día que se está viendo y se pone al día al cambiar de fecha
+    def t253(e):
+        e.ir()
+        # El enlace va en la fila de la fecha (la app ya no tiene calendario propio salvo con «Varios días»): siempre a la vista,
+        # también en el móvil (390 px), y sin gastar una fila más (T255).
+        ok(e.pg.is_visible('#enlace-calendario'), 'T253 el enlace al calendario de Sagarde se ve sin abrir nada')
+        alto_enlace = e.pg.evaluate("document.getElementById('enlace-calendario').getBoundingClientRect().height")
+        ok(alto_enlace >= 44, 'T253 y se puede pulsar con el dedo (alto %s px)' % alto_enlace)
+        ok(e.pg.get_attribute('#enlace-calendario', 'href') == 'personal_sagarde.html#calendario&dia=2026-10-23',
+           'T253 lleva el día que se ve (hoy): %r' % e.pg.get_attribute('#enlace-calendario', 'href'))
+        e.fecha('2026-10-21')
+        ok(e.pg.get_attribute('#enlace-calendario', 'href') == 'personal_sagarde.html#calendario&dia=2026-10-21',
+           'T253 al cambiar de fecha, el enlace lleva el día nuevo: %r' % e.pg.get_attribute('#enlace-calendario', 'href'))
+        ok('Calendario' in e.txt('#enlace-calendario'), 'T253 y dice a dónde va: %r' % e.txt('#enlace-calendario'))
+        ok(e.pg.get_attribute('#enlace-calendario', 'aria-label') == 'Calendario y ranking de todas las obras',
+           'T253 y quien usa lector de pantalla oye el nombre completo: %r' % e.pg.get_attribute('#enlace-calendario', 'aria-label'))
+        # con «Varios días» sigue ahí y lleva el último día que se tocó
+        e.clic('button[data-multi-dias]')
+        e.clic('button[data-cal-dia="2026-10-19"]')
+        ok(e.pg.is_visible('#enlace-calendario') and e.pg.get_attribute('#enlace-calendario', 'href') == 'personal_sagarde.html#calendario&dia=2026-10-19',
+           'T253 con «Varios días» el enlace sigue a la vista y lleva el último día tocado: %r' % e.pg.get_attribute('#enlace-calendario', 'href'))
+        # y en pantalla ancha (tablet) también
+        e.pg.set_viewport_size({'width': 1100, 'height': 800})
+        e.pg.wait_for_timeout(200)
+        ok(e.pg.is_visible('#enlace-calendario'), 'T253 en pantalla ancha el enlace se ve siempre')
+    con_escena('T253', est_enlace(), t253)
+
+    # --- T254: si la app YA está abierta y llega un enlace que solo cambia lo de detrás del # (la ventana de la app instalada, por ejemplo),
+    # también lo aplica: no hay recarga y sin esto «no haría nada»
+    def t254(e):
+        e.ir()
+        ok(e.valor('#fecha') == '2026-10-23', 'T254 preparación: abierta en hoy')
+        e.pg.evaluate("()=>{location.hash='#obra=mungia&fecha=2026-10-20&amb=vivienda'}")
+        e.pg.wait_for_timeout(400)
+        ok(e.valor('#obra') == 'mungia' and e.valor('#fecha') == '2026-10-20' and e.marcados() == ['Ana', 'Beto'],
+           'T254 la app abierta cambia al día del enlace: %s %s %s' % (e.valor('#obra'), e.valor('#fecha'), e.marcados()))
+        ok(e.pg.evaluate('location.hash') == '', 'T254 y deja la dirección limpia')
+        ok(not e.errs, 'T254 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T254', est_enlace(), t254)
+
+    # ======================================================================================================================
+    # 06/11/2026 — EL CALENDARIO PROPIO DE LA APP SOLO SALE CON «VARIOS DÍAS» (decisión de Bixente: «Solo Varios días»). Había dos
+    # calendarios que podían liar (el de la app y el de Sagarde, con todas las obras). Ahora el día se elige con el campo de la fecha o
+    # desde el calendario de Sagarde (un enlace corto en la misma fila de la fecha) y el calendario de la app solo existe para marcar
+    # varios días de golpe (su semana entera), que además funciona sin cobertura.
+    # ======================================================================================================================
+    # --- T255: sin «Varios días» no hay calendario en la app; el enlace al de Sagarde va en la misma fila que la fecha, y el rótulo dice el día
+    def t255(e):
+        e.ir()
+        ok(e.pg.query_selector('#cal-box') is None and e.pg.query_selector('button[data-cal-dia]') is None and e.pg.query_selector('#cal-toggle') is None,
+           'T255 sin «Varios días» no hay calendario en la app (ni el botón de plegarlo)')
+        fila = e.pg.evaluate("""() => {
+          const i = document.getElementById('fecha').getBoundingClientRect(), l = document.getElementById('enlace-calendario').getBoundingClientRect();
+          return {iy: Math.round(i.top), ly: Math.round(l.top), lh: Math.round(l.height), lw: Math.round(l.width), ancho: window.innerWidth,
+                  desborde: document.documentElement.scrollWidth - window.innerWidth};
+        }""")
+        ok(abs(fila['iy'] - fila['ly']) <= 3 and fila['lh'] >= 44 and fila['desborde'] <= 0,
+           'T255 el enlace al calendario de Sagarde va en la misma fila que la fecha, se pulsa con el dedo y no hay desborde: %s' % fila)
+        ok(e.txt('#fecha-rotulo').lower() == 'fecha: hoy · viernes 23/10', 'T255 el rótulo dice qué día está elegido: %r' % e.txt('#fecha-rotulo'))
+        e.fecha('2026-10-21')
+        ok(e.txt('#fecha-rotulo').lower() == 'fecha: miércoles 21/10', 'T255 y cambia con la fecha: %r' % e.txt('#fecha-rotulo'))
+        e.fecha('2026-10-22')
+        ok(e.txt('#fecha-rotulo').lower() == 'fecha: ayer · jueves 22/10', 'T255 el día anterior a hoy dice «Ayer»: %r' % e.txt('#fecha-rotulo'))
+        ok(not e.errs, 'T255 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T255', est200(), t255)
+
+    # --- T256: «Varios días» saca el calendario ya abierto (sin botón de plegar), el botón no se mueve de sitio al encenderlo y apagarlo lo quita
+    def t256(e):
+        e.ir()
+        # (se mide respecto al campo de la fecha: con el primer cambio aparece la línea «Borrador guardado automáticamente» en la
+        # cabecera y baja toda la pantalla 12 px, y eso no tiene que ver con el calendario)
+        sitio = "(()=>{const f=document.getElementById('fecha').getBoundingClientRect().top; return document.querySelector('button[data-multi-dias]').getBoundingClientRect().top - f;})()"
+        antes = e.pg.evaluate(sitio)
+        e.clic('button[data-multi-dias]')
+        ok(e.pg.is_visible('#cal-box') and e.pg.query_selector('#cal-toggle') is None and e.pg.get_attribute('button[data-multi-dias]', 'aria-pressed') == 'true',
+           'T256 con «Varios días» el calendario sale abierto, sin botón de plegarlo')
+        despues = e.pg.evaluate(sitio)
+        ok(abs(antes - despues) <= 2, 'T256 al encenderlo, el botón «Varios días» no se mueve de sitio (el calendario sale debajo de él): %s -> %s' % (antes, despues))
+        ok(e.txt('#fecha-rotulo').lower() == 'fecha: hoy · viernes 23/10', 'T256 con un solo día el rótulo dice cuál: %r' % e.txt('#fecha-rotulo'))
+        e.clic('button[data-cal-dia="2026-10-21"]')
+        ok(e.txt('#fecha-rotulo').lower() == 'fecha: 2 días marcados' and e.pg.is_visible('#cal-box'),
+           'T256 al marcar otro día, el rótulo cuenta los días y el calendario sigue abierto: %r' % e.txt('#fecha-rotulo'))
+        e.clic('button[data-multi-dias]')
+        ok(e.pg.query_selector('#cal-box') is None and e.txt('#fecha-rotulo').lower() == 'fecha: miércoles 21/10',
+           'T256 al apagar «Varios días» el calendario desaparece y queda el último día tocado: %r' % e.txt('#fecha-rotulo'))
+        ok(not e.errs, 'T256 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T256', est200(), t256)
+
+    # --- T257: llegar desde el calendario de Sagarde con «Varios días» encendido lo apaga y abre UN día (como abrir un día desde Jornadas)
+    def t257(e):
+        e.ir()
+        e.clic('button[data-multi-dias]')
+        ok(e.pg.is_visible('#cal-box'), 'T257 preparación: «Varios días» encendido')
+        e.pg.evaluate("()=>{location.hash='#obra=olabeaga&fecha=2026-10-20&amb=vivienda'}")
+        e.pg.wait_for_timeout(400)
+        ok(e.pg.query_selector('#cal-box') is None and e.pg.get_attribute('button[data-multi-dias]', 'aria-pressed') == 'false'
+           and e.pg.evaluate("a.fechas") == ['2026-10-20'] and e.marcados() == ['Ana', 'Beto', 'Carlos'],
+           'T257 el enlace apaga «Varios días» y abre el 20/10 con su gente: %s %s' % (e.pg.evaluate("a.fechas"), e.marcados()))
+    con_escena('T257', est200(), t257)
 
     # Fin del bloque de las dos pestañas
 

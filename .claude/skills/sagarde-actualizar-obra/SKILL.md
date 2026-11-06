@@ -243,8 +243,13 @@ Objetivo suyo (04/10/2026): tras actualizar la obra, el informe que pida sale
 
 ## Trampas ya vistas
 
+- **(1) RESUELTO el 06/11/2026: el portal ya no avisa «Sin aplicar en REVISIONES» de un control que el propio `.bat` acaba de aplicar.**
+  Entre aplicar y pintar, el `.bat` tiene un paso nuevo, `[2b/6]`, que ejecuta `auditor_sagarde.py --solo-pendientes`: vuelve a mirar
+  SOLO lo que queda sin aplicar y reescribe esa parte del diagnóstico (`refrescar_pendientes`); el paso 0 sigue siendo el único que frena.
+  Un control dudoso que el `.bat` no aplica SÍ sigue avisando. Pruebas: `_SISTEMA/MOTOR/tests/test_refrescar_pendientes.py` (16 mutaciones
+  detectadas, entre ellas mover el paso antes de aplicar). Lo de abajo es el relato del defecto, que sigue valiendo para entender el orden de los pasos.
 - **ABIERTO (apuntado el 05/11/2026 a petición de Bixente: «no puede ocurrir, genera dudas») — dos avisos que mienten sobre controles horarios.**
-  (1) **El portal avisa «Sin aplicar en REVISIONES» de un control que el propio `.bat` acaba de aplicar.** El paso [0/6] del `.bat`
+  (1) **El portal avisaba «Sin aplicar en REVISIONES» de un control que el propio `.bat` acababa de aplicar [resuelto, ver arriba].** El paso [0/6] del `.bat`
   (`auditor_sagarde.py`) calcula los pendientes y escribe `_SISTEMA/MOTOR/auditoria_diagnostico.json`; el paso [1/6]
   (`generar_todos.py`) aplica los controles limpios; el paso [3/6] (`sagarde_portal.py`) pinta el aviso leyendo el JSON de antes de
   aplicar. Hace falta una segunda pasada del `.bat` para que desaparezca. (2) **[NO SE REPARA EL FALLO DE FONDO: Bixente (05/11) pidió una salida práctica y se hizo la pestaña «Bandeja» de la app (ver skill `sagarde-personal`): enseña lo sin enviar y lo quita con «Quitar»; las jornadas nuevas ya llevan nombres actuales] La bandeja «Enviar al PC» de la app

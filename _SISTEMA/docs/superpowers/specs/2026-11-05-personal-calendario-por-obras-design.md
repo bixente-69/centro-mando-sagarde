@@ -56,6 +56,38 @@ completos; sin registro, quedan vacíos y no acusan a nadie. Las obras cerradas 
 - Suite completa del motor en la rama (05/11/2026): 2.042 pruebas, 1 error —`TestCasoRealMungia`, ambiental: lee un fichero real de
   Mungia que no está en git y por eso no existe en el worktree; comprobado que existe en el árbol real—, 6 saltadas a propósito.
 
+## Interconexión con la app de jornada (06/11/2026)
+
+Petición de Bixente (06/11/2026): «pincho en el día 3, para ver quién estuvo en obra, y no me hace nada»; «los enlaces tienen que
+ser al pinchar el día: si está vacío, poder generar; si ya tiene, poder generar o editar alguno de los que están; y al revés, desde
+el generador poder pinchar el calendario… sin que haya más calendarios en generar que puedan ocasionar líos».
+
+- **El detalle del día se ve.** Sale al lado del calendario (pantalla de 1.000 px o más); en pantalla estrecha se desplaza solo a la
+  vista y trae «↑ Volver al calendario». Antes salía debajo, fuera de pantalla, y parecía que no hacía nada.
+- **«Anotar este día».** Cada obra abierta con su botón: **Editar** si ese día tiene registro (uno por zona si tiene viviendas y
+  garajes) o **Generar** si no (también en días futuros). Las obras cerradas con registro ese día salen sin botón («obra cerrada»):
+  la app solo trabaja con las abiertas.
+- **Ida: calendario → app.** El botón abre `generador_personal.html#obra=<id>&fecha=AAAA-MM-DD[&amb=vivienda|garaje]` (el id va
+  codificado). La app solo acepta valores válidos —obra abierta, fecha que existe, zona conocida—; lo demás se ignora. Enseña lo
+  guardado de ese día y deja la dirección limpia. **Nunca pisa una jornada a medias:** si hay alguien marcado que no coincide con lo
+  guardado, avisa y no cambia nada. También funciona con la app ya abierta.
+- **Vuelta: app → calendario.** La app lleva, en la misma fila que la fecha, el enlace corto «📅 Calendario ›» (nombre completo: «Calendario y ranking de todas las obras»), que abre
+  `personal_sagarde.html#calendario&dia=AAAA-MM-DD` (calendario con ese día elegido; una fecha que no existe se ignora). La cabecera
+  de la página de Sagarde lleva «✎ Anotar la jornada en la app de la tablet ›».
+- **Limitación conocida:** la página de Sagarde necesita internet; la app de jornada funciona sin cobertura (su *service worker*
+  solo cubre `generador_personal.html`). Sin cobertura, el enlace al calendario no abre.
+- **Decidido por Bixente (06/11/2026, «Solo Varios días»):** el calendario propio de la app solo sale con «Varios días» (marcar su
+  semana entera de golpe), que además funciona sin internet. Sin «Varios días» no hay calendario en la app: el día se elige con el
+  campo de la fecha (con un rótulo que lo dice con palabras: «Fecha: Hoy · viernes 23/10») o desde el calendario de Sagarde, y en la
+  misma fila de la fecha va el enlace corto «📅 Calendario ›». Con «Varios días» el calendario sale siempre abierto, debajo de los
+  botones «Copiar el último día» / «Varios días» (el botón no se mueve al encenderlo). Se descartaron quitarlo del todo (la semana
+  entera habría que marcarla con internet) y sustituirlo por una tira de la semana.
+- **Pruebas:** escenas 11–16 de `tests/verificar_calendario_obras.py` (721 comprobaciones, con el recorrido de ida y vuelta entre
+  las dos páginas) y T246–T254 de `tests/verificar_generador_personal.py`. **Por mutación:** página 17 (16 detectadas; la que queda es
+  equivalente: el escapado se aplica sobre una dirección que ya va codificada con `encodeURIComponent`, no hay valor que lo distinga) y
+  app 15 (15 detectadas; dos sobrevivieron al principio —aceptar cualquier obra o cualquier zona— porque el desplegable de obras
+  enseña la primera de la lista cuando el valor no existe, así que T250 mira también el estado interno y lo que se guarda en el aparato).
+
 ## Abierto (decisiones de Bixente)
 
 1. **¿Qué obras se exigen?** (**Resuelto el 05/11/2026**) Todas las abiertas desde su primer registro. En los datos reales eso
@@ -69,5 +101,6 @@ completos; sin registro, quedan vacíos y no acusan a nadie. Las obras cerradas 
 
 ## Fuera de esta pieza (siguen abiertos, ver la memoria del proyecto)
 
-Fusión sin pisar en el PC (que un día de un aparato no borre al de otro), arreglo de las pestañas de la tablet que se pisan,
-nombre del aparato en cada fichero, y el buzón automático (decidido: **primero lo seguro, el buzón después**).
+Hecho después, el 05/11/2026 (ver la memoria del proyecto): arreglo de las pestañas de la tablet que se pisan, nombre del aparato en
+cada fichero y aviso con las horas en el PC (decidido «solo avisar»: no se ignoran los ficheros viejos). Sigue abierto:
+el buzón automático (decidido: **primero lo seguro, el buzón después**).

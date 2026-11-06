@@ -708,6 +708,20 @@
       .btn-volver-portal:active {
         background: #123a63;
       }
+      /* Enlace al calendario de Sagarde (todas las obras y el ranking): va en la misma fila que la fecha, por eso es corto */
+      .enlace-cal {
+        flex: 0 0 auto;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        padding: 6px 14px;
+        font-size: 15px;
+        line-height: 1.2;
+        color: var(--header);
+        text-decoration: none;
+        white-space: nowrap;
+      }
       .criterio-busqueda {
         display: flex;
         gap: 6px;
@@ -899,7 +913,7 @@
           font-size: 9px;
         }
       }
-      /* ---- Pantallas: el móvil de pie (una columna, calendario plegado, «Guardar» siempre a la vista) y la tablet (dos columnas) ---- */
+      /* ---- Pantallas: el móvil de pie (una columna, sin calendario salvo con «Varios días», «Guardar» siempre a la vista) y la tablet (dos columnas) ---- */
       html {
         scroll-padding-top: calc(var(--tabs-h) + 8px);
         scroll-padding-bottom: calc(var(--barra-h) + 12px);
@@ -934,13 +948,6 @@
         flex: 1 1 140px;
         width: auto;
         min-width: 0;
-      }
-      .cal-toggle {
-        flex: 1 1 150px;
-        min-height: 46px;
-        padding: 6px 8px;
-        font-size: 15px;
-        line-height: 1.2;
       }
       .seg button[data-m] {
         min-width: 56px;
@@ -981,9 +988,6 @@
         min-width: 150px;
       }
       @media (max-width: 767px) {
-        .cal-box.plegado {
-          display: none;
-        }
         .cal-box {
           margin-left: -4px;
           margin-right: -4px;
@@ -1006,9 +1010,6 @@
         }
       }
       @media (min-width: 768px) {
-        .cal-toggle {
-          display: none;
-        }
         .fecha-fila input {
           flex-basis: 100%;
         }
@@ -1799,6 +1800,75 @@
         }
         return false;
       }
+      // ---------------------------------------------------------------------------
+      // Enlace desde el calendario de Sagarde (personal_sagarde.html): «generador_personal.html#obra=olabeaga&fecha=2026-11-03&amb=vivienda».
+      // Abre la app en esa obra, esa zona y ese día, como si se hubieran elegido a mano, y enseña lo que el día tenga
+      // guardado («Editar»; si está vacío es «Generar»). Solo vale lo que se reconoce: una obra abierta, una fecha que existe y
+      // «vivienda» o «garaje»; lo demás se ignora. Nunca pisa una jornada que se lleve a medias: en ese caso avisa y no toca nada.
+      // ---------------------------------------------------------------------------
+      function enlaceDeLaWeb() {
+        let texto = (location.hash || '').replace(/^#/, '');
+        if (!texto) return null;
+        let datos;
+        try {
+          datos = new URLSearchParams(texto);
+        } catch (e) {
+          return null;
+        }
+        let pedido = {};
+        let obra = datos.get('obra');
+        if (obra && obrasAbiertas().some((entrada) => entrada[0] === obra)) pedido.obra = obra;
+        let fecha = datos.get('fecha');
+        if (fecha && fechaOk(fecha)) pedido.fecha = fecha;
+        let zona = datos.get('amb');
+        if (zona === 'vivienda' || zona === 'garaje') pedido.amb = zona;
+        return Object.keys(pedido).length ? pedido : null;
+      }
+      // ¿Hay en pantalla alguien marcado que no coincide con lo guardado de ese día? Entonces hay una jornada a medias.
+      function hayJornadaAMedias() {
+        let marcados = a.list
+          .filter((x) => x.on)
+          .map((x) => key(x.nombre))
+          .sort();
+        let guardada = jornadaGuardada();
+        let guardados = guardada ? guardada.nombres.map(key).sort() : [];
+        return marcados.length !== guardados.length || marcados.some((x, i) => x !== guardados[i]);
+      }
+      // Aplica el enlace de la dirección (si lo hay y vale) y lo quita de la dirección para que recargar no lo repita.
+      function abrirEnlaceDeLaWeb() {
+        let pedido = enlaceDeLaWeb();
+        if (!pedido) return false;
+        try {
+          history.replaceState(null, '', location.pathname + location.search);
+        } catch (e) {
+          /* sin historial: da igual */
+        }
+        let destino = { obra: pedido.obra || a.obra, amb: pedido.amb || a.amb, fecha: pedido.fecha || a.fecha };
+        if (destino.obra === a.obra && destino.amb === a.amb && destino.fecha === a.fecha) return true;
+        if (hayJornadaAMedias()) {
+          toast(
+            'Tienes una jornada a medias en ' + nombreObra(a.obra) + ' (' + diaLargo(a.fecha) +
+              '): guárdala o déjala como estaba y vuelve a pinchar el día en el calendario.',
+          );
+          return false;
+        }
+        Object.assign(a, destino);
+        a.fechas = [destino.fecha];
+        a.calMes = destino.fecha.slice(0, 7);
+        a.multiDia = false;  // llegar desde el calendario de Sagarde es abrir UN día (como abrir un día desde Jornadas)
+        a.v = 'app';
+        set(K.ob, a.obra);
+        changed();
+        return true;
+      }
+      // Enlace al calendario de Sagarde (todas las obras y el ranking), abierto en el día que se está viendo. Va en la misma fila
+      // que la fecha (por eso el texto es corto); el nombre completo lo dice el aria-label.
+      function enlaceCalendarioHTML() {
+        return (
+          `<a id="enlace-calendario" class="btn ghost enlace-cal" href="personal_sagarde.html#calendario&amp;dia=${E(a.fecha)}" ` +
+          `aria-label="Calendario y ranking de todas las obras">📅 Calendario ›</a>`
+        );
+      }
       // Aviso flotante que se oculta solo (dura más cuanto más largo es el texto).
       function toast(s) {
         let x = document.querySelector('#toast');
@@ -2226,7 +2296,7 @@
           ? `<div class="dias-marcados"><span>Días marcados (${marcadas.length}):</span> ${marcadas.map((f) => `<span class="chip">${fdia(f)} <button type="button" data-quitar-dia="${f}">×</button></span>`).join('')}</div>`
           : '';
         return (
-          `<div class="cal-box${a.calAbierto ? '' : ' plegado'}" id="cal-box">` +
+          `<div class="cal-box" id="cal-box">` +
           `<div class="cal-head">` +
           `<button type="button" class="nav-cal" data-cal-nav="-1">‹</button>` +
           `<span>${meses[mes - 1]} ${ano}</span>` +
@@ -2681,21 +2751,12 @@
         });
         return mejor || ids[0] || '';
       }
-      // Botón que abre o pliega el calendario: dice qué día está elegido, o cuántos días están marcados.
-      function calToggleHTML() {
+      // Qué día está elegido, con palabras («Hoy · viernes 23/10»), o cuántos días están marcados. Va en el rótulo de la fecha.
+      function fechaTexto() {
         let dias = a.fechas && a.fechas.length ? a.fechas : [a.fecha];
-        let texto =
-          dias.length > 1
-            ? dias.length + ' días marcados'
-            : (a.fecha === today() ? 'Hoy · ' : a.fecha === add(today(), -1) ? 'Ayer · ' : '') + diaLargo(a.fecha);
-        return (
-          '<button type="button" class="btn ghost cal-toggle" id="cal-toggle" data-cal-abrir aria-expanded="' +
-          (a.calAbierto ? 'true' : 'false') +
-          '" aria-controls="cal-box">' +
-          E(texto) +
-          (a.calAbierto ? '&nbsp;▴' : '&nbsp;▾') +
-          '</button>'
-        );
+        return dias.length > 1
+          ? dias.length + ' días marcados'
+          : (a.fecha === today() ? 'Hoy · ' : a.fecha === add(today(), -1) ? 'Ayer · ' : '') + diaLargo(a.fecha);
       }
       function appView() {
         let horario = hor();
@@ -2727,8 +2788,8 @@
           `</select><label class="fld">Qué anotas</label><div class="seg"><button ` +
           `data-amb="vivienda" class="${a.amb === 'vivienda' ? 'on' : ''}">Viviendas</button>` +
           `<button data-amb="garaje" class="${a.amb === 'garaje' ? 'on' : ''}">Garajes</button>` +
-          `</div><label class="fld">Fecha y calendario</label><div class="fecha-fila"><input id="fecha" type="date" value="` +
-          `${E(a.fecha)}">${calToggleHTML()}</div>${calendarioHTML()}<div class="chips">` +
+          `</div><label class="fld" id="fecha-rotulo">Fecha: ${E(fechaTexto())}</label><div class="fecha-fila"><input id="fecha" type="date" value="` +
+          `${E(a.fecha)}">${enlaceCalendarioHTML()}</div><div class="chips">` +
           `${
             ultimoDia
               ? `<button class="btn ghost sm" data-copiar-ultimo>Copiar el último día (${E(fdia(ultimoDia.fecha))})</button>`
@@ -2736,7 +2797,7 @@
           }` +
           `<button class="btn ghost sm ${modoVarios() ? 'on' : ''}" data-multi-dias aria-pressed="${modoVarios() ? 'true' : 'false'}">` +
           `Varios días</button></div>` +
-          `${modoVarios() ? '<p class="nota">Toca los días que quieras marcar: lo que guardes vale para todos.</p>' : ''}` +
+          `${modoVarios() ? '<p class="nota">Toca los días que quieras marcar: lo que guardes vale para todos.</p>' + calendarioHTML() : ''}` +
           `</div><div class="col-der">${rotuloHTML()}<div class="actions"><button class="btn ghost sm" data-todos="1">Marcar ` +
           `todos</button><button class="btn ghost sm" data-todos="0">Desmarcar todos</button>` +
           `</div><div id="lista">${rowsHTML()}</div><label class="fld">Añadir de la base</label>` +
@@ -4289,40 +4350,23 @@
           copiarUltimoDia();
           return;
         }
-        // «Varios días»: encendido, los días del calendario se suman o se quitan del marcado; apagado, vuelve a haber un
-        // solo día (el último que se tocó) y la lista que se está preparando se queda como está.
+        // «Varios días»: encendido, sale el calendario de la app y los días que se pinchan se suman o se quitan del marcado;
+        // apagado, el calendario desaparece, vuelve a haber un solo día (el último que se tocó) y la lista que se está
+        // preparando se queda como está. (Sin «Varios días» no hay calendario aquí: el día se elige con el campo de la fecha o
+        // desde el calendario de Sagarde.)
         if (datos.multiDias !== undefined) {
           if (modoVarios()) {
             a.multiDia = false;
             a.fechas = [a.fecha];
           } else {
             a.multiDia = true;
-            a.calAbierto = true;
           }
           changed(false);
           return;
         }
-        // Abrir o plegar el calendario (en el móvil va plegado para que la lista de gente se vea al abrir)
-        if (datos.calAbrir !== undefined) {
-          a.calAbierto = !a.calAbierto;
-          render();
-          return;
-        }
-        // Día del calendario. Con «Varios días» apagado (lo normal) el día pinchado pasa a ser EL día y se ve lo que
-        // tenga guardado (volver a pinchar el mismo no recarga: no se pierde lo que se esté preparando). Con «Varios
-        // días» encendido se suma o se quita del marcado y la lista no se toca.
+        // Día del calendario (solo existe con «Varios días» encendido): se suma o se quita del marcado y la lista no se toca.
         if (datos.calDia) {
           let dia = datos.calDia;
-          if (!modoVarios()) {
-            let mismo = dia === a.fecha;
-            a.fecha = dia;
-            a.fechas = [dia];
-            a.calMes = dia.slice(0, 7);
-            a.calAbierto = false;
-            if (mismo) render();
-            else changed();
-            return;
-          }
           a.fechas = a.fechas && a.fechas.length ? a.fechas : [a.fecha];
           if (a.fechas.includes(dia)) {
             if (a.fechas.length > 1) {
@@ -4883,6 +4927,7 @@
         reconcile();
         a.obra = obraPorDefecto();
         if (!restore()) loadList();
+        abrirEnlaceDeLaWeb();
         render();
         if (rotos > 0)
           toast(
@@ -4903,6 +4948,11 @@
         let activo = document.activeElement;
         if (!activo || !/^(INPUT|TEXTAREA|SELECT)$/.test(activo.tagName)) render();
       }
+      // Si la app ya está abierta y llega un enlace del calendario que solo cambia lo de detrás del # (no se recarga la
+      // página), también se aplica.
+      window.addEventListener('hashchange', () => {
+        if (iniciada) abrirEnlaceDeLaWeb();
+      });
       window.addEventListener('storage', (evento) => {
         if (evento.key === null || CLAVES_LISTAS.includes(evento.key)) alDiaConLaOtraPestana();
       });

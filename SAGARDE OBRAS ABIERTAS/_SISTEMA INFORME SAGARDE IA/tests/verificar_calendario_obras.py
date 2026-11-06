@@ -47,6 +47,7 @@ NOMBRES = {'a': '2026 ALFA UNO', 'b': '2026 BETA DOS 32V', 'c': '2025 GAMMA TRES
 CERRADAS = {'z'}
 ABIERTAS = ['a', 'b', 'c', 'g']
 XSS = '<img src=x onerror="window.__xss=1">'
+HORARIO = {'lun': 7.5, 'mar': 7.5, 'mie': 7.5, 'jue': 7.5, 'vie': 7.5, 'sab': 0, 'dom': 0}  # el de la app de jornada (la usa el recorrido completo)
 
 
 def j(obra, fecha, nombre, horas, ambito='vivienda', extra=0, empresa=None):
@@ -78,8 +79,8 @@ MALAS = [  # no cuentan: fecha imposible y sin nombre
 def estado_js(jornadas):
     obras = {}
     for id_, nombre in NOMBRES.items():
-        obras[id_] = {'nombre': nombre, 'cerrada': id_ in CERRADAS, 'horario_semanal': {}, 'excepciones_horario': {},
-                      'ultima': None, 'jornadas': [d for o, d in jornadas if o == id_]}
+        obras[id_] = {'nombre': nombre, 'cerrada': id_ in CERRADAS, 'horario_semanal': HORARIO, 'excepciones_horario': {},
+                      'ultima': {'vivienda': None, 'garaje': None}, 'jornadas': [d for o, d in jornadas if o == id_]}
     est = {'version': 1, 'generado': '2026-11-09T08:00:00+01:00', 'jornada_base_h': 7.5, 'catalogo': [], 'obras': obras}
     return 'window.SAGARDE_PERSONAL = ' + json.dumps(est, ensure_ascii=False) + ';\n'
 
@@ -135,8 +136,8 @@ def montar(motor, jornadas, temporales):
     d = os.path.join(base, 'cal_obras_' + uuid.uuid4().hex[:8])
     os.makedirs(d)
     temporales.append(d)
-    for f in ('personal_sagarde.html', 'personal_calculo.js'):
-        shutil.copy(os.path.join(motor, f), os.path.join(d, f))
+    for f in ('personal_sagarde.html', 'personal_calculo.js', 'generador_personal.html'):
+        shutil.copy(os.path.join(motor, f), os.path.join(d, f))   # (la app de jornada: el recorrido de ida y vuelta entre las dos páginas)
     with open(os.path.join(d, 'personal_estado.js'), 'w', encoding='utf-8') as fh:
         fh.write(estado_js(jornadas))
     return d
@@ -146,12 +147,14 @@ def url(d, hash_=''):
     return 'file:///' + os.path.join(d, 'personal_sagarde.html').replace(os.sep, '/').replace(' ', '%20') + hash_
 
 
-def abrir(browser, d, hash_='#calendario', ancho=1100, errores=None):
-    pg = browser.new_page(viewport={'width': ancho, 'height': 900})
+def abrir(browser, d, hash_='#calendario', ancho=1100, errores=None, alto=900):
+    # Sin animaciones (reduced_motion): el desplazamiento al detalle del día es inmediato y se puede medir
+    pg = browser.new_page(viewport={'width': ancho, 'height': alto}, reduced_motion='reduce')
     pg.add_init_script(FIJA)
     if errores is not None:
         pg.on('pageerror', lambda e: errores.append('pageerror: ' + str(e)))
-        pg.on('console', lambda m: errores.append('console: ' + m.text) if m.type == 'error' else None)
+        # («Failed to load resource»: al ir a la app de jornada desde un fichero local faltan su manifiesto y sus iconos; no es un fallo de la página)
+        pg.on('console', lambda m: errores.append('console: ' + m.text) if m.type == 'error' and 'Failed to load resource' not in m.text else None)
     pg.goto(url(d, hash_))
     pg.wait_for_selector('#contenido-calendario .cal-dia, #contenido-calendario .aviso')
     return pg
@@ -339,6 +342,146 @@ def main():
             comprobar(pg.is_visible('#cal-obra'), 'móvil', 'el desplegable debe verse')
             igual(pg.eval_on_selector_all('#cal-detalle tbody td[data-etq]', 'tds => tds.slice(0, 3).map(t => t.dataset.etq)'), ['Nombre', 'Zona', 'Horas'], 'móvil: cada dato lleva su etiqueta')
             anotar(pg)
+            pg.close()
+
+            # --- 11. El detalle del día SE VE al pinchar (antes salía debajo del calendario, fuera de la pantalla) ---
+            for ancho, alto, lado_a_lado in ((1345, 940, True), (1100, 900, True), (1000, 800, True), (800, 900, False), (390, 844, False)):
+                pg = abrir(browser, d, ancho=ancho, alto=alto, errores=errores)
+                pg.click('.cal-dia[data-f="2026-11-03"]')
+                pg.wait_for_timeout(150)
+                r = pg.evaluate("""() => { const d = document.querySelector('#cal-detalle').getBoundingClientRect(), g = document.querySelector('.cal-grid').getBoundingClientRect();
+                                  return {top: Math.round(d.top), left: Math.round(d.left), gridDerecha: Math.round(g.right), alto: innerHeight}; }""")
+                ctx = '%dx%d' % (ancho, alto)
+                comprobar(0 <= r['top'] < r['alto'] - 120, 'detalle a la vista ' + ctx, 'el detalle empieza a %d px del borde de una pantalla de %d' % (r['top'], r['alto']))
+                comprobar((r['left'] >= r['gridDerecha'] - 4) == lado_a_lado, 'detalle al lado ' + ctx,
+                          'se esperaba lado a lado=%s; el detalle está en x=%d y el calendario acaba en x=%d' % (lado_a_lado, r['left'], r['gridDerecha']))
+                igual(pg.is_visible('.cal-volver'), not lado_a_lado, 'botón «Volver al calendario» solo en pantalla estrecha ' + ctx)
+                if not lado_a_lado:
+                    pg.click('.cal-volver')
+                    pg.wait_for_timeout(150)
+                    top = pg.evaluate('document.querySelector(".cal-izq").getBoundingClientRect().top')
+                    comprobar(-2 <= top < 200, 'volver ' + ctx, 'tras «Volver al calendario» el calendario empieza a %d px del borde' % top)
+                pg.close()
+
+            # --- 12. «Anotar este día»: cada obra con su botón (Editar si tiene registro, Generar si no) y la dirección exacta ---
+            pg = abrir(browser, d, errores=errores)
+            B = 'generador_personal.html#obra=%s&fecha=%s'
+
+            def acciones(fecha):
+                pg.click('.cal-dia[data-f="%s"]' % fecha)
+                return pg.eval_on_selector_all('#cal-detalle .cal-accion', """lis => lis.map(li => ({
+                    obra: li.querySelector('b').textContent, resumen: li.querySelector('.peq').textContent,
+                    enlaces: Array.from(li.querySelectorAll('a')).map(a => ({texto: a.textContent.trim(), href: a.getAttribute('href'), clase: a.className, aria: a.getAttribute('aria-label')})),
+                    cerrada: !!li.querySelector('.cal-cerrada')}))""")
+
+            ac = acciones('2026-11-02')
+            igual([x['obra'] for x in ac], [NOMBRES[o] for o in ('a', 'b', 'c', 'g', 'z')], '02/11 las obras abiertas (en su orden) y luego la cerrada que tuvo registro')
+            igual([x['resumen'] for x in ac], ['3 personas · 21,5 h', '1 persona · 9,5 h', 'sin registro', 'sin registro', '1 persona · 8 h'], '02/11 qué hay en cada obra')
+            igual([[e['texto'] for e in x['enlaces']] for x in ac], [['Editar'], ['Editar viviendas', 'Editar garajes'], ['Generar'], ['Generar'], []],
+                  '02/11 botones: Editar con registro (uno por zona), Generar sin registro y ninguno en la cerrada')
+            igual([e['href'] for e in ac[0]['enlaces']], [B % ('a', '2026-11-02') + '&amb=vivienda'], '02/11 «Editar» de a abre esa obra, ese día y esa zona')
+            igual([e['href'] for e in ac[1]['enlaces']], [B % ('b', '2026-11-02') + '&amb=vivienda', B % ('b', '2026-11-02') + '&amb=garaje'],
+                  '02/11 b tiene viviendas y garajes: un «Editar» para cada zona')
+            igual([e['href'] for e in ac[2]['enlaces']], [B % ('c', '2026-11-02')], '02/11 «Generar» no fija la zona: la elige la app')
+            igual(ac[4]['cerrada'], True, '02/11 la obra cerrada lo dice')
+            comprobar('cal-btn-generar' in ac[2]['enlaces'][0]['clase'] and 'acento' in ac[2]['enlaces'][0]['clase'] and 'cal-btn-editar' in ac[0]['enlaces'][0]['clase'],
+                      'estilo de los botones', 'Generar (naranja) y Editar llevan su estilo')
+            igual(ac[0]['enlaces'][0]['aria'], 'Editar en 2026 ALFA UNO, lunes 2 de noviembre de 2026', '02/11 texto del botón para lectores de pantalla')
+            anotar(pg)
+            ac = acciones('2026-11-05')
+            igual([x['obra'] for x in ac], [NOMBRES[o] for o in ('a', 'b', 'c', 'g')], '05/11 las cuatro obras abiertas')
+            igual([[e['texto'] for e in x['enlaces']] for x in ac], [['Generar']] * 4, '05/11 sin registro en ninguna: todas con «Generar»')
+            igual([e['href'] for x in ac for e in x['enlaces']], [B % (o, '2026-11-05') for o in ('a', 'b', 'c', 'g')], '05/11 cada «Generar» abre su obra en ese día')
+            anotar(pg)
+            ac = acciones('2026-11-04')
+            igual([[e['texto'] for e in x['enlaces']] for x in ac], [['Generar'], ['Editar'], ['Editar'], ['Generar']], '04/11 b y c con registro; a y g sin él')
+            ac = acciones('2026-11-12')
+            igual([[e['texto'] for e in x['enlaces']] for x in ac], [['Generar']] * 4, '12/11 (futuro) también se puede generar de antemano')
+            pg.close()
+
+            # --- 13. Una obra con un nombre o un código raro no rompe la dirección ni se cuela como etiqueta ---
+            d5 = montar(motor, [], temporales)
+            raro = 'x" onmouseover="window.__xss=2&y=1#\'<b>'
+            est_raro = {'version': 1, 'generado': '2026-11-09T08:00:00+01:00', 'jornada_base_h': 7.5, 'catalogo': [], 'obras': {
+                raro: {'nombre': '2026 <i>RARA</i>', 'cerrada': False, 'horario_semanal': HORARIO, 'excepciones_horario': {}, 'ultima': {'vivienda': None, 'garaje': None},
+                       'jornadas': [{'fecha': '2026-11-02', 'ambito': 'vivienda', 'nombre': 'Ana', 'horas': 7.5, 'extra': 0}]}}}
+            with open(os.path.join(d5, 'personal_estado.js'), 'w', encoding='utf-8') as fh:
+                fh.write('window.SAGARDE_PERSONAL = ' + json.dumps(est_raro, ensure_ascii=False) + ';\n')
+            pg = abrir(browser, d5, errores=errores)
+            pg.click('.cal-dia[data-f="2026-11-02"]')
+            enl = pg.eval_on_selector_all('#cal-detalle .cal-accion a', 'as => as.map(a => ({href: a.getAttribute("href"), attrs: a.getAttributeNames().sort()}))')
+            igual(len(enl), 1, 'obra rara: un solo botón')
+            igual(enl[0]['href'], "generador_personal.html#obra=x%22%20onmouseover%3D%22window.__xss%3D2%26y%3D1%23'%3Cb%3E&fecha=2026-11-02&amb=vivienda",
+                  'obra rara: el código va codificado en la dirección')
+            igual(enl[0]['attrs'], ['aria-label', 'class', 'href'], 'obra rara: no se cuela ningún atributo nuevo')
+            comprobar('2026 <i>RARA</i>' in pg.inner_text('#cal-detalle'), 'obra rara', 'el nombre con etiquetas se ve como texto')
+            comprobar(pg.locator('#cal-detalle i').count() == 0, 'obra rara', 'el nombre con etiquetas no creó ninguna etiqueta')
+            comprobar(pg.evaluate('window.__xss') is None, 'obra rara', 'no se ejecutó nada')
+            pg.close()
+
+            # --- 14. De punta a punta: pincho «Generar» o «Editar» y aterrizo en la app de jornada en esa obra y ese día; y vuelvo con su enlace ---
+            def a_la_app(fecha, obra, boton):
+                p_ = abrir(browser, d, errores=errores)
+                p_.click('.cal-dia[data-f="%s"]' % fecha)
+                with p_.expect_navigation():
+                    p_.click('#cal-detalle .cal-accion:has(b:text-is("%s")) a:text-is("%s")' % (NOMBRES[obra], boton))
+                p_.wait_for_selector('#obra')
+                p_.wait_for_timeout(200)
+                return p_
+
+            pg = a_la_app('2026-11-05', 'c', 'Generar')
+            igual(pg.input_value('#obra'), 'c', '«Generar»: la app abre en la obra pedida')
+            igual(pg.input_value('#fecha'), '2026-11-05', '«Generar»: y en el día pedido')
+            igual(pg.inner_text('#estado-dia').strip(), 'Este día no tiene nada guardado.', '«Generar»: el día sale vacío, listo para anotar')
+            igual(pg.evaluate('location.hash'), '', '«Generar»: la dirección queda limpia')
+            pg.close()
+            pg = a_la_app('2026-11-02', 'a', 'Editar')
+            igual([pg.input_value('#obra'), pg.input_value('#fecha')], ['a', '2026-11-02'], '«Editar»: la app abre en la obra y el día pedidos')
+            comprobar(pg.inner_text('#estado-dia').startswith('✓ Guardado el'), '«Editar»', 'la app dice que ese día está guardado: ' + pg.inner_text('#estado-dia'))
+            marcados = pg.eval_on_selector_all('#v-app .row', 'e=>e.filter(r=>r.querySelector(".x.on")).map(r=>r.dataset.nombre)')
+            igual(sorted(marcados), sorted(['Ana', 'Luis', XSS]), '«Editar»: salen marcados los tres que estuvieron ese día')
+            comprobar(pg.evaluate('window.__xss') is None, '«Editar»', 'el nombre con etiquetas no se ejecutó en la app')
+            with pg.expect_navigation():
+                pg.click('#enlace-calendario')
+            pg.wait_for_selector('.cal-dia')
+            igual(pg.get_attribute('.cal-dia[aria-pressed="true"]', 'data-f'), '2026-11-02', 'la vuelta: el calendario abre con el día de la app elegido')
+            igual(pg.inner_text('#cal-detalle h3'), 'lunes 2 de noviembre de 2026', 'la vuelta: y enseña ese día')
+            pg.close()
+            pg = a_la_app('2026-11-02', 'b', 'Editar garajes')
+            comprobar('on' in (pg.get_attribute('button[data-amb="garaje"]', 'class') or '').split(), '«Editar garajes»', 'la app abre en la zona de Garajes')
+            igual([pg.input_value('#obra'), pg.input_value('#fecha')], ['b', '2026-11-02'], '«Editar garajes»: obra y día')
+            pg.close()
+
+            # --- 15. #calendario&dia=AAAA-MM-DD abre el calendario con ese día elegido (así vuelve la app); una fecha que no vale se ignora ---
+            for hash_, esperado, mes in (('#calendario&dia=2026-11-03', '2026-11-03', 'noviembre 2026'), ('#calendario&dia=2026-10-29', '2026-10-29', 'octubre 2026')):
+                pg = abrir(browser, d, hash_=hash_, ancho=800, alto=900, errores=errores)
+                igual(pg.get_attribute('.cal-dia[aria-pressed="true"]', 'data-f'), esperado, hash_ + ': día elegido')
+                igual(pg.inner_text('#contenido-calendario .etq'), mes, hash_ + ': mes')
+                top = pg.evaluate('document.querySelector("#cal-detalle").getBoundingClientRect().top')
+                comprobar(0 <= top < 780, hash_ + ' detalle a la vista', 'el detalle empieza a %d px del borde' % top)
+                pg.close()
+            for malo in ('2026-13-45', 'abc', '2026-11-3', '%3Cimg%20src%3Dx%20onerror%3Dwindow.__xss%3D3%3E', ''):
+                pg = abrir(browser, d, hash_='#calendario&dia=' + malo, errores=errores)
+                igual(pg.locator('.cal-dia[aria-pressed="true"]').count(), 0, 'dia=%r: no se elige nada' % malo)
+                igual(pg.inner_text('#contenido-calendario .etq'), 'noviembre 2026', 'dia=%r: queda el mes de hoy' % malo)
+                comprobar(pg.evaluate('window.__xss') is None, 'dia=%r' % malo, 'no se ejecutó nada')
+                pg.close()
+            pg = browser.new_page(viewport={'width': 1100, 'height': 900})
+            pg.add_init_script(FIJA)
+            pg.goto(url(d, '#base&dia=2026-11-03'))
+            pg.wait_for_selector('#vista-base:not([hidden])')
+            comprobar(pg.is_visible('#vista-base') and not pg.is_visible('#vista-calendario'), '#base&dia=…', 'el día solo vale para el calendario: la pestaña pedida es la Base')
+            igual(pg.locator('.cal-dia[aria-pressed="true"]').count(), 0, '#base&dia=…: el calendario (oculto) no elige ese día')
+            pg.close()
+
+            # --- 16. En la cabecera, el acceso a la app de jornada (desde cualquier pestaña) ---
+            pg = browser.new_page(viewport={'width': 1100, 'height': 900})
+            pg.add_init_script(FIJA)
+            pg.goto(url(d, ''))
+            pg.wait_for_selector('#enlace-app-jornada')
+            igual(pg.get_attribute('#enlace-app-jornada', 'href'), 'generador_personal.html', 'cabecera: enlace a la app de jornada')
+            comprobar(pg.is_visible('#enlace-app-jornada') and 'app de la tablet' in pg.inner_text('#enlace-app-jornada'), 'cabecera', 'el enlace se ve y dice a dónde lleva')
+            TEXTOS.append(pg.inner_text('header.hdr'))
             pg.close()
 
             # --- 8. Sin ninguna jornada: lo dice y no inventa nada ---

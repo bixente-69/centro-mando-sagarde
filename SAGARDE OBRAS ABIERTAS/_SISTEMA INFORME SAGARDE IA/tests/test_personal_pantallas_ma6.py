@@ -2,7 +2,7 @@
 """MA6 · la tablet de Personal (generador_personal.html) en el móvil y en la tablet: Chromium de verdad, datos INVENTADOS, fecha fija 23/10/2026.
 
 Mide (en 360, 390, 414, 768, 820 y 1180 px de ancho): que la página no se sale de ancho, que no hay botones ni campos de menos de 44 px,
-que la cabecera es de una fila y baja, que la lista de gente se ve al abrir en el móvil (con el calendario plegado), que «Guardar jornada»
+que la cabecera es de una fila y baja, que la lista de gente se ve al abrir en el móvil (la app no tiene calendario propio hasta «Varios días»), que «Guardar jornada»
 está siempre a la vista (también con el teclado puesto) y no tapa el último nombre, que a partir de 768 px hay dos columnas, que los campos
 no hacen zoom (16 px) y que la obra de prueba no sale en los desplegables y la tablet se abre en una obra con gente.
 P3_APP apunta a otra copia de los tres ficheros de la tablet (para las mutaciones: se rompe una COPIA, nunca el original)."""
@@ -161,12 +161,10 @@ class TestMedidasEnSeisAnchos(Base):
             with self.subTest(ancho=ancho):
                 pg, errores = self.abrir(ancho, alto)
                 self._revisar(pg, "Anotar", ancho)
-                if pg.is_visible("#cal-toggle"):
-                    pg.click("#cal-toggle")
-                self.assertTrue(pg.is_visible("#cal-box"), "el calendario tiene que verse al abrirlo")
-                self._revisar(pg, "Anotar con el calendario abierto", ancho)
+                self.assertIsNone(pg.query_selector("#cal-box"), "sin «Varios días» no hay calendario en la app (el de verdad es el de Sagarde)")
                 pg.click("button[data-multi-dias]")
-                self._revisar(pg, "Anotar con «Varios días» encendido", ancho)
+                self.assertTrue(pg.is_visible("#cal-box"), "«Varios días» saca el calendario a la vista")
+                self._revisar(pg, "Anotar con «Varios días» encendido (calendario abierto)", ancho)
                 pg.click("button[data-multi-dias]")
                 pg.click("#horario summary")
                 self._revisar(pg, "Anotar con el horario semanal abierto", ancho)
@@ -177,7 +175,7 @@ class TestMedidasEnSeisAnchos(Base):
                 self._revisar(pg, "Anotar con el lápiz abierto", ancho)
                 pg.click("button[data-ren-cancelar]")
                 # un lunes de futuro (en esta fecha de prueba): al guardar sale el aviso con sus botones
-                pg.click('button[data-cal-dia="2026-10-26"]')
+                pg.evaluate("v => { const f = document.getElementById('fecha'); f.value = v; f.dispatchEvent(new Event('change', { bubbles: true })); }", "2026-10-26")
                 pg.click("button[data-copiar-ultimo]")   # un día nuevo sale sin marcar: se copia a la gente del 22/10
                 pg.click("button[data-guardar]")
                 pg.wait_for_selector("#aviso-guardar")
@@ -208,40 +206,39 @@ class TestCabeceraListaYGuardar(Base):
                 self.assertEqual(c["pos"], "sticky")
                 self.assertEqual(pg.get_attribute(".btn-volver-portal", "aria-label"), "Volver al Portal Sagarde")
 
-    def test_en_el_movil_la_lista_se_ve_al_abrir_y_el_calendario_va_plegado(self):
+    def test_en_el_movil_la_lista_se_ve_al_abrir_y_no_hay_calendario_hasta_varios_dias(self):
         for ancho, alto in MOVILES:
             with self.subTest(ancho=ancho):
                 pg, _ = self.abrir(ancho, alto)   # con el aviso de «añadir a la pantalla de inicio» puesto: el peor caso
-                self.assertFalse(pg.is_visible("#cal-box"), "en el móvil el calendario tiene que ir plegado")
-                self.assertTrue(pg.is_visible("#cal-toggle"))
-                texto = " ".join(pg.inner_text("#cal-toggle").split())
-                self.assertEqual(texto, "Hoy · viernes 23/10 ▾", "el botón dice qué día está elegido")
-                self.assertEqual(pg.get_attribute("#cal-toggle", "aria-expanded"), "false")
+                self.assertIsNone(pg.query_selector("#cal-box"), "sin «Varios días» no hay calendario en la app")
+                self.assertIsNone(pg.query_selector("#cal-toggle"), "ni botón de plegarlo: ya no hay nada que plegar")
+                # el rótulo de la fecha dice qué día está elegido (la hoja de estilos lo escribe en mayúsculas)
+                texto = " ".join(pg.inner_text("#fecha-rotulo").split()).lower()
+                self.assertEqual(texto, "fecha: hoy · viernes 23/10", "el rótulo dice qué día está elegido")
+                # el enlace al calendario de Sagarde va en la misma fila que la fecha: no gasta una fila más
+                fila = pg.evaluate("""() => { const i = document.getElementById('fecha').getBoundingClientRect(), l = document.getElementById('enlace-calendario').getBoundingClientRect();
+                  return {mismaFila: Math.abs(i.top - l.top) < 3, alto: l.height}; }""")
+                self.assertTrue(fila["mismaFila"], "el enlace al calendario tiene que ir en la misma fila que la fecha: %s" % fila)
+                self.assertGreaterEqual(fila["alto"], 44, "el enlace tiene que poder pulsarse con el dedo: %s" % fila)
                 primera = pg.evaluate("document.querySelector('#lista .row').getBoundingClientRect().top")
                 self.assertLessEqual(primera, alto - 56, "la primera persona de la lista tiene que verse sin bajar (empieza a %s de %s px)" % (round(primera), alto))
-                # abrir y plegar
-                pg.click("#cal-toggle")
-                self.assertTrue(pg.is_visible("#cal-box"))
-                self.assertEqual(pg.get_attribute("#cal-toggle", "aria-expanded"), "true")
-                self.assertEqual(" ".join(pg.inner_text("#cal-toggle").split()), "Hoy · viernes 23/10 ▴")
-                pg.click('button[data-cal-dia="2026-10-22"]')
-                self.assertFalse(pg.is_visible("#cal-box"), "elegir un día pliega el calendario para que se vea la lista")
-                self.assertEqual(" ".join(pg.inner_text("#cal-toggle").split()), "Ayer · jueves 22/10 ▾")
+                # «Varios días»: el calendario sale abierto, marcar un día no lo pliega y apagarlo lo quita
                 pg.click("button[data-multi-dias]")
-                self.assertTrue(pg.is_visible("#cal-box"), "«Varios días» abre el calendario")
+                self.assertTrue(pg.is_visible("#cal-box"), "«Varios días» saca el calendario")
                 pg.click('button[data-cal-dia="2026-10-21"]')
                 self.assertTrue(pg.is_visible("#cal-box"), "marcar un día con «Varios días» no pliega el calendario")
-                self.assertEqual(" ".join(pg.inner_text("#cal-toggle").split()), "2 días marcados ▴")
-                pg.click("#cal-toggle")
-                self.assertFalse(pg.is_visible("#cal-box"))
-                self.assertEqual(" ".join(pg.inner_text("#cal-toggle").split()), "2 días marcados ▾")
+                self.assertEqual(" ".join(pg.inner_text("#fecha-rotulo").split()).lower(), "fecha: 2 días marcados")
+                pg.click("button[data-multi-dias]")
+                self.assertIsNone(pg.query_selector("#cal-box"), "apagar «Varios días» quita el calendario")
 
-    def test_en_la_tablet_el_calendario_siempre_se_ve(self):
+    def test_en_la_tablet_sin_varios_dias_no_hay_calendario_y_con_varios_dias_se_ve(self):
         for ancho, alto in TABLETS:
             with self.subTest(ancho=ancho):
                 pg, _ = self.abrir(ancho, alto)
-                self.assertTrue(pg.is_visible("#cal-box"))
-                self.assertFalse(pg.is_visible("#cal-toggle"), "con dos columnas no hace falta el botón de plegar")
+                self.assertIsNone(pg.query_selector("#cal-box"), "en la tablet tampoco hay calendario propio sin «Varios días»")
+                self.assertTrue(pg.is_visible("#enlace-calendario"), "el enlace al calendario de Sagarde se ve")
+                pg.click("button[data-multi-dias]")
+                self.assertTrue(pg.is_visible("#cal-box"), "con «Varios días» el calendario sale a la vista")
 
     def test_guardar_esta_siempre_a_la_vista_tambien_con_el_teclado(self):
         for ancho, alto in ANCHOS:
@@ -319,7 +316,9 @@ class TestDosColumnas(Base):
                 pg.wait_for_function("(JSON.parse(localStorage.getItem('sgd_personal_pendientes') || '[]')).length === 1")
 
     def test_la_columna_de_la_izquierda_se_queda_y_tiene_su_scroll_si_la_pantalla_es_baja(self):
-        pg, _ = self.abrir(1180, 520)
+        # (sin el calendario propio, que ya solo sale con «Varios días», la columna de la izquierda mide ~344 px: la pantalla de la
+        # prueba tiene que ser más baja que eso para que haga falta su scroll)
+        pg, _ = self.abrir(1180, 420)
         c = pg.evaluate("""() => { const e = document.querySelector('.col-izq'), s = getComputedStyle(e);
           return {pos: s.position, oy: s.overflowY, alto: e.clientHeight, contenido: e.scrollHeight, pantalla: innerHeight}; }""")
         self.assertEqual(c["pos"], "sticky", c)

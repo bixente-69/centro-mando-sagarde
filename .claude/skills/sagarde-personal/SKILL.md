@@ -68,6 +68,31 @@ exige. El cálculo es `calendarioMes` en `personal_calculo.js` (una sola vez; la
 aplicado**: un control horario sin aplicar en `REVISIONES` no sale hasta «actualiza la obra» o el `.bat`. Si una obra ya no se
 sigue y estorba como «falta», lo limpio es cerrarla (`sagarde-cerrar-obra`). Spec: `_SISTEMA/docs/superpowers/specs/2026-11-05-personal-calendario-por-obras-design.md`.
 
+**Interconectada con la app de jornada (06/11/2026, pedido de Bixente: «un solo calendario, sin líos»).** El detalle del día sale **al
+lado del calendario** (pantalla de 1.000 px o más) o, en pantalla estrecha, **se desplaza solo a la vista** con un botón «↑ Volver al
+calendario» (antes salía debajo, fuera de pantalla y parecía que «no hacía nada»). Arriba del detalle, **«Anotar este día»**: cada obra
+abierta con su botón —**Editar** si ese día tiene registro (uno por zona si hay viviendas y garajes), **Generar** si no (también días
+futuros)—; las cerradas con registro salen sin botón. Los botones abren la app en `generador_personal.html#obra=<id>&fecha=AAAA-MM-DD[&amb=vivienda|garaje]`
+(el id va codificado); la app (`abrirEnlaceDeLaWeb`) abre en esa obra, zona y día **solo con valores válidos** (obra abierta, fecha real,
+zona conocida), enseña lo guardado del día y deja la dirección limpia; si lo que hay en pantalla es una **jornada a medias** (alguien
+marcado que no coincide con lo guardado) NO la pisa: avisa y no cambia nada. También reacciona si la app ya está abierta (`hashchange`).
+Al revés: la app tiene, en la misma fila que el campo de la fecha (corto, para no gastar una fila más en el móvil), el enlace «📅 Calendario ›» (`#enlace-calendario`, nombre completo en su `aria-label`: «Calendario y ranking de todas las obras») →
+`personal_sagarde.html#calendario&dia=AAAA-MM-DD` (abre el calendario con ese día elegido; una fecha que no existe se ignora), y la cabecera de
+la página de Sagarde tiene «✎ Anotar la jornada en la app de la tablet ›». **Limitación:** la página de Sagarde necesita internet (el
+service worker solo cubre la app de jornada); sin cobertura no se puede abrir el calendario desde la tablet. Pruebas: `verificar_calendario_obras.py`
+(escenas 11–16, con el recorrido de ida y vuelta entre las dos páginas) y `verificar_generador_personal.py` (T246–T254).
+
+**El calendario propio de la app SOLO sale con «Varios días» (06/11/2026, decisión de Bixente: «Solo Varios días»).** Había dos calendarios
+(el de la app y el de Sagarde, con todas las obras) y podían liar. Ahora, en la app: sin «Varios días» **no hay calendario** (ni
+`#cal-box` ni botón de plegarlo); el día se elige con el campo de la fecha o llegando desde el calendario de Sagarde; sobre el campo, el rótulo
+`#fecha-rotulo` dice el día con palabras («Fecha: Hoy · viernes 23/10», «Ayer · …» o «N días marcados»). Con «Varios días» encendido sale el
+calendario de la app (marcas de días con registro, leyenda, mes anterior/siguiente, días marcados con su ×) **siempre abierto**, debajo de la
+fila de botones «Copiar el último día» / «Varios días» (el botón no se mueve al encenderlo); apagarlo lo quita y deja el último día tocado.
+Llegar por el enlace de Sagarde apaga «Varios días» y abre UN día (igual que abrir un día desde «Jornadas»). Motivo de dejarlo para
+«Varios días»: es como Bixente marca su semana entera de golpe y debe seguir funcionando **sin cobertura** (la página de Sagarde
+necesita internet). Pruebas: `verificar_generador_personal.py` T255–T257 (y las escenas T200–T223b, que ahora eligen el día con el campo de
+la fecha o encienden «Varios días» antes de mirar el calendario) y `test_personal_pantallas_ma6.py`.
+
 ## La tablet con varias pestañas y el nombre del aparato (05/11/2026)
 
 - **Dos pestañas de la misma tablet ya no se pisan.** Las siete listas que guarda el aparato (`pendientes`, `nuevos`, `horarios`,
