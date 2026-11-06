@@ -122,6 +122,26 @@
    "presentes": [],
    "registrado": "2026-11-03T22:22:43.328Z",
    "origen": "movil"
+  },
+  {
+   "fecha": "2026-11-06",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0004",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0006",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-06T12:43:24.377Z",
+   "origen": "movil"
   }
  ]
 }

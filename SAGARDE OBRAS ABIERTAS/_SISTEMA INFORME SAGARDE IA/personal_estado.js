@@ -1,6 +1,6 @@
 window.SAGARDE_PERSONAL = {
  "version": 1,
- "generado": "2026-11-06T06:34:32.863379+01:00",
+ "generado": "2026-11-06T14:01:26.103396+01:00",
  "jornada_base_h": 7.5,
  "catalogo": [
   {
@@ -211,7 +211,7 @@ window.SAGARDE_PERSONAL = {
    },
    "ultima": {
     "vivienda": {
-     "fecha": "2026-11-04",
+     "fecha": "2026-11-06",
      "presentes": [
       {
        "nombre": "Manuel",
@@ -225,6 +225,14 @@ window.SAGARDE_PERSONAL = {
    "jornadas": [
     {
      "fecha": "2026-11-04",
+     "ambito": "vivienda",
+     "nombre": "Manuel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-06",
      "ambito": "vivienda",
      "nombre": "Manuel",
      "horas": 8,
@@ -1120,7 +1128,7 @@ window.SAGARDE_PERSONAL = {
    },
    "ultima": {
     "vivienda": {
-     "fecha": "2026-11-05",
+     "fecha": "2026-11-06",
      "presentes": [
       {
        "nombre": "Javi",
@@ -1640,6 +1648,30 @@ window.SAGARDE_PERSONAL = {
      "horas": 8,
      "extra": 0,
      "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-06",
+     "ambito": "vivienda",
+     "nombre": "Ignacio",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-06",
+     "ambito": "vivienda",
+     "nombre": "Javi",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-06",
+     "ambito": "vivienda",
+     "nombre": "Leonel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
     }
    ]
   },
@@ -1679,7 +1711,21 @@ window.SAGARDE_PERSONAL = {
     }
    },
    "ultima": {
-    "vivienda": null,
+    "vivienda": {
+     "fecha": "2026-11-06",
+     "presentes": [
+      {
+       "nombre": "Alejo",
+       "horas": 8,
+       "extra": 0
+      },
+      {
+       "nombre": "Nestor",
+       "horas": 8,
+       "extra": 0
+      }
+     ]
+    },
     "garaje": {
      "fecha": "2026-11-04",
      "presentes": [
@@ -1756,6 +1802,22 @@ window.SAGARDE_PERSONAL = {
     {
      "fecha": "2026-11-04",
      "ambito": "garaje",
+     "nombre": "Nestor",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-06",
+     "ambito": "vivienda",
+     "nombre": "Alejo",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-06",
+     "ambito": "vivienda",
      "nombre": "Nestor",
      "horas": 8,
      "extra": 0,
