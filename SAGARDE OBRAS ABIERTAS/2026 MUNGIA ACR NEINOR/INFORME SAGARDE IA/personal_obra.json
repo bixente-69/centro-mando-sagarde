@@ -118,6 +118,26 @@
    "presentes": [],
    "registrado": "2026-11-01T19:41:26.891Z",
    "origen": "movil"
+  },
+  {
+   "fecha": "2026-11-05",
+   "ambito": "garaje",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0005",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0006",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-05T13:55:24.993Z",
+   "origen": "movil"
   }
  ]
 }

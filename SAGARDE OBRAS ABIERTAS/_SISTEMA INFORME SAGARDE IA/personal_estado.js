@@ -1,6 +1,6 @@
 window.SAGARDE_PERSONAL = {
  "version": 1,
- "generado": "2026-11-05T13:51:34.919690+01:00",
+ "generado": "2026-11-06T06:34:32.863379+01:00",
  "jornada_base_h": 7.5,
  "catalogo": [
   {
@@ -271,13 +271,8 @@ window.SAGARDE_PERSONAL = {
    "ultima": {
     "vivienda": null,
     "garaje": {
-     "fecha": "2026-10-29",
+     "fecha": "2026-11-05",
      "presentes": [
-      {
-       "nombre": "Alejo",
-       "horas": 8,
-       "extra": 0
-      },
       {
        "nombre": "Manuel",
        "horas": 8,
@@ -358,6 +353,22 @@ window.SAGARDE_PERSONAL = {
     },
     {
      "fecha": "2026-10-29",
+     "ambito": "garaje",
+     "nombre": "Nestor",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-05",
+     "ambito": "garaje",
+     "nombre": "Manuel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-05",
      "ambito": "garaje",
      "nombre": "Nestor",
      "horas": 8,
@@ -1109,7 +1120,7 @@ window.SAGARDE_PERSONAL = {
    },
    "ultima": {
     "vivienda": {
-     "fecha": "2026-11-03",
+     "fecha": "2026-11-05",
      "presentes": [
       {
        "nombre": "Javi",
@@ -1441,6 +1452,14 @@ window.SAGARDE_PERSONAL = {
     {
      "fecha": "2026-10-29",
      "ambito": "vivienda",
+     "nombre": "Asensio",
+     "horas": 7.5,
+     "extra": 0,
+     "empresa": "Sagarde"
+    },
+    {
+     "fecha": "2026-10-29",
+     "ambito": "vivienda",
      "nombre": "Hssain",
      "horas": 8,
      "extra": 0,
@@ -1568,6 +1587,54 @@ window.SAGARDE_PERSONAL = {
     },
     {
      "fecha": "2026-11-03",
+     "ambito": "vivienda",
+     "nombre": "Leonel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-04",
+     "ambito": "vivienda",
+     "nombre": "Ignacio",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-04",
+     "ambito": "vivienda",
+     "nombre": "Javi",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-04",
+     "ambito": "vivienda",
+     "nombre": "Leonel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-05",
+     "ambito": "vivienda",
+     "nombre": "Ignacio",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-05",
+     "ambito": "vivienda",
+     "nombre": "Javi",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-05",
      "ambito": "vivienda",
      "nombre": "Leonel",
      "horas": 8,

@@ -243,6 +243,18 @@ Objetivo suyo (04/10/2026): tras actualizar la obra, el informe que pida sale
 
 ## Trampas ya vistas
 
+- **ABIERTO (apuntado el 05/11/2026 a petición de Bixente: «no puede ocurrir, genera dudas») — dos avisos que mienten sobre controles horarios.**
+  (1) **El portal avisa «Sin aplicar en REVISIONES» de un control que el propio `.bat` acaba de aplicar.** El paso [0/6] del `.bat`
+  (`auditor_sagarde.py`) calcula los pendientes y escribe `_SISTEMA/MOTOR/auditoria_diagnostico.json`; el paso [1/6]
+  (`generar_todos.py`) aplica los controles limpios; el paso [3/6] (`sagarde_portal.py`) pinta el aviso leyendo el JSON de antes de
+  aplicar. Hace falta una segunda pasada del `.bat` para que desaparezca. (2) **[NO SE REPARA EL FALLO DE FONDO: Bixente (05/11) pidió una salida práctica y se hizo la pestaña «Bandeja» de la app (ver skill `sagarde-personal`): enseña lo sin enviar y lo quita con «Quitar»; las jornadas nuevas ya llevan nombres actuales] La bandeja «Enviar al PC» de la app
+  (`generador_personal.html`) no se vacía si las jornadas pendientes llevan nombres antiguos**: `reconcile()` solo descarta una
+  pendiente si coincide con lo publicado comparando nombres literales, y el PC ya renombró a esa gente (`nombres_anteriores` del
+  catálogo); lo mismo con horarios especiales y cambios de nombre. Reproducido en navegador: con nombres actuales se limpia sola, con
+  nombres antiguos nunca. Causas y reparación propuesta en la memoria `project_sagarde_pendiente_reparar_aviso_sin_aplicar_atrasado`.
+  Hasta repararlo: si el aviso del portal sale justo después de dejar un control limpio, no es un dato roto (el auditor de la
+  pasada siguiente da cero); y las jornadas viejas «sin enviar» del PC que el lector clasificó como `sin_efecto` no hay que volver
+  a prepararlas. Un aviso real (control a revisar, inválido) NO debe esconderse al arreglarlo.
 - **RESUELTO el 09/10/2026: `--finalizar` ya no degrada las tarjetas de OTRAS obras.**
   Pasó el 05/10, el 08/10 y el 09/10: reconstruía `index.html` y `resumen_obras.json`
   desde `_cache_resultados_regen.json`, cuya entrada de cada obra solo se refrescaba al
