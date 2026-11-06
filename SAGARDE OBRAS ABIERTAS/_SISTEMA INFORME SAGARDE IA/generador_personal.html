@@ -1421,13 +1421,22 @@
           memoria = null;
         }
       }
+      // ¿Es «nombre» un nombre ANTIGUO de alguien que el PC ya renombró? El PC guarda los anteriores en nombres_anteriores
+      // («Manuel (Manueles)» pasó a «Manuel»): no es otra persona. Si hoy es el nombre de alguien, no cuenta como antiguo.
+      // (Un nombre nuevo creado en este aparato antes del cambio se quedaba guardado y salía repetido en «Añadir de la base».)
+      function esNombreAntiguoDelPC(nombre) {
+        let clave = key(nombre);
+        let catalogo = state?.catalogo || [];
+        if (catalogo.some((c) => key(c.nombre) === clave)) return false;
+        return catalogo.some((c) => Array.isArray(c.nombres_anteriores) && c.nombres_anteriores.some((x) => typeof x === 'string' && key(x) === clave));
+      }
       // Nombres de trabajadores (publicados y nuevos creados) por su clave sin tildes ni mayúsculas.
       function indiceNombres() {
         if (memoria && memoria.nombres) return memoria.nombres;
         let m = new Map();
         (state?.catalogo || []).forEach((x) => m.set(key(x.nombre), x.nombre));
         news.forEach((x) => {
-          if (!m.has(key(x))) m.set(key(x), x);
+          if (!m.has(key(x)) && !esNombreAntiguoDelPC(x)) m.set(key(x), x);
         });
         if (memoria) memoria.nombres = m;
         return m;
@@ -1612,7 +1621,14 @@
           });
           if (!Object.keys(personas).length) delete excepciones[id];
         });
-        altas = altas.filter((x) => !state?.catalogo?.some((c) => key(c.nombre) === key(x)));
+        // Un nombre «nuevo» de este aparato que el PC ya tiene con otro nombre (lo renombró y guarda el antiguo) no es otra
+        // persona: se olvida, y su alta pendiente también (el PC ya conoce a esa persona).
+        let nuevosSinViejos = news.filter((x) => !esNombreAntiguoDelPC(x));
+        if (nuevosSinViejos.length !== news.length) {
+          news = nuevosSinViejos;
+          set(K.n, news);
+        }
+        altas = altas.filter((x) => !state?.catalogo?.some((c) => key(c.nombre) === key(x)) && !esNombreAntiguoDelPC(x));
         set(K.p, pending);
         set(K.h, hours);
         set(K.x, excepciones);
@@ -2163,7 +2179,7 @@
           if (x.activo !== false) m.set(key(x.nombre), x.nombre);
         });
         news.forEach((x) => {
-          if (!m.has(key(x))) m.set(key(x), x);
+          if (!m.has(key(x)) && !esNombreAntiguoDelPC(x)) m.set(key(x), x);
         });
         let lista = [...m.values()].sort((x, y) => x.localeCompare(y, 'es'));
         let kFiltro = key(filtro);

@@ -5015,6 +5015,85 @@ with sync_playwright() as p:
            'T257 el enlace apaga «Varios días» y abre el 20/10 con su gente: %s %s' % (e.pg.evaluate("a.fechas"), e.marcados()))
     con_escena('T257', est200(), t257)
 
+    # ======================================================================================================================
+    # 06/11/2026 — NOMBRES ANTIGUOS REPETIDOS EN LA LISTA DE AÑADIR (Bixente: «manuel de la empresa manueles, y manuel (manueles)»).
+    # Un nombre NUEVO que se creó en este aparato antes de que el PC lo renombrara («Manuel (Manueles)» → «Manuel», empresa Manueles)
+    # se quedaba guardado en el aparato para siempre: «Añadir de la base» enseñaba a la misma persona dos veces («Manuel · Manueles» y
+    # «Manuel (Manueles)»). El PC publica el nombre antiguo en nombres_anteriores: ese nombre no es otra persona. Ahora no sale en la
+    # lista y el aparato lo olvida (también su alta pendiente); un nombre nuevo de verdad, o uno que HOY es de otra persona, se queda.
+    # ======================================================================================================================
+    def est_antiguos():
+        datos = est9(viv('2026-10-21', 'Ana'), ['Ana', 'Manuel', 'Alejo', 'Nestor', 'Rafa', 'Rafael'], u('2026-10-21', 'Ana'))
+        for c in datos['catalogo']:
+            if c['nombre'] in ('Manuel', 'Alejo', 'Nestor'):
+                c.update(empresa='Manueles', nombres_anteriores=[c['nombre'] + ' (Manueles)'])
+            if c['nombre'] == 'Rafael':
+                c.update(nombres_anteriores=['Rafa'])      # un nombre antiguo que HOY es el nombre de otra persona (Rafa): no cuenta como antiguo
+        return datos
+
+    # --- T258: el nombre antiguo guardado en el aparato no sale como otra persona en la lista de añadir
+    def t258(e):
+        e.ir()
+        nombres = nombres_opciones(e)
+        ok(nombres.count('Manuel · Manueles') == 1 and nombres.count('Alejo · Manueles') == 1 and nombres.count('Nestor · Manueles') == 1
+           and not [n for n in nombres if '(manueles)' in n.lower()],
+           'T258 «Manuel», «Alejo» y «Nestor» salen una sola vez y sin su nombre antiguo (también el escrito en mayúsculas): %s' % nombres)
+        ok('Pepe' in nombres, 'T258 un nombre nuevo de verdad (Pepe) sigue saliendo: %s' % nombres)
+        ok(len(set(nombres)) == len(nombres), 'T258 y no hay ninguna persona repetida: %s' % nombres)
+        base = e.pg.evaluate("cat()")
+        ok(not [n for n in base if '(manueles)' in n.lower()] and 'Pepe' in base,
+           'T258 y la base que ve la tablet (la que usa para saber si un nombre escrito es el mismo u otro) tampoco los trae: %s' % base)
+        ok(not e.errs, 'T258 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T258', est_antiguos(), t258, init=sembrar_varios({'sgd_personal_nuevos': ['Manuel (Manueles)', 'Alejo (Manueles)', 'NESTOR (MANUELES)', 'Pepe']}))
+
+    # --- T259: el aparato olvida los nombres antiguos (y su alta pendiente) y conserva lo que es de verdad nuevo
+    def t259(e):
+        e.ir()
+        ok(ls(e, 'nuevos') == ['Pepe'], 'T259 en «nombres nuevos» solo queda Pepe: %s' % ls(e, 'nuevos'))
+        ok(ls(e, 'altas') == ['Pepe'], 'T259 y en las altas pendientes también: %s' % ls(e, 'altas'))
+    con_escena('T259', est_antiguos(), t259, init=sembrar_varios({'sgd_personal_nuevos': ['Manuel (Manueles)', 'Alejo (Manueles)', 'NESTOR (MANUELES)', 'Pepe'],
+                                                                   'sgd_personal_altas': ['Manuel (Manueles)', 'Pepe']}))
+
+    # --- T260: un nombre que fue antiguo de alguien pero HOY es el de otra persona no se trata como antiguo: sale y no se olvida
+    def t260(e):
+        e.ir()
+        nombres = nombres_opciones(e)
+        ok(nombres.count('Rafa') == 1 and nombres.count('Rafael') == 1, 'T260 «Rafa» y «Rafael» salen una vez cada uno: %s' % nombres)
+        ok(ls(e, 'nuevos') == ['Rafa'], 'T260 y «Rafa», que hoy es de otra persona, no se olvida: %s' % ls(e, 'nuevos'))
+    con_escena('T260', est_antiguos(), t260, init=sembrar_varios({'sgd_personal_nuevos': ['Rafa']}))
+
+    # --- T261: datos mal formados en nombres_anteriores (un texto suelto, nulos, números) no rompen la app y solo cuenta lo que es un nombre de verdad
+    def t261(e):
+        e.ir()
+        ok(not e.errs, 'T261 sin errores de JavaScript con nombres_anteriores mal formados: %s' % e.errs)
+        nombres = nombres_opciones(e)
+        ok('Fedor' in nombres and not [n for n in nombres if n.startswith('Luisito')],
+           'T261 «Fedor» (nombres_anteriores era un texto suelto, no una lista) sigue como nombre nuevo y «Luisito» (nombre antiguo válido entre basura) no sale: %s' % nombres)
+        ok(ls(e, 'nuevos') == ['Fedor'], 'T261 el aparato olvida solo «Luisito»: %s' % ls(e, 'nuevos'))
+    raros = est9(viv('2026-10-21', 'Ana'), ['Ana', 'Fede', 'Luis'], u('2026-10-21', 'Ana'))
+    for c in raros['catalogo']:
+        if c['nombre'] == 'Fede':
+            c['nombres_anteriores'] = 'Fedor'
+        if c['nombre'] == 'Luis':
+            c['nombres_anteriores'] = [None, 7, {'x': 1}, 'Luisito']
+    con_escena('T261', raros, t261, init=sembrar_varios({'sgd_personal_nuevos': ['Fedor', 'Luisito']}))
+
+    # --- T262: aunque un nombre antiguo entre en «nuevos» con la app YA abierta (otra pestaña de la misma tablet lo guarda, o se escribe
+    # a mano), no sale como otra persona ni en la lista de añadir ni en la base que ve la tablet, y se olvida en el siguiente repaso
+    # (al abrir, el repaso ya lo había olvidado: por eso T258 solo no distingue el filtro de la lista del repaso)
+    def t262(e):
+        e.ir()
+        e.pg.evaluate("()=>{news.push('Manuel (Manueles)'); set(K.n, news); render();}")
+        nombres = nombres_opciones(e)
+        ok(nombres.count('Manuel · Manueles') == 1 and not [n for n in nombres if '(manueles)' in n.lower()],
+           'T262 un nombre antiguo que entra con la app abierta no sale como otra persona en la lista de añadir: %s' % nombres)
+        base = e.pg.evaluate("cat()")
+        ok(not [n for n in base if '(manueles)' in n.lower()], 'T262 ni en la base que ve la tablet: %s' % base)
+        e.pg.evaluate("()=>{reconcile();}")
+        ok(ls(e, 'nuevos') == [], 'T262 y en el siguiente repaso el aparato lo olvida: %s' % ls(e, 'nuevos'))
+        ok(not e.errs, 'T262 sin errores de JavaScript: %s' % e.errs)
+    con_escena('T262', est_antiguos(), t262)
+
     # Fin del bloque de las dos pestañas
 
     # Fin del bloque del paso MA4c

@@ -93,6 +93,17 @@ Llegar por el enlace de Sagarde apaga «Varios días» y abre UN día (igual que
 necesita internet). Pruebas: `verificar_generador_personal.py` T255–T257 (y las escenas T200–T223b, que ahora eligen el día con el campo de
 la fecha o encienden «Varios días» antes de mirar el calendario) y `test_personal_pantallas_ma6.py`.
 
+**Nombres antiguos repetidos en «Añadir de la base» (06/11/2026, Bixente: «manuel de la empresa manueles, y manuel (manueles)»).**
+Causa: un nombre NUEVO creado en la tablet antes de que el PC lo renombrara (`Manuel (Manueles)` → `Manuel`, empresa `Manueles`; el PC guarda el
+antiguo en `nombres_anteriores` del catálogo de `personal_estado.js`) se quedaba para siempre en `sgd_personal_nuevos` y la lista unía catálogo +
+nuevos por nombre exacto: salía la misma persona dos veces (reproducido con el catálogo real: 27 opciones en vez de 24; también Alejo y Nestor).
+Arreglo en `generador_personal.html`: `esNombreAntiguoDelPC(nombre)` (nombre antiguo de alguien que hoy se llama de otra forma; si HOY es el nombre
+de otra persona no cuenta; tolera `nombres_anteriores` mal formado) filtra `indiceNombres()` y `opcionesHTML()` (la lista de añadir, `cat()` y
+`personasDeLaBase()`, la que decide si un nombre escrito es «el mismo» u otro) y `reconcile()` olvida del aparato esos nombres de `nuevos` y de
+`altas`. **No** se tocan `empresas` ni las jornadas pendientes con nombre antiguo: pueden llevar un cambio real todavía sin enviar. Pruebas:
+`verificar_generador_personal.py` T258–T261. Si reaparece algo parecido, mirar `localStorage` del aparato (`sgd_personal_nuevos`, `altas`,
+`empresas`) o la pestaña «Bandeja».
+
 ## La tablet con varias pestañas y el nombre del aparato (05/11/2026)
 
 - **Dos pestañas de la misma tablet ya no se pisan.** Las siete listas que guarda el aparato (`pendientes`, `nuevos`, `horarios`,
