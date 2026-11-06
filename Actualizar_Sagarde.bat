@@ -47,6 +47,14 @@ if %errorlevel% neq 0 (
 )
 echo.
 
+echo [2b/6] Volviendo a mirar lo que queda sin aplicar en REVISIONES...
+rem El paso 0 calculo lo pendiente ANTES de aplicar; sin esto el portal avisaria de controles que el paso 1 acaba de aplicar.
+%PY% "_SISTEMA\MOTOR\scripts\auditor_sagarde.py" --solo-pendientes
+if %errorlevel% neq 0 (
+  echo   [AVISO] No se pudo volver a mirar lo pendiente. El portal puede ensenar un aviso de sin aplicar atrasado.
+)
+echo.
+
 echo [3/6] Generando portal principal...
 %PY% "_SISTEMA\MOTOR\sagarde_portal.py"
 if %errorlevel% neq 0 (

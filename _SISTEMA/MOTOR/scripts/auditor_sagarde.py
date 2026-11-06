@@ -43,7 +43,7 @@ if str(MOTOR_DIR) not in sys.path:
 
 from avisos import (contrato_sin_aviso, dias_desde_timestamp, es_aviso_por_antiguedad,
                     CODIGO_HOJAS_SIN_APLICAR, CODIGO_CONTROLES_SIN_APLICAR,
-                    CODIGO_PENDIENTES_NO_COMPROBADO)
+                    CODIGO_PENDIENTES_NO_COMPROBADO, CODIGOS_PENDIENTES)
 
 _SCRIPTS_DIR = str(Path(__file__).resolve().parent)
 if _SCRIPTS_DIR not in sys.path:
@@ -349,6 +349,41 @@ def audit_mantenimientos() -> list[dict]:
     return issues
 
 
+def _totales_y_nota(issues: list[dict]) -> tuple[dict, int]:
+    """Totales por nivel y nota de salud: una sola fórmula para la auditoría completa y para el refresco de pendientes."""
+    errores = sum(1 for i in issues if i["nivel"] == "error")
+    avisos = sum(1 for i in issues if i["nivel"] == "warning")
+    infos = sum(1 for i in issues if i["nivel"] == "info")
+    totales = {"total_issues": len(issues), "errors": errores, "warnings": avisos, "infos": infos}
+    return totales, max(0, 100 - (errores * 30 + avisos * 15 + infos * 2))
+
+
+def refrescar_pendientes(ruta=None) -> dict | None:
+    """Vuelve a mirar lo que espera sin aplicar en REVISIONES y lo deja en el diagnóstico.
+
+    Defecto del 05/11/2026 (reparado el 06/11/2026): el paso 0 del .bat calculaba los pendientes, el paso 1
+    aplicaba los controles limpios y el portal (paso 3) pintaba el aviso con lo calculado ANTES, así que un control
+    que el propio .bat acababa de aplicar seguía saliendo como «sin aplicar» hasta la pasada siguiente. Este refresco
+    se llama entre aplicar y pintar y reescribe SOLO los avisos de pendientes (los demás, los totales por nivel y la
+    nota se conservan o se recalculan con la misma fórmula; la hora de la auditoría no se toca).
+    Si no hay diagnóstico no se inventa ninguno (devuelve None); uno ilegible lanza ValueError; si la comprobación
+    falla se AVISA (PENDIENTES_NO_COMPROBADO): un cero por haber fallado sería el fallo de siempre."""
+    ruta = Path(ruta or DIAGNOSTICO_JSON)
+    if not ruta.is_file():
+        return None
+    diagnostico = json.loads(ruta.read_text(encoding="utf-8"))
+    try:
+        nuevos = audit_pendientes_revisiones()
+    except Exception as exc:  # noqa: BLE001 — se dice, no se calla
+        nuevos = [_issue_no_comprobado("(todas)", f"{type(exc).__name__}: {exc}")]
+    resto = [i for i in diagnostico.get("issues", []) if i.get("codigo") not in CODIGOS_PENDIENTES]
+    diagnostico["issues"] = resto + nuevos
+    diagnostico["totales"], diagnostico["salud_score"] = _totales_y_nota(diagnostico["issues"])
+    diagnostico["pendientes_refrescados"] = datetime.now().strftime("%d/%m/%Y %H:%M")
+    ruta.write_text(json.dumps(diagnostico, ensure_ascii=False, indent=2), encoding="utf-8")
+    return diagnostico
+
+
 def run_audit() -> dict:
     print("=" * 60)
     print(" AUDITORÍA DE SALUD DE DATOS SAGARDE (PRE-PUBLICACIÓN)")
@@ -364,17 +399,13 @@ def run_audit() -> dict:
     errors = [i for i in all_issues if i["nivel"] == "error"]
     warnings = [i for i in all_issues if i["nivel"] == "warning"]
     infos = [i for i in all_issues if i["nivel"] == "info"]
+    totales, salud_score = _totales_y_nota(all_issues)
 
     resultado = {
         "generado": datetime.now().strftime("%d/%m/%Y %H:%M"),
         "generado_ts": datetime.now().timestamp(),
-        "salud_score": max(0, 100 - (len(errors) * 30 + len(warnings) * 15 + len(infos) * 2)),
-        "totales": {
-            "total_issues": len(all_issues),
-            "errors": len(errors),
-            "warnings": len(warnings),
-            "infos": len(infos),
-        },
+        "salud_score": salud_score,
+        "totales": totales,
         "issues": all_issues
     }
 
@@ -402,8 +433,25 @@ def run_audit() -> dict:
     return resultado
 
 
-def main() -> int:
-    """Código de salida para Actualizar_Sagarde.bat: 3 si hay errores que frenan la publicación."""
+def main(argv=None) -> int:
+    """Código de salida para Actualizar_Sagarde.bat: 3 si hay errores que frenan la publicación.
+
+    Con `--solo-pendientes` (paso entre aplicar y pintar el portal) solo vuelve a mirar lo que queda sin aplicar:
+    sale con 0 aunque el diagnóstico tenga errores (el que frena la publicación es el paso 0) y con 1 si no pudo."""
+    argumentos = sys.argv[1:] if argv is None else list(argv)
+    if "--solo-pendientes" in argumentos:
+        try:
+            diagnostico = refrescar_pendientes()
+        except Exception as exc:  # noqa: BLE001
+            print(f"[AVISO] No se pudo volver a mirar lo que queda sin aplicar: {type(exc).__name__}: {exc}")
+            return 1
+        if diagnostico is None:
+            print("[AVISO] No hay diagnostico de la auditoria: no hay nada que refrescar.")
+            return 0
+        pendientes = [i for i in diagnostico["issues"] if i.get("codigo") in (CODIGO_HOJAS_SIN_APLICAR, CODIGO_CONTROLES_SIN_APLICAR)]
+        print(f"[OK] Vuelto a mirar REVISIONES tras aplicar: {sum(int(i.get('n') or 0) for i in pendientes)} fichero(s) sin aplicar "
+              f"en {len({i.get('obra') for i in pendientes})} obra(s).")
+        return 0
     return 3 if run_audit()["totales"]["errors"] else 0
 
 
