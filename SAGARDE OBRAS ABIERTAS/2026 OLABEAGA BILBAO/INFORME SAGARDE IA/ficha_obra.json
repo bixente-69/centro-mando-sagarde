@@ -9450,7 +9450,7 @@
   "materiales": {
     "ultimo_mes": "Noviembre26",
     "ultima_fecha": "05/11/2026",
-    "dias_desde": 1,
+    "dias_desde": 2,
     "meses": [
       "Octubre26",
       "Noviembre26"
@@ -9458,7 +9458,7 @@
     "n_items": 61,
     "aviso": null,
     "_meta": {
-      "actualizado": "06/11/2026 06:33"
+      "actualizado": "07/11/2026 08:38"
     }
   },
   "documentos": {
