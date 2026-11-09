@@ -50,6 +50,21 @@
    ],
    "registrado": "2026-11-06T12:41:11.376Z",
    "origen": "movil"
+  },
+  {
+   "fecha": "2026-11-09",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0005",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-09T10:29:22.482Z",
+   "origen": "movil"
   }
  ]
 }
