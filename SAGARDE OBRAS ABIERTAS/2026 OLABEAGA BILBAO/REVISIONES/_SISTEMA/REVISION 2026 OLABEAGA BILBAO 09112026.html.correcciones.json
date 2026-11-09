@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "hoja": "REVISION 2026 OLABEAGA BILBAO 09112026.html",
+  "obra": "olabeaga",
+  "fecha": "09/11/2026",
+  "revision": "olabeaga__09/11/2026__html_digital__24bf6a81",
+  "origen": "hoja generada rellenada digitalmente (paso 4, sin tinta)",
+  "estados": {
+    "p1__2__primera_cara_pladur__A": "X",
+    "p1__3__primera_cara_pladur__A": "X",
+    "p2__pb__tabicado__TRAST 2": "M",
+    "p2__pb__tabicado__TRAST 3": "X",
+    "p2__pb__rozas_timbres__TRAST 3": "N",
+    "p2__4__perfilado_pladur__B": "X",
+    "p2__4__primera_cara_pladur__B": "M",
+    "p3__1__segunda_cara_pladur__B": "M",
+    "p3__1__segunda_cara_pladur__C": "M",
+    "p3__3__tubeado__B": "X",
+    "p3__3__tubeado__C": "X"
+  }
+}

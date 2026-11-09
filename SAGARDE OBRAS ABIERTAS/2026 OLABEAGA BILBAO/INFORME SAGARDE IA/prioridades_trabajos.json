@@ -2,17 +2,17 @@
   "version": "4.3",
   "catalogo_version": "1.3",
   "obra": "2026 OLABEAGA BILBAO",
-  "revision": "05/11/2026",
+  "revision": "09/11/2026",
   "sin_base": false,
-  "edad_revision_dias": 2,
+  "edad_revision_dias": 0,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "07/11/2026 08:38",
+  "generado": "09/11/2026 22:36",
   "resumen": {
     "listos": 20,
     "verificar": 0,
-    "unidades_listas": 111,
+    "unidades_listas": 121,
     "unidades_verificar": 0,
     "bloqueados": 30,
     "otros_gremios": 16,
@@ -21,7 +21,7 @@
     "unidades_sin_revisar": 0,
     "terminados": 0,
     "inventario_total": 66,
-    "detalle_total": 1459,
+    "detalle_total": 1458,
     "preguntas_pendientes": 0,
     "viviendas": 11,
     "zonas_comunes": 3,
@@ -328,12 +328,21 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "TRAST 3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "M"
         }
       ],
-      "n_celdas": 16,
-      "n_ubicaciones": 16,
+      "n_celdas": 17,
+      "n_ubicaciones": 17,
       "n_unidades": 2,
-      "estado_actual": "M: 2 · /: 4 · Pendiente: 10",
+      "estado_actual": "M: 3 · /: 4 · Pendiente: 10",
       "motivo": "Infraestructura vertical eléctrica.",
       "impacto_gremios": "Infraestructura vertical eléctrica.",
       "orden": 2
@@ -492,12 +501,21 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "TRAST 3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "/"
         }
       ],
-      "n_celdas": 16,
-      "n_ubicaciones": 16,
+      "n_celdas": 17,
+      "n_ubicaciones": 17,
       "n_unidades": 2,
-      "estado_actual": "M: 2 · /: 2 · Pendiente: 12",
+      "estado_actual": "M: 2 · /: 3 · Pendiente: 12",
       "motivo": "Infraestructura vertical de telecomunicaciones.",
       "impacto_gremios": "Infraestructura vertical de telecomunicaciones.",
       "orden": 3
@@ -674,12 +692,21 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "TRAST 3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 18,
-      "n_ubicaciones": 18,
+      "n_celdas": 19,
+      "n_ubicaciones": 19,
       "n_unidades": 2,
-      "estado_actual": "/: 6 · Pendiente: 12",
+      "estado_actual": "/: 6 · Pendiente: 13",
       "motivo": "Infraestructura vertical de servicios comunes.",
       "impacto_gremios": "Infraestructura vertical de servicios comunes.",
       "orden": 4
@@ -856,12 +883,21 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "TRAST 3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 18,
-      "n_ubicaciones": 18,
-      "n_unidades": 9,
-      "estado_actual": "M: 4 · Pendiente: 14",
+      "n_celdas": 19,
+      "n_ubicaciones": 19,
+      "n_unidades": 10,
+      "estado_actual": "M: 4 · Pendiente: 15",
       "motivo": "Abre el frente de zonas comunes.",
       "impacto_gremios": "Abre el frente de zonas comunes.",
       "orden": 5
@@ -1150,6 +1186,15 @@
           "estado_actual": "Pendiente"
         },
         {
+          "edificio": "PORTAL 2",
+          "planta": "PB",
+          "unidades": [
+            "TRAST 3"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
           "edificio": "PORTAL 3",
           "planta": "2ª",
           "unidades": [
@@ -1186,10 +1231,10 @@
           "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 20,
-      "n_ubicaciones": 20,
-      "n_unidades": 20,
-      "estado_actual": "/: 1 · Pendiente: 19",
+      "n_celdas": 21,
+      "n_ubicaciones": 21,
+      "n_unidades": 21,
+      "estado_actual": "/: 1 · Pendiente: 20",
       "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
       "impacto_gremios": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
       "orden": 7
@@ -1218,7 +1263,25 @@
           "edificio": "PORTAL 1",
           "planta": "2ª",
           "unidades": [
+            "A"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "2ª",
+          "unidades": [
             "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 1",
+          "planta": "3ª",
+          "unidades": [
+            "A"
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
@@ -1282,24 +1345,6 @@
           "planta": "3ª",
           "unidades": [
             "A"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "3ª",
-          "unidades": [
-            "B"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "Pendiente"
-        },
-        {
-          "edificio": "PORTAL 3",
-          "planta": "3ª",
-          "unidades": [
-            "C"
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
@@ -1368,12 +1413,30 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 5,
-      "n_ubicaciones": 5,
-      "n_unidades": 5,
-      "estado_actual": "Pendiente: 5",
+      "n_celdas": 7,
+      "n_ubicaciones": 7,
+      "n_unidades": 7,
+      "estado_actual": "Pendiente: 7",
       "motivo": "Cableado general; no incluye cableados especiales.",
       "impacto_gremios": "Cableado general; no incluye cableados especiales.",
       "orden": 9
@@ -1433,12 +1496,30 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 5,
-      "n_ubicaciones": 5,
-      "n_unidades": 5,
-      "estado_actual": "Pendiente: 5",
+      "n_celdas": 7,
+      "n_ubicaciones": 7,
+      "n_unidades": 7,
+      "estado_actual": "Pendiente: 7",
       "motivo": "Cableado específico de telecomunicaciones.",
       "impacto_gremios": "Cableado específico de telecomunicaciones.",
       "orden": 10
@@ -1471,12 +1552,30 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 2,
-      "n_ubicaciones": 2,
-      "n_unidades": 2,
-      "estado_actual": "Pendiente: 2",
+      "n_celdas": 4,
+      "n_ubicaciones": 4,
+      "n_unidades": 4,
+      "estado_actual": "Pendiente: 4",
       "motivo": "Cableado específico de portero.",
       "impacto_gremios": "Cableado específico de portero.",
       "orden": 11
@@ -1563,12 +1662,30 @@
           ],
           "n_unidades": 1,
           "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidades": [
+            "B"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
+        },
+        {
+          "edificio": "PORTAL 3",
+          "planta": "3ª",
+          "unidades": [
+            "C"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 8,
-      "n_ubicaciones": 8,
-      "n_unidades": 8,
-      "estado_actual": "M: 6 · Pendiente: 2",
+      "n_celdas": 10,
+      "n_ubicaciones": 10,
+      "n_unidades": 10,
+      "estado_actual": "M: 6 · Pendiente: 4",
       "motivo": "Cableado específico de termostatos.",
       "impacto_gremios": "Cableado específico de termostatos.",
       "orden": 12
@@ -2560,8 +2677,8 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "TRAST 2",
-      "estado": "/",
-      "estado_actual": "/",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
       "dependencias_cumplidas": [],
@@ -2570,7 +2687,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/10/2026"
+      "ultima_fecha": "09/11/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -2587,17 +2704,17 @@
       "edificio": "PORTAL 2",
       "planta": "PB",
       "unidad": "TRAST 3",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Sin separaciones de vivienda no se inicia la instalación interior.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "27/10/2026"
+      "ultima_fecha": "09/11/2026"
     },
     {
       "tarea_id": "tabicado",
@@ -3613,44 +3730,7 @@
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "/",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
-      "dependencias_sin_dato": [],
-      "omitido_ultima": false,
-      "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
-    },
-    {
-      "tarea_id": "rozas_timbres",
-      "trabajo": "Rozas de timbres",
-      "trabajos_originales": [
-        "Rozas de timbres"
-      ],
-      "propiedad": "propio",
-      "ambito": "vivienda",
-      "ambito_nombre": "Viviendas",
-      "orden_ejecucion": 20,
-      "fase_nombre": "Inicio de obra",
-      "display_group": "rozas_timbres",
-      "edificio": "PORTAL 2",
-      "planta": "PB",
-      "unidad": "TRAST 3",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tabicado"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "tabicado",
-          "nombre": "Tabicado",
-          "estado": "/",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -4768,7 +4848,7 @@
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "/",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -4795,19 +4875,19 @@
       "unidad": "TRAST 3",
       "estado": "M",
       "estado_actual": "M",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical eléctrica.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -5923,7 +6003,7 @@
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "/",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -5950,19 +6030,19 @@
       "unidad": "TRAST 3",
       "estado": "/",
       "estado_actual": "/",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical de telecomunicaciones.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -7098,7 +7178,7 @@
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "/",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -7125,19 +7205,19 @@
       "unidad": "TRAST 3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Infraestructura vertical de servicios comunes.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -8273,7 +8353,7 @@
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "/",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -8300,19 +8380,19 @@
       "unidad": "TRAST 3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Abre el frente de zonas comunes.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -12222,17 +12302,17 @@
       "edificio": "PORTAL 2",
       "planta": "4ª",
       "unidad": "B",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Condición de otro gremio.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "07/10/2026"
+      "ultima_fecha": "09/11/2026"
     },
     {
       "tarea_id": "perfilado_pladur",
@@ -12681,17 +12761,17 @@
       "edificio": "PORTAL 1",
       "planta": "2ª",
       "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Habilita trabajos interiores.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "05/11/2026"
+      "ultima_fecha": "09/11/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -12735,17 +12815,17 @@
       "edificio": "PORTAL 1",
       "planta": "3ª",
       "unidad": "A",
-      "estado": "M",
-      "estado_actual": "M",
-      "categoria": "OTROS_GREMIOS",
-      "motivo": "Habilita trabajos interiores.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "05/11/2026"
+      "ultima_fecha": "09/11/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -13086,8 +13166,8 @@
       "edificio": "PORTAL 2",
       "planta": "4ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Habilita trabajos interiores.",
       "dependencias_cumplidas": [],
@@ -13096,7 +13176,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "09/11/2026"
     },
     {
       "tarea_id": "primera_cara_pladur",
@@ -14260,7 +14340,7 @@
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "/",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -14287,19 +14367,19 @@
       "unidad": "TRAST 3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tabicado.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado.",
+      "dependencias_cumplidas": [
         "Tabicado"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tabicado",
           "nombre": "Tabicado",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -14782,19 +14862,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Prepara los recorridos de la instalación.",
+      "dependencias_cumplidas": [
         "Primeras caras de Pladur"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "primera_cara_pladur",
           "nombre": "Primeras caras de Pladur",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -14856,19 +14936,19 @@
       "unidad": "A",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Primeras caras de Pladur.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Prepara los recorridos de la instalación.",
+      "dependencias_cumplidas": [
         "Primeras caras de Pladur"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "primera_cara_pladur",
           "nombre": "Primeras caras de Pladur",
-          "estado": "M",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -15327,7 +15407,7 @@
         {
           "id": "primera_cara_pladur",
           "nombre": "Primeras caras de Pladur",
-          "estado": "Pendiente",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -15746,27 +15826,17 @@
       "edificio": "PORTAL 3",
       "planta": "3ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Primeras caras de Pladur"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "primera_cara_pladur",
-          "nombre": "Primeras caras de Pladur",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "09/11/2026"
     },
     {
       "tarea_id": "tubeado",
@@ -15783,27 +15853,17 @@
       "edificio": "PORTAL 3",
       "planta": "3ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "VIABLE",
-      "motivo": "Prepara los recorridos de la instalación.",
-      "dependencias_cumplidas": [
-        "Primeras caras de Pladur"
-      ],
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
+      "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
-      "dependencias_detalle": [
-        {
-          "id": "primera_cara_pladur",
-          "nombre": "Primeras caras de Pladur",
-          "estado": "X",
-          "minimo": 1.0,
-          "cumplida": true
-        }
-      ],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "09/11/2026"
     },
     {
       "tarea_id": "tubeado",
@@ -17013,19 +17073,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado general; no incluye cableados especiales.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -17050,19 +17110,19 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado general; no incluye cableados especiales.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -18167,19 +18227,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de telecomunicaciones.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -18204,19 +18264,19 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de telecomunicaciones.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -19281,19 +19341,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de portero.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -19318,19 +19378,19 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de portero.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -20465,19 +20525,19 @@
       "unidad": "B",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de termostatos.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -20502,19 +20562,19 @@
       "unidad": "C",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado interior.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado específico de termostatos.",
+      "dependencias_cumplidas": [
         "Tubeado interior"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "tubeado",
           "nombre": "Tubeado interior",
-          "estado": "Pendiente",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
@@ -21215,8 +21275,8 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "B",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Trabajo externo. Es recomendable completar cableados antes, pero no es una dependencia obligatoria para Pladur.",
       "dependencias_cumplidas": [],
@@ -21225,7 +21285,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "09/11/2026"
     },
     {
       "tarea_id": "segunda_cara_pladur",
@@ -21242,8 +21302,8 @@
       "edificio": "PORTAL 3",
       "planta": "1ª",
       "unidad": "C",
-      "estado": "",
-      "estado_actual": "Pendiente",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Trabajo externo. Es recomendable completar cableados antes, pero no es una dependencia obligatoria para Pladur.",
       "dependencias_cumplidas": [],
@@ -21252,7 +21312,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "04/10/2026"
+      "ultima_fecha": "09/11/2026"
     },
     {
       "tarea_id": "segunda_cara_pladur",
@@ -22301,7 +22361,7 @@
         {
           "id": "segunda_cara_pladur",
           "nombre": "Segundas caras de Pladur",
-          "estado": "Pendiente",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -22338,7 +22398,7 @@
         {
           "id": "segunda_cara_pladur",
           "nombre": "Segundas caras de Pladur",
-          "estado": "Pendiente",
+          "estado": "M",
           "minimo": 1.0,
           "cumplida": false
         }
@@ -53014,13 +53074,6 @@
           "categoria": "BLOQUEADO"
         },
         {
-          "edificio": "PORTAL 2",
-          "planta": "PB",
-          "unidad": "TRAST 3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "A",
@@ -53110,12 +53163,12 @@
       ],
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
-      "n_ubicaciones": 33,
-      "estado_actual": "Pendiente: 17 · X: 16",
+      "n_ubicaciones": 32,
+      "estado_actual": "Pendiente: 16 · X: 16",
       "resumen_categorias": {
         "VIABLE": 14,
         "TERMINADO": 16,
-        "BLOQUEADO": 3
+        "BLOQUEADO": 2
       },
       "motivo": "Abre el frente inicial de instalaciones. Dependencias pendientes: Tabicado. Terminado según la última confirmación válida.",
       "orden_inventario": 1
@@ -53286,7 +53339,7 @@
           "planta": "PB",
           "unidad": "TRAST 3",
           "estado": "M",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -53381,8 +53434,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "M: 5 · /: 4 · Pendiente: 12 · X: 14",
       "resumen_categorias": {
-        "VIABLE": 16,
-        "BLOQUEADO": 5,
+        "VIABLE": 17,
+        "BLOQUEADO": 4,
         "TERMINADO": 14
       },
       "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical eléctrica. Terminado según la última confirmación válida.",
@@ -53554,7 +53607,7 @@
           "planta": "PB",
           "unidad": "TRAST 3",
           "estado": "/",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -53649,8 +53702,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "M: 2 · /: 5 · Pendiente: 14 · X: 14",
       "resumen_categorias": {
-        "VIABLE": 16,
-        "BLOQUEADO": 5,
+        "VIABLE": 17,
+        "BLOQUEADO": 4,
         "TERMINADO": 14
       },
       "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de telecomunicaciones. Terminado según la última confirmación válida.",
@@ -53822,7 +53875,7 @@
           "planta": "PB",
           "unidad": "TRAST 3",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -53917,8 +53970,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "/: 6 · Pendiente: 17 · X: 12",
       "resumen_categorias": {
-        "VIABLE": 18,
-        "BLOQUEADO": 5,
+        "VIABLE": 19,
+        "BLOQUEADO": 4,
         "TERMINADO": 12
       },
       "motivo": "Dependencias pendientes: Tabicado. Infraestructura vertical de servicios comunes. Terminado según la última confirmación válida.",
@@ -54090,7 +54143,7 @@
           "planta": "PB",
           "unidad": "TRAST 3",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -54185,8 +54238,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "M: 4 · Pendiente: 19 · X: 12",
       "resumen_categorias": {
-        "VIABLE": 18,
-        "BLOQUEADO": 5,
+        "VIABLE": 19,
+        "BLOQUEADO": 4,
         "TERMINADO": 12
       },
       "motivo": "Abre el frente de zonas comunes. Dependencias pendientes: Tabicado. Terminado según la última confirmación válida.",
@@ -54625,7 +54678,7 @@
           "planta": "PB",
           "unidad": "TRAST 3",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -54720,9 +54773,9 @@
       "n_ubicaciones": 35,
       "estado_actual": "/: 1 · Pendiente: 27 · X: 7",
       "resumen_categorias": {
-        "VIABLE": 20,
+        "VIABLE": 21,
         "TERMINADO": 7,
-        "BLOQUEADO": 8
+        "BLOQUEADO": 7
       },
       "motivo": "Caja o envolvente colocada; no equivale a cuadro mecanizado. Dependencias pendientes: Tabicado. Terminado según la última confirmación válida.",
       "orden_inventario": 7
@@ -54753,7 +54806,7 @@
           "planta": "2ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
@@ -54767,7 +54820,7 @@
           "planta": "3ª",
           "unidad": "A",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 1",
@@ -54948,15 +55001,15 @@
           "edificio": "PORTAL 3",
           "planta": "3ª",
           "unidad": "B",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "3ª",
           "unidad": "C",
-          "estado": "Pendiente",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
@@ -54986,11 +55039,11 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 35,
-      "estado_actual": "M: 1 · Pendiente: 26 · X: 8",
+      "estado_actual": "M: 1 · Pendiente: 24 · X: 10",
       "resumen_categorias": {
         "VIABLE": 11,
-        "TERMINADO": 8,
-        "BLOQUEADO": 16
+        "TERMINADO": 10,
+        "BLOQUEADO": 14
       },
       "motivo": "Dependencias pendientes: Primeras caras de Pladur. Prepara los recorridos de la instalación. Terminado según la última confirmación válida.",
       "orden_inventario": 8
@@ -55217,14 +55270,14 @@
           "planta": "3ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "3ª",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55256,8 +55309,8 @@
       "n_ubicaciones": 35,
       "estado_actual": "Pendiente: 32 · X: 3",
       "resumen_categorias": {
-        "BLOQUEADO": 27,
-        "VIABLE": 5,
+        "BLOQUEADO": 25,
+        "VIABLE": 7,
         "TERMINADO": 3
       },
       "motivo": "Cableado general; no incluye cableados especiales. Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
@@ -55464,14 +55517,14 @@
           "planta": "3ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "3ª",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55503,8 +55556,8 @@
       "n_ubicaciones": 32,
       "estado_actual": "Pendiente: 29 · X: 3",
       "resumen_categorias": {
-        "BLOQUEADO": 24,
-        "VIABLE": 5,
+        "BLOQUEADO": 22,
+        "VIABLE": 7,
         "TERMINADO": 3
       },
       "motivo": "Cableado específico de telecomunicaciones. Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
@@ -55711,14 +55764,14 @@
           "planta": "3ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "3ª",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55750,9 +55803,9 @@
       "n_ubicaciones": 32,
       "estado_actual": "Pendiente: 25 · X: 7",
       "resumen_categorias": {
-        "BLOQUEADO": 23,
+        "BLOQUEADO": 21,
         "TERMINADO": 7,
-        "VIABLE": 2
+        "VIABLE": 4
       },
       "motivo": "Cableado específico de portero. Dependencias pendientes: Tubeado interior. Terminado según la última confirmación válida.",
       "orden_inventario": 11
@@ -55958,14 +56011,14 @@
           "planta": "3ª",
           "unidad": "B",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "3ª",
           "unidad": "C",
           "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "categoria": "VIABLE"
         },
         {
           "edificio": "PORTAL 3",
@@ -55997,8 +56050,8 @@
       "n_ubicaciones": 32,
       "estado_actual": "M: 7 · Pendiente: 25",
       "resumen_categorias": {
-        "BLOQUEADO": 24,
-        "VIABLE": 8
+        "BLOQUEADO": 22,
+        "VIABLE": 10
       },
       "motivo": "Cableado específico de termostatos. Dependencias pendientes: Tubeado interior.",
       "orden_inventario": 12
@@ -60871,15 +60924,15 @@
           "edificio": "PORTAL 2",
           "planta": "PB",
           "unidad": "TRAST 2",
-          "estado": "/",
+          "estado": "M",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 2",
           "planta": "PB",
           "unidad": "TRAST 3",
-          "estado": "/",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 3",
@@ -60972,10 +61025,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 35,
-      "estado_actual": "M: 3 · /: 5 · X: 27",
+      "estado_actual": "M: 4 · /: 3 · X: 28",
       "resumen_categorias": {
-        "TERMINADO": 27,
-        "OTROS_GREMIOS": 8
+        "TERMINADO": 28,
+        "OTROS_GREMIOS": 7
       },
       "motivo": "Sin separaciones de vivienda no se inicia la instalación interior. Terminado según la última confirmación válida.",
       "orden_inventario": 51
@@ -61623,8 +61676,8 @@
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
-          "estado": "/",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 2",
@@ -61731,10 +61784,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 32,
-      "estado_actual": "/: 9 · Pendiente: 2 · X: 21",
+      "estado_actual": "/: 8 · Pendiente: 2 · X: 22",
       "resumen_categorias": {
-        "TERMINADO": 21,
-        "OTROS_GREMIOS": 11
+        "TERMINADO": 22,
+        "OTROS_GREMIOS": 10
       },
       "motivo": "Condición de otro gremio. Terminado según la última confirmación válida.",
       "orden_inventario": 54
@@ -61764,8 +61817,8 @@
           "edificio": "PORTAL 1",
           "planta": "2ª",
           "unidad": "A",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -61778,8 +61831,8 @@
           "edificio": "PORTAL 1",
           "planta": "3ª",
           "unidad": "A",
-          "estado": "M",
-          "categoria": "OTROS_GREMIOS"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "PORTAL 1",
@@ -61869,7 +61922,7 @@
           "edificio": "PORTAL 2",
           "planta": "4ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -61977,10 +62030,10 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 32,
-      "estado_actual": "M: 2 · Pendiente: 11 · X: 19",
+      "estado_actual": "M: 1 · Pendiente: 10 · X: 21",
       "resumen_categorias": {
-        "TERMINADO": 19,
-        "OTROS_GREMIOS": 13
+        "TERMINADO": 21,
+        "OTROS_GREMIOS": 11
       },
       "motivo": "Habilita trabajos interiores. Terminado según la última confirmación válida.",
       "orden_inventario": 55
@@ -62143,14 +62196,14 @@
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "B",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "PORTAL 3",
           "planta": "1ª",
           "unidad": "C",
-          "estado": "Pendiente",
+          "estado": "M",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -62223,7 +62276,7 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 32,
-      "estado_actual": "Pendiente: 32",
+      "estado_actual": "M: 2 · Pendiente: 30",
       "resumen_categorias": {
         "OTROS_GREMIOS": 32
       },
@@ -64510,7 +64563,7 @@
       "trabajo": "Tubeado interior",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 98,
+      "desbloquea": 90,
       "tajos_afectados": [
         "Cableado eléctrico",
         "Portero / videoportero",
@@ -64645,21 +64698,6 @@
       ]
     },
     {
-      "tarea_id": "tabicado",
-      "trabajo": "Tabicado",
-      "estado_actual": "X",
-      "propiedad": "externo",
-      "desbloquea": 19,
-      "tajos_afectados": [
-        "Cuadros presentados",
-        "Montante de servicios comunes",
-        "Montante de telecomunicaciones",
-        "Montante eléctrica",
-        "Rozas de timbres",
-        "Tubeado de zonas comunes"
-      ]
-    },
-    {
       "tarea_id": "montante_electrica",
       "trabajo": "Montante eléctrica",
       "estado_actual": "/",
@@ -64670,13 +64708,18 @@
       ]
     },
     {
-      "tarea_id": "primera_cara_pladur",
-      "trabajo": "Primeras caras de Pladur",
+      "tarea_id": "tabicado",
+      "trabajo": "Tabicado",
       "estado_actual": "X",
       "propiedad": "externo",
-      "desbloquea": 16,
+      "desbloquea": 17,
       "tajos_afectados": [
-        "Tubeado interior"
+        "Cuadros presentados",
+        "Montante de servicios comunes",
+        "Montante de telecomunicaciones",
+        "Montante eléctrica",
+        "Rozas de timbres",
+        "Tubeado de zonas comunes"
       ]
     },
     {
@@ -64697,6 +64740,16 @@
       "desbloquea": 15,
       "tajos_afectados": [
         "Agujeros de iluminación en ZZCC"
+      ]
+    },
+    {
+      "tarea_id": "primera_cara_pladur",
+      "trabajo": "Primeras caras de Pladur",
+      "estado_actual": "X",
+      "propiedad": "externo",
+      "desbloquea": 14,
+      "tajos_afectados": [
+        "Tubeado interior"
       ]
     },
     {

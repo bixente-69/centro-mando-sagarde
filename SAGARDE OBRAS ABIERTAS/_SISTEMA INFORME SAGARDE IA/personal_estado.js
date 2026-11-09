@@ -1,6 +1,6 @@
 window.SAGARDE_PERSONAL = {
  "version": 1,
- "generado": "2026-11-06T18:36:36.198751+01:00",
+ "generado": "2026-11-09T21:32:34.903717+01:00",
  "jornada_base_h": 7.5,
  "catalogo": [
   {
@@ -211,7 +211,7 @@ window.SAGARDE_PERSONAL = {
    },
    "ultima": {
     "vivienda": {
-     "fecha": "2026-11-06",
+     "fecha": "2026-11-09",
      "presentes": [
       {
        "nombre": "Manuel",
@@ -233,6 +233,14 @@ window.SAGARDE_PERSONAL = {
     },
     {
      "fecha": "2026-11-06",
+     "ambito": "vivienda",
+     "nombre": "Manuel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-09",
      "ambito": "vivienda",
      "nombre": "Manuel",
      "horas": 8,
@@ -1128,13 +1136,8 @@ window.SAGARDE_PERSONAL = {
    },
    "ultima": {
     "vivienda": {
-     "fecha": "2026-11-06",
+     "fecha": "2026-11-09",
      "presentes": [
-      {
-       "nombre": "Javi",
-       "horas": 8,
-       "extra": 0
-      },
       {
        "nombre": "Leonel",
        "horas": 8,
@@ -1672,6 +1675,22 @@ window.SAGARDE_PERSONAL = {
      "horas": 8,
      "extra": 0,
      "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-09",
+     "ambito": "vivienda",
+     "nombre": "Ignacio",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-09",
+     "ambito": "vivienda",
+     "nombre": "Leonel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
     }
    ]
   },
@@ -1711,7 +1730,21 @@ window.SAGARDE_PERSONAL = {
     }
    },
    "ultima": {
-    "vivienda": null,
+    "vivienda": {
+     "fecha": "2026-11-09",
+     "presentes": [
+      {
+       "nombre": "Alejo",
+       "horas": 8,
+       "extra": 0
+      },
+      {
+       "nombre": "Nestor",
+       "horas": 8,
+       "extra": 0
+      }
+     ]
+    },
     "garaje": {
      "fecha": "2026-11-06",
      "presentes": [
@@ -1804,6 +1837,22 @@ window.SAGARDE_PERSONAL = {
     {
      "fecha": "2026-11-06",
      "ambito": "garaje",
+     "nombre": "Nestor",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-09",
+     "ambito": "vivienda",
+     "nombre": "Alejo",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-09",
+     "ambito": "vivienda",
      "nombre": "Nestor",
      "horas": 8,
      "extra": 0,
