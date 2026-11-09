@@ -22125,7 +22125,7 @@
   "materiales": {
     "ultimo_mes": "Noviembre26",
     "ultima_fecha": "02/11/2026",
-    "dias_desde": 5,
+    "dias_desde": 7,
     "meses": [
       "Marzo26",
       "Abril26",
@@ -22137,7 +22137,7 @@
     "n_items": 37,
     "aviso": null,
     "_meta": {
-      "actualizado": "07/11/2026 08:38"
+      "actualizado": "09/11/2026 21:38"
     }
   },
   "documentos": {
