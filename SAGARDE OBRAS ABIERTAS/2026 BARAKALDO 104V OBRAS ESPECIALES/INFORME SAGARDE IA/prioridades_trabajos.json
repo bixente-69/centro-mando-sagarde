@@ -4,11 +4,11 @@
   "obra": "2026 BARAKALDO 104V OBRAS ESPECIALES",
   "revision": "08/10/2026",
   "sin_base": false,
-  "edad_revision_dias": 32,
+  "edad_revision_dias": 33,
   "revision_caducada": true,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "09/11/2026 22:37",
+  "generado": "10/11/2026 06:36",
   "resumen": {
     "listos": 3,
     "verificar": 0,
@@ -177676,6 +177676,6 @@
     "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmación.",
     "El orden sigue la secuencia lógica definida en CATALOGO_TAJOS.json.",
-    "La revisión es del 08/10/2026 (32 días). Los tajos conservan su clasificación; confirmar en obra antes de ejecutar."
+    "La revisión es del 08/10/2026 (33 días). Los tajos conservan su clasificación; confirmar en obra antes de ejecutar."
   ]
 }
