@@ -167,7 +167,10 @@ def scan_area(folder: Path) -> dict:
     for path in folder.rglob("*"):
         if not visible(path) or es_ruta_privada_herramientas(path):
             continue
-        (dirs if path.is_dir() else files).append(path)
+        if path.is_dir():
+            dirs.append(path)
+        elif path.is_file():
+            files.append(path)
     docs = [p for p in files if p.suffix.lower() in DOC_EXTS]
     latest = max((p.stat().st_mtime for p in files), default=folder.stat().st_mtime)
     title, description, color = AREA_META.get(folder.name, (folder.name.title(), "Carpeta de trabajo", "#475467"))
