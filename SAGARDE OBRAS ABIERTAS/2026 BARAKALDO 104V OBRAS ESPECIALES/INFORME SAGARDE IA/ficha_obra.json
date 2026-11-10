@@ -22903,16 +22903,16 @@
     }
   },
   "documentos": {
-    "total": 214,
+    "total": 206,
     "por_categoria": {
       "Excel": 2,
       "Imágenes": 141,
-      "Otros": 13,
+      "Otros": 5,
       "PDF": 48,
       "Planos y gráfica": 10
     },
     "_meta": {
-      "actualizado": "10/11/2026 15:40"
+      "actualizado": "10/11/2026 16:40"
     }
   },
   "contactos": []
