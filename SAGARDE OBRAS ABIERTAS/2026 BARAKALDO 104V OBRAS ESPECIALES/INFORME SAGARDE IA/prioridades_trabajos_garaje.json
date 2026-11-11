@@ -2,19 +2,19 @@
   "version": "4.3",
   "catalogo_version": "1.3",
   "obra": "2026 BARAKALDO 104V OBRAS ESPECIALES",
-  "revision": "02/11/2026",
+  "revision": "10/11/2026",
   "sin_base": false,
-  "edad_revision_dias": 8,
+  "edad_revision_dias": 1,
   "revision_caducada": false,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "10/11/2026 22:27",
+  "generado": "11/11/2026 06:45",
   "resumen": {
-    "listos": 1,
+    "listos": 2,
     "verificar": 0,
     "unidades_listas": 15,
     "unidades_verificar": 0,
-    "bloqueados": 28,
+    "bloqueados": 27,
     "otros_gremios": 5,
     "dudas": 0,
     "sin_revisar": 0,
@@ -24,7 +24,7 @@
     "detalle_total": 387,
     "preguntas_pendientes": 0,
     "viviendas": 0,
-    "zonas_comunes": 1,
+    "zonas_comunes": 2,
     "edificio": 0
   },
   "items": [
@@ -133,10 +133,39 @@
           "edificio": "G. Barakaldo 104",
           "planta": "S-3",
           "unidades": [
-            "Alumbrado 1"
+            "Rampa"
           ],
           "n_unidades": 1,
           "estado_actual": "/"
+        }
+      ],
+      "n_celdas": 11,
+      "n_ubicaciones": 11,
+      "n_unidades": 11,
+      "estado_actual": "/: 1 · Pendiente: 10",
+      "motivo": "Raíz propia de los viales; no espera a raseado (superficies distintas).",
+      "impacto_gremios": "Raíz propia de los viales; no espera a raseado (superficies distintas).",
+      "orden": 1
+    },
+    {
+      "tarea_id": "garaje_cableado_vial",
+      "trabajo": "Cableado de viales",
+      "situacion": "LISTO",
+      "categoria": "VIABLE",
+      "ambito": "zona_comun",
+      "ambito_nombre": "Zonas comunes",
+      "prioridad": "P2",
+      "orden_ejecucion": 545,
+      "fase_nombre": "Instalación interior garaje",
+      "ubicaciones": [
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-3",
+          "unidades": [
+            "Alumbrado 1"
+          ],
+          "n_unidades": 1,
+          "estado_actual": "Pendiente"
         },
         {
           "edificio": "G. Barakaldo 104",
@@ -145,7 +174,7 @@
             "Alumbrado 2"
           ],
           "n_unidades": 1,
-          "estado_actual": "/"
+          "estado_actual": "Pendiente"
         },
         {
           "edificio": "G. Barakaldo 104",
@@ -154,7 +183,7 @@
             "Alumbrado 3"
           ],
           "n_unidades": 1,
-          "estado_actual": "/"
+          "estado_actual": "Pendiente"
         },
         {
           "edificio": "G. Barakaldo 104",
@@ -163,25 +192,16 @@
             "Alumbrado fijo"
           ],
           "n_unidades": 1,
-          "estado_actual": "/"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-3",
-          "unidades": [
-            "Rampa"
-          ],
-          "n_unidades": 1,
-          "estado_actual": "/"
+          "estado_actual": "Pendiente"
         }
       ],
-      "n_celdas": 15,
-      "n_ubicaciones": 15,
-      "n_unidades": 15,
-      "estado_actual": "/: 5 · Pendiente: 10",
-      "motivo": "Raíz propia de los viales; no espera a raseado (superficies distintas).",
-      "impacto_gremios": "Raíz propia de los viales; no espera a raseado (superficies distintas).",
-      "orden": 1
+      "n_celdas": 4,
+      "n_ubicaciones": 4,
+      "n_unidades": 4,
+      "estado_actual": "Pendiente: 4",
+      "motivo": "Cableado de circuitos en viales de garaje.",
+      "impacto_gremios": "Cableado de circuitos en viales de garaje.",
+      "orden": 2
     }
   ],
   "detalle_items": [
@@ -210,7 +230,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -237,7 +257,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -264,7 +284,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -291,7 +311,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -318,7 +338,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -335,8 +355,8 @@
       "edificio": "G. Barakaldo 104",
       "planta": "S-2",
       "unidad": "Trasteros 1",
-      "estado": "/",
-      "estado_actual": "/",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
       "dependencias_cumplidas": [],
@@ -345,7 +365,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -362,8 +382,8 @@
       "edificio": "G. Barakaldo 104",
       "planta": "S-2",
       "unidad": "Trasteros 2",
-      "estado": "/",
-      "estado_actual": "/",
+      "estado": "M",
+      "estado_actual": "M",
       "categoria": "OTROS_GREMIOS",
       "motivo": "Sin separaciones no se inicia nada del resto en esa zona.",
       "dependencias_cumplidas": [],
@@ -372,7 +392,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -399,7 +419,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tabicado",
@@ -426,7 +446,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -453,7 +473,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -480,7 +500,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -507,7 +527,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -534,7 +554,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -561,7 +581,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -588,7 +608,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -615,7 +635,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -642,7 +662,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -669,7 +689,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -696,7 +716,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -723,7 +743,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -750,7 +770,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -777,7 +797,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -804,7 +824,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_lucido",
@@ -831,7 +851,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -858,7 +878,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -885,7 +905,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -912,7 +932,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -939,7 +959,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -966,7 +986,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -993,7 +1013,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -1020,7 +1040,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -1047,7 +1067,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -1074,7 +1094,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -1101,7 +1121,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -1128,7 +1148,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -1155,7 +1175,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -1182,7 +1202,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -1209,7 +1229,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_falso_techo",
@@ -1236,7 +1256,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_emp",
@@ -1273,7 +1293,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_emp",
@@ -1310,7 +1330,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_emp",
@@ -1347,7 +1367,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_emp",
@@ -1384,7 +1404,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_emp",
@@ -1421,7 +1441,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_emp",
@@ -1458,7 +1478,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_emp",
@@ -1495,7 +1515,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_emp",
@@ -1532,7 +1552,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_emp",
@@ -1569,7 +1589,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_emp",
@@ -1606,7 +1626,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_emp",
@@ -1643,7 +1663,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_emp",
@@ -1680,7 +1700,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_emp",
@@ -1717,7 +1737,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_emp",
@@ -1754,7 +1774,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_emp",
@@ -1791,7 +1811,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_emp",
@@ -1828,7 +1848,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_emp",
@@ -1865,7 +1885,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_emp",
@@ -1902,7 +1922,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -1939,7 +1959,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -1976,7 +1996,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2013,7 +2033,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2050,7 +2070,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2087,7 +2107,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2124,7 +2144,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2161,7 +2181,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2198,7 +2218,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2235,7 +2255,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2272,7 +2292,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2309,7 +2329,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2346,7 +2366,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2383,7 +2403,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2420,7 +2440,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_visto",
@@ -2457,7 +2477,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2494,7 +2514,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2531,7 +2551,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2568,7 +2588,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2605,7 +2625,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2642,7 +2662,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2679,7 +2699,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2716,7 +2736,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2753,7 +2773,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2790,7 +2810,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2827,7 +2847,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2864,7 +2884,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2901,7 +2921,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2938,7 +2958,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -2975,7 +2995,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_visto",
@@ -3012,7 +3032,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3039,7 +3059,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3066,7 +3086,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3093,7 +3113,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3120,7 +3140,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3147,7 +3167,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3174,7 +3194,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3201,7 +3221,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3228,7 +3248,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3255,7 +3275,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3282,7 +3302,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3299,17 +3319,17 @@
       "edificio": "G. Barakaldo 104",
       "planta": "S-3",
       "unidad": "Alumbrado 1",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "VIABLE",
-      "motivo": "Raíz propia de los viales; no espera a raseado (superficies distintas).",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3326,17 +3346,17 @@
       "edificio": "G. Barakaldo 104",
       "planta": "S-3",
       "unidad": "Alumbrado 2",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "VIABLE",
-      "motivo": "Raíz propia de los viales; no espera a raseado (superficies distintas).",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3353,17 +3373,17 @@
       "edificio": "G. Barakaldo 104",
       "planta": "S-3",
       "unidad": "Alumbrado 3",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "VIABLE",
-      "motivo": "Raíz propia de los viales; no espera a raseado (superficies distintas).",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3380,17 +3400,17 @@
       "edificio": "G. Barakaldo 104",
       "planta": "S-3",
       "unidad": "Alumbrado fijo",
-      "estado": "/",
-      "estado_actual": "/",
-      "categoria": "VIABLE",
-      "motivo": "Raíz propia de los viales; no espera a raseado (superficies distintas).",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
       "dependencias_bloqueantes": [],
       "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tubeado_vial",
@@ -3417,7 +3437,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3454,7 +3474,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3491,7 +3511,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3528,7 +3548,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3565,7 +3585,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3602,7 +3622,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3639,7 +3659,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3676,7 +3696,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3713,7 +3733,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3750,7 +3770,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3787,7 +3807,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3806,25 +3826,25 @@
       "unidad": "Alumbrado 1",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado de viales.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado de circuitos en viales de garaje.",
+      "dependencias_cumplidas": [
         "Tubeado de viales"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_tubeado_vial",
           "nombre": "Tubeado de viales",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3843,25 +3863,25 @@
       "unidad": "Alumbrado 2",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado de viales.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado de circuitos en viales de garaje.",
+      "dependencias_cumplidas": [
         "Tubeado de viales"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_tubeado_vial",
           "nombre": "Tubeado de viales",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3880,25 +3900,25 @@
       "unidad": "Alumbrado 3",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado de viales.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado de circuitos en viales de garaje.",
+      "dependencias_cumplidas": [
         "Tubeado de viales"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_tubeado_vial",
           "nombre": "Tubeado de viales",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3917,25 +3937,25 @@
       "unidad": "Alumbrado fijo",
       "estado": "",
       "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado de viales.",
-      "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
+      "categoria": "VIABLE",
+      "motivo": "Cableado de circuitos en viales de garaje.",
+      "dependencias_cumplidas": [
         "Tubeado de viales"
       ],
+      "dependencias_bloqueantes": [],
       "dependencias_detalle": [
         {
           "id": "garaje_tubeado_vial",
           "nombre": "Tubeado de viales",
-          "estado": "/",
+          "estado": "X",
           "minimo": 1.0,
-          "cumplida": false
+          "cumplida": true
         }
       ],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cableado_vial",
@@ -3972,7 +3992,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -3999,7 +4019,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4026,7 +4046,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4053,7 +4073,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4080,7 +4100,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4107,7 +4127,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4134,7 +4154,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4161,7 +4181,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4188,7 +4208,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4215,7 +4235,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4242,7 +4262,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4269,7 +4289,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4296,7 +4316,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4323,7 +4343,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4350,7 +4370,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4377,7 +4397,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4404,7 +4424,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4431,7 +4451,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4458,7 +4478,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4485,7 +4505,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4512,7 +4532,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_1_recinto",
@@ -4539,7 +4559,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4576,7 +4596,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4613,7 +4633,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4650,7 +4670,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4687,7 +4707,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4724,7 +4744,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4761,7 +4781,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4798,7 +4818,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4835,7 +4855,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4872,7 +4892,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4909,7 +4929,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4946,7 +4966,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -4983,7 +5003,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -5020,7 +5040,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -5057,7 +5077,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -5094,7 +5114,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -5131,7 +5151,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -5168,7 +5188,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -5205,7 +5225,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -5242,7 +5262,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -5279,7 +5299,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_recinto",
@@ -5316,7 +5336,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5353,7 +5373,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5390,7 +5410,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5427,7 +5447,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5464,7 +5484,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5501,7 +5521,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5538,7 +5558,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5575,7 +5595,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5612,7 +5632,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5649,7 +5669,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5686,7 +5706,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5723,7 +5743,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5760,7 +5780,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5797,7 +5817,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5834,7 +5854,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_coloc_vial",
@@ -5871,7 +5891,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -5908,7 +5928,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -5945,7 +5965,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -5982,7 +6002,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -6019,7 +6039,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -6056,7 +6076,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -6093,7 +6113,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -6130,7 +6150,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -6167,7 +6187,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -6204,7 +6224,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -6241,7 +6261,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -6278,7 +6298,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_recinto",
@@ -6315,7 +6335,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6352,7 +6372,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6389,7 +6409,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6426,7 +6446,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6463,7 +6483,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6500,7 +6520,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6537,7 +6557,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6574,7 +6594,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6611,7 +6631,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6648,7 +6668,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6685,7 +6705,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6722,7 +6742,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6759,7 +6779,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6796,7 +6816,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6833,7 +6853,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_coloc_vial",
@@ -6870,7 +6890,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -6907,7 +6927,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -6944,7 +6964,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -6981,7 +7001,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -7018,7 +7038,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -7055,7 +7075,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -7092,7 +7112,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -7129,7 +7149,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -7166,7 +7186,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -7203,7 +7223,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -7240,7 +7260,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -7277,7 +7297,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_recinto",
@@ -7314,7 +7334,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7351,7 +7371,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7388,7 +7408,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7425,7 +7445,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7462,7 +7482,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7499,7 +7519,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7536,7 +7556,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7573,7 +7593,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7610,7 +7630,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7647,7 +7667,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7684,7 +7704,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7721,7 +7741,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7758,7 +7778,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7795,7 +7815,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7832,7 +7852,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_coloc_vial",
@@ -7869,7 +7889,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_enchufe_coloc",
@@ -7906,7 +7926,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_enchufe_coloc",
@@ -7943,7 +7963,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_enchufe_coloc",
@@ -7980,7 +8000,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_tubeado_cableado",
@@ -8017,7 +8037,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_tubeado_cableado",
@@ -8054,7 +8074,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_tubeado_cableado",
@@ -8091,7 +8111,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_colocacion",
@@ -8136,7 +8156,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_colocacion",
@@ -8181,7 +8201,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_colocacion",
@@ -8226,7 +8246,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8253,7 +8273,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8280,7 +8300,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8307,7 +8327,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8334,7 +8354,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8361,7 +8381,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8388,7 +8408,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8415,7 +8435,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8442,7 +8462,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8469,7 +8489,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8496,7 +8516,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8523,7 +8543,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8550,7 +8570,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8577,7 +8597,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8604,7 +8624,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8631,7 +8651,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8658,7 +8678,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8685,7 +8705,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8712,7 +8732,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8739,7 +8759,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8766,7 +8786,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_pintura_2_recinto",
@@ -8793,7 +8813,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_embornado",
@@ -8838,7 +8858,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_embornado",
@@ -8883,7 +8903,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_embornado",
@@ -8928,7 +8948,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_rotulacion",
@@ -8965,7 +8985,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_rotulacion",
@@ -9002,7 +9022,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_rotulacion",
@@ -9039,7 +9059,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_equipo_tubeado_cableado",
@@ -9076,7 +9096,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_equipo_tubeado_cableado",
@@ -9113,7 +9133,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_cuadro_equipo_tubeado_cableado",
@@ -9150,7 +9170,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9195,7 +9215,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9240,7 +9260,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9285,7 +9305,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9330,7 +9350,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9375,7 +9395,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9420,7 +9440,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9465,7 +9485,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9510,7 +9530,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9555,7 +9575,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9600,7 +9620,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9645,7 +9665,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9690,7 +9710,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9735,7 +9755,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9780,7 +9800,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9825,7 +9845,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9870,7 +9890,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9915,7 +9935,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -9960,7 +9980,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -10005,7 +10025,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -10050,7 +10070,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_recinto",
@@ -10095,7 +10115,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10140,7 +10160,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10185,7 +10205,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10230,7 +10250,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10275,7 +10295,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10320,7 +10340,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10365,7 +10385,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10410,7 +10430,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10455,7 +10475,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10500,7 +10520,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10545,7 +10565,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10590,7 +10610,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10635,7 +10655,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10680,7 +10700,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10725,7 +10745,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_fijo_embornado_vial",
@@ -10770,7 +10790,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -10815,7 +10835,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -10860,7 +10880,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -10905,7 +10925,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -10950,7 +10970,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -10995,7 +11015,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -11040,7 +11060,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -11085,7 +11105,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -11130,7 +11150,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -11175,7 +11195,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -11220,7 +11240,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -11265,7 +11285,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_recinto",
@@ -11310,7 +11330,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11355,7 +11375,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11400,7 +11420,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11445,7 +11465,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11490,7 +11510,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11535,7 +11555,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11580,7 +11600,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11625,7 +11645,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11670,7 +11690,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11715,7 +11735,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11760,7 +11780,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11805,7 +11825,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11850,7 +11870,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11895,7 +11915,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11940,7 +11960,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_alum_temp_embornado_vial",
@@ -11985,7 +12005,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12030,7 +12050,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12075,7 +12095,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12120,7 +12140,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12165,7 +12185,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12210,7 +12230,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12255,7 +12275,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12300,7 +12320,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12345,7 +12365,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12390,7 +12410,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12435,7 +12455,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12480,7 +12500,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_recinto",
@@ -12525,7 +12545,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -12570,7 +12590,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -12615,7 +12635,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -12660,7 +12680,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -12705,7 +12725,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -12750,7 +12770,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -12795,7 +12815,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -12840,7 +12860,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -12885,7 +12905,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -12930,7 +12950,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -12975,7 +12995,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -13020,7 +13040,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -13065,7 +13085,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -13110,7 +13130,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -13155,7 +13175,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_emergencia_embornado_vial",
@@ -13200,7 +13220,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_enchufe_embornado",
@@ -13245,7 +13265,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_enchufe_embornado",
@@ -13290,7 +13310,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_enchufe_embornado",
@@ -13335,7 +13355,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tierras_derivacion",
@@ -13372,7 +13392,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tierras_derivacion",
@@ -13409,7 +13429,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_tierras_derivacion",
@@ -13446,7 +13466,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_puerta_alimentacion",
@@ -13483,7 +13503,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_puerta_alimentacion",
@@ -13520,7 +13540,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_puerta_alimentacion",
@@ -13557,7 +13577,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_puerta_mecanizado",
@@ -13584,7 +13604,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_puerta_mecanizado",
@@ -13611,7 +13631,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_puerta_mecanizado",
@@ -13638,7 +13658,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -13675,7 +13695,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -13712,7 +13732,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -13749,7 +13769,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -13786,7 +13806,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -13823,7 +13843,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -13860,7 +13880,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -13897,7 +13917,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -13934,7 +13954,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -13971,7 +13991,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -14008,7 +14028,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -14025,27 +14045,17 @@
       "edificio": "G. Barakaldo 104",
       "planta": "S-3",
       "unidad": "Alumbrado 1",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado de viales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado de viales"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_vial",
-          "nombre": "Tubeado de viales",
-          "estado": "/",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -14062,27 +14072,17 @@
       "edificio": "G. Barakaldo 104",
       "planta": "S-3",
       "unidad": "Alumbrado 2",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado de viales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado de viales"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_vial",
-          "nombre": "Tubeado de viales",
-          "estado": "/",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -14099,27 +14099,17 @@
       "edificio": "G. Barakaldo 104",
       "planta": "S-3",
       "unidad": "Alumbrado 3",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado de viales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado de viales"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_vial",
-          "nombre": "Tubeado de viales",
-          "estado": "/",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -14136,27 +14126,17 @@
       "edificio": "G. Barakaldo 104",
       "planta": "S-3",
       "unidad": "Alumbrado fijo",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado de viales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado de viales"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_vial",
-          "nombre": "Tubeado de viales",
-          "estado": "/",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_irve_preinstalacion",
@@ -14173,27 +14153,17 @@
       "edificio": "G. Barakaldo 104",
       "planta": "S-3",
       "unidad": "Rampa",
-      "estado": "",
-      "estado_actual": "Pendiente",
-      "categoria": "BLOQUEADO",
-      "motivo": "Dependencias pendientes: Tubeado de viales.",
+      "estado": "X",
+      "estado_actual": "X",
+      "categoria": "TERMINADO",
+      "motivo": "Terminado según la última confirmación válida.",
       "dependencias_cumplidas": [],
-      "dependencias_bloqueantes": [
-        "Tubeado de viales"
-      ],
-      "dependencias_detalle": [
-        {
-          "id": "garaje_tubeado_vial",
-          "nombre": "Tubeado de viales",
-          "estado": "/",
-          "minimo": 1.0,
-          "cumplida": false
-        }
-      ],
+      "dependencias_bloqueantes": [],
+      "dependencias_detalle": [],
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_telco_transito",
@@ -14230,7 +14200,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_telco_transito",
@@ -14267,7 +14237,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     },
     {
       "tarea_id": "garaje_telco_transito",
@@ -14304,7 +14274,7 @@
       "dependencias_sin_dato": [],
       "omitido_ultima": false,
       "forzado_entregado": false,
-      "ultima_fecha": "02/11/2026"
+      "ultima_fecha": "10/11/2026"
     }
   ],
   "inventario": [
@@ -14389,29 +14359,29 @@
           "edificio": "G. Barakaldo 104",
           "planta": "S-3",
           "unidad": "Alumbrado 1",
-          "estado": "/",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "G. Barakaldo 104",
           "planta": "S-3",
           "unidad": "Alumbrado 2",
-          "estado": "/",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "G. Barakaldo 104",
           "planta": "S-3",
           "unidad": "Alumbrado 3",
-          "estado": "/",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "G. Barakaldo 104",
           "planta": "S-3",
           "unidad": "Alumbrado fijo",
-          "estado": "/",
-          "categoria": "VIABLE"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "G. Barakaldo 104",
@@ -14427,12 +14397,140 @@
       "seccion": "VIABLE",
       "seccion_nombre": "Tajos viables",
       "n_ubicaciones": 15,
-      "estado_actual": "/: 5 · Pendiente: 10",
+      "estado_actual": "/: 1 · Pendiente: 10 · X: 4",
       "resumen_categorias": {
-        "VIABLE": 15
+        "VIABLE": 11,
+        "TERMINADO": 4
       },
-      "motivo": "Raíz propia de los viales; no espera a raseado (superficies distintas).",
+      "motivo": "Raíz propia de los viales; no espera a raseado (superficies distintas). Terminado según la última confirmación válida.",
       "orden_inventario": 1
+    },
+    {
+      "grupo_id": "garaje_cableado_vial",
+      "trabajo": "Cableado de viales",
+      "propiedad": "propio",
+      "orden_ejecucion": 545,
+      "fase_nombre": "Instalación interior garaje",
+      "ubicaciones": [
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-1",
+          "unidad": "Alumbrado 1",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-1",
+          "unidad": "Alumbrado 2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-1",
+          "unidad": "Alumbrado 3",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-1",
+          "unidad": "Alumbrado fijo",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-1",
+          "unidad": "Rampa",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-2",
+          "unidad": "Alumbrado3",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-2",
+          "unidad": "Alumbrado 1",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-2",
+          "unidad": "Alumbrado 2",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-2",
+          "unidad": "Alumbrado fijo",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-2",
+          "unidad": "Rampa",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-3",
+          "unidad": "Alumbrado 1",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-3",
+          "unidad": "Alumbrado 2",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-3",
+          "unidad": "Alumbrado 3",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-3",
+          "unidad": "Alumbrado fijo",
+          "estado": "Pendiente",
+          "categoria": "VIABLE"
+        },
+        {
+          "edificio": "G. Barakaldo 104",
+          "planta": "S-3",
+          "unidad": "Rampa",
+          "estado": "Pendiente",
+          "categoria": "BLOQUEADO"
+        }
+      ],
+      "subtajos": [
+        "Cableado de viales"
+      ],
+      "seccion": "VIABLE",
+      "seccion_nombre": "Tajos viables",
+      "n_ubicaciones": 15,
+      "estado_actual": "Pendiente: 15",
+      "resumen_categorias": {
+        "BLOQUEADO": 11,
+        "VIABLE": 4
+      },
+      "motivo": "Cableado de circuitos en viales de garaje. Dependencias pendientes: Tubeado de viales.",
+      "orden_inventario": 2
     },
     {
       "grupo_id": "garaje_tubeado_emp",
@@ -14516,7 +14614,7 @@
         "BLOQUEADO": 9
       },
       "motivo": "Dependencias pendientes: Tabicado (zona común).",
-      "orden_inventario": 2
+      "orden_inventario": 3
     },
     {
       "grupo_id": "garaje_cableado_emp",
@@ -14600,7 +14698,7 @@
         "BLOQUEADO": 9
       },
       "motivo": "Dependencias pendientes: Tubeado empotrado.",
-      "orden_inventario": 3
+      "orden_inventario": 4
     },
     {
       "grupo_id": "garaje_tubeado_visto",
@@ -14726,7 +14824,7 @@
         "BLOQUEADO": 15
       },
       "motivo": "Dependencias pendientes: Lucido.",
-      "orden_inventario": 4
+      "orden_inventario": 5
     },
     {
       "grupo_id": "garaje_cableado_visto",
@@ -14852,132 +14950,6 @@
         "BLOQUEADO": 15
       },
       "motivo": "Dependencias pendientes: Tubeado visto.",
-      "orden_inventario": 5
-    },
-    {
-      "grupo_id": "garaje_cableado_vial",
-      "trabajo": "Cableado de viales",
-      "propiedad": "propio",
-      "orden_ejecucion": 545,
-      "fase_nombre": "Instalación interior garaje",
-      "ubicaciones": [
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-1",
-          "unidad": "Alumbrado 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-1",
-          "unidad": "Alumbrado 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-1",
-          "unidad": "Alumbrado 3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-1",
-          "unidad": "Alumbrado fijo",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-1",
-          "unidad": "Rampa",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-2",
-          "unidad": "Alumbrado3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-2",
-          "unidad": "Alumbrado 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-2",
-          "unidad": "Alumbrado 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-2",
-          "unidad": "Alumbrado fijo",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-2",
-          "unidad": "Rampa",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-3",
-          "unidad": "Alumbrado 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-3",
-          "unidad": "Alumbrado 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-3",
-          "unidad": "Alumbrado 3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-3",
-          "unidad": "Alumbrado fijo",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        },
-        {
-          "edificio": "G. Barakaldo 104",
-          "planta": "S-3",
-          "unidad": "Rampa",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
-        }
-      ],
-      "subtajos": [
-        "Cableado de viales"
-      ],
-      "seccion": "BLOQUEADO",
-      "seccion_nombre": "Tajos bloqueados",
-      "n_ubicaciones": 15,
-      "estado_actual": "Pendiente: 15",
-      "resumen_categorias": {
-        "BLOQUEADO": 15
-      },
-      "motivo": "Dependencias pendientes: Tubeado de viales.",
       "orden_inventario": 6
     },
     {
@@ -16951,36 +16923,36 @@
           "edificio": "G. Barakaldo 104",
           "planta": "S-3",
           "unidad": "Alumbrado 1",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "G. Barakaldo 104",
           "planta": "S-3",
           "unidad": "Alumbrado 2",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "G. Barakaldo 104",
           "planta": "S-3",
           "unidad": "Alumbrado 3",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "G. Barakaldo 104",
           "planta": "S-3",
           "unidad": "Alumbrado fijo",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         },
         {
           "edificio": "G. Barakaldo 104",
           "planta": "S-3",
           "unidad": "Rampa",
-          "estado": "Pendiente",
-          "categoria": "BLOQUEADO"
+          "estado": "X",
+          "categoria": "TERMINADO"
         }
       ],
       "subtajos": [
@@ -16989,11 +16961,12 @@
       "seccion": "BLOQUEADO",
       "seccion_nombre": "Tajos bloqueados",
       "n_ubicaciones": 15,
-      "estado_actual": "Pendiente: 15",
+      "estado_actual": "Pendiente: 10 · X: 5",
       "resumen_categorias": {
-        "BLOQUEADO": 15
+        "BLOQUEADO": 10,
+        "TERMINADO": 5
       },
-      "motivo": "Dependencias pendientes: Tubeado de viales.",
+      "motivo": "Dependencias pendientes: Tubeado de viales. Terminado según la última confirmación válida.",
       "orden_inventario": 28
     },
     {
@@ -17084,14 +17057,14 @@
           "edificio": "G. Barakaldo 104",
           "planta": "S-2",
           "unidad": "Trasteros 1",
-          "estado": "/",
+          "estado": "M",
           "categoria": "OTROS_GREMIOS"
         },
         {
           "edificio": "G. Barakaldo 104",
           "planta": "S-2",
           "unidad": "Trasteros 2",
-          "estado": "/",
+          "estado": "M",
           "categoria": "OTROS_GREMIOS"
         },
         {
@@ -17115,7 +17088,7 @@
       "seccion": "OTROS_GREMIOS",
       "seccion_nombre": "Otros gremios e interferencias",
       "n_ubicaciones": 9,
-      "estado_actual": "/: 2 · Pendiente: 5 · X: 2",
+      "estado_actual": "M: 2 · Pendiente: 5 · X: 2",
       "resumen_categorias": {
         "OTROS_GREMIOS": 7,
         "TERMINADO": 2
@@ -17794,7 +17767,7 @@
       "trabajo": "Tubeado de viales",
       "estado_actual": "Pendiente",
       "propiedad": "propio",
-      "desbloquea": 36,
+      "desbloquea": 27,
       "tajos_afectados": [
         "Alimentación de cuadro de puerta de acceso",
         "Cableado de viales",

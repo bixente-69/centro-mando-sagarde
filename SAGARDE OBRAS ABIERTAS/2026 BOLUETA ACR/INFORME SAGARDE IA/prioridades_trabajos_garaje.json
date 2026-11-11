@@ -4,11 +4,11 @@
   "obra": "2026 BOLUETA ACR",
   "revision": "09/10/2026",
   "sin_base": false,
-  "edad_revision_dias": 32,
+  "edad_revision_dias": 33,
   "revision_caducada": true,
   "estado_obra": null,
   "historial_confirmado_terminado": false,
-  "generado": "10/11/2026 22:26",
+  "generado": "11/11/2026 06:44",
   "resumen": {
     "listos": 4,
     "verificar": 0,
@@ -4602,6 +4602,6 @@
     "El inventario incluye todos los tajos de la base; los terminados aparecen al final.",
     "Los nombres nuevos no se fusionan: quedan SIN CLASIFICAR hasta confirmaciÃ³n.",
     "El orden sigue la secuencia lÃ³gica definida en CATALOGO_TAJOS.json.",
-    "La revisiÃ³n es del 09/10/2026 (32 dÃ­as). Los tajos conservan su clasificaciÃ³n; confirmar en obra antes de ejecutar."
+    "La revisiÃ³n es del 09/10/2026 (33 dÃ­as). Los tajos conservan su clasificaciÃ³n; confirmar en obra antes de ejecutar."
   ]
 }

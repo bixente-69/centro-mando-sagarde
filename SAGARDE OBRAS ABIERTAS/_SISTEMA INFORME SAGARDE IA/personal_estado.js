@@ -1,6 +1,6 @@
 window.SAGARDE_PERSONAL = {
  "version": 1,
- "generado": "2026-11-09T21:32:34.903717+01:00",
+ "generado": "2026-11-11T06:41:00.553715+01:00",
  "jornada_base_h": 7.5,
  "catalogo": [
   {
@@ -285,7 +285,21 @@ window.SAGARDE_PERSONAL = {
     }
    },
    "ultima": {
-    "vivienda": null,
+    "vivienda": {
+     "fecha": "2026-11-10",
+     "presentes": [
+      {
+       "nombre": "JoseMari",
+       "horas": 7.5,
+       "extra": 0
+      },
+      {
+       "nombre": "Aurelian @AUT",
+       "horas": 7.5,
+       "extra": 0
+      }
+     ]
+    },
     "garaje": {
      "fecha": "2026-11-05",
      "presentes": [
@@ -390,6 +404,22 @@ window.SAGARDE_PERSONAL = {
      "horas": 8,
      "extra": 0,
      "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "vivienda",
+     "nombre": "Aurelian @AUT",
+     "horas": 7.5,
+     "extra": 0,
+     "empresa": "Sagarde"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "vivienda",
+     "nombre": "JoseMari",
+     "horas": 7.5,
+     "extra": 0,
+     "empresa": "Sagarde"
     }
    ]
   },
@@ -1746,10 +1776,15 @@ window.SAGARDE_PERSONAL = {
      ]
     },
     "garaje": {
-     "fecha": "2026-11-06",
+     "fecha": "2026-11-10",
      "presentes": [
       {
        "nombre": "Alejo",
+       "horas": 8,
+       "extra": 0
+      },
+      {
+       "nombre": "Manuel",
        "horas": 8,
        "extra": 0
       },
@@ -1853,6 +1888,30 @@ window.SAGARDE_PERSONAL = {
     {
      "fecha": "2026-11-09",
      "ambito": "vivienda",
+     "nombre": "Nestor",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "garaje",
+     "nombre": "Alejo",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "garaje",
+     "nombre": "Manuel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "garaje",
      "nombre": "Nestor",
      "horas": 8,
      "extra": 0,
