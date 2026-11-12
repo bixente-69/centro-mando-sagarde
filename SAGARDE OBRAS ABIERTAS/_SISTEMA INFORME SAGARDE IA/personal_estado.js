@@ -1,6 +1,6 @@
 window.SAGARDE_PERSONAL = {
  "version": 1,
- "generado": "2026-11-12T12:44:45.090456+01:00",
+ "generado": "2026-11-12T15:23:43.118554+01:00",
  "jornada_base_h": 7.5,
  "catalogo": [
   {
@@ -1996,6 +1996,22 @@ window.SAGARDE_PERSONAL = {
      "fecha": "2026-11-09",
      "ambito": "vivienda",
      "nombre": "Leonel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "vivienda",
+     "nombre": "Enry",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "vivienda",
+     "nombre": "Ignacio",
      "horas": 8,
      "extra": 0,
      "empresa": "CATERSYSTEM"

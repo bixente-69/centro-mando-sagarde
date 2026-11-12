@@ -637,6 +637,26 @@
    "origen": "movil"
   },
   {
+   "fecha": "2026-11-10",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0024",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0025",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-12T14:20:57.573Z",
+   "origen": "movil"
+  },
+  {
    "fecha": "2026-11-11",
    "ambito": "vivienda",
    "anulada": false,
