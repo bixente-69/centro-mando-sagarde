@@ -528,6 +528,166 @@
    ],
    "registrado": "2026-11-02T13:16:56.855Z",
    "origen": "movil"
+  },
+  {
+   "fecha": "2026-11-09",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0007",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0008",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0009",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0010",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0011",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0012",
+     "horas": 9,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-12T08:14:17.495Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-11-10",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0007",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0008",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0009",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0010",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0011",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0012",
+     "horas": 9,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-12T08:14:17.500Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-11-11",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0007",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0008",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0009",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0010",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0011",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0012",
+     "horas": 9,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-12T08:14:17.501Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-11-12",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0007",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0008",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0009",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0010",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0011",
+     "horas": 9,
+     "extra": 0
+    },
+    {
+     "id": "T0012",
+     "horas": 9,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-12T08:14:17.501Z",
+   "origen": "movil"
   }
  ]
 }

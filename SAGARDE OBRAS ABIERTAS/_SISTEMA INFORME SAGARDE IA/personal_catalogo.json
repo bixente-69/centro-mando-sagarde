@@ -231,6 +231,24 @@
    "activo": true,
    "alta": "2026-11-05",
    "fusionado_en": null
+  },
+  {
+   "id": "T0025",
+   "nombre": "Enry",
+   "categoria": "",
+   "empresa": "CATERSYSTEM",
+   "activo": true,
+   "alta": "2026-11-12",
+   "fusionado_en": null
+  },
+  {
+   "id": "T0026",
+   "nombre": "David C",
+   "categoria": "",
+   "empresa": "CATERSYSTEM",
+   "activo": true,
+   "alta": "2026-11-12",
+   "fusionado_en": null
   }
  ]
 }

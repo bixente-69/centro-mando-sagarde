@@ -1,6 +1,6 @@
 window.SAGARDE_PERSONAL = {
  "version": 1,
- "generado": "2026-11-11T06:41:00.553715+01:00",
+ "generado": "2026-11-12T12:44:45.090456+01:00",
  "jornada_base_h": 7.5,
  "catalogo": [
   {
@@ -185,6 +185,20 @@ window.SAGARDE_PERSONAL = {
    "categoria": "",
    "empresa": "CATERSYSTEM",
    "activo": true
+  },
+  {
+   "id": "T0025",
+   "nombre": "Enry",
+   "categoria": "",
+   "empresa": "CATERSYSTEM",
+   "activo": true
+  },
+  {
+   "id": "T0026",
+   "nombre": "David C",
+   "categoria": "",
+   "empresa": "CATERSYSTEM",
+   "activo": true
   }
  ],
  "obras": {
@@ -286,8 +300,13 @@ window.SAGARDE_PERSONAL = {
    },
    "ultima": {
     "vivienda": {
-     "fecha": "2026-11-10",
+     "fecha": "2026-11-12",
      "presentes": [
+      {
+       "nombre": "Eneko",
+       "horas": 4,
+       "extra": 0
+      },
       {
        "nombre": "JoseMari",
        "horas": 7.5,
@@ -420,6 +439,54 @@ window.SAGARDE_PERSONAL = {
      "horas": 7.5,
      "extra": 0,
      "empresa": "Sagarde"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "Aurelian @AUT",
+     "horas": 7.5,
+     "extra": 0,
+     "empresa": "Sagarde"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "Eneko",
+     "horas": 7.5,
+     "extra": 0,
+     "empresa": "Sagarde"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "JoseMari",
+     "horas": 7.5,
+     "extra": 0,
+     "empresa": "Sagarde"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "Aurelian @AUT",
+     "horas": 7.5,
+     "extra": 0,
+     "empresa": "Sagarde"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "Eneko",
+     "horas": 4,
+     "extra": 0,
+     "empresa": "Sagarde"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "JoseMari",
+     "horas": 7.5,
+     "extra": 0,
+     "empresa": "Sagarde"
     }
    ]
   },
@@ -509,36 +576,36 @@ window.SAGARDE_PERSONAL = {
    },
    "ultima": {
     "vivienda": {
-     "fecha": "2026-11-06",
+     "fecha": "2026-11-12",
      "presentes": [
       {
        "nombre": "Danger (M)",
-       "horas": 7,
+       "horas": 9,
        "extra": 0
       },
       {
        "nombre": "Juan Carlos (M)",
-       "horas": 7,
+       "horas": 9,
        "extra": 0
       },
       {
        "nombre": "Alexey (M)",
-       "horas": 7,
+       "horas": 9,
        "extra": 0
       },
       {
        "nombre": "Marko (M)",
-       "horas": 7,
+       "horas": 9,
        "extra": 0
       },
       {
        "nombre": "Libanny (M)",
-       "horas": 7,
+       "horas": 9,
        "extra": 0
       },
       {
        "nombre": "William (M)",
-       "horas": 7,
+       "horas": 9,
        "extra": 0
       }
      ]
@@ -1065,6 +1132,198 @@ window.SAGARDE_PERSONAL = {
      "horas": 7,
      "extra": 0,
      "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-09",
+     "ambito": "vivienda",
+     "nombre": "Alexey (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-09",
+     "ambito": "vivienda",
+     "nombre": "Danger (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-09",
+     "ambito": "vivienda",
+     "nombre": "Juan Carlos (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-09",
+     "ambito": "vivienda",
+     "nombre": "Libanny (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-09",
+     "ambito": "vivienda",
+     "nombre": "Marko (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-09",
+     "ambito": "vivienda",
+     "nombre": "William (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "vivienda",
+     "nombre": "Alexey (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "vivienda",
+     "nombre": "Danger (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "vivienda",
+     "nombre": "Juan Carlos (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "vivienda",
+     "nombre": "Libanny (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "vivienda",
+     "nombre": "Marko (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-10",
+     "ambito": "vivienda",
+     "nombre": "William (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "Alexey (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "Danger (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "Juan Carlos (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "Libanny (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "Marko (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "William (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "Alexey (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "Danger (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "Juan Carlos (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "Libanny (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "Marko (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "William (M)",
+     "horas": 9,
+     "extra": 0,
+     "empresa": "MARIOS"
     }
    ]
   },
@@ -1162,19 +1421,38 @@ window.SAGARDE_PERSONAL = {
      "mie": 8,
      "jue": 8,
      "vie": 8
+    },
+    "Enry": {
+     "lun": 8,
+     "mar": 8,
+     "mie": 8,
+     "jue": 8,
+     "vie": 8
+    },
+    "David C": {
+     "lun": 8,
+     "mar": 8,
+     "mie": 8,
+     "jue": 8,
+     "vie": 8
     }
    },
    "ultima": {
     "vivienda": {
-     "fecha": "2026-11-09",
+     "fecha": "2026-11-12",
      "presentes": [
       {
-       "nombre": "Leonel",
+       "nombre": "Ignacio",
        "horas": 8,
        "extra": 0
       },
       {
-       "nombre": "Ignacio",
+       "nombre": "Enry",
+       "horas": 8,
+       "extra": 0
+      },
+      {
+       "nombre": "David C",
        "horas": 8,
        "extra": 0
       }
@@ -1718,6 +1996,70 @@ window.SAGARDE_PERSONAL = {
      "fecha": "2026-11-09",
      "ambito": "vivienda",
      "nombre": "Leonel",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "Alejo",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "Manueles"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "David C",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "Enry",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "Ignacio",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-11",
+     "ambito": "vivienda",
+     "nombre": "Javi",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "David C",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "Enry",
+     "horas": 8,
+     "extra": 0,
+     "empresa": "CATERSYSTEM"
+    },
+    {
+     "fecha": "2026-11-12",
+     "ambito": "vivienda",
+     "nombre": "Ignacio",
      "horas": 8,
      "extra": 0,
      "empresa": "CATERSYSTEM"

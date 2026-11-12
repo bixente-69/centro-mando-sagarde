@@ -74,6 +74,20 @@
    "mie": 8,
    "jue": 8,
    "vie": 8
+  },
+  "T0025": {
+   "lun": 8,
+   "mar": 8,
+   "mie": 8,
+   "jue": 8,
+   "vie": 8
+  },
+  "T0026": {
+   "lun": 8,
+   "mar": 8,
+   "mie": 8,
+   "jue": 8,
+   "vie": 8
   }
  },
  "jornadas": [
@@ -620,6 +634,66 @@
     }
    ],
    "registrado": "2026-11-09T11:19:32.317Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-11-11",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0003",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0004",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0024",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0025",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0026",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-11T12:51:09.864Z",
+   "origen": "movil"
+  },
+  {
+   "fecha": "2026-11-12",
+   "ambito": "vivienda",
+   "anulada": false,
+   "notas": "",
+   "presentes": [
+    {
+     "id": "T0024",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0025",
+     "horas": 8,
+     "extra": 0
+    },
+    {
+     "id": "T0026",
+     "horas": 8,
+     "extra": 0
+    }
+   ],
+   "registrado": "2026-11-12T11:34:41.558Z",
    "origen": "movil"
   }
  ]
