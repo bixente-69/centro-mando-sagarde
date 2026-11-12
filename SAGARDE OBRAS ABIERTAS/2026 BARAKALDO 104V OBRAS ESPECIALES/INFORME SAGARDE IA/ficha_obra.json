@@ -22908,15 +22908,15 @@
   "dudas": [],
   "materiales": {
     "ultimo_mes": "Noviembre26",
-    "ultima_fecha": "10/11/2026",
-    "dias_desde": 2,
+    "ultima_fecha": "12/11/2026",
+    "dias_desde": 0,
     "meses": [
       "Noviembre26"
     ],
-    "n_items": 23,
+    "n_items": 38,
     "aviso": null,
     "_meta": {
-      "actualizado": "12/11/2026 13:07"
+      "actualizado": "12/11/2026 13:48"
     }
   },
   "documentos": {
