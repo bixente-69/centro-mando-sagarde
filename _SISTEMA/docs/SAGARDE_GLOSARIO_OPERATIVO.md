@@ -698,7 +698,7 @@
 - Función dentro de SAGARDE: obra registrada con DOCX/PDF y ficha.
 - Ruta o ubicación: carpeta; `registro_obras.py:23-32`.
 - Forma de uso: alias, panel, generador.
-- Ejemplo real: ZR1.1, ZR1.2 y ZR2.1 en la ficha publicada.
+- Ejemplo real: ZR1.1, ZR1.2 y ZR2.1 en la ficha publicada (en nomenclatura de entrega / fin de obra confirmada el 19/11/2026: **Bloque A** = ZR1.1 con portales **A1** y **A2**; **Bloque B** = ZR1.2).
 - Relacionado con: adaptador Mungia, confirmaciones de estructura.
 - Estado: CONFIRMADO POR CÓDIGO.
 - Evidencia: registro/ficha/JS/resumen.

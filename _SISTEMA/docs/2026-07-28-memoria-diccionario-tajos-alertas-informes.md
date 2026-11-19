@@ -479,3 +479,13 @@ Estado local comprobado en la fecha de incorporación:
 - npm dejó pendiente de aprobación el script de instalación de
   `@github/keytar`; solo habrá que revisarlo si Gemini no puede conservar el
   inicio de sesión.
+
+## Nomenclatura de bloques y portales en Mungia (`2026 MUNGIA ACR NEINOR`) — 19/11/2026
+
+Confirmado por Bixente el 19/11/2026 para los informes y actas de repaso de fin de obra de Mungia:
+
+- **Bloque A** (antes `ZR1.1`): tiene dos portales, **Portal A1** (20 viviendas, PB a P6) y **Portal A2** (16 viviendas, P1 a P6).
+- **Bloque B** (antes `ZR1.2`): **Portal B** (25 viviendas, PB a P5).
+- **Inspección de calidad / Origen:** **Nora (CEMOSA)** para **Neinor Homes** (Constructora: **ACR**).
+- **Operario de Sagarde (primer oficial en reparaciones):** **Eneko**.
+
