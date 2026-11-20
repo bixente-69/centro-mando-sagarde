@@ -1724,14 +1724,14 @@
   },
   "estados": {
     "p1__pb__tabicado__L.COMER 1": {
-      "v": "/",
-      "f": "27/10/2026",
-      "r": "olabeaga__27/10/2026__html_digital__07d49f91"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__pb__tabicado__L.COMER 2": {
-      "v": "/",
-      "f": "05/11/2026",
-      "r": "olabeaga__05/11/2026__html_digital__af24134f"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__1__tabicado__A": {
       "v": "X",
@@ -2334,9 +2334,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p1__1__cuadros_presentados__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__1__cuadros_presentados__B": {
       "v": "X",
@@ -2344,14 +2344,14 @@
       "r": "olabeaga__02/11/2026__html_digital__e4af310c"
     },
     "p1__2__cuadros_presentados__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__2__cuadros_presentados__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__3__cuadros_presentados__A": {
       "v": "P",
@@ -2384,9 +2384,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p1__1__tubeado__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__1__tubeado__B": {
       "v": "X",
@@ -2394,14 +2394,14 @@
       "r": "olabeaga__02/11/2026__html_digital__e4af310c"
     },
     "p1__2__tubeado__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__2__tubeado__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__3__tubeado__A": {
       "v": "P",
@@ -2534,24 +2534,24 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p1__1__portero__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__1__portero__B": {
-      "v": "X",
-      "f": "05/11/2026",
-      "r": "olabeaga__05/11/2026__html_digital__af24134f"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__2__portero__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__2__portero__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__3__portero__A": {
       "v": "P",
@@ -2584,9 +2584,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p1__1__termostatos__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__1__termostatos__B": {
       "v": "M",
@@ -2594,14 +2594,14 @@
       "r": "olabeaga__05/11/2026__html_digital__af24134f"
     },
     "p1__2__termostatos__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__2__termostatos__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__3__termostatos__A": {
       "v": "P",
@@ -3574,9 +3574,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p1__zesp__garaje_tabicado__z_muk4v5m3_40": {
-      "v": "/",
-      "f": "05/11/2026",
-      "r": "olabeaga__05/11/2026__html_digital__af24134f"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__zesp__garaje_lucido__z_muk4v5m3_40": {
       "v": "P",
@@ -3664,9 +3664,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p1__zesp__garaje_tabicado__z_muk4xw6v_42": {
-      "v": "/",
-      "f": "05/11/2026",
-      "r": "olabeaga__05/11/2026__html_digital__af24134f"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__zesp__garaje_lucido__z_muk4xw6v_42": {
       "v": "P",
@@ -3754,9 +3754,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p1__zesp__garaje_tabicado__z_muk4v7wp_41": {
-      "v": "/",
-      "f": "05/11/2026",
-      "r": "olabeaga__05/11/2026__html_digital__af24134f"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__zesp__garaje_lucido__z_muk4v7wp_41": {
       "v": "P",
@@ -4004,14 +4004,14 @@
       "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
     },
     "p2__3__montante_electrica__A": {
-      "v": "/",
-      "f": "21/10/2026",
-      "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__montante_electrica__B": {
-      "v": "/",
-      "f": "21/10/2026",
-      "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__pb__montante_teleco__TRAST 1": {
       "v": "/",
@@ -4049,14 +4049,14 @@
       "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
     },
     "p2__3__montante_teleco__A": {
-      "v": "/",
-      "f": "21/10/2026",
-      "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__montante_teleco__B": {
-      "v": "/",
-      "f": "21/10/2026",
-      "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__pb__montante_sscc__TRAST 1": {
       "v": "P",
@@ -4074,34 +4074,34 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p2__1__montante_sscc__A": {
-      "v": "/",
-      "f": "21/10/2026",
-      "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__1__montante_sscc__B": {
-      "v": "/",
-      "f": "21/10/2026",
-      "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__2__montante_sscc__A": {
-      "v": "/",
-      "f": "21/10/2026",
-      "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__2__montante_sscc__B": {
-      "v": "/",
-      "f": "21/10/2026",
-      "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__montante_sscc__A": {
-      "v": "/",
-      "f": "02/11/2026",
-      "r": "olabeaga__02/11/2026__html_digital__e4af310c"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__montante_sscc__B": {
-      "v": "/",
-      "f": "02/11/2026",
-      "r": "olabeaga__02/11/2026__html_digital__e4af310c"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__pb__tubeado_zzcc__TRAST 1": {
       "v": "P",
@@ -4139,14 +4139,14 @@
       "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
     },
     "p2__3__tubeado_zzcc__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__tubeado_zzcc__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__pb__cableado_zzcc__TRAST 1": {
       "v": "P",
@@ -4389,14 +4389,14 @@
       "r": "olabeaga__27/10/2026__html_digital__07d49f91"
     },
     "p2__1__segunda_cara_pladur__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__1__segunda_cara_pladur__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__2__segunda_cara_pladur__A": {
       "v": "P",
@@ -4439,29 +4439,29 @@
       "r": "olabeaga__30/10/2026__html_digital__942f56d6"
     },
     "p2__1__cuadros_presentados__B": {
-      "v": "/",
-      "f": "30/10/2026",
-      "r": "olabeaga__30/10/2026__html_digital__942f56d6"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__2__cuadros_presentados__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__2__cuadros_presentados__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__cuadros_presentados__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__cuadros_presentados__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__pb__tubeado__TRAST 1": {
       "v": "P",
@@ -4489,24 +4489,24 @@
       "r": "olabeaga__30/10/2026__html_digital__942f56d6"
     },
     "p2__2__tubeado__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__2__tubeado__B": {
-      "v": "M",
-      "f": "05/11/2026",
-      "r": "olabeaga__05/11/2026__html_digital__af24134f"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__tubeado__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__tubeado__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__pb__cableado__TRAST 1": {
       "v": "P",
@@ -4549,9 +4549,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p2__3__cableado__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__pb__telecableado__TRAST 1": {
       "v": "N",
@@ -4614,34 +4614,34 @@
       "r": "olabeaga__27/10/2026__html_digital__07d49f91"
     },
     "p2__1__portero__A": {
-      "v": "X",
-      "f": "30/10/2026",
-      "r": "olabeaga__30/10/2026__html_digital__942f56d6"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__1__portero__B": {
-      "v": "X",
-      "f": "30/10/2026",
-      "r": "olabeaga__30/10/2026__html_digital__942f56d6"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__2__portero__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__2__portero__B": {
-      "v": "X",
-      "f": "05/11/2026",
-      "r": "olabeaga__05/11/2026__html_digital__af24134f"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__portero__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__portero__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__pb__termostatos__TRAST 1": {
       "v": "N",
@@ -4669,9 +4669,9 @@
       "r": "olabeaga__05/11/2026__html_digital__af24134f"
     },
     "p2__2__termostatos__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__2__termostatos__B": {
       "v": "M",
@@ -4679,14 +4679,14 @@
       "r": "olabeaga__05/11/2026__html_digital__af24134f"
     },
     "p2__3__termostatos__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__3__termostatos__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__pb__doblar_cajas__TRAST 1": {
       "v": "N",
@@ -5584,84 +5584,84 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p2__4__montante_electrica__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__4__montante_electrica__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__duplx_atico__montante_electrica__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__duplx_atico__montante_electrica__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__4__montante_teleco__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__4__montante_teleco__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__duplx_atico__montante_teleco__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__duplx_atico__montante_teleco__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__4__montante_sscc__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__4__montante_sscc__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__duplx_atico__montante_sscc__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__duplx_atico__montante_sscc__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__4__tubeado_zzcc__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__4__tubeado_zzcc__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__duplx_atico__tubeado_zzcc__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__duplx_atico__tubeado_zzcc__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__4__cableado_zzcc__A": {
       "v": "P",
@@ -5749,9 +5749,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p2__4__primera_cara_pladur__B": {
-      "v": "M",
-      "f": "09/11/2026",
-      "r": "olabeaga__09/11/2026__html_digital__24bf6a81"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__duplx_atico__primera_cara_pladur__A": {
       "v": "P",
@@ -6284,9 +6284,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p2__zesp__garaje_tabicado__z_muk4qj3k_33": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__zesp__garaje_lucido__z_muk4qj3k_33": {
       "v": "P",
@@ -6374,9 +6374,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p2__zesp__garaje_tabicado__z_muk4qkov_34": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__zesp__garaje_lucido__z_muk4qkov_34": {
       "v": "P",
@@ -6464,9 +6464,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p2__zesp__garaje_tabicado__z_muk4qu6x_37": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__zesp__garaje_lucido__z_muk4qu6x_37": {
       "v": "P",
@@ -6554,9 +6554,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p2__zesp__garaje_tabicado__z_muk51fcr_43": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__zesp__garaje_lucido__z_muk51fcr_43": {
       "v": "P",
@@ -6644,9 +6644,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p2__zesp__garaje_tabicado__z_muk4qr18_36": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p2__zesp__garaje_lucido__z_muk4qr18_36": {
       "v": "P",
@@ -7199,34 +7199,34 @@
       "r": "olabeaga__30/10/2026__html_digital__942f56d6"
     },
     "p3__4__primera_cara_pladur__A": {
-      "v": "M",
-      "f": "11/11/2026",
-      "r": "olabeaga__11/11/2026__html_digital__7f5c8119"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__4__primera_cara_pladur__B": {
-      "v": "/",
-      "f": "11/11/2026",
-      "r": "olabeaga__11/11/2026__html_digital__7f5c8119"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__1__segunda_cara_pladur__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__1__segunda_cara_pladur__B": {
-      "v": "M",
-      "f": "09/11/2026",
-      "r": "olabeaga__09/11/2026__html_digital__24bf6a81"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__2__segunda_cara_pladur__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__2__segunda_cara_pladur__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__3__segunda_cara_pladur__A": {
       "v": "P",
@@ -7304,19 +7304,19 @@
       "r": "olabeaga__05/11/2026__html_digital__af24134f"
     },
     "p3__2__tubeado__B": {
-      "v": "/",
-      "f": "11/11/2026",
-      "r": "olabeaga__11/11/2026__html_digital__7f5c8119"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__3__tubeado__A": {
-      "v": "M",
-      "f": "11/11/2026",
-      "r": "olabeaga__11/11/2026__html_digital__7f5c8119"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__3__tubeado__B": {
-      "v": "M",
-      "f": "11/11/2026",
-      "r": "olabeaga__11/11/2026__html_digital__7f5c8119"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__4__tubeado__A": {
       "v": "P",
@@ -7409,34 +7409,34 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p3__1__portero__A": {
-      "v": "X",
-      "f": "27/10/2026",
-      "r": "olabeaga__27/10/2026__html_digital__07d49f91"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__1__portero__B": {
-      "v": "X",
-      "f": "27/10/2026",
-      "r": "olabeaga__27/10/2026__html_digital__07d49f91"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__2__portero__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__2__portero__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__3__portero__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__3__portero__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__4__portero__A": {
       "v": "P",
@@ -7459,24 +7459,24 @@
       "r": "olabeaga__05/11/2026__html_digital__af24134f"
     },
     "p3__2__termostatos__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__2__termostatos__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__3__termostatos__A": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__3__termostatos__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__4__termostatos__A": {
       "v": "P",
@@ -7494,9 +7494,9 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p3__1__doblar_cajas__B": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__2__doblar_cajas__A": {
       "v": "P",
@@ -8454,9 +8454,9 @@
       "r": "olabeaga__21/10/2026__html_digital__33ca52d9"
     },
     "p3__1__segunda_cara_pladur__C": {
-      "v": "M",
-      "f": "09/11/2026",
-      "r": "olabeaga__09/11/2026__html_digital__24bf6a81"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__1__cuadros_presentados__C": {
       "v": "X",
@@ -8479,9 +8479,9 @@
       "r": "olabeaga__02/11/2026__html_digital__e4af310c"
     },
     "p3__1__portero__C": {
-      "v": "X",
-      "f": "02/11/2026",
-      "r": "olabeaga__02/11/2026__html_digital__e4af310c"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__1__termostatos__C": {
       "v": "M",
@@ -8489,9 +8489,9 @@
       "r": "olabeaga__05/11/2026__html_digital__af24134f"
     },
     "p3__1__doblar_cajas__C": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__1__embornado__C": {
       "v": "P",
@@ -8639,9 +8639,9 @@
       "r": "olabeaga__30/10/2026__html_digital__942f56d6"
     },
     "p3__2__segunda_cara_pladur__C": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__2__cuadros_presentados__C": {
       "v": "X",
@@ -8664,14 +8664,14 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p3__2__portero__C": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__2__termostatos__C": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__2__doblar_cajas__C": {
       "v": "P",
@@ -8834,14 +8834,14 @@
       "r": "olabeaga__11/11/2026__html_digital__7f5c8119"
     },
     "p3__3__tubeado__C": {
-      "v": "M",
-      "f": "11/11/2026",
-      "r": "olabeaga__11/11/2026__html_digital__7f5c8119"
+      "v": "X",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__3__cableado__C": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__3__telecableado__C": {
       "v": "P",
@@ -8849,14 +8849,14 @@
       "r": "olabeaga__04/10/2026__html_digital__b404d424"
     },
     "p3__3__portero__C": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__3__termostatos__C": {
-      "v": "P",
-      "f": "04/10/2026",
-      "r": "olabeaga__04/10/2026__html_digital__b404d424"
+      "v": "/",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__3__doblar_cajas__C": {
       "v": "P",
@@ -9004,9 +9004,9 @@
       "r": "olabeaga__11/11/2026__html_digital__7f5c8119"
     },
     "p3__4__primera_cara_pladur__C": {
-      "v": "/",
-      "f": "11/11/2026",
-      "r": "olabeaga__11/11/2026__html_digital__7f5c8119"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p3__4__segunda_cara_pladur__C": {
       "v": "P",
@@ -9214,9 +9214,9 @@
       "r": "olabeaga__14/10/2026__html_digital__6d44d1c2"
     },
     "p1__zesp__garaje_tabicado__z_mv84bl2d_9": {
-      "v": "/",
-      "f": "05/11/2026",
-      "r": "olabeaga__05/11/2026__html_digital__af24134f"
+      "v": "M",
+      "f": "20/11/2026",
+      "r": "olabeaga__20/11/2026__html_digital__afd744f6"
     },
     "p1__zesp__garaje_tubeado_emp__z_mv84bl2d_9": {
       "v": "P",
@@ -9478,13 +9478,30 @@
       "procesada": "12/11/2026 12:44",
       "celdas": 1253,
       "cambios": 0
+    },
+    {
+      "id": "olabeaga__20/11/2026__html_digital__afd744f6",
+      "fecha": "20/11/2026",
+      "origen": "hoja generada rellenada digitalmente, leida por la IA",
+      "celdas_medidas": 375,
+      "celdas_cambiadas": 105,
+      "ubicaciones_nuevas": 0,
+      "ubicaciones_retiradas": 0,
+      "celdas_retiradas": 0
+    },
+    {
+      "id": "rev_20112026",
+      "fecha": "20/11/2026",
+      "procesada": "20/11/2026 13:19",
+      "celdas": 1253,
+      "cambios": 0
     }
   ],
   "dudas": [],
   "materiales": {
     "ultimo_mes": "Noviembre26",
     "ultima_fecha": "06/11/2026",
-    "dias_desde": 13,
+    "dias_desde": 14,
     "meses": [
       "Octubre26",
       "Noviembre26"
@@ -9492,20 +9509,20 @@
     "n_items": 59,
     "aviso": null,
     "_meta": {
-      "actualizado": "19/11/2026 10:12"
+      "actualizado": "20/11/2026 13:19"
     }
   },
   "documentos": {
-    "total": 59,
+    "total": 60,
     "por_categoria": {
       "Excel": 2,
       "Imágenes": 6,
-      "Otros": 21,
+      "Otros": 22,
       "PDF": 27,
       "Planos y gráfica": 3
     },
     "_meta": {
-      "actualizado": "12/11/2026 12:44"
+      "actualizado": "20/11/2026 13:19"
     }
   },
   "contactos": []

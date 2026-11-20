@@ -249,6 +249,15 @@
    "activo": true,
    "alta": "2026-11-12",
    "fusionado_en": null
+  },
+  {
+   "id": "T0027",
+   "nombre": "Nico",
+   "categoria": "",
+   "empresa": "CATERSYSTEM",
+   "activo": true,
+   "alta": "2026-11-20",
+   "fusionado_en": null
   }
  ]
 }
